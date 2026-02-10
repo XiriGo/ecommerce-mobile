@@ -1,0 +1,56 @@
+# ─── OS ────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── IDE ───────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# ─── Node ─────────────────────────────────────────
+node_modules/
+.env
+.env.local
+
+# ─── Android ───────────────────────────────────────
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+android/.externalNativeBuild/
+android/.cxx/
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# ─── iOS ───────────────────────────────────────────
+ios/build/
+ios/DerivedData/
+ios/Pods/
+ios/*.xcworkspace
+ios/*.xcuserdata
+ios/**/*.xcuserdata
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# ─── Logs ──────────────────────────────────────────
+scripts/logs/
+*.log
+
+# ─── Coverage ──────────────────────────────────────
+coverage/
+*.lcov
+
+# ─── Misc ──────────────────────────────────────────
+*.tmp
+*.bak

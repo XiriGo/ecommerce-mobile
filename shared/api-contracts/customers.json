@@ -1,0 +1,161 @@
+{
+  "module": "customers",
+  "description": "Customer profile and address management endpoints",
+  "baseUrl": "/store",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/store/customers/me",
+      "description": "Get current customer profile",
+      "auth": true,
+      "request": {},
+      "response": {
+        "customer": "Customer"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/customers/me",
+      "description": "Update current customer profile",
+      "auth": true,
+      "request": {
+        "body": {
+          "first_name": "string (optional)",
+          "last_name": "string (optional)",
+          "phone": "string (optional)",
+          "metadata": "Record<string, unknown> (optional)"
+        }
+      },
+      "response": {
+        "customer": "Customer"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/customers",
+      "description": "Create a new customer (used after auth registration)",
+      "auth": true,
+      "request": {
+        "body": {
+          "first_name": "string (required)",
+          "last_name": "string (required)",
+          "email": "string (required)"
+        }
+      },
+      "response": {
+        "customer": "Customer"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store/customers/me/addresses",
+      "description": "List customer addresses",
+      "auth": true,
+      "request": {},
+      "response": {
+        "addresses": "Address[]"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/customers/me/addresses",
+      "description": "Add a new address",
+      "auth": true,
+      "request": {
+        "body": {
+          "first_name": "string (required)",
+          "last_name": "string (required)",
+          "address_1": "string (required)",
+          "address_2": "string (optional)",
+          "city": "string (required)",
+          "province": "string (optional)",
+          "postal_code": "string (required)",
+          "country_code": "string (required)",
+          "phone": "string (optional)",
+          "is_default_shipping": "boolean (optional)"
+        }
+      },
+      "response": {
+        "address": "Address"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/customers/me/addresses/:id",
+      "description": "Update an existing address",
+      "auth": true,
+      "request": {
+        "params": { "id": "string (address ID)" },
+        "body": {
+          "first_name": "string (optional)",
+          "last_name": "string (optional)",
+          "address_1": "string (optional)",
+          "address_2": "string (optional)",
+          "city": "string (optional)",
+          "province": "string (optional)",
+          "postal_code": "string (optional)",
+          "country_code": "string (optional)",
+          "phone": "string (optional)",
+          "is_default_shipping": "boolean (optional)"
+        }
+      },
+      "response": {
+        "address": "Address"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/store/customers/me/addresses/:id",
+      "description": "Delete an address",
+      "auth": true,
+      "request": {
+        "params": { "id": "string (address ID)" }
+      },
+      "response": {
+        "id": "string",
+        "deleted": "boolean"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/customers/password-token",
+      "description": "Request a password reset token",
+      "auth": false,
+      "request": {
+        "body": {
+          "email": "string (required)"
+        }
+      },
+      "response": {}
+    },
+    {
+      "method": "POST",
+      "path": "/store/customers/password",
+      "description": "Reset password with token",
+      "auth": false,
+      "request": {
+        "body": {
+          "email": "string (required)",
+          "token": "string (required)",
+          "password": "string (required)"
+        }
+      },
+      "response": {
+        "customer": "Customer"
+      }
+    }
+  ],
+  "models": {
+    "Customer": {
+      "id": "string",
+      "email": "string",
+      "first_name": "string",
+      "last_name": "string",
+      "phone": "string | null",
+      "has_account": "boolean",
+      "metadata": "Record<string, unknown> | null",
+      "created_at": "string (ISO date)",
+      "updated_at": "string (ISO date)"
+    }
+  }
+}

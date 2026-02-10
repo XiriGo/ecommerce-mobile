@@ -1,0 +1,109 @@
+{
+  "module": "products",
+  "description": "Product browsing, search, and detail endpoints",
+  "baseUrl": "/store",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/store/products",
+      "description": "List products with filtering, sorting, and pagination",
+      "auth": false,
+      "request": {
+        "query": {
+          "q": "string (optional, search query)",
+          "limit": "number (optional, default 20)",
+          "offset": "number (optional, default 0)",
+          "order": "string (optional, e.g. '-created_at', 'price', '-price')",
+          "category_id[]": "string[] (optional, filter by categories)",
+          "collection_id[]": "string[] (optional, filter by collections)",
+          "tags[]": "string[] (optional, filter by tags)",
+          "fields": "string (optional, comma-separated field selection)"
+        }
+      },
+      "response": {
+        "products": "Product[]",
+        "count": "number",
+        "limit": "number",
+        "offset": "number"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store/products/:id",
+      "description": "Get a single product with full details",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (product ID)" },
+        "query": {
+          "fields": "string (optional, e.g. '+variants,+images,+categories,+tags,+options')"
+        }
+      },
+      "response": {
+        "product": "Product (full detail)"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store/product-categories",
+      "description": "List product categories",
+      "auth": false,
+      "request": {
+        "query": {
+          "limit": "number (optional)",
+          "offset": "number (optional)",
+          "parent_category_id": "string (optional, filter by parent)",
+          "include_descendants_tree": "boolean (optional)"
+        }
+      },
+      "response": {
+        "product_categories": "ProductCategory[]",
+        "count": "number",
+        "limit": "number",
+        "offset": "number"
+      }
+    }
+  ],
+  "models": {
+    "Product": {
+      "id": "string",
+      "title": "string",
+      "subtitle": "string | null",
+      "description": "string | null",
+      "handle": "string",
+      "thumbnail": "string | null (URL)",
+      "status": "string (draft | published)",
+      "images": "ProductImage[]",
+      "variants": "ProductVariant[]",
+      "options": "ProductOption[]",
+      "categories": "ProductCategory[]",
+      "tags": "ProductTag[]",
+      "metadata": "Record<string, unknown> | null",
+      "created_at": "string (ISO date)",
+      "updated_at": "string (ISO date)"
+    },
+    "ProductVariant": {
+      "id": "string",
+      "title": "string",
+      "sku": "string | null",
+      "prices": "MoneyAmount[]",
+      "options": "ProductOptionValue[]",
+      "inventory_quantity": "number",
+      "manage_inventory": "boolean"
+    },
+    "MoneyAmount": {
+      "amount": "number (in smallest unit, e.g. cents)",
+      "currency_code": "string (e.g. 'try', 'usd')"
+    },
+    "ProductImage": {
+      "id": "string",
+      "url": "string"
+    },
+    "ProductCategory": {
+      "id": "string",
+      "name": "string",
+      "handle": "string",
+      "parent_category": "ProductCategory | null",
+      "category_children": "ProductCategory[]"
+    }
+  }
+}

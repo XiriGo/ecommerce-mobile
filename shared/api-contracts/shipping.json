@@ -1,0 +1,46 @@
+{
+  "module": "shipping",
+  "description": "Shipping options endpoints for checkout",
+  "baseUrl": "/store",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/store/shipping-options",
+      "description": "List available shipping options for a cart",
+      "auth": false,
+      "request": {
+        "query": {
+          "cart_id": "string (required)"
+        }
+      },
+      "response": {
+        "shipping_options": "ShippingOption[]"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/carts/:id/shipping-methods",
+      "description": "Add a shipping method to cart",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)" },
+        "body": {
+          "option_id": "string (required, shipping option ID)"
+        }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    }
+  ],
+  "models": {
+    "ShippingOption": {
+      "id": "string",
+      "name": "string",
+      "price_type": "string (flat_rate | calculated)",
+      "amount": "number",
+      "provider_id": "string",
+      "data": "Record<string, unknown>"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(wc *)",
+      "Bash(chmod *)",
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(./gradlew *)",
+      "Bash(xcodebuild *)",
+      "Bash(swiftlint *)",
+      "Bash(npx *)",
+      "Bash(yarn *)",
+      "Bash(node *)",
+      "Bash(cd *)",
+      "Bash(rm *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(touch *)",
+      "Bash(command *)",
+      "mcp__plugin_medusa-dev_MedusaDocs__ask_medusa_question",
+      "mcp__plugin_learn-medusa_MedusaDocs__ask_medusa_question"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard *)",
+      "Bash(rm -rf /)*",
+      "Bash(git push * main)*",
+      "Bash(git push * master)*"
+    ]
+  }
+}

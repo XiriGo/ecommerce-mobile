@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Molt Marketplace design tokens — Typography",
+  "note": "Android uses sp for font sizes and Material 3 type scale. iOS uses system font with Dynamic Type support.",
+  "typeScale": {
+    "displayLarge": { "fontSize": 57, "lineHeight": 64, "letterSpacing": -0.25, "fontWeight": "regular" },
+    "displayMedium": { "fontSize": 45, "lineHeight": 52, "letterSpacing": 0, "fontWeight": "regular" },
+    "displaySmall": { "fontSize": 36, "lineHeight": 44, "letterSpacing": 0, "fontWeight": "regular" },
+    "headlineLarge": { "fontSize": 32, "lineHeight": 40, "letterSpacing": 0, "fontWeight": "regular" },
+    "headlineMedium": { "fontSize": 28, "lineHeight": 36, "letterSpacing": 0, "fontWeight": "regular" },
+    "headlineSmall": { "fontSize": 24, "lineHeight": 32, "letterSpacing": 0, "fontWeight": "regular" },
+    "titleLarge": { "fontSize": 22, "lineHeight": 28, "letterSpacing": 0, "fontWeight": "regular" },
+    "titleMedium": { "fontSize": 16, "lineHeight": 24, "letterSpacing": 0.15, "fontWeight": "medium" },
+    "titleSmall": { "fontSize": 14, "lineHeight": 20, "letterSpacing": 0.1, "fontWeight": "medium" },
+    "bodyLarge": { "fontSize": 16, "lineHeight": 24, "letterSpacing": 0.5, "fontWeight": "regular" },
+    "bodyMedium": { "fontSize": 14, "lineHeight": 20, "letterSpacing": 0.25, "fontWeight": "regular" },
+    "bodySmall": { "fontSize": 12, "lineHeight": 16, "letterSpacing": 0.4, "fontWeight": "regular" },
+    "labelLarge": { "fontSize": 14, "lineHeight": 20, "letterSpacing": 0.1, "fontWeight": "medium" },
+    "labelMedium": { "fontSize": 12, "lineHeight": 16, "letterSpacing": 0.5, "fontWeight": "medium" },
+    "labelSmall": { "fontSize": 11, "lineHeight": 16, "letterSpacing": 0.5, "fontWeight": "medium" }
+  },
+  "fontWeights": {
+    "regular": 400,
+    "medium": 500,
+    "semibold": 600,
+    "bold": 700
+  },
+  "fontFamily": {
+    "android": "sans-serif (system default, Roboto)",
+    "ios": "SF Pro (system default)"
+  }
+}

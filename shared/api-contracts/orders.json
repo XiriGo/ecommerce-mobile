@@ -1,0 +1,82 @@
+{
+  "module": "orders",
+  "description": "Order listing and detail endpoints",
+  "baseUrl": "/store",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/store/orders",
+      "description": "List customer orders with pagination and filtering",
+      "auth": true,
+      "request": {
+        "query": {
+          "limit": "number (optional, default 20)",
+          "offset": "number (optional, default 0)",
+          "status": "string (optional, filter by status: pending, processing, shipped, delivered, cancelled)"
+        }
+      },
+      "response": {
+        "orders": "Order[]",
+        "count": "number",
+        "limit": "number",
+        "offset": "number"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store/orders/:id",
+      "description": "Get order detail by ID",
+      "auth": true,
+      "request": {
+        "params": { "id": "string (order ID)" }
+      },
+      "response": {
+        "order": "Order (full detail)"
+      }
+    }
+  ],
+  "models": {
+    "Order": {
+      "id": "string",
+      "display_id": "number (human-readable order number)",
+      "status": "string (pending | processing | shipped | delivered | cancelled)",
+      "email": "string",
+      "items": "OrderItem[]",
+      "shipping_address": "Address",
+      "billing_address": "Address",
+      "shipping_methods": "ShippingMethod[]",
+      "payments": "Payment[]",
+      "subtotal": "number",
+      "shipping_total": "number",
+      "tax_total": "number",
+      "discount_total": "number",
+      "total": "number",
+      "currency_code": "string",
+      "created_at": "string (ISO date)",
+      "updated_at": "string (ISO date)",
+      "metadata": "Record<string, unknown> | null"
+    },
+    "OrderItem": {
+      "id": "string",
+      "title": "string",
+      "variant_id": "string",
+      "quantity": "number",
+      "unit_price": "number",
+      "subtotal": "number",
+      "total": "number",
+      "thumbnail": "string | null (URL)"
+    },
+    "ShippingMethod": {
+      "id": "string",
+      "name": "string",
+      "price": "number",
+      "data": "Record<string, unknown>"
+    },
+    "Payment": {
+      "id": "string",
+      "provider_id": "string",
+      "amount": "number",
+      "status": "string (captured | pending | refunded)"
+    }
+  }
+}

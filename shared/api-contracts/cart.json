@@ -1,0 +1,162 @@
+{
+  "module": "cart",
+  "description": "Shopping cart management endpoints",
+  "baseUrl": "/store",
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/store/carts",
+      "description": "Create a new cart",
+      "auth": false,
+      "request": {
+        "body": {
+          "region_id": "string (optional)",
+          "sales_channel_id": "string (optional)"
+        }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/store/carts/:id",
+      "description": "Get cart by ID",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)" }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/carts/:id/line-items",
+      "description": "Add a line item to cart",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)" },
+        "body": {
+          "variant_id": "string (required)",
+          "quantity": "number (required, min 1)"
+        }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/carts/:id/line-items/:line_id",
+      "description": "Update line item quantity",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)", "line_id": "string (line item ID)" },
+        "body": {
+          "quantity": "number (required, min 1)"
+        }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/store/carts/:id/line-items/:line_id",
+      "description": "Remove a line item from cart",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)", "line_id": "string (line item ID)" }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/carts/:id",
+      "description": "Update cart (shipping address, email, etc.)",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)" },
+        "body": {
+          "email": "string (optional)",
+          "shipping_address": "Address (optional)",
+          "billing_address": "Address (optional)"
+        }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/carts/:id/promotions",
+      "description": "Apply a promotion/discount code to cart",
+      "auth": false,
+      "request": {
+        "params": { "id": "string (cart ID)" },
+        "body": {
+          "code": "string (required, promotion code)"
+        }
+      },
+      "response": {
+        "cart": "Cart"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/store/carts/:id/complete",
+      "description": "Complete the cart and create an order",
+      "auth": true,
+      "request": {
+        "params": { "id": "string (cart ID)" }
+      },
+      "response": {
+        "type": "string ('order')",
+        "order": "Order"
+      }
+    }
+  ],
+  "models": {
+    "Cart": {
+      "id": "string",
+      "email": "string | null",
+      "items": "LineItem[]",
+      "shipping_address": "Address | null",
+      "billing_address": "Address | null",
+      "shipping_methods": "ShippingMethod[]",
+      "payment_collection": "PaymentCollection | null",
+      "subtotal": "number",
+      "shipping_total": "number",
+      "tax_total": "number",
+      "discount_total": "number",
+      "total": "number",
+      "region": "Region",
+      "currency_code": "string"
+    },
+    "LineItem": {
+      "id": "string",
+      "title": "string",
+      "variant_id": "string",
+      "variant": "ProductVariant",
+      "quantity": "number",
+      "unit_price": "number",
+      "subtotal": "number",
+      "total": "number",
+      "thumbnail": "string | null (URL)"
+    },
+    "Address": {
+      "first_name": "string",
+      "last_name": "string",
+      "address_1": "string",
+      "address_2": "string | null",
+      "city": "string",
+      "province": "string | null",
+      "postal_code": "string",
+      "country_code": "string",
+      "phone": "string | null"
+    }
+  }
+}
