@@ -81,6 +81,9 @@ feature/<name>/
 - Use **`when` exhaustively** (no `else` branch on sealed classes).
 - Prefer **extension functions** over utility classes.
 - Use **`@Stable`** annotation on Compose state classes.
+- **No `AndroidViewModel`**: Use `ViewModel()`. Pass dependencies via Hilt, not Context.
+- **ViewModels at screen level only**: Never pass ViewModel to child composables. Hoist state.
+- **Single `uiState` property**: Expose one `StateFlow<XxxUiState>` per ViewModel, use `stateIn(WhileSubscribed(5_000))`.
 
 ### Compose Rules
 
@@ -209,6 +212,24 @@ struct APIClient {
 | Files | PascalCase.kt | PascalCase.swift |
 | Packages/Modules | lowercase.dotted | PascalCase |
 
+### Architecture Naming Rules
+
+| Type | Pattern | Android Example | iOS Example |
+|------|---------|-----------------|-------------|
+| DTO | `{Name}Dto` | `ProductDto` | `ProductDTO` |
+| Domain model | `{Name}` | `Product` | `Product` |
+| UI state | `{Screen}UiState` | `ProductListUiState` | `ProductListUiState` |
+| UI event | `{Screen}Event` | `ProductListEvent` | `ProductListEvent` |
+| Repository interface | `{Name}Repository` | `ProductRepository` | `ProductRepository` |
+| Repository impl | `{Name}RepositoryImpl` | `ProductRepositoryImpl` | `ProductRepositoryImpl` |
+| Use case | `{Verb}{Name}UseCase` | `GetProductsUseCase` | `GetProductsUseCase` |
+| ViewModel | `{Screen}ViewModel` | `ProductListViewModel` | `ProductListViewModel` |
+| API service | `{Name}Api` | `ProductApi` | N/A (use Endpoint enum) |
+| Mapper | `{Name}Mapper` | `ProductMapper` | extension on DTO |
+| Stream getter | `get{Name}Stream()` | `getProductsStream(): Flow<List<Product>>` | `getProductsStream() -> AsyncStream<[Product]>` |
+| Test fake | `Fake{Name}` | `FakeProductRepository` | `FakeProductRepository` |
+| Test file | `{Name}Test` | `ProductListViewModelTest` | `ProductListViewModelTests` |
+
 ### Import Order
 
 Imports must follow this order, separated by blank lines:
@@ -226,6 +247,7 @@ Imports must follow this order, separated by blank lines:
 - UI-friendly error messages in presentation layer
 - Never swallow errors silently
 - Log errors for debugging
+- **Never send one-off events from ViewModel to UI** (Google strongly recommended). Process the event immediately in ViewModel and update state with the result.
 
 ### API Integration
 
@@ -243,6 +265,489 @@ Imports must follow this order, separated by blank lines:
 - **iOS**: `Localizable.xcstrings` or `.strings` files
 - **Default language**: Turkish (tr)
 - **Secondary**: English (en)
+
+## Code Templates (Reference Implementations)
+
+Every feature implementation MUST follow these templates exactly. Agents should
+copy these patterns for each new feature, replacing `Product` with the feature name.
+
+### Android: UiState Pattern
+
+```kotlin
+// feature/product/presentation/state/ProductListUiState.kt
+@Stable
+sealed interface ProductListUiState {
+    data object Loading : ProductListUiState
+    data class Success(
+        val products: List<Product>,
+        val isLoadingMore: Boolean = false,
+        val hasMore: Boolean = true,
+    ) : ProductListUiState
+    data class Error(val message: String) : ProductListUiState
+}
+
+sealed interface ProductListEvent {
+    data class NavigateToDetail(val productId: String) : ProductListEvent
+    data class ShowSnackbar(val message: String) : ProductListEvent
+}
+```
+
+### Android: ViewModel Pattern
+
+```kotlin
+// feature/product/presentation/viewmodel/ProductListViewModel.kt
+@HiltViewModel
+class ProductListViewModel @Inject constructor(
+    private val getProductsUseCase: GetProductsUseCase,
+) : ViewModel() {
+
+    private val _event = Channel<ProductListEvent>(Channel.BUFFERED)
+    val event: Flow<ProductListEvent> = _event.receiveAsFlow()
+
+    private var offset = 0
+    private val limit = 20
+
+    val uiState: StateFlow<ProductListUiState> = getProductsUseCase(
+        offset = 0, limit = limit
+    ).map<List<Product>, ProductListUiState> { products ->
+        ProductListUiState.Success(
+            products = products,
+            hasMore = products.size >= limit,
+        )
+    }.catch { e ->
+        emit(ProductListUiState.Error(e.toUserMessage()))
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = ProductListUiState.Loading,
+    )
+
+    fun onLoadMore() {
+        val current = uiState.value
+        if (current !is ProductListUiState.Success || current.isLoadingMore || !current.hasMore) return
+        viewModelScope.launch {
+            // update state, fetch next page, merge results
+        }
+    }
+
+    fun onProductClick(productId: String) {
+        viewModelScope.launch {
+            _event.send(ProductListEvent.NavigateToDetail(productId))
+        }
+    }
+}
+```
+
+### Android: Screen Pattern
+
+```kotlin
+// feature/product/presentation/screen/ProductListScreen.kt
+@Composable
+fun ProductListScreen(
+    viewModel: ProductListViewModel = hiltViewModel(),
+    onNavigateToDetail: (String) -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is ProductListEvent.NavigateToDetail -> onNavigateToDetail(event.productId)
+                is ProductListEvent.ShowSnackbar -> { /* show snackbar */ }
+            }
+        }
+    }
+
+    ProductListContent(
+        uiState = uiState,
+        onLoadMore = viewModel::onLoadMore,
+        onProductClick = viewModel::onProductClick,
+    )
+}
+
+@Composable
+private fun ProductListContent(
+    uiState: ProductListUiState,
+    onLoadMore: () -> Unit,
+    onProductClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    when (uiState) {
+        is ProductListUiState.Loading -> LoadingView(modifier)
+        is ProductListUiState.Error -> ErrorView(message = uiState.message, modifier = modifier)
+        is ProductListUiState.Success -> {
+            LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier) {
+                items(uiState.products, key = { it.id }) { product ->
+                    ProductCard(product = product, onClick = { onProductClick(product.id) })
+                }
+                if (uiState.isLoadingMore) {
+                    item(span = { GridItemSpan(2) }) { LoadingIndicator() }
+                }
+            }
+            // Trigger load more when near end
+            LaunchedEffect(uiState.products.size) {
+                if (uiState.hasMore) onLoadMore()
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ProductListContentPreview() {
+    MoltTheme {
+        ProductListContent(
+            uiState = ProductListUiState.Success(products = previewProducts()),
+            onLoadMore = {},
+            onProductClick = {},
+        )
+    }
+}
+```
+
+### Android: Repository Pattern
+
+```kotlin
+// feature/product/domain/repository/ProductRepository.kt
+interface ProductRepository {
+    fun getProductsStream(offset: Int, limit: Int): Flow<List<Product>>
+    suspend fun getProductById(id: String): Product
+}
+
+// feature/product/data/repository/ProductRepositoryImpl.kt
+class ProductRepositoryImpl @Inject constructor(
+    private val api: ProductApi,
+    private val mapper: ProductMapper,
+) : ProductRepository {
+
+    override fun getProductsStream(offset: Int, limit: Int): Flow<List<Product>> = flow {
+        val response = api.getProducts(mapOf("offset" to "$offset", "limit" to "$limit"))
+        emit(response.products.map(mapper::toDomain))
+    }
+
+    override suspend fun getProductById(id: String): Product {
+        val response = api.getProductById(id)
+        return mapper.toDomain(response.product)
+    }
+}
+```
+
+### Android: UseCase Pattern
+
+```kotlin
+// feature/product/domain/usecase/GetProductsUseCase.kt
+class GetProductsUseCase @Inject constructor(
+    private val repository: ProductRepository,
+) {
+    operator fun invoke(offset: Int, limit: Int): Flow<List<Product>> =
+        repository.getProductsStream(offset, limit)
+}
+```
+
+### Android: Domain Error Pattern
+
+```kotlin
+// core/domain/error/AppError.kt
+sealed class AppError : Exception() {
+    data class Network(override val message: String = "Network error") : AppError()
+    data class Server(val code: Int, override val message: String) : AppError()
+    data class NotFound(override val message: String = "Not found") : AppError()
+    data class Unauthorized(override val message: String = "Unauthorized") : AppError()
+    data class Unknown(override val message: String = "Unknown error") : AppError()
+}
+
+// Extension for user-friendly messages
+fun Throwable.toUserMessage(): String = when (this) {
+    is AppError.Network -> "Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin."
+    is AppError.Server -> "Sunucu hatası ($code). Lütfen tekrar deneyin."
+    is AppError.Unauthorized -> "Oturum süreniz doldu. Lütfen tekrar giriş yapın."
+    is AppError.NotFound -> "İçerik bulunamadı."
+    else -> "Bir hata oluştu. Lütfen tekrar deneyin."
+}
+```
+
+### Android: Fake Repository for Tests
+
+```kotlin
+// feature/product/data/repository/FakeProductRepository.kt (in test source set)
+class FakeProductRepository : ProductRepository {
+    private val products = mutableListOf<Product>()
+    var shouldThrow: AppError? = null
+
+    fun addProducts(vararg product: Product) { products.addAll(product) }
+
+    override fun getProductsStream(offset: Int, limit: Int): Flow<List<Product>> = flow {
+        shouldThrow?.let { throw it }
+        emit(products.drop(offset).take(limit))
+    }
+
+    override suspend fun getProductById(id: String): Product {
+        shouldThrow?.let { throw it }
+        return products.first { it.id == id }
+    }
+}
+```
+
+---
+
+### iOS: UiState Pattern
+
+```swift
+// Feature/Product/Presentation/ProductListUiState.swift
+enum ProductListUiState: Equatable {
+    case loading
+    case success(products: [Product], isLoadingMore: Bool = false, hasMore: Bool = true)
+    case error(message: String)
+}
+
+enum ProductListEvent {
+    case navigateToDetail(productId: String)
+    case showToast(message: String)
+}
+```
+
+### iOS: ViewModel Pattern
+
+```swift
+// Feature/Product/Presentation/ProductListViewModel.swift
+@MainActor @Observable
+final class ProductListViewModel {
+    private(set) var uiState: ProductListUiState = .loading
+    private let getProductsUseCase: GetProductsUseCase
+
+    private var offset = 0
+    private let limit = 20
+    var onEvent: ((ProductListEvent) -> Void)?
+
+    init(getProductsUseCase: GetProductsUseCase) {
+        self.getProductsUseCase = getProductsUseCase
+    }
+
+    func loadProducts() async {
+        uiState = .loading
+        do {
+            let products = try await getProductsUseCase.execute(offset: 0, limit: limit)
+            offset = products.count
+            uiState = .success(products: products, hasMore: products.count >= limit)
+        } catch {
+            uiState = .error(message: error.toUserMessage())
+        }
+    }
+
+    func loadMore() async {
+        guard case .success(let products, false, true) = uiState else { return }
+        uiState = .success(products: products, isLoadingMore: true, hasMore: true)
+        do {
+            let newProducts = try await getProductsUseCase.execute(offset: offset, limit: limit)
+            offset += newProducts.count
+            uiState = .success(
+                products: products + newProducts,
+                hasMore: newProducts.count >= limit
+            )
+        } catch {
+            uiState = .success(products: products, hasMore: true) // keep existing data
+        }
+    }
+
+    func onProductTap(_ productId: String) {
+        onEvent?(.navigateToDetail(productId: productId))
+    }
+}
+```
+
+### iOS: View Pattern
+
+```swift
+// Feature/Product/Presentation/ProductListView.swift
+struct ProductListView: View {
+    @State private var viewModel: ProductListViewModel
+
+    init(viewModel: ProductListViewModel) {
+        _viewModel = State(initialValue: viewModel)
+    }
+
+    var body: some View {
+        Group {
+            switch viewModel.uiState {
+            case .loading:
+                LoadingView()
+            case .error(let message):
+                ErrorView(message: message, onRetry: { Task { await viewModel.loadProducts() } })
+            case .success(let products, let isLoadingMore, let hasMore):
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        ForEach(products) { product in
+                            ProductCard(product: product)
+                                .onTapGesture { viewModel.onProductTap(product.id) }
+                        }
+                    }
+                    .padding(.horizontal)
+
+                    if isLoadingMore {
+                        ProgressView()
+                            .padding()
+                    }
+
+                    if hasMore {
+                        Color.clear
+                            .frame(height: 1)
+                            .onAppear { Task { await viewModel.loadMore() } }
+                    }
+                }
+                .refreshable { await viewModel.loadProducts() }
+            }
+        }
+        .task { await viewModel.loadProducts() }
+    }
+}
+
+#Preview {
+    ProductListView(viewModel: ProductListViewModel(
+        getProductsUseCase: GetProductsUseCase(repository: FakeProductRepository())
+    ))
+}
+```
+
+### iOS: Repository Pattern
+
+```swift
+// Feature/Product/Domain/ProductRepository.swift
+protocol ProductRepository: Sendable {
+    func getProducts(offset: Int, limit: Int) async throws -> [Product]
+    func getProductById(_ id: String) async throws -> Product
+}
+
+// Feature/Product/Data/ProductRepositoryImpl.swift
+final class ProductRepositoryImpl: ProductRepository {
+    private let apiClient: APIClient
+
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
+    }
+
+    func getProducts(offset: Int, limit: Int) async throws -> [Product] {
+        let response: ProductListResponse = try await apiClient.request(
+            .getProducts(offset: offset, limit: limit)
+        )
+        return response.products.map(\.toDomain)
+    }
+
+    func getProductById(_ id: String) async throws -> Product {
+        let response: ProductDetailResponse = try await apiClient.request(
+            .getProduct(id: id)
+        )
+        return response.product.toDomain
+    }
+}
+```
+
+### iOS: UseCase Pattern
+
+```swift
+// Feature/Product/Domain/GetProductsUseCase.swift
+final class GetProductsUseCase: Sendable {
+    private let repository: ProductRepository
+
+    init(repository: ProductRepository) {
+        self.repository = repository
+    }
+
+    func execute(offset: Int, limit: Int) async throws -> [Product] {
+        try await repository.getProducts(offset: offset, limit: limit)
+    }
+}
+```
+
+### iOS: Domain Error Pattern
+
+```swift
+// Core/Network/AppError.swift
+enum AppError: Error, Equatable {
+    case network(message: String = "Network error")
+    case server(code: Int, message: String)
+    case notFound(message: String = "Not found")
+    case unauthorized(message: String = "Unauthorized")
+    case unknown(message: String = "Unknown error")
+}
+
+extension Error {
+    var toUserMessage: String {
+        guard let appError = self as? AppError else {
+            return "Bir hata oluştu. Lütfen tekrar deneyin."
+        }
+        switch appError {
+        case .network: return "Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin."
+        case .server(let code, _): return "Sunucu hatası (\(code)). Lütfen tekrar deneyin."
+        case .unauthorized: return "Oturum süreniz doldu. Lütfen tekrar giriş yapın."
+        case .notFound: return "İçerik bulunamadı."
+        case .unknown: return "Bir hata oluştu. Lütfen tekrar deneyin."
+        }
+    }
+}
+```
+
+### iOS: Fake Repository for Tests
+
+```swift
+// MoltMarketplaceTests/Fakes/FakeProductRepository.swift
+final class FakeProductRepository: ProductRepository, @unchecked Sendable {
+    var products: [Product] = []
+    var errorToThrow: AppError?
+
+    func getProducts(offset: Int, limit: Int) async throws -> [Product] {
+        if let error = errorToThrow { throw error }
+        return Array(products.dropFirst(offset).prefix(limit))
+    }
+
+    func getProductById(_ id: String) async throws -> Product {
+        if let error = errorToThrow { throw error }
+        guard let product = products.first(where: { $0.id == id }) else {
+            throw AppError.notFound()
+        }
+        return product
+    }
+}
+```
+
+### Pagination Helper (Both Platforms)
+
+All list screens use offset-based pagination with these rules:
+- `offset`: starts at 0, incremented by `limit` each page
+- `limit`: 20 items per page (Medusa default)
+- `hasMore`: `true` if returned items count >= limit
+- Trigger load more when last item becomes visible
+- Show loading indicator at bottom during load more
+- Keep existing data on load more failure
+
+### File Checklist Per Feature
+
+When implementing a feature, create these files in order:
+
+**Android** (`android/app/src/main/java/com/molt/marketplace/feature/{name}/`):
+1. `data/dto/{Name}Dto.kt` — `@Serializable` data class
+2. `domain/model/{Name}.kt` — domain data class
+3. `data/mapper/{Name}Mapper.kt` — DTO ↔ Domain
+4. `domain/repository/{Name}Repository.kt` — interface
+5. `data/remote/{Name}Api.kt` — Retrofit interface
+6. `data/repository/{Name}RepositoryImpl.kt` — implementation
+7. `domain/usecase/{Verb}{Name}UseCase.kt` — business logic
+8. `presentation/state/{Screen}UiState.kt` — sealed interface
+9. `presentation/viewmodel/{Screen}ViewModel.kt` — @HiltViewModel
+10. `presentation/screen/{Screen}Screen.kt` — @Composable + @Preview
+11. `di/{Name}Module.kt` — Hilt @Module
+
+**iOS** (`ios/MoltMarketplace/Feature/{Name}/`):
+1. `Data/{Name}DTO.swift` — Codable struct
+2. `Domain/{Name}.swift` — domain struct
+3. `Data/{Name}DTO+Extensions.swift` — DTO → Domain mapping
+4. `Domain/{Name}Repository.swift` — protocol
+5. `Data/{Name}Endpoint.swift` — API endpoint enum
+6. `Data/{Name}RepositoryImpl.swift` — implementation
+7. `Domain/{Verb}{Name}UseCase.swift` — business logic
+8. `Presentation/{Screen}UiState.swift` — enum
+9. `Presentation/{Screen}ViewModel.swift` — @Observable @MainActor
+10. `Presentation/{Screen}View.swift` — SwiftUI View + #Preview
+11. Register in `DependencyContainer.swift`
 
 ## Git Workflow
 
@@ -290,11 +795,12 @@ docs(product): add product list documentation [agent:doc] [platform:both]
 
 ### Test Rules
 
+- **Prefer fakes over mocks** (Google strongly recommended). Create `Fake{Name}Repository` classes that implement the interface with in-memory data. Use mocks (MockK/protocol mocks) only when fakes are impractical.
 - **Never mock**: DI container, navigation, platform frameworks
-- **Only mock**: Network layer (MockWebServer/URLProtocol), time, local storage
+- **Only mock/fake**: Network layer, time, local storage
 - Each test is independent (no shared mutable state)
 - **Test naming**: `test_<method>_<condition>_<expected>` or `fun methodName should expectedResult when condition`
-- **Android**: Use `Turbine` for Flow testing, `composeTestRule` for UI testing
+- **Android**: Use `Turbine` for Flow testing, `composeTestRule` for UI testing, assert on `uiState.value` directly when possible
 - **iOS**: Use `Swift Testing` framework with `@Test` macro, `ViewInspector` for SwiftUI testing
 
 ## Multi-Agent Pipeline (Claude Code Agent Teams)
@@ -515,7 +1021,7 @@ enum Config {
 - **Don't**: Use `GlobalScope` → **Do**: Use structured concurrency (viewModelScope)
 - **Don't**: Pass ViewModels down the tree → **Do**: Hoist state, pass data and events
 - **Don't**: Use `remember` for state that survives configuration changes → **Do**: Use ViewModel + StateFlow
-- **Don't**: Access `Context` in ViewModels → **Do**: Pass application context via Hilt or use AndroidViewModel
+- **Don't**: Access `Context` in ViewModels → **Do**: Inject dependencies via Hilt. Never use `AndroidViewModel`.
 
 ### iOS (Swift + SwiftUI)
 - **Don't**: Use `@State` in ViewModels → **Do**: Use `@Published` in ObservableObject or `@Observable`
