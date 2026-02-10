@@ -127,6 +127,11 @@ Core/DesignSystem/
 | Storage | Proto DataStore + Tink (encrypted), Room (structured) |
 | Logging | Timber |
 | Crash Reporting | Firebase Crashlytics |
+| Analytics | Firebase Analytics |
+| Remote Config | Firebase Remote Config (feature flags, force update) |
+| Biometrics | BiometricPrompt (AndroidX) |
+| Maps | Google Places Autocomplete (address input) |
+| Cache | OkHttp Cache (HTTP) + Room (structured local data) |
 | Testing | JUnit 4, Truth, MockK, Turbine, Compose UI Test |
 | Lint | ktlint + detekt |
 
@@ -201,6 +206,11 @@ interface ProductApi {
 | Security | KeychainAccess (token storage) |
 | Logging | os.Logger (Apple unified logging) |
 | Crash Reporting | Sentry |
+| Analytics | Firebase Analytics |
+| Remote Config | Firebase Remote Config (feature flags, force update) |
+| Biometrics | LocalAuthentication (Face ID / Touch ID) |
+| Maps | Google Places Autocomplete (address input) |
+| Cache | URLCache (HTTP) + SwiftData (structured local data) |
 | Testing | Swift Testing + XCTest, ViewInspector, swift-snapshot-testing |
 | Lint | SwiftFormat + SwiftLint |
 
@@ -1727,6 +1737,10 @@ When Figma designs are ready, **only these change**:
 
 ## Continuous Integration
 
+### Platform: GitHub Actions
+
+All CI/CD runs on **GitHub Actions** with platform-specific runners.
+
 ### Android CI Pipeline
 1. Lint (ktlint + detekt)
 2. Unit tests (JUnit)
@@ -1770,6 +1784,118 @@ When Figma designs are ready, **only these change**:
 3. Create git tag: `ios/v1.2.3`
 4. Archive and upload to App Store Connect
 5. Submit for review (TestFlight → App Store)
+
+### Beta Distribution
+- **Android**: Google Play Internal Testing track
+- **iOS**: TestFlight
+- No Firebase App Distribution — native store tools only
+
+### App Size Budget
+- **Target**: < 30 MB (APK / IPA)
+- Monitor size in CI pipeline, warn if exceeds budget
+- Use R8/ProGuard (Android), bitcode + app thinning (iOS) for optimization
+
+## Payment Integration
+
+### Provider: Stripe
+
+- **Medusa plugin**: `medusa-payment-stripe` (backend)
+- **Android SDK**: Stripe Android SDK (PaymentSheet)
+- **iOS SDK**: Stripe iOS SDK (PaymentSheet)
+- **Apple Pay**: Supported via Stripe PaymentSheet (iOS)
+- **Google Pay**: Supported via Stripe PaymentSheet (Android)
+- **3D Secure**: Handled automatically by Stripe SDK
+- **Currency**: EUR (single currency)
+
+### Payment Flow
+1. Client creates cart → backend creates Stripe PaymentIntent
+2. Client presents Stripe PaymentSheet with clientSecret
+3. User enters card / selects Apple Pay / Google Pay
+4. Stripe SDK handles 3D Secure if required
+5. On success → client confirms payment via Medusa API
+6. Backend captures payment, creates order
+
+### Currency
+- **Single currency**: EUR (Euro)
+- All prices stored and displayed in EUR
+- Use locale-aware `NumberFormatter` (iOS) / `NumberFormat` (Android) for display
+- Format: `€12.99` (symbol before amount, dot separator)
+
+## Analytics & Remote Config
+
+### Firebase Analytics
+- **Both platforms** use Firebase Analytics for event tracking
+- Event naming: `snake_case` (e.g., `product_view`, `add_to_cart`, `begin_checkout`)
+- Screen tracking: automatic via `FirebaseAnalytics.logEvent("screen_view")`
+- User properties: `user_id`, `user_type` (guest/registered), `locale`
+
+### Firebase Remote Config
+- **Feature flags**: Enable/disable features per version or user segment
+- **Force update**: `min_supported_version` parameter checked on app launch
+- **A/B testing**: Test UI variants via Remote Config + Analytics
+
+### Force Update Strategy
+1. App launch → fetch `min_supported_version` from Firebase Remote Config
+2. Compare with current app version
+3. If current < min → show blocking dialog: "Please update" → link to store
+4. If current < recommended (soft update) → show dismissible banner
+
+## Real-Time Updates
+
+### Strategy: Push Notification Only
+
+- Order status changes → backend sends push notification (FCM / APNs)
+- User taps notification → navigates to order detail screen
+- Order detail screen: pull-to-refresh for latest status
+- **No WebSocket or polling** — push + pull-to-refresh is sufficient for e-commerce
+
+## Session Management
+
+### Multi-Device Policy
+- **Multiple devices allowed** — user can be logged in on several devices simultaneously
+- No session limit, no forced logout on other devices
+- Each device has its own access/refresh token pair
+- **No inactivity timeout** — session persists until explicit logout or token expiry
+
+### Biometric Authentication
+- **First login**: Email + password (mandatory)
+- **Subsequent logins**: Biometric option (if device supports it)
+- **Android**: `BiometricPrompt` (AndroidX Biometric library)
+- **iOS**: `LocalAuthentication` framework (Face ID / Touch ID)
+- **Storage**: On successful first login, encrypt refresh token with biometric key
+- **Fallback**: If biometric fails 3x → fall back to email + password
+- **Opt-in**: User enables biometric from Settings screen (not forced)
+
+## Caching Strategy
+
+### HTTP Cache Layer
+- **Android**: OkHttp `Cache` with 10 MB disk cache
+- **iOS**: `URLCache` with 10 MB memory / 50 MB disk
+- Cache headers from backend control TTL (5 min products, 1 hour categories)
+
+### Local Structured Data
+- **Android**: Room database for cart, wishlist, recent searches, user profile
+- **iOS**: SwiftData for cart, wishlist, recent searches, user profile
+- Cart persists offline, syncs on next network call
+- Wishlist works offline (toggle locally, sync when online)
+- Recent searches: max 10 items, stored locally only
+
+### Offline Behavior
+- Show cached data when offline (product lists, categories)
+- Show "No Internet" banner (non-blocking)
+- Disable actions requiring network (checkout, add to cart for new items)
+- Auto-retry when connection restored
+
+## Address & Maps
+
+### Google Places Autocomplete
+- Used for shipping address input (M2-04)
+- User types address → autocomplete suggestions from Google Places API
+- On selection → fill street, city, postal code, country fields
+- **Android**: Google Places SDK
+- **iOS**: Google Places SDK (SPM)
+- **API Key**: Stored in `local.properties` (Android) / `.xcconfig` (iOS), never committed
+- **No map view** — autocomplete only, no visual map display needed
 
 ---
 
