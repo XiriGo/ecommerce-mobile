@@ -40,6 +40,62 @@ feature/<name>/
       └── state/         # UI state models
 ```
 
+### Design System Layer (core/designsystem)
+
+All UI components live in a **shared design system module** that wraps platform components.
+Feature screens **NEVER** use Material 3 or SwiftUI components directly — they use `Molt*` wrappers.
+
+```
+shared/design-tokens/ (JSON)  →  core/designsystem/ (platform code)  →  feature/*/presentation/
+         ↑                              ↑                                       ↑
+   Figma export               Only layer that changes              Stays untouched
+   updates these               when Figma arrives                  on design change
+```
+
+**Android** (`android/app/src/main/java/com/molt/marketplace/core/designsystem/`):
+```
+core/designsystem/
+  ├── theme/
+  │   ├── MoltTheme.kt          # @Composable wrapper, applies colorScheme + typography
+  │   ├── MoltColors.kt         # Custom ColorScheme from design tokens
+  │   ├── MoltTypography.kt     # Custom Typography from design tokens
+  │   └── MoltSpacing.kt        # Spacing constants object
+  └── component/
+      ├── MoltButton.kt         # Primary/Secondary/Text button variants
+      ├── MoltCard.kt           # Product card, info card variants
+      ├── MoltTextField.kt      # Text field with label, error, icon
+      ├── MoltTopBar.kt         # Top app bar with back/action
+      ├── MoltBottomBar.kt      # Bottom navigation bar
+      ├── MoltLoadingView.kt    # Full-screen + inline loading
+      ├── MoltErrorView.kt      # Error with retry button
+      ├── MoltEmptyView.kt      # Empty state with illustration
+      ├── MoltImage.kt          # Coil image with placeholder/error
+      └── MoltBadge.kt          # Count badge, status badge
+```
+
+**iOS** (`ios/MoltMarketplace/Core/DesignSystem/`):
+```
+Core/DesignSystem/
+  ├── Theme/
+  │   ├── MoltTheme.swift       # ViewModifier, applies color + typography
+  │   ├── MoltColors.swift      # Color constants from design tokens
+  │   ├── MoltTypography.swift  # Font styles from design tokens
+  │   └── MoltSpacing.swift     # Spacing constants enum
+  └── Component/
+      ├── MoltButton.swift      # Primary/Secondary/Text button variants
+      ├── MoltCard.swift        # Product card, info card variants
+      ├── MoltTextField.swift   # Text field with label, error, icon
+      ├── MoltTopBar.swift      # NavigationBar wrapper
+      ├── MoltTabBar.swift      # Tab bar wrapper
+      ├── MoltLoadingView.swift # Full-screen + inline loading
+      ├── MoltErrorView.swift   # Error with retry button
+      ├── MoltEmptyView.swift   # Empty state with illustration
+      ├── MoltImage.swift       # Kingfisher image with placeholder/error
+      └── MoltBadge.swift       # Count badge, status badge
+```
+
+**Critical Rule**: Feature screens import `core.designsystem` components. When Figma designs arrive, only files under `core/designsystem/` change. Zero feature screen edits needed.
+
 ### State Management
 
 - **Unidirectional Data Flow (UDF)**: UI → Event → ViewModel → State → UI
@@ -342,6 +398,13 @@ class ProductListViewModel @Inject constructor(
 
 ```kotlin
 // feature/product/presentation/screen/ProductListScreen.kt
+// NOTE: Import from core.designsystem — NEVER use Material 3 components directly
+import com.molt.marketplace.core.designsystem.component.MoltLoadingView
+import com.molt.marketplace.core.designsystem.component.MoltErrorView
+import com.molt.marketplace.core.designsystem.component.MoltLoadingIndicator
+import com.molt.marketplace.core.designsystem.theme.MoltSpacing
+import com.molt.marketplace.core.designsystem.theme.MoltTheme
+
 @Composable
 fun ProductListScreen(
     viewModel: ProductListViewModel = hiltViewModel(),
@@ -373,18 +436,27 @@ private fun ProductListContent(
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
-        is ProductListUiState.Loading -> LoadingView(modifier)
-        is ProductListUiState.Error -> ErrorView(message = uiState.message, modifier = modifier)
+        is ProductListUiState.Loading -> MoltLoadingView(modifier)
+        is ProductListUiState.Error -> MoltErrorView(
+            message = uiState.message,
+            onRetry = null, // or viewModel::onRetry
+            modifier = modifier,
+        )
         is ProductListUiState.Success -> {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = modifier,
+                horizontalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
+                verticalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
+                contentPadding = PaddingValues(MoltSpacing.ScreenPaddingHorizontal),
+            ) {
                 items(uiState.products, key = { it.id }) { product ->
                     ProductCard(product = product, onClick = { onProductClick(product.id) })
                 }
                 if (uiState.isLoadingMore) {
-                    item(span = { GridItemSpan(2) }) { LoadingIndicator() }
+                    item(span = { GridItemSpan(2) }) { MoltLoadingIndicator() }
                 }
             }
-            // Trigger load more when near end
             LaunchedEffect(uiState.products.size) {
                 if (uiState.hasMore) onLoadMore()
             }
@@ -559,6 +631,9 @@ final class ProductListViewModel {
 
 ```swift
 // Feature/Product/Presentation/ProductListView.swift
+// NOTE: Import from Core/DesignSystem — NEVER use raw SwiftUI ProgressView/etc. in screens
+import SwiftUI
+
 struct ProductListView: View {
     @State private var viewModel: ProductListViewModel
 
@@ -570,22 +645,27 @@ struct ProductListView: View {
         Group {
             switch viewModel.uiState {
             case .loading:
-                LoadingView()
+                MoltLoadingView()
             case .error(let message):
-                ErrorView(message: message, onRetry: { Task { await viewModel.loadProducts() } })
+                MoltErrorView(
+                    message: message,
+                    onRetry: { Task { await viewModel.loadProducts() } }
+                )
             case .success(let products, let isLoadingMore, let hasMore):
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                    LazyVGrid(
+                        columns: [GridItem(.flexible()), GridItem(.flexible())],
+                        spacing: MoltSpacing.productGridSpacing
+                    ) {
                         ForEach(products) { product in
                             ProductCard(product: product)
                                 .onTapGesture { viewModel.onProductTap(product.id) }
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
 
                     if isLoadingMore {
-                        ProgressView()
-                            .padding()
+                        MoltLoadingIndicator()
                     }
 
                     if hasMore {
@@ -709,6 +789,420 @@ final class FakeProductRepository: ProductRepository, @unchecked Sendable {
 }
 ```
 
+---
+
+### Android: Design System — Theme
+
+```kotlin
+// core/designsystem/theme/MoltColors.kt
+import androidx.compose.ui.graphics.Color
+
+object MoltColors {
+    // Primary — updated when Figma arrives
+    val Primary = Color(0xFF6750A4)
+    val OnPrimary = Color(0xFFFFFFFF)
+    val PrimaryContainer = Color(0xFFEADDFF)
+    val OnPrimaryContainer = Color(0xFF21005D)
+
+    // Semantic — e-commerce specific
+    val Success = Color(0xFF4CAF50)
+    val OnSuccess = Color(0xFFFFFFFF)
+    val Warning = Color(0xFFFF9800)
+    val PriceRegular = Color(0xFF1C1B1F)
+    val PriceSale = Color(0xFFB3261E)
+    val PriceOriginal = Color(0xFF79747E)
+    val RatingStarFilled = Color(0xFFFFC107)
+    val RatingStarEmpty = Color(0xFFE0E0E0)
+    val BadgeBackground = Color(0xFFB3261E)
+    val BadgeText = Color(0xFFFFFFFF)
+    val Divider = Color(0xFFCAC4D0)
+    val Shimmer = Color(0xFFE7E0EC)
+}
+```
+
+```kotlin
+// core/designsystem/theme/MoltSpacing.kt
+import androidx.compose.ui.unit.dp
+
+object MoltSpacing {
+    val XXS = 2.dp
+    val XS = 4.dp
+    val SM = 8.dp
+    val MD = 12.dp
+    val Base = 16.dp
+    val LG = 24.dp
+    val XL = 32.dp
+    val XXL = 48.dp
+    val XXXL = 64.dp
+
+    // Layout
+    val ScreenPaddingHorizontal = 16.dp
+    val ScreenPaddingVertical = 16.dp
+    val CardPadding = 12.dp
+    val ListItemSpacing = 8.dp
+    val SectionSpacing = 24.dp
+    val ProductGridSpacing = 8.dp
+    val MinTouchTarget = 48.dp
+}
+```
+
+```kotlin
+// core/designsystem/theme/MoltTheme.kt
+@Composable
+fun MoltTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    val colorScheme = if (darkTheme) MoltDarkColorScheme else MoltLightColorScheme
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = MoltTypography,
+        content = content,
+    )
+}
+
+// Color schemes built from MoltColors — single source of truth
+private val MoltLightColorScheme = lightColorScheme(
+    primary = MoltColors.Primary,
+    onPrimary = MoltColors.OnPrimary,
+    primaryContainer = MoltColors.PrimaryContainer,
+    onPrimaryContainer = MoltColors.OnPrimaryContainer,
+    // ... map all design token colors
+)
+```
+
+### Android: Design System — Components
+
+```kotlin
+// core/designsystem/component/MoltButton.kt
+enum class MoltButtonStyle { Primary, Secondary, Text }
+
+@Composable
+fun MoltButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    style: MoltButtonStyle = MoltButtonStyle.Primary,
+    enabled: Boolean = true,
+    loading: Boolean = false,
+) {
+    when (style) {
+        MoltButtonStyle.Primary -> Button(
+            onClick = onClick,
+            modifier = modifier.heightIn(min = MoltSpacing.MinTouchTarget),
+            enabled = enabled && !loading,
+        ) {
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+                Spacer(Modifier.width(MoltSpacing.SM))
+            }
+            Text(text)
+        }
+        MoltButtonStyle.Secondary -> OutlinedButton(/* same pattern */) { Text(text) }
+        MoltButtonStyle.Text -> TextButton(/* same pattern */) { Text(text) }
+    }
+}
+```
+
+```kotlin
+// core/designsystem/component/MoltLoadingView.kt
+@Composable
+fun MoltLoadingView(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun MoltLoadingIndicator(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().padding(MoltSpacing.Base), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+    }
+}
+```
+
+```kotlin
+// core/designsystem/component/MoltErrorView.kt
+@Composable
+fun MoltErrorView(
+    message: String,
+    onRetry: (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize().padding(MoltSpacing.Base),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Icon(Icons.Outlined.ErrorOutline, contentDescription = null, modifier = Modifier.size(48.dp))
+        Spacer(Modifier.height(MoltSpacing.Base))
+        Text(message, style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+        if (onRetry != null) {
+            Spacer(Modifier.height(MoltSpacing.Base))
+            MoltButton(text = stringResource(R.string.retry), onClick = onRetry)
+        }
+    }
+}
+```
+
+```kotlin
+// core/designsystem/component/MoltEmptyView.kt
+@Composable
+fun MoltEmptyView(
+    message: String,
+    modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Outlined.Inbox,
+) {
+    Column(
+        modifier = modifier.fillMaxSize().padding(MoltSpacing.Base),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Icon(icon, contentDescription = null, modifier = Modifier.size(64.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(Modifier.height(MoltSpacing.Base))
+        Text(message, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+```
+
+```kotlin
+// core/designsystem/component/MoltImage.kt
+@Composable
+fun MoltImage(
+    url: String?,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop,
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .crossfade(true)
+            .build(),
+        contentDescription = contentDescription,
+        modifier = modifier,
+        contentScale = contentScale,
+        placeholder = painterResource(R.drawable.placeholder),
+        error = painterResource(R.drawable.placeholder),
+    )
+}
+```
+
+### iOS: Design System — Theme
+
+```swift
+// Core/DesignSystem/Theme/MoltColors.swift
+import SwiftUI
+
+enum MoltColors {
+    // Primary — updated when Figma arrives
+    static let primary = Color(hex: "#6750A4")
+    static let onPrimary = Color.white
+    static let primaryContainer = Color(hex: "#EADDFF")
+    static let onPrimaryContainer = Color(hex: "#21005D")
+
+    // Semantic — e-commerce specific
+    static let success = Color(hex: "#4CAF50")
+    static let onSuccess = Color.white
+    static let warning = Color(hex: "#FF9800")
+    static let priceRegular = Color(hex: "#1C1B1F")
+    static let priceSale = Color(hex: "#B3261E")
+    static let priceOriginal = Color(hex: "#79747E")
+    static let ratingStarFilled = Color(hex: "#FFC107")
+    static let ratingStarEmpty = Color(hex: "#E0E0E0")
+    static let badgeBackground = Color(hex: "#B3261E")
+    static let badgeText = Color.white
+    static let divider = Color(hex: "#CAC4D0")
+    static let shimmer = Color(hex: "#E7E0EC")
+}
+
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+        let scanner = Scanner(string: hex)
+        var rgbValue: UInt64 = 0
+        scanner.scanHexInt64(&rgbValue)
+        self.init(
+            red: Double((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: Double((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: Double(rgbValue & 0x0000FF) / 255.0
+        )
+    }
+}
+```
+
+```swift
+// Core/DesignSystem/Theme/MoltSpacing.swift
+import SwiftUI
+
+enum MoltSpacing {
+    static let xxs: CGFloat = 2
+    static let xs: CGFloat = 4
+    static let sm: CGFloat = 8
+    static let md: CGFloat = 12
+    static let base: CGFloat = 16
+    static let lg: CGFloat = 24
+    static let xl: CGFloat = 32
+    static let xxl: CGFloat = 48
+    static let xxxl: CGFloat = 64
+
+    // Layout
+    static let screenPaddingHorizontal: CGFloat = 16
+    static let screenPaddingVertical: CGFloat = 16
+    static let cardPadding: CGFloat = 12
+    static let listItemSpacing: CGFloat = 8
+    static let sectionSpacing: CGFloat = 24
+    static let productGridSpacing: CGFloat = 8
+    static let minTouchTarget: CGFloat = 44  // Apple HIG: 44pt
+}
+```
+
+### iOS: Design System — Components
+
+```swift
+// Core/DesignSystem/Component/MoltButton.swift
+import SwiftUI
+
+enum MoltButtonStyle { case primary, secondary, text }
+
+struct MoltButton: View {
+    let title: String
+    let style: MoltButtonStyle
+    let isLoading: Bool
+    let action: () -> Void
+
+    init(_ title: String, style: MoltButtonStyle = .primary, isLoading: Bool = false, action: @escaping () -> Void) {
+        self.title = title
+        self.style = style
+        self.isLoading = isLoading
+        self.action = action
+    }
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: MoltSpacing.sm) {
+                if isLoading {
+                    ProgressView()
+                        .tint(style == .primary ? .white : MoltColors.primary)
+                }
+                Text(title)
+            }
+            .frame(maxWidth: style == .text ? nil : .infinity)
+            .frame(minHeight: MoltSpacing.minTouchTarget)
+        }
+        .disabled(isLoading)
+        .buttonStyle(moltButtonStyle)
+    }
+
+    @ViewBuilder
+    private var moltButtonStyle: some ButtonStyle {
+        switch style {
+        case .primary: .borderedProminent
+        case .secondary: .bordered
+        case .text: .plain
+        }
+    }
+}
+```
+
+```swift
+// Core/DesignSystem/Component/MoltLoadingView.swift
+struct MoltLoadingView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            ProgressView()
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+struct MoltLoadingIndicator: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            ProgressView()
+            Spacer()
+        }
+        .padding(MoltSpacing.base)
+    }
+}
+```
+
+```swift
+// Core/DesignSystem/Component/MoltErrorView.swift
+struct MoltErrorView: View {
+    let message: String
+    var onRetry: (() -> Void)?
+
+    var body: some View {
+        VStack(spacing: MoltSpacing.base) {
+            Spacer()
+            Image(systemName: "exclamationmark.circle")
+                .font(.system(size: 48))
+                .foregroundStyle(.secondary)
+            Text(message)
+                .font(.body)
+                .multilineTextAlignment(.center)
+            if let onRetry {
+                MoltButton(String(localized: "retry"), action: onRetry)
+                    .frame(width: 200)
+            }
+            Spacer()
+        }
+        .padding(MoltSpacing.base)
+    }
+}
+```
+
+```swift
+// Core/DesignSystem/Component/MoltEmptyView.swift
+struct MoltEmptyView: View {
+    let message: String
+    var systemImage: String = "tray"
+
+    var body: some View {
+        VStack(spacing: MoltSpacing.base) {
+            Spacer()
+            Image(systemName: systemImage)
+                .font(.system(size: 64))
+                .foregroundStyle(.secondary)
+            Text(message)
+                .font(.body)
+                .foregroundStyle(.secondary)
+            Spacer()
+        }
+        .padding(MoltSpacing.base)
+    }
+}
+```
+
+```swift
+// Core/DesignSystem/Component/MoltImage.swift
+import Kingfisher
+import SwiftUI
+
+struct MoltImage: View {
+    let url: URL?
+    var contentMode: SwiftUI.ContentMode = .fill
+
+    var body: some View {
+        KFImage(url)
+            .placeholder { Color(MoltColors.shimmer) }
+            .fade(duration: 0.25)
+            .resizable()
+            .aspectRatio(contentMode: contentMode)
+    }
+}
+```
+
+---
+
 ### Pagination Helper (Both Platforms)
 
 All list screens use offset-based pagination with these rules:
@@ -718,6 +1212,42 @@ All list screens use offset-based pagination with these rules:
 - Trigger load more when last item becomes visible
 - Show loading indicator at bottom during load more
 - Keep existing data on load more failure
+
+### File Checklist — Design System (One-Time Scaffold)
+
+Created once during app scaffold (M0-01). All features depend on these.
+
+**Android** (`android/app/src/main/java/com/molt/marketplace/core/designsystem/`):
+1. `theme/MoltColors.kt` — Color constants from design tokens
+2. `theme/MoltTypography.kt` — Typography from design tokens
+3. `theme/MoltSpacing.kt` — Spacing constants
+4. `theme/MoltTheme.kt` — @Composable theme wrapper
+5. `component/MoltButton.kt` — Primary/Secondary/Text button
+6. `component/MoltCard.kt` — Product card, info card
+7. `component/MoltTextField.kt` — Text field with label/error
+8. `component/MoltTopBar.kt` — Top app bar
+9. `component/MoltBottomBar.kt` — Bottom navigation
+10. `component/MoltLoadingView.kt` — Full-screen + inline loading
+11. `component/MoltErrorView.kt` — Error with retry
+12. `component/MoltEmptyView.kt` — Empty state
+13. `component/MoltImage.kt` — Coil image with placeholder
+14. `component/MoltBadge.kt` — Count/status badge
+
+**iOS** (`ios/MoltMarketplace/Core/DesignSystem/`):
+1. `Theme/MoltColors.swift` — Color constants from design tokens
+2. `Theme/MoltTypography.swift` — Font styles from design tokens
+3. `Theme/MoltSpacing.swift` — Spacing constants
+4. `Theme/MoltTheme.swift` — ViewModifier theme wrapper
+5. `Component/MoltButton.swift` — Primary/Secondary/Text button
+6. `Component/MoltCard.swift` — Product card, info card
+7. `Component/MoltTextField.swift` — Text field with label/error
+8. `Component/MoltTopBar.swift` — Navigation bar wrapper
+9. `Component/MoltTabBar.swift` — Tab bar wrapper
+10. `Component/MoltLoadingView.swift` — Full-screen + inline loading
+11. `Component/MoltErrorView.swift` — Error with retry
+12. `Component/MoltEmptyView.swift` — Empty state
+13. `Component/MoltImage.swift` — Kingfisher image with placeholder
+14. `Component/MoltBadge.swift` — Count/status badge
 
 ### File Checklist Per Feature
 
@@ -733,7 +1263,7 @@ When implementing a feature, create these files in order:
 7. `domain/usecase/{Verb}{Name}UseCase.kt` — business logic
 8. `presentation/state/{Screen}UiState.kt` — sealed interface
 9. `presentation/viewmodel/{Screen}ViewModel.kt` — @HiltViewModel
-10. `presentation/screen/{Screen}Screen.kt` — @Composable + @Preview
+10. `presentation/screen/{Screen}Screen.kt` — @Composable + @Preview (uses Molt* components)
 11. `di/{Name}Module.kt` — Hilt @Module
 
 **iOS** (`ios/MoltMarketplace/Feature/{Name}/`):
@@ -746,7 +1276,7 @@ When implementing a feature, create these files in order:
 7. `Domain/{Verb}{Name}UseCase.swift` — business logic
 8. `Presentation/{Screen}UiState.swift` — enum
 9. `Presentation/{Screen}ViewModel.swift` — @Observable @MainActor
-10. `Presentation/{Screen}View.swift` — SwiftUI View + #Preview
+10. `Presentation/{Screen}View.swift` — SwiftUI View + #Preview (uses Molt* components)
 11. Register in `DependencyContainer.swift`
 
 ## Git Workflow
@@ -881,6 +1411,7 @@ dependencies, and coordinates the full lifecycle.
 
 ### Android
 - `android/app/src/main/java/com/molt/marketplace/` - Android source root
+- `android/app/src/main/java/com/molt/marketplace/core/designsystem/` - Design system (theme + components)
 - `android/app/src/main/java/com/molt/marketplace/core/` - Core utilities, DI, network
 - `android/app/src/main/java/com/molt/marketplace/feature/` - Feature modules
 - `android/app/src/main/res/` - Android resources (strings, drawables, themes)
@@ -889,6 +1420,7 @@ dependencies, and coordinates the full lifecycle.
 
 ### iOS
 - `ios/MoltMarketplace/` - iOS source root
+- `ios/MoltMarketplace/Core/DesignSystem/` - Design system (theme + components)
 - `ios/MoltMarketplace/Core/` - Core utilities, DI, network
 - `ios/MoltMarketplace/Feature/` - Feature modules
 - `ios/MoltMarketplace/Resources/` - iOS resources (assets, localization)
@@ -1002,9 +1534,10 @@ enum Config {
 - [ ] All tests pass before merge
 
 ### UI/UX
-- [ ] Follows design system (Material 3 / SwiftUI design)
+- [ ] Uses `Molt*` design system components (no raw Material 3 / SwiftUI components in feature screens)
+- [ ] All colors from `MoltColors`, all spacing from `MoltSpacing` (no magic numbers)
 - [ ] Responsive to different screen sizes
-- [ ] Loading and error states implemented
+- [ ] Loading and error states implemented (MoltLoadingView, MoltErrorView)
 - [ ] Accessibility labels present
 - [ ] No hardcoded strings (all localized)
 
@@ -1013,6 +1546,35 @@ enum Config {
 - [ ] Complex logic explained with comments
 - [ ] Feature README updated
 - [ ] CHANGELOG updated
+
+## Design Transition Strategy (Dummy → Figma)
+
+### Phase 1: Dummy Screens (Current)
+
+- Use Material 3 defaults (Android) and system styles (iOS) via `MoltTheme`
+- All colors/spacing from `MoltColors` / `MoltSpacing` (which map to design tokens)
+- Feature screens use `Molt*` design system components (MoltButton, MoltCard, etc.)
+- Focus on correct architecture, data flow, and business logic — not pixel-perfect design
+
+### Phase 2: Figma Design Arrives
+
+When Figma designs are ready, **only these change**:
+
+| What Changes | Files | Impact |
+|-------------|-------|--------|
+| Design tokens | `shared/design-tokens/*.json` | Colors, typography, spacing values |
+| Theme | `core/designsystem/theme/Molt*.kt` / `.swift` | New color scheme, fonts, spacing |
+| Components | `core/designsystem/component/Molt*.kt` / `.swift` | Visual appearance (padding, shapes, shadows) |
+| Assets | `res/drawable/` / `Assets.xcassets` | Icons, illustrations, placeholders |
+
+**What NEVER changes**: ViewModels, UseCases, Repositories, DTOs, domain models, navigation, API integration, tests.
+
+### Rules for Figma-Safe Code
+
+1. **No magic numbers in feature screens**: All dimensions from `MoltSpacing`, all colors from `MoltColors`
+2. **No raw platform components in feature screens**: Use `MoltButton` not `Button`, `MoltLoadingView` not `CircularProgressIndicator`
+3. **Component props, not visual props**: Feature screens pass data + events to components. Components decide how to render.
+4. **Preview with theme**: All `@Preview` / `#Preview` wrapped in `MoltTheme` to reflect current design tokens
 
 ## Common Pitfalls
 
