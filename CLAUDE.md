@@ -326,11 +326,109 @@ Imports must follow this order, separated by blank lines:
 
 ### Localization
 
-- All user-facing strings in resource files
-- **Android**: `res/values/strings.xml`, `res/values-tr/strings.xml`
-- **iOS**: `Localizable.xcstrings` or `.strings` files
-- **Default language**: Turkish (tr)
-- **Secondary**: English (en)
+#### Supported Languages
+
+| Priority | Language | Code | Role |
+|----------|----------|------|------|
+| 1 | English | `en` | **Default** (development language, fallback) |
+| 2 | Maltese | `mt` | Secondary |
+| 3 | Turkish | `tr` | Tertiary |
+
+#### File Structure
+
+**Android** (`android/app/src/main/res/`):
+```
+res/
+  values/             # English (default)
+    strings.xml
+  values-mt/          # Maltese
+    strings.xml
+  values-tr/          # Turkish
+    strings.xml
+```
+
+**iOS** (`ios/MoltMarketplace/Resources/`):
+```
+Resources/
+  Localizable.xcstrings    # All languages in one file (Xcode 15+ String Catalog)
+  ── or ──
+  en.lproj/Localizable.strings   # English (default)
+  mt.lproj/Localizable.strings   # Maltese
+  tr.lproj/Localizable.strings   # Turkish
+```
+
+Prefer `Localizable.xcstrings` (String Catalog) — single file, Xcode handles all languages.
+
+#### String Key Naming Convention
+
+Format: `<feature>_<screen>_<element>_<description>`
+
+```
+// Examples
+product_list_title                    → "Products"
+product_list_empty_message            → "No products found"
+product_detail_add_to_cart_button     → "Add to Cart"
+cart_checkout_button                  → "Proceed to Checkout"
+auth_login_email_placeholder          → "Enter your email"
+common_error_network                  → "Connection error. Please check your internet."
+common_retry_button                   → "Retry"
+common_loading_message                → "Loading..."
+```
+
+Prefixes:
+- `common_` — shared across features (errors, buttons, labels)
+- `<feature>_` — feature-specific strings
+
+#### Parameterized Strings
+
+**Android**:
+```xml
+<string name="product_detail_price">%1$s</string>
+<string name="cart_item_count">%1$d items</string>
+<string name="order_status_format">Order #%1$s — %2$s</string>
+```
+```kotlin
+stringResource(R.string.cart_item_count, count)
+```
+
+**iOS**:
+```swift
+// String Catalog supports interpolation automatically
+String(localized: "cart_item_count \(count)")
+// or with explicit table
+String(localized: "order_status_format \(orderId) \(status)")
+```
+
+#### Pluralization
+
+**Android** (`res/values/strings.xml`):
+```xml
+<plurals name="cart_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="other">%d items</item>
+</plurals>
+```
+```kotlin
+pluralStringResource(R.plurals.cart_item_count, count, count)
+```
+
+**iOS** (String Catalog handles automatically):
+```swift
+// Xcode String Catalog auto-detects plurals from interpolation
+String(localized: "\(count) items in cart")
+// Configure plural variants in Xcode String Catalog UI
+```
+
+#### Rules
+
+1. **All user-facing strings in resource files** — zero hardcoded strings in code
+2. **Development in English first** — write English strings, then translate
+3. **Keys are code, values are content** — never change a key after release (breaks translations)
+4. **No string concatenation for sentences** — use parameterized strings (word order differs per language)
+5. **Test with longest language** — Maltese/Turkish strings may be longer than English, test layout
+6. **No RTL required** — all three languages are LTR
+7. **Number/currency formatting** — use `NumberFormatter` (iOS) / `NumberFormat` (Android) with locale
+8. **Date formatting** — use locale-aware formatters, never manual format strings
 
 ## Code Templates (Reference Implementations)
 
@@ -538,13 +636,14 @@ sealed class AppError : Exception() {
     data class Unknown(override val message: String = "Unknown error") : AppError()
 }
 
-// Extension for user-friendly messages
-fun Throwable.toUserMessage(): String = when (this) {
-    is AppError.Network -> "Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin."
-    is AppError.Server -> "Sunucu hatası ($code). Lütfen tekrar deneyin."
-    is AppError.Unauthorized -> "Oturum süreniz doldu. Lütfen tekrar giriş yapın."
-    is AppError.NotFound -> "İçerik bulunamadı."
-    else -> "Bir hata oluştu. Lütfen tekrar deneyin."
+// Extension for user-friendly messages — uses string resource IDs
+// Actual strings live in res/values/strings.xml (localized per language)
+fun Throwable.toUserMessageResId(): Int = when (this) {
+    is AppError.Network -> R.string.common_error_network
+    is AppError.Server -> R.string.common_error_server
+    is AppError.Unauthorized -> R.string.common_error_unauthorized
+    is AppError.NotFound -> R.string.common_error_not_found
+    else -> R.string.common_error_unknown
 }
 ```
 
@@ -761,16 +860,17 @@ enum AppError: Error, Equatable {
 }
 
 extension Error {
+    /// Returns localized user-facing message from String Catalog
     var toUserMessage: String {
         guard let appError = self as? AppError else {
-            return "Bir hata oluştu. Lütfen tekrar deneyin."
+            return String(localized: "common_error_unknown")
         }
         switch appError {
-        case .network: return "Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin."
-        case .server(let code, _): return "Sunucu hatası (\(code)). Lütfen tekrar deneyin."
-        case .unauthorized: return "Oturum süreniz doldu. Lütfen tekrar giriş yapın."
-        case .notFound: return "İçerik bulunamadı."
-        case .unknown: return "Bir hata oluştu. Lütfen tekrar deneyin."
+        case .network: return String(localized: "common_error_network")
+        case .server(let code, _): return String(localized: "common_error_server \(code)")
+        case .unauthorized: return String(localized: "common_error_unauthorized")
+        case .notFound: return String(localized: "common_error_not_found")
+        case .unknown: return String(localized: "common_error_unknown")
         }
     }
 }
@@ -953,7 +1053,7 @@ fun MoltErrorView(
         Text(message, style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
         if (onRetry != null) {
             Spacer(Modifier.height(MoltSpacing.Base))
-            MoltButton(text = stringResource(R.string.retry), onClick = onRetry)
+            MoltButton(text = stringResource(R.string.common_retry_button), onClick = onRetry)
         }
     }
 }
@@ -1160,7 +1260,7 @@ struct MoltErrorView: View {
                 .font(.body)
                 .multilineTextAlignment(.center)
             if let onRetry {
-                MoltButton(String(localized: "retry"), action: onRetry)
+                MoltButton(String(localized: "common_retry_button"), action: onRetry)
                     .frame(width: 200)
             }
             Spacer()
