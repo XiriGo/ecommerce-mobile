@@ -90,7 +90,7 @@ Core/DesignSystem/
       ├── MoltLoadingView.swift # Full-screen + inline loading
       ├── MoltErrorView.swift   # Error with retry button
       ├── MoltEmptyView.swift   # Empty state with illustration
-      ├── MoltImage.swift       # Kingfisher image with placeholder/error
+      ├── MoltImage.swift       # Nuke image with placeholder/error
       └── MoltBadge.swift       # Count badge, status badge
 ```
 
@@ -109,8 +109,8 @@ Core/DesignSystem/
 - **minSdk**: 26 (Android 8.0)
 - **targetSdk**: 35
 - **compileSdk**: 35
-- **Kotlin**: 2.1.x
-- **Compose BOM**: 2025.x
+- **Kotlin**: 2.3.10
+- **Compose BOM**: 2026.01.01
 
 ### Dependencies
 
@@ -118,13 +118,16 @@ Core/DesignSystem/
 |----------|---------|
 | UI | Jetpack Compose + Material 3 |
 | DI | Hilt (Dagger) |
-| Network | Retrofit + OkHttp + Kotlin Serialization |
+| Network | Retrofit 3.0 + OkHttp + Kotlin Serialization |
 | Image | Coil (Compose) |
 | Navigation | Compose Navigation (type-safe) |
 | Async | Kotlin Coroutines + Flow |
 | State | StateFlow + collectAsStateWithLifecycle() |
-| Storage | DataStore (preferences), Room (structured) |
-| Testing | JUnit 5, MockK, Turbine, Compose UI Test |
+| Pagination | Paging 3 (3.4.0) + Compose integration |
+| Storage | Proto DataStore + Tink (encrypted), Room (structured) |
+| Logging | Timber |
+| Crash Reporting | Firebase Crashlytics |
+| Testing | JUnit 4, Truth, MockK, Turbine, Compose UI Test |
 | Lint | ktlint + detekt |
 
 ### Kotlin Rules
@@ -179,9 +182,9 @@ interface ProductApi {
 
 ### Versions
 
-- **Minimum iOS**: 16.0
+- **Minimum iOS**: 17.0
 - **Target iOS**: 18.0
-- **Swift**: 6.x
+- **Swift**: 6.2
 - **Xcode**: 16+
 
 ### Dependencies (SPM)
@@ -189,14 +192,17 @@ interface ProductApi {
 | Category | Library |
 |----------|---------|
 | UI | SwiftUI (built-in) |
-| DI | Manual (protocol-based) / Factory |
+| DI | Factory (`@Injected` property wrapper) |
 | Network | URLSession + async/await + Codable |
-| Image | Kingfisher (cache) + AsyncImage |
+| Image | Nuke (NukeUI) |
 | Navigation | NavigationStack + NavigationPath |
 | Async | Swift Concurrency (async/await, Task) |
 | Storage | UserDefaults, SwiftData |
-| Testing | Swift Testing + XCTest, ViewInspector |
-| Lint | SwiftLint (strict) |
+| Security | KeychainAccess (token storage) |
+| Logging | os.Logger (Apple unified logging) |
+| Crash Reporting | Sentry |
+| Testing | Swift Testing + XCTest, ViewInspector, swift-snapshot-testing |
+| Lint | SwiftFormat + SwiftLint |
 
 ### Swift Rules
 
@@ -207,7 +213,7 @@ interface ProductApi {
 - **Sendable conformance** for all types passed across concurrency boundaries.
 - **`final class`** by default. Only remove `final` when subclassing is explicitly needed.
 - **Prefer value types** (struct, enum) over reference types (class).
-- **Use `@Observable`** (iOS 17+) for view models. Provide `@ObservableObject` wrapper for iOS 16.
+- **Use `@Observable`** for view models (iOS 17+ minimum — no `ObservableObject` needed).
 
 ### SwiftUI Rules
 
@@ -218,23 +224,27 @@ interface ProductApi {
 - **No hardcoded strings**: Use `String(localized:)` or `.localizable` pattern.
 - **Theme tokens**: Always use theme constants, never hardcode colors/fonts.
 
-### DI Pattern (iOS)
+### DI Pattern (iOS — Factory)
 
 ```swift
-protocol ProductRepository: Sendable {
-    func getProducts(filters: ProductFilters) async throws -> ProductListResponse
+import Factory
+
+// Container.swift — register dependencies
+extension Container {
+    var apiClient: Factory<APIClient> {
+        self { APIClientImpl(baseURL: Config.apiBaseURL) }
+            .singleton
+    }
+    var productRepository: Factory<ProductRepository> {
+        self { ProductRepositoryImpl(apiClient: self.apiClient()) }
+    }
 }
 
-final class ProductRepositoryImpl: ProductRepository {
-    private let apiClient: APIClient
-    init(apiClient: APIClient) { self.apiClient = apiClient }
-}
-
-@MainActor
-final class DependencyContainer {
-    static let shared = DependencyContainer()
-    lazy var apiClient: APIClient = { APIClientImpl(baseURL: Config.apiBaseURL) }()
-    lazy var productRepository: ProductRepository = { ProductRepositoryImpl(apiClient: apiClient) }()
+// Usage in ViewModel
+@MainActor @Observable
+final class ProductListViewModel {
+    @ObservationIgnored @Injected(\.productRepository) private var repository
+    // ...
 }
 ```
 
@@ -1184,7 +1194,7 @@ struct MoltEmptyView: View {
 
 ```swift
 // Core/DesignSystem/Component/MoltImage.swift
-import Kingfisher
+import NukeUI
 import SwiftUI
 
 struct MoltImage: View {
@@ -1192,11 +1202,18 @@ struct MoltImage: View {
     var contentMode: SwiftUI.ContentMode = .fill
 
     var body: some View {
-        KFImage(url)
-            .placeholder { Color(MoltColors.shimmer) }
-            .fade(duration: 0.25)
-            .resizable()
-            .aspectRatio(contentMode: contentMode)
+        LazyImage(url: url) { state in
+            if let image = state.image {
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: contentMode)
+            } else if state.error != nil {
+                Color(MoltColors.shimmer)
+            } else {
+                Color(MoltColors.shimmer)
+            }
+        }
+        .transition(.opacity.animation(.easeInOut(duration: 0.25)))
     }
 }
 ```
@@ -1246,7 +1263,7 @@ Created once during app scaffold (M0-01). All features depend on these.
 10. `Component/MoltLoadingView.swift` — Full-screen + inline loading
 11. `Component/MoltErrorView.swift` — Error with retry
 12. `Component/MoltEmptyView.swift` — Empty state
-13. `Component/MoltImage.swift` — Kingfisher image with placeholder
+13. `Component/MoltImage.swift` — Nuke image with placeholder
 14. `Component/MoltBadge.swift` — Count/status badge
 
 ### File Checklist Per Feature
@@ -1277,7 +1294,7 @@ When implementing a feature, create these files in order:
 8. `Presentation/{Screen}UiState.swift` — enum
 9. `Presentation/{Screen}ViewModel.swift` — @Observable @MainActor
 10. `Presentation/{Screen}View.swift` — SwiftUI View + #Preview (uses Molt* components)
-11. Register in `DependencyContainer.swift`
+11. Register in `Container+Extensions.swift` (Factory)
 
 ## Git Workflow
 
@@ -1469,8 +1486,8 @@ enum Config {
 
 ### Authentication
 - Store auth tokens securely:
-  - Android: EncryptedSharedPreferences
-  - iOS: Keychain Services
+  - Android: Proto DataStore + Google Tink (EncryptedSharedPreferences is deprecated)
+  - iOS: KeychainAccess (wrapper for Keychain Services)
 - Auto-refresh expired tokens via interceptor/middleware
 - Clear tokens on logout or 401 Unauthorized
 
@@ -1586,7 +1603,7 @@ When Figma designs are ready, **only these change**:
 - **Don't**: Access `Context` in ViewModels → **Do**: Inject dependencies via Hilt. Never use `AndroidViewModel`.
 
 ### iOS (Swift + SwiftUI)
-- **Don't**: Use `@State` in ViewModels → **Do**: Use `@Published` in ObservableObject or `@Observable`
+- **Don't**: Use `@State` in ViewModels → **Do**: Use `@Observable` macro (iOS 17+)
 - **Don't**: Perform async work in view initializers → **Do**: Use `.task` or `.onAppear`
 - **Don't**: Force unwrap optionals → **Do**: Use `guard let`, `if let`, or `??`
 - **Don't**: Use `DispatchQueue.main.async` → **Do**: Use `@MainActor` and async/await
@@ -1602,7 +1619,7 @@ When Figma designs are ready, **only these change**:
 - **Chucker**: HTTP traffic inspector (debug builds only)
 
 ### iOS
-- **Console**: Standard logging with OSLog
+- **Console**: Structured logging with os.Logger (privacy redaction)
 - **View Hierarchy**: UI hierarchy debugging (Xcode)
 - **Network Link Conditioner**: Network simulation
 - **Instruments**: Performance profiling
@@ -1619,7 +1636,7 @@ When Figma designs are ready, **only these change**:
 6. Build release APK (signed)
 
 ### iOS CI Pipeline
-1. Lint (SwiftLint)
+1. Format (SwiftFormat) + Lint (SwiftLint)
 2. Unit tests (Swift Testing)
 3. Build debug app
 4. UI tests (on simulator)
