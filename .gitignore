@@ -51,6 +51,9 @@ scripts/logs/
 coverage/
 *.lcov
 
+# ─── Claude Code (secrets) ────────────────────────
+.claude/settings.local.json
+
 # ─── Misc ──────────────────────────────────────────
 *.tmp
 *.bak
