@@ -32,41 +32,54 @@ Parse: `$ARGUMENTS`
 Create an agent team with the following structure. Use **delegate mode**
 (Shift+Tab) so you focus purely on coordination, not implementation.
 
+### Available Subagents
+
+This project defines specialized subagents in `.claude/agents/`. Each subagent
+has its corresponding skill preloaded, the correct model, and appropriate tool
+restrictions. Reference these subagent types when spawning teammates:
+
+| Subagent | Model | Preloaded Skill | Memory |
+|----------|-------|-----------------|--------|
+| `architect` | Opus | architect | project |
+| `android-dev` | Opus | android-dev | project |
+| `ios-dev` | Opus | ios-dev | project |
+| `android-tester` | Sonnet | test-agent | project |
+| `ios-tester` | Sonnet | test-agent | project |
+| `doc-writer` | Sonnet | doc-agent | — |
+| `reviewer` | Opus | review-agent | project |
+
 ### Tasks (with dependency chain)
 
 Create these tasks in the shared task list:
 
-| # | Task | Depends On | Description |
-|---|------|------------|-------------|
-| 1 | Design feature spec | — | Platform-agnostic architecture spec |
-| 2 | Implement Android | Task 1 | Kotlin + Jetpack Compose + Material 3 |
-| 3 | Implement iOS | Task 1 | Swift + SwiftUI (parallel with Task 2) |
-| 4 | Test Android | Task 2 | JUnit 5 + MockK + Turbine + Compose Test |
-| 5 | Test iOS | Task 3 | Swift Testing + XCTest (parallel with Task 4) |
-| 6 | Document feature | Tasks 4, 5 | Feature docs + CHANGELOG |
-| 7 | Cross-platform review | Task 6 | Quality, consistency, spec compliance |
+| # | Task | Depends On | Subagent Type | Description |
+|---|------|------------|---------------|-------------|
+| 1 | Design feature spec | — | `architect` | Platform-agnostic architecture spec |
+| 2 | Implement Android | Task 1 | `android-dev` | Kotlin + Jetpack Compose + Material 3 |
+| 3 | Implement iOS | Task 1 | `ios-dev` | Swift + SwiftUI (parallel with Task 2) |
+| 4 | Test Android | Task 2 | `android-tester` | JUnit 4 + MockK + Turbine + Compose Test |
+| 5 | Test iOS | Task 3 | `ios-tester` | Swift Testing + ViewInspector (parallel with Task 4) |
+| 6 | Document feature | Tasks 4, 5 | `doc-writer` | Feature docs + CHANGELOG |
+| 7 | Cross-platform review | Task 6 | `reviewer` | Quality, consistency, spec compliance |
 
 ### Teammate Spawn Prompts
 
-Spawn these teammates with the prompts below. Replace `{feature}` and `{scope}`
-with actual values.
+Spawn teammates with these prompts. The subagent definitions in `.claude/agents/`
+provide the base configuration (model, tools, skills, memory). Your spawn prompt
+adds the feature-specific context. Replace `{feature}` and `{scope}` with actual values.
 
 ---
 
-**Teammate: Architect** (use Opus model)
+**Teammate: Architect** (subagent type: `architect`)
 
 ```
-You are the Mobile Feature Architect for Molt Marketplace.
-
-Read your full instructions at `.claude/skills/architect/SKILL.md`.
-
 Your task: design a platform-agnostic spec for feature `{feature}`.
 
-Context files to read:
-- `PROMPTS/BUYER_APP.md` — find the {feature} section
-- `shared/api-contracts/` — relevant endpoint definitions
-- `shared/design-tokens/` — design tokens
-- `shared/feature-specs/` — existing specs for pattern matching
+Context:
+- Feature requirements: see `PROMPTS/BUYER_APP.md` section for {feature}
+- API contracts: `shared/api-contracts/`
+- Design tokens: `shared/design-tokens/`
+- Existing specs: `shared/feature-specs/`
 
 Output: `shared/feature-specs/{feature}.md`
 Handoff: `docs/pipeline/{feature}-architect.handoff.md`
@@ -78,16 +91,12 @@ git commit -m "docs(specs): add {feature} specification [agent:architect]"
 
 ---
 
-**Teammate: Android Dev** (use Opus model)
+**Teammate: Android Dev** (subagent type: `android-dev`)
 
 ```
-You are the Android Developer for Molt Marketplace.
+Implement feature `{feature}` for Android.
 
-Read your full instructions at `.claude/skills/android-dev/SKILL.md`.
 Read the architect spec at `shared/feature-specs/{feature}.md`.
-Read `CLAUDE.md` — Android coding standards.
-
-Implement this feature using Kotlin + Jetpack Compose + Material 3.
 Follow Clean Architecture: data/ → domain/ → presentation/.
 
 Handoff: `docs/pipeline/{feature}-android-dev.handoff.md`
@@ -99,17 +108,14 @@ git commit -m "feat({scope}): implement {feature} [agent:android-dev] [platform:
 
 ---
 
-**Teammate: iOS Dev** (use Opus model)
+**Teammate: iOS Dev** (subagent type: `ios-dev`)
 
 ```
-You are the iOS Developer for Molt Marketplace.
+Implement feature `{feature}` for iOS.
 
-Read your full instructions at `.claude/skills/ios-dev/SKILL.md`.
 Read the architect spec at `shared/feature-specs/{feature}.md`.
-Read `CLAUDE.md` — iOS coding standards.
 Read the Android implementation for consistency (same behavior, platform conventions).
-
-Implement using Swift + SwiftUI. Follow Clean Architecture.
+Follow Clean Architecture: Data/ → Domain/ → Presentation/.
 
 Handoff: `docs/pipeline/{feature}-ios-dev.handoff.md`
 
@@ -120,16 +126,12 @@ git commit -m "feat({scope}): implement {feature} [agent:ios-dev] [platform:ios]
 
 ---
 
-**Teammate: Android Tester** (use Sonnet model)
+**Teammate: Android Tester** (subagent type: `android-tester`)
 
 ```
-You are the Android Test Agent for Molt Marketplace.
+Write tests for feature `{feature}` on Android.
 
-Read test instructions at `.claude/skills/test-agent/SKILL.md`.
-Read `CLAUDE.md` — test rules.
-Read all Android source files for feature `{feature}`.
-
-Write unit tests (JUnit 5, MockK, Turbine) and UI tests (Compose Test).
+Read all Android source files for this feature.
 Coverage target: >= 80% lines, >= 70% branches.
 
 Handoff: `docs/pipeline/{feature}-android-test.handoff.md`
@@ -141,16 +143,12 @@ git commit -m "test({scope}): add {feature} tests [agent:android-test] [platform
 
 ---
 
-**Teammate: iOS Tester** (use Sonnet model)
+**Teammate: iOS Tester** (subagent type: `ios-tester`)
 
 ```
-You are the iOS Test Agent for Molt Marketplace.
+Write tests for feature `{feature}` on iOS.
 
-Read test instructions at `.claude/skills/test-agent/SKILL.md`.
-Read `CLAUDE.md` — test rules.
-Read all iOS source files for feature `{feature}`.
-
-Write unit tests (Swift Testing @Test macro) and UI tests (XCTest/ViewInspector).
+Read all iOS source files for this feature.
 Coverage target: >= 80% lines, >= 70% branches.
 
 Handoff: `docs/pipeline/{feature}-ios-test.handoff.md`
@@ -162,13 +160,12 @@ git commit -m "test({scope}): add {feature} tests [agent:ios-test] [platform:ios
 
 ---
 
-**Teammate: Doc Writer** (use Sonnet model)
+**Teammate: Doc Writer** (subagent type: `doc-writer`)
 
 ```
-You are the Documentation Agent for Molt Marketplace.
+Document feature `{feature}`.
 
-Read your instructions at `.claude/skills/doc-agent/SKILL.md`.
-Read ALL handoff files and source code for feature `{feature}`.
+Read ALL handoff files and source code for this feature.
 
 Create:
 1. Feature README: `docs/features/{feature}.md`
@@ -183,12 +180,9 @@ git commit -m "docs({scope}): add {feature} documentation [agent:doc]"
 
 ---
 
-**Teammate: Reviewer** (use Opus model)
+**Teammate: Reviewer** (subagent type: `reviewer`)
 
 ```
-You are the Code Reviewer for Molt Marketplace.
-
-Read your instructions at `.claude/skills/review-agent/SKILL.md`.
 Review BOTH Android and iOS implementations of feature `{feature}`.
 
 Check:
@@ -229,13 +223,13 @@ git commit -m "chore({scope}): review approved for {feature} [agent:review]"
    - Cross-platform review passed
 
    ## Pipeline Status
-   | Task | Teammate | Status |
+   | Task | Subagent | Status |
    |------|----------|--------|
    | Architect | architect | done |
    | Android Dev | android-dev | done |
    | iOS Dev | ios-dev | done |
-   | Android Test | android-test | done |
-   | iOS Test | ios-test | done |
+   | Android Test | android-tester | done |
+   | iOS Test | ios-tester | done |
    | Doc | doc-writer | done |
    | Review | reviewer | done |"
    ```
@@ -249,3 +243,4 @@ git commit -m "chore({scope}): review approved for {feature} [agent:review]"
 4. Reviewer can message teammates directly for fixes
 5. On failure after 2 retries: STOP and report to user
 6. Always instruct teammates to read CLAUDE.md first
+7. Subagent definitions provide base config — your spawn prompts add feature context

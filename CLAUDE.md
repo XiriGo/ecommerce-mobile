@@ -1460,26 +1460,58 @@ docs(product): add product list documentation [agent:doc] [platform:both]
 - **Android**: Use `Turbine` for Flow testing, `composeTestRule` for UI testing, assert on `uiState.value` directly when possible
 - **iOS**: Use `Swift Testing` framework with `@Test` macro, `ViewInspector` for SwiftUI testing
 
-## Multi-Agent Pipeline (Claude Code Agent Teams)
+## Multi-Agent Pipeline (Agent Teams + Subagents)
 
 ### How It Works
 
-This project uses **Claude Code Agent Teams** for feature implementation.
-A team lead orchestrates specialized teammates, each a separate Claude Code session.
+This project uses two complementary Claude Code features:
+
+1. **Agent Teams** — Full pipeline: team lead coordinates 7 specialized teammates
+   working in parallel across separate Claude Code sessions.
+2. **Custom Subagents** — Individual use: spawn a specific agent for focused tasks
+   (e.g., "use the android-dev subagent to implement this screen").
 
 Enable: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in `.claude/settings.local.json`
 
+### Architecture
+
+```
+.claude/
+├── agents/                  # Subagent definitions (model, tools, memory, skills)
+│   ├── architect.md
+│   ├── android-dev.md
+│   ├── ios-dev.md
+│   ├── android-tester.md
+│   ├── ios-tester.md
+│   ├── doc-writer.md
+│   └── reviewer.md
+└── skills/                  # Skill prompts (detailed instructions, invocable via /command)
+    ├── architect/SKILL.md
+    ├── android-dev/SKILL.md
+    ├── ios-dev/SKILL.md
+    ├── test-agent/SKILL.md
+    ├── doc-agent/SKILL.md
+    ├── review-agent/SKILL.md
+    ├── pipeline-run/SKILL.md   # Team Lead orchestrator
+    ├── create-pr/SKILL.md
+    └── verify/SKILL.md
+```
+
+**Subagents** (`.claude/agents/`) define WHO: model, tools, permissions, persistent memory.
+**Skills** (`.claude/skills/`) define WHAT: detailed step-by-step instructions.
+Each subagent preloads its corresponding skill via the `skills:` frontmatter field.
+
 ### Team Structure
 
-| Teammate | Model | Responsibility | Skill Reference |
-|----------|-------|----------------|-----------------|
-| **Architect** | Opus | Feature spec, API mapping, UI wireframe | `.claude/skills/architect/` |
-| **Android Dev** | Opus | Kotlin/Compose implementation | `.claude/skills/android-dev/` |
-| **iOS Dev** | Opus | Swift/SwiftUI implementation | `.claude/skills/ios-dev/` |
-| **Android Tester** | Sonnet | Android unit + UI tests | `.claude/skills/test-agent/` |
-| **iOS Tester** | Sonnet | iOS unit + UI tests | `.claude/skills/test-agent/` |
-| **Doc Writer** | Sonnet | Feature documentation | `.claude/skills/doc-agent/` |
-| **Reviewer** | Opus | Cross-platform code review | `.claude/skills/review-agent/` |
+| Subagent | Model | Tools | Skill | Memory | Permission |
+|----------|-------|-------|-------|--------|------------|
+| `architect` | Opus | Read, Grep, Glob, Write, WebSearch, WebFetch | architect | project | default |
+| `android-dev` | Opus | Read, Edit, Write, Grep, Glob, Bash | android-dev | project | acceptEdits |
+| `ios-dev` | Opus | Read, Edit, Write, Grep, Glob, Bash | ios-dev | project | acceptEdits |
+| `android-tester` | Sonnet | Read, Edit, Write, Grep, Glob, Bash | test-agent | project | acceptEdits |
+| `ios-tester` | Sonnet | Read, Edit, Write, Grep, Glob, Bash | test-agent | project | acceptEdits |
+| `doc-writer` | Sonnet | Read, Grep, Glob, Write, Edit | doc-agent | — | acceptEdits |
+| `reviewer` | Opus | Read, Grep, Glob, Bash, Write, Edit | review-agent | project | default |
 
 ### Pipeline Flow
 
@@ -1489,14 +1521,36 @@ Architect → [Android Dev ‖ iOS Dev] → [Android Tester ‖ iOS Tester] → 
 
 (‖ = parallel — teammates work simultaneously)
 
-### Running the Pipeline
+### Running the Pipeline (Agent Teams)
 
 Invoke: `/pipeline-run M1-06 product-list`
 
-The team lead creates an agent team, spawns teammates, creates tasks with
-dependencies, and coordinates the full lifecycle.
+The team lead creates an agent team, spawns teammates (using subagent definitions),
+creates tasks with dependencies, and coordinates the full lifecycle.
 
-### Teammate Communication
+### Using Individual Subagents
+
+For focused tasks without the full pipeline:
+
+```
+Use the architect subagent to design the product-search feature spec
+Use the android-dev subagent to implement the login screen
+Use the reviewer subagent to review recent changes
+```
+
+Subagents run in their own context window with preloaded skill instructions,
+correct model, and persistent memory for learning across sessions.
+
+### Persistent Memory
+
+Subagents with `memory: project` store learnings in `.claude/agent-memory/<name>/`.
+This builds institutional knowledge across sessions:
+- Architecture patterns discovered
+- Common bugs and fixes
+- Codebase conventions
+- Library-specific quirks
+
+### Teammate Communication (Agent Teams)
 
 - Teammates message each other directly (iOS Dev asks Android Dev about API usage)
 - Reviewer sends change requests directly to the relevant developer
@@ -1516,6 +1570,8 @@ dependencies, and coordinates the full lifecycle.
 3. Next teammate validates previous artifacts before starting work.
 4. Teammates commit with the `[agent:<name>]` and `[platform:<platform>]` suffixes.
 5. Team lead handles git branch, push, and PR creation — teammates only commit.
+6. Subagent definitions in `.claude/agents/` provide base config (model, tools, skills, memory).
+7. Skill files in `.claude/skills/` provide detailed step-by-step instructions.
 
 ## Documentation Requirements
 
