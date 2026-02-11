@@ -1,7 +1,7 @@
 [versions]
-agp = "8.13.2"
-kotlin = "2.1.10"
-ksp = "2.1.10-1.0.31"
+agp = "8.8.0"
+kotlin = "2.1.0"
+ksp = "2.1.0-1.0.28"
 composeBom = "2026.01.01"
 hilt = "2.55"
 hiltNavigationCompose = "1.2.0"
