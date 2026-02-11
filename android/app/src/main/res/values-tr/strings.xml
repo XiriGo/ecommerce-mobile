@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Molt Marketplace</string>
+    <string name="common_loading_message">Yukleniyor...</string>
+    <string name="common_retry_button">Tekrar Dene</string>
+    <string name="common_error_network">Baglanti hatasi. Lutfen internetinizi kontrol edin.</string>
+    <string name="common_error_server">Bir seyler ters gitti. Lutfen daha sonra tekrar deneyin.</string>
+    <string name="common_error_unauthorized">Devam etmek icin lutfen giris yapin.</string>
+    <string name="common_error_not_found">Aranan oge bulunamadi.</string>
+    <string name="common_error_unknown">Beklenmedik bir hata olustu.</string>
+    <string name="common_ok_button">Tamam</string>
+    <string name="common_cancel_button">Iptal</string>
+    <string name="common_close_button">Kapat</string>
+    <string name="common_search_placeholder">Ara</string>
+</resources>
