@@ -3,50 +3,304 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		MoltMarketplaceApp.swift in Sources = {isa = PBXBuildFile; };
-		Config.swift in Sources = {isa = PBXBuildFile; };
-		MoltColors.swift in Sources = {isa = PBXBuildFile; };
-		MoltSpacing.swift in Sources = {isa = PBXBuildFile; };
-		MoltTypography.swift in Sources = {isa = PBXBuildFile; };
-		MoltTheme.swift in Sources = {isa = PBXBuildFile; };
-		Container+Extensions.swift in Sources = {isa = PBXBuildFile; };
+		047C511E2FB9F1D9B6E547C1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 52EEBFC5650EA0ACAEE1933E /* Factory */; };
+		04E47E886CF0913CC0092A4A /* Container+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */; };
+		1E26BC7183999147981657C8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 81AEB5341BCB6D1683358830 /* Localizable.xcstrings */; };
+		425A79AD53D18471E2196DE7 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AE4565B462B9953D80DBFAED /* KeychainAccess */; };
+		428F9C423EE8639C27039849 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5796C24228555A16CCF6A61D /* FirebaseAnalytics */; };
+		4E52E9ABD5FFCE40DBBB07C7 /* MoltTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDF5E770AED65686426372F /* MoltTheme.swift */; };
+		4F632579BFCBA8831B27126D /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 87D0C63AC8B95476F9595855 /* SnapshotTesting */; };
+		60BE49E8B598321EAA6767EA /* LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */; };
+		65D20D4B09BAB86C1262A996 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 82D588A709AE3CBA15F476F1 /* Sentry */; };
+		7F0C8DFD1A26CDE7D4C2E82F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5AED23F7F0320BADB15E55 /* FirebaseRemoteConfig */; };
+		9188999C41BBA12EC12CDFBB /* MoltMarketplaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623857302B51F9203BBC5AE /* MoltMarketplaceApp.swift */; };
+		93CA5CAD99AD0B2C592476F7 /* MoltColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C2530E11CEC05274D49AF /* MoltColorsTests.swift */; };
+		9B2304B00742C6EF50F9A9B3 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 532FD11F3D3273FA6232FD55 /* FirebaseCrashlytics */; };
+		B062D06EFD23B216C7120C8F /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 33657EACEEEB375E5D5FA417 /* NukeUI */; };
+		B28106C551A9DDDB59AFF2E2 /* MoltTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF14957D737C403D4C202BBF /* MoltTypography.swift */; };
+		B690D39A246540F32379063E /* MoltSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */; };
+		BBC56E84E169A6E4BA9D7EA3 /* MoltColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */; };
+		C20FF0BD4AC86986CA7AC5AF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = DAA71C964A252460F4727E25 /* FirebaseMessaging */; };
+		C83F6232F61FCD3C35EBA7E7 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = EBFF3A5B3E71ECA346D268F9 /* ViewInspector */; };
+		D38AEF5817684527F2510486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */; };
+		D7505BCDC605DF17BE937EDC /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A781AA8A0197BC663457891 /* ConfigTests.swift */; };
+		DD8336A1956DE506D700D08C /* MoltSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */; };
+		DEF682F4A39F10F74044A7FA /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = FDB0E1E9B6E79B4520CFDD1E /* Nuke */; };
+		E85544B3690E2D3D3A68A442 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE92AD0FA3B02AED5D7789 /* Config.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1F5CE27971CB7A61324A963C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD463566EF0DD0FCCEBCBCB6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1E0AD1D41173613957ACC94;
+			remoteInfo = MoltMarketplace;
+		};
+		67CFF3BE0950BFD533239863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD463566EF0DD0FCCEBCBCB6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1E0AD1D41173613957ACC94;
+			remoteInfo = MoltMarketplace;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		MoltMarketplace.app = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		033C2530E11CEC05274D49AF /* MoltColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColorsTests.swift; sourceTree = "<group>"; };
+		0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Extensions.swift"; sourceTree = "<group>"; };
+		16C3E346871C401D5FCBB922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2623857302B51F9203BBC5AE /* MoltMarketplaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltMarketplaceApp.swift; sourceTree = "<group>"; };
+		2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableTests.swift; sourceTree = "<group>"; };
+		2EDF5E770AED65686426372F /* MoltTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTheme.swift; sourceTree = "<group>"; };
+		40BE92AD0FA3B02AED5D7789 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColors.swift; sourceTree = "<group>"; };
+		5A781AA8A0197BC663457891 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
+		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		81AEB5341BCB6D1683358830 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacingTests.swift; sourceTree = "<group>"; };
+		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B72C477B1CBC8BE84E7DA113 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		BFD3C59EFB0693C71AD7236D /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
+		CA7E99A60235FAE3B592DCC5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		EF14957D737C403D4C202BBF /* MoltTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTypography.swift; sourceTree = "<group>"; };
+		FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		00BCFF93B07938DFCBDFD72B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				047C511E2FB9F1D9B6E547C1 /* Factory in Frameworks */,
+				DEF682F4A39F10F74044A7FA /* Nuke in Frameworks */,
+				B062D06EFD23B216C7120C8F /* NukeUI in Frameworks */,
+				425A79AD53D18471E2196DE7 /* KeychainAccess in Frameworks */,
+				428F9C423EE8639C27039849 /* FirebaseAnalytics in Frameworks */,
+				9B2304B00742C6EF50F9A9B3 /* FirebaseCrashlytics in Frameworks */,
+				C20FF0BD4AC86986CA7AC5AF /* FirebaseMessaging in Frameworks */,
+				7F0C8DFD1A26CDE7D4C2E82F /* FirebaseRemoteConfig in Frameworks */,
+				65D20D4B09BAB86C1262A996 /* Sentry in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445907C2AA31D630304D74F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C83F6232F61FCD3C35EBA7E7 /* ViewInspector in Frameworks */,
+				4F632579BFCBA8831B27126D /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
-		MainGroup = {
+		05C0113A12BCC98DD76F262E /* MoltMarketplaceTests */ = {
 			isa = PBXGroup;
 			children = (
-				MoltMarketplace,
-				Products,
+				B840285206CE00CA50C8DF74 /* .gitkeep */,
+				5A781AA8A0197BC663457891 /* ConfigTests.swift */,
+				570BCF9C7C9A4C7BB3BF9029 /* Core */,
+				BFCE56F21B907B5A596C6887 /* Resources */,
+			);
+			path = MoltMarketplaceTests;
+			sourceTree = "<group>";
+		};
+		11D59896679D2881EEC4E21E /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				3535EBA3FCEB0B606038D18A /* Theme */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		31FA3F26A0126D3CF84CAE03 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		3535EBA3FCEB0B606038D18A /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */,
+				FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */,
+				2EDF5E770AED65686426372F /* MoltTheme.swift */,
+				EF14957D737C403D4C202BBF /* MoltTypography.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		48BA5F23D3179361D6DAF320 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */,
+				16C3E346871C401D5FCBB922 /* Info.plist */,
+				81AEB5341BCB6D1683358830 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		570BCF9C7C9A4C7BB3BF9029 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				CA7C4CB013D83F19D523D98F /* DesignSystem */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		77F2F3DC69BEA9B5C3D643E8 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		80209D7ED6963F50EE573551 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				CA7E99A60235FAE3B592DCC5 /* Debug.xcconfig */,
+				B72C477B1CBC8BE84E7DA113 /* Release.xcconfig */,
+				BFD3C59EFB0693C71AD7236D /* Staging.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		875705E9585232AE3040C907 = {
+			isa = PBXGroup;
+			children = (
+				F857330082FBC775168B4253 /* MoltMarketplace */,
+				05C0113A12BCC98DD76F262E /* MoltMarketplaceTests */,
+				BFEDACE78FDBE48ADD4251E1 /* MoltMarketplaceUITests */,
+				D1CB401E30FAB08CF487EF3E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		Products = {
+		9D89E1E4F4C90BD75DA9A588 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				MoltMarketplace.app,
+				11D59896679D2881EEC4E21E /* DesignSystem */,
+				77F2F3DC69BEA9B5C3D643E8 /* DI */,
+				31FA3F26A0126D3CF84CAE03 /* Domain */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		BFCE56F21B907B5A596C6887 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BFEDACE78FDBE48ADD4251E1 /* MoltMarketplaceUITests */ = {
+			isa = PBXGroup;
+			children = (
+				77364795F411A949687B29A5 /* .gitkeep */,
+			);
+			path = MoltMarketplaceUITests;
+			sourceTree = "<group>";
+		};
+		CA7C4CB013D83F19D523D98F /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				F4ACF29154D39A2605F8E00F /* Theme */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		D1CB401E30FAB08CF487EF3E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B050F57437DBFA131C516717 /* MoltMarketplace.app */,
+				A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */,
+				417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F4ACF29154D39A2605F8E00F /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				033C2530E11CEC05274D49AF /* MoltColorsTests.swift */,
+				9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		F857330082FBC775168B4253 /* MoltMarketplace */ = {
+			isa = PBXGroup;
+			children = (
+				40BE92AD0FA3B02AED5D7789 /* Config.swift */,
+				2623857302B51F9203BBC5AE /* MoltMarketplaceApp.swift */,
+				80209D7ED6963F50EE573551 /* Configuration */,
+				9D89E1E4F4C90BD75DA9A588 /* Core */,
+				48BA5F23D3179361D6DAF320 /* Resources */,
+			);
+			path = MoltMarketplace;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		MoltMarketplace = {
+		4E835DAFE43BAB3469B115D6 /* MoltMarketplaceUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BuildConfigurationList;
+			buildConfigurationList = CBE938612DFD5FD176DC7872 /* Build configuration list for PBXNativeTarget "MoltMarketplaceUITests" */;
 			buildPhases = (
-				Sources,
-				Frameworks,
-				Resources,
+				54C25D48845D4E29D0798F8B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				54236EE2A2817A1E3F2D8A4E /* PBXTargetDependency */,
+			);
+			name = MoltMarketplaceUITests;
+			packageProductDependencies = (
+			);
+			productName = MoltMarketplaceUITests;
+			productReference = 417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		C44DF55C82A688D89D255093 /* MoltMarketplaceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E02913C4AE675F6BD6283789 /* Build configuration list for PBXNativeTarget "MoltMarketplaceTests" */;
+			buildPhases = (
+				DADAC911DD50A6D31447B72B /* Sources */,
+				445907C2AA31D630304D74F8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03084A87E6E6B792CF49E262 /* PBXTargetDependency */,
+			);
+			name = MoltMarketplaceTests;
+			packageProductDependencies = (
+				EBFF3A5B3E71ECA346D268F9 /* ViewInspector */,
+				87D0C63AC8B95476F9595855 /* SnapshotTesting */,
+			);
+			productName = MoltMarketplaceTests;
+			productReference = A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F1E0AD1D41173613957ACC94 /* MoltMarketplace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D4AF1E59E9021C9CE6DC916 /* Build configuration list for PBXNativeTarget "MoltMarketplace" */;
+			buildPhases = (
+				5B9F3B518E065A5612C8D0FA /* Sources */,
+				F7CB740748A24FE8FA99D5D2 /* Resources */,
+				00BCFF93B07938DFCBDFD72B /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -54,165 +308,645 @@
 			);
 			name = MoltMarketplace;
 			packageProductDependencies = (
+				52EEBFC5650EA0ACAEE1933E /* Factory */,
+				FDB0E1E9B6E79B4520CFDD1E /* Nuke */,
+				33657EACEEEB375E5D5FA417 /* NukeUI */,
+				AE4565B462B9953D80DBFAED /* KeychainAccess */,
+				5796C24228555A16CCF6A61D /* FirebaseAnalytics */,
+				532FD11F3D3273FA6232FD55 /* FirebaseCrashlytics */,
+				DAA71C964A252460F4727E25 /* FirebaseMessaging */,
+				4B5AED23F7F0320BADB15E55 /* FirebaseRemoteConfig */,
+				82D588A709AE3CBA15F476F1 /* Sentry */,
 			);
 			productName = MoltMarketplace;
-			productReference = MoltMarketplace.app;
+			productReference = B050F57437DBFA131C516717 /* MoltMarketplace.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		Project = {
+		CD463566EF0DD0FCCEBCBCB6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					4E835DAFE43BAB3469B115D6 = {
+						TestTargetID = F1E0AD1D41173613957ACC94;
+					};
 				};
 			};
-			buildConfigurationList = ProjectBuildConfigurationList;
-			compatibilityVersion = "Xcode 15.0";
+			buildConfigurationList = DB8080607CF6F9581DE569BB /* Build configuration list for PBXProject "MoltMarketplace" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				Base,
 				en,
 				mt,
 				tr,
 			);
-			mainGroup = MainGroup;
+			mainGroup = 875705E9585232AE3040C907;
+			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				F119AC2B4F57DCC743641308 /* XCRemoteSwiftPackageReference "Factory" */,
+				E7C4A1A9BA745A0313B67997 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				9270E96FB33BF78503182E2E /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				BC44BAA7809D4BD76C655D56 /* XCRemoteSwiftPackageReference "Nuke" */,
+				4010E74BDED9697B8A53079C /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				A13A85DD26B765AA49C3BE86 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				14FD04FA8D7E8155F46AAC5F /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
-			productRefGroup = Products;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				MoltMarketplace,
+				F1E0AD1D41173613957ACC94 /* MoltMarketplace */,
+				C44DF55C82A688D89D255093 /* MoltMarketplaceTests */,
+				4E835DAFE43BAB3469B115D6 /* MoltMarketplaceUITests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F7CB740748A24FE8FA99D5D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D38AEF5817684527F2510486 /* Assets.xcassets in Resources */,
+				1E26BC7183999147981657C8 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		54C25D48845D4E29D0798F8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B9F3B518E065A5612C8D0FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E85544B3690E2D3D3A68A442 /* Config.swift in Sources */,
+				04E47E886CF0913CC0092A4A /* Container+Extensions.swift in Sources */,
+				BBC56E84E169A6E4BA9D7EA3 /* MoltColors.swift in Sources */,
+				9188999C41BBA12EC12CDFBB /* MoltMarketplaceApp.swift in Sources */,
+				DD8336A1956DE506D700D08C /* MoltSpacing.swift in Sources */,
+				4E52E9ABD5FFCE40DBBB07C7 /* MoltTheme.swift in Sources */,
+				B28106C551A9DDDB59AFF2E2 /* MoltTypography.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DADAC911DD50A6D31447B72B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7505BCDC605DF17BE937EDC /* ConfigTests.swift in Sources */,
+				60BE49E8B598321EAA6767EA /* LocalizableTests.swift in Sources */,
+				93CA5CAD99AD0B2C592476F7 /* MoltColorsTests.swift in Sources */,
+				B690D39A246540F32379063E /* MoltSpacingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03084A87E6E6B792CF49E262 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1E0AD1D41173613957ACC94 /* MoltMarketplace */;
+			targetProxy = 67CFF3BE0950BFD533239863 /* PBXContainerItemProxy */;
+		};
+		54236EE2A2817A1E3F2D8A4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1E0AD1D41173613957ACC94 /* MoltMarketplace */;
+			targetProxy = 1F5CE27971CB7A61324A963C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		Debug = {
+		382A3826F9D709864CB25450 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = Debug.xcconfig;
+			baseConfigurationReference = CA7E99A60235FAE3B592DCC5 /* Debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"@executable_path/Frameworks",
+					"DEBUG=1",
 				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.molt.marketplace.debug";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		Staging = {
+		3B3A34390F82C58C8C95C04B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = Staging.xcconfig;
+			baseConfigurationReference = B72C477B1CBC8BE84E7DA113 /* Release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.molt.marketplace.staging";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Staging;
-		};
-		Release = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = Release.xcconfig;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.molt.marketplace";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
+		3EA6F0D1A796D0A4AD8E8283 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoltMarketplace.app/MoltMarketplace";
+			};
+			name = Staging;
+		};
+		55C7377C80C817F6B7D30166 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MoltMarketplace;
+			};
+			name = Debug;
+		};
+		5F4D721432AC3A2614E437F9 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = MoltMarketplace;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Staging;
+		};
+		7E81E798CAFEC18386CA9EBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = MoltMarketplace;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		850D2D7F45BE9919F800C483 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoltMarketplace.app/MoltMarketplace";
+			};
+			name = Debug;
+		};
+		B90C13E890EE988CA43A836F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = MoltMarketplace;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BEAB6F0338117DDC0B3898CE /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MoltMarketplace;
+			};
+			name = Staging;
+		};
+		C2971C06FFC6E8547B9BD235 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MoltMarketplace;
+			};
+			name = Release;
+		};
+		D9A49EF706DF0E3B838E8F64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoltMarketplace.app/MoltMarketplace";
+			};
+			name = Release;
+		};
+		DF64D8F870568347A0F880C6 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFD3C59EFB0693C71AD7236D /* Staging.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Staging;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BuildConfigurationList = {
+		2D4AF1E59E9021C9CE6DC916 /* Build configuration list for PBXNativeTarget "MoltMarketplace" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				Debug,
-				Staging,
-				Release,
+				B90C13E890EE988CA43A836F /* Debug */,
+				7E81E798CAFEC18386CA9EBE /* Release */,
+				5F4D721432AC3A2614E437F9 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		ProjectBuildConfigurationList = {
+		CBE938612DFD5FD176DC7872 /* Build configuration list for PBXNativeTarget "MoltMarketplaceUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				Debug,
-				Staging,
-				Release,
+				55C7377C80C817F6B7D30166 /* Debug */,
+				C2971C06FFC6E8547B9BD235 /* Release */,
+				BEAB6F0338117DDC0B3898CE /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DB8080607CF6F9581DE569BB /* Build configuration list for PBXProject "MoltMarketplace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				382A3826F9D709864CB25450 /* Debug */,
+				3B3A34390F82C58C8C95C04B /* Release */,
+				DF64D8F870568347A0F880C6 /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E02913C4AE675F6BD6283789 /* Build configuration list for PBXNativeTarget "MoltMarketplaceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				850D2D7F45BE9919F800C483 /* Debug */,
+				D9A49EF706DF0E3B838E8F64 /* Release */,
+				3EA6F0D1A796D0A4AD8E8283 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		14FD04FA8D7E8155F46AAC5F /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+		4010E74BDED9697B8A53079C /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.40.0;
+			};
+		};
+		9270E96FB33BF78503182E2E /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+		A13A85DD26B765AA49C3BE86 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.0;
+			};
+		};
+		BC44BAA7809D4BD76C655D56 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
+		E7C4A1A9BA745A0313B67997 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.7.0;
+			};
+		};
+		F119AC2B4F57DCC743641308 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		33657EACEEEB375E5D5FA417 /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC44BAA7809D4BD76C655D56 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
+		};
+		4B5AED23F7F0320BADB15E55 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7C4A1A9BA745A0313B67997 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		52EEBFC5650EA0ACAEE1933E /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F119AC2B4F57DCC743641308 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+		532FD11F3D3273FA6232FD55 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7C4A1A9BA745A0313B67997 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		5796C24228555A16CCF6A61D /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7C4A1A9BA745A0313B67997 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		82D588A709AE3CBA15F476F1 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4010E74BDED9697B8A53079C /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		87D0C63AC8B95476F9595855 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A13A85DD26B765AA49C3BE86 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		AE4565B462B9953D80DBFAED /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9270E96FB33BF78503182E2E /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		DAA71C964A252460F4727E25 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7C4A1A9BA745A0313B67997 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		EBFF3A5B3E71ECA346D268F9 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14FD04FA8D7E8155F46AAC5F /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+		FDB0E1E9B6E79B4520CFDD1E /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC44BAA7809D4BD76C655D56 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = Project;
+	rootObject = CD463566EF0DD0FCCEBCBCB6 /* Project object */;
 }
