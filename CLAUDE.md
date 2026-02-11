@@ -1573,6 +1573,40 @@ This builds institutional knowledge across sessions:
 6. Subagent definitions in `.claude/agents/` provide base config (model, tools, skills, memory).
 7. Skill files in `.claude/skills/` provide detailed step-by-step instructions.
 
+## MCP Servers
+
+Proje `.mcp.json` dosyasında tanımlı MCP sunucuları kullanır. Detaylar: `docs/mcp-servers.md`
+
+### Yerel Sunucular (auth gerekmez)
+
+| MCP Server | Kapsam | Kullanım |
+|------------|--------|----------|
+| `xcode-build` | iOS | Xcode build, test, run, simulator yönetimi |
+| `apple-docs` | iOS | Apple Developer Documentation arama |
+| `apple-docs-full` | iOS | Kapsamlı Apple docs (WWDC, HIG dahil) |
+| `material3` | Android | Material 3 bileşenler, token'lar, ikonlar |
+| `ios-simulator` | iOS | Simulator etkileşimi, screenshot, UI inspect |
+| `mobile-automation` | Her ikisi | Android ADB + iOS Simulator otomasyonu |
+| `context7` | Her ikisi | Tüm kütüphanelerin güncel dökümantasyonu |
+| `sentry` | iOS | Crash analizi, issue araştırma |
+
+### Remote / Auth Gerektiren
+
+| MCP Server | Kapsam | Auth |
+|------------|--------|------|
+| `github` | Proje | `GITHUB_TOKEN` env var |
+| `figma` | Tasarım | `FIGMA_API_KEY` env var |
+| `stripe` | Ödeme | OAuth (ilk kullanımda) |
+| `firebase` | Her ikisi | `firebase login` (firebase-tools) |
+
+### Agent → MCP Eşleştirme
+
+- **Architect**: `apple-docs`, `material3`, `context7`
+- **Android Dev**: `material3`, `context7`, `mobile-automation`
+- **iOS Dev**: `apple-docs`, `xcode-build`, `ios-simulator`, `context7`
+- **Testers**: `xcode-build`, `ios-simulator`, `mobile-automation`, `context7`
+- **Reviewer**: Tüm sunucular
+
 ## Documentation Requirements
 
 - **Feature README**: `docs/features/<name>/README.md` (feature overview, architecture, screens)

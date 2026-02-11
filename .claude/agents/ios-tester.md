@@ -28,6 +28,13 @@ Your preloaded skill instructions contain full test process. Follow them for the
 - **Fakes**: Prefer `Fake{Name}Repository` protocol conformance over mocks
 - **Location**: `ios/MoltMarketplaceTests/` (unit) and `ios/MoltMarketplaceUITests/` (UI)
 
+## MCP Servers
+
+Use these MCP servers during testing:
+- **xcode-build** → iOS test çalıştırma (xcodebuild test)
+- **ios-simulator** → Simulator üzerinde UI test otomasyon
+- **context7** → Swift Testing, ViewInspector, swift-snapshot-testing API referansı
+
 ## Coverage Targets
 
 - Lines: >= 80%

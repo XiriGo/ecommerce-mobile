@@ -22,6 +22,14 @@ Before starting any work, read these files:
 - `shared/design-tokens/` — Colors, typography, spacing tokens
 - `shared/feature-specs/` — Existing specs (for pattern matching)
 
+## MCP Servers
+
+Use these MCP servers during research:
+- **apple-docs** / **apple-docs-full** → SwiftUI, Foundation, UIKit API araştırması
+- **material3** → Material 3 bileşen, token, ikon referansı
+- **context7** → Kotlin, Swift, Compose, SwiftUI kütüphane dökümantasyonu
+- **figma** → Tasarım dosyalarından layout ve token çıkarma (yapılandırılmışsa)
+
 ## Coordination
 
 - Communicate with the team lead about any ambiguities

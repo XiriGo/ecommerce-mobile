@@ -31,6 +31,14 @@ Before implementing, read these files:
 - SwiftUI theme via `Core/DesignSystem/` components (MoltButton, MoltCard, etc.)
 - All strings via `String(localized:)` — no hardcoded text
 
+## MCP Servers
+
+Use these MCP servers during implementation:
+- **apple-docs** → SwiftUI, Foundation, Combine, SwiftData API referansı
+- **xcode-build** → Build, test, run komutları
+- **ios-simulator** → Simulator yönetimi, UI inceleme, screenshot
+- **context7** → Nuke, Factory, KeychainAccess, LocalAuthentication API referansı
+
 ## Coordination
 
 - Wait for Architect spec before starting

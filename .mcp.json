@@ -1,0 +1,70 @@
+{
+  "mcpServers": {
+    "xcode-build": {
+      "command": "npx",
+      "args": ["-y", "xcodebuildmcp@latest", "mcp"],
+      "description": "Xcode build, test, run, simulator management for iOS development"
+    },
+    "apple-docs": {
+      "command": "npx",
+      "args": ["-y", "apple-doc-mcp-server@latest"],
+      "description": "Apple Developer Documentation search (SwiftUI, UIKit, Foundation, etc.)"
+    },
+    "apple-docs-full": {
+      "command": "npx",
+      "args": ["-y", "@kimsungwhee/apple-docs-mcp@latest"],
+      "description": "Comprehensive Apple docs including WWDC sessions, HIG, all frameworks"
+    },
+    "material3": {
+      "command": "npx",
+      "args": ["-y", "@weppa-cloud/material3-mcp-server@latest"],
+      "description": "Material Design 3 components, design tokens, icons, accessibility guidelines"
+    },
+    "ios-simulator": {
+      "command": "npx",
+      "args": ["-y", "ios-simulator-mcp@latest"],
+      "description": "iOS Simulator interaction - screenshots, UI inspection, automation"
+    },
+    "mobile-automation": {
+      "command": "npx",
+      "args": ["-y", "mobile-mcp@latest"],
+      "description": "Cross-platform mobile automation - Android ADB + iOS Simulator"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "description": "Library documentation lookup (Kotlin, Swift, Compose, SwiftUI, Retrofit, Hilt, etc.)"
+    },
+    "sentry": {
+      "command": "npx",
+      "args": ["-y", "@sentry/mcp-server@latest"],
+      "description": "Sentry error tracking - crash analysis, issue investigation, root cause"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github@latest"],
+      "description": "GitHub API - issues, PRs, branches, releases, code search",
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "figma-developer-mcp@latest"],
+      "description": "Figma design-to-code - extract layouts, design tokens, components",
+      "env": {
+        "FIGMA_API_KEY": "${FIGMA_API_KEY}"
+      }
+    },
+    "stripe": {
+      "type": "url",
+      "url": "https://mcp.stripe.com",
+      "description": "Stripe payment API - customers, payments, intents, refunds"
+    },
+    "firebase": {
+      "type": "url",
+      "url": "http://127.0.0.1:3845/mcp",
+      "description": "Firebase services - Analytics, Crashlytics, FCM, Remote Config (requires firebase-tools running locally)"
+    }
+  }
+}

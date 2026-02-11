@@ -25,7 +25,19 @@
       "Bash(touch *)",
       "Bash(command *)",
       "mcp__plugin_medusa-dev_MedusaDocs__ask_medusa_question",
-      "mcp__plugin_learn-medusa_MedusaDocs__ask_medusa_question"
+      "mcp__plugin_learn-medusa_MedusaDocs__ask_medusa_question",
+      "mcp__xcode-build__*",
+      "mcp__apple-docs__*",
+      "mcp__apple-docs-full__*",
+      "mcp__material3__*",
+      "mcp__ios-simulator__*",
+      "mcp__mobile-automation__*",
+      "mcp__context7__*",
+      "mcp__sentry__*",
+      "mcp__github__*",
+      "mcp__figma__*",
+      "mcp__stripe__*",
+      "mcp__firebase__*"
     ],
     "deny": [
       "Bash(git push --force *)",

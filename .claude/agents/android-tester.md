@@ -27,6 +27,12 @@ Your preloaded skill instructions contain full test process. Follow them for the
 - **Fakes**: Prefer `Fake{Name}Repository` over mocks (Google recommended)
 - **Location**: `android/app/src/test/` (unit) and `android/app/src/androidTest/` (UI)
 
+## MCP Servers
+
+Use these MCP servers during testing:
+- **context7** → JUnit, Truth, MockK, Turbine, Compose Test API referansı
+- **mobile-automation** → Android emülatör üzerinde UI test çalıştırma
+
 ## Coverage Targets
 
 - Lines: >= 80%

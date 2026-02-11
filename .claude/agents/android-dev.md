@@ -30,6 +30,13 @@ Before implementing, read these files:
 - Material 3 theming via `core/designsystem/` components (MoltButton, MoltCard, etc.)
 - All strings via `stringResource()` — no hardcoded text
 
+## MCP Servers
+
+Use these MCP servers during implementation:
+- **material3** → Material 3 bileşen kullanımı, tasarım token'ları, ikonlar
+- **context7** → Retrofit, Hilt, Room, Paging, Coil, Kotlin Coroutines API referansı
+- **mobile-automation** → Android emülatör/cihaz üzerinde test ve debug
+
 ## Coordination
 
 - Wait for Architect spec before starting

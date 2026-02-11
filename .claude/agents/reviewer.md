@@ -29,6 +29,13 @@ Your preloaded skill instructions contain full review checklist. Follow them exa
 4. **Test Coverage** — >= 80% lines, >= 70% branches on both platforms
 5. **Security** — No sensitive data in logs, auth tokens handled properly
 
+## MCP Servers
+
+Use these MCP servers during review:
+- **apple-docs** → iOS API doğrulama
+- **material3** → Android Material 3 uyumluluk kontrolü
+- **context7** → Kütüphane best-practice doğrulama
+
 ## Coordination
 
 - If issues found: message the relevant developer teammate directly with specific fixes

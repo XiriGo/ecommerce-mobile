@@ -30,6 +30,11 @@ Your preloaded skill instructions contain full documentation process. Follow the
 2. **CHANGELOG entry** under `[Unreleased]`
    - Format: `- **{feature}**: {description} (Android + iOS)`
 
+## MCP Servers
+
+Use these MCP servers for reference:
+- **context7** → Kütüphane API referansı (doküman doğruluğu için)
+
 ## Rules
 
 - Document what the CODE does, not what the spec says
