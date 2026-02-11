@@ -109,7 +109,9 @@ Core/DesignSystem/
 - **minSdk**: 26 (Android 8.0)
 - **targetSdk**: 35
 - **compileSdk**: 35
-- **Kotlin**: 2.3.10
+- **Kotlin**: 2.1.0
+- **Gradle**: 9.2.1
+- **AGP**: 8.8.0
 - **Compose BOM**: 2026.01.01
 
 ### Dependencies
