@@ -4,6 +4,8 @@
 
 Android app scaffold has been successfully implemented with complete project structure, Gradle configuration, Hilt DI setup, design system theme shell, and base resource files.
 
+**UPDATE (2026-02-11)**: Fixed Gradle wrapper issue. All wrapper files now committed. Build verified working with `./gradlew assembleDebug` and `./gradlew assembleStaging`.
+
 ## Artifacts Delivered
 
 ### Core Files (23 files)
@@ -12,7 +14,10 @@ Android app scaffold has been successfully implemented with complete project str
 2. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/settings.gradle.kts` — Module includes and version catalog reference
 3. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle.properties` — JVM args and Kotlin/Android config
 4. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` — Complete version catalog with all dependencies
-5. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/wrapper/gradle-wrapper.properties` — Gradle 8.11.1 wrapper
+5. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/wrapper/gradle-wrapper.properties` — Gradle 8.13 wrapper
+5a. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/wrapper/gradle-wrapper.jar` — Gradle wrapper JAR
+5b. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradlew` — Gradle wrapper script (Unix)
+5c. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradlew.bat` — Gradle wrapper script (Windows)
 6. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts` — App module with debug/staging/release build types
 7. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/proguard-rules.pro` — R8/ProGuard rules for Retrofit + Kotlinx Serialization
 8. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/AndroidManifest.xml` — Main manifest with MoltApplication and MainActivity
@@ -32,6 +37,8 @@ Android app scaffold has been successfully implemented with complete project str
 22. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/res/drawable/splash_logo.xml` — Placeholder splash logo vector
 23. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/res/drawable/placeholder.xml` — Placeholder image vector
 24. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/res/drawable/ic_launcher_foreground.xml` — Launcher icon foreground
+25. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml` — Adaptive icon (API 26+)
+26. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml` — Adaptive icon round (API 26+)
 
 ### Placeholder Directories (with .gitkeep)
 
@@ -113,14 +120,17 @@ MainActivity shows centered "Molt Marketplace" text using `MaterialTheme.typogra
 - [x] String resources for 3 languages (en, mt, tr)
 - [x] Network security config
 - [x] Placeholder drawables (splash_logo, placeholder, ic_launcher_foreground)
-- [x] Gradle wrapper configured (8.11.1)
+- [x] Gradle wrapper configured and committed (8.13)
+- [x] Gradle wrapper JAR and scripts committed
+- [x] Adaptive launcher icons (API 26+)
+- [x] Build verified: assembleDebug and assembleStaging successful
 
 ## Known Limitations
 
-- No Gradle wrapper JAR files included (will be generated on first build)
-- No mipmap launcher icons (placeholder only in drawable/)
+- Configuration cache disabled in gradle.properties (was causing first-build issues)
 - No Firebase configuration files (google-services.json added in M0-06)
 - No actual Molt logo (placeholder vector drawable used)
+- No raster mipmap icons (adaptive icon XML only, works on API 26+)
 
 ## Next Steps for Downstream Teammates
 
@@ -163,4 +173,6 @@ All implementation follows CLAUDE.md standards:
 
 **Delivered by**: android-dev
 **Date**: 2026-02-11
-**Commit**: Ready for commit
+**Commits**:
+- 6fbdf6c — Initial scaffold implementation
+- 9168e92 — Gradle wrapper fix and adaptive icons
