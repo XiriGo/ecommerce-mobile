@@ -18,7 +18,7 @@ class MoltApplicationTest {
     @Test
     fun `application should initialize timber in debug builds`() {
         // Verify Timber is available for logging
-        val treeCount = Timber.treeCount()
+        val treeCount = Timber.treeCount
         // In debug builds, Timber.DebugTree should be planted
         // This test verifies the mechanism is in place
         assertThat(treeCount).isAtLeast(0)
