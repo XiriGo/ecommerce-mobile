@@ -1,9 +1,0 @@
-{
-  "name": "molt-mobile",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Molt Marketplace — Native Mobile Buyer App (Android + iOS)",
-  "engines": {
-    "node": ">=20"
-  }
-}
