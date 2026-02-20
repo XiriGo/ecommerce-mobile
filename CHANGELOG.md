@@ -8,6 +8,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M0-03: Network Layer
+
+- **Network Layer**: HTTP client infrastructure for Medusa v2 REST API communication (Android + iOS)
+  - Retrofit 3.0 + OkHttp 5.0 + Kotlin Serialization (Android); URLSession + async/await (iOS)
+  - Auth interceptor (`AuthInterceptor` / inline `APIClient` logic) injects `Authorization: Bearer` token on authenticated requests; skips public endpoints
+  - Automatic token refresh on 401 using mutex-serialized concurrency (`kotlinx.coroutines.sync.Mutex` / Swift `actor TokenRefreshActor`); max 1 retry per request
+  - Retry policy: 3 retries for 500/502/503/504 with exponential backoff (1s, 2s, 4s) and ±20% jitter
+  - Medusa error response parsing (`MedusaErrorDto/DTO`) mapped to typed `AppError` sealed class/enum (5 cases: Network, Server, NotFound, Unauthorized, Unknown)
+  - `AppError.toUserMessageResId()` (Android) / `Error.toUserMessage` (iOS) map errors to localized string keys from M0-01
+  - Global snake_case ↔ camelCase JSON conversion (`JsonNamingStrategy.SnakeCase` on Android; `.convertFromSnakeCase` on iOS); ISO 8601 date handling; `ignoreUnknownKeys = true`
+  - Debug-only request/response logging (`HttpLoggingInterceptor` + Timber on Android; `os.Logger` + `#if DEBUG` on iOS)
+  - `NetworkMonitor` for device connectivity state (`StateFlow<Boolean>` on Android; `@Observable isConnected: Bool` on iOS via `NWPathMonitor`)
+  - `PaginationMeta` helper for Medusa offset-based pagination (`count`, `limit`, `offset`, computed `hasMore`)
+  - `TokenProvider` interface/protocol defined here; `NoOpTokenProvider` placeholder until M0-06 (Auth Infrastructure) provides the real implementation
+  - Hilt `NetworkModule` (Android) / Factory `Container+Extensions` (iOS) providing singleton `Retrofit`/`APIClient`, `OkHttpClient`, `NetworkMonitor`
+  - OkHttp timeouts: 30s connect, 60s read/write; URLSession: 60s request, 300s resource; 10 MB disk cache (Android + iOS)
+- **Tests**: 133 Android unit tests (13 files, JUnit 4 + Truth + MockWebServer) + ~141 iOS unit tests (10 files, Swift Testing + MockURLProtocol)
+  - Android: `FakeTokenProvider` in-memory fake; `MockWebServer` for HTTP-level interceptor tests
+  - iOS: `MockURLProtocol` (URLProtocol subclass, no external dependencies); `APIClient.makeTestClient(...)` test factory
+  - Coverage: `AuthInterceptor`, `TokenRefreshAuthenticator`/`TokenRefreshActor`, `RetryInterceptor`/`RetryPolicy`, `ApiErrorMapper`/`APIClient` error mapping, `AppError` user message mapping, `PaginationMeta.hasMore`, `JSONCoders`, `Endpoint`, `MedusaErrorDTO`, `NetworkConfig`
+
 #### M0-02: Design System
 
 - **Design System**: 14 reusable `Molt*` UI components implemented on both Android and iOS (Android + iOS)

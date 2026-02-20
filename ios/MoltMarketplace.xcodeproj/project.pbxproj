@@ -3,66 +3,91 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		047C511E2FB9F1D9B6E547C1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 52EEBFC5650EA0ACAEE1933E /* Factory */; };
 		04E47E886CF0913CC0092A4A /* Container+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */; };
+		10A8D2831BD4D4D132160637 /* MoltTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A7CBF7721EFCEEC4DE8BFF /* MoltTextFieldTests.swift */; };
+		113585DB5149248ECE991BE2 /* MoltCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8367AC7D24C87D3EBFC40EDF /* MoltCardTests.swift */; };
+		13E8D235792CC1BC9C7DBF51 /* MoltTopBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59405CAA4EE85C548DFA5BD /* MoltTopBarTests.swift */; };
 		1E26BC7183999147981657C8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 81AEB5341BCB6D1683358830 /* Localizable.xcstrings */; };
+		2856784F88B3ABCC1499B947 /* MoltErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5B6941EDBA5230672E481 /* MoltErrorView.swift */; };
+		2D993ACECCE086FD063CEF3C /* MoltButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B7AE544F06A5FA5847B63 /* MoltButtonTests.swift */; };
+		2E64D65D2C5C07CC103AB4BD /* MoltChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86309C831B0A485D41B353 /* MoltChip.swift */; };
+		34FAE17D429F8539F5F56E5B /* MoltRatingBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8E05034D1CB26C2561668A /* MoltRatingBarTests.swift */; };
+		36A7D5C0C0B9A73FDE730D2B /* RetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C53F9C8E440F9DB251617F /* RetryPolicy.swift */; };
+		3CF2DE5D87D211071AF3EAA5 /* MoltTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28547F71F6DD09DD5F04031B /* MoltTopBar.swift */; };
+		3D7E2443750FDDFF1E75FB6A /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62689091D4D4B017CD009C61 /* NetworkMonitor.swift */; };
+		4068F24A9F6947F3FF37563F /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CDDD52047E62B05944712B /* RequestLogger.swift */; };
+		41E203CA4ACD4858D18CC8FF /* MoltQuantityStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FE966B7E62C3FB20DE71F7 /* MoltQuantityStepper.swift */; };
 		425A79AD53D18471E2196DE7 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AE4565B462B9953D80DBFAED /* KeychainAccess */; };
 		428F9C423EE8639C27039849 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5796C24228555A16CCF6A61D /* FirebaseAnalytics */; };
+		47F6CF83DD154CE2EBC0543B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44924854D3F87C4767E134D1 /* APIClient.swift */; };
+		48C6B6D6C07A425116A319DB /* MoltElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD7442B1733300D6B890BEF /* MoltElevation.swift */; };
+		4A7587D524FBE198EC211BB7 /* MoltImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C9F64D1759C903FF4B2A8C /* MoltImage.swift */; };
+		4B7AC2C5D8BF34749EE9C617 /* MoltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */; };
 		4E52E9ABD5FFCE40DBBB07C7 /* MoltTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDF5E770AED65686426372F /* MoltTheme.swift */; };
 		4F632579BFCBA8831B27126D /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 87D0C63AC8B95476F9595855 /* SnapshotTesting */; };
+		5F343A095F070928509833A3 /* MedusaErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA30517DCE0975BCA83996 /* MedusaErrorDTO.swift */; };
+		600867F6DF557B31C1C69E9D /* JSONCoders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5067E50478883745968CBB3 /* JSONCoders.swift */; };
 		60BE49E8B598321EAA6767EA /* LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */; };
 		65D20D4B09BAB86C1262A996 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 82D588A709AE3CBA15F476F1 /* Sentry */; };
+		70C48DF7342D24660EE62817 /* MoltEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADFD046F30F0866B8E5AB2 /* MoltEmptyView.swift */; };
+		746099AF4C0A37501C47EC83 /* MoltCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9107164CF634CAD51DCFAEB8 /* MoltCard.swift */; };
+		784BD787975D5504D7D07F51 /* MoltTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A96599B81199BB8A97284E /* MoltTabBar.swift */; };
+		7D9396D564F07A9852AD29BC /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC49E96766C937B3790D264 /* PaginatedResponse.swift */; };
 		7F0C8DFD1A26CDE7D4C2E82F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5AED23F7F0320BADB15E55 /* FirebaseRemoteConfig */; };
+		8BF63E4DAF30BFB52AF31CA3 /* MoltButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE984110B4ED6B9FB1A7372E /* MoltButton.swift */; };
+		8D9BDF928BD8FD45A005FCD9 /* MoltTabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF84CC2D9F865C565DDF340 /* MoltTabBarTests.swift */; };
+		904A98ACF5D38F5F431E8E2C /* MoltEmptyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2A50D0E55552F373D13F11 /* MoltEmptyViewTests.swift */; };
 		9188999C41BBA12EC12CDFBB /* MoltMarketplaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623857302B51F9203BBC5AE /* MoltMarketplaceApp.swift */; };
+		92F08C5B2E3313AE75E4908B /* MoltLoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137C84B8F93548F60625C589 /* MoltLoadingViewTests.swift */; };
+		932A2E3A7C540B7EFC62D0C2 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAC7A0F26FB78C4AAF027A3 /* NetworkConfig.swift */; };
 		93CA5CAD99AD0B2C592476F7 /* MoltColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C2530E11CEC05274D49AF /* MoltColorsTests.swift */; };
+		9A6B12992ABEF717CA70BE9B /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A538F6391C8D6E894FCB25BB /* HTTPMethod.swift */; };
 		9B2304B00742C6EF50F9A9B3 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 532FD11F3D3273FA6232FD55 /* FirebaseCrashlytics */; };
+		A2CA905DCE676FA4BC333C79 /* MoltChipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB89B4F158289374534389 /* MoltChipTests.swift */; };
+		ADAC518F1B809EA3F9B0718C /* MoltQuantityStepperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21F3EEA62495CC62785AF1E /* MoltQuantityStepperTests.swift */; };
+		AFAA7AA79865A2114D52CEAA /* ArchitectureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499A44FD23D43F396771CCA /* ArchitectureTests.swift */; };
 		B062D06EFD23B216C7120C8F /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 33657EACEEEB375E5D5FA417 /* NukeUI */; };
+		B129DA10DF9CEEF1AB318753 /* MoltBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CB93AB3CE23EF49ABDC180 /* MoltBadgeTests.swift */; };
 		B28106C551A9DDDB59AFF2E2 /* MoltTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF14957D737C403D4C202BBF /* MoltTypography.swift */; };
+		B3FFC81A791EAAFC083A0BE6 /* MoltImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207C3B26963E82E5C81E0939 /* MoltImageTests.swift */; };
 		B690D39A246540F32379063E /* MoltSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */; };
 		BBC56E84E169A6E4BA9D7EA3 /* MoltColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */; };
+		BDCC21DADF4A12BC30557BED /* MoltPriceText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BB9D9C336DEFADA2BA1E85 /* MoltPriceText.swift */; };
 		C20FF0BD4AC86986CA7AC5AF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = DAA71C964A252460F4727E25 /* FirebaseMessaging */; };
+		C25F946ABEB27E6E84FED717 /* MoltPriceTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C35827356B83FCB7EC6FABA /* MoltPriceTextTests.swift */; };
 		C83F6232F61FCD3C35EBA7E7 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = EBFF3A5B3E71ECA346D268F9 /* ViewInspector */; };
+		C8BF8CA46696CB8F1036E6F1 /* TokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF515DA58CA50CD1CAEDA7B /* TokenProvider.swift */; };
+		CF29208B560993D4771FF59F /* MoltRatingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C77B645178F56C7EFDDD50A /* MoltRatingBar.swift */; };
 		D38AEF5817684527F2510486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */; };
+		D65F68A19866080BB0FFECDA /* MoltElevationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B589E821679E6540F1B7FEC /* MoltElevationTests.swift */; };
 		D7505BCDC605DF17BE937EDC /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A781AA8A0197BC663457891 /* ConfigTests.swift */; };
+		D8D8CE2372A08A50DB72F67A /* MoltCornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5B9CC3C24C7009A718C0C6 /* MoltCornerRadius.swift */; };
 		DD8336A1956DE506D700D08C /* MoltSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */; };
 		DEF682F4A39F10F74044A7FA /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = FDB0E1E9B6E79B4520CFDD1E /* Nuke */; };
+		E0024DAE5E1DB5F86D9BF89F /* AuthMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD450106BE9402A0AE68DAD /* AuthMiddleware.swift */; };
+		E470B0A05D6A2F13FF378D42 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5A571095BA57CBE0B37F3C /* Endpoint.swift */; };
+		E7A0B15ABD5B1911796137F4 /* MoltErrorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */; };
 		E85544B3690E2D3D3A68A442 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE92AD0FA3B02AED5D7789 /* Config.swift */; };
-		466AB6554E25452A835EFB8A /* MoltCornerRadiusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FDF9C57B96443D84D47093 /* MoltCornerRadiusTests.swift */; };
-		12B571882CFC4072A62AB895 /* MoltElevationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1171888B8124B0495A82EE3 /* MoltElevationTests.swift */; };
-		151034CB8D4A4D9E9E8F269B /* MoltButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393EB22718004C55B0AA9F36 /* MoltButtonTests.swift */; };
-		AEA2B8B226D44705ACD521C8 /* MoltTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FCE54A469446DB9A796940 /* MoltTextFieldTests.swift */; };
-		3F90FAD19E98452FA9DA8FD1 /* MoltCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E192DD338F74C79A122318E /* MoltCardTests.swift */; };
-		584E1F39EC324DEFA61EF5FF /* MoltChipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EF0B8A2BF04402B04CE7E6 /* MoltChipTests.swift */; };
-		7A103313E40A441E8BFFF199 /* MoltTopBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB2A887498A40D3B610FA7A /* MoltTopBarTests.swift */; };
-		E217B3C7F6BB49A698B152BD /* MoltTabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE1B7BD367240BA84D0DB07 /* MoltTabBarTests.swift */; };
-		BE964A622B1C4D469CFDC0EC /* MoltLoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D236F8D2F44721A7E69781 /* MoltLoadingViewTests.swift */; };
-		B3D9D2E037FC4485A6DC5DDD /* MoltErrorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A5A6628B7E464A838090E5 /* MoltErrorViewTests.swift */; };
-		C7D6740D96B548D188E16AEF /* MoltEmptyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3EF362A7B42ACA3D6DF67 /* MoltEmptyViewTests.swift */; };
-		B2E3EB55BCFD4D059458B402 /* MoltImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D4FEF9DF440BABC0CFF2C /* MoltImageTests.swift */; };
-		B3937B94BFBD491882B93726 /* MoltBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AEE76D049D44F19E36AD8A /* MoltBadgeTests.swift */; };
-		7242A4B433A1412A829D97DB /* MoltRatingBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D114C8BEDE9C42E8B2D78C77 /* MoltRatingBarTests.swift */; };
-		7DD61233A87E4658A5D44F3A /* MoltPriceTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B714BDA6D00B46ADBA7BDA84 /* MoltPriceTextTests.swift */; };
-		36D1E840C0294E8582800C00 /* MoltQuantityStepperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B7E9727A7F45E580495F87 /* MoltQuantityStepperTests.swift */; };
-		C2956855B1374503AA60DF3A /* MoltCornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB30EEC2A94D219CF59FD2 /* MoltCornerRadius.swift */; };
-		08E98E1F837340C095862038 /* MoltElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B1247CA80C4BBAAE825BC5 /* MoltElevation.swift */; };
-		3164B6DA8AF441B3AB77F4C8 /* MoltButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51567D8B2EC341258491D7CF /* MoltButton.swift */; };
-		95FA7B0F2FA642D1B040BA66 /* MoltTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F223EA3B9A4208A54DD4C5 /* MoltTextField.swift */; };
-		3C9E6D4345E540E89B173393 /* MoltCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D517107DF240A19AC832D7 /* MoltCard.swift */; };
-		EC08F6E4C7F644899F7E42F2 /* MoltChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EEB632F0224239A190BE3D /* MoltChip.swift */; };
-		AA9686BED2B342DD88D3E126 /* MoltTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7AC736C9AD4EECAC6D2E63 /* MoltTopBar.swift */; };
-		15C420761C8348298B6B6CBB /* MoltTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDB1E648C9C4A7C9030D441 /* MoltTabBar.swift */; };
-		04286BF222A34041B8A3A2EC /* MoltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8D1BDCA354DF18EDF4AE6 /* MoltLoadingView.swift */; };
-		58E6C7BCC41948AC9C5906FD /* MoltErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7073C5C6F7E497F84F38232 /* MoltErrorView.swift */; };
-		40E558E36F5C4FF4B20B267D /* MoltEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EE0195AB934A6F910A73CD /* MoltEmptyView.swift */; };
-		042D2923891348F79476AC7B /* MoltImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867DC03B3D8749F3AE58316A /* MoltImage.swift */; };
-		7CE09283D9324FAE89A2BECF /* MoltBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD97AA007E84FFDB1F449A6 /* MoltBadge.swift */; };
-		7466989C19254C81948A5C67 /* MoltRatingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C24C580A2144EE792B2D526 /* MoltRatingBar.swift */; };
-		55DCBD82242948BA9A353D52 /* MoltPriceText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98ECAED5BA8B4F328AD6FCDD /* MoltPriceText.swift */; };
-		D3793531BC5B4C819A8B5B81 /* MoltQuantityStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C45F3BB8C4E3E8DAB94BD /* MoltQuantityStepper.swift */; };
+		EA5F0D8ED3F7BDFA0ECD8EB6 /* MoltTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D76A077D41437F665B7043 /* MoltTextField.swift */; };
+		EC06EC9348341A91BC275CC9 /* MoltCornerRadiusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9D9EE3685E54EBA495A78 /* MoltCornerRadiusTests.swift */; };
+		F15E0A7AAD9B55CFEC7535B9 /* MoltBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */; };
+		F546287CF92E4AE404B38BC1 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E098365BBBA105D187739634 /* AppError.swift */; };
+		6F770D65D670E58E0351D8AE /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C8C7D7247342CD8100F2F /* APIClientTests.swift */; };
+		EB3FC12896B9622317749428 /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F6EAC342FC231B7B08716 /* AppErrorTests.swift */; };
+		577D53ECC28A70A61C7510A1 /* AuthMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7733C28EE8BA53BDB56B8824 /* AuthMiddlewareTests.swift */; };
+		7E86DBCCB97046FC2E18384E /* EndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD89216CA16CFFCAEA498747 /* EndpointTests.swift */; };
+		96DE50E801865B3698654EBF /* JSONCodersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D820C5C3EF80053A88AE39 /* JSONCodersTests.swift */; };
+		2BF8234041F35487D86C669F /* MedusaErrorDTOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5200A5FA0939B99D7A1D7B28 /* MedusaErrorDTOTests.swift */; };
+		03241E752210A924798EF86D /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBFE0E73D7E7320AD0A7570 /* MockURLProtocol.swift */; };
+		EF1B321FCEAD377F6261E547 /* NetworkConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F27CF2D0613031DCB5D8D2 /* NetworkConfigTests.swift */; };
+		55D0F8F66DCD1E54C201C787 /* PaginatedResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */; };
+		19F4501D295F232278CE3D7E /* RetryPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */; };
+		EAA12504EA33256D8743B223 /* TokenProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,60 +108,85 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01C53F9C8E440F9DB251617F /* RetryPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicy.swift; sourceTree = "<group>"; };
 		033C2530E11CEC05274D49AF /* MoltColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColorsTests.swift; sourceTree = "<group>"; };
+		05C9F64D1759C903FF4B2A8C /* MoltImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltImage.swift; sourceTree = "<group>"; };
+		0B589E821679E6540F1B7FEC /* MoltElevationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltElevationTests.swift; sourceTree = "<group>"; };
+		0CD450106BE9402A0AE68DAD /* AuthMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMiddleware.swift; sourceTree = "<group>"; };
 		0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Extensions.swift"; sourceTree = "<group>"; };
+		0D5B9CC3C24C7009A718C0C6 /* MoltCornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCornerRadius.swift; sourceTree = "<group>"; };
+		137C84B8F93548F60625C589 /* MoltLoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltLoadingViewTests.swift; sourceTree = "<group>"; };
 		16C3E346871C401D5FCBB922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1AF5B6941EDBA5230672E481 /* MoltErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorView.swift; sourceTree = "<group>"; };
+		1EC49E96766C937B3790D264 /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
+		207C3B26963E82E5C81E0939 /* MoltImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltImageTests.swift; sourceTree = "<group>"; };
 		2623857302B51F9203BBC5AE /* MoltMarketplaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltMarketplaceApp.swift; sourceTree = "<group>"; };
+		28547F71F6DD09DD5F04031B /* MoltTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTopBar.swift; sourceTree = "<group>"; };
 		2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableTests.swift; sourceTree = "<group>"; };
+		2E4B7AE544F06A5FA5847B63 /* MoltButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltButtonTests.swift; sourceTree = "<group>"; };
 		2EDF5E770AED65686426372F /* MoltTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTheme.swift; sourceTree = "<group>"; };
+		36CB93AB3CE23EF49ABDC180 /* MoltBadgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltBadgeTests.swift; sourceTree = "<group>"; };
+		3DD7442B1733300D6B890BEF /* MoltElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltElevation.swift; sourceTree = "<group>"; };
+		3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltBadge.swift; sourceTree = "<group>"; };
 		40BE92AD0FA3B02AED5D7789 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		44924854D3F87C4767E134D1 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		4499A44FD23D43F396771CCA /* ArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchitectureTests.swift; sourceTree = "<group>"; };
+		4C35827356B83FCB7EC6FABA /* MoltPriceTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceTextTests.swift; sourceTree = "<group>"; };
 		4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColors.swift; sourceTree = "<group>"; };
+		52BB9D9C336DEFADA2BA1E85 /* MoltPriceText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceText.swift; sourceTree = "<group>"; };
 		5A781AA8A0197BC663457891 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
-		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		62689091D4D4B017CD009C61 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		6BF515DA58CA50CD1CAEDA7B /* TokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProvider.swift; sourceTree = "<group>"; };
+		6E8E05034D1CB26C2561668A /* MoltRatingBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltRatingBarTests.swift; sourceTree = "<group>"; };
+		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		77AA30517DCE0975BCA83996 /* MedusaErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedusaErrorDTO.swift; sourceTree = "<group>"; };
 		81AEB5341BCB6D1683358830 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8367AC7D24C87D3EBFC40EDF /* MoltCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCardTests.swift; sourceTree = "<group>"; };
 		8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltLoadingView.swift; sourceTree = "<group>"; };
+		9107164CF634CAD51DCFAEB8 /* MoltCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCard.swift; sourceTree = "<group>"; };
+		93D76A077D41437F665B7043 /* MoltTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTextField.swift; sourceTree = "<group>"; };
+		95CDDD52047E62B05944712B /* RequestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
+		9B2A50D0E55552F373D13F11 /* MoltEmptyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltEmptyViewTests.swift; sourceTree = "<group>"; };
 		9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacingTests.swift; sourceTree = "<group>"; };
-		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C77B645178F56C7EFDDD50A /* MoltRatingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltRatingBar.swift; sourceTree = "<group>"; };
+		A0A7CBF7721EFCEEC4DE8BFF /* MoltTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTextFieldTests.swift; sourceTree = "<group>"; };
+		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A538F6391C8D6E894FCB25BB /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		ADE9D9EE3685E54EBA495A78 /* MoltCornerRadiusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCornerRadiusTests.swift; sourceTree = "<group>"; };
+		AFF84CC2D9F865C565DDF340 /* MoltTabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBarTests.swift; sourceTree = "<group>"; };
+		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2FE966B7E62C3FB20DE71F7 /* MoltQuantityStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltQuantityStepper.swift; sourceTree = "<group>"; };
+		B59405CAA4EE85C548DFA5BD /* MoltTopBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTopBarTests.swift; sourceTree = "<group>"; };
 		B72C477B1CBC8BE84E7DA113 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		BE984110B4ED6B9FB1A7372E /* MoltButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltButton.swift; sourceTree = "<group>"; };
 		BFD3C59EFB0693C71AD7236D /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
+		C0FB89B4F158289374534389 /* MoltChipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltChipTests.swift; sourceTree = "<group>"; };
+		C21F3EEA62495CC62785AF1E /* MoltQuantityStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltQuantityStepperTests.swift; sourceTree = "<group>"; };
 		CA7E99A60235FAE3B592DCC5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		CA86309C831B0A485D41B353 /* MoltChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltChip.swift; sourceTree = "<group>"; };
+		D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorViewTests.swift; sourceTree = "<group>"; };
+		DE5A571095BA57CBE0B37F3C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		E098365BBBA105D187739634 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		E5067E50478883745968CBB3 /* JSONCoders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoders.swift; sourceTree = "<group>"; };
+		E6ADFD046F30F0866B8E5AB2 /* MoltEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltEmptyView.swift; sourceTree = "<group>"; };
+		EEAC7A0F26FB78C4AAF027A3 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		EF14957D737C403D4C202BBF /* MoltTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTypography.swift; sourceTree = "<group>"; };
+		F9A96599B81199BB8A97284E /* MoltTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBar.swift; sourceTree = "<group>"; };
 		FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacing.swift; sourceTree = "<group>"; };
-		D2FDF9C57B96443D84D47093 /* MoltCornerRadiusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCornerRadiusTests.swift; sourceTree = "<group>"; };
-		D1171888B8124B0495A82EE3 /* MoltElevationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltElevationTests.swift; sourceTree = "<group>"; };
-		393EB22718004C55B0AA9F36 /* MoltButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltButtonTests.swift; sourceTree = "<group>"; };
-		31FCE54A469446DB9A796940 /* MoltTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTextFieldTests.swift; sourceTree = "<group>"; };
-		0E192DD338F74C79A122318E /* MoltCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCardTests.swift; sourceTree = "<group>"; };
-		12EF0B8A2BF04402B04CE7E6 /* MoltChipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltChipTests.swift; sourceTree = "<group>"; };
-		DFB2A887498A40D3B610FA7A /* MoltTopBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTopBarTests.swift; sourceTree = "<group>"; };
-		7AE1B7BD367240BA84D0DB07 /* MoltTabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBarTests.swift; sourceTree = "<group>"; };
-		37D236F8D2F44721A7E69781 /* MoltLoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltLoadingViewTests.swift; sourceTree = "<group>"; };
-		64A5A6628B7E464A838090E5 /* MoltErrorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorViewTests.swift; sourceTree = "<group>"; };
-		3AB3EF362A7B42ACA3D6DF67 /* MoltEmptyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltEmptyViewTests.swift; sourceTree = "<group>"; };
-		5C4D4FEF9DF440BABC0CFF2C /* MoltImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltImageTests.swift; sourceTree = "<group>"; };
-		68AEE76D049D44F19E36AD8A /* MoltBadgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltBadgeTests.swift; sourceTree = "<group>"; };
-		D114C8BEDE9C42E8B2D78C77 /* MoltRatingBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltRatingBarTests.swift; sourceTree = "<group>"; };
-		B714BDA6D00B46ADBA7BDA84 /* MoltPriceTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceTextTests.swift; sourceTree = "<group>"; };
-		86B7E9727A7F45E580495F87 /* MoltQuantityStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltQuantityStepperTests.swift; sourceTree = "<group>"; };
-		CBEB30EEC2A94D219CF59FD2 /* MoltCornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCornerRadius.swift; sourceTree = "<group>"; };
-		69B1247CA80C4BBAAE825BC5 /* MoltElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltElevation.swift; sourceTree = "<group>"; };
-		51567D8B2EC341258491D7CF /* MoltButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltButton.swift; sourceTree = "<group>"; };
-		67F223EA3B9A4208A54DD4C5 /* MoltTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTextField.swift; sourceTree = "<group>"; };
-		B2D517107DF240A19AC832D7 /* MoltCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCard.swift; sourceTree = "<group>"; };
-		01EEB632F0224239A190BE3D /* MoltChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltChip.swift; sourceTree = "<group>"; };
-		AF7AC736C9AD4EECAC6D2E63 /* MoltTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTopBar.swift; sourceTree = "<group>"; };
-		3DDB1E648C9C4A7C9030D441 /* MoltTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBar.swift; sourceTree = "<group>"; };
-		B2C8D1BDCA354DF18EDF4AE6 /* MoltLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltLoadingView.swift; sourceTree = "<group>"; };
-		F7073C5C6F7E497F84F38232 /* MoltErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorView.swift; sourceTree = "<group>"; };
-		60EE0195AB934A6F910A73CD /* MoltEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltEmptyView.swift; sourceTree = "<group>"; };
-		867DC03B3D8749F3AE58316A /* MoltImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltImage.swift; sourceTree = "<group>"; };
-		EDD97AA007E84FFDB1F449A6 /* MoltBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltBadge.swift; sourceTree = "<group>"; };
-		7C24C580A2144EE792B2D526 /* MoltRatingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltRatingBar.swift; sourceTree = "<group>"; };
-		98ECAED5BA8B4F328AD6FCDD /* MoltPriceText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceText.swift; sourceTree = "<group>"; };
-		E75C45F3BB8C4E3E8DAB94BD /* MoltQuantityStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltQuantityStepper.swift; sourceTree = "<group>"; };
+		390C8C7D7247342CD8100F2F /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		8E4F6EAC342FC231B7B08716 /* AppErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorTests.swift; sourceTree = "<group>"; };
+		7733C28EE8BA53BDB56B8824 /* AuthMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMiddlewareTests.swift; sourceTree = "<group>"; };
+		CD89216CA16CFFCAEA498747 /* EndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointTests.swift; sourceTree = "<group>"; };
+		51D820C5C3EF80053A88AE39 /* JSONCodersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodersTests.swift; sourceTree = "<group>"; };
+		5200A5FA0939B99D7A1D7B28 /* MedusaErrorDTOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedusaErrorDTOTests.swift; sourceTree = "<group>"; };
+		CCBFE0E73D7E7320AD0A7570 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		43F27CF2D0613031DCB5D8D2 /* NetworkConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfigTests.swift; sourceTree = "<group>"; };
+		D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponseTests.swift; sourceTree = "<group>"; };
+		E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicyTests.swift; sourceTree = "<group>"; };
+		1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,10 +218,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		050F3FBCDB7F139274662E42 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				44924854D3F87C4767E134D1 /* APIClient.swift */,
+				0CD450106BE9402A0AE68DAD /* AuthMiddleware.swift */,
+				DE5A571095BA57CBE0B37F3C /* Endpoint.swift */,
+				A538F6391C8D6E894FCB25BB /* HTTPMethod.swift */,
+				E5067E50478883745968CBB3 /* JSONCoders.swift */,
+				77AA30517DCE0975BCA83996 /* MedusaErrorDTO.swift */,
+				EEAC7A0F26FB78C4AAF027A3 /* NetworkConfig.swift */,
+				62689091D4D4B017CD009C61 /* NetworkMonitor.swift */,
+				1EC49E96766C937B3790D264 /* PaginatedResponse.swift */,
+				95CDDD52047E62B05944712B /* RequestLogger.swift */,
+				01C53F9C8E440F9DB251617F /* RetryPolicy.swift */,
+				6BF515DA58CA50CD1CAEDA7B /* TokenProvider.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		05C0113A12BCC98DD76F262E /* MoltMarketplaceTests */ = {
 			isa = PBXGroup;
 			children = (
 				B840285206CE00CA50C8DF74 /* .gitkeep */,
+				4499A44FD23D43F396771CCA /* ArchitectureTests.swift */,
 				5A781AA8A0197BC663457891 /* ConfigTests.swift */,
 				570BCF9C7C9A4C7BB3BF9029 /* Core */,
 				BFCE56F21B907B5A596C6887 /* Resources */,
@@ -182,8 +252,8 @@
 		11D59896679D2881EEC4E21E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				32EBB39FE0A502BE1F67613B /* Component */,
 				3535EBA3FCEB0B606038D18A /* Theme */,
-				4A6778CCFBC8474EBD12C173 /* Component */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -191,19 +261,41 @@
 		31FA3F26A0126D3CF84CAE03 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				67E1A9D13BB990095252D199 /* Error */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		32EBB39FE0A502BE1F67613B /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */,
+				BE984110B4ED6B9FB1A7372E /* MoltButton.swift */,
+				9107164CF634CAD51DCFAEB8 /* MoltCard.swift */,
+				CA86309C831B0A485D41B353 /* MoltChip.swift */,
+				E6ADFD046F30F0866B8E5AB2 /* MoltEmptyView.swift */,
+				1AF5B6941EDBA5230672E481 /* MoltErrorView.swift */,
+				05C9F64D1759C903FF4B2A8C /* MoltImage.swift */,
+				8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */,
+				52BB9D9C336DEFADA2BA1E85 /* MoltPriceText.swift */,
+				B2FE966B7E62C3FB20DE71F7 /* MoltQuantityStepper.swift */,
+				9C77B645178F56C7EFDDD50A /* MoltRatingBar.swift */,
+				F9A96599B81199BB8A97284E /* MoltTabBar.swift */,
+				93D76A077D41437F665B7043 /* MoltTextField.swift */,
+				28547F71F6DD09DD5F04031B /* MoltTopBar.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		3535EBA3FCEB0B606038D18A /* Theme */ = {
 			isa = PBXGroup;
 			children = (
 				4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */,
+				0D5B9CC3C24C7009A718C0C6 /* MoltCornerRadius.swift */,
+				3DD7442B1733300D6B890BEF /* MoltElevation.swift */,
 				FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */,
 				2EDF5E770AED65686426372F /* MoltTheme.swift */,
 				EF14957D737C403D4C202BBF /* MoltTypography.swift */,
-				CBEB30EEC2A94D219CF59FD2 /* MoltCornerRadius.swift */,
-				69B1247CA80C4BBAAE825BC5 /* MoltElevation.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -222,8 +314,35 @@
 			isa = PBXGroup;
 			children = (
 				CA7C4CB013D83F19D523D98F /* DesignSystem */,
+				7DBD9150E09A04993544873B /* Network */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		7DBD9150E09A04993544873B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				390C8C7D7247342CD8100F2F /* APIClientTests.swift */,
+				8E4F6EAC342FC231B7B08716 /* AppErrorTests.swift */,
+				7733C28EE8BA53BDB56B8824 /* AuthMiddlewareTests.swift */,
+				CD89216CA16CFFCAEA498747 /* EndpointTests.swift */,
+				51D820C5C3EF80053A88AE39 /* JSONCodersTests.swift */,
+				5200A5FA0939B99D7A1D7B28 /* MedusaErrorDTOTests.swift */,
+				CCBFE0E73D7E7320AD0A7570 /* MockURLProtocol.swift */,
+				43F27CF2D0613031DCB5D8D2 /* NetworkConfigTests.swift */,
+				D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */,
+				E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */,
+				1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		67E1A9D13BB990095252D199 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				E098365BBBA105D187739634 /* AppError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		77F2F3DC69BEA9B5C3D643E8 /* DI */ = {
@@ -260,8 +379,30 @@
 				11D59896679D2881EEC4E21E /* DesignSystem */,
 				77F2F3DC69BEA9B5C3D643E8 /* DI */,
 				31FA3F26A0126D3CF84CAE03 /* Domain */,
+				050F3FBCDB7F139274662E42 /* Network */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		B0ACD5FE22D8A63D002A0808 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				36CB93AB3CE23EF49ABDC180 /* MoltBadgeTests.swift */,
+				2E4B7AE544F06A5FA5847B63 /* MoltButtonTests.swift */,
+				8367AC7D24C87D3EBFC40EDF /* MoltCardTests.swift */,
+				C0FB89B4F158289374534389 /* MoltChipTests.swift */,
+				9B2A50D0E55552F373D13F11 /* MoltEmptyViewTests.swift */,
+				D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */,
+				207C3B26963E82E5C81E0939 /* MoltImageTests.swift */,
+				137C84B8F93548F60625C589 /* MoltLoadingViewTests.swift */,
+				4C35827356B83FCB7EC6FABA /* MoltPriceTextTests.swift */,
+				C21F3EEA62495CC62785AF1E /* MoltQuantityStepperTests.swift */,
+				6E8E05034D1CB26C2561668A /* MoltRatingBarTests.swift */,
+				AFF84CC2D9F865C565DDF340 /* MoltTabBarTests.swift */,
+				A0A7CBF7721EFCEEC4DE8BFF /* MoltTextFieldTests.swift */,
+				B59405CAA4EE85C548DFA5BD /* MoltTopBarTests.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		BFCE56F21B907B5A596C6887 /* Resources */ = {
@@ -283,8 +424,8 @@
 		CA7C4CB013D83F19D523D98F /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				B0ACD5FE22D8A63D002A0808 /* Component */,
 				F4ACF29154D39A2605F8E00F /* Theme */,
-				82AB7B0B3F064681B103FFF0 /* Component */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -303,9 +444,9 @@
 			isa = PBXGroup;
 			children = (
 				033C2530E11CEC05274D49AF /* MoltColorsTests.swift */,
+				ADE9D9EE3685E54EBA495A78 /* MoltCornerRadiusTests.swift */,
+				0B589E821679E6540F1B7FEC /* MoltElevationTests.swift */,
 				9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */,
-				D2FDF9C57B96443D84D47093 /* MoltCornerRadiusTests.swift */,
-				D1171888B8124B0495A82EE3 /* MoltElevationTests.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -320,48 +461,6 @@
 				48BA5F23D3179361D6DAF320 /* Resources */,
 			);
 			path = MoltMarketplace;
-			sourceTree = "<group>";
-		};
-		82AB7B0B3F064681B103FFF0 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				393EB22718004C55B0AA9F36 /* MoltButtonTests.swift */,
-				31FCE54A469446DB9A796940 /* MoltTextFieldTests.swift */,
-				0E192DD338F74C79A122318E /* MoltCardTests.swift */,
-				12EF0B8A2BF04402B04CE7E6 /* MoltChipTests.swift */,
-				DFB2A887498A40D3B610FA7A /* MoltTopBarTests.swift */,
-				7AE1B7BD367240BA84D0DB07 /* MoltTabBarTests.swift */,
-				37D236F8D2F44721A7E69781 /* MoltLoadingViewTests.swift */,
-				64A5A6628B7E464A838090E5 /* MoltErrorViewTests.swift */,
-				3AB3EF362A7B42ACA3D6DF67 /* MoltEmptyViewTests.swift */,
-				5C4D4FEF9DF440BABC0CFF2C /* MoltImageTests.swift */,
-				68AEE76D049D44F19E36AD8A /* MoltBadgeTests.swift */,
-				D114C8BEDE9C42E8B2D78C77 /* MoltRatingBarTests.swift */,
-				B714BDA6D00B46ADBA7BDA84 /* MoltPriceTextTests.swift */,
-				86B7E9727A7F45E580495F87 /* MoltQuantityStepperTests.swift */,
-			);
-			path = Component;
-			sourceTree = "<group>";
-		};
-		4A6778CCFBC8474EBD12C173 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				51567D8B2EC341258491D7CF /* MoltButton.swift */,
-				67F223EA3B9A4208A54DD4C5 /* MoltTextField.swift */,
-				B2D517107DF240A19AC832D7 /* MoltCard.swift */,
-				01EEB632F0224239A190BE3D /* MoltChip.swift */,
-				AF7AC736C9AD4EECAC6D2E63 /* MoltTopBar.swift */,
-				3DDB1E648C9C4A7C9030D441 /* MoltTabBar.swift */,
-				B2C8D1BDCA354DF18EDF4AE6 /* MoltLoadingView.swift */,
-				F7073C5C6F7E497F84F38232 /* MoltErrorView.swift */,
-				60EE0195AB934A6F910A73CD /* MoltEmptyView.swift */,
-				867DC03B3D8749F3AE58316A /* MoltImage.swift */,
-				EDD97AA007E84FFDB1F449A6 /* MoltBadge.swift */,
-				7C24C580A2144EE792B2D526 /* MoltRatingBar.swift */,
-				98ECAED5BA8B4F328AD6FCDD /* MoltPriceText.swift */,
-				E75C45F3BB8C4E3E8DAB94BD /* MoltQuantityStepper.swift */,
-			);
-			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,6 +568,7 @@
 				A13A85DD26B765AA49C3BE86 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 				14FD04FA8D7E8155F46AAC5F /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -503,29 +603,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F6CF83DD154CE2EBC0543B /* APIClient.swift in Sources */,
+				F546287CF92E4AE404B38BC1 /* AppError.swift in Sources */,
+				E0024DAE5E1DB5F86D9BF89F /* AuthMiddleware.swift in Sources */,
 				E85544B3690E2D3D3A68A442 /* Config.swift in Sources */,
 				04E47E886CF0913CC0092A4A /* Container+Extensions.swift in Sources */,
+				E470B0A05D6A2F13FF378D42 /* Endpoint.swift in Sources */,
+				9A6B12992ABEF717CA70BE9B /* HTTPMethod.swift in Sources */,
+				600867F6DF557B31C1C69E9D /* JSONCoders.swift in Sources */,
+				5F343A095F070928509833A3 /* MedusaErrorDTO.swift in Sources */,
+				F15E0A7AAD9B55CFEC7535B9 /* MoltBadge.swift in Sources */,
+				8BF63E4DAF30BFB52AF31CA3 /* MoltButton.swift in Sources */,
+				746099AF4C0A37501C47EC83 /* MoltCard.swift in Sources */,
+				2E64D65D2C5C07CC103AB4BD /* MoltChip.swift in Sources */,
 				BBC56E84E169A6E4BA9D7EA3 /* MoltColors.swift in Sources */,
+				D8D8CE2372A08A50DB72F67A /* MoltCornerRadius.swift in Sources */,
+				48C6B6D6C07A425116A319DB /* MoltElevation.swift in Sources */,
+				70C48DF7342D24660EE62817 /* MoltEmptyView.swift in Sources */,
+				2856784F88B3ABCC1499B947 /* MoltErrorView.swift in Sources */,
+				4A7587D524FBE198EC211BB7 /* MoltImage.swift in Sources */,
+				4B7AC2C5D8BF34749EE9C617 /* MoltLoadingView.swift in Sources */,
 				9188999C41BBA12EC12CDFBB /* MoltMarketplaceApp.swift in Sources */,
+				BDCC21DADF4A12BC30557BED /* MoltPriceText.swift in Sources */,
+				41E203CA4ACD4858D18CC8FF /* MoltQuantityStepper.swift in Sources */,
+				CF29208B560993D4771FF59F /* MoltRatingBar.swift in Sources */,
 				DD8336A1956DE506D700D08C /* MoltSpacing.swift in Sources */,
+				784BD787975D5504D7D07F51 /* MoltTabBar.swift in Sources */,
+				EA5F0D8ED3F7BDFA0ECD8EB6 /* MoltTextField.swift in Sources */,
 				4E52E9ABD5FFCE40DBBB07C7 /* MoltTheme.swift in Sources */,
+				3CF2DE5D87D211071AF3EAA5 /* MoltTopBar.swift in Sources */,
 				B28106C551A9DDDB59AFF2E2 /* MoltTypography.swift in Sources */,
-				C2956855B1374503AA60DF3A /* MoltCornerRadius.swift in Sources */,
-				08E98E1F837340C095862038 /* MoltElevation.swift in Sources */,
-				3164B6DA8AF441B3AB77F4C8 /* MoltButton.swift in Sources */,
-				95FA7B0F2FA642D1B040BA66 /* MoltTextField.swift in Sources */,
-				3C9E6D4345E540E89B173393 /* MoltCard.swift in Sources */,
-				EC08F6E4C7F644899F7E42F2 /* MoltChip.swift in Sources */,
-				AA9686BED2B342DD88D3E126 /* MoltTopBar.swift in Sources */,
-				15C420761C8348298B6B6CBB /* MoltTabBar.swift in Sources */,
-				04286BF222A34041B8A3A2EC /* MoltLoadingView.swift in Sources */,
-				58E6C7BCC41948AC9C5906FD /* MoltErrorView.swift in Sources */,
-				40E558E36F5C4FF4B20B267D /* MoltEmptyView.swift in Sources */,
-				042D2923891348F79476AC7B /* MoltImage.swift in Sources */,
-				7CE09283D9324FAE89A2BECF /* MoltBadge.swift in Sources */,
-				7466989C19254C81948A5C67 /* MoltRatingBar.swift in Sources */,
-				55DCBD82242948BA9A353D52 /* MoltPriceText.swift in Sources */,
-				D3793531BC5B4C819A8B5B81 /* MoltQuantityStepper.swift in Sources */,
+				932A2E3A7C540B7EFC62D0C2 /* NetworkConfig.swift in Sources */,
+				3D7E2443750FDDFF1E75FB6A /* NetworkMonitor.swift in Sources */,
+				7D9396D564F07A9852AD29BC /* PaginatedResponse.swift in Sources */,
+				4068F24A9F6947F3FF37563F /* RequestLogger.swift in Sources */,
+				36A7D5C0C0B9A73FDE730D2B /* RetryPolicy.swift in Sources */,
+				C8BF8CA46696CB8F1036E6F1 /* TokenProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,26 +646,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFAA7AA79865A2114D52CEAA /* ArchitectureTests.swift in Sources */,
 				D7505BCDC605DF17BE937EDC /* ConfigTests.swift in Sources */,
 				60BE49E8B598321EAA6767EA /* LocalizableTests.swift in Sources */,
+				B129DA10DF9CEEF1AB318753 /* MoltBadgeTests.swift in Sources */,
+				2D993ACECCE086FD063CEF3C /* MoltButtonTests.swift in Sources */,
+				113585DB5149248ECE991BE2 /* MoltCardTests.swift in Sources */,
+				A2CA905DCE676FA4BC333C79 /* MoltChipTests.swift in Sources */,
 				93CA5CAD99AD0B2C592476F7 /* MoltColorsTests.swift in Sources */,
+				EC06EC9348341A91BC275CC9 /* MoltCornerRadiusTests.swift in Sources */,
+				D65F68A19866080BB0FFECDA /* MoltElevationTests.swift in Sources */,
+				904A98ACF5D38F5F431E8E2C /* MoltEmptyViewTests.swift in Sources */,
+				E7A0B15ABD5B1911796137F4 /* MoltErrorViewTests.swift in Sources */,
+				B3FFC81A791EAAFC083A0BE6 /* MoltImageTests.swift in Sources */,
+				92F08C5B2E3313AE75E4908B /* MoltLoadingViewTests.swift in Sources */,
+				C25F946ABEB27E6E84FED717 /* MoltPriceTextTests.swift in Sources */,
+				ADAC518F1B809EA3F9B0718C /* MoltQuantityStepperTests.swift in Sources */,
+				34FAE17D429F8539F5F56E5B /* MoltRatingBarTests.swift in Sources */,
 				B690D39A246540F32379063E /* MoltSpacingTests.swift in Sources */,
-				466AB6554E25452A835EFB8A /* MoltCornerRadiusTests.swift in Sources */,
-				12B571882CFC4072A62AB895 /* MoltElevationTests.swift in Sources */,
-				151034CB8D4A4D9E9E8F269B /* MoltButtonTests.swift in Sources */,
-				AEA2B8B226D44705ACD521C8 /* MoltTextFieldTests.swift in Sources */,
-				3F90FAD19E98452FA9DA8FD1 /* MoltCardTests.swift in Sources */,
-				584E1F39EC324DEFA61EF5FF /* MoltChipTests.swift in Sources */,
-				7A103313E40A441E8BFFF199 /* MoltTopBarTests.swift in Sources */,
-				E217B3C7F6BB49A698B152BD /* MoltTabBarTests.swift in Sources */,
-				BE964A622B1C4D469CFDC0EC /* MoltLoadingViewTests.swift in Sources */,
-				B3D9D2E037FC4485A6DC5DDD /* MoltErrorViewTests.swift in Sources */,
-				C7D6740D96B548D188E16AEF /* MoltEmptyViewTests.swift in Sources */,
-				B2E3EB55BCFD4D059458B402 /* MoltImageTests.swift in Sources */,
-				B3937B94BFBD491882B93726 /* MoltBadgeTests.swift in Sources */,
-				7242A4B433A1412A829D97DB /* MoltRatingBarTests.swift in Sources */,
-				7DD61233A87E4658A5D44F3A /* MoltPriceTextTests.swift in Sources */,
-				36D1E840C0294E8582800C00 /* MoltQuantityStepperTests.swift in Sources */,
+				8D9BDF928BD8FD45A005FCD9 /* MoltTabBarTests.swift in Sources */,
+				10A8D2831BD4D4D132160637 /* MoltTextFieldTests.swift in Sources */,
+				13E8D235792CC1BC9C7DBF51 /* MoltTopBarTests.swift in Sources */,
+				6F770D65D670E58E0351D8AE /* APIClientTests.swift in Sources */,
+				EB3FC12896B9622317749428 /* AppErrorTests.swift in Sources */,
+				577D53ECC28A70A61C7510A1 /* AuthMiddlewareTests.swift in Sources */,
+				7E86DBCCB97046FC2E18384E /* EndpointTests.swift in Sources */,
+				96DE50E801865B3698654EBF /* JSONCodersTests.swift in Sources */,
+				2BF8234041F35487D86C669F /* MedusaErrorDTOTests.swift in Sources */,
+				03241E752210A924798EF86D /* MockURLProtocol.swift in Sources */,
+				EF1B321FCEAD377F6261E547 /* NetworkConfigTests.swift in Sources */,
+				55D0F8F66DCD1E54C201C787 /* PaginatedResponseTests.swift in Sources */,
+				19F4501D295F232278CE3D7E /* RetryPolicyTests.swift in Sources */,
+				EAA12504EA33256D8743B223 /* TokenProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,7 +892,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -812,7 +936,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

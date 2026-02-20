@@ -4,8 +4,8 @@
 
 The Network Layer provides the HTTP client infrastructure for the Molt Marketplace buyer app
 to communicate with the Medusa v2 REST API. It establishes the API client, interceptor/middleware
-chains, error handling, JSON serialization, pagination helpers, network monitoring, and token
-management. All feature modules depend on this layer for their data-fetching needs.
+chains, error handling, JSON serialization, pagination helpers, network monitoring, retry policy,
+and token management. All feature modules depend on this layer for their data-fetching needs.
 
 This is a **developer infrastructure** feature. It produces no user-facing screens, but its
 error-handling types surface in every feature's UI via `MoltErrorView` and localized error
@@ -21,6 +21,7 @@ messages.
 - As a **developer**, I want a network connectivity monitor so that the app can show offline banners proactively.
 - As a **developer**, I want pagination helpers so that offset-based list endpoints follow a consistent pattern.
 - As a **developer**, I want snake_case to camelCase JSON mapping configured once so that every DTO just works.
+- As a **developer**, I want automatic retry with exponential backoff for 5xx errors so that transient server failures are handled gracefully.
 
 ### Scope
 
@@ -31,11 +32,12 @@ messages.
 | URLSession configuration (iOS) | Login/register endpoints (M0-06) |
 | Auth token interceptor/middleware | Feature-specific API services |
 | Token refresh authenticator | Feature-specific DTOs |
-| HTTP error to AppError mapping | Retry policy with exponential backoff (deferred) |
-| JSON serialization config | Certificate pinning (release hardening) |
-| Pagination response DTOs | Caching strategy (handled by OkHttp/URLCache defaults) |
-| Network connectivity monitor | WebSocket or real-time connections |
-| Debug-only request logging | Analytics event tracking |
+| Retry policy with exponential backoff for 5xx | Certificate pinning (release hardening) |
+| HTTP error to AppError mapping | WebSocket or real-time connections |
+| JSON serialization config | Analytics event tracking |
+| Pagination response DTOs | |
+| Network connectivity monitor | |
+| Debug-only request logging | |
 | AppError sealed class/enum | |
 | Error to user message mapping | |
 
@@ -248,7 +250,7 @@ enum AppError: Error, Equatable
 | 404 | Not found | `AppError.NotFound(message: parsed from body or default)` |
 | 422 | Validation error | `AppError.Server(code: 422, message: parsed from body)` |
 | 429 | Rate limited | `AppError.Server(code: 429, message: "Too many requests")` |
-| 500-599 | Server error | `AppError.Server(code: statusCode, message: parsed from body or default)` |
+| 500-599 | Server error | Retry up to 3 times with exponential backoff. If all retries fail: `AppError.Server(code: statusCode, message: parsed from body or default)` |
 | IOException (Android) | Network failure | `AppError.Network` |
 | URLError (iOS) | Network failure | `AppError.Network` |
 | SerializationException / DecodingError | JSON parse failure | `AppError.Unknown(message: "Failed to parse response")` |
@@ -416,10 +418,10 @@ or an `AppError` -- never a raw 401.
 
 | Parameter | Android (OkHttp) | iOS (URLSession) |
 |-----------|-------------------|-------------------|
-| Connect timeout | 15 seconds | N/A (combined) |
-| Read timeout | 30 seconds | N/A (combined) |
-| Write timeout | 30 seconds | N/A (combined) |
-| Request timeout | N/A | 30 seconds (`timeoutIntervalForRequest`) |
+| Connect timeout | 30 seconds | N/A (combined) |
+| Read timeout | 60 seconds | N/A (combined) |
+| Write timeout | 60 seconds | N/A (combined) |
+| Request timeout | N/A | 60 seconds (`timeoutIntervalForRequest`) |
 | Resource timeout | N/A | 300 seconds (`timeoutIntervalForResource`) |
 
 ### 6.3 Unauthorized (401)
@@ -460,11 +462,11 @@ or an `AppError` -- never a raw 401.
 |---------|-----------|-------------|-----------------|
 | Invalid request data | HTTP 422 | `AppError.Server(code: 422, message: parsed body)` | Feature shows specific validation message from server |
 
-### 6.6 Server Error (5xx)
+### 6.6 Server Error (5xx) with Retry
 
 | Trigger | Detection | Mapped Error | User Experience |
 |---------|-----------|-------------|-----------------|
-| Backend error | HTTP 500-599 | `AppError.Server(code: statusCode, message: parsed body or default)` | `MoltErrorView` with "Something went wrong. Please try again later." and Retry button |
+| Backend error | HTTP 500-599 | Retried up to 3 times with exponential backoff. Final failure: `AppError.Server(code: statusCode, message: parsed body or default)` | `MoltErrorView` with "Something went wrong. Please try again later." and Retry button |
 
 ### 6.7 JSON Parse Error
 
@@ -486,7 +488,83 @@ or an `AppError` -- never a raw 401.
 
 ---
 
-## 7. Accessibility
+## 7. Retry Policy
+
+### 7.1 Overview
+
+The network layer implements automatic retry with exponential backoff for transient server
+errors (HTTP 5xx). This is transparent to callers -- repositories and ViewModels do not need
+to implement retry logic themselves.
+
+### 7.2 Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Max retries | 3 |
+| Retryable status codes | 500, 502, 503, 504 (server errors) |
+| Base delay | 1 second |
+| Backoff multiplier | 2x |
+| Max delay | 8 seconds |
+| Jitter | +/- 20% random jitter to prevent thundering herd |
+
+**Delay schedule:**
+
+| Attempt | Base Delay | With Jitter Range |
+|---------|-----------|-------------------|
+| 1st retry | 1s | 0.8s -- 1.2s |
+| 2nd retry | 2s | 1.6s -- 2.4s |
+| 3rd retry | 4s | 3.2s -- 4.8s |
+
+### 7.3 Non-Retryable Requests
+
+Retries are NOT applied to:
+- **Client errors** (4xx): 400, 401, 403, 404, 422, 429 -- these are not transient
+- **Network errors** (IOException / URLError): connectivity issues are handled by the offline
+  banner and manual user retry; automatic retry would just delay the error
+- **POST requests that are not idempotent**: To avoid duplicate side effects, POST requests
+  are only retried if the failure was a 5xx **and** the request body was never sent (i.e.,
+  the error occurred at the connection level, not after the server received the body). In
+  practice, OkHttp's `RetryAndFollowUpInterceptor` handles this distinction. For iOS,
+  `APIClient` checks `URLError.networkUnavailableReason` to determine if the request
+  reached the server.
+
+**Safe to retry:**
+- All GET requests (idempotent reads)
+- All DELETE requests (idempotent deletes)
+- POST requests where the server returned a 5xx status code (the server received and
+  processed the request but failed internally -- the retry is a new attempt)
+
+### 7.4 Interaction with Token Refresh
+
+Retry and token refresh are independent mechanisms:
+- **401 handling**: Done by the `TokenRefreshAuthenticator` (Android) / `APIClient` inline
+  logic (iOS). This is NOT part of the retry interceptor.
+- **5xx retry**: Done by the `RetryInterceptor` (Android) / `APIClient` retry loop (iOS).
+- If a retried request returns 401, the token refresh mechanism handles it normally.
+- If a token-refreshed request returns 5xx, it enters the retry loop.
+
+### 7.5 Sequence Diagram -- Retry with Backoff
+
+```
+Client          RetryInterceptor       OkHttp/URLSession       Server
+  |                    |                       |                   |
+  |--- request() ---->|                       |                   |
+  |                    |--- execute() -------->|--- HTTP --------->|
+  |                    |                       |<-- 503 -----------|
+  |                    |  (attempt 1 failed)   |                   |
+  |                    |  wait ~1s             |                   |
+  |                    |--- execute() -------->|--- HTTP --------->|
+  |                    |                       |<-- 502 -----------|
+  |                    |  (attempt 2 failed)   |                   |
+  |                    |  wait ~2s             |                   |
+  |                    |--- execute() -------->|--- HTTP --------->|
+  |                    |                       |<-- 200 -----------|
+  |<-- response -------|                       |                   |
+```
+
+---
+
+## 8. Accessibility
 
 Not applicable for the network layer itself. All error messages produced by this layer
 are surfaced through localized string resources (`common_error_network`, `common_error_server`,
@@ -500,9 +578,9 @@ No interactive elements are created by this layer.
 
 ---
 
-## 8. Android Implementation Details
+## 9. Android Implementation Details
 
-### 8.1 Retrofit + OkHttp Configuration
+### 9.1 Retrofit + OkHttp Configuration
 
 **Retrofit instance:**
 - Base URL: `BuildConfig.API_BASE_URL`
@@ -522,17 +600,18 @@ Json {
 ```
 
 **OkHttp client:**
-- Connect timeout: 15 seconds
-- Read timeout: 30 seconds
-- Write timeout: 30 seconds
+- Connect timeout: 30 seconds
+- Read timeout: 60 seconds
+- Write timeout: 60 seconds
 - Cache: 10 MB disk cache in app cache directory
 - Interceptors (applied in this order):
   1. `AuthInterceptor` (application interceptor) -- injects Bearer token
-  2. `HttpLoggingInterceptor` (network interceptor, debug only) -- logs request/response via Timber
-  3. `ChuckerInterceptor` (application interceptor, debug only) -- in-app HTTP inspector
+  2. `RetryInterceptor` (application interceptor) -- retries 5xx with exponential backoff
+  3. `HttpLoggingInterceptor` (network interceptor, debug only) -- logs request/response via Timber
+  4. `ChuckerInterceptor` (application interceptor, debug only) -- in-app HTTP inspector
 - Authenticator: `TokenRefreshAuthenticator` -- handles 401 retry with refreshed token
 
-### 8.2 AuthInterceptor
+### 9.2 AuthInterceptor
 
 **Type**: OkHttp `Interceptor` (application-level)
 
@@ -550,7 +629,7 @@ Json {
 - `POST /auth/customer/emailpass/register` (register)
 - Requests that already have an `Authorization` header (do not overwrite)
 
-### 8.3 TokenRefreshAuthenticator
+### 9.3 TokenRefreshAuthenticator
 
 **Type**: OkHttp `Authenticator`
 
@@ -564,7 +643,33 @@ Json {
 - On failure: calls `TokenProvider.clearTokens()` and returns `null` (lets the 401 propagate)
 - Max retry count: 1 (do not loop indefinitely)
 
-### 8.4 ApiErrorMapper
+### 9.4 RetryInterceptor
+
+**Type**: OkHttp `Interceptor` (application-level)
+
+**Behavior:**
+1. Proceed with the chain to get the response
+2. If response status is in `[500, 502, 503, 504]`:
+   a. Close the response body
+   b. For each retry attempt (up to 3):
+      - Calculate delay: `baseDelay * 2^(attempt-1)` with jitter
+      - Sleep for the calculated delay (`Thread.sleep` -- interceptors run on OkHttp threads)
+      - Re-execute the request via `chain.proceed(request)`
+      - If the new response is successful (not 5xx): return it
+   c. If all retries fail: return the last failed response (caller maps to `AppError.Server`)
+3. If response is not 5xx: return immediately (no retry)
+
+**Configuration constants** (defined in `RetryInterceptor`):
+```
+MAX_RETRIES = 3
+BASE_DELAY_MS = 1000L
+BACKOFF_MULTIPLIER = 2.0
+MAX_DELAY_MS = 8000L
+JITTER_FACTOR = 0.2
+RETRYABLE_CODES = setOf(500, 502, 503, 504)
+```
+
+### 9.5 ApiErrorMapper
 
 **Responsibilities:**
 - Takes a Retrofit `HttpException` or a raw `Throwable` and maps it to `AppError`
@@ -574,7 +679,7 @@ Json {
 - For `SerializationException`: maps to `AppError.Unknown`
 - For everything else: maps to `AppError.Unknown`
 
-### 8.5 NetworkMonitor
+### 9.6 NetworkMonitor
 
 **Implementation:**
 - Requires `Context` (injected via Hilt as `@ApplicationContext`)
@@ -587,7 +692,16 @@ Json {
 - Initial value: query `activeNetwork` capabilities at construction time
 - Requires `ACCESS_NETWORK_STATE` permission (already in manifest from scaffold)
 
-### 8.6 Hilt DI Module
+### 9.7 LoggingInterceptor
+
+**Type**: Thin wrapper around OkHttp's `HttpLoggingInterceptor`
+
+**Configuration:**
+- Logger: `Timber`-based logger implementation
+- Level: `BODY` for debug builds, `NONE` for release builds
+- Added as a **network interceptor** to capture wire-level details
+
+### 9.8 Hilt DI Module
 
 A `@Module @InstallIn(SingletonComponent::class)` that provides:
 
@@ -603,19 +717,19 @@ Note: The `NetworkModule` is created here. Feature-specific `@Provides fun provi
 
 ---
 
-## 9. iOS Implementation Details
+## 10. iOS Implementation Details
 
-### 9.1 URLSession Configuration
+### 10.1 URLSession Configuration
 
 **URLSessionConfiguration.default** with customizations:
-- `timeoutIntervalForRequest`: 30 seconds
+- `timeoutIntervalForRequest`: 60 seconds
 - `timeoutIntervalForResource`: 300 seconds
 - `urlCache`: `URLCache(memoryCapacity: 10_485_760, diskCapacity: 52_428_800)` (10 MB memory, 50 MB disk)
 - `httpAdditionalHeaders`:
   - `Accept`: `application/json`
 - `waitsForConnectivity`: `false` (fail fast when offline; app shows offline banner separately)
 
-### 9.2 APIClient
+### 10.2 APIClient
 
 **Type**: `final class APIClient: Sendable`
 
@@ -625,6 +739,7 @@ Note: The `NetworkModule` is created here. Feature-specific `@Provides fun provi
 - `tokenProvider: TokenProvider` -- for auth header injection
 - `decoder: JSONDecoder` -- configured for Medusa responses
 - `encoder: JSONEncoder` -- configured for Medusa requests
+- `retryPolicy: RetryPolicy` -- configuration for retry behavior
 
 **Primary method:**
 ```
@@ -641,11 +756,12 @@ func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
 7. Call `session.data(for: request)`
 8. Check HTTP status code:
    - 200-299: decode response body as `T` using `JSONDecoder.api`
-   - 401: attempt token refresh and retry (see section 9.4)
+   - 401: attempt token refresh and retry (see section 10.4)
+   - 500-504: enter retry loop with exponential backoff (see section 10.5)
    - Other: parse error body as `MedusaErrorDTO`, map to `AppError`
 9. Return decoded `T`
 
-### 9.3 Endpoint Protocol
+### 10.3 Endpoint Protocol
 
 ```
 protocol Endpoint: Sendable {
@@ -666,7 +782,7 @@ Each feature defines an `enum` conforming to `Endpoint` for its API calls.
 - `body`: nil
 - `requiresAuth`: false
 
-### 9.4 AuthMiddleware (Token Injection + Refresh)
+### 10.4 AuthMiddleware (Token Injection + Refresh)
 
 Token injection and refresh are handled within `APIClient.request()` rather than as
 a separate middleware class, since URLSession does not have OkHttp's interceptor pattern.
@@ -679,7 +795,30 @@ a separate middleware class, since URLSession does not have OkHttp's interceptor
 - On failure: clears tokens, throws `AppError.unauthorized`
 - Max retry: 1 attempt
 
-### 9.5 JSONCoders
+### 10.5 RetryPolicy
+
+**Type**: `struct RetryPolicy: Sendable`
+
+**Properties:**
+```
+struct RetryPolicy: Sendable {
+    let maxRetries: Int             // default: 3
+    let baseDelay: TimeInterval     // default: 1.0
+    let backoffMultiplier: Double   // default: 2.0
+    let maxDelay: TimeInterval      // default: 8.0
+    let jitterFactor: Double        // default: 0.2
+    let retryableStatusCodes: Set<Int>  // default: [500, 502, 503, 504]
+}
+```
+
+**Implementation in APIClient:**
+- After receiving a 5xx response, `APIClient` enters a retry loop
+- Uses `Task.sleep(nanoseconds:)` for async-friendly delays (no thread blocking)
+- Applies jitter: `delay * (1.0 + Double.random(in: -jitterFactor...jitterFactor))`
+- If the retried request returns 401, the token refresh mechanism handles it
+- If all retries exhausted, throws `AppError.server(code:message:)` from the last response
+
+### 10.6 JSONCoders
 
 **`JSONDecoder.api`** (static computed property or factory):
 - `keyDecodingStrategy = .convertFromSnakeCase`
@@ -689,7 +828,7 @@ a separate middleware class, since URLSession does not have OkHttp's interceptor
 - `keyEncodingStrategy = .convertToSnakeCase`
 - `dateEncodingStrategy = .iso8601`
 
-### 9.6 HTTPMethod Enum
+### 10.7 HTTPMethod Enum
 
 ```
 enum HTTPMethod: String, Sendable {
@@ -701,7 +840,7 @@ enum HTTPMethod: String, Sendable {
 }
 ```
 
-### 9.7 NetworkMonitor
+### 10.8 NetworkMonitor
 
 **Type**: `@MainActor @Observable final class NetworkMonitor`
 
@@ -713,7 +852,7 @@ enum HTTPMethod: String, Sendable {
 - Starts monitoring on `init`, cancels on `deinit`
 - Must dispatch UI updates to `@MainActor`
 
-### 9.8 RequestLogger
+### 10.9 RequestLogger
 
 **Type**: Protocol or utility function, debug-only
 
@@ -724,7 +863,7 @@ enum HTTPMethod: String, Sendable {
 - Wrapped in `#if DEBUG` -- zero overhead in release builds
 - Uses `os.Logger.Level.debug` for requests, `.info` for responses, `.error` for failures
 
-### 9.9 Factory DI Registration
+### 10.10 Factory DI Registration
 
 In `Container+Extensions.swift`:
 
@@ -736,9 +875,9 @@ In `Container+Extensions.swift`:
 
 ---
 
-## 10. File Manifest
+## 11. File Manifest
 
-### 10.1 Android Files
+### 11.1 Android Files
 
 Base path: `android/app/src/main/java/com/molt/marketplace/core/`
 
@@ -748,15 +887,16 @@ Base path: `android/app/src/main/java/com/molt/marketplace/core/`
 | 2 | `network/OkHttpClientFactory.kt` | Builds `OkHttpClient` with interceptor chain, authenticator, cache, and timeouts. Separates OkHttp construction from Retrofit for testability. |
 | 3 | `network/AuthInterceptor.kt` | OkHttp `Interceptor` that reads token from `TokenProvider` and injects `Authorization: Bearer` header. Skips public-only endpoints. |
 | 4 | `network/TokenRefreshAuthenticator.kt` | OkHttp `Authenticator` that handles 401 by calling `TokenProvider.refreshToken()`, retries with new token, or clears tokens on failure. Uses `Mutex` for concurrency. |
-| 5 | `network/LoggingInterceptor.kt` | Thin wrapper around OkHttp's `HttpLoggingInterceptor` configured with `Timber` logger. Sets `BODY` level for debug, `NONE` for release. |
-| 6 | `network/ApiErrorMapper.kt` | Object with `fun Throwable.toAppError(): AppError` extension function. Maps `HttpException`, `IOException`, `SerializationException` to `AppError` subtypes. Parses `MedusaErrorDto` from error response body. |
-| 7 | `network/MedusaErrorDto.kt` | `@Serializable data class MedusaErrorDto(val type: String, val message: String, val code: String? = null)` |
-| 8 | `network/PaginationMeta.kt` | `data class PaginationMeta(val count: Int, val limit: Int, val offset: Int)` -- convenience for extracting pagination info from responses. |
-| 9 | `network/NetworkMonitor.kt` | `ConnectivityManager`-based class exposing `val isConnected: StateFlow<Boolean>`. Uses `registerDefaultNetworkCallback`. Injected as `@Singleton`. |
-| 10 | `network/TokenProvider.kt` | `interface TokenProvider` with `getAccessToken()`, `refreshToken()`, `clearTokens()` suspend functions. |
-| 11 | `network/HttpMethod.kt` | Not needed (Retrofit uses annotations). Omit. |
-| 12 | `domain/error/AppError.kt` | Sealed class with 5 subtypes (`Network`, `Server`, `NotFound`, `Unauthorized`, `Unknown`) + `toUserMessageResId()` extension function. |
-| 13 | `di/NetworkModule.kt` | Hilt `@Module @InstallIn(SingletonComponent::class)` providing `Json`, `OkHttpClient`, `Retrofit`, `NetworkMonitor`, placeholder `TokenProvider`. |
+| 5 | `network/RetryInterceptor.kt` | OkHttp `Interceptor` that retries 5xx responses up to 3 times with exponential backoff and jitter. Configurable via constants. |
+| 6 | `network/LoggingInterceptor.kt` | Thin wrapper around OkHttp's `HttpLoggingInterceptor` configured with `Timber` logger. Sets `BODY` level for debug, `NONE` for release. |
+| 7 | `network/ApiErrorMapper.kt` | Object with `fun Throwable.toAppError(): AppError` extension function. Maps `HttpException`, `IOException`, `SerializationException` to `AppError` subtypes. Parses `MedusaErrorDto` from error response body. |
+| 8 | `network/MedusaErrorDto.kt` | `@Serializable data class MedusaErrorDto(val type: String, val message: String, val code: String? = null)` |
+| 9 | `network/PaginationMeta.kt` | `data class PaginationMeta(val count: Int, val limit: Int, val offset: Int)` -- convenience for extracting pagination info from responses. |
+| 10 | `network/NetworkMonitor.kt` | `ConnectivityManager`-based class exposing `val isConnected: StateFlow<Boolean>`. Uses `registerDefaultNetworkCallback`. Injected as `@Singleton`. |
+| 11 | `network/TokenProvider.kt` | `interface TokenProvider` with `getAccessToken()`, `refreshToken()`, `clearTokens()` suspend functions. |
+| 12 | `network/HttpMethod.kt` | Not needed (Retrofit uses annotations). Omit. |
+| 13 | `domain/error/AppError.kt` | Sealed class with 5 subtypes (`Network`, `Server`, `NotFound`, `Unauthorized`, `Unknown`) + `toUserMessageResId()` extension function. |
+| 14 | `di/NetworkModule.kt` | Hilt `@Module @InstallIn(SingletonComponent::class)` providing `Json`, `OkHttpClient`, `Retrofit`, `NetworkMonitor`, placeholder `TokenProvider`. |
 
 **Test files** (base: `android/app/src/test/java/com/molt/marketplace/core/`):
 
@@ -764,44 +904,47 @@ Base path: `android/app/src/main/java/com/molt/marketplace/core/`
 |---|-----------|-------|
 | 1 | `network/AuthInterceptorTest.kt` | Token injection, skipping public endpoints, missing token behavior |
 | 2 | `network/TokenRefreshAuthenticatorTest.kt` | Successful refresh + retry, failed refresh + clear, concurrent refresh serialization |
-| 3 | `network/ApiErrorMapperTest.kt` | All HTTP status mappings, IOException mapping, SerializationException mapping, MedusaErrorDto parsing |
-| 4 | `domain/error/AppErrorTest.kt` | `toUserMessageResId()` returns correct string resource for each case |
+| 3 | `network/RetryInterceptorTest.kt` | Retry on 500/502/503/504, no retry on 4xx, max retry limit, exponential backoff delays |
+| 4 | `network/ApiErrorMapperTest.kt` | All HTTP status mappings, IOException mapping, SerializationException mapping, MedusaErrorDto parsing |
+| 5 | `domain/error/AppErrorTest.kt` | `toUserMessageResId()` returns correct string resource for each case |
 
-### 10.2 iOS Files
+### 11.2 iOS Files
 
 Base path: `ios/MoltMarketplace/Core/`
 
 | # | File Path (relative to base) | Description |
 |---|------------------------------|-------------|
-| 1 | `Network/APIClient.swift` | `final class APIClient: Sendable`. Generic `request<T: Decodable>(_ endpoint: Endpoint) async throws -> T`. Handles auth injection, 401 refresh + retry, error mapping. |
+| 1 | `Network/APIClient.swift` | `final class APIClient: Sendable`. Generic `request<T: Decodable>(_ endpoint: Endpoint) async throws -> T`. Handles auth injection, 401 refresh + retry, 5xx retry with backoff, error mapping. |
 | 2 | `Network/Endpoint.swift` | `protocol Endpoint: Sendable` with `path`, `method`, `headers`, `queryItems`, `body`, `requiresAuth` properties. Default implementations via extension. |
 | 3 | `Network/HTTPMethod.swift` | `enum HTTPMethod: String, Sendable` -- `.get`, `.post`, `.put`, `.delete`, `.patch`. |
 | 4 | `Network/AuthMiddleware.swift` | `actor TokenRefreshActor` managing the refresh mutex. Used by `APIClient` to serialize concurrent token refresh attempts. |
-| 5 | `Network/JSONCoders.swift` | `extension JSONDecoder { static let api: JSONDecoder }` and `extension JSONEncoder { static let api: JSONEncoder }` with snake_case + ISO 8601 config. |
-| 6 | `Network/PaginatedResponse.swift` | `struct PaginationMeta: Decodable, Equatable, Sendable` with `count`, `limit`, `offset` fields. |
-| 7 | `Network/MedusaErrorDTO.swift` | `struct MedusaErrorDTO: Decodable` with `type`, `message`, `code` (optional) fields. |
-| 8 | `Network/NetworkMonitor.swift` | `@MainActor @Observable final class NetworkMonitor`. Uses `NWPathMonitor`. Exposes `private(set) var isConnected: Bool`. |
-| 9 | `Network/RequestLogger.swift` | Debug-only utility using `os.Logger`. Logs request method/URL/headers and response status/duration. Wrapped in `#if DEBUG`. |
-| 10 | `Network/TokenProvider.swift` | `protocol TokenProvider: Sendable` with `getAccessToken()`, `refreshToken()`, `clearTokens()` async functions. |
-| 11 | `Domain/Error/AppError.swift` | `enum AppError: Error, Equatable` with 5 cases + `extension Error { var toUserMessage: String }` using `String(localized:)`. |
+| 5 | `Network/RetryPolicy.swift` | `struct RetryPolicy: Sendable` with `maxRetries`, `baseDelay`, `backoffMultiplier`, `maxDelay`, `jitterFactor`, `retryableStatusCodes`. Static `.default` factory. |
+| 6 | `Network/JSONCoders.swift` | `extension JSONDecoder { static let api: JSONDecoder }` and `extension JSONEncoder { static let api: JSONEncoder }` with snake_case + ISO 8601 config. |
+| 7 | `Network/PaginatedResponse.swift` | `struct PaginationMeta: Decodable, Equatable, Sendable` with `count`, `limit`, `offset` fields. |
+| 8 | `Network/MedusaErrorDTO.swift` | `struct MedusaErrorDTO: Decodable` with `type`, `message`, `code` (optional) fields. |
+| 9 | `Network/NetworkMonitor.swift` | `@MainActor @Observable final class NetworkMonitor`. Uses `NWPathMonitor`. Exposes `private(set) var isConnected: Bool`. |
+| 10 | `Network/RequestLogger.swift` | Debug-only utility using `os.Logger`. Logs request method/URL/headers and response status/duration. Wrapped in `#if DEBUG`. |
+| 11 | `Network/TokenProvider.swift` | `protocol TokenProvider: Sendable` with `getAccessToken()`, `refreshToken()`, `clearTokens()` async functions. |
+| 12 | `Domain/Error/AppError.swift` | `enum AppError: Error, Equatable` with 5 cases + `extension Error { var toUserMessage: String }` using `String(localized:)`. |
 
 **Test files** (base: `ios/MoltMarketplaceTests/Core/`):
 
 | # | Test File | Tests |
 |---|-----------|-------|
-| 1 | `Network/APIClientTests.swift` | Successful request, error status mapping, auth header injection, token refresh on 401 |
+| 1 | `Network/APIClientTests.swift` | Successful request, error status mapping, auth header injection, token refresh on 401, retry on 5xx with backoff |
 | 2 | `Network/TokenRefreshActorTests.swift` | Successful refresh + retry, failed refresh + clear, concurrent refresh serialization |
-| 3 | `Network/JSONCodersTests.swift` | Snake_case decoding, ISO 8601 date decoding, encoding round-trip |
-| 4 | `Domain/Error/AppErrorTests.swift` | `toUserMessage` returns correct localized string for each case |
+| 3 | `Network/RetryPolicyTests.swift` | Delay calculation, jitter bounds, retryable status code filtering |
+| 4 | `Network/JSONCodersTests.swift` | Snake_case decoding, ISO 8601 date decoding, encoding round-trip |
+| 5 | `Domain/Error/AppErrorTests.swift` | `toUserMessage` returns correct localized string for each case |
 
-### 10.3 Shared Files (No changes)
+### 11.3 Shared Files (No changes)
 
 No new shared files. The existing `shared/api-contracts/*.json` files are reference-only
 and are not modified by this feature.
 
 ---
 
-## 11. Build Verification Criteria
+## 12. Build Verification Criteria
 
 The network layer is complete when:
 
@@ -811,6 +954,9 @@ The network layer is complete when:
 - [ ] `AuthInterceptor` injects token header when `TokenProvider` returns a token
 - [ ] `AuthInterceptor` skips injection when `TokenProvider` returns null
 - [ ] `TokenRefreshAuthenticator` calls `refreshToken()` on 401 and retries
+- [ ] `RetryInterceptor` retries on 500, 502, 503, 504 up to 3 times
+- [ ] `RetryInterceptor` does NOT retry on 4xx responses
+- [ ] `RetryInterceptor` applies exponential backoff with jitter between retries
 - [ ] `ApiErrorMapper` correctly maps all HTTP status codes to `AppError` subtypes
 - [ ] `ApiErrorMapper` correctly maps `IOException` to `AppError.Network`
 - [ ] `ApiErrorMapper` parses `MedusaErrorDto` from error response bodies
@@ -820,6 +966,7 @@ The network layer is complete when:
 - [ ] All unit tests pass: `./gradlew testDebugUnitTest --tests "*.core.*"`
 - [ ] OkHttp logging interceptor is active only in debug builds
 - [ ] JSON serialization correctly handles snake_case keys
+- [ ] OkHttp connect timeout is 30s, read timeout is 60s, write timeout is 60s
 
 ### iOS
 
@@ -827,7 +974,9 @@ The network layer is complete when:
 - [ ] `APIClient.request()` correctly builds `URLRequest` from `Endpoint`
 - [ ] `APIClient.request()` injects Bearer token for authenticated endpoints
 - [ ] `APIClient.request()` attempts token refresh on 401 and retries
+- [ ] `APIClient.request()` retries on 5xx up to 3 times with exponential backoff
 - [ ] `APIClient.request()` maps error responses to `AppError`
+- [ ] `RetryPolicy` calculates correct delays with backoff and jitter
 - [ ] `JSONDecoder.api` correctly decodes snake_case keys
 - [ ] `JSONDecoder.api` correctly decodes ISO 8601 dates
 - [ ] `NetworkMonitor.isConnected` reflects actual connectivity state
@@ -836,10 +985,11 @@ The network layer is complete when:
 - [ ] All unit tests pass: `xcodebuild test -scheme MoltMarketplace-Debug`
 - [ ] `RequestLogger` is compiled only in DEBUG builds
 - [ ] No strict concurrency warnings
+- [ ] URLSession request timeout is 60s
 
 ---
 
-## 12. Implementation Notes for Developers
+## 13. Implementation Notes for Developers
 
 ### For Android Developer
 
@@ -849,14 +999,15 @@ The network layer is complete when:
 4. Create `network/ApiErrorMapper.kt` -- maps Throwable to AppError, used by all repositories
 5. Create `network/AuthInterceptor.kt` -- reads token from `TokenProvider`, injects header
 6. Create `network/TokenRefreshAuthenticator.kt` -- handles 401 retry via `TokenProvider.refreshToken()`
-7. Create `network/LoggingInterceptor.kt` -- wraps OkHttp logging interceptor with Timber
-8. Create `network/OkHttpClientFactory.kt` -- assembles interceptor chain, sets timeouts and cache
-9. Create `network/ApiClient.kt` -- creates Retrofit with OkHttp client and JSON converter
-10. Create `network/PaginationMeta.kt` -- simple data class
-11. Create `network/NetworkMonitor.kt` -- ConnectivityManager wrapper
-12. Create `di/NetworkModule.kt` -- Hilt module providing all network singletons
-13. Provide a no-op `TokenProvider` implementation in the Hilt module as a placeholder for M0-06
-14. Write unit tests for `AuthInterceptor`, `TokenRefreshAuthenticator`, `ApiErrorMapper`, `AppError`
+7. Create `network/RetryInterceptor.kt` -- retries 5xx responses with exponential backoff
+8. Create `network/LoggingInterceptor.kt` -- wraps OkHttp logging interceptor with Timber
+9. Create `network/OkHttpClientFactory.kt` -- assembles interceptor chain, sets timeouts and cache
+10. Create `network/ApiClient.kt` -- creates Retrofit with OkHttp client and JSON converter
+11. Create `network/PaginationMeta.kt` -- simple data class
+12. Create `network/NetworkMonitor.kt` -- ConnectivityManager wrapper
+13. Create `di/NetworkModule.kt` -- Hilt module providing all network singletons
+14. Provide a no-op `TokenProvider` implementation in the Hilt module as a placeholder for M0-06
+15. Write unit tests for `AuthInterceptor`, `TokenRefreshAuthenticator`, `RetryInterceptor`, `ApiErrorMapper`, `AppError`
 
 **Key OkHttp notes:**
 - Use `runBlocking` in `AuthInterceptor.intercept()` to call `suspend fun getAccessToken()`,
@@ -867,6 +1018,11 @@ The network layer is complete when:
 - Ensure the logging interceptor is a **network interceptor** (added via `.addNetworkInterceptor()`)
   so it logs the actual wire-level request/response including redirects.
 - Chucker should be an **application interceptor** (added via `.addInterceptor()`).
+- `RetryInterceptor` must be an **application interceptor** added AFTER `AuthInterceptor`
+  but BEFORE the logging interceptor. Order: Auth -> Retry -> Logging (network) -> Chucker.
+- In `RetryInterceptor`, use `Thread.sleep()` for the delay (not coroutine `delay()`),
+  since OkHttp interceptors run on synchronous threads. This is acceptable because OkHttp
+  manages its own thread pool.
 
 **DI module structure:**
 - `NetworkModule` is `@InstallIn(SingletonComponent::class)` with `object` type using `@Provides`
@@ -881,14 +1037,15 @@ The network layer is complete when:
 4. Create `Network/JSONCoders.swift` -- static decoder/encoder
 5. Create `Network/MedusaErrorDTO.swift` -- error response parsing
 6. Create `Network/TokenProvider.swift` -- protocol for auth
-7. Create `Network/AuthMiddleware.swift` -- `actor TokenRefreshActor` for refresh mutex
-8. Create `Network/APIClient.swift` -- main client with request method
-9. Create `Network/PaginatedResponse.swift` -- pagination metadata struct
-10. Create `Network/NetworkMonitor.swift` -- NWPathMonitor wrapper
-11. Create `Network/RequestLogger.swift` -- os.Logger debug logging
-12. Register in `Container+Extensions.swift` (Factory): `apiClient`, `networkMonitor`
-13. Provide a no-op `TokenProvider` conformance as placeholder for M0-06
-14. Write unit tests for `APIClient`, `TokenRefreshActor`, `JSONCoders`, `AppError`
+7. Create `Network/RetryPolicy.swift` -- retry configuration struct
+8. Create `Network/AuthMiddleware.swift` -- `actor TokenRefreshActor` for refresh mutex
+9. Create `Network/APIClient.swift` -- main client with request method, retry loop, error mapping
+10. Create `Network/PaginatedResponse.swift` -- pagination metadata struct
+11. Create `Network/NetworkMonitor.swift` -- NWPathMonitor wrapper
+12. Create `Network/RequestLogger.swift` -- os.Logger debug logging
+13. Register in `Container+Extensions.swift` (Factory): `apiClient`, `networkMonitor`
+14. Provide a no-op `TokenProvider` conformance as placeholder for M0-06
+15. Write unit tests for `APIClient`, `TokenRefreshActor`, `RetryPolicy`, `JSONCoders`, `AppError`
 
 **Key Swift notes:**
 - `APIClient` should be a `final class` (not an actor) since it uses `URLSession` which
@@ -899,8 +1056,11 @@ The network layer is complete when:
   SwiftUI views. The `NWPathMonitor` callback dispatches to `@MainActor` for updates.
 - `Endpoint.body` is typed as `(any Encodable)?`. The `APIClient` erases this to `Data`
   using `JSONEncoder.api.encode()` with a type-erasing wrapper.
+- The retry loop in `APIClient` uses `Task.sleep(nanoseconds:)` which is async-friendly
+  and supports structured concurrency cancellation. Do NOT use `Thread.sleep`.
 - For testing, create a `MockURLProtocol` that intercepts `URLSession` requests and returns
   pre-configured responses. Register it via `URLSessionConfiguration.protocolClasses`.
+- `RetryPolicy` is a simple value type with a `static let `default`` factory for standard config.
 
 ### Common Rules (Both Platforms)
 
@@ -915,3 +1075,5 @@ The network layer is complete when:
 - Debug logging must have zero overhead in release builds
 - Currency amounts from the API are in the **smallest unit** (e.g., cents). Conversion to
   display format (e.g., EUR 12.99) is handled by feature-level formatters, not the network layer
+- Retry policy applies only to 5xx server errors. Client errors (4xx) and network errors are
+  never automatically retried
