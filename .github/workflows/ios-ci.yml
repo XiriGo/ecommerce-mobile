@@ -1,0 +1,113 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
+    paths:
+      - 'ios/**'
+      - 'shared/**'
+      - '.github/workflows/ios-ci.yml'
+      - 'CLAUDE.md'
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'ios/**'
+      - 'shared/**'
+      - '.github/workflows/ios-ci.yml'
+      - 'CLAUDE.md'
+
+concurrency:
+  group: ios-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SCHEME: MoltMarketplace
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+
+jobs:
+  lint:
+    name: Lint (SwiftLint + SwiftFormat)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: brew install swiftlint swiftformat
+
+      - name: SwiftLint
+        run: swiftlint lint --strict --reporter github-actions-logging
+        working-directory: ios
+
+      - name: SwiftFormat
+        run: swiftformat --lint . --config .swiftformat
+        working-directory: ios
+
+  build:
+    name: Build
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+        working-directory: ios
+
+      - name: Cache SPM packages
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -scheme ${{ env.SCHEME }} \
+            -destination '${{ env.DESTINATION }}' \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
+
+  test:
+    name: Unit tests
+    runs-on: macos-15
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+        working-directory: ios
+
+      - name: Cache SPM packages
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Run tests
+        run: |
+          xcodebuild test \
+            -scheme ${{ env.SCHEME }} \
+            -destination '${{ env.DESTINATION }}' \
+            -skipPackagePluginValidation \
+            -resultBundlePath TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-test-results
+          path: ios/TestResults.xcresult
+          retention-days: 14

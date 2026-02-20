@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Molt Marketplace</string>
+    <string name="common_loading_message">Qed jillowdja...</string>
+    <string name="common_retry_button">Erga\' ipprova</string>
+    <string name="common_error_network">Problema fil-konnessjoni. Iccekja l-internet tieghek.</string>
+    <string name="common_error_server">Xi haga marret hazin. Erga\' ipprova aktar tard.</string>
+    <string name="common_error_unauthorized">Jekk joghgbok idhlol biex tkompli.</string>
+    <string name="common_error_not_found">L-oggett mitlub ma nstabx.</string>
+    <string name="common_error_unknown">Sehhet problema mhux mistennija.</string>
+    <string name="common_ok_button">OK</string>
+    <string name="common_cancel_button">Ikkanella</string>
+    <string name="common_close_button">Aghlaq</string>
+    <string name="common_search_placeholder">Fittex</string>
+</resources>

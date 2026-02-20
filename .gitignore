@@ -57,3 +57,12 @@ coverage/
 # ─── Misc ──────────────────────────────────────────
 *.tmp
 *.bak
+
+# Xcode user data  
+*.xcuserstate
+xcuserdata/
+ios/build/
+ios/.swiftpm/
+
+# Android build artifacts
+android/gradle/gradle-daemon-jvm.properties
