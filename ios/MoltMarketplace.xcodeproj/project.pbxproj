@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -58,17 +58,17 @@
 		2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableTests.swift; sourceTree = "<group>"; };
 		2EDF5E770AED65686426372F /* MoltTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTheme.swift; sourceTree = "<group>"; };
 		40BE92AD0FA3B02AED5D7789 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColors.swift; sourceTree = "<group>"; };
 		5A781AA8A0197BC663457891 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
-		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		81AEB5341BCB6D1683358830 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacingTests.swift; sourceTree = "<group>"; };
-		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B72C477B1CBC8BE84E7DA113 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		BFD3C59EFB0693C71AD7236D /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		CA7E99A60235FAE3B592DCC5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		EF14957D737C403D4C202BBF /* MoltTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTypography.swift; sourceTree = "<group>"; };
@@ -357,7 +357,6 @@
 				A13A85DD26B765AA49C3BE86 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 				14FD04FA8D7E8155F46AAC5F /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -620,6 +619,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -662,6 +662,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
