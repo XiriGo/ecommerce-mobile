@@ -1827,11 +1827,22 @@ When Figma designs are ready, **only these change**:
 - **Instruments**: Performance profiling
 - **Proxyman**: HTTP traffic inspector
 
+## Device Support
+
+- **Phone-first**: No special tablet layouts. Grid columns adapt by width class (Compact=2, Medium=3, Expanded=4).
+- **Portrait-only**: All screens locked to portrait orientation.
+  - Android: `android:screenOrientation="portrait"` in AndroidManifest.xml
+  - iOS: `UISupportedInterfaceOrientations` = portrait only in Info.plist
+- **Minimum screen**: Android 320dp width (minSdk 26), iOS 375pt width (iPhone SE 3rd gen)
+- **Dark mode**: Handled by `MoltTheme` — no extra configuration needed
+- **Full guide**: `docs/guides/device-support.md`
+
 ## Continuous Integration
 
 ### Platform: GitHub Actions
 
 All CI/CD runs on **GitHub Actions** with platform-specific runners.
+Workflow files: `.github/workflows/android-ci.yml`, `.github/workflows/ios-ci.yml`
 
 ### Android CI Pipeline
 1. Lint (ktlint + detekt)
@@ -1849,11 +1860,20 @@ All CI/CD runs on **GitHub Actions** with platform-specific runners.
 5. Code coverage report
 6. Build release IPA (signed)
 
+### Lint Configuration
+
+- **Android**: `android/detekt.yml` (Detekt rules), ktlint via Gradle plugin
+- **iOS**: `.swiftlint.yml` (SwiftLint rules), `.swiftformat` (SwiftFormat rules)
+
 ### CI Requirements
 - All checks must pass before merge
 - Coverage must not decrease
 - No new lint warnings
 - Build succeeds for both debug and release
+
+### CI/CD Guide
+
+Full pipeline documentation: `docs/guides/ci-cd.md`
 
 ## Release Process
 
@@ -1991,6 +2011,6 @@ All CI/CD runs on **GitHub Actions** with platform-specific runners.
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-02-20
 **Maintained By**: Molt Development Team
 **Questions**: Refer to project lead or update this guide via PR

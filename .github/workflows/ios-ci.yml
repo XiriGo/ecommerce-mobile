@@ -1,0 +1,67 @@
+name: iOS CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'ios/**'
+      - 'shared/**'
+      - '.github/workflows/ios-ci.yml'
+  push:
+    branches: [main, develop]
+    paths:
+      - 'ios/**'
+      - 'shared/**'
+
+concurrency:
+  group: ios-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install swiftlint swiftformat
+      - name: SwiftLint
+        run: swiftlint lint --reporter github-actions-logging
+        working-directory: ios
+      - name: SwiftFormat
+        run: swiftformat --lint .
+        working-directory: ios
+
+  build-and-test:
+    runs-on: macos-15
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData
+          key: spm-${{ hashFiles('ios/MoltMarketplace.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: spm-
+      - name: Build for testing
+        run: |
+          xcodebuild build-for-testing \
+            -project MoltMarketplace.xcodeproj \
+            -scheme MoltMarketplace \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -resultBundlePath build/Build.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
+      - name: Run tests
+        run: |
+          xcodebuild test-without-building \
+            -project MoltMarketplace.xcodeproj \
+            -scheme MoltMarketplace \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -resultBundlePath build/Test.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-test-results
+          path: ios/build/*.xcresult
+          retention-days: 14

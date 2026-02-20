@@ -43,6 +43,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Placeholder directories for feature modules
   - Test infrastructure for both platforms
 
+#### Infrastructure Guides
+
+- **device-support**: Platform infrastructure guide covering phone-first approach, portrait-only orientation lock, screen size adaptation (WindowWidthSizeClass / horizontalSizeClass), safe area handling, Dynamic Type, dark mode, status bar, minimum screen sizes, and accessibility touch targets (Android + iOS)
+- **local-storage**: Platform infrastructure guide covering all four storage layers (Proto DataStore, Tink-encrypted DataStore, Room, OkHttp Cache on Android; UserDefaults, KeychainAccess, SwiftData, URLCache on iOS), full entity schemas for CartItem / WishlistItem / RecentSearch / RecentlyViewed, DAO interfaces, offline-first patterns, data retention rules, migration strategy, and backup/security considerations (Android + iOS)
+- **testing-strategy**: Platform infrastructure guide covering test pyramid (unit / integration / E2E), framework summary (JUnit 4 + Truth + MockK + Turbine on Android; Swift Testing on iOS), E2E scenarios (Guest Browse, Login, Add to Cart, Checkout, Search), API mock strategy (MockWebServer + Dispatcher on Android; MockURLProtocol on iOS), shared test fixtures layout, fake repository pattern, snapshot testing (Paparazzi on Android; swift-snapshot-testing on iOS), performance baselines, CI integration, flaky test policy, and agentic testing agent responsibilities (Android + iOS)
+
 #### Project Setup
 
 - Claude Code Agent Teams pipeline with 7 specialized teammates
