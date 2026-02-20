@@ -12,4 +12,21 @@
     <string name="common_cancel_button">Ikkanella</string>
     <string name="common_close_button">Aghlaq</string>
     <string name="common_search_placeholder">Fittex</string>
+    <string name="common_error_generic">Xi haga marret hazin</string>
+    <string name="common_empty_message">Xejn x\'juri</string>
+    <string name="common_navigate_back">Mur lura</string>
+    <string name="common_decrease_quantity">Naqqas il-kwantita</string>
+    <string name="common_increase_quantity">Zid il-kwantita</string>
+    <string name="common_quantity_value">Kwantita: %d</string>
+    <string name="common_rating_description">Klassifika: %1$.1f minn %2$d</string>
+    <string name="common_reviews_count">(%d revizjonijiet)</string>
+    <string name="common_price_label">Prezz: %s</string>
+    <string name="common_sale_price_label">Prezz tal-bejgh: %1$s, kien %2$s</string>
+    <string name="common_add_to_wishlist">Zid mal-wishlist</string>
+    <string name="common_remove_from_wishlist">Nehhi mill-wishlist</string>
+    <string name="common_notifications_count">%d notifiki</string>
+    <string name="common_tab_home">Dar</string>
+    <string name="common_tab_categories">Kategoriji</string>
+    <string name="common_tab_cart">Karrettun</string>
+    <string name="common_tab_profile">Profil</string>
 </resources>

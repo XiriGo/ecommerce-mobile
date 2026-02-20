@@ -12,4 +12,21 @@
     <string name="common_cancel_button">Iptal</string>
     <string name="common_close_button">Kapat</string>
     <string name="common_search_placeholder">Ara</string>
+    <string name="common_error_generic">Bir seyler ters gitti</string>
+    <string name="common_empty_message">Gosterilecek bir sey yok</string>
+    <string name="common_navigate_back">Geri git</string>
+    <string name="common_decrease_quantity">Miktari azalt</string>
+    <string name="common_increase_quantity">Miktari artir</string>
+    <string name="common_quantity_value">Miktar: %d</string>
+    <string name="common_rating_description">Puan: %2$d uzerinden %1$.1f</string>
+    <string name="common_reviews_count">(%d degerlendirme)</string>
+    <string name="common_price_label">Fiyat: %s</string>
+    <string name="common_sale_price_label">Indirimli fiyat: %1$s, eskisi %2$s</string>
+    <string name="common_add_to_wishlist">Favorilere ekle</string>
+    <string name="common_remove_from_wishlist">Favorilerden kaldir</string>
+    <string name="common_notifications_count">%d bildirim</string>
+    <string name="common_tab_home">Ana sayfa</string>
+    <string name="common_tab_categories">Kategoriler</string>
+    <string name="common_tab_cart">Sepet</string>
+    <string name="common_tab_profile">Profil</string>
 </resources>

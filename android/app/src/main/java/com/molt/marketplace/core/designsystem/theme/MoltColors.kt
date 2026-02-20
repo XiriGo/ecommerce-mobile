@@ -83,6 +83,9 @@ object MoltColors {
     val Success = Color(0xFF4CAF50)
     val OnSuccess = Color(0xFFFFFFFF)
     val Warning = Color(0xFFFF9800)
+    val OnWarning = Color(0xFFFFFFFF)
+    val Info = Color(0xFF2196F3)
+    val OnInfo = Color(0xFFFFFFFF)
 
     val PriceRegular = Color(0xFF1C1B1F)
     val PriceSale = Color(0xFFB3261E)
