@@ -24,7 +24,7 @@ concurrency:
 
 env:
   SCHEME: MoltMarketplace
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
 
 jobs:
   lint:
@@ -41,7 +41,7 @@ jobs:
         working-directory: ios
 
       - name: SwiftFormat
-        run: swiftformat --lint .
+        run: swiftformat --lint . --config .swiftformat
         working-directory: ios
 
   build:

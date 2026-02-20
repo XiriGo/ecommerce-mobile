@@ -44,7 +44,6 @@
 
 # --- Imports ---
 --importgrouping testable-bottom
---sortedimports true
 
 # --- Self ---
 --self remove
@@ -213,6 +212,8 @@
 --disable docComments
 # wrapMultilineConditionalAssignment: Can conflict with SwiftLint indentation rules
 --disable wrapMultilineConditionalAssignment
+# redundantStaticSelf: Can conflict with SwiftLint prefer_self_in_static_references
+--disable redundantStaticSelf
 
 # =============================================================================
 # Exclusions

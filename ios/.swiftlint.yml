@@ -26,8 +26,10 @@ analyzer_rules:
   - unused_declaration
   - unused_import
 
-# --- Disabled rules: keep all default rules enabled ---
-disabled_rules: []
+# --- Disabled rules ---
+disabled_rules:
+  # sorted_imports: Conflicts with SwiftFormat importgrouping (testable-bottom)
+  - sorted_imports
 
 # --- Opt-in rules ---
 opt_in_rules:
@@ -102,8 +104,9 @@ opt_in_rules:
   - private_action
   - private_outlet
   - private_subject
-  - explicit_acl
-  - explicit_top_level_acl
+  # explicit_acl and explicit_top_level_acl disabled — conflicts with SwiftFormat organizeDeclarations
+  # - explicit_acl
+  # - explicit_top_level_acl
 
   # Testing
   - quick_discouraged_call
@@ -283,10 +286,6 @@ expiring_todo:
   date_delimiters:
     opening: "["
     closing: "]"
-
-# --- Explicit ACL ---
-explicit_acl:
-  severity: warning
 
 # =============================================================================
 # Custom rules

@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [develop, main]
 
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: pr-gate-${{ github.event.pull_request.number }}
   cancel-in-progress: true
@@ -14,7 +18,7 @@ env:
   JAVA_DISTRIBUTION: 'temurin'
   # iOS
   SCHEME: MoltMarketplace
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
 
 jobs:
   # ------------------------------------------------------------------

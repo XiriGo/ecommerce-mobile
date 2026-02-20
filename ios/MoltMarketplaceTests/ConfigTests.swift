@@ -1,39 +1,39 @@
 import Foundation
-@testable import MoltMarketplace
 import Testing
+@testable import MoltMarketplace
 
 @Suite("Config Tests")
-internal struct ConfigTests {
+struct ConfigTests {
     @Test("apiBaseURL returns valid URL for all configurations")
-    internal func testApiBaseURLIsValid() {
+    func apiBaseURLIsValid() {
         let url = Config.apiBaseURL
         #expect(url.scheme == "https")
         #expect(url.host()?.hasSuffix("molt.mt") == true)
     }
 
     @Test("apiBaseURL returns correct environment URL for Debug")
-    internal func testApiBaseURLDebug() {
+    func apiBaseURLDebug() {
         #if DEBUG
         #expect(Config.apiBaseURL.absoluteString == "https://api-dev.molt.mt")
         #endif
     }
 
     @Test("apiBaseURL returns correct environment URL for Staging")
-    internal func testApiBaseURLStaging() {
+    func apiBaseURLStaging() {
         #if STAGING
         #expect(Config.apiBaseURL.absoluteString == "https://api-staging.molt.mt")
         #endif
     }
 
     @Test("apiBaseURL returns correct environment URL for Release")
-    internal func testApiBaseURLRelease() {
+    func apiBaseURLRelease() {
         #if !DEBUG && !STAGING
         #expect(Config.apiBaseURL.absoluteString == "https://api.molt.mt")
         #endif
     }
 
     @Test("bundleVersion returns valid semantic version format")
-    internal func testBundleVersionFormat() {
+    func bundleVersionFormat() {
         let version = Config.bundleVersion
         #expect(!version.isEmpty)
         // Should match semantic versioning pattern (e.g., "1.0.0")
@@ -43,7 +43,7 @@ internal struct ConfigTests {
     }
 
     @Test("buildNumber returns valid build number")
-    internal func testBuildNumber() {
+    func testBuildNumber() {
         let buildNumber = Config.buildNumber
         #expect(!buildNumber.isEmpty)
         // Build number should be numeric or alphanumeric

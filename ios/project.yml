@@ -73,6 +73,10 @@ targets:
     platform: iOS
     sources:
       - MoltMarketplaceTests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        PRODUCT_BUNDLE_IDENTIFIER: com.molt.marketplace.tests
     dependencies:
       - target: MoltMarketplace
       - package: ViewInspector
@@ -84,6 +88,10 @@ targets:
     platform: iOS
     sources:
       - MoltMarketplaceUITests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        PRODUCT_BUNDLE_IDENTIFIER: com.molt.marketplace.uitests
     dependencies:
       - target: MoltMarketplace
 packages:

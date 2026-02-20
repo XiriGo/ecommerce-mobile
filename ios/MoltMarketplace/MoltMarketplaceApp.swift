@@ -1,21 +1,29 @@
 import SwiftUI
 
+// MARK: - MoltMarketplaceApp
+
 @main
-internal struct MoltMarketplaceApp: App {
-    internal init() {
+struct MoltMarketplaceApp: App {
+    // MARK: - Lifecycle
+
+    init() {
         // DI container setup will be added in M0-05
     }
 
-    internal var body: some Scene {
+    // MARK: - Internal
+
+    var body: some Scene {
         WindowGroup {
             ContentView()
         }
     }
 }
 
+// MARK: - ContentView
+
 // Placeholder view - replaced with navigation in M0-04
-internal struct ContentView: View {
-    internal var body: some View {
+struct ContentView: View {
+    var body: some View {
         VStack {
             Spacer()
             Text("Molt Marketplace")
