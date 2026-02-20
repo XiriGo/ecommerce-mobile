@@ -56,12 +56,16 @@ enum MoltColors {
     static let inversePrimary = Color(hex: "#D0BCFF")
 
     static let scrim = Color.black
+    static let shadow = Color.black
 
     // MARK: - Semantic Colors (E-commerce)
 
     static let success = Color(hex: "#4CAF50")
     static let onSuccess = Color.white
     static let warning = Color(hex: "#FF9800")
+    static let onWarning = Color.white
+    static let info = Color(hex: "#2196F3")
+    static let onInfo = Color.white
     static let priceRegular = Color(hex: "#1C1B1F")
     static let priceSale = Color(hex: "#B3261E")
     static let priceOriginal = Color(hex: "#79747E")
@@ -85,7 +89,7 @@ extension Color {
         self.init(
             red: Double((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: Double((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: Double(rgbValue & 0x0000FF) / 255.0,
+            blue: Double(rgbValue & 0x0000FF) / 255.0
         )
     }
 }

@@ -1,1148 +1,1009 @@
-# M0-02: Design System Components -- Feature Specification
+# Design System Specification (M0-02)
 
-## Overview
-
-The Design System Components feature implements 14 reusable `Molt*` wrapper components that all
-feature screens use instead of raw Material 3 (Android) or SwiftUI (iOS) components. These
-wrappers create an abstraction layer between the design system and feature code so that when
-Figma designs arrive, only the files under `core/designsystem/component/` change -- zero edits
-to feature screens.
-
-The theme shell (`MoltColors`, `MoltSpacing`, `MoltTypography`, `MoltTheme`) already exists
-from M0-01. This task fills the `component/` directory with concrete, production-ready UI
-building blocks.
-
-### User Stories
-
-- As a **feature developer**, I want pre-built `MoltButton`, `MoltCard`, `MoltTextField`, and
-  other components so that I can build screens without touching raw platform components.
-- As a **feature developer**, I want `MoltLoadingView`, `MoltErrorView`, and `MoltEmptyView`
-  components so that I can handle all screen states consistently.
-- As a **feature developer**, I want `MoltPriceText` and `MoltRatingBar` so that I can display
-  prices and ratings in a consistent, locale-aware format.
-- As a **feature developer**, I want `MoltImage` so that I can load remote images with
-  placeholder, crossfade, and error handling without configuring Coil/Nuke directly.
-- As a **feature developer**, I want `MoltTopBar` and `MoltBottomBar`/`MoltTabBar` so that
-  navigation chrome is consistent across all screens.
-- As a **feature developer**, I want `MoltSearchBar` so that I can add search input to screens
-  with the standard search UX.
-- As a **designer**, I want all visual tokens (colors, spacing, radii, typography) consumed
-  through the design system layer so that a future Figma-driven redesign only touches component
-  files.
-
-### Scope
-
-| In Scope | Out of Scope |
-|----------|-------------|
-| 14 `Molt*` wrapper components (see list below) | Theme files (already exist from M0-01) |
-| Component-level states (loading, disabled, error) | Screen-level state management |
-| `@Preview` / `#Preview` for every component | Feature screens that consume these components |
-| New localized string keys for component labels | Navigation wiring (M0-04) |
-| Accessibility labels and minimum touch targets | Network layer (M0-03) |
-| Unit/snapshot tests for each component | Business logic or API calls |
-
-### Dependencies on Other Features
-
-| Feature | What This Needs |
-|---------|-----------------|
-| M0-01 App Scaffold | Theme shell (`MoltColors`, `MoltSpacing`, `MoltTypography`, `MoltTheme`), project structure, string resource files, placeholder assets (`placeholder.xml`, `Placeholder.imageset`) |
-
-### Features That Depend on This
-
-All features from M0-04 onward: Navigation (M0-04), Auth (M1-01 through M1-03), Home (M1-04),
-Categories (M1-05), Product List (M1-06), Product Detail (M1-07), Search (M1-08), Cart (M2-01),
-Wishlist (M2-02), Checkout (M2-04 through M2-07), Orders (M3-01, M3-02), Profile (M3-03),
-Settings (M3-06), and all M4 features.
+**Feature ID**: M0-02
+**Issue**: #3
+**Pipeline ID**: m0/design-system
+**Branch**: feature/m0/design-system
+**Status**: Specification Complete
+**Author**: architect agent
+**Date**: 2026-02-20
 
 ---
 
-## 1. API Mapping
+## 1. Overview
 
-Not applicable. Design system components are pure UI building blocks with no API calls. All data
-is passed in as props from feature-level ViewModels. Components do not import any network or
-repository layer code.
+The Molt Design System is the shared UI component library for both Android (Jetpack Compose) and iOS (SwiftUI). It provides a single source of truth for visual tokens (colors, typography, spacing) and reusable UI components (`Molt*` wrappers) that all feature screens consume.
+
+**Key principle**: Feature screens never import raw platform components (Material 3, SwiftUI primitives). They only import `Molt*` components from `core/designsystem`. When Figma designs arrive, only files under `core/designsystem/` change. Zero feature-screen edits needed.
+
+### Token Pipeline
+
+```
+shared/design-tokens/*.json  -->  core/designsystem/theme/  -->  core/designsystem/component/  -->  feature/*/presentation/
+        (source)                    (platform constants)           (Molt* wrappers)                  (consumers)
+```
+
+### Dependencies
+
+- **Depends on**: M0-01 App Scaffold (project structure, Gradle/SPM config)
+- **Blocks**: All M1+ features (every screen uses Molt* components)
 
 ---
 
-## 2. Data Models
+## 2. Design Tokens
 
-Not applicable. Components accept primitive types and simple data classes/structs as props.
-They do not define DTOs or domain models. The types used by components (e.g., `Long` for price
-in cents, `Float` for rating) are standard platform types.
+All token values are defined in `shared/design-tokens/` and must be translated to platform constants.
 
-Where a component needs a structured prop (e.g., `MoltBottomBar` tab items), a simple data
-class/struct is defined alongside the component file. These are UI-only models, not domain models.
+### 2.1 Colors
+
+**Source**: `shared/design-tokens/colors.json`
+
+#### Light Theme
+
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `primary` | `#6750A4` | Primary buttons, active states, links |
+| `onPrimary` | `#FFFFFF` | Text/icon on primary surfaces |
+| `primaryContainer` | `#EADDFF` | Primary container backgrounds |
+| `onPrimaryContainer` | `#21005D` | Text/icon on primary containers |
+| `secondary` | `#625B71` | Secondary actions, filter chips |
+| `onSecondary` | `#FFFFFF` | Text on secondary surfaces |
+| `secondaryContainer` | `#E8DEF8` | Selected chip backgrounds |
+| `onSecondaryContainer` | `#1D192B` | Text on secondary containers |
+| `tertiary` | `#7D5260` | Accent, complementary elements |
+| `onTertiary` | `#FFFFFF` | Text on tertiary surfaces |
+| `tertiaryContainer` | `#FFD8E4` | Tertiary container backgrounds |
+| `onTertiaryContainer` | `#31111D` | Text on tertiary containers |
+| `error` | `#B3261E` | Error states, validation errors |
+| `onError` | `#FFFFFF` | Text on error surfaces |
+| `errorContainer` | `#F9DEDC` | Error container backgrounds |
+| `onErrorContainer` | `#410E0B` | Text on error containers |
+| `surface` | `#FFFBFE` | Card backgrounds, sheets |
+| `onSurface` | `#1C1B1F` | Primary text on surface |
+| `surfaceVariant` | `#E7E0EC` | Dividers, borders, subtle backgrounds |
+| `onSurfaceVariant` | `#49454F` | Secondary text, icons |
+| `outline` | `#79747E` | Borders, text field outlines |
+| `outlineVariant` | `#CAC4D0` | Subtle borders, dividers |
+| `background` | `#FFFBFE` | Screen background |
+| `onBackground` | `#1C1B1F` | Text on background |
+| `inverseSurface` | `#313033` | Snackbar background |
+| `inverseOnSurface` | `#F4EFF4` | Text on inverse surface |
+| `inversePrimary` | `#D0BCFF` | Primary on inverse surface |
+| `scrim` | `#000000` | Modal overlay (alpha 0.32) |
+| `shadow` | `#000000` | Shadow color |
+
+#### Dark Theme
+
+| Token | Hex |
+|-------|-----|
+| `primary` | `#D0BCFF` |
+| `onPrimary` | `#381E72` |
+| `primaryContainer` | `#4F378B` |
+| `onPrimaryContainer` | `#EADDFF` |
+| `secondary` | `#CCC2DC` |
+| `onSecondary` | `#332D41` |
+| `secondaryContainer` | `#4A4458` |
+| `onSecondaryContainer` | `#E8DEF8` |
+| `tertiary` | `#EFB8C8` |
+| `onTertiary` | `#492532` |
+| `tertiaryContainer` | `#633B48` |
+| `onTertiaryContainer` | `#FFD8E4` |
+| `error` | `#F2B8B5` |
+| `onError` | `#601410` |
+| `errorContainer` | `#8C1D18` |
+| `onErrorContainer` | `#F9DEDC` |
+| `surface` | `#1C1B1F` |
+| `onSurface` | `#E6E1E5` |
+| `surfaceVariant` | `#49454F` |
+| `onSurfaceVariant` | `#CAC4D0` |
+| `outline` | `#938F99` |
+| `outlineVariant` | `#49454F` |
+| `background` | `#1C1B1F` |
+| `onBackground` | `#E6E1E5` |
+| `inverseSurface` | `#E6E1E5` |
+| `inverseOnSurface` | `#313033` |
+| `inversePrimary` | `#6750A4` |
+| `scrim` | `#000000` |
+| `shadow` | `#000000` |
+
+#### Semantic Colors (Theme-Independent)
+
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `success` | `#4CAF50` | Success states, confirmations |
+| `onSuccess` | `#FFFFFF` | Text on success surfaces |
+| `warning` | `#FF9800` | Warning states, caution indicators |
+| `onWarning` | `#FFFFFF` | Text on warning surfaces |
+| `info` | `#2196F3` | Informational states |
+| `onInfo` | `#FFFFFF` | Text on info surfaces |
+| `priceRegular` | `#1C1B1F` | Regular product price |
+| `priceSale` | `#B3261E` | Sale/discounted price |
+| `priceOriginal` | `#79747E` | Original price (strikethrough) |
+| `ratingStarFilled` | `#FFC107` | Filled rating star |
+| `ratingStarEmpty` | `#E0E0E0` | Empty rating star |
+| `badgeBackground` | `#B3261E` | Notification badge background |
+| `badgeText` | `#FFFFFF` | Badge text |
+| `divider` | `#CAC4D0` | Horizontal/vertical dividers |
+| `shimmer` | `#E7E0EC` | Shimmer loading placeholder |
+
+### 2.2 Typography
+
+**Source**: `shared/design-tokens/typography.json`
+
+| Style | Size (sp/pt) | Line Height | Letter Spacing | Weight | Usage |
+|-------|-------------|-------------|----------------|--------|-------|
+| `displayLarge` | 57 | 64 | -0.25 | 400 | Hero banners |
+| `displayMedium` | 45 | 52 | 0 | 400 | Large headings |
+| `displaySmall` | 36 | 44 | 0 | 400 | Section titles |
+| `headlineLarge` | 32 | 40 | 0 | 400 | Screen titles |
+| `headlineMedium` | 28 | 36 | 0 | 400 | Section headers |
+| `headlineSmall` | 24 | 32 | 0 | 400 | Card titles |
+| `titleLarge` | 22 | 28 | 0 | 400 | Top bar title |
+| `titleMedium` | 16 | 24 | 0.15 | 500 | Product title, list item title |
+| `titleSmall` | 14 | 20 | 0.1 | 500 | Subtitle, metadata label |
+| `bodyLarge` | 16 | 24 | 0.5 | 400 | Product description, body text |
+| `bodyMedium` | 14 | 20 | 0.25 | 400 | Default body text |
+| `bodySmall` | 12 | 16 | 0.4 | 400 | Captions, helper text |
+| `labelLarge` | 14 | 20 | 0.1 | 500 | Button text, chip text |
+| `labelMedium` | 12 | 16 | 0.5 | 500 | Tab labels, filter labels |
+| `labelSmall` | 11 | 16 | 0.5 | 500 | Badge text, timestamp |
+
+**Font families**: Android = system default (Roboto), iOS = SF Pro (system default).
+
+Font weight mapping:
+- 400 = `regular` (Android: `FontWeight.Normal`, iOS: `.regular`)
+- 500 = `medium` (Android: `FontWeight.Medium`, iOS: `.medium`)
+- 600 = `semibold` (Android: `FontWeight.SemiBold`, iOS: `.semibold`)
+- 700 = `bold` (Android: `FontWeight.Bold`, iOS: `.bold`)
+
+### 2.3 Spacing
+
+**Source**: `shared/design-tokens/spacing.json`
+
+| Token | Value (dp/pt) | Usage |
+|-------|--------------|-------|
+| `xxs` | 2 | Minimal gaps (badge offset) |
+| `xs` | 4 | Icon-to-text gap, tight padding |
+| `sm` | 8 | List item spacing, inline gaps |
+| `md` | 12 | Card internal padding |
+| `base` | 16 | Screen horizontal padding, section padding |
+| `lg` | 24 | Section spacing, large gaps |
+| `xl` | 32 | Large section spacing |
+| `xxl` | 48 | Extra-large spacing |
+| `xxxl` | 64 | Page-level spacing |
+
+### 2.4 Corner Radius
+
+| Token | Value (dp/pt) | Usage |
+|-------|--------------|-------|
+| `none` | 0 | Square corners |
+| `small` | 4 | Chips, small elements |
+| `medium` | 8 | Cards, text fields |
+| `large` | 12 | Bottom sheets, dialogs |
+| `extraLarge` | 16 | Top bar, large containers |
+| `full` | 999 | Pills, circular avatars |
+
+### 2.5 Elevation
+
+| Token | Value (dp) | Usage |
+|-------|-----------|-------|
+| `level0` | 0 | Flat surfaces |
+| `level1` | 1 | Cards at rest |
+| `level2` | 3 | Cards on hover/press |
+| `level3` | 6 | Floating action button |
+| `level4` | 8 | Navigation bar |
+| `level5` | 12 | Modal sheets |
+
+### 2.6 Layout Constants
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `screenPaddingHorizontal` | 16 | Horizontal padding for all screens |
+| `screenPaddingVertical` | 16 | Vertical padding for screen content |
+| `cardPadding` | 12 | Internal padding for cards |
+| `listItemSpacing` | 8 | Vertical gap between list items |
+| `sectionSpacing` | 24 | Gap between content sections |
+| `productGridSpacing` | 8 | Gap between grid items |
+| `productGridColumns` | 2 | Default grid column count |
+| `minTouchTarget` | 48 (Android) / 44 (iOS) | Minimum tap area |
+| `iconSize.small` | 16 | Small icons |
+| `iconSize.medium` | 24 | Default icons |
+| `iconSize.large` | 32 | Large icons |
+| `iconSize.extraLarge` | 48 | Feature icons |
+| `avatarSize.small` | 32 | Inline avatars |
+| `avatarSize.medium` | 48 | List avatars |
+| `avatarSize.large` | 64 | Profile avatars |
+| `avatarSize.extraLarge` | 96 | Large profile display |
+| `productImageAspectRatio` | 16:9 | Product image containers |
+| `bannerAspectRatio` | 21:9 | Hero banner containers |
 
 ---
 
-## 3. Component Specifications
+## 3. Component Catalog
 
 ### 3.1 MoltButton
 
-**Purpose**: Primary interactive button used across all screens for actions.
+**Description**: Standard action button with multiple visual variants and a loading state.
 
-**Variants**:
+#### Parameters
 
-| Variant | Android Wraps | iOS Style |
-|---------|--------------|-----------|
-| `Primary` | `Button` (filled) | `.borderedProminent` |
-| `Secondary` | `OutlinedButton` | `.bordered` |
-| `Text` | `TextButton` | `.plain` |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `text` / `title` | `String` | required | Button label text (localized) |
+| `onClick` / `action` | `() -> Unit` / `() -> Void` | required | Tap callback |
+| `style` | `MoltButtonStyle` | `.primary` | Visual variant |
+| `enabled` | `Boolean` / `Bool` | `true` | Interactive state |
+| `loading` | `Boolean` / `Bool` | `false` | Shows spinner, disables interaction |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
+| `leadingIcon` | `ImageVector?` / `String?` | `null` / `nil` | Optional leading icon |
+| `fullWidth` | `Boolean` / `Bool` | `true` (primary/secondary), `false` (text) | Stretch to fill width |
 
-**Props**:
+#### MoltButtonStyle Enum
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `text` / `title` | `String` | `String` | Yes | -- | Button label |
-| `onClick` / `action` | `() -> Unit` | `() -> Void` | Yes | -- | Tap callback |
-| `style` | `MoltButtonStyle` enum | `MoltButtonStyle` enum | No | `Primary` | Visual variant |
-| `enabled` | `Boolean` | `Bool` | No | `true` | Interaction enabled |
-| `loading` | `Boolean` | `Bool` | No | `false` | Shows inline spinner, disables tap |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Android layout modifier |
+| Value | Android Mapping | iOS Mapping | Visual |
+|-------|-----------------|-------------|--------|
+| `primary` | `Button` (filled) | `.borderedProminent` | Solid primary background, white text |
+| `secondary` | `OutlinedButton` | `.bordered` | Outlined, primary text |
+| `outlined` | `OutlinedButton` (variant) | `.bordered` + tint | Outlined with custom border color |
+| `text` | `TextButton` | `.plain` | No background, primary text |
 
-**MoltButtonStyle Enum**: `Primary`, `Secondary`, `Text`
+#### States
 
-**Behavior**:
-- When `loading = true`: shows a small `CircularProgressIndicator` (Android, 18dp, 2dp stroke)
-  or `ProgressView` (iOS) to the left of the text. Button is disabled during loading.
-- Minimum height: `MoltSpacing.MinTouchTarget` (48dp Android) / `MoltSpacing.minTouchTarget`
-  (44pt iOS).
-- Primary variant fills full available width (`fillMaxWidth` / `maxWidth: .infinity`). Text
-  variant does not expand.
-- Uses `MaterialTheme.colorScheme` colors (Android) / `MoltColors` (iOS). Never hardcodes.
+- **Default**: Normal appearance
+- **Pressed**: Slight opacity change / ripple effect
+- **Disabled**: 38% opacity (Material 3 standard), not interactive
+- **Loading**: Spinner replaces or precedes text, button disabled
 
-**Text-Based Wireframe**:
+#### Accessibility
 
-```
-Primary (normal):
-+----------------------------------------+
-|           [ Button Text ]              |  height >= 48dp/44pt
-+----------------------------------------+
+- Android: `contentDescription` inherited from `text` parameter. Loading state announces "Loading" via `semantics`.
+- iOS: `accessibilityLabel` from `title`. Loading state sets `accessibilityValue` to localized "Loading".
 
-Primary (loading):
-+----------------------------------------+
-|        [o] [ Button Text ]             |  o = spinner
-+----------------------------------------+
+#### Platform-Specific Notes
 
-Secondary (normal):
-+========================================+
-|           [ Button Text ]              |  outlined border
-+========================================+
-
-Text (normal):
-          [ Button Text ]                   no background, no border
-
-Disabled (any variant):
-+----------------------------------------+
-|           [ Button Text ]              |  40% opacity
-+----------------------------------------+
-```
+- Android: Minimum height `MoltSpacing.MinTouchTarget` (48dp). Uses `MaterialTheme.colorScheme` for colors.
+- iOS: Minimum height `MoltSpacing.minTouchTarget` (44pt). Uses native `ButtonStyle` conformance.
 
 ---
 
-### 3.2 MoltCard
+### 3.2 MoltTextField
 
-**Purpose**: Card container for displaying product information or general info content.
+**Description**: Text input field with label, error message, helper text, and optional icons.
 
-**Variants**: `ProductCard`, `InfoCard`
+#### Parameters
 
-#### ProductCard
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `value` | `String` | required | Current text value |
+| `onValueChange` | `(String) -> Unit` / `(String) -> Void` | required | Text change callback |
+| `label` | `String` | required | Field label (localized) |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
+| `placeholder` | `String?` | `nil` | Placeholder text when empty |
+| `errorMessage` | `String?` | `nil` | Error text shown below field (turns border to error color) |
+| `helperText` | `String?` | `nil` | Helper text shown below field (hidden when error present) |
+| `leadingIcon` | `ImageVector?` / `String?` | `nil` | Icon at start of field |
+| `trailingIcon` | `ImageVector?` / `String?` | `nil` | Icon at end of field (e.g., clear, visibility toggle) |
+| `onTrailingIconClick` | `(() -> Unit)?` / `(() -> Void)?` | `nil` | Tap callback for trailing icon |
+| `enabled` | `Boolean` / `Bool` | `true` | Interactive state |
+| `readOnly` | `Boolean` / `Bool` | `false` | Visible but not editable |
+| `keyboardType` | `KeyboardType` | `.default` | Keyboard configuration |
+| `isPassword` | `Boolean` / `Bool` | `false` | Obscure text, show visibility toggle as trailing icon |
+| `singleLine` | `Boolean` / `Bool` | `true` | Restrict to single line |
+| `maxLength` | `Int?` | `nil` | Character limit (show counter when set) |
 
-**Props**:
+#### States
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `imageUrl` | `String?` | `URL?` | No | `null` / `nil` | Product thumbnail URL |
-| `title` | `String` | `String` | Yes | -- | Product name (max 2 lines, ellipsis) |
-| `price` | `Long` | `Int` | Yes | -- | Price in cents (EUR) |
-| `originalPrice` | `Long?` | `Int?` | No | `null` / `nil` | Original price before discount |
-| `vendorName` | `String` | `String` | Yes | -- | Vendor display name |
-| `rating` | `Float?` | `Double?` | No | `null` / `nil` | Average rating 0.0-5.0 |
-| `onClick` | `() -> Unit` | `() -> Void` | Yes | -- | Card tap callback |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+- **Default**: Outlined border, label above
+- **Focused**: Primary-colored border, floating label
+- **Error**: Error-colored border, error text below
+- **Disabled**: Reduced opacity, not interactive
 
-**Text-Based Wireframe -- ProductCard**:
+#### Accessibility
 
-```
-+----------------------------+
-|                            |
-|      [ Product Image ]     |  16:9 aspect ratio via MoltImage
-|        (MoltImage)         |
-|                            |
-+----------------------------+
-| Product Title Text That    |  titleSmall, max 2 lines
-| May Wrap to Two Lines...   |
-| Vendor Name                |  bodySmall, onSurfaceVariant
-| EUR 29.99  EUR 39.99       |  MoltPriceText (sale + strikethrough)
-| **** (4.2)                 |  MoltRatingBar + count (optional)
-+----------------------------+
+- Android: Label is linked via `OutlinedTextField` built-in semantics. Error announced via `semantics { error(errorMessage) }`.
+- iOS: `accessibilityLabel` from `label`. Error announced via `.accessibilityHint`.
 
-Padding: MoltSpacing.CardPadding (12dp/pt) inside text area
-Corner radius: MoltCornerRadius.medium (8dp/pt)
-Elevation: level1 (Android) / shadow (iOS)
-```
+#### Platform-Specific Notes
 
-#### InfoCard
-
-**Props**:
-
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `title` | `String` | `String` | Yes | -- | Card title |
-| `subtitle` | `String?` | `String?` | No | `null` / `nil` | Secondary text |
-| `trailingContent` | `@Composable (() -> Unit)?` | `AnyView?` / `@ViewBuilder` | No | `null` / `nil` | Trailing composable/view |
-| `onClick` | `(() -> Unit)?` | `(() -> Void)?` | No | `null` / `nil` | Tap callback (null = not clickable) |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
-
-**Text-Based Wireframe -- InfoCard**:
-
-```
-+------------------------------------------+
-|  Title Text              [ Trailing ]    |  titleMedium
-|  Subtitle text (optional)                |  bodyMedium, onSurfaceVariant
-+------------------------------------------+
-
-Padding: MoltSpacing.CardPadding (12dp/pt)
-Corner radius: MoltCornerRadius.medium (8dp/pt)
-Surface color background
-Optional clickable ripple
-```
+- Android: Wraps `OutlinedTextField`. Corner radius `MoltCornerRadius.medium` (8dp).
+- iOS: Custom `TextField` wrapper with `.textFieldStyle(.roundedBorder)` appearance overridden. Uses `@FocusState` for focus management.
 
 ---
 
-### 3.3 MoltTextField
+### 3.3 MoltCard
 
-**Purpose**: Text input field with label, placeholder, error message, and icon support.
+**Description**: Container component for displaying content cards in different layouts.
 
-**Props**:
+#### Variants
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `value` | `String` | `String` (Binding) | Yes | -- | Current text value |
-| `onValueChange` | `(String) -> Unit` | `Binding<String>` | Yes | -- | Text change callback |
-| `label` | `String` | `String` | Yes | -- | Field label (above field) |
-| `placeholder` | `String` | `String` | No | `""` | Placeholder text |
-| `errorMessage` | `String?` | `String?` | No | `null` / `nil` | Error text (shows in red below field) |
-| `leadingIcon` | `ImageVector?` | `String?` (SF Symbol) | No | `null` / `nil` | Leading icon |
-| `trailingIcon` | `ImageVector?` | `String?` (SF Symbol) | No | `null` / `nil` | Trailing icon |
-| `trailingIconClick` | `(() -> Unit)?` | `(() -> Void)?` | No | `null` / `nil` | Trailing icon tap (e.g., clear, toggle visibility) |
-| `keyboardType` | `KeyboardType` | `UIKeyboardType` | No | `Text` / `.default` | Keyboard type |
-| `isSecure` | `Boolean` | `Bool` | No | `false` | Masks input (password field) |
-| `enabled` | `Boolean` | `Bool` | No | `true` | Field enabled |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+##### MoltProductCard
 
-**Android**: Wraps `OutlinedTextField` with `isError` state and `supportingText` for error.
-**iOS**: Wraps `TextField` (or `SecureField` when `isSecure = true`) with `LabeledContent`-like
-layout.
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `imageUrl` | `String?` / `URL?` | required | Product image URL |
+| `title` | `String` | required | Product name (max 2 lines) |
+| `price` | `String` | required | Formatted current price |
+| `originalPrice` | `String?` | `nil` | Original price (for sale items) |
+| `vendorName` | `String?` | `nil` | Vendor display name |
+| `rating` | `Double?` / `Float?` | `nil` | Average rating (1.0-5.0) |
+| `reviewCount` | `Int?` | `nil` | Number of reviews |
+| `isWishlisted` | `Boolean` / `Bool` | `false` | Heart icon filled state |
+| `onWishlistToggle` | `(() -> Unit)?` | `nil` | Heart icon tap callback |
+| `onClick` | `() -> Unit` / `() -> Void` | required | Card tap callback |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Behavior**:
-- When `errorMessage` is non-null: border turns `error` color, error text appears below field
-  in `bodySmall` style with `error` color.
-- When `isSecure = true`: renders a password field. On Android, wraps `OutlinedTextField` with
-  `visualTransformation = PasswordVisualTransformation()`. On iOS, uses `SecureField`.
-- `trailingIcon` with `trailingIconClick` supports toggling password visibility (eye icon).
-- Label is always visible above the field (not as floating label).
+##### MoltInfoCard
 
-**Text-Based Wireframe**:
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `title` | `String` | required | Card title |
+| `subtitle` | `String?` | `nil` | Card subtitle |
+| `leadingIcon` | `ImageVector?` / `String?` | `nil` | Leading icon |
+| `trailingContent` | `@Composable (() -> Unit)?` / `AnyView?` | `nil` | Trailing slot |
+| `onClick` | `(() -> Unit)?` | `nil` | Card tap callback (nil = non-tappable) |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
+
+#### Product Card Layout
 
 ```
-Normal:
-  Email
-  +--------------------------------------+
-  | [icon]  placeholder text       [icon]|
-  +--------------------------------------+
-
-Error:
-  Email
-  +--------------------------------------+  <- red border
-  | [icon]  user@example         [icon]  |
-  +--------------------------------------+
-  Invalid email format                      <- bodySmall, error color
-
-Secure:
-  Password
-  +--------------------------------------+
-  | [lock]  ************           [eye] |
-  +--------------------------------------+
++--------------------------------------+
+| [Image - 16:9 aspect ratio]    [heart] |
++--------------------------------------+
+| Product Title (max 2 lines)           |
+| Vendor Name                           |
+| EUR 29.99  EUR 39.99 (strikethrough)  |
+| [stars] 4.5 (123)                     |
++--------------------------------------+
 ```
+
+#### States
+
+- **Default**: Elevation level1, standard appearance
+- **Pressed**: Elevation level2, ripple/highlight effect
+- **Loading**: Shimmer placeholder (solid `shimmer` color blocks matching layout)
+
+#### Accessibility
+
+- Android: Card has combined `contentDescription` = "$title, $price, $vendorName, rating $rating out of 5". Wishlist heart is a separate clickable with `contentDescription` = "Add to wishlist" / "Remove from wishlist".
+- iOS: Same `accessibilityLabel` composition. Wishlist button uses `accessibilityAddTraits(.isButton)`.
+
+#### Platform-Specific Notes
+
+- Android: Wraps `Card` composable. Padding `MoltSpacing.CardPadding`. Corner radius `MoltCornerRadius.medium`.
+- iOS: Wraps content in `VStack` with `.background(RoundedRectangle)`. Shadow from elevation token.
 
 ---
 
-### 3.4 MoltTopBar
+### 3.4 MoltChip
 
-**Purpose**: Top navigation bar with title, optional back button, and optional action icons.
+**Description**: Compact element for filters, categories, and selections.
 
-**Props**:
+#### Variants
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `title` | `String` | `String` | Yes | -- | Bar title |
-| `onBackClick` | `(() -> Unit)?` | `(() -> Void)?` | No | `null` / `nil` | Back button callback. When non-null, shows back arrow. |
-| `actions` | `List<MoltTopBarAction>` | `[MoltTopBarAction]` | No | `emptyList()` / `[]` | Trailing action icons |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+##### MoltFilterChip
 
-**MoltTopBarAction**:
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `label` | `String` | required | Chip text |
+| `selected` | `Boolean` / `Bool` | `false` | Selected state |
+| `onClick` | `() -> Unit` / `() -> Void` | required | Toggle callback |
+| `leadingIcon` | `ImageVector?` / `String?` | `nil` | Leading icon |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-| Field | Android Type | iOS Type | Description |
-|-------|-------------|----------|-------------|
-| `icon` | `ImageVector` | `String` (SF Symbol name) | Icon resource |
-| `contentDescription` | `String` | `String` | Accessibility label |
-| `onClick` | `() -> Unit` | `() -> Void` | Action callback |
+##### MoltCategoryChip
 
-**Android**: Wraps `TopAppBar` (Material 3 `MediumTopAppBar` or `TopAppBar`).
-**iOS**: Custom `HStack` inside `.toolbar` or standalone `HStack` with back button, title, and
-actions. Uses `titleMedium` / `.headline` for title.
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `label` | `String` | required | Category name |
+| `iconUrl` | `String?` / `URL?` | `nil` | Category icon URL |
+| `onClick` | `() -> Unit` / `() -> Void` | required | Tap callback |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Behavior**:
-- When `onBackClick` is non-null: shows a back arrow icon (`Icons.AutoMirrored.Filled.ArrowBack`
-  on Android, `chevron.left` SF Symbol on iOS). Content description: `common_back_button` string.
-- Actions render as `IconButton` (Android) / `Button` with icon (iOS) in trailing position.
-- Minimum height: system default (`TopAppBar` height on Android, 44pt on iOS).
+#### States
 
-**Text-Based Wireframe**:
+- **Default (unselected)**: Outlined with surface variant background
+- **Selected**: `secondaryContainer` background, `onSecondaryContainer` text, checkmark icon
+- **Disabled**: 38% opacity
 
-```
-With back + actions:
-+------------------------------------------+
-|  [<]  Title Text              [icon] [icon] |
-+------------------------------------------+
+#### Accessibility
 
-Without back (root screen):
-+------------------------------------------+
-|       Title Text              [icon] [icon] |
-+------------------------------------------+
+- Android: `FilterChip` built-in semantics. Selected state announced via `Role.Checkbox`.
+- iOS: `accessibilityLabel` = label. `accessibilityAddTraits(selected ? .isSelected : [])`.
 
-No actions:
-+------------------------------------------+
-|  [<]  Title Text                         |
-+------------------------------------------+
-```
+#### Platform-Specific Notes
+
+- Android: Wraps `FilterChip` (Material 3). Corner radius `MoltCornerRadius.small`.
+- iOS: Custom `Button` with capsule shape. Uses `MoltColors.secondaryContainer` when selected.
 
 ---
 
-### 3.5 MoltBottomBar (Android) / MoltTabBar (iOS)
+### 3.5 MoltTopBar
 
-**Purpose**: Bottom navigation / tab bar for main app sections.
+**Description**: Top application bar with navigation and action buttons.
 
-**Props**:
+#### Parameters
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `tabs` | `List<MoltTabItem>` | `[MoltTabItem]` | Yes | -- | Tab definitions |
-| `selectedTab` | `Int` | `Int` | Yes | -- | Currently selected tab index |
-| `onTabSelected` | `(Int) -> Unit` | `(Int) -> Void` | Yes | -- | Tab selection callback |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `title` | `String` | required | Bar title text |
+| `onBackClick` | `(() -> Unit)?` / `(() -> Void)?` | `nil` | Back button callback (nil = no back button) |
+| `actions` | `@Composable RowScope.() -> Unit` / `[MoltTopBarAction]` | empty | Action buttons (right side) |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**MoltTabItem**:
+#### MoltTopBarAction (iOS convenience)
 
-| Field | Android Type | iOS Type | Description |
-|-------|-------------|----------|-------------|
-| `icon` | `ImageVector` | `String` (SF Symbol name) | Tab icon (unselected) |
-| `selectedIcon` | `ImageVector` | `String` (SF Symbol name) | Tab icon (selected, filled variant) |
-| `label` | `String` | `String` | Tab label text |
-| `badgeCount` | `Int?` | `Int?` | Badge count (null = no badge) |
+| Field | Type | Description |
+|-------|------|-------------|
+| `icon` | `String` | SF Symbol name |
+| `accessibilityLabel` | `String` | VoiceOver label |
+| `action` | `() -> Void` | Tap callback |
+| `badgeCount` | `Int?` | Optional badge overlay |
 
-**Android**: Wraps `NavigationBar` with `NavigationBarItem` entries. Uses `BadgedBox` for badge.
-**iOS**: Wraps `TabView` with `.tabItem` labels or custom `HStack` bar with tab buttons.
+#### Accessibility
 
-**Behavior**:
-- Selected tab shows filled icon variant and primary-colored label.
-- Unselected tabs show outlined icon and `onSurfaceVariant` label.
-- When `badgeCount` is non-null and > 0: shows `MoltBadge` (count variant) on the icon.
-- Badge count > 99 displays as "99+".
+- Android: Back button `contentDescription` = localized "Navigate back". Action icons require explicit `contentDescription`.
+- iOS: Back button uses system `navigationBarBackButtonHidden` + custom button with `accessibilityLabel`. Actions use `accessibilityLabel`.
 
-**Tab Definitions** (used in M0-04 Navigation):
+#### Platform-Specific Notes
 
-| Index | Icon (Android) | Icon (iOS) | Label Key | English |
-|-------|---------------|------------|-----------|---------|
-| 0 | `Icons.Outlined.Home` / `Icons.Filled.Home` | `house` / `house.fill` | `nav_tab_home` | Home |
-| 1 | `Icons.Outlined.Category` / `Icons.Filled.Category` | `square.grid.2x2` / `square.grid.2x2.fill` | `nav_tab_categories` | Categories |
-| 2 | `Icons.Outlined.ShoppingCart` / `Icons.Filled.ShoppingCart` | `cart` / `cart.fill` | `nav_tab_cart` | Cart |
-| 3 | `Icons.Outlined.Person` / `Icons.Filled.Person` | `person` / `person.fill` | `nav_tab_profile` | Profile |
-
-**Text-Based Wireframe**:
-
-```
-+------------------------------------------+
-|  [house]   [grid]   [cart]   [person]    |
-|   Home    Categor.   Cart    Profile     |
-|    ^                 (3)                 |
-| selected          badge count            |
-+------------------------------------------+
-```
+- Android: Wraps `TopAppBar` (Material 3). `NavigationIcon` slot for back. `actions` slot for action icons.
+- iOS: Uses `toolbar` modifier with `.navigationBarTitleDisplayMode(.inline)`. Back button via `navigationBarBackButtonHidden` + custom `ToolbarItem(.navigationBarLeading)`.
 
 ---
 
-### 3.6 MoltLoadingView
+### 3.6 MoltBottomBar (Android) / MoltTabBar (iOS)
 
-**Purpose**: Loading indicators for full-screen and inline contexts.
+**Description**: Bottom tab navigation bar with tab items and optional badge counts.
 
-**Variants**: `FullScreen` (composable/view), `Inline` (composable/view -- exported as `MoltLoadingIndicator`)
+#### Parameters
 
-#### MoltLoadingView (Full Screen)
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `items` | `List<MoltTabItem>` / `[MoltTabItem]` | required | Tab definitions |
+| `selectedIndex` | `Int` | required | Currently selected tab index |
+| `onTabSelected` | `(Int) -> Unit` / `(Int) -> Void` | required | Tab selection callback |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Props**:
+#### MoltTabItem
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+| Field | Type | Description |
+|-------|------|-------------|
+| `label` | `String` | Tab label (localized) |
+| `icon` | `ImageVector` / `String` | Tab icon (Material Icon / SF Symbol) |
+| `selectedIcon` | `ImageVector` / `String` | Filled variant when selected |
+| `badgeCount` | `Int?` | Badge count (nil = no badge) |
 
-**Behavior**: Centered `CircularProgressIndicator` (Android) / `ProgressView` (iOS) inside a
-`fillMaxSize` / full-frame container. Uses `MaterialTheme.colorScheme.primary` as tint.
+#### Tab Items (App-Wide)
 
-#### MoltLoadingIndicator (Inline)
+| Tab | Label Key | Android Icon | iOS SF Symbol | Badge |
+|-----|-----------|-------------|---------------|-------|
+| Home | `common_tab_home` | `Icons.Outlined.Home` / `Icons.Filled.Home` | `house` / `house.fill` | None |
+| Categories | `common_tab_categories` | `Icons.Outlined.Category` / `Icons.Filled.Category` | `square.grid.2x2` / `square.grid.2x2.fill` | None |
+| Cart | `common_tab_cart` | `Icons.Outlined.ShoppingCart` / `Icons.Filled.ShoppingCart` | `cart` / `cart.fill` | Cart item count |
+| Profile | `common_tab_profile` | `Icons.Outlined.Person` / `Icons.Filled.Person` | `person` / `person.fill` | None |
 
-**Props**:
+#### Accessibility
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+- Android: Each tab has `contentDescription` = label. Badge announces count via semantics.
+- iOS: Each tab has `accessibilityLabel` = label. Badge uses `.badge()` modifier (system-handled).
 
-**Behavior**: Smaller centered spinner (24dp Android, default size iOS) with
-`MoltSpacing.Base` padding. Fills width. Used at the bottom of paginated lists.
+#### Platform-Specific Notes
 
-**Text-Based Wireframe**:
-
-```
-MoltLoadingView (full screen):
-+----------------------------------+
-|                                  |
-|                                  |
-|             ( o )                |  centered spinner
-|                                  |
-|                                  |
-+----------------------------------+
-
-MoltLoadingIndicator (inline):
-+----------------------------------+
-|             (o)                  |  small spinner, padded
-+----------------------------------+
-```
+- Android: Wraps `NavigationBar` + `NavigationBarItem` (Material 3). Badge via `BadgedBox`.
+- iOS: Wraps `TabView` with `tabItem` modifiers. Badge via `.badge(count)`.
 
 ---
 
-### 3.7 MoltErrorView
+### 3.7 MoltLoadingView
 
-**Purpose**: Full-screen error state with icon, message, and optional retry button.
+**Description**: Loading state indicators for full-screen and inline contexts.
 
-**Props**:
+#### Variants
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `message` | `String` | `String` | Yes | -- | Error description |
-| `onRetry` | `(() -> Unit)?` | `(() -> Void)?` | No | `null` / `nil` | Retry callback. When non-null, shows retry button. |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+##### MoltLoadingView (Full Screen)
 
-**Behavior**:
-- Fills available space (`fillMaxSize` / full frame).
-- Centered vertically: error icon (48dp/48pt), spacing, message text (`bodyLarge`, centered),
-  spacing, optional `MoltButton` with text from `common_retry_button` string resource.
-- Icon: `Icons.Outlined.ErrorOutline` (Android) / `exclamationmark.circle` SF Symbol (iOS).
-- Icon tint: `onSurfaceVariant` (subtle, not alarming).
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Text-Based Wireframe**:
+Fills the entire available space with a centered progress indicator.
 
-```
-+----------------------------------+
-|                                  |
-|             [!]                  |  error icon, 48dp/pt
-|                                  |
-|   Connection error. Please       |  bodyLarge, centered
-|   check your internet.           |
-|                                  |
-|          [ Retry ]               |  MoltButton, primary (optional)
-|                                  |
-+----------------------------------+
-```
+##### MoltLoadingIndicator (Inline)
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
+
+Horizontally centered, smaller indicator for list footers and inline loading.
+
+#### Accessibility
+
+- Android: Progress indicator gets `contentDescription` = localized "Loading".
+- iOS: Uses system `ProgressView` which has built-in accessibility.
+
+#### Platform-Specific Notes
+
+- Android: `CircularProgressIndicator` (full: default size, inline: 24dp, strokeWidth 2dp).
+- iOS: `ProgressView()` (system spinner).
 
 ---
 
-### 3.8 MoltEmptyView
+### 3.8 MoltErrorView
 
-**Purpose**: Full-screen empty state for lists and screens with no content.
+**Description**: Error state display with message and optional retry action.
 
-**Props**:
+#### Parameters
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `message` | `String` | `String` | Yes | -- | Empty state description |
-| `icon` | `ImageVector` | `String` (SF Symbol name) | No | `Icons.Outlined.Inbox` / `"tray"` | Large illustration icon |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `message` | `String` | required | Error description (localized) |
+| `onRetry` | `(() -> Unit)?` / `(() -> Void)?` | `nil` | Retry callback (nil = no retry button) |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Behavior**:
-- Fills available space.
-- Centered vertically: large icon (64dp/64pt) in `onSurfaceVariant` color, spacing, message
-  text (`bodyLarge`, `onSurfaceVariant`).
-- No action button (feature screens add their own action below if needed).
-
-**Text-Based Wireframe**:
+#### Layout
 
 ```
-+----------------------------------+
-|                                  |
-|            [inbox]               |  icon, 64dp/pt, onSurfaceVariant
-|                                  |
-|     Nothing here yet             |  bodyLarge, onSurfaceVariant
-|                                  |
-+----------------------------------+
+        [Error Icon - 48dp/pt]
+          (16dp/pt gap)
+       Error message text
+       (center-aligned, bodyLarge)
+          (16dp/pt gap)
+       [Retry Button] (if onRetry != nil)
 ```
+
+#### Accessibility
+
+- Android: Icon has `contentDescription` = null (decorative). Error message is primary. Retry button has `contentDescription` from button text.
+- iOS: Icon is decorative (`.accessibilityHidden(true)`). Text and button are accessible.
+
+#### Platform-Specific Notes
+
+- Android: Error icon = `Icons.Outlined.ErrorOutline`. Retry button uses `MoltButton`.
+- iOS: Error icon = SF Symbol `exclamationmark.circle`. Retry button uses `MoltButton`.
 
 ---
 
-### 3.9 MoltImage
+### 3.9 MoltEmptyView
 
-**Purpose**: Async remote image loader with placeholder, crossfade, and error fallback.
+**Description**: Empty state display with illustration, message, and optional action.
 
-**Props**:
+#### Parameters
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `url` | `String?` | `URL?` | No | `null` / `nil` | Image URL |
-| `contentDescription` | `String?` | -- | No | `null` | Accessibility label (Android) |
-| `contentScale` | `ContentScale` | -- | No | `ContentScale.Crop` | Scale mode (Android) |
-| `contentMode` | -- | `ContentMode` | No | `.fill` | Scale mode (iOS) |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `message` | `String` | required | Empty state message (localized) |
+| `icon` (Android) | `ImageVector` | `Icons.Outlined.Inbox` | Empty state icon |
+| `systemImage` (iOS) | `String` | `"tray"` | SF Symbol name |
+| `actionLabel` | `String?` | `nil` | Action button text |
+| `onAction` | `(() -> Unit)?` / `(() -> Void)?` | `nil` | Action button callback |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Android**: Wraps Coil `AsyncImage` with `ImageRequest.Builder` configured for `crossfade(true)`.
-Uses `painterResource(R.drawable.placeholder)` for both `placeholder` and `error` states.
-
-**iOS**: Wraps NukeUI `LazyImage`. Shows `MoltColors.shimmer` background during loading and on
-error. Uses `.opacity` transition with 0.25s ease-in-out animation on image appear.
-
-**Behavior**:
-- When `url` is null: shows placeholder drawable/color immediately.
-- Loading: shows placeholder (Android drawable) / shimmer color (iOS).
-- Success: crossfade to loaded image.
-- Error: shows placeholder (Android) / shimmer color (iOS). No broken image icon.
-
-**Text-Based Wireframe**:
+#### Layout
 
 ```
-Loading:
-+----------------------------+
-|                            |
-|     [ shimmer/placeholder ]|  gray placeholder
-|                            |
-+----------------------------+
-
-Success:
-+----------------------------+
-|                            |
-|     [ loaded image ]       |  crossfade in
-|                            |
-+----------------------------+
-
-Error:
-+----------------------------+
-|                            |
-|     [ placeholder ]        |  same as loading state
-|                            |
-+----------------------------+
+        [Icon - 64dp/pt, onSurfaceVariant]
+              (16dp/pt gap)
+         Empty state message
+         (center-aligned, bodyLarge, onSurfaceVariant)
+              (16dp/pt gap)
+         [Action Button] (if actionLabel != nil)
 ```
+
+#### Accessibility
+
+- Android: Icon `contentDescription` = null (decorative). Message is primary text.
+- iOS: Icon `.accessibilityHidden(true)`. Message is primary.
 
 ---
 
-### 3.10 MoltBadge
+### 3.10 MoltImage
 
-**Purpose**: Small indicator for counts (cart items, notifications) or status labels.
+**Description**: Async image loader with placeholder and error fallback.
 
-**Variants**: `CountBadge`, `StatusBadge`
+#### Parameters
 
-#### CountBadge
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `url` (Android) | `String?` | required | Image URL string |
+| `url` (iOS) | `URL?` | required | Image URL |
+| `contentDescription` (Android) | `String?` | required | Accessibility description |
+| `contentScale` (Android) | `ContentScale` | `ContentScale.Crop` | Image scaling |
+| `contentMode` (iOS) | `ContentMode` | `.fill` | Image content mode |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Props**:
+#### States
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `count` | `Int` | `Int` | Yes | -- | Badge count. 0 = hidden. > 99 = "99+" |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+- **Loading**: Shimmer color (`MoltColors.shimmer`) solid fill
+- **Success**: Actual image with crossfade animation (250ms)
+- **Error**: Same shimmer color as placeholder (or `R.drawable.placeholder` on Android)
 
-**Behavior**:
-- Circular badge with `MoltColors.BadgeBackground` background and `MoltColors.BadgeText` text.
-- Font: `labelSmall` (11sp/pt).
-- When `count <= 0`: badge is not rendered (fully hidden).
-- When `count > 99`: displays "99+".
-- Size: auto-sized to text, minimum 16dp/16pt diameter circle. Pill shape for multi-digit.
+#### Accessibility
 
-#### StatusBadge
+- Android: `contentDescription` parameter passed to `AsyncImage`.
+- iOS: No explicit label needed for decorative images; for meaningful images, wrap with `.accessibilityLabel`.
 
-**Props**:
+#### Platform-Specific Notes
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `text` | `String` | `String` | Yes | -- | Status label |
-| `backgroundColor` | `Color` | `Color` | No | `MoltColors.BadgeBackground` | Background color |
-| `textColor` | `Color` | `Color` | No | `MoltColors.BadgeText` | Text color |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
-
-**Behavior**:
-- Pill-shaped (`MoltCornerRadius.full`) badge with custom colors.
-- Font: `labelSmall`.
-- Horizontal padding: `MoltSpacing.SM` (8dp/pt). Vertical padding: `MoltSpacing.XXS` (2dp/pt).
-- Used for order status labels ("Processing", "Shipped", "Delivered").
-
-**Text-Based Wireframe**:
-
-```
-CountBadge:
-  (3)       single digit, circle
-  (12)      double digit, pill
-  (99+)     overflow, pill
-
-StatusBadge:
-  [ Processing ]   pill shape, custom colors
-  [ Delivered ]    pill shape, success color
-```
+- Android: Uses Coil `AsyncImage` with `ImageRequest.Builder.crossfade(true)`. Placeholder and error drawables from resources.
+- iOS: Uses NukeUI `LazyImage`. Crossfade via `.transition(.opacity.animation(.easeInOut(duration: 0.25)))`.
 
 ---
 
-### 3.11 MoltSearchBar
+### 3.11 MoltBadge
 
-**Purpose**: Search input field with search icon, clear button, and submit action.
+**Description**: Small count or status indicator badge, typically overlaid on icons.
 
-**Props**:
+#### Variants
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `query` | `String` | `String` (Binding) | Yes | -- | Current search text |
-| `onQueryChange` | `(String) -> Unit` | `Binding<String>` | Yes | -- | Text change callback |
-| `placeholder` | `String` | `String` | No | `stringResource(R.string.common_search_placeholder)` / `String(localized: "common_search_placeholder")` | Placeholder text |
-| `onSearch` | `((String) -> Unit)?` | `((String) -> Void)?` | No | `null` / `nil` | Submit/IME action callback |
-| `onClear` | `() -> Unit` | `() -> Void` | Yes | -- | Clear button callback |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+##### MoltCountBadge
 
-**Behavior**:
-- Leading icon: `Icons.Outlined.Search` (Android) / `magnifyingglass` SF Symbol (iOS). Not
-  tappable.
-- Trailing icon: `Icons.Outlined.Clear` / `xmark.circle.fill` when query is non-empty. Tappable
-  (calls `onClear`). Hidden when query is empty.
-- Keyboard action: `ImeAction.Search` (Android) / `.search` return key type (iOS). Calls
-  `onSearch` on submit.
-- Shape: `MoltCornerRadius.full` (pill shape, 999dp/pt corner radius).
-- Background: `surfaceVariant` color.
-- No elevation/shadow.
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `count` | `Int` | required | Badge count |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Text-Based Wireframe**:
+Display logic:
+- `count == 0`: Hidden (no badge)
+- `count 1-99`: Show number
+- `count >= 100`: Show "99+"
 
-```
-Empty:
-+------------------------------------------+
-|  [Q]  Search                             |
-+------------------------------------------+
+##### MoltStatusBadge
 
-With text:
-+------------------------------------------+
-|  [Q]  running shoes              [X]     |
-+------------------------------------------+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `status` | `MoltBadgeStatus` | required | Status type |
+| `label` | `String` | required | Status text (localized) |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-Q = search icon, X = clear button
-Pill shape, surfaceVariant background
-```
+#### MoltBadgeStatus Enum
+
+| Value | Background | Text Color | Usage |
+|-------|-----------|------------|-------|
+| `success` | `MoltColors.success` | `MoltColors.onSuccess` | Order delivered, in stock |
+| `warning` | `MoltColors.warning` | `MoltColors.onWarning` | Low stock, pending |
+| `error` | `MoltColors.error` | `MoltColors.onError` | Out of stock, cancelled |
+| `info` | `MoltColors.info` | `MoltColors.onInfo` | Processing, info |
+| `neutral` | `MoltColors.surfaceVariant` | `MoltColors.onSurfaceVariant` | Default status |
+
+#### Accessibility
+
+- Android: Count badge uses `semantics { contentDescription = "$count notifications" }`. Status badge uses label as `contentDescription`.
+- iOS: Count badge uses `.accessibilityLabel("\(count) notifications")`. Status badge uses `label` as `accessibilityLabel`.
+
+#### Platform-Specific Notes
+
+- Android: Count badge wraps in `BadgedBox` (Material 3). Status badge is custom `Surface` with rounded corners.
+- iOS: Count badge is `Text` in red circle. Status badge uses capsule-shaped background.
 
 ---
 
-### 3.12 MoltDivider
+### 3.12 MoltRatingBar
 
-**Purpose**: Thin horizontal separator line between content sections.
+**Description**: Read-only star rating display showing a value between 1 and 5.
 
-**Props**:
+#### Parameters
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `thickness` | `Dp` | `CGFloat` | No | `1.dp` / `1` | Line thickness |
-| `color` | `Color` | `Color` | No | `MoltColors.Divider` / `MoltColors.divider` | Line color |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `rating` | `Float` / `Double` | required | Rating value (0.0 to 5.0) |
+| `maxRating` | `Int` | `5` | Maximum number of stars |
+| `starSize` | `Dp` / `CGFloat` | `16` (dp/pt) | Individual star size |
+| `showValue` | `Boolean` / `Bool` | `false` | Show numeric value next to stars |
+| `reviewCount` | `Int?` | `nil` | Show "(N)" review count after value |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Android**: Wraps `HorizontalDivider` (Material 3).
-**iOS**: `Rectangle()` with `.frame(height:)` and `.foregroundStyle()`.
-
-**Behavior**: Simple horizontal line. Fills available width. No padding (callers add their own).
-
-**Text-Based Wireframe**:
+#### Layout
 
 ```
-Content above
-──────────────────────────────────  <- MoltDivider, 1dp/pt, divider color
-Content below
+[star][star][star][star][star] 4.5 (123)
+ filled filled filled half  empty
 ```
+
+#### Star Fill Logic
+
+For each star position `i` (1-based):
+- If `rating >= i`: filled star (`ratingStarFilled`)
+- If `rating >= i - 0.5`: half-filled star (clip mask)
+- Else: empty star (`ratingStarEmpty`)
+
+#### Accessibility
+
+- Android: `contentDescription` = localized "Rating: $rating out of $maxRating" + optional "(N reviews)".
+- iOS: `accessibilityLabel` = same composition.
+
+#### Platform-Specific Notes
+
+- Android: Custom composable with `Canvas` or `Icon` per star. Uses `MoltColors.RatingStarFilled` / `MoltColors.RatingStarEmpty`.
+- iOS: `HStack` of `Image(systemName: "star.fill")` / `Image(systemName: "star.leadinghalf.filled")` / `Image(systemName: "star")`.
 
 ---
 
 ### 3.13 MoltPriceText
 
-**Purpose**: Locale-aware formatted price display with optional sale price and strikethrough.
+**Description**: Formatted price display with currency symbol, sale price, and strikethrough for original price.
 
-**Props**:
+#### Parameters
 
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `amount` | `Long` | `Int` | Yes | -- | Price in cents (e.g., 2999 = EUR 29.99) |
-| `originalAmount` | `Long?` | `Int?` | No | `null` / `nil` | Original price in cents (before discount) |
-| `currencyCode` | `String` | `String` | No | `"EUR"` | ISO 4217 currency code |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `price` | `String` | required | Formatted current price (e.g., "29.99") |
+| `originalPrice` | `String?` | `nil` | Original price before discount |
+| `currencySymbol` | `String` | `"EUR"` | Currency symbol/code |
+| `size` | `MoltPriceSize` | `.medium` | Text size variant |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-**Behavior**:
-- Formats `amount` as currency using `NumberFormat.getCurrencyInstance()` (Android) /
-  `Decimal.FormatStyle.Currency(code:)` (iOS) with the user's current locale.
-- The display format should respect locale conventions (e.g., `EUR 29.99` or `29,99 EUR`).
-- When `originalAmount` is non-null and different from `amount`:
-  - Current price: `MoltColors.PriceSale` / `priceSale` color, `titleMedium` weight.
-  - Original price: `MoltColors.PriceOriginal` / `priceOriginal` color, `bodyMedium`,
-    `TextDecoration.LineThrough` (Android) / `.strikethrough()` (iOS).
-  - Layout: current price first, then original price with `MoltSpacing.XS` gap.
-- When `originalAmount` is null: price in `MoltColors.PriceRegular` / `priceRegular` color,
-  `titleMedium` weight.
+#### MoltPriceSize Enum
 
-**Text-Based Wireframe**:
+| Value | Price Style | Original Price Style |
+|-------|------------|---------------------|
+| `small` | `bodySmall` | `labelSmall` |
+| `medium` | `titleMedium` | `bodySmall` |
+| `large` | `headlineSmall` | `bodyMedium` |
 
+#### Layout
+
+When `originalPrice != nil` (sale):
 ```
-Regular price:
-  EUR 29.99                    priceRegular, titleMedium
-
-Sale price:
-  EUR 29.99  EUR 39.99         priceSale + priceOriginal (strikethrough)
-              ~~~~~~~~
+EUR 29.99  EUR 39.99
+(priceSale)  (priceOriginal, strikethrough)
 ```
 
----
-
-### 3.14 MoltRatingBar
-
-**Purpose**: Star rating display (read-only, not interactive).
-
-**Props**:
-
-| Prop | Android Type | iOS Type | Required | Default | Description |
-|------|-------------|----------|----------|---------|-------------|
-| `rating` | `Float` | `Double` | Yes | -- | Rating value 0.0 - 5.0 |
-| `maxRating` | `Int` | `Int` | No | `5` | Maximum number of stars |
-| `size` | `Dp` | `CGFloat` | No | `16.dp` / `16` | Individual star size |
-| `modifier` | `Modifier` | -- | No | `Modifier` | Layout modifier |
-
-**Behavior**:
-- Renders `maxRating` stars in a horizontal row with `MoltSpacing.XXS` (2dp/pt) spacing.
-- Full stars: `MoltColors.RatingStarFilled` / `ratingStarFilled`.
-- Empty stars: `MoltColors.RatingStarEmpty` / `ratingStarEmpty`.
-- Half stars: When `rating` has a fractional part >= 0.25 and < 0.75, render a half-filled star.
-  Fractional part >= 0.75 rounds up to full star. < 0.25 rounds down to empty star.
-- Icons: `Icons.Filled.Star` / `Icons.Filled.StarHalf` / `Icons.Outlined.StarOutline` (Android);
-  `star.fill` / `star.leadinghalf.filled` / `star` SF Symbols (iOS).
-- Read-only: no tap interaction, no accessibility adjustable trait.
-
-**Text-Based Wireframe**:
-
+When `originalPrice == nil` (regular):
 ```
-rating = 3.5, maxRating = 5:
-  [*] [*] [*] [/] [ ]         * = filled, / = half, [ ] = empty
-
-rating = 4.0:
-  [*] [*] [*] [*] [ ]
-
-rating = 0.0:
-  [ ] [ ] [ ] [ ] [ ]
+EUR 29.99
+(priceRegular)
 ```
 
+#### Formatting Rules
+
+- Currency format: "EUR XX.XX" (euro symbol before amount, dot decimal separator)
+- Use locale-aware `NumberFormat` (Android) / `NumberFormatter` (iOS) for display
+- Always show 2 decimal places
+
+#### Accessibility
+
+- Android: Combined `contentDescription` = "Price: EUR 29.99" or "Sale price: EUR 29.99, was EUR 39.99".
+- iOS: `accessibilityLabel` = same composition.
+
+#### Platform-Specific Notes
+
+- Android: `Row` with two `Text` composables. Original price uses `TextDecoration.LineThrough`.
+- iOS: `HStack` with two `Text` views. Original price uses `.strikethrough()`.
+
 ---
 
-## 4. UI Wireframe -- Component Gallery Overview
+### 3.14 MoltQuantityStepper
 
-This section shows how all 14 components relate visually. Feature screens compose these
-components; a component gallery/preview screen is not shipped in the app but each component
-has its own `@Preview` / `#Preview`.
+**Description**: Increment/decrement control for item quantities.
+
+#### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `quantity` | `Int` | required | Current quantity value |
+| `onQuantityChange` | `(Int) -> Unit` / `(Int) -> Void` | required | Quantity change callback |
+| `minQuantity` | `Int` | `1` | Minimum allowed value |
+| `maxQuantity` | `Int` | `99` | Maximum allowed value |
+| `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
+
+#### Layout
 
 ```
-+============================================================+
-|  [<]  Component Gallery                           [icon]    |  MoltTopBar
-+============================================================+
-|                                                             |
-|  +--search bar (pill shape, surfaceVariant bg)----------+   |  MoltSearchBar
-|  | [Q]  Search products                            [X]  |   |
-|  +------------------------------------------------------+   |
-|                                                             |
-|  +---ProductCard---+  +---ProductCard---+                   |  MoltCard (ProductCard)
-|  |  [  image  ]    |  |  [  image  ]    |                   |  uses MoltImage
-|  |  Product Name   |  |  Product Name   |                   |
-|  |  Vendor         |  |  Vendor         |                   |
-|  |  EUR 29.99      |  |  EUR 19.99 25.00|                   |  MoltPriceText
-|  |  ****_ (4.2)    |  |  ***__ (3.0)    |                   |  MoltRatingBar
-|  +-----------------+  +-----------------+                   |
-|                                                             |
-|  ────────────────────────────────────────────────────────   |  MoltDivider
-|                                                             |
-|  +---InfoCard--------------------------------------------+  |  MoltCard (InfoCard)
-|  |  Order #12345                        [ Delivered ]    |  |  MoltBadge (StatusBadge)
-|  |  Feb 15, 2026                                         |  |
-|  +-------------------------------------------------------+  |
-|                                                             |
-|  [ Primary Button ]                                         |  MoltButton (Primary)
-|  [ Secondary Button ]                                       |  MoltButton (Secondary)
-|  [ Text Button ]                                            |  MoltButton (Text)
-|                                                             |
-|  Email                                                      |  MoltTextField
-|  +------------------------------------------------------+   |
-|  | [mail]  user@example.com                              |   |
-|  +------------------------------------------------------+   |
-|                                                             |
-|  -- Loading --                                              |  MoltLoadingView
-|       ( o )                                                 |
-|                                                             |
-|  -- Error --                                                |  MoltErrorView
-|       [!]                                                   |
-|   Error message                                             |
-|   [ Retry ]                                                 |
-|                                                             |
-|  -- Empty --                                                |  MoltEmptyView
-|     [inbox]                                                 |
-|   Nothing here yet                                          |
-|                                                             |
-+============================================================+
-|  [home]  [grid]  [cart]  [person]                           |  MoltBottomBar / MoltTabBar
-|   Home   Categ.   Cart   Profile                            |
-|                   (3)                                       |  MoltBadge (CountBadge)
-+============================================================+
+[ - ]  3  [ + ]
 ```
 
----
+- Minus button disabled when `quantity <= minQuantity`
+- Plus button disabled when `quantity >= maxQuantity`
+- Count displayed with `titleMedium` style
 
-## 5. Navigation Flow
+#### Accessibility
 
-Not applicable. Design system components are not screens and do not participate in navigation.
-They are composed into feature screens that are wired into the navigation graph (M0-04).
+- Android: Minus button `contentDescription` = localized "Decrease quantity". Plus button = "Increase quantity". Quantity text = "Quantity: $quantity".
+- iOS: Same labels. Consider `accessibilityAdjustableAction` for combined stepper control.
 
----
+#### Platform-Specific Notes
 
-## 6. State Management
-
-Design system components are stateless UI building blocks. They receive state via props and
-emit events via callbacks. There are no ViewModels, no UiState sealed classes, and no side
-effects at the component level.
-
-### Component-Level States
-
-| Component | States | How State Is Expressed |
-|-----------|--------|----------------------|
-| MoltButton | Normal, Loading, Disabled | `enabled` + `loading` props |
-| MoltCard | Normal, Pressed | Platform ripple/highlight (automatic) |
-| MoltTextField | Normal, Focused, Error, Disabled | `errorMessage` != null triggers error; `enabled` prop |
-| MoltTopBar | With/without back, with/without actions | `onBackClick` nullability, `actions` list |
-| MoltBottomBar/TabBar | Selected tab, badge counts | `selectedTab` + `MoltTabItem.badgeCount` |
-| MoltLoadingView | Always loading (single state) | No props needed |
-| MoltLoadingIndicator | Always loading (single state) | No props needed |
-| MoltErrorView | Error with/without retry | `onRetry` nullability |
-| MoltEmptyView | Always same (single state) | `message` + `icon` |
-| MoltImage | Loading, Success, Error | Internal Coil/Nuke state machine |
-| MoltBadge (Count) | Visible (count > 0), Hidden (count <= 0) | `count` prop |
-| MoltBadge (Status) | Always visible | `text` + colors |
-| MoltSearchBar | Empty, Has Text | `query` emptiness controls clear button visibility |
-| MoltDivider | Always same (single state) | No dynamic states |
-| MoltPriceText | Regular, Sale | `originalAmount` nullability |
-| MoltRatingBar | Always same (renders rating) | `rating` prop value |
-
-### State Ownership Rule
-
-Components NEVER hold their own state. The calling screen (via its ViewModel) owns all state
-and passes it down as props. Events flow upward via callback props. This is the Unidirectional
-Data Flow (UDF) pattern enforced project-wide.
+- Android: `Row` with two `IconButton` composables and center `Text`. Min touch target 48dp for each button.
+- iOS: `HStack` with two `Button` views and center `Text`. Min touch target 44pt.
 
 ---
 
-## 7. Error Scenarios
+## 4. File Structure
 
-### Component-Level Error Handling
+### 4.1 Android
 
-| Component | Error Scenario | Behavior |
-|-----------|---------------|----------|
-| MoltImage | Image URL returns 4xx/5xx or is malformed | Shows placeholder drawable (Android) or shimmer color (iOS). No error icon, no retry. Silent fallback. |
-| MoltImage | URL is null | Shows placeholder immediately. Not treated as an error. |
-| MoltTextField | Validation error from ViewModel | ViewModel sets `errorMessage` prop. Field shows red border and error text. Component does NOT validate internally. |
-| MoltErrorView | Network/server error on a screen | Feature ViewModel sets `UiState.Error(message)`. Screen renders `MoltErrorView` with the message. Retry button calls ViewModel reload function. |
-| MoltPriceText | Amount is 0 | Displays formatted zero price (e.g., "EUR 0.00"). Not treated as an error. |
-| MoltPriceText | Invalid currency code | Falls back to code-based display (e.g., "XXX 29.99"). No crash. |
-| MoltRatingBar | Rating < 0 or > maxRating | Clamp to valid range: `rating.coerceIn(0f, maxRating.toFloat())`. No crash. |
-| MoltBadge (Count) | Negative count | Treated as 0; badge is hidden. |
-| MoltSearchBar | Extremely long query | Text field handles truncation naturally. No special handling needed. |
+**Root**: `android/app/src/main/java/com/molt/marketplace/core/designsystem/`
 
-### Error Prevention Rules
+```
+core/designsystem/
+  theme/
+    MoltColors.kt          -- Color object (light, dark, semantic) from colors.json
+    MoltTypography.kt      -- Typography object from typography.json
+    MoltSpacing.kt         -- Spacing object from spacing.json
+    MoltCornerRadius.kt    -- Corner radius object from spacing.json
+    MoltElevation.kt       -- Elevation object from spacing.json
+    MoltTheme.kt           -- @Composable MoltTheme wrapper (applies colorScheme + typography)
+  component/
+    MoltButton.kt          -- MoltButton + MoltButtonStyle enum
+    MoltTextField.kt       -- MoltTextField
+    MoltCard.kt            -- MoltProductCard + MoltInfoCard
+    MoltChip.kt            -- MoltFilterChip + MoltCategoryChip
+    MoltTopBar.kt          -- MoltTopBar
+    MoltBottomBar.kt       -- MoltBottomBar + MoltTabItem
+    MoltLoadingView.kt     -- MoltLoadingView + MoltLoadingIndicator
+    MoltErrorView.kt       -- MoltErrorView
+    MoltEmptyView.kt       -- MoltEmptyView
+    MoltImage.kt           -- MoltImage
+    MoltBadge.kt           -- MoltCountBadge + MoltStatusBadge + MoltBadgeStatus enum
+    MoltRatingBar.kt       -- MoltRatingBar
+    MoltPriceText.kt       -- MoltPriceText + MoltPriceSize enum
+    MoltQuantityStepper.kt -- MoltQuantityStepper
+```
 
-1. All components must handle null props gracefully (via nullable types and defaults).
-2. No component throws exceptions. Invalid input is clamped, defaulted, or silently ignored.
-3. Components log warnings via `Timber.w()` (Android) / `Logger.warning()` (iOS) for
-   unexpected inputs in debug builds only.
-4. No `!!` (Kotlin) or force unwrap (Swift) in any component code.
+**Total files**: 6 theme + 14 component = **20 Kotlin files**
+
+### 4.2 iOS
+
+**Root**: `ios/MoltMarketplace/Core/DesignSystem/`
+
+```
+Core/DesignSystem/
+  Theme/
+    MoltColors.swift       -- MoltColors enum (light, dark, semantic) + Color(hex:) extension
+    MoltTypography.swift   -- MoltTypography enum from typography.json
+    MoltSpacing.swift      -- MoltSpacing enum from spacing.json
+    MoltCornerRadius.swift -- MoltCornerRadius enum from spacing.json
+    MoltElevation.swift    -- MoltElevation enum (shadow helpers)
+    MoltTheme.swift        -- MoltTheme ViewModifier (applies color + typography environment)
+  Component/
+    MoltButton.swift       -- MoltButton view + MoltButtonStyle enum
+    MoltTextField.swift    -- MoltTextField view
+    MoltCard.swift         -- MoltProductCard + MoltInfoCard views
+    MoltChip.swift         -- MoltFilterChip + MoltCategoryChip views
+    MoltTopBar.swift       -- MoltTopBar view
+    MoltTabBar.swift       -- MoltTabBar view + MoltTabItem struct
+    MoltLoadingView.swift  -- MoltLoadingView + MoltLoadingIndicator views
+    MoltErrorView.swift    -- MoltErrorView
+    MoltEmptyView.swift    -- MoltEmptyView
+    MoltImage.swift        -- MoltImage view (NukeUI)
+    MoltBadge.swift        -- MoltCountBadge + MoltStatusBadge + MoltBadgeStatus enum
+    MoltRatingBar.swift    -- MoltRatingBar view
+    MoltPriceText.swift    -- MoltPriceText view + MoltPriceSize enum
+    MoltQuantityStepper.swift -- MoltQuantityStepper view
+```
+
+**Total files**: 6 theme + 14 component = **20 Swift files**
 
 ---
 
-## 8. Accessibility
+## 5. Localization Keys
 
-### Global Requirements (All Components)
+All user-facing strings in design system components must use localization keys.
 
-- Minimum touch target: 48dp (Android) / 44pt (iOS) for all interactive elements.
-- Dynamic Type / font scaling: all text must scale with system font size settings.
-- Color contrast: all text meets WCAG AA (>= 4.5:1 for normal text, >= 3:1 for large text).
-- No information conveyed by color alone (e.g., error state also has text and icon, not just
-  red border).
-
-### Per-Component Accessibility
-
-| Component | Content Description / Label | Traits / Roles | Notes |
-|-----------|---------------------------|----------------|-------|
-| MoltButton | Text is the label (automatic) | Button role | Loading state announces "Loading" to screen reader |
-| MoltCard (Product) | Combine: "{title}, {vendorName}, {formattedPrice}" | Button role (clickable) | Image has decorative role (title conveys info) |
-| MoltCard (Info) | "{title}, {subtitle}" | Button role if clickable, none if not | Trailing content has its own labels |
-| MoltTextField | `label` prop is the accessibility label | Text field role | Error message announced as error |
-| MoltTopBar | Title is heading | Heading role for title | Back button: label from `common_back_button` string |
-| MoltBottomBar/TabBar | Tab label is accessibility label | Tab role | Selected state announced. Badge count announced: "{label}, {count} items" |
-| MoltLoadingView | "Loading" (`common_loading_message` string) | Progress indicator | Announce to screen reader on appearance |
-| MoltLoadingIndicator | "Loading" | Progress indicator | Same as above |
-| MoltErrorView | Message text is announced | Alert role (iOS) | Retry button independently labeled |
-| MoltEmptyView | Message text is announced | Static text | Icon is decorative |
-| MoltImage | `contentDescription` prop (Android), decorative by default | Image role if description provided | When used inside MoltCard, image is decorative (card handles label) |
-| MoltBadge (Count) | "{count} new items" or similar | None (visual only) | Parent element (tab) includes badge count in its label |
-| MoltBadge (Status) | `text` is the label | Status role | Read as part of parent container |
-| MoltSearchBar | Placeholder is accessibility hint; label is "Search" | Search field role | Clear button: "Clear search" label |
-| MoltDivider | No accessibility label | Separator role | Ignored by screen readers by default |
-| MoltPriceText | Full price text is announced | Static text | Sale: announces "sale price {amount}, original price {originalAmount}" |
-| MoltRatingBar | "{rating} out of {maxRating} stars" | Static text (read-only) | Not adjustable (display only) |
-
-### Accessibility Testing Checklist
-
-- [ ] TalkBack (Android) reads every interactive element with correct label
-- [ ] VoiceOver (iOS) reads every interactive element with correct label
-- [ ] Font scale at 200% does not clip or overlap text
-- [ ] All touch targets >= 48dp/44pt
-- [ ] No information conveyed solely by color
-- [ ] Focus order follows visual order (top-to-bottom, left-to-right)
-
----
-
-## 9. String Resources
-
-### New String Keys Required
-
-These keys must be added to existing string resource files created in M0-01.
+### String Keys
 
 | Key | English (en) | Maltese (mt) | Turkish (tr) |
 |-----|-------------|-------------|-------------|
-| `nav_tab_home` | Home | Id-Dar | Ana Sayfa |
-| `nav_tab_categories` | Categories | Kategoriji | Kategoriler |
-| `nav_tab_cart` | Cart | Kartell | Sepet |
-| `nav_tab_profile` | Profile | Profil | Profil |
-| `common_back_button` | Back | Lura | Geri |
-| `common_empty_message` | Nothing here yet | Xejn hawnhekk ghadha | Henuz burada bir sey yok |
-
-### Existing Keys Used by Components
-
-These keys were created in M0-01 and are referenced by design system components:
-
-| Key | Used By | English |
-|-----|---------|---------|
-| `common_retry_button` | MoltErrorView | Retry |
-| `common_loading_message` | MoltLoadingView (accessibility) | Loading... |
-| `common_search_placeholder` | MoltSearchBar (default placeholder) | Search |
-
-### Files to Modify
-
-**Android**:
-- `android/app/src/main/res/values/strings.xml` -- add 6 new keys
-- `android/app/src/main/res/values-mt/strings.xml` -- add 6 new keys
-- `android/app/src/main/res/values-tr/strings.xml` -- add 6 new keys
-
-**iOS**:
-- `ios/MoltMarketplace/Resources/Localizable.xcstrings` -- add 6 new keys in all 3 languages
+| `common_loading` | Loading... | Tagħbija... | Yukleniyor... |
+| `common_retry_button` | Retry | Erga' pprova | Tekrar dene |
+| `common_error_icon_description` | Error | Zball | Hata |
+| `common_navigate_back` | Navigate back | Mur lura | Geri git |
+| `common_decrease_quantity` | Decrease quantity | Naqqas il-kwantita | Miktari azalt |
+| `common_increase_quantity` | Increase quantity | Żid il-kwantita | Miktari artir |
+| `common_quantity_value` | Quantity: %d | Kwantita: %d | Miktar: %d |
+| `common_rating_description` | Rating: %.1f out of %d | Klassifika: %.1f minn %d | Puan: %d uzerinden %.1f |
+| `common_reviews_count` | (%d reviews) | (%d reviżjonijiet) | (%d degerlendirme) |
+| `common_price_label` | Price: %s | Prezz: %s | Fiyat: %s |
+| `common_sale_price_label` | Sale price: %1$s, was %2$s | Prezz tal-bejgh: %1$s, kien %2$s | Indirimli fiyat: %1$s, eskisi %2$s |
+| `common_add_to_wishlist` | Add to wishlist | Żid mal-wishlist | Favorilere ekle |
+| `common_remove_from_wishlist` | Remove from wishlist | Neħħi mill-wishlist | Favorilerden kaldir |
+| `common_notifications_count` | %d notifications | %d notifiki | %d bildirim |
+| `common_tab_home` | Home | Dar | Ana sayfa |
+| `common_tab_categories` | Categories | Kategoriji | Kategoriler |
+| `common_tab_cart` | Cart | Karrettun | Sepet |
+| `common_tab_profile` | Profile | Profil | Profil |
 
 ---
 
-## 10. File Manifest
+## 6. Preview Requirements
 
-### 10.1 Android Component Files
+Every component file must include at least one preview demonstrating:
+1. Default state
+2. Key variant (if applicable)
+3. Edge case (long text, loading, error, etc.)
 
-Base path: `android/app/src/main/java/com/molt/marketplace/core/designsystem/component/`
+### Android Preview Pattern
 
-| # | File Name | Description |
-|---|----------|-------------|
-| 1 | `MoltButton.kt` | Primary, Secondary, Text button variants with loading state. Enum: `MoltButtonStyle`. |
-| 2 | `MoltCard.kt` | `ProductCard` and `InfoCard` composables. Uses `MoltImage`, `MoltPriceText`, `MoltRatingBar`. |
-| 3 | `MoltTextField.kt` | Outlined text field with label, error, icons, secure mode. |
-| 4 | `MoltTopBar.kt` | Top app bar with back button and actions. Data class: `MoltTopBarAction`. |
-| 5 | `MoltBottomBar.kt` | Bottom navigation bar with tab items and badge. Data class: `MoltTabItem`. |
-| 6 | `MoltLoadingView.kt` | `MoltLoadingView` (full-screen) and `MoltLoadingIndicator` (inline). |
-| 7 | `MoltErrorView.kt` | Error state with icon, message, retry button. |
-| 8 | `MoltEmptyView.kt` | Empty state with icon and message. |
-| 9 | `MoltImage.kt` | Coil `AsyncImage` wrapper with placeholder and crossfade. |
-| 10 | `MoltBadge.kt` | `MoltCountBadge` and `MoltStatusBadge` composables. |
-| 11 | `MoltSearchBar.kt` | Pill-shaped search input with search icon and clear button. |
-| 12 | `MoltDivider.kt` | `HorizontalDivider` wrapper with default token values. |
-| 13 | `MoltPriceText.kt` | Locale-aware currency formatter with sale price strikethrough. |
-| 14 | `MoltRatingBar.kt` | Star rating display with filled, half, empty stars. |
+```kotlin
+@Preview(showBackground = true)
+@Composable
+private fun MoltButtonPrimaryPreview() {
+    MoltTheme {
+        MoltButton(text = "Add to Cart", onClick = {})
+    }
+}
 
-### 10.2 iOS Component Files
+@Preview(showBackground = true)
+@Composable
+private fun MoltButtonLoadingPreview() {
+    MoltTheme {
+        MoltButton(text = "Loading", onClick = {}, loading = true)
+    }
+}
+```
 
-Base path: `ios/MoltMarketplace/Core/DesignSystem/Component/`
+### iOS Preview Pattern
 
-| # | File Name | Description |
-|---|----------|-------------|
-| 1 | `MoltButton.swift` | Primary, Secondary, Text button variants with loading state. Enum: `MoltButtonStyle`. |
-| 2 | `MoltCard.swift` | `MoltProductCard` and `MoltInfoCard` views. Uses `MoltImage`, `MoltPriceText`, `MoltRatingBar`. |
-| 3 | `MoltTextField.swift` | Text field with label, error, icons, secure mode. |
-| 4 | `MoltTopBar.swift` | Navigation bar wrapper with back button and actions. Struct: `MoltTopBarAction`. |
-| 5 | `MoltTabBar.swift` | Tab bar with tab items and badge. Struct: `MoltTabItem`. |
-| 6 | `MoltLoadingView.swift` | `MoltLoadingView` (full-screen) and `MoltLoadingIndicator` (inline). |
-| 7 | `MoltErrorView.swift` | Error state with icon, message, retry button. |
-| 8 | `MoltEmptyView.swift` | Empty state with icon and message. |
-| 9 | `MoltImage.swift` | NukeUI `LazyImage` wrapper with shimmer placeholder. |
-| 10 | `MoltBadge.swift` | `MoltCountBadge` and `MoltStatusBadge` views. |
-| 11 | `MoltSearchBar.swift` | Pill-shaped search input with search icon and clear button. |
-| 12 | `MoltDivider.swift` | `Rectangle` divider wrapper with default token values. |
-| 13 | `MoltPriceText.swift` | Locale-aware currency formatter with sale price strikethrough. |
-| 14 | `MoltRatingBar.swift` | Star rating display with filled, half, empty stars. |
+```swift
+#Preview("MoltButton Primary") {
+    MoltButton("Add to Cart") { }
+}
 
-### 10.3 String Resource Files (Modified)
-
-| # | File Path | Action |
-|---|----------|--------|
-| 1 | `android/app/src/main/res/values/strings.xml` | Add 6 new keys (English) |
-| 2 | `android/app/src/main/res/values-mt/strings.xml` | Add 6 new keys (Maltese) |
-| 3 | `android/app/src/main/res/values-tr/strings.xml` | Add 6 new keys (Turkish) |
-| 4 | `ios/MoltMarketplace/Resources/Localizable.xcstrings` | Add 6 new keys (all 3 languages) |
-
-### 10.4 Android Test Files
-
-Base path: `android/app/src/test/java/com/molt/marketplace/core/designsystem/component/`
-
-| # | File Name | Tests |
-|---|----------|-------|
-| 1 | `MoltButtonTest.kt` | Renders all variants; loading disables click; spinner visible when loading |
-| 2 | `MoltCardTest.kt` | ProductCard renders title/price/vendor; InfoCard renders title/subtitle |
-| 3 | `MoltTextFieldTest.kt` | Error message shows; secure field masks text; icons render |
-| 4 | `MoltTopBarTest.kt` | Back button visible when onBackClick non-null; actions render |
-| 5 | `MoltBottomBarTest.kt` | Correct tab selected; badge count renders; callback fires |
-| 6 | `MoltLoadingViewTest.kt` | Progress indicator visible |
-| 7 | `MoltErrorViewTest.kt` | Message text visible; retry button present/absent based on onRetry |
-| 8 | `MoltEmptyViewTest.kt` | Message text and icon visible |
-| 9 | `MoltImageTest.kt` | Placeholder shown when URL is null |
-| 10 | `MoltBadgeTest.kt` | Count badge hidden when 0; shows "99+" for > 99; status badge renders text |
-| 11 | `MoltSearchBarTest.kt` | Clear button visible only when query non-empty; onSearch fires |
-| 12 | `MoltDividerTest.kt` | Divider renders with default and custom thickness |
-| 13 | `MoltPriceTextTest.kt` | Formats price correctly; sale price shows strikethrough original |
-| 14 | `MoltRatingBarTest.kt` | Correct number of filled/half/empty stars |
-
-### 10.5 iOS Test Files
-
-Base path: `ios/MoltMarketplaceTests/Core/DesignSystem/Component/`
-
-| # | File Name | Tests |
-|---|----------|-------|
-| 1 | `MoltButtonTests.swift` | Renders all variants; loading disables tap; spinner visible when loading |
-| 2 | `MoltCardTests.swift` | ProductCard renders title/price/vendor; InfoCard renders title/subtitle |
-| 3 | `MoltTextFieldTests.swift` | Error message shows; secure field masks text; icons render |
-| 4 | `MoltTopBarTests.swift` | Back button visible when onBackClick non-nil; actions render |
-| 5 | `MoltTabBarTests.swift` | Correct tab selected; badge count renders; callback fires |
-| 6 | `MoltLoadingViewTests.swift` | Progress indicator visible |
-| 7 | `MoltErrorViewTests.swift` | Message text visible; retry button present/absent based on onRetry |
-| 8 | `MoltEmptyViewTests.swift` | Message text and icon visible |
-| 9 | `MoltImageTests.swift` | Placeholder shown when URL is nil |
-| 10 | `MoltBadgeTests.swift` | Count badge hidden when 0; shows "99+" for > 99; status badge renders text |
-| 11 | `MoltSearchBarTests.swift` | Clear button visible only when query non-empty; onSearch fires |
-| 12 | `MoltDividerTests.swift` | Divider renders with default and custom thickness |
-| 13 | `MoltPriceTextTests.swift` | Formats price correctly; sale price shows strikethrough original |
-| 14 | `MoltRatingBarTests.swift` | Correct number of filled/half/empty stars |
+#Preview("MoltButton Loading") {
+    MoltButton("Loading", isLoading: true) { }
+}
+```
 
 ---
 
-## 11. Build Verification Criteria
+## 7. Acceptance Criteria
 
-The design system components are complete when:
+### Theme
 
-### Android
+- [ ] All color tokens from `colors.json` mapped to platform constants
+- [ ] Light and dark color schemes implemented and switchable
+- [ ] All typography styles from `typography.json` mapped to platform text styles
+- [ ] All spacing tokens from `spacing.json` mapped to platform dimension constants
+- [ ] Corner radius and elevation tokens mapped
+- [ ] `MoltTheme` wrapper applies color scheme + typography to content tree
 
-- [ ] All 14 component files compile without errors
-- [ ] `./gradlew assembleDebug` succeeds
-- [ ] Every component has at least one `@Preview` function
-- [ ] All previews render in Android Studio preview pane without errors
-- [ ] All 14 component test files pass: `./gradlew testDebugUnitTest`
-- [ ] No new lint warnings from ktlint or detekt
-- [ ] String resources parse without errors in all 3 languages
-- [ ] No hardcoded strings, colors, or spacing values in component code
-- [ ] All colors from `MoltColors`, all spacing from `MoltSpacing`
-- [ ] No direct Material 3 component usage in component public APIs (wrapped internally only)
+### Components
 
-### iOS
+- [ ] All 14 components implemented on both platforms
+- [ ] Each component has a `modifier` (Android) parameter as first optional parameter
+- [ ] No raw Material 3 or SwiftUI primitives exposed in public API (all wrapped)
+- [ ] All components support the states listed in their spec
+- [ ] All strings use localization keys (no hardcoded user-facing text)
+- [ ] All interactive elements meet minimum touch target (48dp Android / 44pt iOS)
 
-- [ ] All 14 component files compile without errors
-- [ ] `xcodebuild -scheme MoltMarketplace-Debug build` succeeds
-- [ ] Every component has a `#Preview` block
-- [ ] All previews render in Xcode preview canvas without errors
-- [ ] All 14 component test files pass
-- [ ] No new SwiftLint or SwiftFormat warnings
-- [ ] String Catalog includes all 6 new keys in all 3 languages
-- [ ] No hardcoded strings, colors, or spacing values in component code
-- [ ] All colors from `MoltColors`, all spacing from `MoltSpacing`
-- [ ] No force unwraps (`!`) in component code
-- [ ] Strict Concurrency Checking: no warnings
+### Accessibility
 
----
+- [ ] All interactive elements have `contentDescription` (Android) / `accessibilityLabel` (iOS)
+- [ ] Loading states announce "Loading" to screen readers
+- [ ] Error states announce error message
+- [ ] Color contrast ratio >= 4.5:1 for text on all backgrounds
+- [ ] Dynamic Type support on iOS (text scales with system setting)
 
-## 12. Implementation Notes for Developers
+### Previews
 
-### For Android Developer
+- [ ] Every component file has at least one `@Preview` / `#Preview`
+- [ ] Previews wrapped in `MoltTheme`
+- [ ] Both light and dark previews for theme-dependent components
 
-1. Remove `.gitkeep` from `core/designsystem/component/` before adding files.
-2. Create components in dependency order: `MoltDivider` and `MoltImage` first (no deps), then
-   `MoltButton`, `MoltBadge`, `MoltLoadingView`, `MoltRatingBar`, `MoltPriceText` (simple),
-   then `MoltTextField`, `MoltSearchBar`, `MoltErrorView`, `MoltEmptyView` (use MoltButton),
-   then `MoltTopBar`, `MoltBottomBar` (use MoltBadge), then `MoltCard` (uses MoltImage,
-   MoltPriceText, MoltRatingBar).
-3. Every composable must accept `modifier: Modifier = Modifier` as the first optional parameter.
-4. Use `@Stable` annotation on any data classes used as composable parameters.
-5. Use `stringResource(R.string.xxx)` for all user-facing strings.
-6. Wrap every `@Preview` in `MoltTheme { }`.
-7. Add string resources to all 3 string XML files before building.
-8. Import only from `com.molt.marketplace.core.designsystem.theme.*` for tokens.
+### Quality
 
-### For iOS Developer
-
-1. Remove `.gitkeep` from `Core/DesignSystem/Component/` before adding files.
-2. Create components in the same dependency order as Android (see above).
-3. Use `String(localized:)` for all user-facing strings.
-4. Every view must have a `#Preview` block.
-5. All structs conforming to `View` must be `internal` (default) or `public` if needed
-   across modules.
-6. No `AnyView` -- use `@ViewBuilder` or conditional `some View` returns.
-7. Add new keys to `Localizable.xcstrings` for all 3 languages before building.
-8. Use `MoltCornerRadius` constants from `MoltTheme.swift` for corner radii.
-9. NukeUI dependency already declared in SPM from M0-01.
-
-### Common Rules
-
-- Every component is self-contained in one file (component + its supporting types).
-- No component imports feature-level code or network/repository code.
-- Components reference `MoltColors`, `MoltSpacing`, `MoltTypography`, `MoltCornerRadius` only.
-- All `@Preview` / `#Preview` blocks demonstrate the component in multiple states (normal,
-  loading, error, etc.) using `PreviewProvider` (Android) or `#Preview("state name")` (iOS).
-- Naming: Android composable functions use `PascalCase`. iOS struct names use `PascalCase`.
-- File names match the primary composable/struct name.
+- [ ] Android: ktlint + detekt pass with zero warnings
+- [ ] iOS: SwiftLint + SwiftFormat pass with zero warnings
+- [ ] No `Any` type usage
+- [ ] No force unwrap (`!!` or `!`)
+- [ ] All types are immutable (data class / struct)
+- [ ] No hardcoded colors, dimensions, or strings in component code
+- [ ] 60fps scroll performance (no jank from complex component rendering)
 
 ---
 
-## 13. Design Transition Notes
+## 8. Design Transition Notes
 
-When Figma designs arrive, these component files are the ONLY files that change:
+This spec uses Material 3 defaults and system fonts. When Figma designs arrive:
 
-| What Changes | Where |
-|-------------|-------|
-| Colors, shadows, shapes | `MoltButton.kt` / `MoltButton.swift` internal styling |
-| Card layout, padding, corner radius | `MoltCard.kt` / `MoltCard.swift` |
-| Input field appearance | `MoltTextField.kt` / `MoltTextField.swift` |
-| Top bar height, styling | `MoltTopBar.kt` / `MoltTopBar.swift` |
-| Tab bar icons, layout | `MoltBottomBar.kt` / `MoltTabBar.swift` |
-| Loading spinner style | `MoltLoadingView.kt` / `MoltLoadingView.swift` |
-| Error/empty illustrations | `MoltErrorView.kt` / `MoltEmptyView.swift` etc. |
-| Badge size, shape | `MoltBadge.kt` / `MoltBadge.swift` |
-| Price text layout | `MoltPriceText.kt` / `MoltPriceText.swift` |
-| Star icons, spacing | `MoltRatingBar.kt` / `MoltRatingBar.swift` |
+1. **Update** `shared/design-tokens/*.json` with new values
+2. **Update** theme files (`MoltColors`, `MoltTypography`, `MoltSpacing`) to read new tokens
+3. **Update** component files to match new visual specs (padding, shapes, shadows)
+4. **Do NOT change** any feature screen code -- the `Molt*` API contracts stay stable
 
-**What NEVER changes**: Feature screen code, ViewModels, UseCases, Repositories, DTOs, domain
-models, navigation, API integration, tests (unless component props change).
+The component API (parameters, callbacks, types) defined in this spec is the stable contract. Visual implementation behind these APIs is what changes when Figma arrives.
 
-Component prop signatures are the contract. Prop names and types should be considered stable
-after M0-02 is complete. Visual implementation behind those props can change freely.
+---
+
+**Specification Complete**
+**Next**: Android Dev + iOS Dev implement in parallel based on this spec.

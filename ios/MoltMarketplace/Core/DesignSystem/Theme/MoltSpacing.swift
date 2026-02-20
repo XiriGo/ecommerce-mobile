@@ -1,5 +1,7 @@
 import SwiftUI
 
+// swiftlint:disable no_magic_numbers
+
 enum MoltSpacing {
     // MARK: - Base Spacing
 
@@ -23,4 +25,24 @@ enum MoltSpacing {
     static let productGridSpacing: CGFloat = 8
     static let productGridColumns: Int = 2
     static let minTouchTarget: CGFloat = 44 // Apple HIG: 44pt minimum
+
+    // MARK: - Icon Sizes
+
+    enum IconSize {
+        static let small: CGFloat = 16
+        static let medium: CGFloat = 24
+        static let large: CGFloat = 32
+        static let extraLarge: CGFloat = 48
+    }
+
+    // MARK: - Avatar Sizes
+
+    enum AvatarSize {
+        static let small: CGFloat = 32
+        static let medium: CGFloat = 48
+        static let large: CGFloat = 64
+        static let extraLarge: CGFloat = 96
+    }
 }
+
+// swiftlint:enable no_magic_numbers
