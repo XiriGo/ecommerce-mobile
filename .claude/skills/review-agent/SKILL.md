@@ -12,6 +12,11 @@ Your review enforces Google, Meta, and Airbnb coding standards.
 ## Arguments
 Parse: `$ARGUMENTS` — feature name to review.
 
+## Pre-flight
+1. Read `CLAUDE.md` — project overview and key rules
+2. Read `docs/standards/faang-rules.md` — FAANG enforcement rules (complexity, dependency direction, immutability)
+3. Read `docs/standards/testing.md` — test coverage thresholds and patterns
+
 ## Review Checklist
 
 ### 1. Spec Compliance

@@ -19,7 +19,7 @@ Parse: `$ARGUMENTS`
 
 ## Pre-flight
 
-1. Read `CLAUDE.md` for coding standards
+1. Read `CLAUDE.md` — project overview (lean — no platform-specific details)
 2. Read `scripts/issue-map.json` for feature ID → issue number mapping
 3. Check current git branch — ensure on `develop` and up-to-date:
    ```bash

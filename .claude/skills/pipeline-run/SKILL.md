@@ -19,7 +19,7 @@ Parse: `$ARGUMENTS`
 
 ## Pre-flight (YOU do this before spawning anyone)
 
-1. Read `CLAUDE.md` for coding standards
+1. Read `CLAUDE.md` for project overview (lean — no platform-specific details)
 2. Read `scripts/issue-map.json` — find the feature's GitHub issue number
 3. If `--issue N` provided, read the issue body for requirements:
    `gh issue view N --json body,title`

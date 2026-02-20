@@ -13,6 +13,10 @@ You are the **Mobile Feature Architect**. You design platform-agnostic feature s
 ## Arguments
 Parse: `$ARGUMENTS` — feature name and description.
 
+## Pre-flight
+1. Read `CLAUDE.md` — project overview and key rules
+2. Read `docs/standards/common.md` — naming conventions, API integration, localization, design transition strategy
+
 ## Process
 1. Read `PROMPTS/BUYER_APP.md` — find ALL sections relevant to this feature
 2. Read relevant API contracts in `shared/api-contracts/`
