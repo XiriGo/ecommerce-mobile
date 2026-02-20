@@ -77,6 +77,17 @@
 		EC06EC9348341A91BC275CC9 /* MoltCornerRadiusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9D9EE3685E54EBA495A78 /* MoltCornerRadiusTests.swift */; };
 		F15E0A7AAD9B55CFEC7535B9 /* MoltBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */; };
 		F546287CF92E4AE404B38BC1 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E098365BBBA105D187739634 /* AppError.swift */; };
+		6F770D65D670E58E0351D8AE /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C8C7D7247342CD8100F2F /* APIClientTests.swift */; };
+		EB3FC12896B9622317749428 /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F6EAC342FC231B7B08716 /* AppErrorTests.swift */; };
+		577D53ECC28A70A61C7510A1 /* AuthMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7733C28EE8BA53BDB56B8824 /* AuthMiddlewareTests.swift */; };
+		7E86DBCCB97046FC2E18384E /* EndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD89216CA16CFFCAEA498747 /* EndpointTests.swift */; };
+		96DE50E801865B3698654EBF /* JSONCodersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D820C5C3EF80053A88AE39 /* JSONCodersTests.swift */; };
+		2BF8234041F35487D86C669F /* MedusaErrorDTOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5200A5FA0939B99D7A1D7B28 /* MedusaErrorDTOTests.swift */; };
+		03241E752210A924798EF86D /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBFE0E73D7E7320AD0A7570 /* MockURLProtocol.swift */; };
+		EF1B321FCEAD377F6261E547 /* NetworkConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F27CF2D0613031DCB5D8D2 /* NetworkConfigTests.swift */; };
+		55D0F8F66DCD1E54C201C787 /* PaginatedResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */; };
+		19F4501D295F232278CE3D7E /* RetryPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */; };
+		EAA12504EA33256D8743B223 /* TokenProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +176,17 @@
 		EF14957D737C403D4C202BBF /* MoltTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTypography.swift; sourceTree = "<group>"; };
 		F9A96599B81199BB8A97284E /* MoltTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBar.swift; sourceTree = "<group>"; };
 		FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacing.swift; sourceTree = "<group>"; };
+		390C8C7D7247342CD8100F2F /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		8E4F6EAC342FC231B7B08716 /* AppErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorTests.swift; sourceTree = "<group>"; };
+		7733C28EE8BA53BDB56B8824 /* AuthMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMiddlewareTests.swift; sourceTree = "<group>"; };
+		CD89216CA16CFFCAEA498747 /* EndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointTests.swift; sourceTree = "<group>"; };
+		51D820C5C3EF80053A88AE39 /* JSONCodersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodersTests.swift; sourceTree = "<group>"; };
+		5200A5FA0939B99D7A1D7B28 /* MedusaErrorDTOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedusaErrorDTOTests.swift; sourceTree = "<group>"; };
+		CCBFE0E73D7E7320AD0A7570 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		43F27CF2D0613031DCB5D8D2 /* NetworkConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfigTests.swift; sourceTree = "<group>"; };
+		D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponseTests.swift; sourceTree = "<group>"; };
+		E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicyTests.swift; sourceTree = "<group>"; };
+		1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,8 +314,27 @@
 			isa = PBXGroup;
 			children = (
 				CA7C4CB013D83F19D523D98F /* DesignSystem */,
+				7DBD9150E09A04993544873B /* Network */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		7DBD9150E09A04993544873B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				390C8C7D7247342CD8100F2F /* APIClientTests.swift */,
+				8E4F6EAC342FC231B7B08716 /* AppErrorTests.swift */,
+				7733C28EE8BA53BDB56B8824 /* AuthMiddlewareTests.swift */,
+				CD89216CA16CFFCAEA498747 /* EndpointTests.swift */,
+				51D820C5C3EF80053A88AE39 /* JSONCodersTests.swift */,
+				5200A5FA0939B99D7A1D7B28 /* MedusaErrorDTOTests.swift */,
+				CCBFE0E73D7E7320AD0A7570 /* MockURLProtocol.swift */,
+				43F27CF2D0613031DCB5D8D2 /* NetworkConfigTests.swift */,
+				D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */,
+				E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */,
+				1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		67E1A9D13BB990095252D199 /* Error */ = {
@@ -626,6 +667,17 @@
 				8D9BDF928BD8FD45A005FCD9 /* MoltTabBarTests.swift in Sources */,
 				10A8D2831BD4D4D132160637 /* MoltTextFieldTests.swift in Sources */,
 				13E8D235792CC1BC9C7DBF51 /* MoltTopBarTests.swift in Sources */,
+				6F770D65D670E58E0351D8AE /* APIClientTests.swift in Sources */,
+				EB3FC12896B9622317749428 /* AppErrorTests.swift in Sources */,
+				577D53ECC28A70A61C7510A1 /* AuthMiddlewareTests.swift in Sources */,
+				7E86DBCCB97046FC2E18384E /* EndpointTests.swift in Sources */,
+				96DE50E801865B3698654EBF /* JSONCodersTests.swift in Sources */,
+				2BF8234041F35487D86C669F /* MedusaErrorDTOTests.swift in Sources */,
+				03241E752210A924798EF86D /* MockURLProtocol.swift in Sources */,
+				EF1B321FCEAD377F6261E547 /* NetworkConfigTests.swift in Sources */,
+				55D0F8F66DCD1E54C201C787 /* PaginatedResponseTests.swift in Sources */,
+				19F4501D295F232278CE3D7E /* RetryPolicyTests.swift in Sources */,
+				EAA12504EA33256D8743B223 /* TokenProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
