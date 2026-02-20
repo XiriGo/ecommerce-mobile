@@ -2009,6 +2009,172 @@ Full pipeline documentation: `docs/guides/ci-cd.md`
 - **API Key**: Stored in `local.properties` (Android) / `.xcconfig` (iOS), never committed
 - **No map view** — autocomplete only, no visual map display needed
 
+## FAANG-Level Enforcement Rules
+
+These rules are enforced by lint configs (`detekt.yml`, `.swiftlint.yml`), architecture tests
+(`ArchitectureTest.kt`, `ArchitectureTests.swift`), and CI/CD pipelines. Violations block merge.
+
+### Complexity Budget
+
+| Metric | Limit | Enforced By |
+|--------|-------|-------------|
+| Cyclomatic complexity | <= 10 per function | detekt / SwiftLint |
+| Function body length | <= 60 lines | detekt / SwiftLint |
+| File length | <= 400 lines | detekt / SwiftLint |
+| Method parameters | <= 6 | detekt / SwiftLint |
+| Line length | <= 120 characters | ktlint / SwiftLint |
+
+### Zero Dead Code Policy
+
+- Zero unused imports, variables, functions, or parameters
+- No commented-out code blocks
+- No `TODO` comments without linked GitHub issue
+- No unreachable code paths
+
+### Dependency Direction Enforcement
+
+Enforced by `ArchitectureTest.kt` (Android) and `ArchitectureTests.swift` (iOS):
+
+```
+presentation/ → domain/ → (nothing)
+data/ → domain/ → (nothing)
+presentation/ ✗ data/  (forbidden)
+domain/ ✗ data/         (forbidden)
+domain/ ✗ presentation/ (forbidden)
+```
+
+- Domain layer: ZERO imports from `data/` or `presentation/`
+- Presentation layer: ZERO imports from `data/`
+- ViewModels: No `android.content.Context` or `android.app.*` imports (Android)
+- ViewModels: Must have `@MainActor` and `@Observable` (iOS)
+- Feature screens: Must use `Molt*` components, no raw Material 3 / SwiftUI
+
+### API Safety
+
+- All network calls wrapped in `try/catch` with domain error mapping
+- Never swallow exceptions — every `catch` has a meaningful action (log + user message)
+- Domain errors as sealed class (Kotlin) / enum (Swift)
+- No hardcoded API URLs, keys, or secrets
+- Auth tokens via interceptor/middleware only
+
+### Immutability Rules
+
+- All domain models are immutable (`data class` / `struct`)
+- No `var` for state in ViewModels — use `MutableStateFlow` (Android) / `@Observable` (iOS)
+- All DTOs are immutable
+- Collections exposed as `List` (Kotlin) / `[T]` (Swift), never mutable
+
+### Naming Discipline
+
+- Intention-revealing names — no abbreviations (`productListViewModel`, not `plvm`)
+- No single-letter variables except lambdas (`it`, `$0`)
+- No Hungarian notation
+- Follow platform naming conventions strictly (see Naming Conventions table)
+
+### Design System Compliance
+
+- Feature screens: `Molt*` components ONLY (no raw `Button`, `TextField`, `ProgressView`)
+- All colors from `MoltColors` — no hardcoded hex values in feature code
+- All spacing from `MoltSpacing` — no magic numbers for dimensions
+- Every screen composable has `@Preview` / `#Preview` wrapped in `MoltTheme`
+
+## GitHub Workflow
+
+### Issue-Driven Development
+
+All work is tracked via **GitHub Issues** organized in **Milestones** and a **GitHub Project** (Kanban board).
+
+| Milestone | Scope |
+|-----------|-------|
+| M0: Foundation | App scaffold, design system, network, navigation, DI, auth |
+| M1: Core Features | Login, register, home, categories, product list/detail, search |
+| M2: Commerce | Cart, wishlist, address, checkout, payment |
+| M3: User Features | Orders, profile, payments, notifications, settings, reviews, vendors |
+| M4: Enhancements | Q&A, recently viewed, price alerts, share, onboarding |
+
+### Issue Lifecycle
+
+```
+Backlog → Ready → In Progress → In Review → Done
+```
+
+- **Backlog**: Issue created, dependencies may be unmet
+- **Ready** (`status:ready`): All dependencies closed, agent can pick it up
+- **In Progress** (`status:in-progress`): Agent pipeline is working on it
+- **In Review**: PR created, CI running
+- **Done** (`status:done`): PR merged, issue closed
+
+### Branch Naming (Linked to Issue)
+
+- `feature/{pipeline_id}` → linked to GitHub issue via PR `Closes #N`
+- Example: `feature/m1/product-list` → PR body includes `Closes #12`
+
+### Commit Convention
+
+```
+<type>(<scope>): <description> [agent:<name>] [platform:<platform>]
+```
+
+- `[agent:<name>]` tag identifies which AI agent committed
+- `[platform:<platform>]` tag identifies target platform
+
+### PR Requirements
+
+- PR body MUST include `Closes #N` to auto-close the linked issue
+- PR MUST have `agent:pipeline` label for auto-merge eligibility
+- PR MUST pass all CI checks: lint + build + test (both platforms)
+- PR MUST be reviewed (by reviewer agent or human)
+
+### Auto-merge Flow
+
+1. Agent creates PR with `Closes #N` and `agent:pipeline` label
+2. CI runs: lint → build → test (both platforms)
+3. Reviewer agent approves
+4. `auto-merge.yml` workflow enables squash merge
+5. On merge: issue auto-closed, dependent issues unblocked
+
+### Dependency Tracking
+
+Each issue body contains a "Dependencies" section with `Depends on #N` references.
+When an issue is closed:
+1. Find all open issues referencing it
+2. Check if ALL their dependencies are closed
+3. If yes: move to `status:ready` (agent can pick it up)
+
+### Queue Runner
+
+Run the full pipeline: `/queue-run all`
+
+The queue runner:
+1. Fetches `status:ready` issues from GitHub
+2. Resolves dependency order
+3. For each issue: claims it → creates branch → runs `/pipeline-run` → quality gate → PR → auto-merge
+4. Unblocks dependent issues after each completion
+5. Stops on failure, supports resume: `/queue-run --from N`
+
+### Traceability Chain
+
+```
+GitHub Issue #12 "Product List"
+  → Branch: feature/m1/product-list
+    → Commits: [agent:architect], [agent:android-dev], [agent:ios-dev], ...
+  → PR #45 "feat(product): implement product list" → Closes #12
+    → CI: Android ✅ iOS ✅
+    → Review: Approved ✅
+    → Auto-merged (squash) → develop
+  → Issue #12: Done ✅
+  → Dependent issues unblocked → status:ready
+```
+
+### Issue Map
+
+`scripts/issue-map.json` maps feature IDs to GitHub issue numbers:
+```json
+{"M0-01": 2, "M0-02": 3, ..., "M4-05": 35}
+```
+
+Used by `/pipeline-run` and `/queue-run` for issue lookup.
+
 ---
 
 **Last Updated**: 2026-02-20

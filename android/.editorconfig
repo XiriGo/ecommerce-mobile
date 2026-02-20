@@ -1,0 +1,110 @@
+# =============================================================================
+# EditorConfig + ktlint — Molt Marketplace Android
+# =============================================================================
+# Google Kotlin Style Guide enforcement via ktlint
+# Reference: https://developer.android.com/kotlin/style-guide
+# Reference: https://pinterest.github.io/ktlint/latest/rules/configuration-ktlint/
+# =============================================================================
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+max_line_length = 120
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+indent_size = 4
+max_line_length = 120
+
+# =============================================================================
+# ktlint configuration
+# =============================================================================
+
+# Enforce Google Android Kotlin style (ktlint built-in)
+ktlint_code_style = android_studio
+
+# --- Import ordering (Google Kotlin Style) ---
+# Order: all other imports, then java, javax, android, androidx, project imports
+# Blank line separated groups
+ij_kotlin_imports_layout = *,java.**,javax.**,android.**,androidx.**,com.molt.**
+
+# --- No wildcard imports ---
+ij_kotlin_packages_to_use_import_on_demand = unset
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+
+# --- Trailing comma ---
+# Required on declaration sites (function params, class params, etc.)
+ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = 3
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+# --- Indentation ---
+ij_kotlin_continuation_indent_size = 4
+
+# --- Spacing ---
+ij_kotlin_spaces_around_assignment_in_lambda = true
+
+# --- Wrapping ---
+ij_kotlin_wrap_expression_body_functions = 1
+ij_kotlin_method_parameters_wrap = on_every_item
+ij_kotlin_method_call_chain_wrap = on_every_item
+ij_kotlin_parameter_annotation_wrap = on_every_item
+
+# --- Blank lines ---
+ij_kotlin_keep_blank_lines_in_declarations = 1
+ij_kotlin_keep_blank_lines_in_code = 1
+ij_kotlin_keep_blank_lines_before_right_brace = 0
+
+# --- Braces ---
+ij_kotlin_lbrace_on_next_line = false
+
+# =============================================================================
+# Gradle files
+# =============================================================================
+[*.gradle.kts]
+indent_size = 4
+max_line_length = 120
+
+# =============================================================================
+# Properties files
+# =============================================================================
+[*.properties]
+charset = utf-8
+indent_size = 4
+
+# =============================================================================
+# XML files (Android resources)
+# =============================================================================
+[*.xml]
+indent_size = 4
+
+# =============================================================================
+# JSON files
+# =============================================================================
+[*.json]
+indent_size = 2
+
+# =============================================================================
+# YAML files
+# =============================================================================
+[*.{yml,yaml}]
+indent_size = 2
+
+# =============================================================================
+# Markdown files
+# =============================================================================
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# =============================================================================
+# TOML files (Gradle version catalogs)
+# =============================================================================
+[*.toml]
+indent_size = 4

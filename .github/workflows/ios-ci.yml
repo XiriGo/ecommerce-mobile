@@ -1,67 +1,113 @@
 name: iOS CI
 
 on:
-  pull_request:
-    branches: [main, develop]
+  push:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
     paths:
       - 'ios/**'
       - 'shared/**'
       - '.github/workflows/ios-ci.yml'
-  push:
-    branches: [main, develop]
+      - 'CLAUDE.md'
+  pull_request:
+    branches: [develop]
     paths:
       - 'ios/**'
       - 'shared/**'
+      - '.github/workflows/ios-ci.yml'
+      - 'CLAUDE.md'
 
 concurrency:
   group: ios-ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  SCHEME: MoltMarketplace
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
+
 jobs:
   lint:
+    name: Lint (SwiftLint + SwiftFormat)
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
-      - run: brew install swiftlint swiftformat
+
+      - name: Install tools
+        run: brew install swiftlint swiftformat
+
       - name: SwiftLint
-        run: swiftlint lint --reporter github-actions-logging
+        run: swiftlint lint --strict --reporter github-actions-logging
         working-directory: ios
+
       - name: SwiftFormat
         run: swiftformat --lint .
         working-directory: ios
 
-  build-and-test:
+  build:
+    name: Build
     runs-on: macos-15
-    needs: lint
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+        working-directory: ios
+
+      - name: Cache SPM packages
+        uses: actions/cache@v4
         with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData
-          key: spm-${{ hashFiles('ios/MoltMarketplace.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
-          restore-keys: spm-
-      - name: Build for testing
+          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Build
         run: |
-          xcodebuild build-for-testing \
-            -project MoltMarketplace.xcodeproj \
-            -scheme MoltMarketplace \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
-            -resultBundlePath build/Build.xcresult \
+          xcodebuild build \
+            -scheme ${{ env.SCHEME }} \
+            -destination '${{ env.DESTINATION }}' \
+            -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
         working-directory: ios
+
+  test:
+    name: Unit tests
+    runs-on: macos-15
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+        working-directory: ios
+
+      - name: Cache SPM packages
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
+          restore-keys: spm-${{ runner.os }}-
+
       - name: Run tests
         run: |
-          xcodebuild test-without-building \
-            -project MoltMarketplace.xcodeproj \
-            -scheme MoltMarketplace \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
-            -resultBundlePath build/Test.xcresult \
+          xcodebuild test \
+            -scheme ${{ env.SCHEME }} \
+            -destination '${{ env.DESTINATION }}' \
+            -skipPackagePluginValidation \
+            -resultBundlePath TestResults.xcresult \
             CODE_SIGNING_ALLOWED=NO
         working-directory: ios
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ios-test-results
-          path: ios/build/*.xcresult
+          path: ios/TestResults.xcresult
           retention-days: 14

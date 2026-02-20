@@ -9,6 +9,12 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
+detekt {
+    config.setFrom("$rootDir/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    parallel = true
+}
+
 android {
     namespace = "com.molt.marketplace"
     compileSdk = 35

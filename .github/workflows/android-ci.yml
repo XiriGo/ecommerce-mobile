@@ -1,74 +1,105 @@
 name: Android CI
 
 on:
-  pull_request:
-    branches: [main, develop]
+  push:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
     paths:
       - 'android/**'
       - 'shared/**'
       - '.github/workflows/android-ci.yml'
-  push:
-    branches: [main, develop]
+      - 'CLAUDE.md'
+  pull_request:
+    branches: [develop]
     paths:
       - 'android/**'
       - 'shared/**'
+      - '.github/workflows/android-ci.yml'
+      - 'CLAUDE.md'
 
 concurrency:
   group: android-ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+
 jobs:
   lint:
+    name: Lint (ktlint + detekt)
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew ktlintCheck detekt
 
-  test:
-    runs-on: ubuntu-latest
-    needs: lint
-    defaults:
-      run:
-        working-directory: android
-    steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew testDebugUnitTest
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: android-test-results
-          path: android/app/build/reports/tests/
-          retention-days: 14
+
+      - name: Run ktlint
+        run: ./gradlew ktlintCheck
+
+      - name: Run detekt
+        run: ./gradlew detekt
 
   build:
+    name: Build debug APK
     runs-on: ubuntu-latest
-    needs: test
     defaults:
       run:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew assembleDebug
+
+      - name: Assemble debug
+        run: ./gradlew assembleDebug
+
       - uses: actions/upload-artifact@v4
         with:
           name: debug-apk
           path: android/app/build/outputs/apk/debug/
+          retention-days: 14
+
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    needs: build
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Run unit tests
+        run: ./gradlew test
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-test-results
+          path: |
+            android/app/build/reports/tests/
+            android/app/build/test-results/
           retention-days: 14
