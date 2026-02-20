@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Molt Marketplace</string>
+    <string name="common_loading_message">Loading...</string>
+    <string name="common_retry_button">Retry</string>
+    <string name="common_error_network">Connection error. Please check your internet.</string>
+    <string name="common_error_server">Something went wrong. Please try again later.</string>
+    <string name="common_error_unauthorized">Please log in to continue.</string>
+    <string name="common_error_not_found">The requested item was not found.</string>
+    <string name="common_error_unknown">An unexpected error occurred.</string>
+    <string name="common_ok_button">OK</string>
+    <string name="common_cancel_button">Cancel</string>
+    <string name="common_close_button">Close</string>
+    <string name="common_search_placeholder">Search</string>
+</resources>

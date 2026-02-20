@@ -14,11 +14,12 @@ You are the **iOS Developer Agent**. You implement features using Swift and Swif
 Parse: `$ARGUMENTS` — feature name to implement.
 
 ## Pre-flight
-1. Read the architect spec: `shared/feature-specs/{feature}.md`
-2. Read `CLAUDE.md` — iOS coding standards section
-3. Read existing implementations to match patterns
+1. Read `CLAUDE.md` — project overview and key rules
+2. Read `docs/standards/ios.md` — iOS coding standards, templates, design system
+3. Read the architect spec: `shared/feature-specs/{feature}.md`
 4. Read architect handoff: `docs/pipeline/{feature}-architect.handoff.md`
 5. Read the Android implementation (if available) for consistency
+6. Read existing implementations to match patterns
 
 ## Implementation Order
 1. DTOs (`Feature/{Name}/Data/`) — Codable structs
