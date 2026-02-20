@@ -8,6 +8,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M0-02: Design System
+
+- **Design System**: 14 reusable `Molt*` UI components implemented on both Android and iOS (Android + iOS)
+  - `MoltButton` (4 variants: primary, secondary, outlined, text; loading state; leading icon)
+  - `MoltTextField` (label, placeholder, error message, helper text, password toggle, maxLength counter)
+  - `MoltCard` (`MoltProductCard` with image/price/rating/wishlist + `MoltInfoCard` generic)
+  - `MoltChip` (`MoltFilterChip` with selected state + `MoltCategoryChip`)
+  - `MoltTopBar` (back button, title, action slots with badge support)
+  - `MoltBottomBar` / `MoltTabBar` (4-tab navigation with cart badge count)
+  - `MoltLoadingView` (full-screen spinner) + `MoltLoadingIndicator` (inline)
+  - `MoltErrorView` (error icon, message, optional retry)
+  - `MoltEmptyView` (icon, message, optional action)
+  - `MoltImage` (async image with shimmer placeholder and crossfade)
+  - `MoltBadge` (`MoltCountBadge` 0/1–99/99+ + `MoltStatusBadge` 5 statuses)
+  - `MoltRatingBar` (read-only, half-star precision, optional value and review count)
+  - `MoltPriceText` (currency display, sale strikethrough, 3 size variants)
+  - `MoltQuantityStepper` (increment/decrement with min/max enforcement)
+- **Design tokens**: Full color palette (28 light + 28 dark + 15 semantic tokens), 15 typography styles, 9 base spacing tokens, layout constants, 6 corner radius levels, 6 elevation levels (Android + iOS)
+- **Theme support**: `MoltTheme` composable wrapper (Android) / `ViewModifier` (iOS) with automatic light/dark mode switching (Android + iOS)
+- **Localization**: 17 design system string keys (common accessibility labels, tab names, action strings) in English, Maltese, and Turkish (Android + iOS)
+- **Tests**: ~90 Android Compose UI tests (15 files) + ~175 iOS Swift Testing tests (16 files); 14/14 components covered on both platforms (Android + iOS)
+
 #### M0-01: App Scaffold
 
 - **Android project structure** with Gradle KTS and version catalog (`libs.versions.toml`)
