@@ -1,5 +1,6 @@
 package com.molt.marketplace
 
+import dagger.hilt.android.AndroidEntryPoint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,11 +26,11 @@ class MainActivity : ComponentActivity() {
             MoltTheme {
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = "Molt Marketplace",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.headlineSmall,
                     )
                 }
             }

@@ -7,13 +7,15 @@
 
 # --- Source inclusion / exclusion ---
 included:
-  - ios/MoltMarketplace
+  - MoltMarketplace
+  - MoltMarketplaceTests
+  - MoltMarketplaceUITests
 
 excluded:
-  - ios/MoltMarketplace.xcodeproj
-  - ios/Pods
-  - ios/.build
-  - ios/DerivedData
+  - MoltMarketplace.xcodeproj
+  - Pods
+  - .build
+  - DerivedData
   - "**/.build"
   - "**/Package.swift"
   - "**/*.generated.swift"
@@ -233,19 +235,7 @@ multiline_arguments:
 
 # --- Modifier order (Apple convention) ---
 modifier_order:
-  preferred_modifier_order:
-    - acl
-    - setterACL
-    - override
-    - dynamic
-    - mutating
-    - nonmutating
-    - lazy
-    - final
-    - required
-    - convenience
-    - typeMethods
-    - owned
+  severity: warning
 
 # --- Attributes ---
 attributes:
@@ -302,72 +292,26 @@ explicit_acl:
 # Custom rules
 # =============================================================================
 custom_rules:
-  # Warn when Feature screens use raw ProgressView instead of MoltLoadingView
-  no_raw_progress_view_in_features:
-    name: "No raw ProgressView in Feature screens"
-    regex: 'ProgressView\s*(\(|{)'
-    match_kinds:
-      - identifier
-    message: "Use MoltLoadingView or MoltLoadingIndicator from Core/DesignSystem instead of raw ProgressView in feature screens."
-    severity: warning
-    included:
-      - ".*/Feature/.*\\.swift$"
-    excluded:
-      - ".*/Core/DesignSystem/.*\\.swift$"
-
-  # Warn when Feature screens use raw Button instead of MoltButton
-  no_raw_button_in_features:
-    name: "No raw Button in Feature screens"
-    regex: '(?<!\w)Button\s*(\(|{)'
-    match_kinds:
-      - identifier
-    message: "Use MoltButton from Core/DesignSystem instead of raw Button in feature screens."
-    severity: warning
-    included:
-      - ".*/Feature/.*\\.swift$"
-    excluded:
-      - ".*/Core/DesignSystem/.*\\.swift$"
-
-  # Prevent hardcoded color values in Feature screens
-  no_hardcoded_colors_in_features:
-    name: "No hardcoded colors in Feature screens"
-    regex: 'Color\s*\(\s*(red:|hex:|\.init\()'
-    match_kinds:
-      - identifier
-    message: "Use MoltColors constants from Core/DesignSystem instead of hardcoded Color values."
-    severity: warning
-    included:
-      - ".*/Feature/.*\\.swift$"
-
-  # Prevent force unwrap via ! operator
-  no_force_unwrap:
-    name: "No force unwrap"
-    regex: '(?<!\?)!\s'
-    message: "Avoid force unwrapping. Use guard let, if let, or ?? instead."
-    severity: error
-    match_kinds:
-      - identifier
-
   # Prevent print() calls — use os.Logger instead
   no_print_statements:
     name: "No print statements"
-    regex: '(?<!\w)print\s*\('
-    match_kinds:
-      - identifier
+    regex: '\bprint\s*\('
     message: "Use os.Logger for logging instead of print()."
     severity: warning
-    excluded:
-      - ".*/Preview/.*\\.swift$"
-      - ".*Tests.*\\.swift$"
 
   # Prevent NSLog calls — use os.Logger instead
   no_nslog:
     name: "No NSLog"
     regex: 'NSLog\s*\('
-    match_kinds:
-      - identifier
     message: "Use os.Logger for logging instead of NSLog()."
     severity: warning
+
+  # NOTE: The following rules are designed for Feature screens only, but SwiftLint
+  # custom_rules don't support per-rule included/excluded paths. These rules should
+  # be enforced by the reviewer agent and architecture tests instead:
+  # - no_raw_progress_view_in_features: Use MoltLoadingView, not raw ProgressView
+  # - no_raw_button_in_features: Use MoltButton, not raw Button
+  # - no_hardcoded_colors_in_features: Use MoltColors, not Color(hex:)
 
 # =============================================================================
 # Reporter

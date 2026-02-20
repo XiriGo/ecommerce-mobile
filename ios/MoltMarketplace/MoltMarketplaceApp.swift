@@ -1,13 +1,12 @@
 import SwiftUI
 
 @main
-struct MoltMarketplaceApp: App {
-
-    init() {
+internal struct MoltMarketplaceApp: App {
+    internal init() {
         // DI container setup will be added in M0-05
     }
 
-    var body: some Scene {
+    internal var body: some Scene {
         WindowGroup {
             ContentView()
         }
@@ -15,12 +14,12 @@ struct MoltMarketplaceApp: App {
 }
 
 // Placeholder view - replaced with navigation in M0-04
-struct ContentView: View {
-    var body: some View {
+internal struct ContentView: View {
+    internal var body: some View {
         VStack {
             Spacer()
             Text("Molt Marketplace")
-                .font(.system(size: 24))
+                .font(MoltTypography.headlineSmall)
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

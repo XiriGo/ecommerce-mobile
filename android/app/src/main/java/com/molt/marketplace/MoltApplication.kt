@@ -1,8 +1,8 @@
 package com.molt.marketplace
 
-import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import android.app.Application
 
 @HiltAndroidApp
 class MoltApplication : Application() {

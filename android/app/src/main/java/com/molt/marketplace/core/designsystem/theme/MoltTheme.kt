@@ -34,7 +34,7 @@ private val MoltLightColorScheme = lightColorScheme(
     inverseSurface = MoltColors.InverseSurface,
     inverseOnSurface = MoltColors.InverseOnSurface,
     inversePrimary = MoltColors.InversePrimary,
-    scrim = MoltColors.Scrim
+    scrim = MoltColors.Scrim,
 )
 
 private val MoltDarkColorScheme = darkColorScheme(
@@ -65,14 +65,12 @@ private val MoltDarkColorScheme = darkColorScheme(
     inverseSurface = MoltColors.DarkInverseSurface,
     inverseOnSurface = MoltColors.DarkInverseOnSurface,
     inversePrimary = MoltColors.DarkInversePrimary,
-    scrim = MoltColors.DarkScrim
+    scrim = MoltColors.DarkScrim,
 )
 
 @Composable
-fun MoltTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
+@Suppress("ktlint:standard:function-naming")
+fun MoltTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colorScheme = if (darkTheme) {
         MoltDarkColorScheme
     } else {
@@ -82,6 +80,6 @@ fun MoltTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = MoltTypography,
-        content = content
+        content = content,
     )
 }

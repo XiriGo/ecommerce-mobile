@@ -1,8 +1,8 @@
 package com.molt.marketplace.core.designsystem.theme
 
-import androidx.compose.ui.graphics.Color
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import androidx.compose.ui.graphics.Color
 
 class MoltColorsTest {
 

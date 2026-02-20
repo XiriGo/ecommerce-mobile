@@ -15,6 +15,14 @@ detekt {
     parallel = true
 }
 
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = "17"
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "17"
+}
+
 android {
     namespace = "com.molt.marketplace"
     compileSdk = 35
@@ -52,7 +60,7 @@ android {
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             buildConfigField("String", "API_BASE_URL", "\"https://api.molt.mt\"")
         }
@@ -157,6 +165,10 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.truth)
     androidTestImplementation(libs.compose.ui.test.junit4)
 
     // Debug

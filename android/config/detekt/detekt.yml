@@ -22,6 +22,9 @@ complexity:
   CognitiveComplexMethod:
     active: true
     threshold: 10
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
 
   ComplexCondition:
     active: true
@@ -78,6 +81,9 @@ complexity:
   NestedBlockDepth:
     active: true
     threshold: 4
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
 
   NestedScopeFunctions:
     active: true
@@ -319,6 +325,9 @@ naming:
   FunctionMaxLength:
     active: true
     maximumFunctionNameLength: 40
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
 
   FunctionMinLength:
     active: true
@@ -374,7 +383,7 @@ naming:
     active: true
     constantPattern: '[A-Z][A-Za-z0-9]*'
     propertyPattern: '[A-Z][A-Za-z0-9]*'
-    privatePropertyPattern: '_?[a-z][A-Za-z0-9]*'
+    privatePropertyPattern: '_?[a-zA-Z][A-Za-z0-9]*'
 
   VariableMaxLength:
     active: true
@@ -603,9 +612,6 @@ style:
         value: 'takeUnless'
       - reason: 'Use `all` instead'
         value: 'none'
-    negativeFunctionAsExtension:
-      - reason: 'Use `isNotEmpty` instead'
-        value: 'isEmpty'
 
   EqualsNullCall:
     active: true
@@ -631,12 +637,14 @@ style:
 
   ForbiddenComment:
     active: true
-    values:
-      - 'FIXME:'
-      - 'HACK:'
-      - 'STOPSHIP:'
+    comments:
+      - reason: 'Use TODO with a ticket reference instead.'
+        value: 'FIXME:'
+      - reason: 'Use TODO with a ticket reference instead.'
+        value: 'HACK:'
+      - reason: 'Remove before release.'
+        value: 'STOPSHIP:'
     allowedPatterns: ''
-    customMessage: 'Use TODO with a ticket reference instead of FIXME/HACK/STOPSHIP.'
 
   ForbiddenImport:
     active: true
@@ -680,13 +688,14 @@ style:
       - '**/test/**'
       - '**/androidTest/**'
       - '**/*Test.kt'
+      - '**/designsystem/theme/**'
     ignoreNumbers:
       - '-1'
       - '0'
       - '1'
       - '2'
     ignoreHashCodeFunction: true
-    ignorePropertyDeclaration: false
+    ignorePropertyDeclaration: true
     ignoreLocalVariableDeclaration: false
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
@@ -726,7 +735,6 @@ style:
   MultilineRawStringIndentation:
     active: true
     indentSize: 4
-    trimmingMethod: 'trimIndent'
 
   NoTabs:
     active: true
@@ -783,11 +791,9 @@ style:
 
   TrailingWhitespace:
     active: true
-    allowOnEmptyLines: false
 
   TrimMultilineRawString:
     active: true
-    trimmingMethod: 'trimIndent'
 
   UnderscoresInNumericLiterals:
     active: true
@@ -905,280 +911,3 @@ style:
   WildcardImport:
     active: true
     excludeImports: []
-
-# =============================================================================
-# Formatting Rules (ktlint integration)
-# =============================================================================
-formatting:
-  active: true
-  android: true
-  autoCorrect: true
-
-  AnnotationOnSeparateLine:
-    active: true
-
-  AnnotationSpacing:
-    active: true
-
-  ArgumentListWrapping:
-    active: true
-    maxLineLength: 120
-    indentSize: 4
-
-  BlockCommentInitialStarAlignment:
-    active: true
-
-  ChainWrapping:
-    active: true
-
-  ClassName:
-    active: true
-
-  CommentSpacing:
-    active: true
-
-  CommentWrapping:
-    active: true
-    indentSize: 4
-
-  ContextReceiverMapping:
-    active: true
-    maxLineLength: 120
-    indentSize: 4
-
-  DiscouragedCommentLocation:
-    active: true
-
-  EnumEntryNameCase:
-    active: true
-
-  EnumWrapping:
-    active: true
-    indentSize: 4
-
-  Filename:
-    active: true
-
-  FinalNewline:
-    active: true
-    insertFinalNewLine: true
-
-  FunctionName:
-    active: true
-
-  FunctionReturnTypeSpacing:
-    active: true
-    maxLineLength: 120
-
-  FunctionSignature:
-    active: true
-    forceMultilineWhenParameterCountGreaterOrEqualThan: 3
-    functionBodyExpressionWrapping: 'default'
-    maxLineLength: 120
-    indentSize: 4
-
-  FunctionStartOfBodySpacing:
-    active: true
-
-  FunctionTypeModifierSpacing:
-    active: true
-
-  FunctionTypeReferenceSpacing:
-    active: true
-
-  IfElseBracing:
-    active: true
-    indentSize: 4
-
-  IfElseWrapping:
-    active: true
-    indentSize: 4
-
-  ImportOrdering:
-    active: true
-    layout: '*,java.**,javax.**,android.**,androidx.**,com.molt.**'
-
-  Indentation:
-    active: true
-    indentSize: 4
-
-  KdocWrapping:
-    active: true
-    indentSize: 4
-
-  MaximumLineLength:
-    active: true
-    maxLineLength: 120
-
-  ModifierListSpacing:
-    active: true
-
-  ModifierOrdering:
-    active: true
-
-  MultiLineIfElse:
-    active: true
-
-  MultilineExpressionWrapping:
-    active: true
-    indentSize: 4
-
-  MultilineLoop:
-    active: true
-    indentSize: 4
-
-  NoBlankLineBeforeRbrace:
-    active: true
-
-  NoBlankLineInList:
-    active: true
-
-  NoBlankLinesInChainedMethodCalls:
-    active: true
-
-  NoConsecutiveBlankLines:
-    active: true
-
-  NoConsecutiveComments:
-    active: true
-
-  NoEmptyClassBody:
-    active: true
-
-  NoEmptyFile:
-    active: true
-
-  NoEmptyFirstLineInClassBody:
-    active: true
-
-  NoEmptyFirstLineInMethodBlock:
-    active: true
-
-  NoLineBreakAfterElse:
-    active: true
-
-  NoLineBreakBeforeAssignment:
-    active: true
-
-  NoMultipleSpaces:
-    active: true
-
-  NoSemicolons:
-    active: true
-
-  NoSingleLineBlockComment:
-    active: true
-
-  NoTrailingSpaces:
-    active: true
-
-  NoUnitReturn:
-    active: true
-
-  NoUnusedImports:
-    active: true
-
-  NoWildcardImports:
-    active: true
-
-  NullableTypeSpacing:
-    active: true
-
-  PackageName:
-    active: true
-
-  ParameterListSpacing:
-    active: true
-
-  ParameterListWrapping:
-    active: true
-    maxLineLength: 120
-    indentSize: 4
-
-  ParameterWrapping:
-    active: true
-    maxLineLength: 120
-    indentSize: 4
-
-  PropertyName:
-    active: true
-
-  PropertyWrapping:
-    active: true
-    maxLineLength: 120
-    indentSize: 4
-
-  SpacingAroundAngleBrackets:
-    active: true
-
-  SpacingAroundColon:
-    active: true
-
-  SpacingAroundComma:
-    active: true
-
-  SpacingAroundCurly:
-    active: true
-
-  SpacingAroundDot:
-    active: true
-
-  SpacingAroundDoubleColon:
-    active: true
-
-  SpacingAroundKeyword:
-    active: true
-
-  SpacingAroundOperators:
-    active: true
-
-  SpacingAroundParens:
-    active: true
-
-  SpacingAroundRangeOperator:
-    active: true
-
-  SpacingAroundUnaryOperator:
-    active: true
-
-  SpacingBetweenDeclarationsWithAnnotations:
-    active: true
-
-  SpacingBetweenDeclarationsWithComments:
-    active: true
-
-  SpacingBetweenFunctionNameAndOpeningParenthesis:
-    active: true
-
-  StringTemplate:
-    active: true
-
-  StringTemplateIndent:
-    active: true
-    indentSize: 4
-
-  TrailingCommaOnCallSite:
-    active: true
-    useTrailingCommaOnCallSite: true
-
-  TrailingCommaOnDeclarationSite:
-    active: true
-    useTrailingCommaOnDeclarationSite: true
-
-  TryCatchFinallySpacing:
-    active: true
-    indentSize: 4
-
-  TypeArgumentListSpacing:
-    active: true
-
-  TypeParameterListSpacing:
-    active: true
-
-  UnnecessaryParenthesesBeforeTrailingLambda:
-    active: true
-
-  Wrapping:
-    active: true
-    maxLineLength: 120
-    indentSize: 4

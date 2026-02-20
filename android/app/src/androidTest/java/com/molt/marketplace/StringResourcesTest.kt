@@ -1,13 +1,13 @@
 package com.molt.marketplace
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 
 @RunWith(AndroidJUnit4::class)
 class StringResourcesTest {
@@ -127,7 +127,7 @@ class StringResourcesTest {
             R.string.common_ok_button,
             R.string.common_cancel_button,
             R.string.common_close_button,
-            R.string.common_search_placeholder
+            R.string.common_search_placeholder,
         )
 
         allStringResourceIds.forEach { resourceId ->

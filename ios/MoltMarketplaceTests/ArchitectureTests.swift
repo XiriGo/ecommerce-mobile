@@ -1,5 +1,5 @@
-import Testing
 import Foundation
+import Testing
 
 /// Architecture tests that enforce Clean Architecture layer boundaries.
 ///
@@ -9,15 +9,13 @@ import Foundation
 /// - Feature screens use design system components instead of raw SwiftUI components
 /// - ViewModels include required @MainActor and @Observable annotations
 @Suite("Architecture Tests")
-struct ArchitectureTests {
-
+internal struct ArchitectureTests {
     // MARK: - Helpers
 
     private static let sourceRoot: URL = {
         // Navigate from the test bundle to the iOS source root
         // In Xcode, the working directory for tests is the build products dir.
         // We use a well-known relative path from the project root.
-        let fileManager = FileManager.default
 
         // Try to find the source root relative to the package/project directory
         // First check for SRCROOT environment variable (set by Xcode)
@@ -27,7 +25,7 @@ struct ArchitectureTests {
         }
 
         // Fallback: walk up from current file location to find the project
-        var url = URL(fileURLWithPath: #filePath)
+        let url = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent() // ArchitectureTests.swift -> MoltMarketplaceTests/
         let projectRoot = url.deletingLastPathComponent() // MoltMarketplaceTests/ -> ios/
         return projectRoot.appendingPathComponent("MoltMarketplace")
@@ -44,10 +42,8 @@ struct ArchitectureTests {
         }
 
         var files: [URL] = []
-        for case let fileURL as URL in enumerator {
-            if fileURL.pathExtension == "swift" {
-                files.append(fileURL)
-            }
+        for case let fileURL as URL in enumerator where fileURL.pathExtension == "swift" {
+            files.append(fileURL)
         }
         return files
     }
@@ -68,17 +64,25 @@ struct ArchitectureTests {
         )
     }
 
+    private static func containsDataLayerReference(_ line: String) -> Bool {
+        line.contains("RepositoryImpl")
+            || line.contains("DTO")
+            || line.contains("Endpoint")
+            || line.contains("APIClient")
+    }
+
+    private static func isCodeLine(_ trimmed: String) -> Bool {
+        !trimmed.hasPrefix("//")
+            && !trimmed.hasPrefix("*")
+            && !trimmed.hasPrefix("import ")
+    }
+
     // MARK: - Rule 1: Domain layer must NOT import from Data types
 
     @Test("Domain layer must not depend on Data layer")
-    func domainMustNotDependOnData() {
+    internal func domainMustNotDependOnData() {
         let allFiles = Self.findSwiftFiles(in: Self.sourceRoot)
-
-        let domainFiles = allFiles.filter { url in
-            let path = url.path
-            return path.contains("/Domain/")
-        }
-
+        let domainFiles = allFiles.filter { $0.path.contains("/Domain/") }
         var violations: [String] = []
 
         for file in domainFiles {
@@ -87,32 +91,22 @@ struct ArchitectureTests {
 
             for (index, line) in lines.enumerated() {
                 let trimmed = line.trimmingCharacters(in: .whitespaces)
-
-                // Check for imports of Data layer types (DTO, RepositoryImpl, Endpoint)
-                if trimmed.hasPrefix("import ") && (
-                    trimmed.contains("Data") ||
-                    trimmed.contains("DTO") ||
-                    trimmed.contains("Endpoint")
-                ) {
-                    let relativePath = Self.relativePath(for: file)
+                let hasDataImport = trimmed.hasPrefix("import ")
+                    && Self.containsDataLayerReference(trimmed)
+                if hasDataImport {
+                    let path = Self.relativePath(for: file)
                     violations.append(
-                        "\(relativePath):\(index + 1): '\(trimmed)' " +
-                        "-- domain layer must not depend on data layer"
+                        "\(path):\(index + 1): '\(trimmed)' "
+                        + "-- domain layer must not depend on data layer"
                     )
                 }
-
-                // Check for references to Data-layer types within the same module
-                if !trimmed.hasPrefix("//") && !trimmed.hasPrefix("*") && !trimmed.hasPrefix("import ") {
-                    if trimmed.contains("RepositoryImpl") ||
-                       trimmed.contains("DTO") ||
-                       trimmed.contains("Endpoint") ||
-                       trimmed.contains("APIClient") {
-                        let relativePath = Self.relativePath(for: file)
-                        violations.append(
-                            "\(relativePath):\(index + 1): references data-layer type '\(trimmed.prefix(80))...' " +
-                            "-- domain layer must not reference data-layer types"
-                        )
-                    }
+                if Self.isCodeLine(trimmed) && Self.containsDataLayerReference(trimmed) {
+                    let path = Self.relativePath(for: file)
+                    violations.append(
+                        "\(path):\(index + 1): references data-layer type "
+                        + "'\(trimmed.prefix(80))...' "
+                        + "-- domain layer must not reference data-layer types"
+                    )
                 }
             }
         }
@@ -126,14 +120,9 @@ struct ArchitectureTests {
     // MARK: - Rule 2: Presentation layer must NOT import from Data types
 
     @Test("Presentation layer must not depend on Data layer")
-    func presentationMustNotDependOnData() {
+    internal func presentationMustNotDependOnData() {
         let allFiles = Self.findSwiftFiles(in: Self.sourceRoot)
-
-        let presentationFiles = allFiles.filter { url in
-            let path = url.path
-            return path.contains("/Presentation/")
-        }
-
+        let presentationFiles = allFiles.filter { $0.path.contains("/Presentation/") }
         var violations: [String] = []
 
         for file in presentationFiles {
@@ -142,19 +131,13 @@ struct ArchitectureTests {
 
             for (index, line) in lines.enumerated() {
                 let trimmed = line.trimmingCharacters(in: .whitespaces)
-
-                // Check for references to Data-layer types
-                if !trimmed.hasPrefix("//") && !trimmed.hasPrefix("*") && !trimmed.hasPrefix("import ") {
-                    if trimmed.contains("RepositoryImpl") ||
-                       trimmed.contains("DTO") ||
-                       trimmed.contains("Endpoint") ||
-                       trimmed.contains("APIClient") {
-                        let relativePath = Self.relativePath(for: file)
-                        violations.append(
-                            "\(relativePath):\(index + 1): references data-layer type '\(trimmed.prefix(80))...' " +
-                            "-- presentation layer must not reference data-layer types"
-                        )
-                    }
+                if Self.isCodeLine(trimmed) && Self.containsDataLayerReference(trimmed) {
+                    let path = Self.relativePath(for: file)
+                    violations.append(
+                        "\(path):\(index + 1): references data-layer type "
+                        + "'\(trimmed.prefix(80))...' "
+                        + "-- presentation layer must not reference data-layer types"
+                    )
                 }
             }
         }
@@ -168,7 +151,7 @@ struct ArchitectureTests {
     // MARK: - Rule 3: Feature screens must use design system components
 
     @Test("Feature screens must use Molt design system components instead of raw SwiftUI")
-    func featureScreensMustUseDesignSystem() {
+    internal func featureScreensMustUseDesignSystem() {
         let allFiles = Self.findSwiftFiles(in: Self.sourceRoot)
 
         // Find files in Feature/*/Presentation/ directories
@@ -195,14 +178,12 @@ struct ArchitectureTests {
                 // Skip comments
                 if trimmed.hasPrefix("//") || trimmed.hasPrefix("*") { continue }
 
-                for (pattern, replacement) in forbiddenPatterns {
-                    if trimmed.contains(pattern) {
-                        let relativePath = Self.relativePath(for: file)
-                        violations.append(
-                            "\(relativePath):\(index + 1): uses raw '\(pattern)' " +
-                            "-- use \(replacement) from Core/DesignSystem instead"
-                        )
-                    }
+                for (pattern, replacement) in forbiddenPatterns where trimmed.contains(pattern) {
+                    let relativePath = Self.relativePath(for: file)
+                    violations.append(
+                        "\(relativePath):\(index + 1): uses raw '\(pattern)' "
+                        + "-- use \(replacement) from Core/DesignSystem instead"
+                    )
                 }
             }
         }
@@ -216,7 +197,7 @@ struct ArchitectureTests {
     // MARK: - Rule 4: ViewModels must use @MainActor and @Observable
 
     @Test("ViewModels must include @MainActor and @Observable annotations")
-    func viewModelsMustHaveRequiredAnnotations() {
+    internal func viewModelsMustHaveRequiredAnnotations() {
         let allFiles = Self.findSwiftFiles(in: Self.sourceRoot)
 
         let viewModelFiles = allFiles.filter { url in
@@ -234,15 +215,15 @@ struct ArchitectureTests {
 
             if !hasMainActor {
                 violations.append(
-                    "\(relativePath): missing @MainActor annotation " +
-                    "-- all ViewModels must be annotated with @MainActor"
+                    "\(relativePath): missing @MainActor annotation "
+                    + "-- all ViewModels must be annotated with @MainActor"
                 )
             }
 
             if !hasObservable {
                 violations.append(
-                    "\(relativePath): missing @Observable annotation " +
-                    "-- all ViewModels must be annotated with @Observable (iOS 17+)"
+                    "\(relativePath): missing @Observable annotation "
+                    + "-- all ViewModels must be annotated with @Observable (iOS 17+)"
                 )
             }
         }

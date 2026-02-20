@@ -25,8 +25,7 @@ class ArchitectureTest {
             .toList()
     }
 
-    private fun File.importLines(): List<String> =
-        readLines().filter { it.trimStart().startsWith("import ") }
+    private fun File.importLines(): List<String> = readLines().filter { it.trimStart().startsWith("import ") }
 
     // -------------------------------------------------------------------------
     // Rule 1: Domain layer must NOT import from Data or Presentation layers
@@ -48,14 +47,14 @@ class ArchitectureTest {
                 if (importPath.contains(".data.") || importPath.contains(".presentation.")) {
                     violations.add(
                         "${file.relativeTo(sourceRoot).path}: illegal import '$importPath' " +
-                            "-- domain layer must not depend on data or presentation layers"
+                            "-- domain layer must not depend on data or presentation layers",
                     )
                 }
             }
         }
 
         assertWithMessage(
-            "Domain layer boundary violations found:\n${violations.joinToString("\n")}"
+            "Domain layer boundary violations found:\n${violations.joinToString("\n")}",
         ).that(violations).isEmpty()
     }
 
@@ -79,14 +78,14 @@ class ArchitectureTest {
                 if (importPath.contains(".data.")) {
                     violations.add(
                         "${file.relativeTo(sourceRoot).path}: illegal import '$importPath' " +
-                            "-- presentation layer must not depend on data layer"
+                            "-- presentation layer must not depend on data layer",
                     )
                 }
             }
         }
 
         assertWithMessage(
-            "Presentation layer boundary violations found:\n${violations.joinToString("\n")}"
+            "Presentation layer boundary violations found:\n${violations.joinToString("\n")}",
         ).that(violations).isEmpty()
     }
 
@@ -111,14 +110,14 @@ class ArchitectureTest {
                     violations.add(
                         "${file.relativeTo(sourceRoot).path}: illegal import '$importPath' " +
                             "-- feature screens must use core.designsystem components " +
-                            "instead of raw Material 3 imports"
+                            "instead of raw Material 3 imports",
                     )
                 }
             }
         }
 
         assertWithMessage(
-            "Material 3 direct-import violations in feature screens:\n${violations.joinToString("\n")}"
+            "Material 3 direct-import violations in feature screens:\n${violations.joinToString("\n")}",
         ).that(violations).isEmpty()
     }
 
@@ -146,7 +145,7 @@ class ArchitectureTest {
                         violations.add(
                             "${file.relativeTo(sourceRoot).path}: illegal import '$importPath' " +
                                 "-- ViewModels must not depend on Android Context or " +
-                                "android.app package. Inject dependencies via Hilt instead."
+                                "android.app package. Inject dependencies via Hilt instead.",
                         )
                     }
                 }
@@ -154,7 +153,7 @@ class ArchitectureTest {
         }
 
         assertWithMessage(
-            "ViewModel Android-dependency violations found:\n${violations.joinToString("\n")}"
+            "ViewModel Android-dependency violations found:\n${violations.joinToString("\n")}",
         ).that(violations).isEmpty()
     }
 
@@ -180,13 +179,13 @@ class ArchitectureTest {
                 violations.add(
                     "${file.relativeTo(sourceRoot).path}: " +
                         "contains @Composable functions but no @Preview -- " +
-                        "every screen composable must have a @Preview function"
+                        "every screen composable must have a @Preview function",
                 )
             }
         }
 
         assertWithMessage(
-            "Missing @Preview in screen composables:\n${violations.joinToString("\n")}"
+            "Missing @Preview in screen composables:\n${violations.joinToString("\n")}",
         ).that(violations).isEmpty()
     }
 }

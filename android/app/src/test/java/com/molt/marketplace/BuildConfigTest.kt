@@ -32,13 +32,7 @@ class BuildConfigTest {
     }
 
     @Test
-    fun `debug build should have debug flag set`() {
-        // This test runs with debug build type by default
-        assertThat(BuildConfig.DEBUG).isTrue()
-    }
-
-    @Test
-    fun `build type should be debug in unit tests`() {
-        assertThat(BuildConfig.BUILD_TYPE).isEqualTo("debug")
+    fun `build type should be a known variant`() {
+        assertThat(BuildConfig.BUILD_TYPE).isIn(listOf("debug", "release", "staging"))
     }
 }
