@@ -41,4 +41,49 @@
     <string name="nav_profile_guest_register_button">Create Account</string>
     <string name="nav_cart_badge_description">%d items in cart</string>
     <string name="common_back_button">Back</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_title">Welcome to Molt</string>
+    <string name="home_welcome_subtitle">Discover amazing products at great prices</string>
+    <string name="home_search_hint">Search products, brands, categories...</string>
+    <string name="home_banner_summer_title">Summer Sale</string>
+    <string name="home_banner_summer_subtitle">Up to 50% off selected items</string>
+    <string name="home_banner_new_title">New Collection</string>
+    <string name="home_banner_new_subtitle">Explore the latest arrivals</string>
+    <string name="home_banner_free_shipping_title">Free Shipping</string>
+    <string name="home_banner_free_shipping_subtitle">On orders over $50</string>
+    <string name="home_section_categories">Categories</string>
+    <string name="home_section_popular">Popular Products</string>
+    <string name="home_section_new_arrivals">New Arrivals</string>
+    <string name="home_category_electronics">Electronics</string>
+    <string name="home_category_fashion">Fashion</string>
+    <string name="home_category_home">Home</string>
+    <string name="home_category_sports">Sports</string>
+    <string name="home_category_books">Books</string>
+    <string name="home_category_gaming">Gaming</string>
+    <string name="home_product_headphones">Wireless Noise-Cancelling Headphones</string>
+    <string name="home_product_sneakers">Running Sneakers Pro</string>
+    <string name="home_product_backpack">Travel Backpack Waterproof</string>
+    <string name="home_product_watch">Smart Watch Series X</string>
+    <string name="home_product_keyboard">Mechanical Gaming Keyboard</string>
+    <string name="home_product_jacket">Premium Winter Jacket</string>
+    <string name="home_product_lamp">Modern Desk Lamp LED</string>
+
+    <!-- Categories Screen -->
+    <string name="categories_search_hint">Search categories...</string>
+    <string name="categories_item_count">%d items</string>
+    <string name="categories_toys">Toys</string>
+    <string name="categories_pets">Pets</string>
+    <string name="categories_more">More</string>
+
+    <!-- Cart Screen -->
+    <string name="cart_empty_message">Your cart is empty</string>
+    <string name="cart_start_shopping">Start Shopping</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_menu_orders">Orders</string>
+    <string name="profile_menu_wishlist">Wishlist</string>
+    <string name="profile_menu_addresses">Addresses</string>
+    <string name="profile_menu_payment_methods">Payment Methods</string>
+    <string name="profile_menu_settings">Settings</string>
 </resources>

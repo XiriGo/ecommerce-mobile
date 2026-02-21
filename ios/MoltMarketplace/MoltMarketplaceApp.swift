@@ -15,6 +15,7 @@ struct MoltMarketplaceApp: App {
     var body: some Scene {
         WindowGroup {
             MainTabView()
+                .background(MoltColors.background.ignoresSafeArea())
         }
     }
 }

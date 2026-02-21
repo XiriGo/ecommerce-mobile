@@ -2,9 +2,8 @@ import SwiftUI
 
 // MARK: - MainTabView
 
-/// Root view of the application. Displays a four-tab layout where each tab
-/// maintains its own independent NavigationStack. Uses MoltTabBar for the
-/// bottom navigation and presents auth flows as fullscreen covers.
+/// Root view of the application. Displays a four-tab layout using native TabView
+/// for iOS Liquid Glass treatment. Each tab maintains its own independent NavigationStack.
 struct MainTabView: View {
     // MARK: - Properties
 
@@ -19,12 +18,31 @@ struct MainTabView: View {
     // MARK: - Body
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            tabContent
-            MoltTabBar(
-                items: tabItems,
-                selectedIndex: tabBarSelection
-            )
+        TabView(selection: tabSelection) {
+            homeTab
+                .tabItem {
+                    Label(Tab.home.title, systemImage: Tab.home.systemImage)
+                }
+                .tag(Tab.home)
+
+            categoriesTab
+                .tabItem {
+                    Label(Tab.categories.title, systemImage: Tab.categories.systemImage)
+                }
+                .tag(Tab.categories)
+
+            cartTab
+                .tabItem {
+                    Label(Tab.cart.title, systemImage: Tab.cart.systemImage)
+                }
+                .tag(Tab.cart)
+                .badge(router.cartBadgeCount > 0 ? router.cartBadgeCount : 0)
+
+            profileTab
+                .tabItem {
+                    Label(Tab.profile.title, systemImage: Tab.profile.systemImage)
+                }
+                .tag(Tab.profile)
         }
         .fullScreenCover(item: authBinding) { route in
             NavigationStack {
@@ -37,83 +55,43 @@ struct MainTabView: View {
         .environment(router)
     }
 
-    // MARK: - Tab Content
-
-    /// Displays the NavigationStack for the currently selected tab.
-    /// Each tab preserves its own navigation path independently.
-    @ViewBuilder
-    private var tabContent: some View {
-        ZStack {
-            homeTab
-                .opacity(router.selectedTab == .home ? 1 : 0)
-                .accessibilityHidden(router.selectedTab != .home)
-
-            categoriesTab
-                .opacity(router.selectedTab == .categories ? 1 : 0)
-                .accessibilityHidden(router.selectedTab != .categories)
-
-            cartTab
-                .opacity(router.selectedTab == .cart ? 1 : 0)
-                .accessibilityHidden(router.selectedTab != .cart)
-
-            profileTab
-                .opacity(router.selectedTab == .profile ? 1 : 0)
-                .accessibilityHidden(router.selectedTab != .profile)
-        }
-    }
-
     // MARK: - Tabs
 
     private var homeTab: some View {
         NavigationStack(path: router.bindingForPath(.home)) {
-            PlaceholderView(title: Tab.home.title, systemImage: Tab.home.systemImage)
+            HomeScreen()
                 .moltNavigationDestinations()
         }
     }
 
     private var categoriesTab: some View {
         NavigationStack(path: router.bindingForPath(.categories)) {
-            PlaceholderView(title: Tab.categories.title, systemImage: Tab.categories.systemImage)
+            CategoriesScreen()
                 .moltNavigationDestinations()
         }
     }
 
     private var cartTab: some View {
         NavigationStack(path: router.bindingForPath(.cart)) {
-            PlaceholderView(title: Tab.cart.title, systemImage: Tab.cart.systemImage)
+            CartScreen()
                 .moltNavigationDestinations()
         }
     }
 
     private var profileTab: some View {
         NavigationStack(path: router.bindingForPath(.profile)) {
-            PlaceholderView(title: Tab.profile.title, systemImage: Tab.profile.systemImage)
+            ProfileScreen()
                 .moltNavigationDestinations()
-        }
-    }
-
-    // MARK: - Tab Bar Items
-
-    private var tabItems: [MoltTabItem] {
-        Tab.allCases.enumerated().map { index, tab in
-            MoltTabItem(
-                id: index,
-                label: tab.title,
-                icon: tab.systemImage,
-                selectedIcon: tab.selectedSystemImage,
-                badgeCount: tab == .cart ? router.cartBadgeCount : nil
-            )
         }
     }
 
     // MARK: - Bindings
 
-    private var tabBarSelection: Binding<Int> {
+    private var tabSelection: Binding<Tab> {
         Binding(
-            get: { Tab.allCases.firstIndex(of: router.selectedTab) ?? 0 },
-            set: { index in
-                guard let tab = Tab.allCases[safe: index] else { return }
-                router.selectTab(tab)
+            get: { router.selectedTab },
+            set: { newTab in
+                router.selectTab(newTab)
             }
         )
     }
@@ -127,14 +105,6 @@ struct MainTabView: View {
                 }
             }
         )
-    }
-}
-
-// MARK: - Collection Safe Subscript
-
-private extension Collection {
-    subscript(safe index: Index) -> Element? {
-        indices.contains(index) ? self[index] : nil
     }
 }
 

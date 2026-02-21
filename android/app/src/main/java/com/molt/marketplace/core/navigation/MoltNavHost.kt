@@ -8,29 +8,28 @@ import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.CreditCard
 import androidx.compose.material.icons.outlined.EmojiPeople
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PersonAdd
 import androidx.compose.material.icons.outlined.RateReview
 import androidx.compose.material.icons.outlined.Receipt
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.Store
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.molt.marketplace.R
+import com.molt.marketplace.feature.cart.presentation.screen.CartScreen
+import com.molt.marketplace.feature.categories.presentation.screen.CategoriesScreen
+import com.molt.marketplace.feature.home.presentation.screen.HomeScreen
+import com.molt.marketplace.feature.profile.presentation.screen.ProfileScreen
 
 @Composable
 fun MoltNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -52,19 +51,13 @@ fun MoltNavHost(navController: NavHostController, modifier: Modifier = Modifier)
 
 private fun NavGraphBuilder.homeRoutes() {
     composable<Route.Home> {
-        PlaceholderScreen(
-            title = stringResource(R.string.nav_tab_home),
-            icon = Icons.Outlined.Home,
-        )
+        HomeScreen()
     }
 }
 
 private fun NavGraphBuilder.categoryRoutes() {
     composable<Route.Categories> {
-        PlaceholderScreen(
-            title = stringResource(R.string.nav_tab_categories),
-            icon = Icons.Outlined.Category,
-        )
+        CategoriesScreen()
     }
     composable<Route.CategoryProducts> {
         PlaceholderScreen(
@@ -115,10 +108,7 @@ private fun NavGraphBuilder.sharedRoutes() {
 
 private fun NavGraphBuilder.cartRoutes() {
     composable<Route.Cart> {
-        PlaceholderScreen(
-            title = stringResource(R.string.nav_tab_cart),
-            icon = Icons.Outlined.ShoppingCart,
-        )
+        CartScreen()
     }
     composable<Route.Checkout> {
         PlaceholderScreen(
@@ -154,10 +144,7 @@ private fun NavGraphBuilder.cartRoutes() {
 
 private fun NavGraphBuilder.profileRoutes() {
     composable<Route.Profile> {
-        PlaceholderScreen(
-            title = stringResource(R.string.nav_tab_profile),
-            icon = Icons.Outlined.Person,
-        )
+        ProfileScreen()
     }
     composable<Route.OrderList> {
         PlaceholderScreen(

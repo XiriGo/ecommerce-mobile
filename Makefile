@@ -14,9 +14,9 @@ ANDROID_DIR  := android
 IOS_DIR      := ios
 IOS_SCHEME   := MoltMarketplace
 
-# Auto-detect first available iPhone simulator (fallback: iPhone 16)
+# Auto-detect latest available iPhone simulator (fallback: iPhone 16)
 IOS_SIM := $(shell xcrun simctl list devices available 2>/dev/null \
-	| grep -m1 'iPhone' | sed 's/^ *//;s/ [(].*[)]//;s/ *$$//')
+	| grep 'iPhone' | tail -1 | sed 's/^ *//;s/ [(].*[)]//;s/ *$$//')
 ifeq ($(IOS_SIM),)
 IOS_SIM := iPhone 16
 endif

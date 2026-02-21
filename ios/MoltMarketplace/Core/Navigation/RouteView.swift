@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - RouteView
 
 /// Maps a Route to its corresponding View.
-/// Unimplemented screens display a PlaceholderView until their milestone is reached.
+/// Implemented screens render their feature view; unimplemented screens show a PlaceholderView.
 struct RouteView: View {
     // MARK: - Properties
 
@@ -17,13 +17,29 @@ struct RouteView: View {
 
     // MARK: - Body
 
+    @ViewBuilder
     var body: some View {
-        PlaceholderView(title: route.title, systemImage: systemImage(for: route))
+        switch route {
+        case .home:
+            HomeScreen()
+
+        case .categories:
+            CategoriesScreen()
+
+        case .cart:
+            CartScreen()
+
+        case .profile:
+            ProfileScreen()
+
+        default:
+            PlaceholderView(title: route.title, systemImage: systemImage(for: route))
+        }
     }
 
     // MARK: - Private
 
-    /// Returns the SF Symbol name for the given route.
+    /// Returns the SF Symbol name for routes that still use PlaceholderView.
     private func systemImage(for route: Route) -> String {
         switch route {
         case .home: return "house"
@@ -62,6 +78,7 @@ struct RouteView: View {
     NavigationStack {
         RouteView(route: .home)
     }
+    .environment(AppRouter())
 }
 
 #Preview("RouteView - Product Detail") {
