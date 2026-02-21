@@ -8,6 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M0-06: Auth Infrastructure
+
+- **Auth Infrastructure**: Encrypted token storage, auth state management, session lifecycle, and token provider integration for the Molt Marketplace buyer app (Android + iOS)
+  - `TokenStorage` interface + `EncryptedTokenStorage` (Android, dedicated DataStore with Tink AES256_GCM encryption) / `KeychainTokenStorage` (iOS, KeychainAccess with `.whenUnlockedThisDeviceOnly`) for encrypted-at-rest JWT storage
+  - `AuthState` sealed interface (Android) / enum (iOS): `Loading`, `Authenticated(token: String)`, `Guest` — annotated `@Stable` (Android) / `Equatable, Sendable` (iOS)
+  - `AuthStateManager` interface + `AuthStateManagerImpl`: observable `StateFlow<AuthState>` (Android, `@Singleton`) / `@MainActor @Observable` class (iOS) with `checkStoredToken()`, `onLoginSuccess(token:)`, `onLogout()`
+  - `SessionManager` as single public API for M1+ screens: coordinates `AuthApi` / `AuthEndpoint` + `TokenStorage` + `AuthStateManager`; `Mutex`-protected token refresh (Android) / private `RefreshActor` (iOS)
+  - `AuthApi` Retrofit interface (Android) / `AuthEndpoint` Endpoint enum (iOS) covering all 5 auth endpoints: login, register, createSession, destroySession, refreshToken
+  - `BiometricTokenStorage` interface stub (both platforms; implementation deferred to M3)
+  - `AuthModule` (Android Hilt): `AuthBindsModule` + `AuthProvidesModule` with private `SessionTokenProvider` adapter + `Lazy<SessionManager>` for circular dependency resolution
+  - `Container+Extensions.swift` updated (iOS): replaced `NoOpTokenProvider` with `LazyTokenProvider` + added `tokenStorage`, `authStateManager`, `sessionManager` singletons
+  - `NetworkModule.kt` modified (Android): removed `InMemoryTokenProvider` and `provideTokenProvider()` — `TokenProvider` binding moved to `AuthModule`
+  - Fire-and-forget logout (always clears local state regardless of API result), optimistic session on network failure (stays `Authenticated` if session validation fails due to network)
+- **Tests**: 65 Android unit tests (5 files) + 56 iOS unit tests (5 files) — 121 total (Android + iOS)
+  - Android: `TokenStorageTest` (11), `AuthStateManagerTest` (20), `SessionManagerTest` (20), `AuthModuleTest` (14) — `FakeTokenStorage` + `FakeAuthApi` fake pattern; Turbine for `StateFlow`/`Flow` assertions
+  - iOS: `TokenStorageTests` (9), `AuthStateManagerTests` (11), `SessionManagerTests` (14), `AuthEndpointTests` (22) — `FakeTokenStorage` with call count tracking; `MockURLProtocol` for HTTP-level tests; `@Suite(.serialized)` for shared mock state
+
 #### M0-05: DI Setup
 
 - **DI Setup**: Hilt modules (Android) + Factory container registrations (iOS) for network, storage, coroutine, and common infrastructure dependencies (Android + iOS)

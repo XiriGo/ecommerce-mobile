@@ -41,10 +41,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTokenProvider(): TokenProvider = InMemoryTokenProvider()
-
-    @Provides
-    @Singleton
     fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor = AuthInterceptor(tokenProvider)
 
     @Provides
@@ -94,13 +90,4 @@ object NetworkModule {
         okHttpClient = okHttpClient,
         json = json,
     )
-}
-
-/**
- * No-op token provider placeholder. Replaced by a real implementation in M0-06 (Auth Infra).
- */
-private class InMemoryTokenProvider : TokenProvider {
-    override suspend fun getAccessToken(): String? = null
-    override suspend fun refreshToken(): String? = null
-    override suspend fun clearTokens() { /* no-op */ }
 }
