@@ -359,64 +359,64 @@ class RouteSerializationTest {
 
     @Test
     fun `two ProductDetail routes with same id are equal`() {
-        val a = Route.ProductDetail(productId = "same_id")
-        val b = Route.ProductDetail(productId = "same_id")
-        assertThat(a).isEqualTo(b)
+        val routeOne = Route.ProductDetail(productId = "same_id")
+        val routeTwo = Route.ProductDetail(productId = "same_id")
+        assertThat(routeOne).isEqualTo(routeTwo)
     }
 
     @Test
     fun `two ProductDetail routes with different ids are not equal`() {
-        val a = Route.ProductDetail(productId = "id_one")
-        val b = Route.ProductDetail(productId = "id_two")
-        assertThat(a).isNotEqualTo(b)
+        val routeOne = Route.ProductDetail(productId = "id_one")
+        val routeTwo = Route.ProductDetail(productId = "id_two")
+        assertThat(routeOne).isNotEqualTo(routeTwo)
     }
 
     @Test
     fun `two ProductList routes with same params are equal`() {
-        val a = Route.ProductList(categoryId = "cat_1", query = "q")
-        val b = Route.ProductList(categoryId = "cat_1", query = "q")
-        assertThat(a).isEqualTo(b)
+        val routeOne = Route.ProductList(categoryId = "cat_1", query = "query_val")
+        val routeTwo = Route.ProductList(categoryId = "cat_1", query = "query_val")
+        assertThat(routeOne).isEqualTo(routeTwo)
     }
 
     @Test
     fun `ProductList with different query values are not equal`() {
-        val a = Route.ProductList(query = "shoes")
-        val b = Route.ProductList(query = "boots")
-        assertThat(a).isNotEqualTo(b)
+        val routeOne = Route.ProductList(query = "shoes")
+        val routeTwo = Route.ProductList(query = "boots")
+        assertThat(routeOne).isNotEqualTo(routeTwo)
     }
 
     @Test
     fun `two Login routes with same returnTo are equal`() {
-        val a = Route.Login(returnTo = "checkout")
-        val b = Route.Login(returnTo = "checkout")
-        assertThat(a).isEqualTo(b)
+        val routeOne = Route.Login(returnTo = "checkout")
+        val routeTwo = Route.Login(returnTo = "checkout")
+        assertThat(routeOne).isEqualTo(routeTwo)
     }
 
     @Test
     fun `Login with null returnTo differs from Login with non-null returnTo`() {
-        val a = Route.Login(returnTo = null)
-        val b = Route.Login(returnTo = "checkout")
-        assertThat(a).isNotEqualTo(b)
+        val routeOne = Route.Login(returnTo = null)
+        val routeTwo = Route.Login(returnTo = "checkout")
+        assertThat(routeOne).isNotEqualTo(routeTwo)
     }
 
     @Test
     fun `two OrderDetail routes with same orderId are equal`() {
-        val a = Route.OrderDetail(orderId = "order_1")
-        val b = Route.OrderDetail(orderId = "order_1")
-        assertThat(a).isEqualTo(b)
+        val routeOne = Route.OrderDetail(orderId = "order_1")
+        val routeTwo = Route.OrderDetail(orderId = "order_1")
+        assertThat(routeOne).isEqualTo(routeTwo)
     }
 
     @Test
     fun `Home data object is a singleton - same reference`() {
-        val a: Route = Route.Home
-        val b: Route = Route.Home
-        assertThat(a).isSameInstanceAs(b)
+        val routeOne: Route = Route.Home
+        val routeTwo: Route = Route.Home
+        assertThat(routeOne).isSameInstanceAs(routeTwo)
     }
 
     @Test
     fun `Cart data object is a singleton - same reference`() {
-        val a: Route = Route.Cart
-        val b: Route = Route.Cart
-        assertThat(a).isSameInstanceAs(b)
+        val routeOne: Route = Route.Cart
+        val routeTwo: Route = Route.Cart
+        assertThat(routeOne).isSameInstanceAs(routeTwo)
     }
 }

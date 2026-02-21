@@ -1,5 +1,8 @@
 package com.molt.marketplace.core.navigation
 
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Home
@@ -10,9 +13,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
 
 /**
  * Compose UI tests for PlaceholderScreen.
