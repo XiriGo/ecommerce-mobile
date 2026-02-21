@@ -4,12 +4,39 @@ import Foundation
 // MARK: - Core Infrastructure (Singletons)
 
 extension Container {
+    // MARK: - Auth
+
+    /// Keychain-backed token storage for secure JWT persistence.
+    var tokenStorage: Factory<TokenStorage> {
+        self { KeychainTokenStorage() }
+            .singleton
+    }
+
+    /// Observable auth state manager that coordinates auth state transitions.
+    var authStateManager: Factory<AuthStateManagerImpl> {
+        self { AuthStateManagerImpl(tokenStorage: self.tokenStorage()) }
+            .singleton
+    }
+
+    /// Session manager that coordinates login, register, logout, and token refresh.
+    /// Also serves as the `TokenProvider` for the network layer.
+    var sessionManager: Factory<SessionManager> {
+        self {
+            SessionManager(
+                apiClient: self.apiClient(),
+                tokenStorage: self.tokenStorage(),
+                authStateManager: self.authStateManager()
+            )
+        }
+        .singleton
+    }
+
     // MARK: - Network
 
-    /// Token provider for auth header injection. Currently a no-op placeholder.
-    /// Replaced by a real Keychain-backed implementation in M0-06 (Auth Infrastructure).
+    /// Lazy token provider that breaks the circular dependency between APIClient
+    /// and SessionManager. Resolves SessionManager on first use, not at construction.
     var tokenProvider: Factory<any TokenProvider> {
-        self { NoOpTokenProvider() }
+        self { LazyTokenProvider { Container.shared.sessionManager() } }
             .singleton
     }
 
@@ -32,6 +59,38 @@ extension Container {
     var networkMonitor: Factory<NetworkMonitor> {
         self { NetworkMonitor() }
             .singleton
+    }
+}
+
+// MARK: - LazyTokenProvider
+
+/// Breaks the circular dependency: APIClient -> TokenProvider -> SessionManager -> APIClient.
+/// The underlying SessionManager is resolved lazily on first method call, not at construction.
+private final class LazyTokenProvider: TokenProvider, @unchecked Sendable {
+    private let resolver: @Sendable () -> SessionManager
+    private var resolved: SessionManager?
+
+    init(resolver: @escaping @Sendable () -> SessionManager) {
+        self.resolver = resolver
+    }
+
+    private func provider() -> SessionManager {
+        if let resolved { return resolved }
+        let instance = resolver()
+        resolved = instance
+        return instance
+    }
+
+    func getAccessToken() async -> String? {
+        await provider().getAccessToken()
+    }
+
+    func refreshToken() async throws -> String? {
+        try await provider().refreshToken()
+    }
+
+    func clearTokens() async {
+        await provider().clearTokens()
     }
 }
 
