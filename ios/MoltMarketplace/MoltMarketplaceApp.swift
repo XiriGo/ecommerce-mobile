@@ -14,27 +14,7 @@ struct MoltMarketplaceApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
         }
     }
-}
-
-// MARK: - ContentView
-
-// Placeholder view - replaced with navigation in M0-04
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Spacer()
-            Text("Molt Marketplace")
-                .font(MoltTypography.headlineSmall)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(MoltColors.background))
-    }
-}
-
-#Preview {
-    ContentView()
 }
