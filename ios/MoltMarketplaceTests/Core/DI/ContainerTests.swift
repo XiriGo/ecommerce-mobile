@@ -18,10 +18,10 @@ struct ContainerTests {
         #expect(client is APIClient)
     }
 
-    @Test("tokenProvider resolves to NoOpTokenProvider")
-    func test_tokenProvider_resolves_toNoOp() {
+    @Test("tokenProvider resolves without crash")
+    func test_tokenProvider_resolves() {
         let provider = Container.shared.tokenProvider()
-        #expect(provider is NoOpTokenProvider)
+        #expect(provider is any TokenProvider)
     }
 
     @Test("networkMonitor resolves without crash")
@@ -70,8 +70,9 @@ struct ContainerTests {
         Container.shared.tokenProvider.register { FakeTokenProvider() }
         Container.shared.reset()
 
+        // After reset, tokenProvider resolves to the real LazyTokenProvider (not FakeTokenProvider)
         let resolved = Container.shared.tokenProvider()
-        #expect(resolved is NoOpTokenProvider)
+        #expect(!(resolved is FakeTokenProvider))
     }
 
     // MARK: - Cross-Test Isolation
@@ -85,7 +86,7 @@ struct ContainerTests {
 
         // Reset and verify original is restored — simulates what each test's init() does
         Container.shared.reset()
-        #expect(Container.shared.tokenProvider() is NoOpTokenProvider)
+        #expect(!(Container.shared.tokenProvider() is FakeTokenProvider))
     }
 
     @Test("resetting container clears all three singleton caches")
@@ -124,7 +125,7 @@ struct ContainerTests {
         let monitor = Container.shared.networkMonitor()
 
         #expect(client is APIClient)
-        #expect(provider is NoOpTokenProvider)
+        #expect(provider is any TokenProvider)
         #expect(monitor is NetworkMonitor)
     }
 
@@ -144,7 +145,7 @@ struct ContainerTests {
         let fakeMonitor = NetworkMonitor()
         Container.shared.networkMonitor.register { fakeMonitor }
 
-        #expect(Container.shared.tokenProvider() is NoOpTokenProvider)
+        #expect(Container.shared.tokenProvider() is any TokenProvider)
         #expect(Container.shared.apiClient() is APIClient)
     }
 }

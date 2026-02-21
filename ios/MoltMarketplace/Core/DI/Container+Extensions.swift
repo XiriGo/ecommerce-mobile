@@ -14,7 +14,7 @@ extension Container {
 
     /// Observable auth state manager that coordinates auth state transitions.
     var authStateManager: Factory<AuthStateManagerImpl> {
-        self { AuthStateManagerImpl(tokenStorage: self.tokenStorage()) }
+        self { MainActor.assumeIsolated { AuthStateManagerImpl(tokenStorage: self.tokenStorage()) } }
             .singleton
     }
 
