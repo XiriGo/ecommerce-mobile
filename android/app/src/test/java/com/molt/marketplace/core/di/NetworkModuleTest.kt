@@ -10,6 +10,7 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 import com.molt.marketplace.core.network.ApiClient
 import com.molt.marketplace.core.network.AuthInterceptor
+import com.molt.marketplace.core.network.FakeTokenProvider
 import com.molt.marketplace.core.network.NetworkConfig
 import com.molt.marketplace.core.network.TokenRefreshAuthenticator
 
@@ -84,30 +85,27 @@ class NetworkModuleTest {
     // endregion
 
     // region provideTokenProvider
+    // NOTE: NetworkModule.provideTokenProvider() was removed in M0-06 when the real
+    // SessionTokenProvider was wired via AuthModule. These tests verify behavior using
+    // FakeTokenProvider (from the network test package) which mirrors the old contract.
 
     @Test
-    fun `provideTokenProvider returns a non-null TokenProvider`() {
-        val provider = NetworkModule.provideTokenProvider()
-        assertThat(provider).isNotNull()
-    }
-
-    @Test
-    fun `InMemoryTokenProvider getAccessToken returns null initially`() {
-        val provider = NetworkModule.provideTokenProvider()
+    fun `FakeTokenProvider getAccessToken returns null initially`() {
+        val provider = FakeTokenProvider()
         val token = runBlocking { provider.getAccessToken() }
         assertThat(token).isNull()
     }
 
     @Test
-    fun `InMemoryTokenProvider refreshToken returns null`() {
-        val provider = NetworkModule.provideTokenProvider()
+    fun `FakeTokenProvider refreshToken returns null when not configured`() {
+        val provider = FakeTokenProvider()
         val token = runBlocking { provider.refreshToken() }
         assertThat(token).isNull()
     }
 
     @Test
-    fun `InMemoryTokenProvider clearTokens does not throw`() {
-        val provider = NetworkModule.provideTokenProvider()
+    fun `FakeTokenProvider clearTokens does not throw`() {
+        val provider = FakeTokenProvider()
         runBlocking { provider.clearTokens() }
     }
 
@@ -117,14 +115,14 @@ class NetworkModuleTest {
 
     @Test
     fun `provideAuthInterceptor returns non-null AuthInterceptor`() {
-        val tokenProvider = NetworkModule.provideTokenProvider()
+        val tokenProvider = FakeTokenProvider()
         val interceptor = NetworkModule.provideAuthInterceptor(tokenProvider)
         assertThat(interceptor).isNotNull()
     }
 
     @Test
     fun `provideAuthInterceptor creates AuthInterceptor with given TokenProvider`() {
-        val tokenProvider = NetworkModule.provideTokenProvider()
+        val tokenProvider = FakeTokenProvider()
         val interceptor = NetworkModule.provideAuthInterceptor(tokenProvider)
         assertThat(interceptor).isInstanceOf(AuthInterceptor::class.java)
     }
@@ -135,14 +133,14 @@ class NetworkModuleTest {
 
     @Test
     fun `provideTokenRefreshAuthenticator returns non-null instance`() {
-        val tokenProvider = NetworkModule.provideTokenProvider()
+        val tokenProvider = FakeTokenProvider()
         val authenticator = NetworkModule.provideTokenRefreshAuthenticator(tokenProvider)
         assertThat(authenticator).isNotNull()
     }
 
     @Test
     fun `provideTokenRefreshAuthenticator creates TokenRefreshAuthenticator`() {
-        val tokenProvider = NetworkModule.provideTokenProvider()
+        val tokenProvider = FakeTokenProvider()
         val authenticator = NetworkModule.provideTokenRefreshAuthenticator(tokenProvider)
         assertThat(authenticator).isInstanceOf(TokenRefreshAuthenticator::class.java)
     }
@@ -153,7 +151,7 @@ class NetworkModuleTest {
 
     @Test
     fun `authenticated client interceptors include AuthInterceptor`() {
-        val tokenProvider = NetworkModule.provideTokenProvider()
+        val tokenProvider = FakeTokenProvider()
         val authInterceptor = NetworkModule.provideAuthInterceptor(tokenProvider)
         val client = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
@@ -240,7 +238,7 @@ class NetworkModuleTest {
 
     @Test
     fun `provideRetrofit uses authenticated OkHttpClient`() {
-        val tokenProvider = NetworkModule.provideTokenProvider()
+        val tokenProvider = FakeTokenProvider()
         val authInterceptor = NetworkModule.provideAuthInterceptor(tokenProvider)
         val client = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
