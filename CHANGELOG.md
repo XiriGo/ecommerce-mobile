@@ -8,6 +8,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M0-05: DI Setup
+
+- **DI Setup**: Hilt modules (Android) + Factory container registrations (iOS) for network, storage, coroutine, and common infrastructure dependencies (Android + iOS)
+  - Five `@Qualifier` annotations (`@IoDispatcher`, `@MainDispatcher`, `@DefaultDispatcher`, `@AuthenticatedClient`, `@UnauthenticatedClient`) in `Qualifiers.kt` (Android)
+  - `CoroutineModule`: three `CoroutineDispatcher` providers + app-scoped `CoroutineScope` with `SupervisorJob` + `@DefaultDispatcher` (Android)
+  - `StorageModule`: `DataStore<Preferences>` (general preferences) + `MoltDatabase` Room abstract class shell with `PlaceholderEntity` (required by Room KSP; removed when first real entity is added in M2-01) (Android)
+  - `NetworkModule` updated with `@AuthenticatedClient` / `@UnauthenticatedClient` OkHttpClient split; `Retrofit` updated to use `@AuthenticatedClient` client (Android)
+  - `Container+Extensions.swift` verified with `apiClient`, `tokenProvider`, `networkMonitor` singletons; feature DI pattern documented as inline MARK comments (iOS)
+  - `NetworkMonitor` concrete `@Observable` class using `NWPathMonitor`; registered as `.singleton` in Container (iOS — from M0-03, verified in M0-05)
+  - Canonical feature DI pattern documented for M1+: repository `@Binds` in `ViewModelComponent` + use case `@Inject constructor` (Android); `Container+<Name>.swift` extension with transient scope (iOS)
+  - Test replacement pattern: `@TestInstallIn` for Hilt (Android); `Container.shared.reset()` + `.register { }` override (iOS)
+  - All infrastructure dependencies scoped as singletons; repositories ViewModel-scoped (Android) / transient (iOS); use cases always transient
+- **Tests**: 55 Android unit tests (4 files) + 21 iOS unit tests (2 files) — 76 total (Android + iOS)
+  - Android: `QualifiersTest` (11), `CoroutineModuleTest` (10), `NetworkModuleTest` (25), `StorageModuleTest` (9) — Robolectric for Storage tests
+  - iOS: `ContainerTests` (14), `NetworkMonitorTests` (7) — `@Suite(.serialized)` with `Container.shared.reset()` in `init()`
+
 #### M0-04: Navigation
 
 - **Navigation**: Type-safe tab-based routing and navigation infrastructure (Android + iOS)
