@@ -11,6 +11,8 @@
 		047C511E2FB9F1D9B6E547C1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 52EEBFC5650EA0ACAEE1933E /* Factory */; };
 		04E47E886CF0913CC0092A4A /* Container+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */; };
 		0D935FC51E1349997ECD01F7 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2AD1491562F49BB0E8F1C /* Tab.swift */; };
+		1008984D38E1A6167D499739 /* AuthEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563445AE805BEC63BD044BBF /* AuthEndpointTests.swift */; };
+		104E4EBBB9C3700F057B830C /* SessionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD0DE0021AEB2D4F437068D /* SessionManagerTests.swift */; };
 		10A8D2831BD4D4D132160637 /* MoltTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A7CBF7721EFCEEC4DE8BFF /* MoltTextFieldTests.swift */; };
 		113585DB5149248ECE991BE2 /* MoltCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8367AC7D24C87D3EBFC40EDF /* MoltCardTests.swift */; };
 		13E8D235792CC1BC9C7DBF51 /* MoltTopBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59405CAA4EE85C548DFA5BD /* MoltTopBarTests.swift */; };
@@ -37,6 +39,7 @@
 		44A83862A0AB8C421F64A2F5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14FF9BF5CCFE0D100A0DE9 /* RouteView.swift */; };
 		47F6CF83DD154CE2EBC0543B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44924854D3F87C4767E134D1 /* APIClient.swift */; };
 		48C6B6D6C07A425116A319DB /* MoltElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD7442B1733300D6B890BEF /* MoltElevation.swift */; };
+		491A67A113A795EC7360082A /* TokenStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885B95127ABEED04970C71FC /* TokenStorageTests.swift */; };
 		4A7587D524FBE198EC211BB7 /* MoltImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C9F64D1759C903FF4B2A8C /* MoltImage.swift */; };
 		4B7AC2C5D8BF34749EE9C617 /* MoltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */; };
 		4E52E9ABD5FFCE40DBBB07C7 /* MoltTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDF5E770AED65686426372F /* MoltTheme.swift */; };
@@ -51,6 +54,7 @@
 		5F70D64EE628C39FA1CB03E6 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9773618D07782D6051910CDC /* LoginRequest.swift */; };
 		600867F6DF557B31C1C69E9D /* JSONCoders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5067E50478883745968CBB3 /* JSONCoders.swift */; };
 		60BE49E8B598321EAA6767EA /* LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6781E654FF35BC3A613C53 /* LocalizableTests.swift */; };
+		61C3FE04A847F7D477DF8A43 /* AuthStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000FD79168621E152706007D /* AuthStateManagerTests.swift */; };
 		65D20D4B09BAB86C1262A996 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 82D588A709AE3CBA15F476F1 /* Sentry */; };
 		66F1F8B90A6F745FD3E01C31 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7FD1EC00A736AA40122C9A /* PlaceholderView.swift */; };
 		6948B56CAD17B3711D93C2AB /* PlaceholderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E97CFB4756553EB57AB7E8 /* PlaceholderViewTests.swift */; };
@@ -62,6 +66,7 @@
 		7F0C8DFD1A26CDE7D4C2E82F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5AED23F7F0320BADB15E55 /* FirebaseRemoteConfig */; };
 		8BD1BEE7E7126D835ED5D823 /* TokenProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543CF40C5DE1CBDE6F95C3A0 /* TokenProviderTests.swift */; };
 		8BF63E4DAF30BFB52AF31CA3 /* MoltButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE984110B4ED6B9FB1A7372E /* MoltButton.swift */; };
+		8C762F9D02CB9D9F58C2C4BB /* FakeTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A44746BC10765B735F92E /* FakeTokenStorage.swift */; };
 		8D9BDF928BD8FD45A005FCD9 /* MoltTabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF84CC2D9F865C565DDF340 /* MoltTabBarTests.swift */; };
 		904A98ACF5D38F5F431E8E2C /* MoltEmptyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2A50D0E55552F373D13F11 /* MoltEmptyViewTests.swift */; };
 		90F3B525A515BF7FA65AA84C /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1851A2BF63B2E916E73B4F26 /* AppRouter.swift */; };
@@ -134,6 +139,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		000FD79168621E152706007D /* AuthStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManagerTests.swift; sourceTree = "<group>"; };
 		01C53F9C8E440F9DB251617F /* RetryPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicy.swift; sourceTree = "<group>"; };
 		033C2530E11CEC05274D49AF /* MoltColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColorsTests.swift; sourceTree = "<group>"; };
 		05C9F64D1759C903FF4B2A8C /* MoltImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltImage.swift; sourceTree = "<group>"; };
@@ -176,6 +182,8 @@
 		52BB9D9C336DEFADA2BA1E85 /* MoltPriceText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceText.swift; sourceTree = "<group>"; };
 		543CF40C5DE1CBDE6F95C3A0 /* TokenProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderTests.swift; sourceTree = "<group>"; };
 		555E8358851E4935F41B0CE9 /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
+		563445AE805BEC63BD044BBF /* AuthEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndpointTests.swift; sourceTree = "<group>"; };
+		575A44746BC10765B735F92E /* FakeTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTokenStorage.swift; sourceTree = "<group>"; };
 		5A781AA8A0197BC663457891 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
 		61D34E52EA954DC323C74B89 /* ContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTests.swift; sourceTree = "<group>"; };
 		62689091D4D4B017CD009C61 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -187,6 +195,7 @@
 		7B8BAF091DC24C0728A66E76 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		81AEB5341BCB6D1683358830 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8367AC7D24C87D3EBFC40EDF /* MoltCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCardTests.swift; sourceTree = "<group>"; };
+		885B95127ABEED04970C71FC /* TokenStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorageTests.swift; sourceTree = "<group>"; };
 		8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltLoadingView.swift; sourceTree = "<group>"; };
 		9107164CF634CAD51DCFAEB8 /* MoltCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCard.swift; sourceTree = "<group>"; };
@@ -217,6 +226,7 @@
 		C76430E04B06EFA2002685F4 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		CA7E99A60235FAE3B592DCC5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		CA86309C831B0A485D41B353 /* MoltChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltChip.swift; sourceTree = "<group>"; };
+		CFD0DE0021AEB2D4F437068D /* SessionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerTests.swift; sourceTree = "<group>"; };
 		D0311F008B3C58A3E0A41D0E /* TabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabTests.swift; sourceTree = "<group>"; };
 		D09A0E1480A554F945A275BE /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorViewTests.swift; sourceTree = "<group>"; };
@@ -367,6 +377,18 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		3B153EBDEDFA60896B96D69A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				563445AE805BEC63BD044BBF /* AuthEndpointTests.swift */,
+				000FD79168621E152706007D /* AuthStateManagerTests.swift */,
+				575A44746BC10765B735F92E /* FakeTokenStorage.swift */,
+				CFD0DE0021AEB2D4F437068D /* SessionManagerTests.swift */,
+				885B95127ABEED04970C71FC /* TokenStorageTests.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		48BA5F23D3179361D6DAF320 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +402,7 @@
 		570BCF9C7C9A4C7BB3BF9029 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				3B153EBDEDFA60896B96D69A /* Auth */,
 				CA7C4CB013D83F19D523D98F /* DesignSystem */,
 				7E2EB9E4D8226887CDD7CC6D /* DI */,
 				ECAB9977C258ECE7112A2333 /* Navigation */,
@@ -787,11 +810,14 @@
 				1F08419AA4629196765E97C5 /* AppErrorTests.swift in Sources */,
 				42F1F5A39638F2088598A5BD /* AppRouterTests.swift in Sources */,
 				AFAA7AA79865A2114D52CEAA /* ArchitectureTests.swift in Sources */,
+				1008984D38E1A6167D499739 /* AuthEndpointTests.swift in Sources */,
 				245DFD38BA4FA75CB95522AB /* AuthMiddlewareTests.swift in Sources */,
+				61C3FE04A847F7D477DF8A43 /* AuthStateManagerTests.swift in Sources */,
 				D7505BCDC605DF17BE937EDC /* ConfigTests.swift in Sources */,
 				24FECBB921EE48A96A42C7F3 /* ContainerTests.swift in Sources */,
 				F9B5AF7E3CD3698C5DB86D39 /* DeepLinkParserTests.swift in Sources */,
 				BB04CFC8AC8CF03841B7CD22 /* EndpointTests.swift in Sources */,
+				8C762F9D02CB9D9F58C2C4BB /* FakeTokenStorage.swift in Sources */,
 				BC6817AF50B36BAB2E98C4EA /* JSONCodersTests.swift in Sources */,
 				60BE49E8B598321EAA6767EA /* LocalizableTests.swift in Sources */,
 				2BBFC6C194BE07B8550532C2 /* MedusaErrorDTOTests.swift in Sources */,
@@ -820,8 +846,10 @@
 				6948B56CAD17B3711D93C2AB /* PlaceholderViewTests.swift in Sources */,
 				43C1A9A65312CF95DF058800 /* RetryPolicyTests.swift in Sources */,
 				5B4CB99D1B90BEA9D49DF748 /* RouteTests.swift in Sources */,
+				104E4EBBB9C3700F057B830C /* SessionManagerTests.swift in Sources */,
 				C89A1E2088B67793A52C3F8E /* TabTests.swift in Sources */,
 				8BD1BEE7E7126D835ED5D823 /* TokenProviderTests.swift in Sources */,
+				491A67A113A795EC7360082A /* TokenStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
