@@ -1,12 +1,5 @@
 package com.molt.marketplace.core.di
 
-import android.content.Context
-import com.molt.marketplace.BuildConfig
-import com.molt.marketplace.core.network.ApiClient
-import com.molt.marketplace.core.network.AuthInterceptor
-import com.molt.marketplace.core.network.OkHttpClientFactory
-import com.molt.marketplace.core.network.TokenProvider
-import com.molt.marketplace.core.network.TokenRefreshAuthenticator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +10,13 @@ import kotlinx.serialization.json.JsonNamingStrategy
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
+import android.content.Context
+import com.molt.marketplace.BuildConfig
+import com.molt.marketplace.core.network.ApiClient
+import com.molt.marketplace.core.network.AuthInterceptor
+import com.molt.marketplace.core.network.OkHttpClientFactory
+import com.molt.marketplace.core.network.TokenProvider
+import com.molt.marketplace.core.network.TokenRefreshAuthenticator
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -40,8 +40,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor =
-        AuthInterceptor(tokenProvider)
+    fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor = AuthInterceptor(tokenProvider)
 
     @Provides
     @Singleton
@@ -62,10 +61,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(
-        okHttpClient: OkHttpClient,
-        json: Json,
-    ): Retrofit = ApiClient.createRetrofit(
+    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit = ApiClient.createRetrofit(
         baseUrl = BuildConfig.API_BASE_URL,
         okHttpClient = okHttpClient,
         json = json,

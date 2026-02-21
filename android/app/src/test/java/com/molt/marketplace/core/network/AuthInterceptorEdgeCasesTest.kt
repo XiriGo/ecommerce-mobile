@@ -30,10 +30,9 @@ class AuthInterceptorEdgeCasesTest {
         server.shutdown()
     }
 
-    private fun createClient(): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenProvider))
-            .build()
+    private fun createClient(): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(AuthInterceptor(tokenProvider))
+        .build()
 
     // -------------------------------------------------------------------------
     // Public endpoint path coverage

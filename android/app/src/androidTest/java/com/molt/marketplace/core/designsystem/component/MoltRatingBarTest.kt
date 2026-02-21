@@ -1,14 +1,14 @@
 package com.molt.marketplace.core.designsystem.component
 
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MoltRatingBarTest {

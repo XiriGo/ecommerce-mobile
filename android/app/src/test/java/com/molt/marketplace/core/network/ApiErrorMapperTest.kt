@@ -1,8 +1,6 @@
 package com.molt.marketplace.core.network
 
 import com.google.common.truth.Truth.assertThat
-import com.molt.marketplace.core.domain.error.AppError
-import com.molt.marketplace.core.network.ApiErrorMapper.toAppError
 import kotlinx.serialization.SerializationException
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -12,13 +10,12 @@ import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import com.molt.marketplace.core.domain.error.AppError
+import com.molt.marketplace.core.network.ApiErrorMapper.toAppError
 
 class ApiErrorMapperTest {
 
-    private fun createHttpException(
-        code: Int,
-        errorBody: String? = null,
-    ): HttpException {
+    private fun createHttpException(code: Int, errorBody: String? = null): HttpException {
         val body = errorBody?.toResponseBody("application/json".toMediaType())
         val response = Response.error<Any>(code, body ?: "".toResponseBody())
         return HttpException(response)

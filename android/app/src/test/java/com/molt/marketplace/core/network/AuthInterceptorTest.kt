@@ -1,7 +1,6 @@
 package com.molt.marketplace.core.network
 
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.mockwebserver.MockResponse

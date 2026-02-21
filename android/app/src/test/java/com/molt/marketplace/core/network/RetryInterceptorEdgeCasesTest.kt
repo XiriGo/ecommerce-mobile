@@ -28,10 +28,9 @@ class RetryInterceptorEdgeCasesTest {
         server.shutdown()
     }
 
-    private fun createClient(): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(RetryInterceptor())
-            .build()
+    private fun createClient(): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(RetryInterceptor())
+        .build()
 
     // -------------------------------------------------------------------------
     // Companion constant verification

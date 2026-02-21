@@ -1,8 +1,8 @@
 package com.molt.marketplace.core.network
 
-import com.molt.marketplace.BuildConfig
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
+import com.molt.marketplace.BuildConfig
 
 object LoggingInterceptor {
 
