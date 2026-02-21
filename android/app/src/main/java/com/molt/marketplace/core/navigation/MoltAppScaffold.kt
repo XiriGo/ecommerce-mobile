@@ -28,7 +28,6 @@ private val bottomBarHiddenRoutes: Set<String> = setOf(
 )
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltAppScaffold(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -89,7 +88,6 @@ fun MoltAppScaffold(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltAppScaffoldPreview() {
     MoltTheme {
         MoltAppScaffold()

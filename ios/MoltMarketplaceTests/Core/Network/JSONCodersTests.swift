@@ -16,13 +16,13 @@ struct JSONCodersTests {
             let createdAt: String
         }
 
-        let json = try #require("""
+        let json = Data("""
         {
             "first_name": "John",
             "last_name": "Doe",
             "created_at": "2025-01-15T10:30:00Z"
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.firstName == "John")
@@ -40,14 +40,14 @@ struct JSONCodersTests {
             let shippingAddress: Address
         }
 
-        let json = try #require("""
+        let json = Data("""
         {
             "shipping_address": {
                 "street_address": "123 Main St",
                 "postal_code": "12345"
             }
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.shippingAddress.streetAddress == "123 Main St")
@@ -62,11 +62,11 @@ struct JSONCodersTests {
             let createdAt: Date
         }
 
-        let json = try #require("""
+        let json = Data("""
         {
             "created_at": "2025-01-15T10:30:00Z"
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         var calendar = Calendar(identifier: .gregorian)
@@ -89,11 +89,11 @@ struct JSONCodersTests {
             let createdAt: Date
         }
 
-        let json = try #require("""
+        let json = Data("""
         {
             "created_at": "January 15, 2025"
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         #expect(throws: (any Error).self) {
             try JSONDecoder.api.decode(Response.self, from: json)
@@ -168,13 +168,13 @@ struct JSONCodersTests {
             let name: String
         }
 
-        let json = try #require("""
+        let json = Data("""
         {
             "name": "Test",
             "unknown_field": "some value",
             "another_unknown": 42
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.name == "Test")

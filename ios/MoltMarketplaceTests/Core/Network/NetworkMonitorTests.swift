@@ -12,7 +12,8 @@ struct NetworkMonitorTests {
     }
 
     @Test("isConnected defaults to true on init")
-    @MainActor func test_isConnected_defaultsToTrue() {
+    @MainActor
+    func test_isConnected_defaultsToTrue() {
         let monitor = NetworkMonitor()
         #expect(monitor.isConnected == true)
     }
@@ -51,7 +52,8 @@ struct NetworkMonitorTests {
     }
 
     @Test("multiple isConnected reads return consistent value")
-    @MainActor func test_isConnected_multipleReads_areConsistent() {
+    @MainActor
+    func test_isConnected_multipleReads_areConsistent() {
         let monitor = NetworkMonitor()
         let first = monitor.isConnected
         let second = monitor.isConnected

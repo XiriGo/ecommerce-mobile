@@ -2,6 +2,8 @@ import SwiftUI
 import Testing
 @testable import MoltMarketplace
 
+private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
+
 // MARK: - MoltImageTests
 
 @Suite("MoltImage Tests")
@@ -66,7 +68,7 @@ struct MoltImageTests {
 
     // MARK: - Body
 
-    @Test("MoltImage body is a valid View", .disabled("SwiftUI body requires runtime environment; use UI tests instead"))
+    @Test("MoltImage body is a valid View", .disabled(swiftUIDisabledReason))
     func test_body_isValidView() {
         let image = MoltImage(url: nil)
         let body = image.body

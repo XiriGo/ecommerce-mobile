@@ -24,7 +24,6 @@ class RetryInterceptor : Interceptor {
             val delay = calculateDelay(attempt)
             Timber.d("Retry attempt %d/%d after %dms for %s", attempt, MAX_RETRIES, delay, request.url)
 
-            @Suppress("BlockingMethodInNonBlockingContext")
             Thread.sleep(delay)
 
             response = chain.proceed(request)

@@ -827,6 +827,26 @@ Steps:
 - Coverage must not decrease
 - No new lint warnings
 - Build succeeds for both debug and release
+- Zero `swiftlint:disable` comments in code (see Zero Lint Suppression Policy in `faang-rules.md`)
+
+### SwiftLint Exclusion Patterns
+
+When a lint rule is structurally incompatible with certain files (e.g., design tokens contain literal numbers), configure exclusions in `.swiftlint.yml` -- **never** use inline `swiftlint:disable`:
+
+```yaml
+# .swiftlint.yml - exclude design system tokens from no_magic_numbers
+no_magic_numbers:
+  excluded:
+    - "MoltMarketplace/Core/DesignSystem/Theme/*"
+    - "MoltMarketplace/Core/DesignSystem/Component/*"
+
+# Higher length limits for test files
+file_length:
+  warning: 300
+  error: 400
+  excluded:
+    - "MoltMarketplaceTests/**"
+```
 
 ---
 

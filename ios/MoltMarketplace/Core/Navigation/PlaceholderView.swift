@@ -39,7 +39,7 @@ struct PlaceholderView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(MoltColors.background))
+        .background(MoltColors.background.ignoresSafeArea())
         .navigationTitle(title)
     }
 }

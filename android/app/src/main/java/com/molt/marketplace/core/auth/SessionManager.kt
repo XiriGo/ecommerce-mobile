@@ -2,7 +2,10 @@ package com.molt.marketplace.core.auth
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.SerializationException
+import retrofit2.HttpException
 import timber.log.Timber
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.molt.marketplace.core.auth.dto.LoginRequest
@@ -19,82 +22,94 @@ class SessionManager @Inject constructor(
 
     private val refreshMutex = Mutex()
 
-    suspend fun login(email: String, password: String): Result<Unit> {
-        return try {
-            val response = authApi.login(LoginRequest(email = email, password = password))
-            val token = response.token
-            if (token.isBlank()) {
-                return Result.failure(AppError.Unknown(message = EMPTY_TOKEN_MESSAGE))
-            }
-            tokenStorage.saveAccessToken(token)
-            tryCreateSession(token)
-            authStateManager.onLoginSuccess(token)
-            Result.success(Unit)
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-            Result.failure(e.toAppError())
-        }
+    suspend fun login(email: String, password: String): Result<Unit> = runAuthCall {
+        val response = authApi.login(LoginRequest(email = email, password = password))
+        processAuthToken(response.token)
     }
 
-    suspend fun register(email: String, password: String): Result<Unit> {
-        return try {
-            val response = authApi.register(RegisterRequest(email = email, password = password))
-            val token = response.token
-            if (token.isBlank()) {
-                return Result.failure(AppError.Unknown(message = EMPTY_TOKEN_MESSAGE))
-            }
-            tokenStorage.saveAccessToken(token)
-            tryCreateSession(token)
-            authStateManager.onLoginSuccess(token)
-            Result.success(Unit)
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-            Result.failure(e.toAppError())
+    suspend fun register(email: String, password: String): Result<Unit> = runAuthCall {
+        val response = authApi.register(RegisterRequest(email = email, password = password))
+        processAuthToken(response.token)
+    }
+
+    private suspend fun processAuthToken(token: String): Result<Unit> {
+        if (token.isBlank()) {
+            return Result.failure(AppError.Unknown(message = EMPTY_TOKEN_MESSAGE))
         }
+        tokenStorage.saveAccessToken(token)
+        tryCreateSession(token)
+        authStateManager.onLoginSuccess(token)
+        return Result.success(Unit)
     }
 
     suspend fun logout() {
         val token = tokenStorage.getAccessToken()
         if (token != null) {
-            try {
-                authApi.destroySession("Bearer $token")
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-                Timber.w(e, "Failed to destroy session on server, proceeding with local logout")
-            }
+            runCatching { authApi.destroySession("Bearer $token") }
+                .onFailure { logApiWarning(it, LOG_DESTROY_SESSION_FAILED) }
         }
         authStateManager.onLogout()
     }
 
-    @Suppress("LabeledExpression")
-    suspend fun refreshToken(): Result<String> {
-        return refreshMutex.withLock {
-            try {
-                val currentToken = tokenStorage.getAccessToken()
-                    ?: return@withLock Result.failure(AppError.Unauthorized(message = "No token to refresh"))
+    suspend fun refreshToken(): Result<String> = refreshMutex.withLock {
+        executeTokenRefresh()
+    }
 
-                val response = authApi.refreshToken("Bearer $currentToken")
-                val newToken = response.token
-                if (newToken.isBlank()) {
-                    return@withLock Result.failure(AppError.Unknown(message = EMPTY_TOKEN_MESSAGE))
-                }
-                tokenStorage.saveAccessToken(newToken)
-                authStateManager.onLoginSuccess(newToken)
-                Result.success(newToken)
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-                Timber.w(e, "Token refresh failed, clearing auth state")
-                authStateManager.onLogout()
-                Result.failure(e.toAppError())
+    private suspend fun executeTokenRefresh(): Result<String> {
+        return try {
+            val currentToken = tokenStorage.getAccessToken()
+                ?: return Result.failure(AppError.Unauthorized(message = "No token to refresh"))
+
+            val response = authApi.refreshToken("Bearer $currentToken")
+            val newToken = response.token
+            if (newToken.isBlank()) {
+                return Result.failure(AppError.Unknown(message = EMPTY_TOKEN_MESSAGE))
             }
+            tokenStorage.saveAccessToken(newToken)
+            authStateManager.onLoginSuccess(newToken)
+            Result.success(newToken)
+        } catch (e: HttpException) {
+            handleRefreshFailure(e)
+        } catch (e: IOException) {
+            handleRefreshFailure(e)
+        } catch (e: SerializationException) {
+            handleRefreshFailure(e)
         }
     }
 
+    private suspend fun handleRefreshFailure(exception: Throwable): Result<String> {
+        Timber.w(exception, LOG_REFRESH_FAILED)
+        authStateManager.onLogout()
+        return Result.failure(exception.toAppError())
+    }
+
     private suspend fun tryCreateSession(token: String) {
-        try {
-            authApi.createSession("Bearer $token")
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-            Timber.w(e, "Session creation failed, continuing with valid token")
+        runCatching { authApi.createSession("Bearer $token") }
+            .onFailure { logApiWarning(it, LOG_SESSION_CREATION_FAILED) }
+    }
+
+    private fun logApiWarning(throwable: Throwable, message: String) {
+        Timber.w(throwable, message)
+    }
+
+    private suspend inline fun runAuthCall(crossinline block: suspend () -> Result<Unit>): Result<Unit> {
+        return try {
+            block()
+        } catch (e: HttpException) {
+            Result.failure(e.toAppError())
+        } catch (e: IOException) {
+            Result.failure(e.toAppError())
+        } catch (e: SerializationException) {
+            Result.failure(e.toAppError())
         }
     }
 
     companion object {
         private const val EMPTY_TOKEN_MESSAGE = "Empty token received"
+        private const val LOG_DESTROY_SESSION_FAILED =
+            "Failed to destroy session on server, proceeding with local logout"
+        private const val LOG_REFRESH_FAILED = "Token refresh failed, clearing auth state"
+        private const val LOG_SESSION_CREATION_FAILED =
+            "Session creation failed, continuing with valid token"
     }
 }

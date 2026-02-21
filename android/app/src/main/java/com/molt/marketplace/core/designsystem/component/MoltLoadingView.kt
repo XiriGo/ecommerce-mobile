@@ -20,7 +20,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltLoadingView(modifier: Modifier = Modifier) {
     val loadingDescription = stringResource(R.string.common_loading_message)
 
@@ -38,7 +37,6 @@ fun MoltLoadingView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltLoadingIndicator(modifier: Modifier = Modifier) {
     val loadingDescription = stringResource(R.string.common_loading_message)
 
@@ -60,7 +58,6 @@ fun MoltLoadingIndicator(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltLoadingViewPreview() {
     MoltTheme {
         MoltLoadingView()
@@ -69,7 +66,6 @@ private fun MoltLoadingViewPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltLoadingIndicatorPreview() {
     MoltTheme {
         MoltLoadingIndicator()

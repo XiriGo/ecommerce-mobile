@@ -1,5 +1,3 @@
-@file:Suppress("MatchingDeclarationName")
-
 package com.molt.marketplace.core.designsystem.component
 
 import androidx.compose.material.icons.Icons
@@ -17,22 +15,11 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
-@Stable
-data class MoltTabItem(
-    val label: String,
-    val icon: ImageVector,
-    val selectedIcon: ImageVector,
-    val badgeCount: Int? = null,
-)
-
 @Composable
-@Suppress("ktlint:standard:function-naming", "CognitiveComplexMethod")
 fun MoltBottomBar(
     items: List<MoltTabItem>,
     selectedIndex: Int,
@@ -41,38 +28,12 @@ fun MoltBottomBar(
 ) {
     NavigationBar(modifier = modifier) {
         items.forEachIndexed { index, item ->
+            val isSelected = selectedIndex == index
             NavigationBarItem(
-                selected = selectedIndex == index,
+                selected = isSelected,
                 onClick = { onTabSelected(index) },
                 icon = {
-                    val icon = if (selectedIndex == index) item.selectedIcon else item.icon
-
-                    if (item.badgeCount != null && item.badgeCount > 0) {
-                        BadgedBox(
-                            badge = {
-                                Badge {
-                                    Text(
-                                        text = if (item.badgeCount >= 100) {
-                                            "99+"
-                                        } else {
-                                            item.badgeCount.toString()
-                                        },
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                }
-                            },
-                        ) {
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = item.label,
-                            )
-                        }
-                    } else {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = item.label,
-                        )
-                    }
+                    BottomBarItemIcon(item = item, isSelected = isSelected)
                 },
                 label = { Text(text = item.label) },
             )
@@ -80,9 +41,34 @@ fun MoltBottomBar(
     }
 }
 
+@Composable
+private fun BottomBarItemIcon(item: MoltTabItem, isSelected: Boolean) {
+    val icon = if (isSelected) item.selectedIcon else item.icon
+    val badgeCount = item.badgeCount
+
+    if (badgeCount != null && badgeCount > 0) {
+        BadgedBox(
+            badge = { BottomBarBadge(count = badgeCount) },
+        ) {
+            Icon(imageVector = icon, contentDescription = item.label)
+        }
+    } else {
+        Icon(imageVector = icon, contentDescription = item.label)
+    }
+}
+
+@Composable
+private fun BottomBarBadge(count: Int) {
+    Badge {
+        Text(
+            text = if (count >= 100) "99+" else count.toString(),
+            style = MaterialTheme.typography.labelSmall,
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltBottomBarPreview() {
     MoltTheme {
         MoltBottomBar(
@@ -112,7 +98,6 @@ private fun MoltBottomBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltBottomBarCartSelectedPreview() {
     MoltTheme {
         MoltBottomBar(

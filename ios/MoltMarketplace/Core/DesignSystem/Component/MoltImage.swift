@@ -50,6 +50,7 @@ struct MoltImage: View {
                 Image(systemName: "photo")
                     .font(.system(size: MoltSpacing.IconSize.large))
                     .foregroundStyle(MoltColors.onSurfaceVariant.opacity(0.5))
+                    .accessibilityHidden(true)
             }
     }
 }

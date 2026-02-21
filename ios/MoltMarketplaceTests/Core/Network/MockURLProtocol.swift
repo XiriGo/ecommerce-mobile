@@ -18,18 +18,18 @@ final class MockURLProtocol: URLProtocol, @unchecked Sendable {
     /// Tracks all intercepted requests for assertion in tests.
     nonisolated(unsafe) static var capturedRequests: [URLRequest] = []
 
-    override class func canInit(with request: URLRequest) -> Bool {
+    override static func canInit(with request: URLRequest) -> Bool {
         true
     }
 
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+    override static func canonicalRequest(for request: URLRequest) -> URLRequest {
         request
     }
 
     override func startLoading() {
-        MockURLProtocol.capturedRequests.append(request)
+        Self.capturedRequests.append(request)
 
-        guard let handler = MockURLProtocol.requestHandler else {
+        guard let handler = Self.requestHandler else {
             client?.urlProtocol(self, didFailWithError: URLError(.unknown))
             return
         }
@@ -56,11 +56,15 @@ extension MockURLProtocol {
         capturedRequests = []
     }
 
+    /// Default fallback URL used when no URL is provided to `stub(statusCode:json:url:)`.
+    private static let defaultStubURL = URL(string: "https://test.example.com")
+
     /// Configures the handler to return a successful JSON response with the given status code.
-    // swiftlint:disable:next force_unwrapping
-    static func stub(statusCode: Int, json: String, url: URL = URL(string: "https://test.example.com")!) {
+    static func stub(statusCode: Int, json: String, url: URL? = nil) {
         requestHandler = { request in
-            let responseURL = request.url ?? url
+            guard let responseURL = request.url ?? url ?? defaultStubURL else {
+                throw URLError(.unknown)
+            }
             guard let response = HTTPURLResponse(
                 url: responseURL,
                 statusCode: statusCode,
@@ -87,10 +91,26 @@ extension MockURLProtocol {
 // MARK: - APIClient + Test Session Factory
 
 extension APIClient {
+    /// Server error status codes used in test retry policies.
+    private static let httpInternalServerError = 500
+    private static let httpBadGateway = 502
+    private static let httpServiceUnavailable = 503
+    private static let httpGatewayTimeout = 504
+    private static let testRetryableStatusCodes: Set<Int> = [
+        httpInternalServerError, httpBadGateway, httpServiceUnavailable, httpGatewayTimeout,
+    ]
+
+    /// Default base URL for test clients.
+    private static let testBaseURL: URL = {
+        guard let url = URL(string: "https://api-test.molt.mt") else {
+            fatalError("Invalid test base URL constant — this is a programming error in test infrastructure.")
+        }
+        return url
+    }()
+
     /// Creates an APIClient configured to use MockURLProtocol for intercepting requests.
     static func makeTestClient(
-        // swiftlint:disable:next force_unwrapping
-        baseURL: URL = URL(string: "https://api-test.molt.mt")!,
+        baseURL: URL? = nil,
         tokenProvider: any TokenProvider = NoOpTokenProvider(),
         retryPolicy: RetryPolicy = RetryPolicy(
             maxRetries: 0,
@@ -98,15 +118,16 @@ extension APIClient {
             backoffMultiplier: 1,
             maxDelay: 0,
             jitterFactor: 0,
-            retryableStatusCodes: [500, 502, 503, 504]
+            retryableStatusCodes: testRetryableStatusCodes
         ),
         publishableApiKey: String? = nil
     ) -> APIClient {
+        let resolvedBaseURL = baseURL ?? testBaseURL
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         let session = URLSession(configuration: config)
         return APIClient(
-            baseURL: baseURL,
+            baseURL: resolvedBaseURL,
             session: session,
             tokenProvider: tokenProvider,
             retryPolicy: retryPolicy,

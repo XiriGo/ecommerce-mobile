@@ -27,7 +27,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming", "CognitiveComplexMethod")
 fun MoltRatingBar(
     rating: Float,
     modifier: Modifier = Modifier,
@@ -48,35 +47,9 @@ fun MoltRatingBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(MoltSpacing.XXS),
     ) {
-        for (i in 1..maxRating) {
-            val icon = when {
-                rating >= i.toFloat() -> Icons.Filled.Star
-                rating >= i.toFloat() - 0.5f -> Icons.AutoMirrored.Filled.StarHalf
-                else -> Icons.Outlined.StarOutline
-            }
+        RatingStars(rating = rating, maxRating = maxRating, starSize = starSize)
 
-            val tint = if (rating >= i.toFloat() - 0.5f) {
-                MoltColors.RatingStarFilled
-            } else {
-                MoltColors.RatingStarEmpty
-            }
-
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(starSize),
-                tint = tint,
-            )
-        }
-
-        if (showValue) {
-            Spacer(modifier = Modifier.width(MoltSpacing.XS))
-            Text(
-                text = String.format(java.util.Locale.ROOT, "%.1f", rating),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        RatingValueText(rating = rating, showValue = showValue)
 
         if (reviewCount != null) {
             Text(
@@ -88,9 +61,48 @@ fun MoltRatingBar(
     }
 }
 
+@Composable
+private fun RatingStars(
+    rating: Float,
+    maxRating: Int,
+    starSize: Dp,
+) {
+    for (i in 1..maxRating) {
+        val icon = when {
+            rating >= i.toFloat() -> Icons.Filled.Star
+            rating >= i.toFloat() - 0.5f -> Icons.AutoMirrored.Filled.StarHalf
+            else -> Icons.Outlined.StarOutline
+        }
+
+        val tint = if (rating >= i.toFloat() - 0.5f) {
+            MoltColors.RatingStarFilled
+        } else {
+            MoltColors.RatingStarEmpty
+        }
+
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(starSize),
+            tint = tint,
+        )
+    }
+}
+
+@Composable
+private fun RatingValueText(rating: Float, showValue: Boolean) {
+    if (showValue) {
+        Spacer(modifier = Modifier.width(MoltSpacing.XS))
+        Text(
+            text = String.format(java.util.Locale.ROOT, "%.1f", rating),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltRatingBarPreview() {
     MoltTheme {
         MoltRatingBar(rating = 4.5f, showValue = true, reviewCount = 123)
@@ -99,7 +111,6 @@ private fun MoltRatingBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltRatingBarLowPreview() {
     MoltTheme {
         MoltRatingBar(rating = 2.0f)
@@ -108,7 +119,6 @@ private fun MoltRatingBarLowPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltRatingBarFullPreview() {
     MoltTheme {
         MoltRatingBar(rating = 5.0f, showValue = true)

@@ -6,6 +6,11 @@ import os
 // MARK: - RequestLogger
 
 enum RequestLogger {
+    // MARK: - Constants
+
+    private static let millisPerSecond = 1000
+    private static let httpSuccessRange = 200 ... 299
+
     // MARK: - Internal
 
     static func logRequest(_ request: URLRequest) {
@@ -25,9 +30,9 @@ enum RequestLogger {
         let url = response.url?.absoluteString ?? "nil"
         let statusCode = response.statusCode
         let bodySize = data.count
-        let durationMs = Int(duration * 1000)
+        let durationMs = Int(duration * Double(millisPerSecond))
 
-        if (200 ... 299).contains(statusCode) {
+        if httpSuccessRange.contains(statusCode) {
             logger.info("<--- \(statusCode) \(url) (\(durationMs)ms, \(bodySize) bytes)")
         } else {
             logger.error("<--- \(statusCode) \(url) (\(durationMs)ms, \(bodySize) bytes)")

@@ -30,7 +30,7 @@ struct MoltButton: View {
         isEnabled: Bool = true,
         isLoading: Bool = false,
         leadingIcon: String? = nil,
-        fullWidth: Bool? = nil,
+        fullWidth: Bool = true,
         action: @escaping () -> Void
     ) {
         self.title = title
@@ -39,7 +39,7 @@ struct MoltButton: View {
         self.isEnabled = isEnabled
         self.isLoading = isLoading
         self.leadingIcon = leadingIcon
-        self.fullWidth = fullWidth ?? (variant != .text)
+        self.fullWidth = fullWidth
     }
 
     // MARK: - Body
@@ -73,6 +73,7 @@ struct MoltButton: View {
             if let leadingIcon, !isLoading {
                 Image(systemName: leadingIcon)
                     .font(.system(size: MoltSpacing.IconSize.medium))
+                    .accessibilityHidden(true)
             }
             Text(title)
                 .font(MoltTypography.labelLarge)
@@ -86,6 +87,7 @@ struct MoltButton: View {
         switch variant {
         case .primary:
             return MoltColors.onPrimary
+
         case .secondary, .outlined, .text:
             return MoltColors.primary
         }
@@ -112,6 +114,7 @@ private struct MoltButtonStyleModifier: ButtonStyle {
         switch variant {
         case .primary:
             return MoltColors.onPrimary
+
         case .secondary, .outlined, .text:
             return MoltColors.primary
         }
@@ -123,9 +126,11 @@ private struct MoltButtonStyleModifier: ButtonStyle {
         case .primary:
             RoundedRectangle(cornerRadius: MoltCornerRadius.full)
                 .fill(MoltColors.primary)
+
         case .secondary:
             RoundedRectangle(cornerRadius: MoltCornerRadius.full)
                 .fill(MoltColors.secondaryContainer)
+
         case .outlined, .text:
             Color.clear
         }
@@ -137,6 +142,7 @@ private struct MoltButtonStyleModifier: ButtonStyle {
         case .outlined:
             RoundedRectangle(cornerRadius: MoltCornerRadius.full)
                 .stroke(MoltColors.outline, lineWidth: 1)
+
         case .primary, .secondary, .text:
             EmptyView()
         }

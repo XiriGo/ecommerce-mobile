@@ -35,7 +35,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming", "CognitiveComplexMethod")
 fun MoltProductCard(
     imageUrl: String?,
     title: String,
@@ -57,83 +56,121 @@ fun MoltProductCard(
         elevation = CardDefaults.cardElevation(defaultElevation = MoltElevation.Level1),
     ) {
         Column {
-            Box {
-                MoltImage(
-                    url = imageUrl,
-                    contentDescription = title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                )
+            ProductCardImageSection(
+                imageUrl = imageUrl,
+                title = title,
+                isWishlisted = isWishlisted,
+                onWishlistToggle = onWishlistToggle,
+            )
 
-                if (onWishlistToggle != null) {
-                    val wishlistDescription = if (isWishlisted) {
-                        stringResource(R.string.common_remove_from_wishlist)
-                    } else {
-                        stringResource(R.string.common_add_to_wishlist)
-                    }
-
-                    IconButton(
-                        onClick = onWishlistToggle,
-                        modifier = Modifier.align(Alignment.TopEnd),
-                    ) {
-                        Icon(
-                            imageVector = if (isWishlisted) {
-                                Icons.Filled.Favorite
-                            } else {
-                                Icons.Outlined.FavoriteBorder
-                            },
-                            contentDescription = wishlistDescription,
-                            tint = if (isWishlisted) {
-                                MaterialTheme.colorScheme.error
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            },
-                        )
-                    }
-                }
-            }
-
-            Column(modifier = Modifier.padding(MoltSpacing.CardPadding)) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
-
-                if (vendorName != null) {
-                    Spacer(modifier = Modifier.height(MoltSpacing.XS))
-                    Text(
-                        text = vendorName,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(MoltSpacing.XS))
-                MoltPriceText(
-                    price = price,
-                    originalPrice = originalPrice,
-                )
-
-                if (rating != null) {
-                    Spacer(modifier = Modifier.height(MoltSpacing.XS))
-                    MoltRatingBar(
-                        rating = rating,
-                        showValue = true,
-                        reviewCount = reviewCount,
-                    )
-                }
-            }
+            ProductCardDetailsSection(
+                title = title,
+                price = price,
+                originalPrice = originalPrice,
+                vendorName = vendorName,
+                rating = rating,
+                reviewCount = reviewCount,
+            )
         }
     }
 }
 
 @Composable
-@Suppress("ktlint:standard:function-naming", "CognitiveComplexMethod")
+private fun ProductCardImageSection(
+    imageUrl: String?,
+    title: String,
+    isWishlisted: Boolean,
+    onWishlistToggle: (() -> Unit)?,
+) {
+    Box {
+        MoltImage(
+            url = imageUrl,
+            contentDescription = title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16f / 9f),
+        )
+
+        if (onWishlistToggle != null) {
+            WishlistButton(
+                isWishlisted = isWishlisted,
+                onToggle = onWishlistToggle,
+                modifier = Modifier.align(Alignment.TopEnd),
+            )
+        }
+    }
+}
+
+@Composable
+private fun WishlistButton(
+    isWishlisted: Boolean,
+    onToggle: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val wishlistDescription = if (isWishlisted) {
+        stringResource(R.string.common_remove_from_wishlist)
+    } else {
+        stringResource(R.string.common_add_to_wishlist)
+    }
+
+    val icon = if (isWishlisted) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+    val tint = if (isWishlisted) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+
+    IconButton(onClick = onToggle, modifier = modifier) {
+        Icon(
+            imageVector = icon,
+            contentDescription = wishlistDescription,
+            tint = tint,
+        )
+    }
+}
+
+@Composable
+private fun ProductCardDetailsSection(
+    title: String,
+    price: String,
+    originalPrice: String?,
+    vendorName: String?,
+    rating: Float?,
+    reviewCount: Int?,
+) {
+    Column(modifier = Modifier.padding(MoltSpacing.CardPadding)) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        if (vendorName != null) {
+            Spacer(modifier = Modifier.height(MoltSpacing.XS))
+            Text(
+                text = vendorName,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+
+        Spacer(modifier = Modifier.height(MoltSpacing.XS))
+        MoltPriceText(
+            price = price,
+            originalPrice = originalPrice,
+        )
+
+        if (rating != null) {
+            Spacer(modifier = Modifier.height(MoltSpacing.XS))
+            MoltRatingBar(
+                rating = rating,
+                showValue = true,
+                reviewCount = reviewCount,
+            )
+        }
+    }
+}
+
+@Composable
 fun MoltInfoCard(
     title: String,
     modifier: Modifier = Modifier,
@@ -142,56 +179,70 @@ fun MoltInfoCard(
     trailingContent: @Composable (() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
+    val clickModifier = if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .then(
-                if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier,
-            ),
+            .then(clickModifier),
         shape = RoundedCornerShape(MoltCornerRadius.Medium),
         elevation = CardDefaults.cardElevation(defaultElevation = MoltElevation.Level1),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MoltSpacing.CardPadding),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(MoltSpacing.MD),
-        ) {
-            if (leadingIcon != null) {
-                Icon(
-                    imageVector = leadingIcon,
-                    contentDescription = null,
-                    modifier = Modifier.size(MoltSpacing.LG),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+        InfoCardContent(
+            title = title,
+            subtitle = subtitle,
+            leadingIcon = leadingIcon,
+            trailingContent = trailingContent,
+        )
+    }
+}
 
-            Column(modifier = Modifier.weight(1f)) {
+@Composable
+private fun InfoCardContent(
+    title: String,
+    subtitle: String?,
+    leadingIcon: ImageVector?,
+    trailingContent: @Composable (() -> Unit)?,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(MoltSpacing.CardPadding),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(MoltSpacing.MD),
+    ) {
+        if (leadingIcon != null) {
+            Icon(
+                imageVector = leadingIcon,
+                contentDescription = null,
+                modifier = Modifier.size(MoltSpacing.LG),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+            )
+            if (subtitle != null) {
+                Spacer(modifier = Modifier.height(MoltSpacing.XS))
                 Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                if (subtitle != null) {
-                    Spacer(modifier = Modifier.height(MoltSpacing.XS))
-                    Text(
-                        text = subtitle,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
             }
+        }
 
-            if (trailingContent != null) {
-                trailingContent()
-            }
+        if (trailingContent != null) {
+            trailingContent()
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltProductCardPreview() {
     MoltTheme {
         MoltProductCard(
@@ -211,7 +262,6 @@ private fun MoltProductCardPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltProductCardWishlistedPreview() {
     MoltTheme {
         MoltProductCard(
@@ -227,7 +277,6 @@ private fun MoltProductCardWishlistedPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltInfoCardPreview() {
     MoltTheme {
         MoltInfoCard(

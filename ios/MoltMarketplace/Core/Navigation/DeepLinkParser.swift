@@ -15,8 +15,10 @@ enum DeepLinkParser {
         switch scheme {
         case "molt":
             return parseMoltScheme(host: host, pathComponents: pathComponents(from: url))
+
         case "https" where host == "molt.mt":
             return parseUniversalLink(pathComponents: pathComponents(from: url))
+
         default:
             return nil
         }
@@ -32,14 +34,19 @@ enum DeepLinkParser {
         switch host {
         case "product":
             return parseProductRoute(pathComponents: pathComponents)
+
         case "category":
             return parseCategoryRoute(pathComponents: pathComponents)
+
         case "cart":
             return .cart
+
         case "order":
             return parseOrderRoute(pathComponents: pathComponents)
+
         case "profile":
             return .profile
+
         default:
             return nil
         }
@@ -51,8 +58,10 @@ enum DeepLinkParser {
         switch first {
         case "product":
             return parseProductRoute(pathComponents: Array(pathComponents.dropFirst()))
+
         case "category":
             return parseCategoryRoute(pathComponents: Array(pathComponents.dropFirst()))
+
         default:
             return nil
         }

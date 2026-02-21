@@ -9,10 +9,16 @@ import Testing
 struct SessionManagerTests {
     // MARK: - Helpers
 
+    private struct ManagerFixture {
+        let manager: SessionManager
+        let storage: FakeTokenStorage
+        let authManager: AuthStateManagerImpl
+    }
+
     private func makeManager(
         storage: FakeTokenStorage = FakeTokenStorage(),
         authManager: AuthStateManagerImpl? = nil
-    ) -> (SessionManager, FakeTokenStorage, AuthStateManagerImpl) {
+    ) -> ManagerFixture {
         let fakeStorage = storage
         let fakeAuthManager = authManager ?? AuthStateManagerImpl(tokenStorage: fakeStorage)
         let client = APIClient.makeTestClient()
@@ -21,7 +27,7 @@ struct SessionManagerTests {
             tokenStorage: fakeStorage,
             authStateManager: fakeAuthManager
         )
-        return (manager, fakeStorage, fakeAuthManager)
+        return ManagerFixture(manager: manager, storage: fakeStorage, authManager: fakeAuthManager)
     }
 
     // MARK: - login success
@@ -52,7 +58,10 @@ struct SessionManagerTests {
         }
 
         let storage = FakeTokenStorage()
-        let (manager, fakeStorage, fakeAuthManager) = makeManager(storage: storage)
+        let fixture = makeManager(storage: storage)
+        let manager = fixture.manager
+        let fakeStorage = fixture.storage
+        let fakeAuthManager = fixture.authManager
 
         try await manager.login(email: "user@example.com", password: "Password1!")
 
@@ -66,7 +75,10 @@ struct SessionManagerTests {
         MockURLProtocol.stub(statusCode: 401, json: #"{"type":"unauthorized","message":"Invalid email or password"}"#)
 
         let storage = FakeTokenStorage()
-        let (manager, fakeStorage, fakeAuthManager) = makeManager(storage: storage)
+        let fixture = makeManager(storage: storage)
+        let manager = fixture.manager
+        let fakeStorage = fixture.storage
+        let fakeAuthManager = fixture.authManager
 
         await #expect(throws: (any Error).self) {
             try await manager.login(email: "bad@example.com", password: "wrong")
@@ -81,14 +93,14 @@ struct SessionManagerTests {
         MockURLProtocol.reset()
         MockURLProtocol.stubNetworkError(.notConnectedToInternet)
 
-        let (manager, fakeStorage, fakeAuthManager) = makeManager()
+        let fixture = makeManager()
 
         await #expect(throws: (any Error).self) {
-            try await manager.login(email: "user@example.com", password: "Password1!")
+            try await fixture.manager.login(email: "user@example.com", password: "Password1!")
         }
 
-        #expect(fakeStorage.storedToken == nil)
-        #expect(fakeAuthManager.authState == .loading)
+        #expect(fixture.storage.storedToken == nil)
+        #expect(fixture.authManager.authState == .loading)
     }
 
     // MARK: - register success
@@ -117,7 +129,10 @@ struct SessionManagerTests {
         }
 
         let storage = FakeTokenStorage()
-        let (manager, fakeStorage, fakeAuthManager) = makeManager(storage: storage)
+        let fixture = makeManager(storage: storage)
+        let manager = fixture.manager
+        let fakeStorage = fixture.storage
+        let fakeAuthManager = fixture.authManager
 
         try await manager.register(email: "new@example.com", password: "Password1!")
 
@@ -133,14 +148,14 @@ struct SessionManagerTests {
             json: #"{"type":"duplicate","message":"Email already registered"}"#
         )
 
-        let (manager, fakeStorage, fakeAuthManager) = makeManager()
+        let fixture = makeManager()
 
         await #expect(throws: (any Error).self) {
-            try await manager.register(email: "existing@example.com", password: "Password1!")
+            try await fixture.manager.register(email: "existing@example.com", password: "Password1!")
         }
 
-        #expect(fakeStorage.storedToken == nil)
-        #expect(fakeAuthManager.authState == .loading)
+        #expect(fixture.storage.storedToken == nil)
+        #expect(fixture.authManager.authState == .loading)
     }
 
     // MARK: - logout
@@ -261,7 +276,7 @@ struct SessionManagerTests {
         )
 
         await #expect(throws: (any Error).self) {
-            let _ = try await manager.refreshToken()
+            _ = try await manager.refreshToken()
         }
     }
 
@@ -272,7 +287,7 @@ struct SessionManagerTests {
         MockURLProtocol.reset()
         let storage = FakeTokenStorage()
         storage.storedToken = "provider_token"
-        let (manager, _, _) = makeManager(storage: storage)
+        let manager = makeManager(storage: storage).manager
 
         let token = await manager.getAccessToken()
 
@@ -282,7 +297,7 @@ struct SessionManagerTests {
     @Test("getAccessToken returns nil when storage is empty")
     func test_getAccessToken_emptyStorage_returnsNil() async {
         MockURLProtocol.reset()
-        let (manager, _, _) = makeManager()
+        let manager = makeManager().manager
 
         let token = await manager.getAccessToken()
 
@@ -294,7 +309,10 @@ struct SessionManagerTests {
         MockURLProtocol.reset()
         let storage = FakeTokenStorage()
         storage.storedToken = "some_token"
-        let (manager, fakeStorage, fakeAuthManager) = makeManager(storage: storage)
+        let fixture = makeManager(storage: storage)
+        let manager = fixture.manager
+        let fakeStorage = fixture.storage
+        let fakeAuthManager = fixture.authManager
         fakeAuthManager.onLoginSuccess(token: "some_token")
 
         await manager.clearTokens()

@@ -1,4 +1,3 @@
-// swiftlint:disable no_magic_numbers
 import SwiftUI
 
 enum MoltTypography {
@@ -32,5 +31,3 @@ enum MoltTypography {
     static let labelMedium = Font.system(size: 12, weight: .medium)
     static let labelSmall = Font.system(size: 11, weight: .medium)
 }
-
-// swiftlint:enable no_magic_numbers

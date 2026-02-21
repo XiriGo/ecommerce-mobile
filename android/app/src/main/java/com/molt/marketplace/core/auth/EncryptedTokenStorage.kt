@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import java.io.IOException
+import java.security.GeneralSecurityException
 import java.util.Base64
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +35,11 @@ class EncryptedTokenStorage @Inject constructor(
             val preferences = dataStore.data.first()
             val encrypted = preferences[KEY_ACCESS_TOKEN] ?: return null
             decrypt(encrypted)
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: GeneralSecurityException) {
+            Timber.w(e, "Failed to read access token, clearing corrupted data")
+            clearTokens()
+            null
+        } catch (e: IOException) {
             Timber.w(e, "Failed to read access token, clearing corrupted data")
             clearTokens()
             null
@@ -53,16 +59,22 @@ class EncryptedTokenStorage @Inject constructor(
         }
     }
 
-    @Suppress("LabeledExpression")
     override fun getAccessTokenFlow(): Flow<String?> {
         return dataStore.data.map { preferences ->
-            val encrypted = preferences[KEY_ACCESS_TOKEN] ?: return@map null
-            try {
-                decrypt(encrypted)
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-                Timber.w(e, "Failed to decrypt token in flow")
-                null
-            }
+            decryptTokenFromPreferences(preferences)
+        }
+    }
+
+    private fun decryptTokenFromPreferences(preferences: Preferences): String? {
+        val encrypted = preferences[KEY_ACCESS_TOKEN] ?: return null
+        return try {
+            decrypt(encrypted)
+        } catch (e: GeneralSecurityException) {
+            Timber.w(e, "Failed to decrypt token in flow")
+            null
+        } catch (e: IOException) {
+            Timber.w(e, "Failed to decrypt token in flow")
+            null
         }
     }
 

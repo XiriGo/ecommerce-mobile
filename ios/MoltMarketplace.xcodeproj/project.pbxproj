@@ -3,13 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DAE5226513946F286E70123 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EC56D824D44FE9E4E9368 /* HomeScreen.swift */; };
+		A2547D02723D437298BA6A40 /* CategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76428925739A40D29D35341A /* CategoriesScreen.swift */; };
+		54B024E131CE42FD9EEF313B /* CartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881A39379E8D4EFFA31DF607 /* CartScreen.swift */; };
+		F6F57874FC2E463DBD682114 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3213F33824D4DDBB9CF9C3E /* ProfileScreen.swift */; };
 		00FE8AEFC902F508A1B38F44 /* KeychainTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD5AE3B5B22FE7BDCC9355 /* KeychainTokenStorage.swift */; };
 		047C511E2FB9F1D9B6E547C1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 52EEBFC5650EA0ACAEE1933E /* Factory */; };
 		04E47E886CF0913CC0092A4A /* Container+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FC0B0006CC55F1ED21057 /* Container+Extensions.swift */; };
+		0AC10E2DBA6FE0AA2473E48C /* RouteAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897DE25ED094FD1F53CD9A6A /* RouteAuthTests.swift */; };
 		0D935FC51E1349997ECD01F7 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2AD1491562F49BB0E8F1C /* Tab.swift */; };
 		1008984D38E1A6167D499739 /* AuthEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563445AE805BEC63BD044BBF /* AuthEndpointTests.swift */; };
 		104E4EBBB9C3700F057B830C /* SessionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD0DE0021AEB2D4F437068D /* SessionManagerTests.swift */; };
@@ -33,7 +38,6 @@
 		41E203CA4ACD4858D18CC8FF /* MoltQuantityStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FE966B7E62C3FB20DE71F7 /* MoltQuantityStepper.swift */; };
 		425A79AD53D18471E2196DE7 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AE4565B462B9953D80DBFAED /* KeychainAccess */; };
 		428F9C423EE8639C27039849 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5796C24228555A16CCF6A61D /* FirebaseAnalytics */; };
-		42F1F5A39638F2088598A5BD /* AppRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B95A18B4A39BDDCB96B73 /* AppRouterTests.swift */; };
 		43C1A9A65312CF95DF058800 /* RetryPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C4AD2AAC913FBA29659E7 /* RetryPolicyTests.swift */; };
 		43D0EAAAC64517E6E5308593 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E8358851E4935F41B0CE9 /* TokenStorage.swift */; };
 		44A83862A0AB8C421F64A2F5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14FF9BF5CCFE0D100A0DE9 /* RouteView.swift */; };
@@ -42,13 +46,14 @@
 		491A67A113A795EC7360082A /* TokenStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885B95127ABEED04970C71FC /* TokenStorageTests.swift */; };
 		4A7587D524FBE198EC211BB7 /* MoltImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C9F64D1759C903FF4B2A8C /* MoltImage.swift */; };
 		4B7AC2C5D8BF34749EE9C617 /* MoltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */; };
+		4D1D4F6C3AE148B18CD56DCE /* APIClientAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24417FE03095A9796E9ADE6 /* APIClientAuthTests.swift */; };
 		4E52E9ABD5FFCE40DBBB07C7 /* MoltTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDF5E770AED65686426372F /* MoltTheme.swift */; };
 		4F632579BFCBA8831B27126D /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 87D0C63AC8B95476F9595855 /* SnapshotTesting */; };
 		51BE439B9FE855372DA3A893 /* NetworkMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A9DCBCB529FD0C63945D /* NetworkMonitorTests.swift */; };
 		528378B619B9F7144EAEF54B /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFBEC4AA37D04F36E6BC60F /* DeepLinkParser.swift */; };
+		552C13056EF633B467DA4EB4 /* APIClientRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8E5ABCA13A0028076B8EBB /* APIClientRequestTests.swift */; };
 		55C27CE10C9D6E150CFA4216 /* AuthStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5660DADA3C0F9D3C43E0144 /* AuthStateManager.swift */; };
 		5644A9BF0B1ED1A7CAECE0EE /* PaginatedResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479AEDFBC00D6216FC901B13 /* PaginatedResponseTests.swift */; };
-		5B4CB99D1B90BEA9D49DF748 /* RouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13A3AD801FECBB3EC5A18A /* RouteTests.swift */; };
 		5DF52A98F821A4E4871C458C /* BiometricTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7D7F30449E832BB4D0EAB0 /* BiometricTokenStorage.swift */; };
 		5F343A095F070928509833A3 /* MedusaErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA30517DCE0975BCA83996 /* MedusaErrorDTO.swift */; };
 		5F70D64EE628C39FA1CB03E6 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9773618D07782D6051910CDC /* LoginRequest.swift */; };
@@ -61,7 +66,9 @@
 		6FCEEF7829DDA5077C0AAC5F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE56AEBE23D35F939C0381D /* Route.swift */; };
 		70C48DF7342D24660EE62817 /* MoltEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADFD046F30F0866B8E5AB2 /* MoltEmptyView.swift */; };
 		746099AF4C0A37501C47EC83 /* MoltCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9107164CF634CAD51DCFAEB8 /* MoltCard.swift */; };
+		752DB3CAFB4D85EFA505E559 /* RoutePropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC4921A460584155B066BB4 /* RoutePropertyTests.swift */; };
 		784BD787975D5504D7D07F51 /* MoltTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A96599B81199BB8A97284E /* MoltTabBar.swift */; };
+		7CBC272BC38D7D384FC87A51 /* AppRouterDeepLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E03D67F210A11F42FF4DBD /* AppRouterDeepLinkTests.swift */; };
 		7D9396D564F07A9852AD29BC /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC49E96766C937B3790D264 /* PaginatedResponse.swift */; };
 		7F0C8DFD1A26CDE7D4C2E82F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5AED23F7F0320BADB15E55 /* FirebaseRemoteConfig */; };
 		8BD1BEE7E7126D835ED5D823 /* TokenProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543CF40C5DE1CBDE6F95C3A0 /* TokenProviderTests.swift */; };
@@ -82,6 +89,7 @@
 		9BE529B71D95243C0429B683 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B080F5D5A8776DE6EE6CBCF4 /* RegisterRequest.swift */; };
 		A0CB992F7356717F00AC7766 /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8BAF091DC24C0728A66E76 /* AuthState.swift */; };
 		A2CA905DCE676FA4BC333C79 /* MoltChipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB89B4F158289374534389 /* MoltChipTests.swift */; };
+		AB8A6E6630AAC4B692C31E78 /* AppRouterNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F6BF223FC75C43FF40431B /* AppRouterNavigationTests.swift */; };
 		ADAC518F1B809EA3F9B0718C /* MoltQuantityStepperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21F3EEA62495CC62785AF1E /* MoltQuantityStepperTests.swift */; };
 		AFAA7AA79865A2114D52CEAA /* ArchitectureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499A44FD23D43F396771CCA /* ArchitectureTests.swift */; };
 		B062D06EFD23B216C7120C8F /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 33657EACEEEB375E5D5FA417 /* NukeUI */; };
@@ -109,6 +117,7 @@
 		DEF682F4A39F10F74044A7FA /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = FDB0E1E9B6E79B4520CFDD1E /* Nuke */; };
 		E0024DAE5E1DB5F86D9BF89F /* AuthMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD450106BE9402A0AE68DAD /* AuthMiddleware.swift */; };
 		E470B0A05D6A2F13FF378D42 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5A571095BA57CBE0B37F3C /* Endpoint.swift */; };
+		E5BD1ADC840E017006EC8C3F /* APIClientRetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F4AB1EF70635DA2582E4B /* APIClientRetryTests.swift */; };
 		E7A0B15ABD5B1911796137F4 /* MoltErrorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */; };
 		E85544B3690E2D3D3A68A442 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE92AD0FA3B02AED5D7789 /* Config.swift */; };
 		EA5F0D8ED3F7BDFA0ECD8EB6 /* MoltTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D76A077D41437F665B7043 /* MoltTextField.swift */; };
@@ -116,9 +125,9 @@
 		EB5C2F646E44747EC39B57AE /* AuthStateManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C04B6EEC622EFC28941A7C4 /* AuthStateManagerImpl.swift */; };
 		EC06EC9348341A91BC275CC9 /* MoltCornerRadiusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9D9EE3685E54EBA495A78 /* MoltCornerRadiusTests.swift */; };
 		F15E0A7AAD9B55CFEC7535B9 /* MoltBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */; };
+		F528989280188D39FC389C8F /* AppRouterStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F2A63DC7C376583279159 /* AppRouterStateTests.swift */; };
 		F546287CF92E4AE404B38BC1 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E098365BBBA105D187739634 /* AppError.swift */; };
 		F9B5AF7E3CD3698C5DB86D39 /* DeepLinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A394AB247A3AA5FFF29F0E0C /* DeepLinkParserTests.swift */; };
-		FC21CD2B17D7B718BAA825CC /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBE36492807ED88CC0BE787 /* APIClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +148,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF9EC56D824D44FE9E4E9368 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		76428925739A40D29D35341A /* CategoriesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesScreen.swift; sourceTree = "<group>"; };
+		881A39379E8D4EFFA31DF607 /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
+		B3213F33824D4DDBB9CF9C3E /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		000FD79168621E152706007D /* AuthStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManagerTests.swift; sourceTree = "<group>"; };
 		01C53F9C8E440F9DB251617F /* RetryPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicy.swift; sourceTree = "<group>"; };
 		033C2530E11CEC05274D49AF /* MoltColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColorsTests.swift; sourceTree = "<group>"; };
@@ -154,6 +167,7 @@
 		16C3E346871C401D5FCBB922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1851A2BF63B2E916E73B4F26 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		1AF5B6941EDBA5230672E481 /* MoltErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorView.swift; sourceTree = "<group>"; };
+		1E8E5ABCA13A0028076B8EBB /* APIClientRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientRequestTests.swift; sourceTree = "<group>"; };
 		1EC49E96766C937B3790D264 /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
 		1FF33FF33FB4EC6AEEB784EB /* EndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointTests.swift; sourceTree = "<group>"; };
 		207C3B26963E82E5C81E0939 /* MoltImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltImageTests.swift; sourceTree = "<group>"; };
@@ -170,13 +184,14 @@
 		3DD7442B1733300D6B890BEF /* MoltElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltElevation.swift; sourceTree = "<group>"; };
 		3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltBadge.swift; sourceTree = "<group>"; };
 		40BE92AD0FA3B02AED5D7789 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		417644A38F36C3BE6C3F9C13 /* MoltMarketplaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoltMarketplaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B2A9DCBCB529FD0C63945D /* NetworkMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorTests.swift; sourceTree = "<group>"; };
 		44924854D3F87C4767E134D1 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		4499A44FD23D43F396771CCA /* ArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchitectureTests.swift; sourceTree = "<group>"; };
 		45B8E02D1523211225AFBBBA /* AuthTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenResponse.swift; sourceTree = "<group>"; };
 		479AEDFBC00D6216FC901B13 /* PaginatedResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponseTests.swift; sourceTree = "<group>"; };
 		4C35827356B83FCB7EC6FABA /* MoltPriceTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceTextTests.swift; sourceTree = "<group>"; };
+		4CC4921A460584155B066BB4 /* RoutePropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePropertyTests.swift; sourceTree = "<group>"; };
 		4E761DC10EDDB98E6A4D7F32 /* MoltColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltColors.swift; sourceTree = "<group>"; };
 		51C80DCDC395782C28BB77B0 /* JSONCodersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodersTests.swift; sourceTree = "<group>"; };
 		52BB9D9C336DEFADA2BA1E85 /* MoltPriceText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltPriceText.swift; sourceTree = "<group>"; };
@@ -190,15 +205,18 @@
 		6BF515DA58CA50CD1CAEDA7B /* TokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProvider.swift; sourceTree = "<group>"; };
 		6E7D7F30449E832BB4D0EAB0 /* BiometricTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricTokenStorage.swift; sourceTree = "<group>"; };
 		6E8E05034D1CB26C2561668A /* MoltRatingBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltRatingBarTests.swift; sourceTree = "<group>"; };
-		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		72F6BF223FC75C43FF40431B /* AppRouterNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterNavigationTests.swift; sourceTree = "<group>"; };
+		77364795F411A949687B29A5 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		77AA30517DCE0975BCA83996 /* MedusaErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedusaErrorDTO.swift; sourceTree = "<group>"; };
 		7B8BAF091DC24C0728A66E76 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		81AEB5341BCB6D1683358830 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8367AC7D24C87D3EBFC40EDF /* MoltCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCardTests.swift; sourceTree = "<group>"; };
 		885B95127ABEED04970C71FC /* TokenStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorageTests.swift; sourceTree = "<group>"; };
+		897DE25ED094FD1F53CD9A6A /* RouteAuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAuthTests.swift; sourceTree = "<group>"; };
 		8B6744C548F4E1E7E28C8A40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DCC6743A28D836C9A7B29E3 /* MoltLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltLoadingView.swift; sourceTree = "<group>"; };
 		9107164CF634CAD51DCFAEB8 /* MoltCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCard.swift; sourceTree = "<group>"; };
+		92E03D67F210A11F42FF4DBD /* AppRouterDeepLinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterDeepLinkTests.swift; sourceTree = "<group>"; };
 		93D76A077D41437F665B7043 /* MoltTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTextField.swift; sourceTree = "<group>"; };
 		95CDDD52047E62B05944712B /* RequestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
 		9773618D07782D6051910CDC /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
@@ -206,18 +224,19 @@
 		9C34D805C5146584F882BFC7 /* MoltSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacingTests.swift; sourceTree = "<group>"; };
 		9C77B645178F56C7EFDDD50A /* MoltRatingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltRatingBar.swift; sourceTree = "<group>"; };
 		A0A7CBF7721EFCEEC4DE8BFF /* MoltTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTextFieldTests.swift; sourceTree = "<group>"; };
+		A24417FE03095A9796E9ADE6 /* APIClientAuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientAuthTests.swift; sourceTree = "<group>"; };
 		A394AB247A3AA5FFF29F0E0C /* DeepLinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTests.swift; sourceTree = "<group>"; };
-		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A46AEF10FAD31263E41A8F11 /* MoltMarketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoltMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A538F6391C8D6E894FCB25BB /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		ADE9D9EE3685E54EBA495A78 /* MoltCornerRadiusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltCornerRadiusTests.swift; sourceTree = "<group>"; };
 		AFF84CC2D9F865C565DDF340 /* MoltTabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBarTests.swift; sourceTree = "<group>"; };
-		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B050F57437DBFA131C516717 /* MoltMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoltMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B080F5D5A8776DE6EE6CBCF4 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		B2FE966B7E62C3FB20DE71F7 /* MoltQuantityStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltQuantityStepper.swift; sourceTree = "<group>"; };
 		B59405CAA4EE85C548DFA5BD /* MoltTopBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTopBarTests.swift; sourceTree = "<group>"; };
 		B5A5D6C64BBA1BED59A898F4 /* AuthEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndpoint.swift; sourceTree = "<group>"; };
 		B72C477B1CBC8BE84E7DA113 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		B840285206CE00CA50C8DF74 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		BE984110B4ED6B9FB1A7372E /* MoltButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltButton.swift; sourceTree = "<group>"; };
 		BFD3C59EFB0693C71AD7236D /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		C0FB89B4F158289374534389 /* MoltChipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltChipTests.swift; sourceTree = "<group>"; };
@@ -231,21 +250,20 @@
 		D09A0E1480A554F945A275BE /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorViewTests.swift; sourceTree = "<group>"; };
 		D4F2AD1491562F49BB0E8F1C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		D88B95A18B4A39BDDCB96B73 /* AppRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterTests.swift; sourceTree = "<group>"; };
+		D75F4AB1EF70635DA2582E4B /* APIClientRetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientRetryTests.swift; sourceTree = "<group>"; };
 		DE5A571095BA57CBE0B37F3C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E098365BBBA105D187739634 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		E5067E50478883745968CBB3 /* JSONCoders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoders.swift; sourceTree = "<group>"; };
 		E6ADFD046F30F0866B8E5AB2 /* MoltEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltEmptyView.swift; sourceTree = "<group>"; };
 		E84BF7AD098442A03975DB84 /* MedusaErrorDTOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedusaErrorDTOTests.swift; sourceTree = "<group>"; };
 		E8DCD97E9BEEF8B1A0C6FDF3 /* AuthMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMiddlewareTests.swift; sourceTree = "<group>"; };
-		EBBE36492807ED88CC0BE787 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		EEAC7A0F26FB78C4AAF027A3 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		EF14957D737C403D4C202BBF /* MoltTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTypography.swift; sourceTree = "<group>"; };
 		EF3C4AD2AAC913FBA29659E7 /* RetryPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicyTests.swift; sourceTree = "<group>"; };
 		F14C6DE3529B0014E7875A5B /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		F50F2A63DC7C376583279159 /* AppRouterStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterStateTests.swift; sourceTree = "<group>"; };
 		F5660DADA3C0F9D3C43E0144 /* AuthStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManager.swift; sourceTree = "<group>"; };
 		F9A96599B81199BB8A97284E /* MoltTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBar.swift; sourceTree = "<group>"; };
-		FA13A3AD801FECBB3EC5A18A /* RouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTests.swift; sourceTree = "<group>"; };
 		FA14FF9BF5CCFE0D100A0DE9 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacing.swift; sourceTree = "<group>"; };
 		FFE56AEBE23D35F939C0381D /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
@@ -508,7 +526,9 @@
 		C889AA9BCE3BCA75CDDE54CD /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EBBE36492807ED88CC0BE787 /* APIClientTests.swift */,
+				A24417FE03095A9796E9ADE6 /* APIClientAuthTests.swift */,
+				1E8E5ABCA13A0028076B8EBB /* APIClientRequestTests.swift */,
+				D75F4AB1EF70635DA2582E4B /* APIClientRetryTests.swift */,
 				2D0825B67FCF99B51F85B49F /* AppErrorTests.swift */,
 				E8DCD97E9BEEF8B1A0C6FDF3 /* AuthMiddlewareTests.swift */,
 				1FF33FF33FB4EC6AEEB784EB /* EndpointTests.swift */,
@@ -572,10 +592,13 @@
 		ECAB9977C258ECE7112A2333 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D88B95A18B4A39BDDCB96B73 /* AppRouterTests.swift */,
+				92E03D67F210A11F42FF4DBD /* AppRouterDeepLinkTests.swift */,
+				72F6BF223FC75C43FF40431B /* AppRouterNavigationTests.swift */,
+				F50F2A63DC7C376583279159 /* AppRouterStateTests.swift */,
 				A394AB247A3AA5FFF29F0E0C /* DeepLinkParserTests.swift */,
 				22E97CFB4756553EB57AB7E8 /* PlaceholderViewTests.swift */,
-				FA13A3AD801FECBB3EC5A18A /* RouteTests.swift */,
+				897DE25ED094FD1F53CD9A6A /* RouteAuthTests.swift */,
+				4CC4921A460584155B066BB4 /* RoutePropertyTests.swift */,
 				D0311F008B3C58A3E0A41D0E /* TabTests.swift */,
 			);
 			path = Navigation;
@@ -600,8 +623,117 @@
 				80209D7ED6963F50EE573551 /* Configuration */,
 				9D89E1E4F4C90BD75DA9A588 /* Core */,
 				48BA5F23D3179361D6DAF320 /* Resources */,
-			);
+			
+				20352170BB5C42D0AAF55350 /* Feature */,);
 			path = MoltMarketplace;
+			sourceTree = "<group>";
+		};
+
+		20352170BB5C42D0AAF55350 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				66D2869998BB4153BFC5C331 /* Home */,
+				7CF1622FDC764737AFAE1280 /* Categories */,
+				B7494CBF11C0457B9BD0F8FF /* Cart */,
+				7D9B469B6361464CB8F6F568 /* Profile */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		66D2869998BB4153BFC5C331 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				72539602279A4AFDBBDACABD /* Presentation */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		72539602279A4AFDBBDACABD /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D544BA83B71D49E6838380F8 /* Screen */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D544BA83B71D49E6838380F8 /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				FF9EC56D824D44FE9E4E9368 /* HomeScreen.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		7CF1622FDC764737AFAE1280 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				45AA9B6A8652417F902CB118 /* Presentation */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		45AA9B6A8652417F902CB118 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				649D7342864048139417DC1E /* Screen */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		649D7342864048139417DC1E /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				76428925739A40D29D35341A /* CategoriesScreen.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		B7494CBF11C0457B9BD0F8FF /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				D19F05A267EB453F811277D4 /* Presentation */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		D19F05A267EB453F811277D4 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				20EB335E62F349A4AE524EFF /* Screen */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		20EB335E62F349A4AE524EFF /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				881A39379E8D4EFFA31DF607 /* CartScreen.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		7D9B469B6361464CB8F6F568 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				855BB4C7B68A41AC87BCEA5F /* Presentation */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		855BB4C7B68A41AC87BCEA5F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				8EC78F69F5A04169ABB303C6 /* Screen */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		8EC78F69F5A04169ABB303C6 /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				B3213F33824D4DDBB9CF9C3E /* ProfileScreen.swift */,
+			);
+			path = Screen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -709,7 +841,6 @@
 				A13A85DD26B765AA49C3BE86 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 				14FD04FA8D7E8155F46AAC5F /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -799,6 +930,10 @@
 				0D935FC51E1349997ECD01F7 /* Tab.swift in Sources */,
 				C8BF8CA46696CB8F1036E6F1 /* TokenProvider.swift in Sources */,
 				43D0EAAAC64517E6E5308593 /* TokenStorage.swift in Sources */,
+				0DAE5226513946F286E70123 /* HomeScreen.swift in Sources */,
+				A2547D02723D437298BA6A40 /* CategoriesScreen.swift in Sources */,
+				54B024E131CE42FD9EEF313B /* CartScreen.swift in Sources */,
+				F6F57874FC2E463DBD682114 /* ProfileScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,9 +941,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC21CD2B17D7B718BAA825CC /* APIClientTests.swift in Sources */,
+				552C13056EF633B467DA4EB4 /* APIClientRequestTests.swift in Sources */,
+				E5BD1ADC840E017006EC8C3F /* APIClientRetryTests.swift in Sources */,
+				4D1D4F6C3AE148B18CD56DCE /* APIClientAuthTests.swift in Sources */,
 				1F08419AA4629196765E97C5 /* AppErrorTests.swift in Sources */,
-				42F1F5A39638F2088598A5BD /* AppRouterTests.swift in Sources */,
+				7CBC272BC38D7D384FC87A51 /* AppRouterDeepLinkTests.swift in Sources */,
+				AB8A6E6630AAC4B692C31E78 /* AppRouterNavigationTests.swift in Sources */,
+				F528989280188D39FC389C8F /* AppRouterStateTests.swift in Sources */,
 				AFAA7AA79865A2114D52CEAA /* ArchitectureTests.swift in Sources */,
 				1008984D38E1A6167D499739 /* AuthEndpointTests.swift in Sources */,
 				245DFD38BA4FA75CB95522AB /* AuthMiddlewareTests.swift in Sources */,
@@ -845,7 +984,8 @@
 				5644A9BF0B1ED1A7CAECE0EE /* PaginatedResponseTests.swift in Sources */,
 				6948B56CAD17B3711D93C2AB /* PlaceholderViewTests.swift in Sources */,
 				43C1A9A65312CF95DF058800 /* RetryPolicyTests.swift in Sources */,
-				5B4CB99D1B90BEA9D49DF748 /* RouteTests.swift in Sources */,
+				0AC10E2DBA6FE0AA2473E48C /* RouteAuthTests.swift in Sources */,
+				752DB3CAFB4D85EFA505E559 /* RoutePropertyTests.swift in Sources */,
 				104E4EBBB9C3700F057B830C /* SessionManagerTests.swift in Sources */,
 				C89A1E2088B67793A52C3F8E /* TabTests.swift in Sources */,
 				8BD1BEE7E7126D835ED5D823 /* TokenProviderTests.swift in Sources */,
@@ -1064,6 +1204,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1108,6 +1249,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MoltMarketplace/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

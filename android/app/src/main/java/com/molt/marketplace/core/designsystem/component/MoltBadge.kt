@@ -1,5 +1,3 @@
-@file:Suppress("MatchingDeclarationName")
-
 package com.molt.marketplace.core.designsystem.component
 
 import androidx.compose.foundation.background
@@ -23,16 +21,7 @@ import com.molt.marketplace.core.designsystem.theme.MoltCornerRadius
 import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
-enum class MoltBadgeStatus {
-    Success,
-    Warning,
-    Error,
-    Info,
-    Neutral,
-}
-
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltCountBadge(count: Int, modifier: Modifier = Modifier) {
     if (count <= 0) return
 
@@ -56,7 +45,6 @@ fun MoltCountBadge(count: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltStatusBadge(
     status: MoltBadgeStatus,
     label: String,
@@ -95,7 +83,6 @@ fun MoltStatusBadge(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltCountBadgePreview() {
     MoltTheme {
         MoltCountBadge(count = 5)
@@ -104,7 +91,6 @@ private fun MoltCountBadgePreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltCountBadgeOverflowPreview() {
     MoltTheme {
         MoltCountBadge(count = 150)
@@ -113,7 +99,6 @@ private fun MoltCountBadgeOverflowPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltStatusBadgeSuccessPreview() {
     MoltTheme {
         MoltStatusBadge(status = MoltBadgeStatus.Success, label = "In Stock")
@@ -122,7 +107,6 @@ private fun MoltStatusBadgeSuccessPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltStatusBadgeErrorPreview() {
     MoltTheme {
         MoltStatusBadge(status = MoltBadgeStatus.Error, label = "Out of Stock")
@@ -131,7 +115,6 @@ private fun MoltStatusBadgeErrorPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltStatusBadgeWarningPreview() {
     MoltTheme {
         MoltStatusBadge(status = MoltBadgeStatus.Warning, label = "Low Stock")

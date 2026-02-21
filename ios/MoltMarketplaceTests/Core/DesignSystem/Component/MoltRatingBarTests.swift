@@ -1,6 +1,8 @@
 import Testing
 @testable import MoltMarketplace
 
+private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
+
 // MARK: - MoltRatingBarTests
 
 @Suite("MoltRatingBar Tests")
@@ -101,7 +103,7 @@ struct MoltRatingBarTests {
 
     // MARK: - Body
 
-    @Test("RatingBar body is a valid View", .disabled("SwiftUI body requires runtime environment; use UI tests instead"))
+    @Test("RatingBar body is a valid View", .disabled(swiftUIDisabledReason))
     func test_body_isValidView() {
         let bar = MoltRatingBar(rating: 4.0)
         let body = bar.body

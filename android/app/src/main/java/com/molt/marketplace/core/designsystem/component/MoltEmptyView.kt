@@ -22,7 +22,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltEmptyView(
     message: String,
     modifier: Modifier = Modifier,
@@ -69,7 +68,6 @@ fun MoltEmptyView(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltEmptyViewPreview() {
     MoltTheme {
         MoltEmptyView(message = "Nothing to show")
@@ -78,7 +76,6 @@ private fun MoltEmptyViewPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltEmptyViewWithActionPreview() {
     MoltTheme {
         MoltEmptyView(

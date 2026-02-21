@@ -4,7 +4,8 @@ import SwiftUI
 
 /// Central router managing all navigation state: selected tab, per-tab navigation paths,
 /// auth flow presentation, and deep link handling.
-@MainActor @Observable
+@MainActor
+@Observable
 final class AppRouter {
     // MARK: - Tab State
 
@@ -149,15 +150,20 @@ final class AppRouter {
         switch route {
         case .home, .productSearch, .vendorStore, .productReviews, .writeReview:
             return .home
+
         case .categories, .categoryProducts, .productList:
             return .categories
+
         case .cart, .checkout, .checkoutAddress, .checkoutShipping, .checkoutPayment, .orderConfirmation:
             return .cart
+
         case .profile, .orderList, .orderDetail, .settings, .addressManagement, .wishlist,
-             .paymentMethods, .notifications, .recentlyViewed, .priceAlerts:
+            .paymentMethods, .notifications, .recentlyViewed, .priceAlerts:
             return .profile
+
         case .productDetail:
             return selectedTab
+
         case .login, .register, .forgotPassword, .onboarding:
             return selectedTab
         }
@@ -166,37 +172,65 @@ final class AppRouter {
     private func routeToString(_ route: Route) -> String {
         switch route {
         case .home: return "home"
+
         case .categories: return "categories"
+
         case .categoryProducts(let id, _): return "category/\(id)"
+
         case .productList(let catId, let query):
             var result = "products"
             if let catId { result += "?categoryId=\(catId)" }
             if let query { result += (catId != nil ? "&" : "?") + "query=\(query)" }
             return result
+
         case .productDetail(let id): return "product/\(id)"
+
         case .productSearch: return "search"
+
         case .vendorStore(let id): return "vendor/\(id)"
+
         case .productReviews(let id): return "reviews/\(id)"
+
         case .writeReview(let id): return "write-review/\(id)"
+
         case .cart: return "cart"
+
         case .checkout: return "checkout"
+
         case .checkoutAddress: return "checkout/address"
+
         case .checkoutShipping: return "checkout/shipping"
+
         case .checkoutPayment: return "checkout/payment"
+
         case .orderConfirmation(let id): return "order-confirmation/\(id)"
+
         case .profile: return "profile"
+
         case .orderList: return "orders"
+
         case .orderDetail(let id): return "order/\(id)"
+
         case .settings: return "settings"
+
         case .addressManagement: return "addresses"
+
         case .wishlist: return "wishlist"
+
         case .paymentMethods: return "payment-methods"
+
         case .notifications: return "notifications"
+
         case .recentlyViewed: return "recently-viewed"
+
         case .priceAlerts: return "price-alerts"
+
         case .login: return "login"
+
         case .register: return "register"
+
         case .forgotPassword: return "forgot-password"
+
         case .onboarding: return "onboarding"
         }
     }

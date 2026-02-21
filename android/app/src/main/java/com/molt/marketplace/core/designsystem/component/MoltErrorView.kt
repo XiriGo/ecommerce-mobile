@@ -23,7 +23,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltErrorView(
     message: String,
     modifier: Modifier = Modifier,
@@ -68,7 +67,6 @@ fun MoltErrorView(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltErrorViewPreview() {
     MoltTheme {
         MoltErrorView(
@@ -80,7 +78,6 @@ private fun MoltErrorViewPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltErrorViewNoRetryPreview() {
     MoltTheme {
         MoltErrorView(message = "No internet connection")

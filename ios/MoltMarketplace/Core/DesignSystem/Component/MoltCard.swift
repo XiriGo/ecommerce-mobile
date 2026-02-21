@@ -165,6 +165,7 @@ struct MoltInfoCard<TrailingContent: View>: View {
                 Image(systemName: leadingIcon)
                     .foregroundStyle(MoltColors.onSurfaceVariant)
                     .font(.system(size: MoltSpacing.IconSize.medium))
+                    .accessibilityHidden(true)
             }
 
             VStack(alignment: .leading, spacing: MoltSpacing.xxs) {
@@ -229,8 +230,9 @@ extension MoltInfoCard where TrailingContent == EmptyView {
         rating: 4.5,
         reviewCount: 123,
         isWishlisted: false,
-        onWishlistToggle: {}
-    ) {}
+        onWishlistToggle: {},
+        action: {}
+    )
     .frame(width: 200)
     .padding()
 }
@@ -241,8 +243,9 @@ extension MoltInfoCard where TrailingContent == EmptyView {
         title: "Simple Product",
         price: "9.99",
         isWishlisted: true,
-        onWishlistToggle: {}
-    ) {}
+        onWishlistToggle: {},
+        action: {}
+    )
     .frame(width: 200)
     .padding()
 }

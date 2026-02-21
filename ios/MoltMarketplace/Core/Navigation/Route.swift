@@ -58,35 +58,36 @@ enum Route: Hashable {
     var requiresAuth: Bool {
         switch self {
         case .checkout,
-             .checkoutAddress,
-             .checkoutShipping,
-             .checkoutPayment,
-             .orderConfirmation,
-             .orderList,
-             .orderDetail,
-             .settings,
-             .addressManagement,
-             .wishlist,
-             .paymentMethods,
-             .notifications,
-             .writeReview,
-             .priceAlerts:
+            .checkoutAddress,
+            .checkoutShipping,
+            .checkoutPayment,
+            .orderConfirmation,
+            .orderList,
+            .orderDetail,
+            .settings,
+            .addressManagement,
+            .wishlist,
+            .paymentMethods,
+            .notifications,
+            .writeReview,
+            .priceAlerts:
             return true
+
         case .home,
-             .productDetail,
-             .productSearch,
-             .vendorStore,
-             .productReviews,
-             .categories,
-             .categoryProducts,
-             .productList,
-             .cart,
-             .profile,
-             .login,
-             .register,
-             .forgotPassword,
-             .onboarding,
-             .recentlyViewed:
+            .productDetail,
+            .productSearch,
+            .vendorStore,
+            .productReviews,
+            .categories,
+            .categoryProducts,
+            .productList,
+            .cart,
+            .profile,
+            .login,
+            .register,
+            .forgotPassword,
+            .onboarding,
+            .recentlyViewed:
             return false
         }
     }

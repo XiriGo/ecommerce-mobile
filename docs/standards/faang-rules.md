@@ -70,3 +70,39 @@ domain/ ✗ presentation/ (forbidden)
 - All colors from `MoltColors` — no hardcoded hex values in feature code
 - All spacing from `MoltSpacing` — no magic numbers for dimensions
 - Every screen composable has `@Preview` / `#Preview` wrapped in `MoltTheme`
+
+## Zero Lint Suppression Policy
+
+Lint rules exist to enforce production-quality code. Suppressing them hides problems instead of fixing them.
+
+### Banned Patterns
+
+| Platform | Banned Pattern | What To Do Instead |
+|----------|----------------|-------------------|
+| Android | `@Suppress("...")` on any detekt/ktlint rule | Fix the code to comply, or configure the rule properly in `detekt.yml` / `.editorconfig` |
+| iOS | `// swiftlint:disable` (file-level or inline) | Fix the code to comply, or configure exclusions in `.swiftlint.yml` |
+
+### Allowed Exceptions (Configure, Don't Suppress)
+
+When a lint rule is structurally incompatible with a pattern (not just inconvenient), **configure the tool** -- never suppress inline:
+
+| Situation | Wrong (Suppress) | Right (Configure) |
+|-----------|-------------------|-------------------|
+| Compose PascalCase functions | `@Suppress("ktlint:standard:function-naming")` | `.editorconfig`: `ktlint_function_naming_ignore_when_annotated_with = Composable,Preview` |
+| Design token literal numbers | `// swiftlint:disable no_magic_numbers` | `.swiftlint.yml`: exclude `Theme/` and token files from `no_magic_numbers` |
+| Test files exceeding length | `// swiftlint:disable file_length` | `.swiftlint.yml`: higher limits for test paths via per-rule `excluded` |
+| Catching broad exceptions | `@Suppress("TooGenericExceptionCaught")` | Catch specific types: `IOException`, `HttpException`, `SerializationException` |
+| Complex Compose functions | `@Suppress("CyclomaticComplexMethod")` | Extract sub-composables and helper functions to reduce complexity |
+
+### CI Enforcement
+
+The quality gate (`/verify`) checks for suppression markers. Any `@Suppress` or `swiftlint:disable` in committed code **fails the gate** (except in auto-generated files).
+
+### Pre-commit Check
+
+```bash
+# Runs automatically via pre-commit hook
+grep -rn '@Suppress' --include='*.kt' android/app/src/main/
+grep -rn 'swiftlint:disable' --include='*.swift' ios/MoltMarketplace/ ios/MoltMarketplaceTests/
+# Both must return zero results
+```

@@ -1,7 +1,5 @@
 import SwiftUI
 
-// swiftlint:disable no_magic_numbers
-
 enum MoltSpacing {
     // MARK: - Base Spacing
 
@@ -44,5 +42,3 @@ enum MoltSpacing {
         static let extraLarge: CGFloat = 96
     }
 }
-
-// swiftlint:enable no_magic_numbers

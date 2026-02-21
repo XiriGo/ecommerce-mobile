@@ -41,4 +41,49 @@
     <string name="nav_profile_guest_register_button">Hesap Olustur</string>
     <string name="nav_cart_badge_description">Sepette %d urun</string>
     <string name="common_back_button">Geri</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_title">Molt\'a Hosgeldiniz</string>
+    <string name="home_welcome_subtitle">Harika urunleri uygun fiyatlarla kesfedin</string>
+    <string name="home_search_hint">Urun, marka, kategori ara...</string>
+    <string name="home_banner_summer_title">Yaz Indirimi</string>
+    <string name="home_banner_summer_subtitle">Secili urunlerde %50\'ye varan indirim</string>
+    <string name="home_banner_new_title">Yeni Koleksiyon</string>
+    <string name="home_banner_new_subtitle">En yeni urunleri kesfedin</string>
+    <string name="home_banner_free_shipping_title">Ucretsiz Kargo</string>
+    <string name="home_banner_free_shipping_subtitle">50$ uzeri siparislerde</string>
+    <string name="home_section_categories">Kategoriler</string>
+    <string name="home_section_popular">Populer Urunler</string>
+    <string name="home_section_new_arrivals">Yeni Gelenler</string>
+    <string name="home_category_electronics">Elektronik</string>
+    <string name="home_category_fashion">Moda</string>
+    <string name="home_category_home">Ev</string>
+    <string name="home_category_sports">Spor</string>
+    <string name="home_category_books">Kitaplar</string>
+    <string name="home_category_gaming">Oyun</string>
+    <string name="home_product_headphones">Kablosuz Gurultu Onleyici Kulaklik</string>
+    <string name="home_product_sneakers">Profesyonel Kosu Ayakkabisi</string>
+    <string name="home_product_backpack">Su Gecirmez Seyahat Sirt Cantasi</string>
+    <string name="home_product_watch">Akilli Saat Serisi X</string>
+    <string name="home_product_keyboard">Mekanik Oyuncu Klavyesi</string>
+    <string name="home_product_jacket">Premium Kis Montu</string>
+    <string name="home_product_lamp">Modern LED Masa Lambasi</string>
+
+    <!-- Categories Screen -->
+    <string name="categories_search_hint">Kategorilerde ara...</string>
+    <string name="categories_item_count">%d urun</string>
+    <string name="categories_toys">Oyuncak</string>
+    <string name="categories_pets">Evcil Hayvan</string>
+    <string name="categories_more">Daha Fazla</string>
+
+    <!-- Cart Screen -->
+    <string name="cart_empty_message">Sepetiniz bos</string>
+    <string name="cart_start_shopping">Alisverise Basla</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_menu_orders">Siparisler</string>
+    <string name="profile_menu_wishlist">Favoriler</string>
+    <string name="profile_menu_addresses">Adresler</string>
+    <string name="profile_menu_payment_methods">Odeme Yontemleri</string>
+    <string name="profile_menu_settings">Ayarlar</string>
 </resources>

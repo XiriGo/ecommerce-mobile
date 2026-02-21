@@ -2,6 +2,8 @@ import SwiftUI
 import Testing
 @testable import MoltMarketplace
 
+private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
+
 // MARK: - MoltCountBadgeTests
 
 @Suite("MoltCountBadge Tests")
@@ -69,12 +71,12 @@ struct MoltCountBadgeTests {
     func test_displayText_zero_badgeHidden() {
         // count == 0 → view body renders nothing (EmptyView)
         // We verify the logic: count > 0 is required to show badge
-        #expect(countDisplayText(for: 0) == "") // Badge is hidden for 0
+        #expect(countDisplayText(for: 0).isEmpty) // Badge is hidden for 0
     }
 
     // MARK: - Body
 
-    @Test("CountBadge body is a valid View", .disabled("SwiftUI body requires runtime environment; use UI tests instead"))
+    @Test("CountBadge body is a valid View", .disabled(swiftUIDisabledReason))
     func test_body_isValidView() {
         let badge = MoltCountBadge(count: 5)
         let body = badge.body

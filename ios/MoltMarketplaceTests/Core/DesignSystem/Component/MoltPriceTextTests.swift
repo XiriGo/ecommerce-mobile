@@ -1,6 +1,8 @@
 import Testing
 @testable import MoltMarketplace
 
+private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
+
 // MARK: - MoltPriceSizeTests
 
 @Suite("MoltPriceSize Tests")
@@ -114,7 +116,7 @@ struct MoltPriceTextTests {
 
     // MARK: - Body
 
-    @Test("PriceText body is a valid View", .disabled("SwiftUI body requires runtime environment; use UI tests instead"))
+    @Test("PriceText body is a valid View", .disabled(swiftUIDisabledReason))
     func test_body_isValidView() {
         let view = MoltPriceText(price: "9.99")
         let body = view.body

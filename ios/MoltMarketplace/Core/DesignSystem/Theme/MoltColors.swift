@@ -1,4 +1,3 @@
-// swiftlint:disable no_magic_numbers
 import SwiftUI
 
 // MARK: - MoltColors
@@ -93,5 +92,3 @@ extension Color {
         )
     }
 }
-
-// swiftlint:enable no_magic_numbers

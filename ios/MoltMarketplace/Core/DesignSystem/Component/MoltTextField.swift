@@ -79,6 +79,7 @@ struct MoltTextField: View {
                 Image(systemName: leadingIcon)
                     .foregroundStyle(MoltColors.onSurfaceVariant)
                     .font(.system(size: MoltSpacing.IconSize.medium))
+                    .accessibilityHidden(true)
             }
 
             textField
@@ -136,6 +137,7 @@ struct MoltTextField: View {
                 Image(systemName: trailingIcon)
                     .foregroundStyle(MoltColors.onSurfaceVariant)
                     .font(.system(size: MoltSpacing.IconSize.medium))
+                    .accessibilityHidden(true)
             }
             .frame(minWidth: MoltSpacing.minTouchTarget, minHeight: MoltSpacing.minTouchTarget)
         }

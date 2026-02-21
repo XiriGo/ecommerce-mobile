@@ -30,8 +30,9 @@ struct MoltProductCardTests {
             rating: 4.5,
             reviewCount: 123,
             isWishlisted: false,
-            onWishlistToggle: {}
-        ) {}
+            onWishlistToggle: {},
+            action: {}
+        )
         _ = card
         #expect(true)
     }
@@ -43,8 +44,9 @@ struct MoltProductCardTests {
             title: "Product",
             price: "9.99",
             isWishlisted: true,
-            onWishlistToggle: {}
-        ) {}
+            onWishlistToggle: {},
+            action: {}
+        )
         _ = card
         #expect(true)
     }
@@ -77,8 +79,9 @@ struct MoltProductCardTests {
             imageUrl: nil,
             title: "Product",
             price: "9.99",
-            onWishlistToggle: {}
-        ) {}
+            onWishlistToggle: {},
+            action: {}
+        )
         _ = card
         #expect(true)
     }

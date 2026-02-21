@@ -13,22 +13,12 @@ object DeepLinkParser {
         return resolveRoute(segments)
     }
 
-    @Suppress("ReturnCount")
     private fun extractPathSegments(uri: Uri): List<String>? {
         val scheme = uri.scheme ?: return null
         return when (scheme) {
-            "molt" -> {
-                val host = uri.host ?: return null
-                listOf(host) + uri.pathSegments
-            }
-            "https", "http" -> {
-                val host = uri.host ?: return null
-                if (host != "molt.mt") return null
-                uri.pathSegments
-            }
-            else -> {
-                null
-            }
+            "molt" -> uri.host?.let { host -> listOf(host) + uri.pathSegments }
+            "https", "http" -> uri.host?.takeIf { it == "molt.mt" }?.let { uri.pathSegments }
+            else -> null
         }
     }
 

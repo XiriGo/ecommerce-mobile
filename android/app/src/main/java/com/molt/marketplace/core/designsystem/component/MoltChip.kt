@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltFilterChip(
     label: String,
     selected: Boolean,
@@ -57,7 +56,6 @@ fun MoltFilterChip(
 }
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltCategoryChip(
     label: String,
     onClick: () -> Unit,
@@ -83,7 +81,6 @@ fun MoltCategoryChip(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltFilterChipUnselectedPreview() {
     MoltTheme {
         MoltFilterChip(label = "Electronics", selected = false, onClick = {})
@@ -92,7 +89,6 @@ private fun MoltFilterChipUnselectedPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltFilterChipSelectedPreview() {
     MoltTheme {
         MoltFilterChip(label = "Electronics", selected = true, onClick = {})
@@ -101,7 +97,6 @@ private fun MoltFilterChipSelectedPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltCategoryChipPreview() {
     MoltTheme {
         MoltCategoryChip(label = "Shoes", onClick = {})
