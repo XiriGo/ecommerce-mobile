@@ -32,4 +32,31 @@ struct NetworkMonitorTests {
         let ref2: AnyObject = monitor
         #expect(ref1 === ref2)
     }
+
+    // MARK: - Additional Coverage
+
+    @Test("two NetworkMonitor instances are independent objects")
+    func test_twoInstances_areDifferentObjects() {
+        let first = NetworkMonitor()
+        let second = NetworkMonitor()
+        #expect(first !== second)
+    }
+
+    @Test("deinit does not crash when monitor is immediately discarded")
+    func test_deinit_doesNotCrash() {
+        // Create monitor in a local scope so it is deallocated when scope exits
+        do {
+            let monitor = NetworkMonitor()
+            _ = monitor
+        }
+        // Reaching here means deinit (which calls NWPathMonitor.cancel()) did not crash
+    }
+
+    @Test("multiple isConnected reads return consistent value")
+    @MainActor func test_isConnected_multipleReads_areConsistent() {
+        let monitor = NetworkMonitor()
+        let first = monitor.isConnected
+        let second = monitor.isConnected
+        #expect(first == second)
+    }
 }

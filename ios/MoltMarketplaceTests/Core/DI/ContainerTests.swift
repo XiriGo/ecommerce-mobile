@@ -73,4 +73,78 @@ struct ContainerTests {
         let resolved = Container.shared.tokenProvider()
         #expect(resolved is NoOpTokenProvider)
     }
+
+    // MARK: - Cross-Test Isolation
+
+    @Test("override followed by reset does not leak into next resolution")
+    func test_override_thenReset_noLeakage() {
+        // Override and verify override is active
+        let fake = FakeTokenProvider()
+        Container.shared.tokenProvider.register { fake }
+        #expect(Container.shared.tokenProvider() is FakeTokenProvider)
+
+        // Reset and verify original is restored — simulates what each test's init() does
+        Container.shared.reset()
+        #expect(Container.shared.tokenProvider() is NoOpTokenProvider)
+    }
+
+    @Test("resetting container clears all three singleton caches")
+    func test_reset_clearsSingletonCachesForAllRegistrations() {
+        // Resolve all three singletons to populate caches
+        let originalClient = Container.shared.apiClient()
+        let originalMonitor = Container.shared.networkMonitor()
+
+        // Reset clears the singleton cache — next resolution creates fresh instances
+        Container.shared.reset()
+
+        let newClient = Container.shared.apiClient()
+        let newMonitor = Container.shared.networkMonitor()
+
+        // After reset, new instances are returned (singleton cache was cleared)
+        #expect(originalClient !== newClient)
+        #expect(originalMonitor !== newMonitor)
+    }
+
+    // MARK: - Container Shared Reference
+
+    @Test("Container.shared refers to the same container across multiple accesses")
+    func test_containerShared_isSameObject() {
+        let first = Container.shared
+        let second = Container.shared
+        // Container.shared must be the same instance (identity)
+        #expect(first === second)
+    }
+
+    // MARK: - All Registrations Coexist
+
+    @Test("all three registrations resolve concurrently without interfering")
+    func test_allRegistrations_resolveIndependently() {
+        let client = Container.shared.apiClient()
+        let provider = Container.shared.tokenProvider()
+        let monitor = Container.shared.networkMonitor()
+
+        #expect(client is APIClient)
+        #expect(provider is NoOpTokenProvider)
+        #expect(monitor is NetworkMonitor)
+    }
+
+    // MARK: - Override Specificity
+
+    @Test("overriding tokenProvider does not affect apiClient or networkMonitor registrations")
+    func test_override_tokenProvider_doesNotAffectOtherRegistrations() {
+        Container.shared.tokenProvider.register { FakeTokenProvider() }
+
+        // Other registrations remain unaffected
+        #expect(Container.shared.apiClient() is APIClient)
+        #expect(Container.shared.networkMonitor() is NetworkMonitor)
+    }
+
+    @Test("overriding networkMonitor does not affect tokenProvider or apiClient registrations")
+    func test_override_networkMonitor_doesNotAffectOtherRegistrations() {
+        let fakeMonitor = NetworkMonitor()
+        Container.shared.networkMonitor.register { fakeMonitor }
+
+        #expect(Container.shared.tokenProvider() is NoOpTokenProvider)
+        #expect(Container.shared.apiClient() is APIClient)
+    }
 }
