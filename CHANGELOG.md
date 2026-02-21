@@ -8,6 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M0-04: Navigation
+
+- **Navigation**: Type-safe tab-based routing and navigation infrastructure (Android + iOS)
+  - Four-tab bottom bar (Home, Categories, Cart, Profile) using `MoltBottomBar` (Android) / `MoltTabBar` (iOS) from M0-02 Design System
+  - Independent per-tab navigation stack with back-stack preservation on tab switch (`saveState`/`restoreState` on Android; four `NavigationPath` instances in `AppRouter` on iOS)
+  - 29 type-safe route definitions covering all M0–M4 screens (`@Serializable` sealed interface on Android; `Hashable` enum with associated values on iOS)
+  - `isAuthRequired` / `requiresAuth` computed property on `Route` for 14 auth-protected destinations
+  - Auth-gated navigation with `returnTo` redirect: guests attempting auth-required routes are redirected to Login and returned to their intended destination after login
+  - Deep link parsing for `molt://` custom scheme and `https://molt.mt/` universal links (`DeepLinkParser` object/enum with stateless `parse()` function)
+  - Deep link intent filters and `singleTask` launch mode declared in `AndroidManifest.xml`; `CFBundleURLTypes` registered in iOS `Info.plist`
+  - Cart badge count wired to `MoltBottomBar`/`MoltTabBar` (defaults to 0 and hidden until M2-01 provides cart count)
+  - Auth gating wired with stub (always guest) until M0-06 Auth Infrastructure provides `AuthStateProvider`
+  - Placeholder screens (`PlaceholderScreen` / `PlaceholderView`) for all unimplemented routes, replaced feature-by-feature in M1+
+  - Tab bar hidden for fullscreen flows: Login, Register, ForgotPassword, Onboarding, all Checkout sub-screens, OrderConfirmation
+  - 10 new localization keys in English, Maltese, and Turkish (tab labels, placeholder copy, guest profile prompt, cart badge description)
+- **Tests**: ~138 Android tests (7 files, JUnit 4 + Truth + Compose UI Test + Robolectric) + ~167 iOS tests (5 files, Swift Testing) — ~305 total
+  - Android: `DeepLinkParserTest` (15), `RouteAuthTest` (19), `TopLevelDestinationTest` (11), `RouteSerializationTest` (~44), `DeepLinkParserEdgeCasesTest` (~28), `MoltAppScaffoldTest` (~11), `PlaceholderScreenTest` (~10)
+  - iOS: `TabTests` (26), `RouteTests` (42), `DeepLinkParserTests` (30), `AppRouterTests` (44), `PlaceholderViewTests` (25)
+
 #### M0-03: Network Layer
 
 - **Network Layer**: HTTP client infrastructure for Medusa v2 REST API communication (Android + iOS)
