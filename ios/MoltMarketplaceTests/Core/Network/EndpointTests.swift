@@ -10,7 +10,7 @@ private struct GetProductsEndpoint: Endpoint {
 
     var path: String { "/store/products" }
     var method: HTTPMethod { .get }
-    var queryItems: [URLQueryItem]? {
+    var queryItems: [URLQueryItem] {
         [
             URLQueryItem(name: "offset", value: "\(offset)"),
             URLQueryItem(name: "limit", value: "\(limit)"),
@@ -52,8 +52,11 @@ private struct CustomHeaderEndpoint: Endpoint {
 
 @Suite("Endpoint Tests")
 struct EndpointTests {
-    // swiftlint:disable:next force_unwrapping
-    private let baseURL = URL(string: "https://api-test.molt.mt")!
+    private let baseURL: URL
+
+    init() throws {
+        baseURL = try #require(URL(string: "https://api-test.molt.mt"))
+    }
 
     // MARK: - Path
 
@@ -90,16 +93,16 @@ struct EndpointTests {
         let endpoint = GetProductsEndpoint(offset: 20, limit: 10)
         let items = endpoint.queryItems
 
-        #expect(items != nil)
-        #expect(items?.count == 2)
-        #expect(items?.first(where: { $0.name == "offset" })?.value == "20")
-        #expect(items?.first(where: { $0.name == "limit" })?.value == "10")
+        #expect(!items.isEmpty)
+        #expect(items.count == 2)
+        #expect(items.first(where: { $0.name == "offset" })?.value == "20")
+        #expect(items.first(where: { $0.name == "limit" })?.value == "10")
     }
 
-    @Test("endpoint without query items returns nil")
-    func test_queryItems_endpointWithNoQueryItems_returnsNil() {
+    @Test("endpoint without query items returns empty array")
+    func test_queryItems_endpointWithNoQueryItems_returnsEmptyArray() {
         let endpoint = CreateCartEndpoint(regionId: "region_01")
-        #expect(endpoint.queryItems == nil)
+        #expect(endpoint.queryItems.isEmpty)
     }
 
     // MARK: - Body

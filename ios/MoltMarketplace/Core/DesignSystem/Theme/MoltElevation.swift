@@ -1,4 +1,3 @@
-// swiftlint:disable no_magic_numbers
 import SwiftUI
 
 // MARK: - MoltElevation
@@ -34,5 +33,3 @@ extension View {
         )
     }
 }
-
-// swiftlint:enable no_magic_numbers

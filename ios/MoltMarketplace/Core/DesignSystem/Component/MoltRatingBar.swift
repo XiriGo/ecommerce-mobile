@@ -1,4 +1,3 @@
-// swiftlint:disable no_magic_numbers
 import SwiftUI
 
 // MARK: - MoltRatingBar
@@ -67,12 +66,15 @@ struct MoltRatingBar: View {
         if rating >= positionDouble {
             Image(systemName: "star.fill")
                 .foregroundStyle(MoltColors.ratingStarFilled)
+                .accessibilityHidden(true)
         } else if rating >= positionDouble - 0.5 {
             Image(systemName: "star.leadinghalf.filled")
                 .foregroundStyle(MoltColors.ratingStarFilled)
+                .accessibilityHidden(true)
         } else {
             Image(systemName: "star")
                 .foregroundStyle(MoltColors.ratingStarEmpty)
+                .accessibilityHidden(true)
         }
     }
 
@@ -96,5 +98,3 @@ struct MoltRatingBar: View {
     }
     .padding()
 }
-
-// swiftlint:enable no_magic_numbers

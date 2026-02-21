@@ -3,6 +3,16 @@ import Foundation
 // MARK: - APIClient
 
 final class APIClient: Sendable {
+    // MARK: - HTTP Status Code Constants
+
+    private static let httpSuccessRange = 200 ... 299
+    private static let httpUnauthorized = 401
+    private static let httpForbidden = 403
+    private static let httpNotFound = 404
+    private static let httpTooManyRequests = 429
+    private static let httpClientErrorRange = 400 ... 499
+    private static let httpServerErrorRange = 500 ... 599
+    private static let nanosecondsPerSecond: UInt64 = 1_000_000_000
     // MARK: - Lifecycle
 
     init(
@@ -63,8 +73,8 @@ final class APIClient: Sendable {
         components.port = baseURL.port
         components.path = endpoint.path
 
-        if let queryItems = endpoint.queryItems, !queryItems.isEmpty {
-            components.queryItems = queryItems
+        if !endpoint.queryItems.isEmpty {
+            components.queryItems = endpoint.queryItems
         }
 
         guard let url = components.url else {
@@ -116,12 +126,12 @@ final class APIClient: Sendable {
         let statusCode = httpResponse.statusCode
 
         // Success
-        if (200 ... 299).contains(statusCode) {
+        if Self.httpSuccessRange.contains(statusCode) {
             return try decodeResponse(data)
         }
 
         // 401 - Attempt token refresh and retry once
-        if statusCode == 401 && endpoint.requiresAuth {
+        if statusCode == Self.httpUnauthorized && endpoint.requiresAuth {
             return try await handleUnauthorized(
                 originalRequest: request,
                 endpoint: endpoint,
@@ -199,7 +209,7 @@ final class APIClient: Sendable {
                 throw AppError.unknown(message: "Invalid response type")
             }
 
-            if (200 ... 299).contains(httpResponse.statusCode) {
+            if Self.httpSuccessRange.contains(httpResponse.statusCode) {
                 return try decodeResponse(data)
             }
 
@@ -225,7 +235,7 @@ final class APIClient: Sendable {
 
         for attempt in 0 ..< retryPolicy.maxRetries {
             let delay = retryPolicy.delay(forAttempt: attempt)
-            try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            try await Task.sleep(nanoseconds: UInt64(delay * Double(Self.nanosecondsPerSecond)))
 
             let (data, response) = try await performRequest(request)
 
@@ -236,12 +246,12 @@ final class APIClient: Sendable {
             let statusCode = httpResponse.statusCode
 
             // Success
-            if (200 ... 299).contains(statusCode) {
+            if Self.httpSuccessRange.contains(statusCode) {
                 return try decodeResponse(data)
             }
 
             // 401 during retry - handle token refresh
-            if statusCode == 401 && endpoint.requiresAuth {
+            if statusCode == Self.httpUnauthorized && endpoint.requiresAuth {
                 return try await handleUnauthorized(
                     originalRequest: request,
                     endpoint: endpoint,
@@ -279,18 +289,27 @@ final class APIClient: Sendable {
         let medusaError = try? JSONDecoder.api.decode(MedusaErrorDTO.self, from: data)
 
         switch statusCode {
-        case 401:
+        case Self.httpUnauthorized:
             return .unauthorized(message: medusaError?.message ?? "Unauthorized")
-        case 403:
+
+        case Self.httpForbidden:
             return .unauthorized(message: medusaError?.message ?? "Access denied")
-        case 404:
+
+        case Self.httpNotFound:
             return .notFound(message: medusaError?.message ?? "Not found")
-        case 429:
-            return .server(code: 429, message: medusaError?.message ?? "Too many requests. Please try again later.")
-        case 400 ... 499:
+
+        case Self.httpTooManyRequests:
+            return .server(
+                code: Self.httpTooManyRequests,
+                message: medusaError?.message ?? "Too many requests. Please try again later."
+            )
+
+        case Self.httpClientErrorRange:
             return .server(code: statusCode, message: medusaError?.message ?? "Request error")
-        case 500 ... 599:
+
+        case Self.httpServerErrorRange:
             return .server(code: statusCode, message: medusaError?.message ?? "Server error")
+
         default:
             return .unknown(message: medusaError?.message ?? "Unexpected error")
         }
@@ -299,12 +318,13 @@ final class APIClient: Sendable {
     private func mapURLError(_ error: URLError) -> AppError {
         switch error.code {
         case .notConnectedToInternet,
-             .networkConnectionLost,
-             .cannotFindHost,
-             .cannotConnectToHost,
-             .dnsLookupFailed,
-             .timedOut:
+            .networkConnectionLost,
+            .cannotFindHost,
+            .cannotConnectToHost,
+            .dnsLookupFailed,
+            .timedOut:
             return .network(message: error.localizedDescription)
+
         default:
             return .network(message: error.localizedDescription)
         }

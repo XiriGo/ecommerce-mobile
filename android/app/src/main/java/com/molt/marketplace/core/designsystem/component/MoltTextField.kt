@@ -28,7 +28,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming", "CyclomaticComplexMethod", "CognitiveComplexMethod")
 fun MoltTextField(
     value: String,
     onValueChange: (String) -> Unit,
@@ -56,99 +55,173 @@ fun MoltTextField(
     }
 
     Column(modifier = semanticsModifier) {
-        OutlinedTextField(
-            value = if (maxLength != null) value.take(maxLength) else value,
-            onValueChange = { newValue ->
-                if (maxLength != null) {
-                    if (newValue.length <= maxLength) onValueChange(newValue)
-                } else {
-                    onValueChange(newValue)
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(text = label) },
-            placeholder = placeholder?.let { { Text(text = it) } },
-            leadingIcon = leadingIcon?.let {
-                {
-                    Icon(
-                        imageVector = it,
-                        contentDescription = null,
-                    )
-                }
-            },
-            trailingIcon = if (isPassword) {
-                {
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        // Using text-based toggle since we don't depend on specific icons
-                        Text(
-                            text = if (passwordVisible) "H" else "S",
-                            style = MaterialTheme.typography.labelSmall,
-                        )
-                    }
-                }
-            } else {
-                trailingIcon?.let {
-                    {
-                        if (onTrailingIconClick != null) {
-                            IconButton(onClick = onTrailingIconClick) {
-                                Icon(imageVector = it, contentDescription = null)
-                            }
-                        } else {
-                            Icon(imageVector = it, contentDescription = null)
-                        }
-                    }
-                }
-            },
+        MoltOutlinedTextFieldContent(
+            value = value,
+            onValueChange = onValueChange,
+            label = label,
+            placeholder = placeholder,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            onTrailingIconClick = onTrailingIconClick,
             enabled = enabled,
             readOnly = readOnly,
-            isError = errorMessage != null,
-            visualTransformation = if (isPassword && !passwordVisible) {
-                PasswordVisualTransformation()
-            } else {
-                VisualTransformation.None
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            errorMessage = errorMessage,
+            isPassword = isPassword,
+            passwordVisible = passwordVisible,
+            onPasswordToggle = { passwordVisible = !passwordVisible },
+            keyboardType = keyboardType,
             singleLine = singleLine,
-            shape = RoundedCornerShape(MoltCornerRadius.Medium),
+            maxLength = maxLength,
         )
 
-        val supportingText = errorMessage ?: helperText
-        if (supportingText != null) {
-            Text(
-                text = supportingText,
-                modifier = Modifier.padding(
-                    start = MoltSpacing.Base,
+        MoltTextFieldSupportingText(
+            errorMessage = errorMessage,
+            helperText = helperText,
+        )
+
+        MoltTextFieldCharacterCount(
+            value = value,
+            maxLength = maxLength,
+        )
+    }
+}
+
+@Composable
+private fun MoltOutlinedTextFieldContent(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    placeholder: String?,
+    leadingIcon: ImageVector?,
+    trailingIcon: ImageVector?,
+    onTrailingIconClick: (() -> Unit)?,
+    enabled: Boolean,
+    readOnly: Boolean,
+    errorMessage: String?,
+    isPassword: Boolean,
+    passwordVisible: Boolean,
+    onPasswordToggle: () -> Unit,
+    keyboardType: KeyboardType,
+    singleLine: Boolean,
+    maxLength: Int?,
+) {
+    OutlinedTextField(
+        value = if (maxLength != null) value.take(maxLength) else value,
+        onValueChange = { newValue ->
+            if (maxLength == null || newValue.length <= maxLength) {
+                onValueChange(newValue)
+            }
+        },
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = label) },
+        placeholder = placeholder?.let { { Text(text = it) } },
+        leadingIcon = leadingIcon?.let {
+            {
+                Icon(
+                    imageVector = it,
+                    contentDescription = null,
+                )
+            }
+        },
+        trailingIcon = resolveTrailingIcon(
+            isPassword = isPassword,
+            passwordVisible = passwordVisible,
+            onPasswordToggle = onPasswordToggle,
+            trailingIcon = trailingIcon,
+            onTrailingIconClick = onTrailingIconClick,
+        ),
+        enabled = enabled,
+        readOnly = readOnly,
+        isError = errorMessage != null,
+        visualTransformation = if (isPassword && !passwordVisible) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        singleLine = singleLine,
+        shape = RoundedCornerShape(MoltCornerRadius.Medium),
+    )
+}
+
+@Composable
+private fun resolveTrailingIcon(
+    isPassword: Boolean,
+    passwordVisible: Boolean,
+    onPasswordToggle: () -> Unit,
+    trailingIcon: ImageVector?,
+    onTrailingIconClick: (() -> Unit)?,
+): (@Composable () -> Unit)? = when {
+    isPassword -> passwordToggleIcon(
+        passwordVisible = passwordVisible,
+        onToggle = onPasswordToggle,
+    )
+    trailingIcon != null -> standardTrailingIcon(
+        icon = trailingIcon,
+        onClick = onTrailingIconClick,
+    )
+    else -> null
+}
+
+private fun passwordToggleIcon(passwordVisible: Boolean, onToggle: () -> Unit): @Composable () -> Unit = {
+    IconButton(onClick = onToggle) {
+        Text(
+            text = if (passwordVisible) "H" else "S",
+            style = MaterialTheme.typography.labelSmall,
+        )
+    }
+}
+
+private fun standardTrailingIcon(icon: ImageVector, onClick: (() -> Unit)?): @Composable () -> Unit = {
+    if (onClick != null) {
+        IconButton(onClick = onClick) {
+            Icon(imageVector = icon, contentDescription = null)
+        }
+    } else {
+        Icon(imageVector = icon, contentDescription = null)
+    }
+}
+
+@Composable
+private fun MoltTextFieldSupportingText(errorMessage: String?, helperText: String?) {
+    val supportingText = errorMessage ?: helperText
+    if (supportingText != null) {
+        Text(
+            text = supportingText,
+            modifier = Modifier.padding(
+                start = MoltSpacing.Base,
+                top = MoltSpacing.XS,
+            ),
+            color = if (errorMessage != null) {
+                MaterialTheme.colorScheme.error
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
+            style = MaterialTheme.typography.bodySmall,
+        )
+    }
+}
+
+@Composable
+private fun MoltTextFieldCharacterCount(value: String, maxLength: Int?) {
+    if (maxLength != null) {
+        Text(
+            text = "${value.length}/$maxLength",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    end = MoltSpacing.Base,
                     top = MoltSpacing.XS,
                 ),
-                color = if (errorMessage != null) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-
-        if (maxLength != null) {
-            Text(
-                text = "${value.length}/$maxLength",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        end = MoltSpacing.Base,
-                        top = MoltSpacing.XS,
-                    ),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = androidx.compose.ui.text.style.TextAlign.End,
-            )
-        }
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = androidx.compose.ui.text.style.TextAlign.End,
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltTextFieldDefaultPreview() {
     MoltTheme {
         MoltTextField(
@@ -162,7 +235,6 @@ private fun MoltTextFieldDefaultPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltTextFieldErrorPreview() {
     MoltTheme {
         MoltTextField(
@@ -176,7 +248,6 @@ private fun MoltTextFieldErrorPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltTextFieldPasswordPreview() {
     MoltTheme {
         MoltTextField(

@@ -254,10 +254,16 @@ Build, lint ve test kontrollerini calistirir.
 | Android | detekt | `./gradlew detekt` |
 | Android | build | `./gradlew assembleDebug` |
 | Android | test | `./gradlew test` |
+| Android | suppress check | `grep -rn '@Suppress' --include='*.kt' android/app/src/main/` (must be empty) |
 | iOS | SwiftLint | `swiftlint lint --strict` |
 | iOS | SwiftFormat | `swiftformat --lint .` |
 | iOS | build | `xcodebuild build` |
 | iOS | test | `xcodebuild test` |
+| iOS | suppress check | `grep -rn 'swiftlint:disable' --include='*.swift' ios/` (must be empty) |
+
+### Suppression Gate (Zero Tolerance)
+
+Pipeline agent'lari `@Suppress` (Android) veya `swiftlint:disable` (iOS) kullanarak lint kurallarini bypass edemez. Kural tetiklenirse, agent kodu duzelir veya lint aracini dogru sekilde konfigure eder. Detaylar: `docs/standards/faang-rules.md`
 
 ---
 

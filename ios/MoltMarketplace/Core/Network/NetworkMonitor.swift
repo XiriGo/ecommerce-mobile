@@ -28,7 +28,8 @@ final class NetworkMonitor: @unchecked Sendable {
 
     // MARK: - Internal
 
-    @MainActor private(set) var isConnected: Bool = true
+    @MainActor
+    private(set) var isConnected: Bool = true
 
     // MARK: - Private
 

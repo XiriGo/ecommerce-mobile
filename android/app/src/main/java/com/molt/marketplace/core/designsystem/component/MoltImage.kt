@@ -17,7 +17,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltColors
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltImage(
     url: String?,
     contentDescription: String?,
@@ -46,7 +45,6 @@ fun MoltImage(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltImagePlaceholderPreview() {
     MoltTheme {
         MoltImage(
@@ -59,7 +57,6 @@ private fun MoltImagePlaceholderPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltImageWithUrlPreview() {
     MoltTheme {
         MoltImage(

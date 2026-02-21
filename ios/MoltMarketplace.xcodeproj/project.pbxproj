@@ -33,7 +33,9 @@
 		41E203CA4ACD4858D18CC8FF /* MoltQuantityStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FE966B7E62C3FB20DE71F7 /* MoltQuantityStepper.swift */; };
 		425A79AD53D18471E2196DE7 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AE4565B462B9953D80DBFAED /* KeychainAccess */; };
 		428F9C423EE8639C27039849 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5796C24228555A16CCF6A61D /* FirebaseAnalytics */; };
-		42F1F5A39638F2088598A5BD /* AppRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B95A18B4A39BDDCB96B73 /* AppRouterTests.swift */; };
+		7CBC272BC38D7D384FC87A51 /* AppRouterDeepLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E03D67F210A11F42FF4DBD /* AppRouterDeepLinkTests.swift */; };
+		AB8A6E6630AAC4B692C31E78 /* AppRouterNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F6BF223FC75C43FF40431B /* AppRouterNavigationTests.swift */; };
+		F528989280188D39FC389C8F /* AppRouterStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F2A63DC7C376583279159 /* AppRouterStateTests.swift */; };
 		43C1A9A65312CF95DF058800 /* RetryPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C4AD2AAC913FBA29659E7 /* RetryPolicyTests.swift */; };
 		43D0EAAAC64517E6E5308593 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E8358851E4935F41B0CE9 /* TokenStorage.swift */; };
 		44A83862A0AB8C421F64A2F5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14FF9BF5CCFE0D100A0DE9 /* RouteView.swift */; };
@@ -48,7 +50,8 @@
 		528378B619B9F7144EAEF54B /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFBEC4AA37D04F36E6BC60F /* DeepLinkParser.swift */; };
 		55C27CE10C9D6E150CFA4216 /* AuthStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5660DADA3C0F9D3C43E0144 /* AuthStateManager.swift */; };
 		5644A9BF0B1ED1A7CAECE0EE /* PaginatedResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479AEDFBC00D6216FC901B13 /* PaginatedResponseTests.swift */; };
-		5B4CB99D1B90BEA9D49DF748 /* RouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13A3AD801FECBB3EC5A18A /* RouteTests.swift */; };
+		0AC10E2DBA6FE0AA2473E48C /* RouteAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897DE25ED094FD1F53CD9A6A /* RouteAuthTests.swift */; };
+		752DB3CAFB4D85EFA505E559 /* RoutePropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC4921A460584155B066BB4 /* RoutePropertyTests.swift */; };
 		5DF52A98F821A4E4871C458C /* BiometricTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7D7F30449E832BB4D0EAB0 /* BiometricTokenStorage.swift */; };
 		5F343A095F070928509833A3 /* MedusaErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AA30517DCE0975BCA83996 /* MedusaErrorDTO.swift */; };
 		5F70D64EE628C39FA1CB03E6 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9773618D07782D6051910CDC /* LoginRequest.swift */; };
@@ -118,7 +121,9 @@
 		F15E0A7AAD9B55CFEC7535B9 /* MoltBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBDDF463EB5B265CD4BCCF6 /* MoltBadge.swift */; };
 		F546287CF92E4AE404B38BC1 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E098365BBBA105D187739634 /* AppError.swift */; };
 		F9B5AF7E3CD3698C5DB86D39 /* DeepLinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A394AB247A3AA5FFF29F0E0C /* DeepLinkParserTests.swift */; };
-		FC21CD2B17D7B718BAA825CC /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBE36492807ED88CC0BE787 /* APIClientTests.swift */; };
+		552C13056EF633B467DA4EB4 /* APIClientRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8E5ABCA13A0028076B8EBB /* APIClientRequestTests.swift */; };
+		E5BD1ADC840E017006EC8C3F /* APIClientRetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F4AB1EF70635DA2582E4B /* APIClientRetryTests.swift */; };
+		4D1D4F6C3AE148B18CD56DCE /* APIClientAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24417FE03095A9796E9ADE6 /* APIClientAuthTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,21 +236,26 @@
 		D09A0E1480A554F945A275BE /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		D275AC2ACBCA57A0C33897B9 /* MoltErrorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltErrorViewTests.swift; sourceTree = "<group>"; };
 		D4F2AD1491562F49BB0E8F1C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		D88B95A18B4A39BDDCB96B73 /* AppRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterTests.swift; sourceTree = "<group>"; };
+		92E03D67F210A11F42FF4DBD /* AppRouterDeepLinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterDeepLinkTests.swift; sourceTree = "<group>"; };
+		72F6BF223FC75C43FF40431B /* AppRouterNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterNavigationTests.swift; sourceTree = "<group>"; };
+		F50F2A63DC7C376583279159 /* AppRouterStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterStateTests.swift; sourceTree = "<group>"; };
 		DE5A571095BA57CBE0B37F3C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E098365BBBA105D187739634 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		E5067E50478883745968CBB3 /* JSONCoders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoders.swift; sourceTree = "<group>"; };
 		E6ADFD046F30F0866B8E5AB2 /* MoltEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltEmptyView.swift; sourceTree = "<group>"; };
 		E84BF7AD098442A03975DB84 /* MedusaErrorDTOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedusaErrorDTOTests.swift; sourceTree = "<group>"; };
 		E8DCD97E9BEEF8B1A0C6FDF3 /* AuthMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMiddlewareTests.swift; sourceTree = "<group>"; };
-		EBBE36492807ED88CC0BE787 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		1E8E5ABCA13A0028076B8EBB /* APIClientRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientRequestTests.swift; sourceTree = "<group>"; };
+		D75F4AB1EF70635DA2582E4B /* APIClientRetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientRetryTests.swift; sourceTree = "<group>"; };
+		A24417FE03095A9796E9ADE6 /* APIClientAuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientAuthTests.swift; sourceTree = "<group>"; };
 		EEAC7A0F26FB78C4AAF027A3 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		EF14957D737C403D4C202BBF /* MoltTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTypography.swift; sourceTree = "<group>"; };
 		EF3C4AD2AAC913FBA29659E7 /* RetryPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicyTests.swift; sourceTree = "<group>"; };
 		F14C6DE3529B0014E7875A5B /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F5660DADA3C0F9D3C43E0144 /* AuthStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManager.swift; sourceTree = "<group>"; };
 		F9A96599B81199BB8A97284E /* MoltTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltTabBar.swift; sourceTree = "<group>"; };
-		FA13A3AD801FECBB3EC5A18A /* RouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTests.swift; sourceTree = "<group>"; };
+		897DE25ED094FD1F53CD9A6A /* RouteAuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAuthTests.swift; sourceTree = "<group>"; };
+		4CC4921A460584155B066BB4 /* RoutePropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePropertyTests.swift; sourceTree = "<group>"; };
 		FA14FF9BF5CCFE0D100A0DE9 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		FA96805A12DE25D240C2CB03 /* MoltSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoltSpacing.swift; sourceTree = "<group>"; };
 		FFE56AEBE23D35F939C0381D /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
@@ -508,7 +518,9 @@
 		C889AA9BCE3BCA75CDDE54CD /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EBBE36492807ED88CC0BE787 /* APIClientTests.swift */,
+				A24417FE03095A9796E9ADE6 /* APIClientAuthTests.swift */,
+				1E8E5ABCA13A0028076B8EBB /* APIClientRequestTests.swift */,
+				D75F4AB1EF70635DA2582E4B /* APIClientRetryTests.swift */,
 				2D0825B67FCF99B51F85B49F /* AppErrorTests.swift */,
 				E8DCD97E9BEEF8B1A0C6FDF3 /* AuthMiddlewareTests.swift */,
 				1FF33FF33FB4EC6AEEB784EB /* EndpointTests.swift */,
@@ -572,10 +584,13 @@
 		ECAB9977C258ECE7112A2333 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D88B95A18B4A39BDDCB96B73 /* AppRouterTests.swift */,
+				92E03D67F210A11F42FF4DBD /* AppRouterDeepLinkTests.swift */,
+				72F6BF223FC75C43FF40431B /* AppRouterNavigationTests.swift */,
+				F50F2A63DC7C376583279159 /* AppRouterStateTests.swift */,
 				A394AB247A3AA5FFF29F0E0C /* DeepLinkParserTests.swift */,
 				22E97CFB4756553EB57AB7E8 /* PlaceholderViewTests.swift */,
-				FA13A3AD801FECBB3EC5A18A /* RouteTests.swift */,
+				897DE25ED094FD1F53CD9A6A /* RouteAuthTests.swift */,
+				4CC4921A460584155B066BB4 /* RoutePropertyTests.swift */,
 				D0311F008B3C58A3E0A41D0E /* TabTests.swift */,
 			);
 			path = Navigation;
@@ -806,9 +821,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC21CD2B17D7B718BAA825CC /* APIClientTests.swift in Sources */,
+				552C13056EF633B467DA4EB4 /* APIClientRequestTests.swift in Sources */,
+				E5BD1ADC840E017006EC8C3F /* APIClientRetryTests.swift in Sources */,
+				4D1D4F6C3AE148B18CD56DCE /* APIClientAuthTests.swift in Sources */,
 				1F08419AA4629196765E97C5 /* AppErrorTests.swift in Sources */,
-				42F1F5A39638F2088598A5BD /* AppRouterTests.swift in Sources */,
+				7CBC272BC38D7D384FC87A51 /* AppRouterDeepLinkTests.swift in Sources */,
+				AB8A6E6630AAC4B692C31E78 /* AppRouterNavigationTests.swift in Sources */,
+				F528989280188D39FC389C8F /* AppRouterStateTests.swift in Sources */,
 				AFAA7AA79865A2114D52CEAA /* ArchitectureTests.swift in Sources */,
 				1008984D38E1A6167D499739 /* AuthEndpointTests.swift in Sources */,
 				245DFD38BA4FA75CB95522AB /* AuthMiddlewareTests.swift in Sources */,
@@ -845,7 +864,8 @@
 				5644A9BF0B1ED1A7CAECE0EE /* PaginatedResponseTests.swift in Sources */,
 				6948B56CAD17B3711D93C2AB /* PlaceholderViewTests.swift in Sources */,
 				43C1A9A65312CF95DF058800 /* RetryPolicyTests.swift in Sources */,
-				5B4CB99D1B90BEA9D49DF748 /* RouteTests.swift in Sources */,
+				0AC10E2DBA6FE0AA2473E48C /* RouteAuthTests.swift in Sources */,
+				752DB3CAFB4D85EFA505E559 /* RoutePropertyTests.swift in Sources */,
 				104E4EBBB9C3700F057B830C /* SessionManagerTests.swift in Sources */,
 				C89A1E2088B67793A52C3F8E /* TabTests.swift in Sources */,
 				8BD1BEE7E7126D835ED5D823 /* TokenProviderTests.swift in Sources */,

@@ -80,13 +80,13 @@ struct PaginatedResponseTests {
 
     @Test("decodes PaginationMeta from JSON correctly")
     func test_decode_validJSON_isDecodedCorrectly() throws {
-        let json = try #require("""
+        let json = Data("""
         {
             "count": 142,
             "limit": 20,
             "offset": 20
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         let meta = try JSONDecoder.api.decode(PaginationMeta.self, from: json)
 
@@ -98,13 +98,13 @@ struct PaginatedResponseTests {
 
     @Test("decodes PaginationMeta and correctly computes hasMore false")
     func test_decode_lastPage_hasMoreIsFalse() throws {
-        let json = try #require("""
+        let json = Data("""
         {
             "count": 142,
             "limit": 20,
             "offset": 140
         }
-        """.data(using: .utf8))
+        """.utf8)
 
         let meta = try JSONDecoder.api.decode(PaginationMeta.self, from: json)
         // 140 + 20 = 160 >= 142 → hasMore = false

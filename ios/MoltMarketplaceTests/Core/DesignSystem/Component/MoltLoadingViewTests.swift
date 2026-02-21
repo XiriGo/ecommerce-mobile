@@ -1,6 +1,8 @@
 import Testing
 @testable import MoltMarketplace
 
+private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
+
 // MARK: - MoltLoadingViewTests
 
 @Suite("MoltLoadingView Tests")
@@ -12,7 +14,7 @@ struct MoltLoadingViewTests {
         #expect(true)
     }
 
-    @Test("MoltLoadingView body is a valid View", .disabled("SwiftUI body requires runtime environment; use UI tests instead"))
+    @Test("MoltLoadingView body is a valid View", .disabled(swiftUIDisabledReason))
     func test_body_isValidView() {
         let view = MoltLoadingView()
         let body = view.body
@@ -32,7 +34,7 @@ struct MoltLoadingIndicatorTests {
         #expect(true)
     }
 
-    @Test("MoltLoadingIndicator body is a valid View", .disabled("SwiftUI body requires runtime environment; use UI tests instead"))
+    @Test("MoltLoadingIndicator body is a valid View", .disabled(swiftUIDisabledReason))
     func test_body_isValidView() {
         let indicator = MoltLoadingIndicator()
         let body = indicator.body

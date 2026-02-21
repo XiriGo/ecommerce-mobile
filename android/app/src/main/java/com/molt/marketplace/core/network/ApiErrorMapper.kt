@@ -51,7 +51,10 @@ object ApiErrorMapper {
             exception.response()?.errorBody()?.string()?.let { body ->
                 json.decodeFromString<MedusaErrorDto>(body)
             }
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: SerializationException) {
+            Timber.d(e, "Failed to parse error body")
+            null
+        } catch (e: IOException) {
             Timber.d(e, "Failed to parse error body")
             null
         }

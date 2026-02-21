@@ -176,8 +176,8 @@ struct AuthEndpointTests {
         }
     }
 
-    @Test("all endpoints have nil queryItems by default")
-    func test_allEndpoints_haveNilQueryItems() {
+    @Test("all endpoints have empty queryItems by default")
+    func test_allEndpoints_haveEmptyQueryItems() {
         let endpoints: [AuthEndpoint] = [
             .login(email: "e@e.com", password: "p"),
             .register(email: "e@e.com", password: "p"),
@@ -186,7 +186,7 @@ struct AuthEndpointTests {
             .refreshToken,
         ]
         for endpoint in endpoints {
-            #expect(endpoint.queryItems == nil)
+            #expect(endpoint.queryItems.isEmpty)
         }
     }
 }

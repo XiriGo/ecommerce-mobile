@@ -3,6 +3,7 @@ package com.molt.marketplace.core.auth.di
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeyTemplates
 import com.google.crypto.tink.KeysetHandle
+import com.google.crypto.tink.RegistryConfiguration
 import com.google.crypto.tink.aead.AeadConfig
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import dagger.Binds
@@ -58,8 +59,7 @@ object AuthProvidesModule {
             .withMasterKeyUri(MASTER_KEY_URI)
             .build()
             .keysetHandle
-        @Suppress("DEPRECATION")
-        return keysetHandle.getPrimitive(Aead::class.java)
+        return keysetHandle.getPrimitive(RegistryConfiguration.get(), Aead::class.java)
     }
 
     @Provides

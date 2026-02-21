@@ -2,7 +2,8 @@ import Foundation
 
 // MARK: - AuthStateManagerImpl
 
-@MainActor @Observable
+@MainActor
+@Observable
 final class AuthStateManagerImpl: AuthStateManager, @unchecked Sendable {
     // MARK: - Lifecycle
 
@@ -34,6 +35,5 @@ final class AuthStateManagerImpl: AuthStateManager, @unchecked Sendable {
 
     // MARK: - Private
 
-    @ObservationIgnored
-    private let tokenStorage: TokenStorage
+    @ObservationIgnored private let tokenStorage: TokenStorage
 }

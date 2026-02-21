@@ -22,7 +22,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltQuantityStepper(
     quantity: Int,
     onQuantityChange: (Int) -> Unit,
@@ -71,7 +70,6 @@ fun MoltQuantityStepper(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltQuantityStepperPreview() {
     MoltTheme {
         MoltQuantityStepper(quantity = 3, onQuantityChange = {})
@@ -80,7 +78,6 @@ private fun MoltQuantityStepperPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltQuantityStepperMinPreview() {
     MoltTheme {
         MoltQuantityStepper(quantity = 1, onQuantityChange = {})
@@ -89,7 +86,6 @@ private fun MoltQuantityStepperMinPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltQuantityStepperMaxPreview() {
     MoltTheme {
         MoltQuantityStepper(quantity = 99, onQuantityChange = {})

@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
+import java.io.IOException
+import java.security.GeneralSecurityException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +30,10 @@ class AuthStateManagerImpl @Inject constructor(
     override suspend fun checkStoredToken() {
         val token = try {
             tokenStorage.getAccessToken()
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: GeneralSecurityException) {
+            Timber.w(e, "Failed to read stored token")
+            null
+        } catch (e: IOException) {
             Timber.w(e, "Failed to read stored token")
             null
         }

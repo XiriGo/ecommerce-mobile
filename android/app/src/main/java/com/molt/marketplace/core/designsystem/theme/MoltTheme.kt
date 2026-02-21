@@ -69,7 +69,6 @@ private val MoltDarkColorScheme = darkColorScheme(
 )
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colorScheme = if (darkTheme) {
         MoltDarkColorScheme

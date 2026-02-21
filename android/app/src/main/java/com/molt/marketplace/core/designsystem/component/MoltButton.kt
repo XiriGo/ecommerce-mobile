@@ -1,8 +1,7 @@
-@file:Suppress("MatchingDeclarationName")
-
 package com.molt.marketplace.core.designsystem.component
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,15 +25,7 @@ import com.molt.marketplace.R
 import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
-enum class MoltButtonStyle {
-    Primary,
-    Secondary,
-    Outlined,
-    Text,
-}
-
 @Composable
-@Suppress("ktlint:standard:function-naming", "CyclomaticComplexMethod", "CognitiveComplexMethod")
 fun MoltButton(
     text: String,
     onClick: () -> Unit,
@@ -46,7 +37,9 @@ fun MoltButton(
     fullWidth: Boolean = style == MoltButtonStyle.Primary || style == MoltButtonStyle.Secondary,
 ) {
     val loadingDescription = stringResource(R.string.common_loading_message)
+    val widthModifier = if (fullWidth) Modifier.fillMaxWidth() else Modifier
     val buttonModifier = modifier
+        .then(widthModifier)
         .heightIn(min = MoltSpacing.MinTouchTarget)
         .then(
             if (loading) {
@@ -57,83 +50,98 @@ fun MoltButton(
         )
 
     val content: @Composable () -> Unit = {
-        if (loading) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(20.dp),
-                strokeWidth = 2.dp,
-                color = if (style == MoltButtonStyle.Primary) {
-                    MaterialTheme.colorScheme.onPrimary
-                } else {
-                    MaterialTheme.colorScheme.primary
-                },
-            )
-            Spacer(modifier = Modifier.width(MoltSpacing.SM))
-        }
-        if (!loading && leadingIcon != null) {
-            Icon(
-                imageVector = leadingIcon,
-                contentDescription = null,
-                modifier = Modifier.size(18.dp),
-            )
-            Spacer(modifier = Modifier.width(MoltSpacing.SM))
-        }
-        Text(text = text)
+        MoltButtonContent(
+            text = text,
+            loading = loading,
+            isPrimary = style == MoltButtonStyle.Primary,
+            leadingIcon = leadingIcon,
+        )
     }
 
-    when (style) {
-        MoltButtonStyle.Primary -> {
-            if (fullWidth) {
-                Button(
-                    onClick = onClick,
-                    modifier = buttonModifier,
-                    enabled = enabled && !loading,
-                    content = { content() },
-                )
+    val isEnabled = enabled && !loading
+    MoltButtonByStyle(
+        style = style,
+        onClick = onClick,
+        modifier = buttonModifier,
+        enabled = isEnabled,
+        content = content,
+    )
+}
+
+@Composable
+private fun MoltButtonContent(
+    text: String,
+    loading: Boolean,
+    isPrimary: Boolean,
+    leadingIcon: ImageVector?,
+) {
+    if (loading) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(20.dp),
+            strokeWidth = 2.dp,
+            color = if (isPrimary) {
+                MaterialTheme.colorScheme.onPrimary
             } else {
-                Button(
-                    onClick = onClick,
-                    modifier = buttonModifier,
-                    enabled = enabled && !loading,
-                    content = { content() },
-                )
-            }
-        }
+                MaterialTheme.colorScheme.primary
+            },
+        )
+        Spacer(modifier = Modifier.width(MoltSpacing.SM))
+    }
+    if (!loading && leadingIcon != null) {
+        Icon(
+            imageVector = leadingIcon,
+            contentDescription = null,
+            modifier = Modifier.size(18.dp),
+        )
+        Spacer(modifier = Modifier.width(MoltSpacing.SM))
+    }
+    Text(text = text)
+}
 
-        MoltButtonStyle.Secondary -> {
-            OutlinedButton(
-                onClick = onClick,
-                modifier = buttonModifier,
-                enabled = enabled && !loading,
-                content = { content() },
-            )
-        }
+@Composable
+private fun MoltButtonByStyle(
+    style: MoltButtonStyle,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    enabled: Boolean,
+    content: @Composable () -> Unit,
+) {
+    when (style) {
+        MoltButtonStyle.Primary -> Button(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            content = { content() },
+        )
 
-        MoltButtonStyle.Outlined -> {
-            OutlinedButton(
-                onClick = onClick,
-                modifier = buttonModifier,
-                enabled = enabled && !loading,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                content = { content() },
-            )
-        }
+        MoltButtonStyle.Secondary -> OutlinedButton(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            content = { content() },
+        )
 
-        MoltButtonStyle.Text -> {
-            TextButton(
-                onClick = onClick,
-                modifier = buttonModifier,
-                enabled = enabled && !loading,
-                content = { content() },
-            )
-        }
+        MoltButtonStyle.Outlined -> OutlinedButton(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            ),
+            content = { content() },
+        )
+
+        MoltButtonStyle.Text -> TextButton(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            content = { content() },
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltButtonPrimaryPreview() {
     MoltTheme {
         MoltButton(text = "Add to Cart", onClick = {})
@@ -142,7 +150,6 @@ private fun MoltButtonPrimaryPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltButtonSecondaryPreview() {
     MoltTheme {
         MoltButton(text = "View Details", onClick = {}, style = MoltButtonStyle.Secondary)
@@ -151,7 +158,6 @@ private fun MoltButtonSecondaryPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltButtonLoadingPreview() {
     MoltTheme {
         MoltButton(text = "Loading", onClick = {}, loading = true)
@@ -160,7 +166,6 @@ private fun MoltButtonLoadingPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltButtonDisabledPreview() {
     MoltTheme {
         MoltButton(text = "Disabled", onClick = {}, enabled = false)

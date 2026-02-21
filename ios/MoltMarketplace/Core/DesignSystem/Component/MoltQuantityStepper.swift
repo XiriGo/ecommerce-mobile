@@ -37,8 +37,10 @@ struct MoltQuantityStepper: View {
             switch direction {
             case .increment:
                 increaseQuantity()
+
             case .decrement:
                 decreaseQuantity()
+
             @unknown default:
                 break
             }

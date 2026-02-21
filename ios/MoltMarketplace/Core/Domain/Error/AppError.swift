@@ -21,12 +21,16 @@ extension Error {
         switch appError {
         case .network:
             return String(localized: "common_error_network")
+
         case .server:
             return String(localized: "common_error_server")
+
         case .unauthorized:
             return String(localized: "common_error_unauthorized")
+
         case .notFound:
             return String(localized: "common_error_not_found")
+
         case .unknown:
             return String(localized: "common_error_unknown")
         }

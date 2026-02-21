@@ -19,7 +19,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltTopBar(
     title: String,
     modifier: Modifier = Modifier,
@@ -56,7 +55,6 @@ fun MoltTopBar(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltTopBarPreview() {
     MoltTheme {
         MoltTopBar(title = "Products")
@@ -65,7 +63,6 @@ private fun MoltTopBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltTopBarWithBackPreview() {
     MoltTheme {
         MoltTopBar(title = "Product Details", onBackClick = {})

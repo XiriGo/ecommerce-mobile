@@ -15,12 +15,16 @@ enum AuthEndpoint: Endpoint {
         switch self {
         case .login:
             "/auth/customer/emailpass"
+
         case .register:
             "/auth/customer/emailpass/register"
+
         case .createSession:
             "/auth/session"
+
         case .destroySession:
             "/auth/session"
+
         case .refreshToken:
             "/auth/token/refresh"
         }
@@ -30,6 +34,7 @@ enum AuthEndpoint: Endpoint {
         switch self {
         case .login, .register, .createSession, .refreshToken:
             .post
+
         case .destroySession:
             .delete
         }
@@ -39,8 +44,10 @@ enum AuthEndpoint: Endpoint {
         switch self {
         case let .login(email, password):
             LoginRequest(email: email, password: password)
+
         case let .register(email, password):
             RegisterRequest(email: email, password: password)
+
         case .createSession, .destroySession, .refreshToken:
             nil
         }
@@ -50,6 +57,7 @@ enum AuthEndpoint: Endpoint {
         switch self {
         case .login, .register:
             false
+
         case .createSession, .destroySession, .refreshToken:
             true
         }

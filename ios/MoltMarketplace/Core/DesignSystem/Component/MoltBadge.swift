@@ -1,4 +1,3 @@
-// swiftlint:disable no_magic_numbers
 import SwiftUI
 
 // MARK: - MoltBadgeStatus
@@ -47,8 +46,7 @@ struct MoltCountBadge: View {
     // MARK: - Body
 
     var body: some View {
-        // swiftlint:disable:next empty_count
-        if count > 0 {
+        if hasItems {
             Text(displayText)
                 .font(MoltTypography.labelSmall)
                 .foregroundStyle(MoltColors.badgeText)
@@ -63,6 +61,10 @@ struct MoltCountBadge: View {
     }
 
     // MARK: - Private
+
+    private var hasItems: Bool {
+        count >= 1
+    }
 
     private var displayText: String {
         count >= 100 ? "99+" : "\(count)"
@@ -120,5 +122,3 @@ struct MoltStatusBadge: View {
     }
     .padding()
 }
-
-// swiftlint:enable no_magic_numbers

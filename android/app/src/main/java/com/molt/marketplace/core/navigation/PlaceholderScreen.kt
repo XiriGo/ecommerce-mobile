@@ -23,7 +23,6 @@ import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun PlaceholderScreen(
     title: String,
     icon: ImageVector,
@@ -62,7 +61,6 @@ fun PlaceholderScreen(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun PlaceholderScreenPreview() {
     MoltTheme {
         PlaceholderScreen(

@@ -824,6 +824,36 @@ Workflow file: `.github/workflows/android-ci.yml`
 - Coverage must not decrease
 - No new lint warnings
 - Build succeeds for both debug and release
+- Zero `@Suppress` annotations in production code (see Zero Lint Suppression Policy in `faang-rules.md`)
+
+### Compose Function Naming (ktlint)
+
+Compose `@Composable` functions use PascalCase by convention, which conflicts with ktlint's default function-naming rule. This is handled via `.editorconfig` configuration -- **not** inline `@Suppress`:
+
+```editorconfig
+# .editorconfig
+ktlint_function_naming_ignore_when_annotated_with = Composable,Preview
+```
+
+### Exception Handling (detekt)
+
+Detekt's `TooGenericExceptionCaught` rule requires catching specific exception types. **Never** suppress this rule with `@Suppress`. Instead, catch the narrowest applicable types:
+
+```kotlin
+// Wrong
+try { apiCall() } catch (@Suppress("TooGenericExceptionCaught") e: Exception) { ... }
+
+// Right
+try {
+    apiCall()
+} catch (e: IOException) {
+    // Network failure
+} catch (e: HttpException) {
+    // Server error
+} catch (e: SerializationException) {
+    // Parse failure
+}
+```
 
 ---
 

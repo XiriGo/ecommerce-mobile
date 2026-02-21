@@ -89,6 +89,36 @@ struct MoltTabBar: View {
 
 // MARK: - Previews
 
+// MARK: - Preview Helpers
+
+private let previewTabItems: [MoltTabItem] = [
+    MoltTabItem(
+        id: 0,
+        label: String(localized: "common_tab_home"),
+        icon: "house",
+        selectedIcon: "house.fill"
+    ),
+    MoltTabItem(
+        id: 1,
+        label: String(localized: "common_tab_categories"),
+        icon: "square.grid.2x2",
+        selectedIcon: "square.grid.2x2.fill"
+    ),
+    MoltTabItem(
+        id: 2,
+        label: String(localized: "common_tab_cart"),
+        icon: "cart",
+        selectedIcon: "cart.fill",
+        badgeCount: 3
+    ),
+    MoltTabItem(
+        id: 3,
+        label: String(localized: "common_tab_profile"),
+        icon: "person",
+        selectedIcon: "person.fill"
+    ),
+]
+
 #Preview("MoltTabBar") {
     struct PreviewWrapper: View {
         @State var selectedIndex = 0
@@ -97,33 +127,7 @@ struct MoltTabBar: View {
             VStack {
                 Spacer()
                 MoltTabBar(
-                    items: [
-                        MoltTabItem(
-                            id: 0,
-                            label: String(localized: "common_tab_home"),
-                            icon: "house",
-                            selectedIcon: "house.fill"
-                        ),
-                        MoltTabItem(
-                            id: 1,
-                            label: String(localized: "common_tab_categories"),
-                            icon: "square.grid.2x2",
-                            selectedIcon: "square.grid.2x2.fill"
-                        ),
-                        MoltTabItem(
-                            id: 2,
-                            label: String(localized: "common_tab_cart"),
-                            icon: "cart",
-                            selectedIcon: "cart.fill",
-                            badgeCount: 3
-                        ),
-                        MoltTabItem(
-                            id: 3,
-                            label: String(localized: "common_tab_profile"),
-                            icon: "person",
-                            selectedIcon: "person.fill"
-                        ),
-                    ],
+                    items: previewTabItems,
                     selectedIndex: $selectedIndex
                 )
             }

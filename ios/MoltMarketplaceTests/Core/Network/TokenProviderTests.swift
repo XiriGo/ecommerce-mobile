@@ -23,6 +23,7 @@ final class FakeTokenProvider: TokenProvider, @unchecked Sendable {
         switch refreshResult {
         case .success(let token):
             return token
+
         case .failure(let error):
             throw error
         }

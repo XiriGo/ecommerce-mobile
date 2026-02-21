@@ -10,15 +10,30 @@ struct RetryPolicy: Sendable {
     let jitterFactor: Double
     let retryableStatusCodes: Set<Int>
 
+    // MARK: - Default Constants
+
+    private static let defaultMaxRetries = 3
+    private static let defaultBaseDelay: TimeInterval = 1.0
+    private static let defaultBackoffMultiplier: Double = 2.0
+    private static let defaultMaxDelay: TimeInterval = 8.0
+    private static let defaultJitterFactor: Double = 0.2
+    private static let httpInternalServerError = 500
+    private static let httpBadGateway = 502
+    private static let httpServiceUnavailable = 503
+    private static let httpGatewayTimeout = 504
+    private static let defaultRetryableStatusCodes: Set<Int> = [
+        httpInternalServerError, httpBadGateway, httpServiceUnavailable, httpGatewayTimeout,
+    ]
+
     // MARK: - Internal
 
-    static let `default` = RetryPolicy(
-        maxRetries: 3,
-        baseDelay: 1.0,
-        backoffMultiplier: 2.0,
-        maxDelay: 8.0,
-        jitterFactor: 0.2,
-        retryableStatusCodes: [500, 502, 503, 504]
+    static let `default` = Self(
+        maxRetries: defaultMaxRetries,
+        baseDelay: defaultBaseDelay,
+        backoffMultiplier: defaultBackoffMultiplier,
+        maxDelay: defaultMaxDelay,
+        jitterFactor: defaultJitterFactor,
+        retryableStatusCodes: defaultRetryableStatusCodes
     )
 
     func delay(forAttempt attempt: Int) -> TimeInterval {

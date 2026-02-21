@@ -1,5 +1,3 @@
-@file:Suppress("MatchingDeclarationName")
-
 package com.molt.marketplace.core.designsystem.component
 
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +18,7 @@ import com.molt.marketplace.core.designsystem.theme.MoltColors
 import com.molt.marketplace.core.designsystem.theme.MoltSpacing
 import com.molt.marketplace.core.designsystem.theme.MoltTheme
 
-enum class MoltPriceSize {
-    Small,
-    Medium,
-    Large,
-}
-
 @Composable
-@Suppress("ktlint:standard:function-naming")
 fun MoltPriceText(
     price: String,
     modifier: Modifier = Modifier,
@@ -85,7 +76,6 @@ fun MoltPriceText(
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltPriceTextRegularPreview() {
     MoltTheme {
         MoltPriceText(price = "29.99")
@@ -94,7 +84,6 @@ private fun MoltPriceTextRegularPreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltPriceTextSalePreview() {
     MoltTheme {
         MoltPriceText(price = "29.99", originalPrice = "39.99")
@@ -103,7 +92,6 @@ private fun MoltPriceTextSalePreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltPriceTextLargePreview() {
     MoltTheme {
         MoltPriceText(price = "199.99", originalPrice = "249.99", size = MoltPriceSize.Large)
@@ -112,7 +100,6 @@ private fun MoltPriceTextLargePreview() {
 
 @Preview(showBackground = true)
 @Composable
-@Suppress("ktlint:standard:function-naming")
 private fun MoltPriceTextSmallPreview() {
     MoltTheme {
         MoltPriceText(price = "9.99", size = MoltPriceSize.Small)
