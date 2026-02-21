@@ -28,9 +28,7 @@ struct NetworkMonitorTests {
     func test_container_networkMonitor_isObservable() {
         let monitor = NetworkMonitor()
         // NetworkMonitor is @Observable -- verify it is a reference type (class)
-        let ref1: AnyObject = monitor
-        let ref2: AnyObject = monitor
-        #expect(ref1 === ref2)
+        #expect(type(of: monitor) is AnyClass)
     }
 
     // MARK: - Additional Coverage

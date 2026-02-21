@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 import Foundation
 import Testing
 @testable import MoltMarketplace
@@ -323,8 +324,11 @@ struct RouteAssociatedValuesTests {
 
     @Test("same routes with same associated values are equal")
     func test_hashable_sameRouteSameValues_areEqual() {
+        // swiftlint:disable:next identical_operands
         #expect(Route.productDetail(productId: "p1") == Route.productDetail(productId: "p1"))
+        // swiftlint:disable:next identical_operands
         #expect(Route.orderDetail(orderId: "o1") == Route.orderDetail(orderId: "o1"))
+        // swiftlint:disable:next identical_operands
         #expect(Route.login(returnTo: "checkout") == Route.login(returnTo: "checkout"))
     }
 

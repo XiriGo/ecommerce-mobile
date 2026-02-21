@@ -34,7 +34,7 @@ struct LocalizableTests {
     @Test("Retry button string exists for all languages")
     func retryButtonExists() {
         #expect(localizedString("common_retry_button", language: "en") == "Retry")
-        #expect(localizedString("common_retry_button", language: "mt") == "Erga' ipprova")
+        #expect(localizedString("common_retry_button", language: "mt") == "Erġa' pprova")
         #expect(localizedString("common_retry_button", language: "tr") == "Tekrar Dene")
     }
 
@@ -112,7 +112,7 @@ struct LocalizableTests {
     @Test("Close button exists for all languages")
     func closeButtonExists() {
         #expect(localizedString("common_close_button", language: "en") == "Close")
-        #expect(localizedString("common_close_button", language: "mt") == "Aghlaq")
+        #expect(localizedString("common_close_button", language: "mt") == "Agħlaq")
         #expect(localizedString("common_close_button", language: "tr") == "Kapat")
     }
 

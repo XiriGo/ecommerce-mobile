@@ -52,6 +52,7 @@ private struct CustomHeaderEndpoint: Endpoint {
 
 @Suite("Endpoint Tests")
 struct EndpointTests {
+    // swiftlint:disable:next force_unwrapping
     private let baseURL = URL(string: "https://api-test.molt.mt")!
 
     // MARK: - Path

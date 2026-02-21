@@ -1,12 +1,12 @@
 package com.molt.marketplace.core.auth
 
-import com.molt.marketplace.core.auth.dto.AuthTokenResponse
-import com.molt.marketplace.core.auth.dto.LoginRequest
-import com.molt.marketplace.core.auth.dto.RegisterRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Header
 import retrofit2.http.POST
+import com.molt.marketplace.core.auth.dto.AuthTokenResponse
+import com.molt.marketplace.core.auth.dto.LoginRequest
+import com.molt.marketplace.core.auth.dto.RegisterRequest
 
 interface AuthApi {
 

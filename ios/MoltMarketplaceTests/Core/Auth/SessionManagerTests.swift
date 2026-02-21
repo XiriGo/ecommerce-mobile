@@ -34,19 +34,21 @@ struct SessionManagerTests {
             callCount += 1
             // First call: login endpoint -> returns token
             // Second call: createSession (fire-and-forget) -> 200
-            let response = HTTPURLResponse(
-                url: request.url!,
+            let requestURL = try #require(request.url)
+            let response = try #require(HTTPURLResponse(
+                url: requestURL,
                 statusCode: 200,
                 httpVersion: "HTTP/1.1",
                 headerFields: ["Content-Type": "application/json"]
-            )!
+            ))
             let json: String
             if callCount == 1 {
                 json = #"{"token":"login_jwt_token"}"#
             } else {
                 json = "{}"
             }
-            return (response, json.data(using: .utf8)!)
+            let data = try #require(json.data(using: .utf8))
+            return (response, data)
         }
 
         let storage = FakeTokenStorage()
@@ -97,19 +99,21 @@ struct SessionManagerTests {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
-            let response = HTTPURLResponse(
-                url: request.url!,
+            let requestURL = try #require(request.url)
+            let response = try #require(HTTPURLResponse(
+                url: requestURL,
                 statusCode: 200,
                 httpVersion: "HTTP/1.1",
                 headerFields: ["Content-Type": "application/json"]
-            )!
+            ))
             let json: String
             if callCount == 1 {
                 json = #"{"token":"register_jwt_token"}"#
             } else {
                 json = "{}"
             }
-            return (response, json.data(using: .utf8)!)
+            let data = try #require(json.data(using: .utf8))
+            return (response, data)
         }
 
         let storage = FakeTokenStorage()

@@ -1,10 +1,6 @@
 package com.molt.marketplace.core.auth
 
 import com.google.common.truth.Truth.assertThat
-import com.molt.marketplace.core.auth.dto.AuthTokenResponse
-import com.molt.marketplace.core.auth.dto.LoginRequest
-import com.molt.marketplace.core.auth.dto.RegisterRequest
-import com.molt.marketplace.core.domain.error.AppError
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -12,6 +8,10 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
+import com.molt.marketplace.core.auth.dto.AuthTokenResponse
+import com.molt.marketplace.core.auth.dto.LoginRequest
+import com.molt.marketplace.core.auth.dto.RegisterRequest
+import com.molt.marketplace.core.domain.error.AppError
 
 class SessionManagerTest {
 

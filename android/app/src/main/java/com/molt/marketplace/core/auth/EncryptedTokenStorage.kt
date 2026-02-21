@@ -1,11 +1,5 @@
 package com.molt.marketplace.core.auth
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import com.google.crypto.tink.Aead
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +9,12 @@ import timber.log.Timber
 import java.util.Base64
 import javax.inject.Inject
 import javax.inject.Singleton
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 
 private val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(
     name = "molt_auth_encrypted",
@@ -33,7 +33,7 @@ class EncryptedTokenStorage @Inject constructor(
             val preferences = dataStore.data.first()
             val encrypted = preferences[KEY_ACCESS_TOKEN] ?: return null
             decrypt(encrypted)
-        } catch (e: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
             Timber.w(e, "Failed to read access token, clearing corrupted data")
             clearTokens()
             null
@@ -53,12 +53,13 @@ class EncryptedTokenStorage @Inject constructor(
         }
     }
 
+    @Suppress("LabeledExpression")
     override fun getAccessTokenFlow(): Flow<String?> {
         return dataStore.data.map { preferences ->
             val encrypted = preferences[KEY_ACCESS_TOKEN] ?: return@map null
             try {
                 decrypt(encrypted)
-            } catch (e: Exception) {
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
                 Timber.w(e, "Failed to decrypt token in flow")
                 null
             }

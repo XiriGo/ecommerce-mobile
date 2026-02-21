@@ -10,13 +10,13 @@ struct MedusaErrorDTOTests {
 
     @Test("decodes full error with type message and code")
     func test_decode_fullError_withTypeMessageAndCode() throws {
-        let json = """
+        let json = try #require("""
         {
             "type": "not_found",
             "message": "Product with id prod_xxx was not found",
             "code": "RESOURCE_NOT_FOUND"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let dto = try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
 
@@ -27,12 +27,12 @@ struct MedusaErrorDTOTests {
 
     @Test("decodes error without optional code field")
     func test_decode_partialError_withoutCode_codeIsNil() throws {
-        let json = """
+        let json = try #require("""
         {
             "type": "unauthorized",
             "message": "Unauthorized access"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let dto = try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
 
@@ -43,13 +43,13 @@ struct MedusaErrorDTOTests {
 
     @Test("decodes server error with null code as nil")
     func test_decode_errorWithNullCode_codeIsNil() throws {
-        let json = """
+        let json = try #require("""
         {
             "type": "internal_server_error",
             "message": "An internal server error occurred",
             "code": null
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let dto = try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
 
@@ -59,12 +59,12 @@ struct MedusaErrorDTOTests {
     }
 
     @Test("throws error for malformed JSON missing required fields")
-    func test_decode_malformedJSON_missingRequiredFields_throwsError() {
-        let json = """
+    func test_decode_malformedJSON_missingRequiredFields_throwsError() throws {
+        let json = try #require("""
         {
             "type": "not_found"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         #expect(throws: (any Error).self) {
             try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
@@ -72,8 +72,8 @@ struct MedusaErrorDTOTests {
     }
 
     @Test("throws error for completely malformed JSON")
-    func test_decode_invalidJSON_throwsError() {
-        let json = "not valid json".data(using: .utf8)!
+    func test_decode_invalidJSON_throwsError() throws {
+        let json = try #require("not valid json".data(using: .utf8))
 
         #expect(throws: (any Error).self) {
             try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
@@ -81,8 +81,8 @@ struct MedusaErrorDTOTests {
     }
 
     @Test("throws error for empty JSON object missing required fields")
-    func test_decode_emptyJSON_throwsError() {
-        let json = "{}".data(using: .utf8)!
+    func test_decode_emptyJSON_throwsError() throws {
+        let json = try #require("{}".data(using: .utf8))
 
         #expect(throws: (any Error).self) {
             try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
@@ -111,13 +111,13 @@ struct MedusaErrorDTOTests {
 
     @Test("decodes invalid_data error type for validation errors")
     func test_decode_invalidDataType_isDecodedCorrectly() throws {
-        let json = """
+        let json = try #require("""
         {
             "type": "invalid_data",
             "message": "Email is already in use",
             "code": "EMAIL_DUPLICATE"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let dto = try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
         #expect(dto.type == "invalid_data")
@@ -126,12 +126,12 @@ struct MedusaErrorDTOTests {
 
     @Test("decodes rate limit error type")
     func test_decode_rateLimitError_isDecodedCorrectly() throws {
-        let json = """
+        let json = try #require("""
         {
             "type": "rate_limit",
             "message": "Too many requests. Please try again later."
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let dto = try JSONDecoder.api.decode(MedusaErrorDTO.self, from: json)
         #expect(dto.type == "rate_limit")

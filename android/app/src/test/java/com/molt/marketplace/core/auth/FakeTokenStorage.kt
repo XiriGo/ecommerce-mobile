@@ -10,17 +10,17 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 class FakeTokenStorage : TokenStorage {
 
-    private val _tokenFlow = MutableStateFlow<String?>(null)
+    private val tokenFlow = MutableStateFlow<String?>(null)
 
-    override suspend fun getAccessToken(): String? = _tokenFlow.value
+    override suspend fun getAccessToken(): String? = tokenFlow.value
 
     override suspend fun saveAccessToken(token: String) {
-        _tokenFlow.value = token
+        tokenFlow.value = token
     }
 
     override suspend fun clearTokens() {
-        _tokenFlow.value = null
+        tokenFlow.value = null
     }
 
-    override fun getAccessTokenFlow(): Flow<String?> = _tokenFlow.asStateFlow()
+    override fun getAccessTokenFlow(): Flow<String?> = tokenFlow.asStateFlow()
 }

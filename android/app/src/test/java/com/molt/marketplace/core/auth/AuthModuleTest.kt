@@ -1,11 +1,11 @@
 package com.molt.marketplace.core.auth
 
 import com.google.common.truth.Truth.assertThat
-import com.molt.marketplace.core.auth.dto.AuthTokenResponse
-import com.molt.marketplace.core.network.TokenProvider
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import com.molt.marketplace.core.auth.dto.AuthTokenResponse
+import com.molt.marketplace.core.network.TokenProvider
 
 /**
  * Tests for the DI-wiring contracts defined in [com.molt.marketplace.core.auth.di.AuthModule].

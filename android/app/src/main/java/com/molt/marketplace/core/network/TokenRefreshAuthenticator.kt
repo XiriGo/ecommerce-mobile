@@ -24,25 +24,31 @@ class TokenRefreshAuthenticator @Inject constructor(
 
         return runBlocking {
             mutex.withLock {
-                val failedToken = response.request.header("Authorization")
-                    ?.removePrefix("Bearer ")
-
+                val failedToken = extractFailedToken(response)
                 val currentToken = tokenProvider.getAccessToken()
-
-                if (currentToken != null && currentToken != failedToken) {
-                    rebuildRequestWithToken(response.request, currentToken)
-                } else {
-                    val newToken = tokenProvider.refreshToken()
-                    if (newToken != null) {
-                        rebuildRequestWithToken(response.request, newToken)
-                    } else {
-                        Timber.w("Token refresh failed, clearing tokens")
-                        tokenProvider.clearTokens()
-                        null
-                    }
-                }
+                resolveToken(response.request, failedToken, currentToken)
             }
         }
+    }
+
+    private fun extractFailedToken(response: Response): String? =
+        response.request.header("Authorization")?.removePrefix("Bearer ")
+
+    private suspend fun resolveToken(
+        request: Request,
+        failedToken: String?,
+        currentToken: String?,
+    ): Request? {
+        if (currentToken != null && currentToken != failedToken) {
+            return rebuildRequestWithToken(request, currentToken)
+        }
+        val newToken = tokenProvider.refreshToken()
+        if (newToken != null) {
+            return rebuildRequestWithToken(request, newToken)
+        }
+        Timber.w("Token refresh failed, clearing tokens")
+        tokenProvider.clearTokens()
+        return null
     }
 
     private fun rebuildRequestWithToken(request: Request, token: String): Request {

@@ -104,11 +104,16 @@ struct AppErrorTests {
 
     @Test("same error cases with same values are equal")
     func test_sameCaseSameValues_areEqual() {
+        // swiftlint:disable identical_operands
         #expect(AppError.network() == AppError.network())
-        #expect(AppError.server(code: 422, message: "Validation error") == AppError.server(code: 422, message: "Validation error"))
+        #expect(
+            AppError.server(code: 422, message: "Validation error")
+                == AppError.server(code: 422, message: "Validation error")
+        )
         #expect(AppError.notFound() == AppError.notFound())
         #expect(AppError.unauthorized() == AppError.unauthorized())
         #expect(AppError.unknown() == AppError.unknown())
+        // swiftlint:enable identical_operands
     }
 
     // MARK: - toUserMessage Mapping

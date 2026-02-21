@@ -49,7 +49,7 @@ class TokenRefreshAuthenticatorTest {
         assertThat(response.code).isEqualTo(200)
         assertThat(server.requestCount).isEqualTo(2)
 
-        val retryRequest = server.takeRequest() // first (401)
+        server.takeRequest() // first (401)
         val secondRequest = server.takeRequest() // retry (200)
         assertThat(secondRequest.getHeader("Authorization")).isEqualTo("Bearer new-token")
     }
@@ -87,7 +87,7 @@ class TokenRefreshAuthenticatorTest {
         val response = client.newCall(request).execute()
 
         assertThat(response.code).isEqualTo(200)
-        val retryRequest = server.takeRequest()
+        server.takeRequest()
         val secondRequest = server.takeRequest()
         assertThat(secondRequest.getHeader("Authorization"))
             .isEqualTo("Bearer new-token-from-another-request")

@@ -71,16 +71,16 @@ class AppErrorEdgeCasesTest {
 
     @Test
     fun `two Network errors with same message are equal`() {
-        val a = AppError.Network("same message")
-        val b = AppError.Network("same message")
-        assertThat(a).isEqualTo(b)
+        val first = AppError.Network("same message")
+        val second = AppError.Network("same message")
+        assertThat(first).isEqualTo(second)
     }
 
     @Test
     fun `two Network errors with different messages are not equal`() {
-        val a = AppError.Network("message A")
-        val b = AppError.Network("message B")
-        assertThat(a).isNotEqualTo(b)
+        val first = AppError.Network("message A")
+        val second = AppError.Network("message B")
+        assertThat(first).isNotEqualTo(second)
     }
 
     @Test

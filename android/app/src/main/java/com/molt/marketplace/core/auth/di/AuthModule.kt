@@ -1,21 +1,10 @@
 package com.molt.marketplace.core.auth.di
 
-import android.content.Context
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeyTemplates
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.aead.AeadConfig
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
-import com.molt.marketplace.BuildConfig
-import com.molt.marketplace.core.auth.AuthApi
-import com.molt.marketplace.core.auth.AuthStateManager
-import com.molt.marketplace.core.auth.AuthStateManagerImpl
-import com.molt.marketplace.core.auth.SessionManager
-import com.molt.marketplace.core.auth.TokenStorage
-import com.molt.marketplace.core.auth.EncryptedTokenStorage
-import com.molt.marketplace.core.di.UnauthenticatedClient
-import com.molt.marketplace.core.network.ApiClient
-import com.molt.marketplace.core.network.TokenProvider
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -26,6 +15,17 @@ import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
+import android.content.Context
+import com.molt.marketplace.BuildConfig
+import com.molt.marketplace.core.auth.AuthApi
+import com.molt.marketplace.core.auth.AuthStateManager
+import com.molt.marketplace.core.auth.AuthStateManagerImpl
+import com.molt.marketplace.core.auth.EncryptedTokenStorage
+import com.molt.marketplace.core.auth.SessionManager
+import com.molt.marketplace.core.auth.TokenStorage
+import com.molt.marketplace.core.di.UnauthenticatedClient
+import com.molt.marketplace.core.network.ApiClient
+import com.molt.marketplace.core.network.TokenProvider
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,6 +44,10 @@ abstract class AuthBindsModule {
 @InstallIn(SingletonComponent::class)
 object AuthProvidesModule {
 
+    private const val KEYSET_NAME = "molt_auth_keyset"
+    private const val PREF_FILE_NAME = "molt_auth_keyset_prefs"
+    private const val MASTER_KEY_URI = "android-keystore://molt_auth_master_key"
+
     @Provides
     @Singleton
     fun provideAead(@ApplicationContext context: Context): Aead {
@@ -60,10 +64,7 @@ object AuthProvidesModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(
-        @UnauthenticatedClient okHttpClient: OkHttpClient,
-        json: Json,
-    ): AuthApi {
+    fun provideAuthApi(@UnauthenticatedClient okHttpClient: OkHttpClient, json: Json): AuthApi {
         val retrofit: Retrofit = ApiClient.createRetrofit(
             baseUrl = BuildConfig.API_BASE_URL,
             okHttpClient = okHttpClient,
@@ -74,14 +75,8 @@ object AuthProvidesModule {
 
     @Provides
     @Singleton
-    fun provideTokenProvider(
-        tokenStorage: TokenStorage,
-        sessionManager: dagger.Lazy<SessionManager>,
-    ): TokenProvider = SessionTokenProvider(tokenStorage, sessionManager)
-
-    private const val KEYSET_NAME = "molt_auth_keyset"
-    private const val PREF_FILE_NAME = "molt_auth_keyset_prefs"
-    private const val MASTER_KEY_URI = "android-keystore://molt_auth_master_key"
+    fun provideTokenProvider(tokenStorage: TokenStorage, sessionManager: dagger.Lazy<SessionManager>): TokenProvider =
+        SessionTokenProvider(tokenStorage, sessionManager)
 }
 
 private class SessionTokenProvider(
@@ -89,13 +84,9 @@ private class SessionTokenProvider(
     private val sessionManager: dagger.Lazy<SessionManager>,
 ) : TokenProvider {
 
-    override suspend fun getAccessToken(): String? {
-        return tokenStorage.getAccessToken()
-    }
+    override suspend fun getAccessToken(): String? = tokenStorage.getAccessToken()
 
-    override suspend fun refreshToken(): String? {
-        return sessionManager.get().refreshToken().getOrNull()
-    }
+    override suspend fun refreshToken(): String? = sessionManager.get().refreshToken().getOrNull()
 
     override suspend fun clearTokens() {
         tokenStorage.clearTokens()

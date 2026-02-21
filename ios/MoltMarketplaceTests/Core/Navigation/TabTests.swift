@@ -122,8 +122,10 @@ struct TabTests {
     @Test("all tabs have different unselected and selected icons")
     func test_systemImages_allTabs_selectedDiffersFromUnselected() {
         for tab in Tab.allCases {
-            #expect(tab.systemImage != tab.selectedSystemImage,
-                    "Tab \(tab) should have different unselected and selected icons")
+            #expect(
+                tab.systemImage != tab.selectedSystemImage,
+                "Tab \(tab) should have different unselected and selected icons"
+            )
         }
     }
 

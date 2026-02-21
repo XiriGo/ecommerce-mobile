@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 import Foundation
 import Testing
 @testable import MoltMarketplace
@@ -35,6 +36,7 @@ private struct BodyEndpoint: Endpoint {
 // MARK: - APIClientTests
 
 @Suite("APIClient Tests")
+// swiftlint:disable:next type_body_length
 struct APIClientTests {
     init() {
         MockURLProtocol.reset()
@@ -142,7 +144,9 @@ struct APIClientTests {
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/products", method: .get)
 
-        await #expect(throws: AppError.server(code: 429, message: "Too many requests. Please try again later.")) {
+        await #expect(
+            throws: AppError.server(code: 429, message: "Too many requests. Please try again later.")
+        ) {
             let _: ProductResponse = try await client.request(endpoint)
         }
     }
@@ -168,15 +172,17 @@ struct APIClientTests {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
-            let response = HTTPURLResponse(
-                url: request.url!,
+            let requestURL = try #require(request.url)
+            let response = try #require(HTTPURLResponse(
+                url: requestURL,
                 statusCode: 500,
                 httpVersion: "HTTP/1.1",
                 headerFields: ["Content-Type": "application/json"]
-            )!
-            return (response, """
+            ))
+            let data = try #require("""
             { "type": "internal_server_error", "message": "Server error" }
-            """.data(using: .utf8)!)
+            """.data(using: .utf8))
+            return (response, data)
         }
 
         let retryPolicy = RetryPolicy(
@@ -204,22 +210,29 @@ struct APIClientTests {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
+            let requestURL = try #require(request.url)
             if callCount == 1 {
-                let response = HTTPURLResponse(
-                    url: request.url!,
+                let response = try #require(HTTPURLResponse(
+                    url: requestURL,
                     statusCode: 500,
                     httpVersion: "HTTP/1.1",
                     headerFields: ["Content-Type": "application/json"]
-                )!
-                return (response, "{ \"type\": \"error\", \"message\": \"temp error\" }".data(using: .utf8)!)
+                ))
+                let data = try #require(
+                    "{ \"type\": \"error\", \"message\": \"temp error\" }".data(using: .utf8)
+                )
+                return (response, data)
             } else {
-                let response = HTTPURLResponse(
-                    url: request.url!,
+                let response = try #require(HTTPURLResponse(
+                    url: requestURL,
                     statusCode: 200,
                     httpVersion: "HTTP/1.1",
                     headerFields: ["Content-Type": "application/json"]
-                )!
-                return (response, "{ \"id\": \"prod_456\", \"title\": \"Recovered\" }".data(using: .utf8)!)
+                ))
+                let data = try #require(
+                    "{ \"id\": \"prod_456\", \"title\": \"Recovered\" }".data(using: .utf8)
+                )
+                return (response, data)
             }
         }
 
@@ -246,13 +259,17 @@ struct APIClientTests {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
-            let response = HTTPURLResponse(
-                url: request.url!,
+            let requestURL = try #require(request.url)
+            let response = try #require(HTTPURLResponse(
+                url: requestURL,
                 statusCode: 404,
                 httpVersion: "HTTP/1.1",
                 headerFields: ["Content-Type": "application/json"]
-            )!
-            return (response, "{ \"type\": \"not_found\", \"message\": \"Not found\" }".data(using: .utf8)!)
+            ))
+            let data = try #require(
+                "{ \"type\": \"not_found\", \"message\": \"Not found\" }".data(using: .utf8)
+            )
+            return (response, data)
         }
 
         let retryPolicy = RetryPolicy(
@@ -334,22 +351,29 @@ struct APIClientTests {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
+            let requestURL = try #require(request.url)
             if callCount == 1 {
-                let response = HTTPURLResponse(
-                    url: request.url!,
+                let response = try #require(HTTPURLResponse(
+                    url: requestURL,
                     statusCode: 401,
                     httpVersion: "HTTP/1.1",
                     headerFields: ["Content-Type": "application/json"]
-                )!
-                return (response, "{ \"type\": \"unauthorized\", \"message\": \"Unauthorized\" }".data(using: .utf8)!)
+                ))
+                let data = try #require(
+                    "{ \"type\": \"unauthorized\", \"message\": \"Unauthorized\" }".data(using: .utf8)
+                )
+                return (response, data)
             } else {
-                let response = HTTPURLResponse(
-                    url: request.url!,
+                let response = try #require(HTTPURLResponse(
+                    url: requestURL,
                     statusCode: 200,
                     httpVersion: "HTTP/1.1",
                     headerFields: ["Content-Type": "application/json"]
-                )!
-                return (response, "{ \"id\": \"order_1\", \"title\": \"Order\" }".data(using: .utf8)!)
+                ))
+                let data = try #require(
+                    "{ \"id\": \"order_1\", \"title\": \"Order\" }".data(using: .utf8)
+                )
+                return (response, data)
             }
         }
 

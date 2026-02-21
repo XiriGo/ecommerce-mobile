@@ -9,6 +9,12 @@ import com.molt.marketplace.core.domain.error.AppError
 
 object ApiErrorMapper {
 
+    private const val HTTP_UNAUTHORIZED = 401
+    private const val HTTP_FORBIDDEN = 403
+    private const val HTTP_NOT_FOUND = 404
+    private const val HTTP_UNPROCESSABLE = 422
+    private const val HTTP_TOO_MANY_REQUESTS = 429
+
     private val json = Json { ignoreUnknownKeys = true }
 
     fun Throwable.toAppError(): AppError = when (this) {
@@ -24,11 +30,14 @@ object ApiErrorMapper {
         val message = errorBody?.message
 
         return when (exception.code()) {
-            401 -> AppError.Unauthorized(message = message ?: "Unauthorized")
-            403 -> AppError.Unauthorized(message = message ?: "Access denied")
-            404 -> AppError.NotFound(message = message ?: "Not found")
-            422 -> AppError.Server(code = 422, message = message ?: "Validation error")
-            429 -> AppError.Server(code = 429, message = message ?: "Too many requests. Please try again later.")
+            HTTP_UNAUTHORIZED -> AppError.Unauthorized(message = message ?: "Unauthorized")
+            HTTP_FORBIDDEN -> AppError.Unauthorized(message = message ?: "Access denied")
+            HTTP_NOT_FOUND -> AppError.NotFound(message = message ?: "Not found")
+            HTTP_UNPROCESSABLE -> AppError.Server(code = HTTP_UNPROCESSABLE, message = message ?: "Validation error")
+            HTTP_TOO_MANY_REQUESTS -> AppError.Server(
+                code = HTTP_TOO_MANY_REQUESTS,
+                message = message ?: "Too many requests. Please try again later.",
+            )
             in 500..599 -> AppError.Server(
                 code = exception.code(),
                 message = message ?: "Server error",
@@ -39,13 +48,10 @@ object ApiErrorMapper {
 
     private fun parseErrorBody(exception: HttpException): MedusaErrorDto? {
         return try {
-            val body = exception.response()?.errorBody()?.string()
-            if (body != null) {
+            exception.response()?.errorBody()?.string()?.let { body ->
                 json.decodeFromString<MedusaErrorDto>(body)
-            } else {
-                null
             }
-        } catch (e: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
             Timber.d(e, "Failed to parse error body")
             null
         }

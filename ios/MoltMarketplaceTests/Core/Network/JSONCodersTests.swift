@@ -16,13 +16,13 @@ struct JSONCodersTests {
             let createdAt: String
         }
 
-        let json = """
+        let json = try #require("""
         {
             "first_name": "John",
             "last_name": "Doe",
             "created_at": "2025-01-15T10:30:00Z"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.firstName == "John")
@@ -40,14 +40,14 @@ struct JSONCodersTests {
             let shippingAddress: Address
         }
 
-        let json = """
+        let json = try #require("""
         {
             "shipping_address": {
                 "street_address": "123 Main St",
                 "postal_code": "12345"
             }
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.shippingAddress.streetAddress == "123 Main St")
@@ -62,16 +62,19 @@ struct JSONCodersTests {
             let createdAt: Date
         }
 
-        let json = """
+        let json = try #require("""
         {
             "created_at": "2025-01-15T10:30:00Z"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(identifier: "UTC")!
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: response.createdAt)
+        calendar.timeZone = try #require(TimeZone(identifier: "UTC"))
+        let components = calendar.dateComponents(
+            [.year, .month, .day, .hour, .minute, .second],
+            from: response.createdAt
+        )
         #expect(components.year == 2025)
         #expect(components.month == 1)
         #expect(components.day == 15)
@@ -81,16 +84,16 @@ struct JSONCodersTests {
     }
 
     @Test("decoder throws for non-ISO8601 date strings")
-    func test_decode_invalidDateString_throwsError() {
+    func test_decode_invalidDateString_throwsError() throws {
         struct Response: Decodable {
             let createdAt: Date
         }
 
-        let json = """
+        let json = try #require("""
         {
             "created_at": "January 15, 2025"
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         #expect(throws: (any Error).self) {
             try JSONDecoder.api.decode(Response.self, from: json)
@@ -130,7 +133,7 @@ struct JSONCodersTests {
         components.timeZone = TimeZone(identifier: "UTC")
 
         let calendar = Calendar(identifier: .gregorian)
-        let date = calendar.date(from: components)!
+        let date = try #require(calendar.date(from: components))
         let request = Request(createdAt: date)
 
         let data = try JSONEncoder.api.encode(request)
@@ -165,13 +168,13 @@ struct JSONCodersTests {
             let name: String
         }
 
-        let json = """
+        let json = try #require("""
         {
             "name": "Test",
             "unknown_field": "some value",
             "another_unknown": 42
         }
-        """.data(using: .utf8)!
+        """.data(using: .utf8))
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.name == "Test")

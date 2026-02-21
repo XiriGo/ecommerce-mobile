@@ -57,15 +57,22 @@ extension MockURLProtocol {
     }
 
     /// Configures the handler to return a successful JSON response with the given status code.
+    // swiftlint:disable:next force_unwrapping
     static func stub(statusCode: Int, json: String, url: URL = URL(string: "https://test.example.com")!) {
         requestHandler = { request in
-            let response = HTTPURLResponse(
-                url: request.url ?? url,
+            let responseURL = request.url ?? url
+            guard let response = HTTPURLResponse(
+                url: responseURL,
                 statusCode: statusCode,
                 httpVersion: "HTTP/1.1",
                 headerFields: ["Content-Type": "application/json"]
-            )!
-            return (response, json.data(using: .utf8)!)
+            ) else {
+                throw URLError(.unknown)
+            }
+            guard let data = json.data(using: .utf8) else {
+                throw URLError(.cannotDecodeContentData)
+            }
+            return (response, data)
         }
     }
 
@@ -82,6 +89,7 @@ extension MockURLProtocol {
 extension APIClient {
     /// Creates an APIClient configured to use MockURLProtocol for intercepting requests.
     static func makeTestClient(
+        // swiftlint:disable:next force_unwrapping
         baseURL: URL = URL(string: "https://api-test.molt.mt")!,
         tokenProvider: any TokenProvider = NoOpTokenProvider(),
         retryPolicy: RetryPolicy = RetryPolicy(

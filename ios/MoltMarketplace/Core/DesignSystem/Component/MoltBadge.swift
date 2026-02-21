@@ -47,6 +47,7 @@ struct MoltCountBadge: View {
     // MARK: - Body
 
     var body: some View {
+        // swiftlint:disable:next empty_count
         if count > 0 {
             Text(displayText)
                 .font(MoltTypography.labelSmall)

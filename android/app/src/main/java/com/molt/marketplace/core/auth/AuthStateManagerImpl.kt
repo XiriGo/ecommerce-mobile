@@ -28,7 +28,7 @@ class AuthStateManagerImpl @Inject constructor(
     override suspend fun checkStoredToken() {
         val token = try {
             tokenStorage.getAccessToken()
-        } catch (e: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
             Timber.w(e, "Failed to read stored token")
             null
         }
