@@ -29,4 +29,16 @@
     <string name="common_tab_categories">Kategoriler</string>
     <string name="common_tab_cart">Sepet</string>
     <string name="common_tab_profile">Profil</string>
+
+    <!-- Navigation -->
+    <string name="nav_tab_home">Ana Sayfa</string>
+    <string name="nav_tab_categories">Kategoriler</string>
+    <string name="nav_tab_cart">Sepet</string>
+    <string name="nav_tab_profile">Profil</string>
+    <string name="nav_placeholder_coming_soon">Yakinda</string>
+    <string name="nav_profile_guest_title">Hesabinizi yonetmek icin giris yapin</string>
+    <string name="nav_profile_guest_login_button">Giris Yap</string>
+    <string name="nav_profile_guest_register_button">Hesap Olustur</string>
+    <string name="nav_cart_badge_description">Sepette %d urun</string>
+    <string name="common_back_button">Geri</string>
 </resources>

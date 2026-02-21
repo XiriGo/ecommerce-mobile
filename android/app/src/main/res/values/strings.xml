@@ -29,4 +29,16 @@
     <string name="common_tab_categories">Categories</string>
     <string name="common_tab_cart">Cart</string>
     <string name="common_tab_profile">Profile</string>
+
+    <!-- Navigation -->
+    <string name="nav_tab_home">Home</string>
+    <string name="nav_tab_categories">Categories</string>
+    <string name="nav_tab_cart">Cart</string>
+    <string name="nav_tab_profile">Profile</string>
+    <string name="nav_placeholder_coming_soon">Coming soon</string>
+    <string name="nav_profile_guest_title">Log in to manage your account</string>
+    <string name="nav_profile_guest_login_button">Log In</string>
+    <string name="nav_profile_guest_register_button">Create Account</string>
+    <string name="nav_cart_badge_description">%d items in cart</string>
+    <string name="common_back_button">Back</string>
 </resources>

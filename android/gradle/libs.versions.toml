@@ -29,6 +29,7 @@ junit = "4.13.2"
 truth = "1.4.4"
 mockk = "1.13.16"
 turbine = "1.2.0"
+robolectric = "4.14.1"
 composeUiTest = "1.7.8"
 leakcanary = "2.14"
 chucker = "4.0.0"
@@ -111,6 +112,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }

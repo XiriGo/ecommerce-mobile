@@ -29,4 +29,16 @@
     <string name="common_tab_categories">Kategoriji</string>
     <string name="common_tab_cart">Karrettun</string>
     <string name="common_tab_profile">Profil</string>
+
+    <!-- Navigation -->
+    <string name="nav_tab_home">Dar</string>
+    <string name="nav_tab_categories">Kategoriji</string>
+    <string name="nav_tab_cart">Kartella</string>
+    <string name="nav_tab_profile">Profil</string>
+    <string name="nav_placeholder_coming_soon">Dalwaqt</string>
+    <string name="nav_profile_guest_title">Idhlol biex tamministra l-kont tieghek</string>
+    <string name="nav_profile_guest_login_button">Idhlol</string>
+    <string name="nav_profile_guest_register_button">Ohlok Kont</string>
+    <string name="nav_cart_badge_description">%d oggetti fil-kartella</string>
+    <string name="common_back_button">Lura</string>
 </resources>
