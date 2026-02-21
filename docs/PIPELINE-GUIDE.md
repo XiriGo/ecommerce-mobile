@@ -11,6 +11,10 @@
 | `/queue-run --from 15` | Belirli issue'dan devam et |
 | `/verify all` | Build + lint + test kontrol |
 | `/create-pr develop --closes 12 --auto-merge` | PR olustur + auto-merge |
+| `make all` | Build + lint + test (her iki platform) |
+| `make android` / `make ios` | Tek platform build + lint + test |
+| `make lint` | Lint + suppress check |
+| `make check-suppress` | Zero suppression kontrolu |
 
 ---
 
