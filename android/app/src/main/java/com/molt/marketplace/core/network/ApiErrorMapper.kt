@@ -1,11 +1,11 @@
 package com.molt.marketplace.core.network
 
-import com.molt.marketplace.core.domain.error.AppError
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
+import com.molt.marketplace.core.domain.error.AppError
 
 object ApiErrorMapper {
 

@@ -1,8 +1,8 @@
 package com.molt.marketplace.core.designsystem.theme
 
-import androidx.compose.ui.unit.dp
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import androidx.compose.ui.unit.dp
 
 class MoltCornerRadiusTest {
 

@@ -1,10 +1,10 @@
 package com.molt.marketplace.core.network
 
+import kotlin.math.min
+import kotlin.random.Random
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
-import kotlin.math.min
-import kotlin.random.Random
 
 class RetryInterceptor : Interceptor {
 

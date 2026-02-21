@@ -88,6 +88,14 @@
 		55D0F8F66DCD1E54C201C787 /* PaginatedResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */; };
 		19F4501D295F232278CE3D7E /* RetryPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */; };
 		EAA12504EA33256D8743B223 /* TokenProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */; };
+		AA0001010101010101010101 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1001010101010101010101 /* Tab.swift */; };
+		AA0002020202020202020202 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1002020202020202020202 /* Route.swift */; };
+		AA0003030303030303030303 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1003030303030303030303 /* AppRouter.swift */; };
+		AA0004040404040404040404 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1004040404040404040404 /* MainTabView.swift */; };
+		AA0005050505050505050505 /* NavigationDestinationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1005050505050505050505 /* NavigationDestinationModifier.swift */; };
+		AA0006060606060606060606 /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1006060606060606060606 /* DeepLinkParser.swift */; };
+		AA0007070707070707070707 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1007070707070707070707 /* PlaceholderView.swift */; };
+		AA0008080808080808080808 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1008080808080808080808 /* RouteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +195,14 @@
 		D85D8EEC7F26E23219072F79 /* PaginatedResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponseTests.swift; sourceTree = "<group>"; };
 		E892D8F94F61976F1D1FA01D /* RetryPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicyTests.swift; sourceTree = "<group>"; };
 		1429D6A18568A07A87CA4399 /* TokenProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderTests.swift; sourceTree = "<group>"; };
+		AA1001010101010101010101 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		AA1002020202020202020202 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		AA1003030303030303030303 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		AA1004040404040404040404 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		AA1005050505050505050505 /* NavigationDestinationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestinationModifier.swift; sourceTree = "<group>"; };
+		AA1006060606060606060606 /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
+		AA1007070707070707070707 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		AA1008080808080808080808 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,9 +395,25 @@
 				11D59896679D2881EEC4E21E /* DesignSystem */,
 				77F2F3DC69BEA9B5C3D643E8 /* DI */,
 				31FA3F26A0126D3CF84CAE03 /* Domain */,
+				AA2000000000000000000001 /* Navigation */,
 				050F3FBCDB7F139274662E42 /* Network */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		AA2000000000000000000001 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				AA1003030303030303030303 /* AppRouter.swift */,
+				AA1006060606060606060606 /* DeepLinkParser.swift */,
+				AA1004040404040404040404 /* MainTabView.swift */,
+				AA1005050505050505050505 /* NavigationDestinationModifier.swift */,
+				AA1007070707070707070707 /* PlaceholderView.swift */,
+				AA1002020202020202020202 /* Route.swift */,
+				AA1008080808080808080808 /* RouteView.swift */,
+				AA1001010101010101010101 /* Tab.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		B0ACD5FE22D8A63D002A0808 /* Component */ = {
@@ -604,6 +636,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				47F6CF83DD154CE2EBC0543B /* APIClient.swift in Sources */,
+				AA0003030303030303030303 /* AppRouter.swift in Sources */,
+				AA0006060606060606060606 /* DeepLinkParser.swift in Sources */,
+				AA0004040404040404040404 /* MainTabView.swift in Sources */,
+				AA0005050505050505050505 /* NavigationDestinationModifier.swift in Sources */,
+				AA0007070707070707070707 /* PlaceholderView.swift in Sources */,
+				AA0002020202020202020202 /* Route.swift in Sources */,
+				AA0008080808080808080808 /* RouteView.swift in Sources */,
+				AA0001010101010101010101 /* Tab.swift in Sources */,
 				F546287CF92E4AE404B38BC1 /* AppError.swift in Sources */,
 				E0024DAE5E1DB5F86D9BF89F /* AuthMiddleware.swift in Sources */,
 				E85544B3690E2D3D3A68A442 /* Config.swift in Sources */,

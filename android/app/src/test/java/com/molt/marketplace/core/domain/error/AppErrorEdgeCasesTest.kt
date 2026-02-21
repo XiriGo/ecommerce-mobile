@@ -1,8 +1,8 @@
 package com.molt.marketplace.core.domain.error
 
 import com.google.common.truth.Truth.assertThat
-import com.molt.marketplace.R
 import org.junit.Test
+import com.molt.marketplace.R
 
 /**
  * Additional edge-case tests for [AppError] and its extension functions.

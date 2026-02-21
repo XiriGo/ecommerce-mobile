@@ -1,8 +1,6 @@
 package com.molt.marketplace.core.network
 
 import com.google.common.truth.Truth.assertThat
-import com.molt.marketplace.core.domain.error.AppError
-import com.molt.marketplace.core.network.ApiErrorMapper.toAppError
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Test
@@ -10,6 +8,8 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 import java.net.ConnectException
+import com.molt.marketplace.core.domain.error.AppError
+import com.molt.marketplace.core.network.ApiErrorMapper.toAppError
 
 /**
  * Additional edge-case tests for [ApiErrorMapper] covering:

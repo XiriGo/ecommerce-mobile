@@ -35,11 +35,10 @@ class TokenRefreshAuthenticatorEdgeCasesTest {
         server.shutdown()
     }
 
-    private fun createClient(): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenProvider))
-            .authenticator(TokenRefreshAuthenticator(tokenProvider))
-            .build()
+    private fun createClient(): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(AuthInterceptor(tokenProvider))
+        .authenticator(TokenRefreshAuthenticator(tokenProvider))
+        .build()
 
     // -------------------------------------------------------------------------
     // Retry-limit enforcement
