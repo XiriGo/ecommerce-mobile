@@ -1,5 +1,5 @@
-import Testing
 import SwiftUI
+import Testing
 @testable import XiriGoEcommerce
 
 // MARK: - XGBrandGradientTests
@@ -11,14 +11,14 @@ struct XGBrandGradientTests {
     // MARK: - Initialisation
 
     @Test("no-content convenience init initialises without crash")
-    func test_init_noContent_initialises() {
+    func init_noContent_initialises() {
         let gradient = XGBrandGradient()
         _ = gradient
         #expect(true)
     }
 
     @Test("ViewBuilder content init initialises without crash")
-    func test_init_withContent_initialises() {
+    func init_withContent_initialises() {
         let gradient = XGBrandGradient {
             Text("Test")
         }
@@ -27,7 +27,7 @@ struct XGBrandGradientTests {
     }
 
     @Test("ViewBuilder content init accepts EmptyView")
-    func test_init_withEmptyView_initialises() {
+    func init_withEmptyView_initialises() {
         let gradient = XGBrandGradient {
             EmptyView()
         }
@@ -36,7 +36,7 @@ struct XGBrandGradientTests {
     }
 
     @Test("XGBrandGradient is a View")
-    func test_xgBrandGradient_conformsToView() {
+    func xgBrandGradient_conformsToView() {
         let gradient: any View = XGBrandGradient()
         _ = gradient
         #expect(true)

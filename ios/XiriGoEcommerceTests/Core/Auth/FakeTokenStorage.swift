@@ -6,8 +6,6 @@ import Foundation
 /// In-memory TokenStorage implementation for unit testing.
 /// Avoids real Keychain access so tests run without device entitlements.
 final class FakeTokenStorage: TokenStorage, @unchecked Sendable {
-    // MARK: - Internal
-
     var storedToken: String?
     var saveCallCount = 0
     var clearCallCount = 0

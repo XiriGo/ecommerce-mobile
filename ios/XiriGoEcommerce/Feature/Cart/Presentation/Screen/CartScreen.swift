@@ -4,10 +4,7 @@ import SwiftUI
 
 /// Shopping cart screen. Displays empty state when cart has no items.
 struct CartScreen: View {
-    // MARK: - Properties
-
-    @Environment(AppRouter.self)
-    private var router
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -18,11 +15,16 @@ struct CartScreen: View {
             actionLabel: String(localized: "cart_start_shopping"),
             onAction: {
                 router.selectTab(.home)
-            }
+            },
         )
         .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_cart"))
     }
+
+    // MARK: - Private
+
+    @Environment(AppRouter.self)
+    private var router
 }
 
 // MARK: - Previews

@@ -2,14 +2,20 @@ import Foundation
 import Testing
 @testable import XiriGoEcommerce
 
-// MARK: - Test Endpoint Implementations
+// MARK: - GetProductsEndpoint
 
 private struct GetProductsEndpoint: Endpoint {
     let offset: Int
     let limit: Int
 
-    var path: String { "/store/products" }
-    var method: HTTPMethod { .get }
+    var path: String {
+        "/store/products"
+    }
+
+    var method: HTTPMethod {
+        .get
+    }
+
     var queryItems: [URLQueryItem] {
         [
             URLQueryItem(name: "offset", value: "\(offset)"),
@@ -18,12 +24,25 @@ private struct GetProductsEndpoint: Endpoint {
     }
 }
 
+// MARK: - GetProductDetailEndpoint
+
 private struct GetProductDetailEndpoint: Endpoint {
     let id: String
-    var path: String { "/store/products/\(id)" }
-    var method: HTTPMethod { .get }
-    var requiresAuth: Bool { false }
+
+    var path: String {
+        "/store/products/\(id)"
+    }
+
+    var method: HTTPMethod {
+        .get
+    }
+
+    var requiresAuth: Bool {
+        false
+    }
 }
+
+// MARK: - CreateCartEndpoint
 
 private struct CreateCartEndpoint: Endpoint {
     struct Body: Encodable, Sendable {
@@ -31,43 +50,74 @@ private struct CreateCartEndpoint: Endpoint {
     }
 
     let regionId: String
-    var path: String { "/store/carts" }
-    var method: HTTPMethod { .post }
-    var body: (any Encodable & Sendable)? { Body(regionId: regionId) }
+
+    var path: String {
+        "/store/carts"
+    }
+
+    var method: HTTPMethod {
+        .post
+    }
+
+    var body: (any Encodable & Sendable)? {
+        Body(regionId: regionId)
+    }
 }
+
+// MARK: - GetOrdersEndpoint
 
 private struct GetOrdersEndpoint: Endpoint {
-    var path: String { "/store/orders" }
-    var method: HTTPMethod { .get }
-    var requiresAuth: Bool { true }
+    var path: String {
+        "/store/orders"
+    }
+
+    var method: HTTPMethod {
+        .get
+    }
+
+    var requiresAuth: Bool {
+        true
+    }
 }
 
+// MARK: - CustomHeaderEndpoint
+
 private struct CustomHeaderEndpoint: Endpoint {
-    var path: String { "/store/custom" }
-    var method: HTTPMethod { .get }
-    var headers: [String: String] { ["X-Custom-Header": "custom-value"] }
+    var path: String {
+        "/store/custom"
+    }
+
+    var method: HTTPMethod {
+        .get
+    }
+
+    var headers: [String: String] {
+        ["X-Custom-Header": "custom-value"]
+    }
 }
 
 // MARK: - EndpointTests
 
 @Suite("Endpoint Tests")
 struct EndpointTests {
-    private let baseURL: URL
+    // MARK: - Lifecycle
 
     init() throws {
         baseURL = try #require(URL(string: "https://api-test.xirigo.com"))
     }
 
+    // MARK: - Internal
+
     // MARK: - Path
 
     @Test("endpoint path is set correctly")
-    func test_path_isSetCorrectly() {
+    func path_isSetCorrectly() {
         let endpoint = GetProductsEndpoint(offset: 0, limit: 20)
         #expect(endpoint.path == "/store/products")
     }
 
     @Test("endpoint path includes dynamic segment")
-    func test_path_withDynamicSegment_includesId() {
+    func path_withDynamicSegment_includesId() {
         let endpoint = GetProductDetailEndpoint(id: "prod_123")
         #expect(endpoint.path == "/store/products/prod_123")
     }
@@ -75,13 +125,13 @@ struct EndpointTests {
     // MARK: - HTTP Method
 
     @Test("GET endpoint has GET method")
-    func test_method_getEndpoint_isGet() {
+    func method_getEndpoint_isGet() {
         let endpoint = GetProductsEndpoint(offset: 0, limit: 20)
         #expect(endpoint.method == .get)
     }
 
     @Test("POST endpoint has POST method")
-    func test_method_postEndpoint_isPost() {
+    func method_postEndpoint_isPost() {
         let endpoint = CreateCartEndpoint(regionId: "region_01")
         #expect(endpoint.method == .post)
     }
@@ -89,7 +139,7 @@ struct EndpointTests {
     // MARK: - Query Items
 
     @Test("query items are set with correct names and values")
-    func test_queryItems_areSetWithCorrectNamesAndValues() {
+    func queryItems_areSetWithCorrectNamesAndValues() {
         let endpoint = GetProductsEndpoint(offset: 20, limit: 10)
         let items = endpoint.queryItems
 
@@ -100,7 +150,7 @@ struct EndpointTests {
     }
 
     @Test("endpoint without query items returns empty array")
-    func test_queryItems_endpointWithNoQueryItems_returnsEmptyArray() {
+    func queryItems_endpointWithNoQueryItems_returnsEmptyArray() {
         let endpoint = CreateCartEndpoint(regionId: "region_01")
         #expect(endpoint.queryItems.isEmpty)
     }
@@ -108,13 +158,13 @@ struct EndpointTests {
     // MARK: - Body
 
     @Test("POST endpoint has a body")
-    func test_body_postEndpoint_hasBody() {
+    func body_postEndpoint_hasBody() {
         let endpoint = CreateCartEndpoint(regionId: "region_eu")
         #expect(endpoint.body != nil)
     }
 
     @Test("GET endpoint has no body by default")
-    func test_body_getEndpoint_isNilByDefault() {
+    func body_getEndpoint_isNilByDefault() {
         let endpoint = GetProductsEndpoint(offset: 0, limit: 20)
         #expect(endpoint.body == nil)
     }
@@ -122,19 +172,19 @@ struct EndpointTests {
     // MARK: - requiresAuth
 
     @Test("endpoint requiresAuth defaults to false")
-    func test_requiresAuth_defaultImplementation_isFalse() {
+    func requiresAuth_defaultImplementation_isFalse() {
         let endpoint = GetProductsEndpoint(offset: 0, limit: 20)
         #expect(endpoint.requiresAuth == false)
     }
 
     @Test("endpoint with requiresAuth true reports true")
-    func test_requiresAuth_whenExplicitlyTrue_isTrue() {
+    func requiresAuth_whenExplicitlyTrue_isTrue() {
         let endpoint = GetOrdersEndpoint()
         #expect(endpoint.requiresAuth == true)
     }
 
     @Test("endpoint with requiresAuth false reports false")
-    func test_requiresAuth_whenExplicitlyFalse_isFalse() {
+    func requiresAuth_whenExplicitlyFalse_isFalse() {
         let endpoint = GetProductDetailEndpoint(id: "prod_1")
         #expect(endpoint.requiresAuth == false)
     }
@@ -142,13 +192,13 @@ struct EndpointTests {
     // MARK: - Headers
 
     @Test("headers default implementation returns empty dictionary")
-    func test_headers_defaultImplementation_returnsEmptyDictionary() {
+    func headers_defaultImplementation_returnsEmptyDictionary() {
         let endpoint = GetProductsEndpoint(offset: 0, limit: 20)
         #expect(endpoint.headers.isEmpty)
     }
 
     @Test("custom headers are returned correctly")
-    func test_headers_customHeaders_areReturnedCorrectly() {
+    func headers_customHeaders_areReturnedCorrectly() {
         let endpoint = CustomHeaderEndpoint()
         #expect(endpoint.headers["X-Custom-Header"] == "custom-value")
     }
@@ -156,7 +206,7 @@ struct EndpointTests {
     // MARK: - URLRequest Construction via APIClient
 
     @Test("GET endpoint builds URLRequest with correct URL")
-    func test_urlRequest_getEndpoint_hasCorrectURL() throws {
+    func urlRequest_getEndpoint_hasCorrectURL() {
         let endpoint = GetProductsEndpoint(offset: 0, limit: 20)
         var components = URLComponents()
         components.scheme = baseURL.scheme
@@ -172,7 +222,7 @@ struct EndpointTests {
     }
 
     @Test("GET endpoint URL includes query parameters")
-    func test_urlRequest_getEndpoint_includesQueryParams() throws {
+    func urlRequest_getEndpoint_includesQueryParams() {
         let endpoint = GetProductsEndpoint(offset: 40, limit: 20)
         var components = URLComponents()
         components.scheme = baseURL.scheme
@@ -187,11 +237,15 @@ struct EndpointTests {
     }
 
     @Test("HTTPMethod rawValues match expected HTTP verbs")
-    func test_httpMethod_rawValues_matchExpectedVerbs() {
+    func httpMethod_rawValues_matchExpectedVerbs() {
         #expect(HTTPMethod.get.rawValue == "GET")
         #expect(HTTPMethod.post.rawValue == "POST")
         #expect(HTTPMethod.put.rawValue == "PUT")
         #expect(HTTPMethod.delete.rawValue == "DELETE")
         #expect(HTTPMethod.patch.rawValue == "PATCH")
     }
+
+    // MARK: - Private
+
+    private let baseURL: URL
 }

@@ -6,11 +6,6 @@ import os
 // MARK: - RequestLogger
 
 enum RequestLogger {
-    // MARK: - Constants
-
-    private static let millisPerSecond = 1000
-    private static let httpSuccessRange = 200 ... 299
-
     // MARK: - Internal
 
     static func logRequest(_ request: URLRequest) {
@@ -45,6 +40,11 @@ enum RequestLogger {
     }
 
     // MARK: - Private
+
+    // MARK: - Constants
+
+    private static let millisPerSecond = 1000
+    private static let httpSuccessRange = 200 ... 299
 
     private static let logger = Logger(subsystem: "com.xirigo.ecommerce", category: "Network")
 

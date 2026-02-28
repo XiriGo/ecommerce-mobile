@@ -52,43 +52,45 @@ enum Route: Hashable {
 
     case onboarding
 
+    // MARK: - Internal
+
     // MARK: - Auth Requirement
 
     /// Whether this route requires the user to be authenticated.
     var requiresAuth: Bool {
         switch self {
-        case .checkout,
-            .checkoutAddress,
-            .checkoutShipping,
-            .checkoutPayment,
-            .orderConfirmation,
-            .orderList,
-            .orderDetail,
-            .settings,
-            .addressManagement,
-            .wishlist,
-            .paymentMethods,
-            .notifications,
-            .writeReview,
-            .priceAlerts:
-            return true
+            case .addressManagement,
+                 .checkout,
+                 .checkoutAddress,
+                 .checkoutPayment,
+                 .checkoutShipping,
+                 .notifications,
+                 .orderConfirmation,
+                 .orderDetail,
+                 .orderList,
+                 .paymentMethods,
+                 .priceAlerts,
+                 .settings,
+                 .wishlist,
+                 .writeReview:
+                true
 
-        case .home,
-            .productDetail,
-            .productSearch,
-            .vendorStore,
-            .productReviews,
-            .categories,
-            .categoryProducts,
-            .productList,
-            .cart,
-            .profile,
-            .login,
-            .register,
-            .forgotPassword,
-            .onboarding,
-            .recentlyViewed:
-            return false
+            case .cart,
+                 .categories,
+                 .categoryProducts,
+                 .forgotPassword,
+                 .home,
+                 .login,
+                 .onboarding,
+                 .productDetail,
+                 .productList,
+                 .productReviews,
+                 .productSearch,
+                 .profile,
+                 .recentlyViewed,
+                 .register,
+                 .vendorStore:
+                false
         }
     }
 
@@ -97,35 +99,35 @@ enum Route: Hashable {
     /// Human-readable title for placeholder screens.
     var title: String {
         switch self {
-        case .home: return String(localized: "nav_tab_home")
-        case .categories: return String(localized: "nav_tab_categories")
-        case .cart: return String(localized: "nav_tab_cart")
-        case .profile: return String(localized: "nav_tab_profile")
-        case .productDetail: return "Product Detail"
-        case .productSearch: return "Search"
-        case .vendorStore: return "Vendor Store"
-        case .productReviews: return "Reviews"
-        case .writeReview: return "Write Review"
-        case .categoryProducts(_, let name): return name.isEmpty ? "Category" : name
-        case .productList: return "Products"
-        case .checkout: return "Checkout"
-        case .checkoutAddress: return "Address"
-        case .checkoutShipping: return "Shipping"
-        case .checkoutPayment: return "Payment"
-        case .orderConfirmation: return "Order Confirmed"
-        case .orderList: return "Orders"
-        case .orderDetail: return "Order Detail"
-        case .settings: return "Settings"
-        case .addressManagement: return "Addresses"
-        case .wishlist: return "Wishlist"
-        case .paymentMethods: return "Payment Methods"
-        case .notifications: return "Notifications"
-        case .recentlyViewed: return "Recently Viewed"
-        case .priceAlerts: return "Price Alerts"
-        case .login: return "Log In"
-        case .register: return "Register"
-        case .forgotPassword: return "Forgot Password"
-        case .onboarding: return "Welcome"
+            case .home: String(localized: "nav_tab_home")
+            case .categories: String(localized: "nav_tab_categories")
+            case .cart: String(localized: "nav_tab_cart")
+            case .profile: String(localized: "nav_tab_profile")
+            case .productDetail: "Product Detail"
+            case .productSearch: "Search"
+            case .vendorStore: "Vendor Store"
+            case .productReviews: "Reviews"
+            case .writeReview: "Write Review"
+            case let .categoryProducts(_, name): name.isEmpty ? "Category" : name
+            case .productList: "Products"
+            case .checkout: "Checkout"
+            case .checkoutAddress: "Address"
+            case .checkoutShipping: "Shipping"
+            case .checkoutPayment: "Payment"
+            case .orderConfirmation: "Order Confirmed"
+            case .orderList: "Orders"
+            case .orderDetail: "Order Detail"
+            case .settings: "Settings"
+            case .addressManagement: "Addresses"
+            case .wishlist: "Wishlist"
+            case .paymentMethods: "Payment Methods"
+            case .notifications: "Notifications"
+            case .recentlyViewed: "Recently Viewed"
+            case .priceAlerts: "Price Alerts"
+            case .login: "Log In"
+            case .register: "Register"
+            case .forgotPassword: "Forgot Password"
+            case .onboarding: "Welcome"
         }
     }
 }

@@ -27,7 +27,7 @@ extension Container {
             MainActor.assumeIsolated {
                 OnboardingViewModel(
                     checkOnboarding: self.checkOnboardingUseCase(),
-                    completeOnboarding: self.completeOnboardingUseCase()
+                    completeOnboarding: self.completeOnboardingUseCase(),
                 )
             }
         }

@@ -9,8 +9,6 @@ import Foundation
 /// nonisolated(unsafe) is used for the static mutable state because URLProtocol
 /// callbacks may occur on arbitrary threads. Tests must reset state before each run.
 final class MockURLProtocol: URLProtocol, @unchecked Sendable {
-    // MARK: - Internal
-
     /// The handler block invoked for each intercepted request.
     /// Return (HTTPURLResponse, Data) for success, or throw for network-level errors.
     nonisolated(unsafe) static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
@@ -50,14 +48,13 @@ final class MockURLProtocol: URLProtocol, @unchecked Sendable {
 // MARK: - MockURLProtocol Helpers
 
 extension MockURLProtocol {
+    // MARK: - Internal
+
     /// Resets shared state. Call in each test's setup or teardown.
     static func reset() {
         requestHandler = nil
         capturedRequests = []
     }
-
-    /// Default fallback URL used when no URL is provided to `stub(statusCode:json:url:)`.
-    private static let defaultStubURL = URL(string: "https://test.example.com")
 
     /// Configures the handler to return a successful JSON response with the given status code.
     static func stub(statusCode: Int, json: String, url: URL? = nil) {
@@ -65,12 +62,14 @@ extension MockURLProtocol {
             guard let responseURL = request.url ?? url ?? defaultStubURL else {
                 throw URLError(.unknown)
             }
-            guard let response = HTTPURLResponse(
-                url: responseURL,
-                statusCode: statusCode,
-                httpVersion: "HTTP/1.1",
-                headerFields: ["Content-Type": "application/json"]
-            ) else {
+            guard
+                let response = HTTPURLResponse(
+                    url: responseURL,
+                    statusCode: statusCode,
+                    httpVersion: "HTTP/1.1",
+                    headerFields: ["Content-Type": "application/json"],
+                )
+            else {
                 throw URLError(.unknown)
             }
             guard let data = json.data(using: .utf8) else {
@@ -86,11 +85,47 @@ extension MockURLProtocol {
             throw URLError(code)
         }
     }
+
+    // MARK: - Private
+
+    /// Default fallback URL used when no URL is provided to `stub(statusCode:json:url:)`.
+    private static let defaultStubURL = URL(string: "https://test.example.com")
 }
 
 // MARK: - APIClient + Test Session Factory
 
 extension APIClient {
+    // MARK: - Internal
+
+    /// Creates an APIClient configured to use MockURLProtocol for intercepting requests.
+    static func makeTestClient(
+        baseURL: URL? = nil,
+        tokenProvider: any TokenProvider = NoOpTokenProvider(),
+        retryPolicy: RetryPolicy = RetryPolicy(
+            maxRetries: 0,
+            baseDelay: 0,
+            backoffMultiplier: 1,
+            maxDelay: 0,
+            jitterFactor: 0,
+            retryableStatusCodes: testRetryableStatusCodes,
+        ),
+        publishableApiKey: String? = nil,
+    ) -> APIClient {
+        let resolvedBaseURL = baseURL ?? testBaseURL
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockURLProtocol.self]
+        let session = URLSession(configuration: config)
+        return APIClient(
+            baseURL: resolvedBaseURL,
+            session: session,
+            tokenProvider: tokenProvider,
+            retryPolicy: retryPolicy,
+            publishableApiKey: publishableApiKey,
+        )
+    }
+
+    // MARK: - Private
+
     /// Server error status codes used in test retry policies.
     private static let httpInternalServerError = 500
     private static let httpBadGateway = 502
@@ -107,31 +142,4 @@ extension APIClient {
         }
         return url
     }()
-
-    /// Creates an APIClient configured to use MockURLProtocol for intercepting requests.
-    static func makeTestClient(
-        baseURL: URL? = nil,
-        tokenProvider: any TokenProvider = NoOpTokenProvider(),
-        retryPolicy: RetryPolicy = RetryPolicy(
-            maxRetries: 0,
-            baseDelay: 0,
-            backoffMultiplier: 1,
-            maxDelay: 0,
-            jitterFactor: 0,
-            retryableStatusCodes: testRetryableStatusCodes
-        ),
-        publishableApiKey: String? = nil
-    ) -> APIClient {
-        let resolvedBaseURL = baseURL ?? testBaseURL
-        let config = URLSessionConfiguration.ephemeral
-        config.protocolClasses = [MockURLProtocol.self]
-        let session = URLSession(configuration: config)
-        return APIClient(
-            baseURL: resolvedBaseURL,
-            session: session,
-            tokenProvider: tokenProvider,
-            retryPolicy: retryPolicy,
-            publishableApiKey: publishableApiKey
-        )
-    }
 }

@@ -6,15 +6,15 @@ import SwiftUI
 /// Uses the existing `SplashLogo` PNG asset from the asset catalog.
 /// Used on Splash and Login screens.
 struct XGLogoMark: View {
-    // MARK: - Properties
-
-    private let size: CGFloat
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(size: CGFloat = 120) {
         self.size = size
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -25,6 +25,10 @@ struct XGLogoMark: View {
             .frame(width: size, height: size)
             .accessibilityLabel(String(localized: "onboarding_logo_a11y"))
     }
+
+    // MARK: - Private
+
+    private let size: CGFloat
 }
 
 // MARK: - Previews

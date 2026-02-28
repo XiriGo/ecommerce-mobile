@@ -8,14 +8,14 @@ struct TokenStorageTests {
     // MARK: - getAccessToken
 
     @Test("getAccessToken returns nil when storage is empty")
-    func test_getAccessToken_emptyStorage_returnsNil() {
+    func getAccessToken_emptyStorage_returnsNil() {
         let storage = FakeTokenStorage()
         let token = storage.getAccessToken()
         #expect(token == nil)
     }
 
     @Test("getAccessToken returns saved token after saveAccessToken")
-    func test_getAccessToken_afterSave_returnsToken() {
+    func getAccessToken_afterSave_returnsToken() {
         let storage = FakeTokenStorage()
         storage.saveAccessToken("jwt_token_abc")
         let token = storage.getAccessToken()
@@ -25,7 +25,7 @@ struct TokenStorageTests {
     // MARK: - saveAccessToken
 
     @Test("saveAccessToken overwrites previously stored token")
-    func test_saveAccessToken_calledTwice_returnsLastToken() {
+    func saveAccessToken_calledTwice_returnsLastToken() {
         let storage = FakeTokenStorage()
         storage.saveAccessToken("first_token")
         storage.saveAccessToken("second_token")
@@ -34,7 +34,7 @@ struct TokenStorageTests {
     }
 
     @Test("saveAccessToken increments call count")
-    func test_saveAccessToken_incrementsSaveCallCount() {
+    func saveAccessToken_incrementsSaveCallCount() {
         let storage = FakeTokenStorage()
         storage.saveAccessToken("token_1")
         storage.saveAccessToken("token_2")
@@ -44,7 +44,7 @@ struct TokenStorageTests {
     // MARK: - clearTokens
 
     @Test("clearTokens removes stored token so getAccessToken returns nil")
-    func test_clearTokens_removesStoredToken() {
+    func clearTokens_removesStoredToken() {
         let storage = FakeTokenStorage()
         storage.saveAccessToken("jwt_token_xyz")
         storage.clearTokens()
@@ -53,14 +53,14 @@ struct TokenStorageTests {
     }
 
     @Test("clearTokens on empty storage does not crash")
-    func test_clearTokens_onEmptyStorage_doesNotCrash() {
+    func clearTokens_onEmptyStorage_doesNotCrash() {
         let storage = FakeTokenStorage()
         storage.clearTokens()
         #expect(storage.clearCallCount == 1)
     }
 
     @Test("clearTokens increments call count")
-    func test_clearTokens_incrementsClearCallCount() {
+    func clearTokens_incrementsClearCallCount() {
         let storage = FakeTokenStorage()
         storage.clearTokens()
         storage.clearTokens()
@@ -70,7 +70,7 @@ struct TokenStorageTests {
     // MARK: - Call Count Tracking
 
     @Test("getAccessToken increments get call count")
-    func test_getAccessToken_incrementsGetCallCount() {
+    func getAccessToken_incrementsGetCallCount() {
         let storage = FakeTokenStorage()
         _ = storage.getAccessToken()
         _ = storage.getAccessToken()
@@ -78,7 +78,7 @@ struct TokenStorageTests {
     }
 
     @Test("multiple operations are tracked independently")
-    func test_multipleMixedOperations_trackCallCountsIndependently() {
+    func multipleMixedOperations_trackCallCountsIndependently() {
         let storage = FakeTokenStorage()
         storage.saveAccessToken("t1")
         storage.saveAccessToken("t2")

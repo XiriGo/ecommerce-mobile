@@ -4,19 +4,7 @@ import SwiftUI
 
 /// Grid-based category browsing screen with search functionality.
 struct CategoriesScreen: View {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let cardBorderOpacity: Double = 0.5
-    }
-
-    // MARK: - Properties
-
-    @Environment(AppRouter.self)
-    private var router
-    @State private var searchText = ""
-
-    private let categories = CategoryItem.samples
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -32,6 +20,29 @@ struct CategoriesScreen: View {
         .navigationTitle(String(localized: "nav_tab_categories"))
     }
 
+    // MARK: - Private
+
+    // MARK: - Constants
+
+    private enum Constants {
+        static let cardBorderOpacity: Double = 0.5
+    }
+
+    @Environment(AppRouter.self)
+    private var router
+    @State private var searchText = ""
+
+    private let categories = CategoryItem.samples
+
+    // MARK: - Filtering
+
+    private var filteredCategories: [CategoryItem] {
+        if searchText.isEmpty {
+            return categories
+        }
+        return categories.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
+
     // MARK: - Search Section
 
     private var searchSection: some View {
@@ -43,7 +54,7 @@ struct CategoriesScreen: View {
 
             TextField(
                 String(localized: "categories_search_placeholder"),
-                text: $searchText
+                text: $searchText,
             )
             .font(XGTypography.bodyLarge)
 
@@ -63,7 +74,7 @@ struct CategoriesScreen: View {
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
         .overlay(
             RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                .stroke(XGColors.outlineVariant, lineWidth: 1)
+                .stroke(XGColors.outlineVariant, lineWidth: 1),
         )
         .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
         .padding(.top, XGSpacing.sm)
@@ -77,7 +88,7 @@ struct CategoriesScreen: View {
                 GridItem(.flexible(), spacing: XGSpacing.md),
                 GridItem(.flexible(), spacing: XGSpacing.md),
             ],
-            spacing: XGSpacing.md
+            spacing: XGSpacing.md,
         ) {
             ForEach(filteredCategories, id: \.id) { category in
                 categoryCard(category)
@@ -113,31 +124,77 @@ struct CategoriesScreen: View {
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
             .overlay(
                 RoundedRectangle(cornerRadius: XGCornerRadius.large)
-                    .stroke(XGColors.outlineVariant.opacity(Constants.cardBorderOpacity), lineWidth: 1)
+                    .stroke(XGColors.outlineVariant.opacity(Constants.cardBorderOpacity), lineWidth: 1),
             )
             .xgElevation(XGElevation.level1)
         }
         .accessibilityLabel(category.name)
         .accessibilityHint(String(localized: "categories_item_count \(category.itemCount)"))
     }
-
-    // MARK: - Filtering
-
-    private var filteredCategories: [CategoryItem] {
-        if searchText.isEmpty {
-            return categories
-        }
-        return categories.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-    }
 }
 
-// MARK: - Sample Data
+// MARK: - CategoryItem
 
 private struct CategoryItem: Identifiable {
+    // MARK: - Internal
+
+    static let samples: [Self] = [
+        Self(
+            id: "cat_1",
+            name: String(localized: "home_category_electronics"),
+            icon: "desktopcomputer",
+            itemCount: SampleCount.electronics,
+        ),
+        Self(
+            id: "cat_2",
+            name: String(localized: "home_category_fashion"),
+            icon: "tshirt",
+            itemCount: SampleCount.fashion,
+        ),
+        Self(
+            id: "cat_3",
+            name: String(localized: "home_category_home"),
+            icon: "house",
+            itemCount: SampleCount.home,
+        ),
+        Self(
+            id: "cat_4",
+            name: String(localized: "home_category_sports"),
+            icon: "figure.run",
+            itemCount: SampleCount.sports,
+        ),
+        Self(
+            id: "cat_5",
+            name: String(localized: "home_category_books"),
+            icon: "book",
+            itemCount: SampleCount.books,
+        ),
+        Self(
+            id: "cat_6",
+            name: String(localized: "categories_beauty"),
+            icon: "sparkles",
+            itemCount: SampleCount.beauty,
+        ),
+        Self(
+            id: "cat_7",
+            name: String(localized: "categories_toys"),
+            icon: "gamecontroller",
+            itemCount: SampleCount.toys,
+        ),
+        Self(
+            id: "cat_8",
+            name: String(localized: "categories_automotive"),
+            icon: "car",
+            itemCount: SampleCount.automotive,
+        ),
+    ]
+
     let id: String
     let name: String
     let icon: String
     let itemCount: Int
+
+    // MARK: - Private
 
     private enum SampleCount {
         static let electronics = 245
@@ -149,57 +206,6 @@ private struct CategoryItem: Identifiable {
         static let toys = 176
         static let automotive = 93
     }
-
-    static let samples: [Self] = [
-        Self(
-            id: "cat_1",
-            name: String(localized: "home_category_electronics"),
-            icon: "desktopcomputer",
-            itemCount: SampleCount.electronics
-        ),
-        Self(
-            id: "cat_2",
-            name: String(localized: "home_category_fashion"),
-            icon: "tshirt",
-            itemCount: SampleCount.fashion
-        ),
-        Self(
-            id: "cat_3",
-            name: String(localized: "home_category_home"),
-            icon: "house",
-            itemCount: SampleCount.home
-        ),
-        Self(
-            id: "cat_4",
-            name: String(localized: "home_category_sports"),
-            icon: "figure.run",
-            itemCount: SampleCount.sports
-        ),
-        Self(
-            id: "cat_5",
-            name: String(localized: "home_category_books"),
-            icon: "book",
-            itemCount: SampleCount.books
-        ),
-        Self(
-            id: "cat_6",
-            name: String(localized: "categories_beauty"),
-            icon: "sparkles",
-            itemCount: SampleCount.beauty
-        ),
-        Self(
-            id: "cat_7",
-            name: String(localized: "categories_toys"),
-            icon: "gamecontroller",
-            itemCount: SampleCount.toys
-        ),
-        Self(
-            id: "cat_8",
-            name: String(localized: "categories_automotive"),
-            icon: "car",
-            itemCount: SampleCount.automotive
-        ),
-    ]
 }
 
 // MARK: - Previews

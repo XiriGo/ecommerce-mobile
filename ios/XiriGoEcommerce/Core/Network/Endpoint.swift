@@ -14,8 +14,19 @@ protocol Endpoint: Sendable {
 // MARK: - Default Implementations
 
 extension Endpoint {
-    var headers: [String: String] { [:] }
-    var queryItems: [URLQueryItem] { [] }
-    var body: (any Encodable & Sendable)? { nil }
-    var requiresAuth: Bool { false }
+    var headers: [String: String] {
+        [:]
+    }
+
+    var queryItems: [URLQueryItem] {
+        []
+    }
+
+    var body: (any Encodable & Sendable)? {
+        nil
+    }
+
+    var requiresAuth: Bool {
+        false
+    }
 }

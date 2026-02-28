@@ -4,10 +4,7 @@ import SwiftUI
 
 /// User profile screen with guest state and menu items.
 struct ProfileScreen: View {
-    // MARK: - Properties
-
-    @Environment(AppRouter.self)
-    private var router
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -22,6 +19,11 @@ struct ProfileScreen: View {
         .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_profile"))
     }
+
+    // MARK: - Private
+
+    @Environment(AppRouter.self)
+    private var router
 
     // MARK: - Guest Header
 
@@ -47,7 +49,7 @@ struct ProfileScreen: View {
                 .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
                 .overlay(
                     Circle()
-                        .stroke(XGColors.outlineVariant, lineWidth: 1)
+                        .stroke(XGColors.outlineVariant, lineWidth: 1),
                 )
 
             Image(systemName: "person.fill")
@@ -62,7 +64,7 @@ struct ProfileScreen: View {
             XGButton(
                 String(localized: "nav_profile_guest_login_button"),
                 variant: .primary,
-                fullWidth: false
+                fullWidth: false,
             ) {
                 router.presentLogin()
             }
@@ -70,7 +72,7 @@ struct ProfileScreen: View {
             XGButton(
                 String(localized: "nav_profile_guest_register_button"),
                 variant: .outlined,
-                fullWidth: false
+                fullWidth: false,
             ) {
                 router.navigate(to: .register)
             }
@@ -118,52 +120,52 @@ struct ProfileScreen: View {
     }
 }
 
-// MARK: - Profile Menu Item
+// MARK: - ProfileMenuItem
 
 private struct ProfileMenuItem: Identifiable {
-    let id: String
-    let title: String
-    let icon: String
-    let route: Route
-
     static let items: [Self] = [
         Self(
             id: "orders",
             title: String(localized: "profile_menu_orders"),
             icon: "list.clipboard",
-            route: .orderList
+            route: .orderList,
         ),
         Self(
             id: "wishlist",
             title: String(localized: "profile_menu_wishlist"),
             icon: "heart",
-            route: .wishlist
+            route: .wishlist,
         ),
         Self(
             id: "addresses",
             title: String(localized: "profile_menu_addresses"),
             icon: "mappin.and.ellipse",
-            route: .addressManagement
+            route: .addressManagement,
         ),
         Self(
             id: "payment",
             title: String(localized: "profile_menu_payment"),
             icon: "creditcard",
-            route: .paymentMethods
+            route: .paymentMethods,
         ),
         Self(
             id: "notifications",
             title: String(localized: "profile_menu_notifications"),
             icon: "bell",
-            route: .notifications
+            route: .notifications,
         ),
         Self(
             id: "settings",
             title: String(localized: "profile_menu_settings"),
             icon: "gearshape",
-            route: .settings
+            route: .settings,
         ),
     ]
+
+    let id: String
+    let title: String
+    let icon: String
+    let route: Route
 }
 
 // MARK: - Previews

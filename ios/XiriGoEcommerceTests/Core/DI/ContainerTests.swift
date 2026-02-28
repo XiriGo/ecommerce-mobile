@@ -6,27 +6,31 @@ import Testing
 
 @Suite("Container Registration Tests", .serialized)
 struct ContainerTests {
+    // MARK: - Lifecycle
+
     init() {
         Container.shared.reset()
         Scope.singleton.reset()
     }
 
+    // MARK: - Internal
+
     // MARK: - Resolution
 
     @Test("apiClient resolves without crash")
-    func test_apiClient_resolves() {
+    func apiClient_resolves() {
         let client = Container.shared.apiClient()
         #expect(client is APIClient)
     }
 
     @Test("tokenProvider resolves without crash")
-    func test_tokenProvider_resolves() {
+    func tokenProvider_resolves() {
         let provider = Container.shared.tokenProvider()
         #expect(provider is any TokenProvider)
     }
 
     @Test("networkMonitor resolves without crash")
-    func test_networkMonitor_resolves() {
+    func networkMonitor_resolves() {
         let monitor = Container.shared.networkMonitor()
         #expect(monitor is NetworkMonitor)
     }
@@ -34,21 +38,21 @@ struct ContainerTests {
     // MARK: - Singleton Behavior
 
     @Test("apiClient returns same instance on multiple resolutions (singleton)")
-    func test_apiClient_singleton_returnsSameInstance() {
+    func apiClient_singleton_returnsSameInstance() {
         let first = Container.shared.apiClient()
         let second = Container.shared.apiClient()
         #expect(first === second)
     }
 
     @Test("networkMonitor returns same instance on multiple resolutions (singleton)")
-    func test_networkMonitor_singleton_returnsSameInstance() {
+    func networkMonitor_singleton_returnsSameInstance() {
         let first = Container.shared.networkMonitor()
         let second = Container.shared.networkMonitor()
         #expect(first === second)
     }
 
     @Test("tokenProvider returns same instance on multiple resolutions (singleton)")
-    func test_tokenProvider_singleton_returnsSameInstance() {
+    func tokenProvider_singleton_returnsSameInstance() {
         // Avoid `as AnyObject` cast which crashes Swift 6.2.3 compiler with @Observable types.
         // Instead, verify singleton by checking the concrete type resolves consistently.
         let first = Container.shared.tokenProvider()
@@ -62,7 +66,7 @@ struct ContainerTests {
     // MARK: - Test Override
 
     @Test("container registration can be overridden for tests")
-    func test_containerOverride_replacesRegistration() {
+    func containerOverride_replacesRegistration() {
         let fakeProvider = FakeTokenProvider()
         fakeProvider.accessToken = "test_token"
         Container.shared.tokenProvider.register { fakeProvider }
@@ -72,7 +76,7 @@ struct ContainerTests {
     }
 
     @Test("container reset restores original registrations")
-    func test_containerReset_restoresOriginalRegistrations() {
+    func containerReset_restoresOriginalRegistrations() {
         Container.shared.tokenProvider.register { FakeTokenProvider() }
         Container.shared.reset()
 
@@ -84,7 +88,7 @@ struct ContainerTests {
     // MARK: - Cross-Test Isolation
 
     @Test("override followed by reset does not leak into next resolution")
-    func test_override_thenReset_noLeakage() {
+    func override_thenReset_noLeakage() {
         // Override and verify override is active
         let fake = FakeTokenProvider()
         Container.shared.tokenProvider.register { fake }
@@ -97,7 +101,7 @@ struct ContainerTests {
     }
 
     @Test("resetting container clears all three singleton caches")
-    func test_reset_clearsSingletonCachesForAllRegistrations() {
+    func reset_clearsSingletonCachesForAllRegistrations() {
         // Resolve all three singletons to populate caches
         let originalClient = Container.shared.apiClient()
         let originalMonitor = Container.shared.networkMonitor()
@@ -117,7 +121,7 @@ struct ContainerTests {
     // MARK: - Container Shared Reference
 
     @Test("Container.shared refers to the same container across multiple accesses")
-    func test_containerShared_isSameObject() {
+    func containerShared_isSameObject() {
         let first = Container.shared
         let second = Container.shared
         // Container.shared must be the same instance (identity)
@@ -127,7 +131,7 @@ struct ContainerTests {
     // MARK: - All Registrations Coexist
 
     @Test("all three registrations resolve concurrently without interfering")
-    func test_allRegistrations_resolveIndependently() {
+    func allRegistrations_resolveIndependently() {
         let client = Container.shared.apiClient()
         let provider = Container.shared.tokenProvider()
         let monitor = Container.shared.networkMonitor()
@@ -140,7 +144,7 @@ struct ContainerTests {
     // MARK: - Override Specificity
 
     @Test("overriding tokenProvider does not affect apiClient or networkMonitor registrations")
-    func test_override_tokenProvider_doesNotAffectOtherRegistrations() {
+    func override_tokenProvider_doesNotAffectOtherRegistrations() {
         Container.shared.tokenProvider.register { FakeTokenProvider() }
 
         // Other registrations remain unaffected
@@ -149,7 +153,7 @@ struct ContainerTests {
     }
 
     @Test("overriding networkMonitor does not affect tokenProvider or apiClient registrations")
-    func test_override_networkMonitor_doesNotAffectOtherRegistrations() {
+    func override_networkMonitor_doesNotAffectOtherRegistrations() {
         let fakeMonitor = NetworkMonitor()
         Container.shared.networkMonitor.register { fakeMonitor }
 

@@ -3,16 +3,6 @@ import Foundation
 // MARK: - APIClient
 
 final class APIClient: Sendable {
-    // MARK: - HTTP Status Code Constants
-
-    private static let httpSuccessRange = 200 ... 299
-    private static let httpUnauthorized = 401
-    private static let httpForbidden = 403
-    private static let httpNotFound = 404
-    private static let httpTooManyRequests = 429
-    private static let httpClientErrorRange = 400 ... 499
-    private static let httpServerErrorRange = 500 ... 599
-    private static let nanosecondsPerSecond: UInt64 = 1_000_000_000
     // MARK: - Lifecycle
 
     init(
@@ -20,13 +10,13 @@ final class APIClient: Sendable {
         session: URLSession? = nil,
         tokenProvider: any TokenProvider = NoOpTokenProvider(),
         retryPolicy: RetryPolicy = .default,
-        publishableApiKey: String? = nil
+        publishableApiKey: String? = nil,
     ) {
         self.baseURL = baseURL
         self.tokenProvider = tokenProvider
         self.retryPolicy = retryPolicy
         self.publishableApiKey = publishableApiKey
-        self.tokenRefreshActor = TokenRefreshActor(tokenProvider: tokenProvider)
+        tokenRefreshActor = TokenRefreshActor(tokenProvider: tokenProvider)
 
         if let session {
             self.session = session
@@ -36,7 +26,7 @@ final class APIClient: Sendable {
             config.timeoutIntervalForResource = NetworkConfig.timeoutIntervalForResource
             config.urlCache = URLCache(
                 memoryCapacity: NetworkConfig.memoryCacheCapacity,
-                diskCapacity: NetworkConfig.diskCacheCapacity
+                diskCapacity: NetworkConfig.diskCacheCapacity,
             )
             config.httpAdditionalHeaders = ["Accept": "application/json"]
             config.waitsForConnectivity = false
@@ -56,6 +46,17 @@ final class APIClient: Sendable {
     }
 
     // MARK: - Private
+
+    // MARK: - HTTP Status Code Constants
+
+    private static let httpSuccessRange = 200 ... 299
+    private static let httpUnauthorized = 401
+    private static let httpForbidden = 403
+    private static let httpNotFound = 404
+    private static let httpTooManyRequests = 429
+    private static let httpClientErrorRange = 400 ... 499
+    private static let httpServerErrorRange = 500 ... 599
+    private static let nanosecondsPerSecond: UInt64 = 1_000_000_000
 
     private let baseURL: URL
     private let session: URLSession
@@ -105,7 +106,7 @@ final class APIClient: Sendable {
 
     private func executeWithRetry<T: Decodable>(
         _ request: URLRequest,
-        endpoint: any Endpoint
+        endpoint: any Endpoint,
     ) async throws -> T {
         var mutableRequest = request
 
@@ -131,12 +132,12 @@ final class APIClient: Sendable {
         }
 
         // 401 - Attempt token refresh and retry once
-        if statusCode == Self.httpUnauthorized && endpoint.requiresAuth {
+        if statusCode == Self.httpUnauthorized, endpoint.requiresAuth {
             return try await handleUnauthorized(
                 originalRequest: request,
                 endpoint: endpoint,
                 failedToken: mutableRequest.value(forHTTPHeaderField: "Authorization")?
-                    .replacingOccurrences(of: "Bearer ", with: "")
+                    .replacingOccurrences(of: "Bearer ", with: ""),
             )
         }
 
@@ -146,7 +147,7 @@ final class APIClient: Sendable {
                 mutableRequest,
                 endpoint: endpoint,
                 lastStatusCode: statusCode,
-                lastData: data
+                lastData: data,
             )
         }
 
@@ -191,7 +192,7 @@ final class APIClient: Sendable {
     private func handleUnauthorized<T: Decodable>(
         originalRequest: URLRequest,
         endpoint: any Endpoint,
-        failedToken: String?
+        failedToken: String?,
     ) async throws -> T {
         do {
             guard let newToken = try await tokenRefreshActor.refreshIfNeeded(failedToken: failedToken) else {
@@ -228,7 +229,7 @@ final class APIClient: Sendable {
         _ request: URLRequest,
         endpoint: any Endpoint,
         lastStatusCode: Int,
-        lastData: Data
+        lastData: Data,
     ) async throws -> T {
         var latestStatusCode = lastStatusCode
         var latestData = lastData
@@ -251,12 +252,12 @@ final class APIClient: Sendable {
             }
 
             // 401 during retry - handle token refresh
-            if statusCode == Self.httpUnauthorized && endpoint.requiresAuth {
+            if statusCode == Self.httpUnauthorized, endpoint.requiresAuth {
                 return try await handleUnauthorized(
                     originalRequest: request,
                     endpoint: endpoint,
                     failedToken: request.value(forHTTPHeaderField: "Authorization")?
-                        .replacingOccurrences(of: "Bearer ", with: "")
+                        .replacingOccurrences(of: "Bearer ", with: ""),
                 )
             }
 
@@ -289,44 +290,44 @@ final class APIClient: Sendable {
         let medusaError = try? JSONDecoder.api.decode(MedusaErrorDTO.self, from: data)
 
         switch statusCode {
-        case Self.httpUnauthorized:
-            return .unauthorized(message: medusaError?.message ?? "Unauthorized")
+            case Self.httpUnauthorized:
+                return .unauthorized(message: medusaError?.message ?? "Unauthorized")
 
-        case Self.httpForbidden:
-            return .unauthorized(message: medusaError?.message ?? "Access denied")
+            case Self.httpForbidden:
+                return .unauthorized(message: medusaError?.message ?? "Access denied")
 
-        case Self.httpNotFound:
-            return .notFound(message: medusaError?.message ?? "Not found")
+            case Self.httpNotFound:
+                return .notFound(message: medusaError?.message ?? "Not found")
 
-        case Self.httpTooManyRequests:
-            return .server(
-                code: Self.httpTooManyRequests,
-                message: medusaError?.message ?? "Too many requests. Please try again later."
-            )
+            case Self.httpTooManyRequests:
+                return .server(
+                    code: Self.httpTooManyRequests,
+                    message: medusaError?.message ?? "Too many requests. Please try again later.",
+                )
 
-        case Self.httpClientErrorRange:
-            return .server(code: statusCode, message: medusaError?.message ?? "Request error")
+            case Self.httpClientErrorRange:
+                return .server(code: statusCode, message: medusaError?.message ?? "Request error")
 
-        case Self.httpServerErrorRange:
-            return .server(code: statusCode, message: medusaError?.message ?? "Server error")
+            case Self.httpServerErrorRange:
+                return .server(code: statusCode, message: medusaError?.message ?? "Server error")
 
-        default:
-            return .unknown(message: medusaError?.message ?? "Unexpected error")
+            default:
+                return .unknown(message: medusaError?.message ?? "Unexpected error")
         }
     }
 
     private func mapURLError(_ error: URLError) -> AppError {
         switch error.code {
-        case .notConnectedToInternet,
-            .networkConnectionLost,
-            .cannotFindHost,
-            .cannotConnectToHost,
-            .dnsLookupFailed,
-            .timedOut:
-            return .network(message: error.localizedDescription)
+            case .cannotConnectToHost,
+                 .cannotFindHost,
+                 .dnsLookupFailed,
+                 .networkConnectionLost,
+                 .notConnectedToInternet,
+                 .timedOut:
+                .network(message: error.localizedDescription)
 
-        default:
-            return .network(message: error.localizedDescription)
+            default:
+                .network(message: error.localizedDescription)
         }
     }
 }

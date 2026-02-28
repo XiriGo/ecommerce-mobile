@@ -9,7 +9,7 @@ struct JSONCodersTests {
     // MARK: - Snake Case Decoding
 
     @Test("decoder converts snake_case JSON keys to camelCase properties")
-    func test_decode_snakeCaseKeys_areConvertedToCamelCase() throws {
+    func decode_snakeCaseKeys_areConvertedToCamelCase() throws {
         struct Response: Decodable {
             let firstName: String
             let lastName: String
@@ -17,12 +17,12 @@ struct JSONCodersTests {
         }
 
         let json = Data("""
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "created_at": "2025-01-15T10:30:00Z"
-        }
-        """.utf8)
+            {
+                "first_name": "John",
+                "last_name": "Doe",
+                "created_at": "2025-01-15T10:30:00Z"
+            }
+            """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.firstName == "John")
@@ -31,7 +31,7 @@ struct JSONCodersTests {
     }
 
     @Test("decoder handles nested objects with snake_case keys")
-    func test_decode_nestedSnakeCaseKeys_areConvertedCorrectly() throws {
+    func decode_nestedSnakeCaseKeys_areConvertedCorrectly() throws {
         struct Address: Decodable {
             let streetAddress: String
             let postalCode: String
@@ -41,13 +41,13 @@ struct JSONCodersTests {
         }
 
         let json = Data("""
-        {
-            "shipping_address": {
-                "street_address": "123 Main St",
-                "postal_code": "12345"
+            {
+                "shipping_address": {
+                    "street_address": "123 Main St",
+                    "postal_code": "12345"
+                }
             }
-        }
-        """.utf8)
+            """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.shippingAddress.streetAddress == "123 Main St")
@@ -57,23 +57,23 @@ struct JSONCodersTests {
     // MARK: - Date Decoding
 
     @Test("decoder decodes ISO 8601 date strings correctly")
-    func test_decode_iso8601DateString_isDecodedAsDate() throws {
+    func decode_iso8601DateString_isDecodedAsDate() throws {
         struct Response: Decodable {
             let createdAt: Date
         }
 
         let json = Data("""
-        {
-            "created_at": "2025-01-15T10:30:00Z"
-        }
-        """.utf8)
+            {
+                "created_at": "2025-01-15T10:30:00Z"
+            }
+            """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = try #require(TimeZone(identifier: "UTC"))
         let components = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute, .second],
-            from: response.createdAt
+            from: response.createdAt,
         )
         #expect(components.year == 2025)
         #expect(components.month == 1)
@@ -84,16 +84,16 @@ struct JSONCodersTests {
     }
 
     @Test("decoder throws for non-ISO8601 date strings")
-    func test_decode_invalidDateString_throwsError() throws {
+    func decode_invalidDateString_throwsError() throws {
         struct Response: Decodable {
             let createdAt: Date
         }
 
         let json = Data("""
-        {
-            "created_at": "January 15, 2025"
-        }
-        """.utf8)
+            {
+                "created_at": "January 15, 2025"
+            }
+            """.utf8)
 
         #expect(throws: (any Error).self) {
             try JSONDecoder.api.decode(Response.self, from: json)
@@ -103,7 +103,7 @@ struct JSONCodersTests {
     // MARK: - Encoder: snake_case Encoding
 
     @Test("encoder converts camelCase properties to snake_case JSON keys")
-    func test_encode_camelCaseProperties_areConvertedToSnakeCaseKeys() throws {
+    func encode_camelCaseProperties_areConvertedToSnakeCaseKeys() throws {
         struct Request: Encodable {
             let firstName: String
             let currencyCode: String
@@ -118,7 +118,7 @@ struct JSONCodersTests {
     }
 
     @Test("encoder converts date to ISO 8601 string")
-    func test_encode_date_isEncodedAsISO8601String() throws {
+    func encode_date_isEncodedAsISO8601String() throws {
         struct Request: Encodable {
             let createdAt: Date
         }
@@ -148,7 +148,7 @@ struct JSONCodersTests {
     // MARK: - Round-trip
 
     @Test("encode then decode produces same values")
-    func test_encodeAndDecode_roundTrip_preservesValues() throws {
+    func encodeAndDecode_roundTrip_preservesValues() throws {
         struct Model: Codable, Equatable {
             let productId: String
             let variantTitle: String
@@ -163,18 +163,18 @@ struct JSONCodersTests {
     }
 
     @Test("decode ignores unknown keys in JSON")
-    func test_decode_unknownKeys_areIgnored() throws {
+    func decode_unknownKeys_areIgnored() throws {
         struct Response: Decodable {
             let name: String
         }
 
         let json = Data("""
-        {
-            "name": "Test",
-            "unknown_field": "some value",
-            "another_unknown": 42
-        }
-        """.utf8)
+            {
+                "name": "Test",
+                "unknown_field": "some value",
+                "another_unknown": 42
+            }
+            """.utf8)
 
         let response = try JSONDecoder.api.decode(Response.self, from: json)
         #expect(response.name == "Test")

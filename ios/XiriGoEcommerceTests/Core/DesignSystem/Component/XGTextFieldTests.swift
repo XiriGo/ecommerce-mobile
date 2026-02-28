@@ -9,7 +9,7 @@ struct XGTextFieldTests {
     // MARK: - Initialisation
 
     @Test("TextField initialises with label and binding")
-    func test_init_withLabelAndBinding_initialises() {
+    func init_withLabelAndBinding_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(value: binding, label: "Email")
@@ -18,118 +18,118 @@ struct XGTextFieldTests {
     }
 
     @Test("TextField initialises with placeholder")
-    func test_init_withPlaceholder_initialises() {
+    func init_withPlaceholder_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Email",
-            placeholder: "Enter your email"
+            placeholder: "Enter your email",
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises with error message")
-    func test_init_withErrorMessage_initialises() {
+    func init_withErrorMessage_initialises() {
         var text = "bad@"
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Email",
-            errorMessage: "Invalid email address"
+            errorMessage: "Invalid email address",
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises with helper text")
-    func test_init_withHelperText_initialises() {
+    func init_withHelperText_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Username",
-            helperText: "Must be at least 3 characters"
+            helperText: "Must be at least 3 characters",
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises in password mode")
-    func test_init_passwordMode_initialises() {
+    func init_passwordMode_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Password",
-            isPassword: true
+            isPassword: true,
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises with maxLength")
-    func test_init_withMaxLength_initialises() {
+    func init_withMaxLength_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Name",
-            maxLength: 50
+            maxLength: 50,
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises in disabled state")
-    func test_init_disabled_initialises() {
+    func init_disabled_initialises() {
         var text = "read only"
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Field",
-            isEnabled: false
+            isEnabled: false,
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises in read-only state")
-    func test_init_readOnly_initialises() {
+    func init_readOnly_initialises() {
         var text = "view only"
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Field",
-            isReadOnly: true
+            isReadOnly: true,
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises with leading icon")
-    func test_init_withLeadingIcon_initialises() {
+    func init_withLeadingIcon_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Search",
-            leadingIcon: "magnifyingglass"
+            leadingIcon: "magnifyingglass",
         )
         _ = field
         #expect(true)
     }
 
     @Test("TextField initialises with trailing icon and tap handler")
-    func test_init_withTrailingIconAndTap_initialises() {
+    func init_withTrailingIconAndTap_initialises() {
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
         let field = XGTextField(
             value: binding,
             label: "Search",
             trailingIcon: "xmark.circle",
-            onTrailingIconTap: {}
+            onTrailingIconTap: {},
         )
         _ = field
         #expect(true)
@@ -138,7 +138,7 @@ struct XGTextFieldTests {
     // MARK: - Error vs Helper Text Priority
 
     @Test("ErrorMessage takes priority over helperText in initialiser")
-    func test_init_errorMessageTakesPriorityOverHelperText_initialises() {
+    func init_errorMessageTakesPriorityOverHelperText_initialises() {
         // Both error and helper can be set — the view shows error when errorMessage != nil
         var text = ""
         let binding = Binding(get: { text }, set: { text = $0 })
@@ -146,7 +146,7 @@ struct XGTextFieldTests {
             value: binding,
             label: "Field",
             errorMessage: "Required",
-            helperText: "Enter something"
+            helperText: "Enter something",
         )
         _ = field
         #expect(true)

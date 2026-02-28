@@ -11,6 +11,8 @@ final class AuthStateManagerImpl: AuthStateManager, @unchecked Sendable {
         self.tokenStorage = tokenStorage
     }
 
+    // MARK: - Internal
+
     // MARK: - AuthStateManager
 
     private(set) var authState: AuthState = .loading

@@ -5,19 +5,15 @@ import Foundation
 /// UserDefaults-backed implementation of `OnboardingRepository`.
 /// Stores a simple boolean flag indicating whether onboarding has been shown.
 final class OnboardingRepositoryImpl: OnboardingRepository, @unchecked Sendable {
-    // MARK: - Constants
-
-    private static let hasSeenOnboardingKey = "has_seen_onboarding"
-
-    // MARK: - Properties
-
-    private let defaults: UserDefaults
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
     }
+
+    // MARK: - Internal
 
     // MARK: - OnboardingRepository
 
@@ -28,4 +24,12 @@ final class OnboardingRepositoryImpl: OnboardingRepository, @unchecked Sendable 
     func setOnboardingSeen() async {
         defaults.set(true, forKey: Self.hasSeenOnboardingKey)
     }
+
+    // MARK: - Private
+
+    // MARK: - Constants
+
+    private static let hasSeenOnboardingKey = "has_seen_onboarding"
+
+    private let defaults: UserDefaults
 }

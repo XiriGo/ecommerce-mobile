@@ -3,12 +3,36 @@ import Foundation
 // MARK: - RetryPolicy
 
 struct RetryPolicy: Sendable {
+    // MARK: - Internal
+
+    static let `default` = Self(
+        maxRetries: defaultMaxRetries,
+        baseDelay: defaultBaseDelay,
+        backoffMultiplier: defaultBackoffMultiplier,
+        maxDelay: defaultMaxDelay,
+        jitterFactor: defaultJitterFactor,
+        retryableStatusCodes: defaultRetryableStatusCodes,
+    )
+
     let maxRetries: Int
     let baseDelay: TimeInterval
     let backoffMultiplier: Double
     let maxDelay: TimeInterval
     let jitterFactor: Double
     let retryableStatusCodes: Set<Int>
+
+    func delay(forAttempt attempt: Int) -> TimeInterval {
+        let exponentialDelay = baseDelay * pow(backoffMultiplier, Double(attempt))
+        let clampedDelay = min(exponentialDelay, maxDelay)
+        let jitter = clampedDelay * Double.random(in: -jitterFactor ... jitterFactor)
+        return clampedDelay + jitter
+    }
+
+    func isRetryable(statusCode: Int) -> Bool {
+        retryableStatusCodes.contains(statusCode)
+    }
+
+    // MARK: - Private
 
     // MARK: - Default Constants
 
@@ -24,26 +48,4 @@ struct RetryPolicy: Sendable {
     private static let defaultRetryableStatusCodes: Set<Int> = [
         httpInternalServerError, httpBadGateway, httpServiceUnavailable, httpGatewayTimeout,
     ]
-
-    // MARK: - Internal
-
-    static let `default` = Self(
-        maxRetries: defaultMaxRetries,
-        baseDelay: defaultBaseDelay,
-        backoffMultiplier: defaultBackoffMultiplier,
-        maxDelay: defaultMaxDelay,
-        jitterFactor: defaultJitterFactor,
-        retryableStatusCodes: defaultRetryableStatusCodes
-    )
-
-    func delay(forAttempt attempt: Int) -> TimeInterval {
-        let exponentialDelay = baseDelay * pow(backoffMultiplier, Double(attempt))
-        let clampedDelay = min(exponentialDelay, maxDelay)
-        let jitter = clampedDelay * Double.random(in: -jitterFactor ... jitterFactor)
-        return clampedDelay + jitter
-    }
-
-    func isRetryable(statusCode: Int) -> Bool {
-        retryableStatusCodes.contains(statusCode)
-    }
 }

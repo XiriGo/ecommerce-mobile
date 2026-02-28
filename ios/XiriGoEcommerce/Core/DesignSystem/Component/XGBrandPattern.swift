@@ -8,9 +8,7 @@ import UIKit
 /// drawn as a repeating tile across the entire surface.
 /// Used on Splash and Login screens over `XGBrandGradient`.
 struct XGBrandPattern: View {
-    // MARK: - Constants
-
-    private let patternOpacity: Double = 0.06
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -27,6 +25,12 @@ struct XGBrandPattern: View {
         .ignoresSafeArea()
         .accessibilityHidden(true)
     }
+
+    // MARK: - Private
+
+    // MARK: - Constants
+
+    private let patternOpacity: Double = 0.06
 }
 
 // MARK: - Previews

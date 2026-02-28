@@ -4,20 +4,7 @@ import SwiftUI
 
 /// Main home screen displaying featured content, categories, and product sections.
 struct HomeScreen: View {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let bannerSubtitleOpacity: Double = 0.85
-        static let bannerWidth: CGFloat = 280
-        static let bannerHeight: CGFloat = 160
-        static let categoryBorderOpacity: Double = 0.5
-        static let newArrivalCardWidth: CGFloat = 180
-    }
-
-    // MARK: - Properties
-
-    @Environment(AppRouter.self)
-    private var router
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -36,6 +23,21 @@ struct HomeScreen: View {
         .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_home"))
     }
+
+    // MARK: - Private
+
+    // MARK: - Constants
+
+    private enum Constants {
+        static let bannerSubtitleOpacity: Double = 0.85
+        static let bannerWidth: CGFloat = 280
+        static let bannerHeight: CGFloat = 160
+        static let categoryBorderOpacity: Double = 0.5
+        static let newArrivalCardWidth: CGFloat = 180
+    }
+
+    @Environment(AppRouter.self)
+    private var router
 
     // MARK: - Welcome Header
 
@@ -78,7 +80,7 @@ struct HomeScreen: View {
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
             .overlay(
                 RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                    .stroke(XGColors.outlineVariant, lineWidth: 1)
+                    .stroke(XGColors.outlineVariant, lineWidth: 1),
             )
         }
         .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
@@ -102,30 +104,6 @@ struct HomeScreen: View {
         }
     }
 
-    private func featuredBannerCard(_ banner: HomeBanner) -> some View {
-        ZStack(alignment: .bottomLeading) {
-            LinearGradient(
-                colors: banner.gradientColors,
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-
-            VStack(alignment: .leading, spacing: XGSpacing.xs) {
-                Text(banner.title)
-                    .font(XGTypography.headlineSmall)
-                    .foregroundStyle(.white)
-
-                Text(banner.subtitle)
-                    .font(XGTypography.bodyMedium)
-                    .foregroundStyle(.white.opacity(Constants.bannerSubtitleOpacity))
-            }
-            .padding(XGSpacing.lg)
-        }
-        .frame(width: Constants.bannerWidth, height: Constants.bannerHeight)
-        .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
-        .xgElevation(XGElevation.level2)
-    }
-
     // MARK: - Categories Section
 
     private var categoriesSection: some View {
@@ -143,35 +121,6 @@ struct HomeScreen: View {
         }
     }
 
-    private func categoryItem(_ category: HomeCategory) -> some View {
-        Button {
-            router.navigate(to: .categoryProducts(categoryId: category.id, categoryName: category.name))
-        } label: {
-            VStack(spacing: XGSpacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(.ultraThinMaterial)
-                        .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
-                        .overlay(
-                            Circle()
-                                .stroke(XGColors.outlineVariant.opacity(Constants.categoryBorderOpacity), lineWidth: 1)
-                        )
-
-                    Image(systemName: category.icon)
-                        .font(.system(size: XGSpacing.IconSize.large))
-                        .foregroundStyle(XGColors.primary)
-                }
-
-                Text(category.name)
-                    .font(XGTypography.labelMedium)
-                    .foregroundStyle(XGColors.onSurface)
-                    .lineLimit(1)
-            }
-            .frame(width: XGSpacing.AvatarSize.extraLarge)
-        }
-        .accessibilityLabel(category.name)
-    }
-
     // MARK: - Popular Products Section
 
     private var popularProductsSection: some View {
@@ -183,7 +132,7 @@ struct HomeScreen: View {
                     GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
                     GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
                 ],
-                spacing: XGSpacing.productGridSpacing
+                spacing: XGSpacing.productGridSpacing,
             ) {
                 ForEach(HomeProduct.popularSamples, id: \.id) { product in
                     XGProductCard(
@@ -196,7 +145,7 @@ struct HomeScreen: View {
                         reviewCount: product.reviewCount,
                         action: {
                             router.navigate(to: .productDetail(productId: product.id))
-                        }
+                        },
                     )
                 }
             }
@@ -220,7 +169,7 @@ struct HomeScreen: View {
                             vendorName: product.vendor,
                             action: {
                                 router.navigate(to: .productDetail(productId: product.id))
-                            }
+                            },
                         )
                         .frame(width: Constants.newArrivalCardWidth)
                     }
@@ -228,6 +177,59 @@ struct HomeScreen: View {
                 .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
             }
         }
+    }
+
+    private func featuredBannerCard(_ banner: HomeBanner) -> some View {
+        ZStack(alignment: .bottomLeading) {
+            LinearGradient(
+                colors: banner.gradientColors,
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing,
+            )
+
+            VStack(alignment: .leading, spacing: XGSpacing.xs) {
+                Text(banner.title)
+                    .font(XGTypography.headlineSmall)
+                    .foregroundStyle(.white)
+
+                Text(banner.subtitle)
+                    .font(XGTypography.bodyMedium)
+                    .foregroundStyle(.white.opacity(Constants.bannerSubtitleOpacity))
+            }
+            .padding(XGSpacing.lg)
+        }
+        .frame(width: Constants.bannerWidth, height: Constants.bannerHeight)
+        .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+        .xgElevation(XGElevation.level2)
+    }
+
+    private func categoryItem(_ category: HomeCategory) -> some View {
+        Button {
+            router.navigate(to: .categoryProducts(categoryId: category.id, categoryName: category.name))
+        } label: {
+            VStack(spacing: XGSpacing.sm) {
+                ZStack {
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
+                        .overlay(
+                            Circle()
+                                .stroke(XGColors.outlineVariant.opacity(Constants.categoryBorderOpacity), lineWidth: 1),
+                        )
+
+                    Image(systemName: category.icon)
+                        .font(.system(size: XGSpacing.IconSize.large))
+                        .foregroundStyle(XGColors.primary)
+                }
+
+                Text(category.name)
+                    .font(XGTypography.labelMedium)
+                    .foregroundStyle(XGColors.onSurface)
+                    .lineLimit(1)
+            }
+            .frame(width: XGSpacing.AvatarSize.extraLarge)
+        }
+        .accessibilityLabel(category.name)
     }
 
     // MARK: - Helpers

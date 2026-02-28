@@ -3,20 +3,19 @@ import SwiftUI
 // MARK: - XGErrorView
 
 struct XGErrorView: View {
-    // MARK: - Properties
-
-    private let message: String
-    private let onRetry: (() -> Void)?
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(
         message: String,
-        onRetry: (() -> Void)? = nil
+        onRetry: (() -> Void)? = nil,
     ) {
         self.message = message
         self.onRetry = onRetry
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -37,13 +36,18 @@ struct XGErrorView: View {
                     String(localized: "common_retry_button"),
                     variant: .outlined,
                     fullWidth: false,
-                    action: onRetry
+                    action: onRetry,
                 )
             }
         }
         .padding(XGSpacing.base)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+
+    // MARK: - Private
+
+    private let message: String
+    private let onRetry: (() -> Void)?
 }
 
 // MARK: - Previews
@@ -51,12 +55,12 @@ struct XGErrorView: View {
 #Preview("XGErrorView with Retry") {
     XGErrorView(
         message: String(localized: "common_error_generic"),
-        onRetry: {}
+        onRetry: {},
     )
 }
 
 #Preview("XGErrorView without Retry") {
     XGErrorView(
-        message: "Network connection lost"
+        message: "Network connection lost",
     )
 }

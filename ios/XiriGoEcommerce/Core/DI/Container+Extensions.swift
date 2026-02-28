@@ -25,7 +25,7 @@ extension Container {
             SessionManager(
                 apiClient: self.apiClient(),
                 tokenStorage: self.tokenStorage(),
-                authStateManager: self.authStateManager()
+                authStateManager: self.authStateManager(),
             )
         }
         .singleton
@@ -46,7 +46,7 @@ extension Container {
         self {
             APIClient(
                 baseURL: Config.apiBaseURL,
-                tokenProvider: self.tokenProvider()
+                tokenProvider: self.tokenProvider(),
             )
         }
         .singleton
@@ -67,19 +67,13 @@ extension Container {
 /// Breaks the circular dependency: APIClient -> TokenProvider -> SessionManager -> APIClient.
 /// The underlying SessionManager is resolved lazily on first method call, not at construction.
 private final class LazyTokenProvider: TokenProvider, @unchecked Sendable {
-    private let resolver: @Sendable () -> SessionManager
-    private var resolved: SessionManager?
+    // MARK: - Lifecycle
 
     init(resolver: @escaping @Sendable () -> SessionManager) {
         self.resolver = resolver
     }
 
-    private func provider() -> SessionManager {
-        if let resolved { return resolved }
-        let instance = resolver()
-        resolved = instance
-        return instance
-    }
+    // MARK: - Internal
 
     func getAccessToken() async -> String? {
         await provider().getAccessToken()
@@ -92,9 +86,24 @@ private final class LazyTokenProvider: TokenProvider, @unchecked Sendable {
     func clearTokens() async {
         await provider().clearTokens()
     }
+
+    // MARK: - Private
+
+    private let resolver: @Sendable () -> SessionManager
+    private var resolved: SessionManager?
+
+    private func provider() -> SessionManager {
+        if let resolved {
+            return resolved
+        }
+        let instance = resolver()
+        resolved = instance
+        return instance
+    }
 }
 
 // MARK: - Feature DI Pattern (Reference for M1+ Features)
+
 //
 // Every feature registers its dependencies as a Container extension. For small
 // projects, add registrations directly to this file. For larger projects, create

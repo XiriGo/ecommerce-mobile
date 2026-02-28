@@ -5,13 +5,7 @@ import SwiftUI
 /// Horizontal pager with 4 onboarding pages, pagination dots, Skip button, and Get Started button.
 /// Uses `TabView` with `.page` style for swipeable content.
 struct OnboardingScreen: View {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let inactiveDotOpacity: Double = 0.4
-        static let getStartedHorizontalPadding: CGFloat = 20
-    }
-    // MARK: - Properties
+    // MARK: - Internal
 
     @Bindable var viewModel: OnboardingViewModel
 
@@ -27,6 +21,15 @@ struct OnboardingScreen: View {
                 bottomControls
             }
         }
+    }
+
+    // MARK: - Private
+
+    // MARK: - Constants
+
+    private enum Constants {
+        static let inactiveDotOpacity: Double = 0.4
+        static let getStartedHorizontalPadding: CGFloat = 20
     }
 
     // MARK: - Pager
@@ -52,7 +55,7 @@ struct OnboardingScreen: View {
                     XGButton(
                         String(localized: "onboarding_skip_button"),
                         variant: .text,
-                        fullWidth: false
+                        fullWidth: false,
                     ) {
                         Task { await viewModel.onSkip() }
                     }
@@ -79,7 +82,7 @@ struct OnboardingScreen: View {
                 totalPages: viewModel.pages.count,
                 currentPage: viewModel.currentPage,
                 activeColor: .white,
-                inactiveColor: .white.opacity(Constants.inactiveDotOpacity)
+                inactiveColor: .white.opacity(Constants.inactiveDotOpacity),
             )
             .padding(.bottom, XGSpacing.xl)
         }
@@ -90,7 +93,7 @@ struct OnboardingScreen: View {
     private var getStartedButton: some View {
         XGButton(
             String(localized: "onboarding_get_started_button"),
-            variant: .primary
+            variant: .primary,
         ) {
             Task { await viewModel.onGetStarted() }
         }
@@ -105,20 +108,20 @@ struct OnboardingScreen: View {
     OnboardingScreen(
         viewModel: OnboardingViewModel(
             checkOnboarding: CheckOnboardingUseCase(
-                repository: PreviewOnboardingRepository()
+                repository: PreviewOnboardingRepository(),
             ),
             completeOnboarding: CompleteOnboardingUseCase(
-                repository: PreviewOnboardingRepository()
-            )
-        )
+                repository: PreviewOnboardingRepository(),
+            ),
+        ),
     )
 }
 
-// MARK: - Preview Helper
+// MARK: - PreviewOnboardingRepository
 
 /// In-memory repository for SwiftUI previews.
 private final class PreviewOnboardingRepository: OnboardingRepository, @unchecked Sendable {
-    private var hasSeen = false
+    // MARK: - Internal
 
     func hasSeenOnboarding() async -> Bool {
         hasSeen
@@ -127,4 +130,8 @@ private final class PreviewOnboardingRepository: OnboardingRepository, @unchecke
     func setOnboardingSeen() async {
         hasSeen = true
     }
+
+    // MARK: - Private
+
+    private var hasSeen = false
 }

@@ -3,18 +3,7 @@ import SwiftUI
 // MARK: - XGProductCard
 
 struct XGProductCard: View {
-    // MARK: - Properties
-
-    private let imageUrl: URL?
-    private let title: String
-    private let price: String
-    private let originalPrice: String?
-    private let vendorName: String?
-    private let rating: Double?
-    private let reviewCount: Int?
-    private let isWishlisted: Bool
-    private let onWishlistToggle: (() -> Void)?
-    private let action: () -> Void
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -28,7 +17,7 @@ struct XGProductCard: View {
         reviewCount: Int? = nil,
         isWishlisted: Bool = false,
         onWishlistToggle: (() -> Void)? = nil,
-        action: @escaping () -> Void
+        action: @escaping () -> Void,
     ) {
         self.imageUrl = imageUrl
         self.title = title
@@ -41,6 +30,8 @@ struct XGProductCard: View {
         self.onWishlistToggle = onWishlistToggle
         self.action = action
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -58,6 +49,34 @@ struct XGProductCard: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
         .accessibilityAddTraits(.isButton)
+    }
+
+    // MARK: - Private
+
+    private let imageUrl: URL?
+    private let title: String
+    private let price: String
+    private let originalPrice: String?
+    private let vendorName: String?
+    private let rating: Double?
+    private let reviewCount: Int?
+    private let isWishlisted: Bool
+    private let onWishlistToggle: (() -> Void)?
+    private let action: () -> Void
+
+    // MARK: - Accessibility
+
+    private var accessibilityDescription: String {
+        var parts = [title, price]
+        if let vendorName {
+            parts.append(vendorName)
+        }
+        if let rating {
+            parts.append(
+                String(localized: "common_rating_description \(rating) \(5)"),
+            )
+        }
+        return parts.joined(separator: ", ")
     }
 
     // MARK: - Subviews
@@ -82,7 +101,7 @@ struct XGProductCard: View {
                 .accessibilityLabel(
                     isWishlisted
                         ? String(localized: "common_remove_from_wishlist")
-                        : String(localized: "common_add_to_wishlist")
+                        : String(localized: "common_add_to_wishlist"),
                 )
             }
         }
@@ -107,39 +126,18 @@ struct XGProductCard: View {
                 XGRatingBar(
                     rating: rating,
                     showValue: true,
-                    reviewCount: reviewCount
+                    reviewCount: reviewCount,
                 )
             }
         }
         .padding(XGSpacing.cardPadding)
-    }
-
-    // MARK: - Accessibility
-
-    private var accessibilityDescription: String {
-        var parts = [title, price]
-        if let vendorName {
-            parts.append(vendorName)
-        }
-        if let rating {
-            parts.append(
-                String(localized: "common_rating_description \(rating) \(5)")
-            )
-        }
-        return parts.joined(separator: ", ")
     }
 }
 
 // MARK: - XGInfoCard
 
 struct XGInfoCard<TrailingContent: View>: View {
-    // MARK: - Properties
-
-    private let title: String
-    private let subtitle: String?
-    private let leadingIcon: String?
-    private let trailingContent: TrailingContent?
-    private let action: (() -> Void)?
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -148,7 +146,7 @@ struct XGInfoCard<TrailingContent: View>: View {
         subtitle: String? = nil,
         leadingIcon: String? = nil,
         action: (() -> Void)? = nil,
-        @ViewBuilder trailingContent: () -> TrailingContent
+        @ViewBuilder trailingContent: () -> TrailingContent,
     ) {
         self.title = title
         self.subtitle = subtitle
@@ -156,6 +154,8 @@ struct XGInfoCard<TrailingContent: View>: View {
         self.action = action
         self.trailingContent = trailingContent()
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -201,6 +201,14 @@ struct XGInfoCard<TrailingContent: View>: View {
             content
         }
     }
+
+    // MARK: - Private
+
+    private let title: String
+    private let subtitle: String?
+    private let leadingIcon: String?
+    private let trailingContent: TrailingContent?
+    private let action: (() -> Void)?
 }
 
 extension XGInfoCard where TrailingContent == EmptyView {
@@ -208,13 +216,13 @@ extension XGInfoCard where TrailingContent == EmptyView {
         title: String,
         subtitle: String? = nil,
         leadingIcon: String? = nil,
-        action: (() -> Void)? = nil
+        action: (() -> Void)? = nil,
     ) {
         self.title = title
         self.subtitle = subtitle
         self.leadingIcon = leadingIcon
         self.action = action
-        self.trailingContent = nil
+        trailingContent = nil
     }
 }
 
@@ -231,7 +239,7 @@ extension XGInfoCard where TrailingContent == EmptyView {
         reviewCount: 123,
         isWishlisted: false,
         onWishlistToggle: {},
-        action: {}
+        action: {},
     )
     .frame(width: 200)
     .padding()
@@ -244,7 +252,7 @@ extension XGInfoCard where TrailingContent == EmptyView {
         price: "9.99",
         isWishlisted: true,
         onWishlistToggle: {},
-        action: {}
+        action: {},
     )
     .frame(width: 200)
     .padding()
@@ -256,13 +264,13 @@ extension XGInfoCard where TrailingContent == EmptyView {
             title: "Shipping Address",
             subtitle: "123 Main Street, Valletta",
             leadingIcon: "location",
-            action: {}
+            action: {},
         )
 
         XGInfoCard(
             title: "Payment Method",
             subtitle: "Visa ending in 4242",
-            leadingIcon: "creditcard"
+            leadingIcon: "creditcard",
         ) {
             Image(systemName: "chevron.right")
                 .foregroundStyle(XGColors.onSurfaceVariant)

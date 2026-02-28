@@ -11,8 +11,6 @@ struct PaginationMeta: Decodable, Equatable, Sendable {
     let limit: Int
     let offset: Int
 
-    // MARK: - Internal
-
     var hasMore: Bool {
         offset + limit < count
     }

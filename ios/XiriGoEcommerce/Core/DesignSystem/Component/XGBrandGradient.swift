@@ -5,15 +5,15 @@ import SwiftUI
 /// Branded radial gradient background composed of two layers from `gradients.json > brandHeader`.
 /// Used on Splash, Login, and Home hero screens. Accepts overlay content via `@ViewBuilder`.
 struct XGBrandGradient<Content: View>: View {
-    // MARK: - Properties
-
-    private let content: Content
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -27,6 +27,8 @@ struct XGBrandGradient<Content: View>: View {
 
     // MARK: - Private
 
+    private let content: Content
+
     /// Base radial gradient: #9000FE -> #6900FE -> #6900FE -> #9000FE
     private var baseGradient: some View {
         RadialGradient(
@@ -38,7 +40,7 @@ struct XGBrandGradient<Content: View>: View {
             ]),
             center: UnitPoint(x: 0.5, y: 0.3),
             startRadius: 0,
-            endRadius: 500
+            endRadius: 500,
         )
         .ignoresSafeArea()
     }
@@ -56,7 +58,7 @@ struct XGBrandGradient<Content: View>: View {
             ]),
             center: UnitPoint(x: 0.5, y: 0.3),
             startRadius: 0,
-            endRadius: 500
+            endRadius: 500,
         )
         .ignoresSafeArea()
     }

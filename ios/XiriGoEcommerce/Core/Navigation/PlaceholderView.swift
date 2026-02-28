@@ -5,10 +5,7 @@ import SwiftUI
 /// Temporary placeholder view for unimplemented screens.
 /// Displays an icon, screen title, and "Coming soon" text.
 struct PlaceholderView: View {
-    // MARK: - Properties
-
-    private let title: String
-    private let systemImage: String
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -16,6 +13,8 @@ struct PlaceholderView: View {
         self.title = title
         self.systemImage = systemImage
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -42,6 +41,11 @@ struct PlaceholderView: View {
         .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(title)
     }
+
+    // MARK: - Private
+
+    private let title: String
+    private let systemImage: String
 }
 
 // MARK: - Previews

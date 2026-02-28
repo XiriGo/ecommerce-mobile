@@ -4,9 +4,7 @@ import Foundation
 
 /// Returns whether onboarding has been previously shown to the user.
 struct CheckOnboardingUseCase: Sendable {
-    // MARK: - Properties
-
-    private let repository: OnboardingRepository
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -14,9 +12,15 @@ struct CheckOnboardingUseCase: Sendable {
         self.repository = repository
     }
 
+    // MARK: - Internal
+
     // MARK: - Execute
 
     func execute() async -> Bool {
         await repository.hasSeenOnboarding()
     }
+
+    // MARK: - Private
+
+    private let repository: OnboardingRepository
 }

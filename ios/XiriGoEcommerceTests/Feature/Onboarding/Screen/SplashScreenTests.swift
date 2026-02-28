@@ -1,5 +1,5 @@
-import Testing
 import SwiftUI
+import Testing
 @testable import XiriGoEcommerce
 
 // MARK: - SplashScreenTests
@@ -11,21 +11,21 @@ import SwiftUI
 @Suite("SplashScreen Tests")
 struct SplashScreenTests {
     @Test("SplashScreen initialises without crash")
-    func test_init_initialises() {
+    func init_initialises() {
         let screen = SplashScreen()
         _ = screen
         #expect(true)
     }
 
     @Test("SplashScreen is a View")
-    func test_splashScreen_conformsToView() {
+    func splashScreen_conformsToView() {
         let screen: any View = SplashScreen()
         _ = screen
         #expect(true)
     }
 
     @Test("SplashScreen is composed of exactly three onboarding components")
-    func test_splashScreen_composesThreeComponents() {
+    func splashScreen_composesThreeComponents() {
         // SplashScreen body composes XGBrandGradient > XGBrandPattern + XGLogoMark + vignetteOverlay
         // Verified structurally via init (body access causes simulator-level State warnings in test context)
         let gradient = XGBrandGradient()

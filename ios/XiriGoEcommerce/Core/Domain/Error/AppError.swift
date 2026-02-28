@@ -19,20 +19,20 @@ extension Error {
             return String(localized: "common_error_unknown")
         }
         switch appError {
-        case .network:
-            return String(localized: "common_error_network")
+            case .network:
+                return String(localized: "common_error_network")
 
-        case .server:
-            return String(localized: "common_error_server")
+            case .server:
+                return String(localized: "common_error_server")
 
-        case .unauthorized:
-            return String(localized: "common_error_unauthorized")
+            case .unauthorized:
+                return String(localized: "common_error_unauthorized")
 
-        case .notFound:
-            return String(localized: "common_error_not_found")
+            case .notFound:
+                return String(localized: "common_error_not_found")
 
-        case .unknown:
-            return String(localized: "common_error_unknown")
+            case .unknown:
+                return String(localized: "common_error_unknown")
         }
     }
 }

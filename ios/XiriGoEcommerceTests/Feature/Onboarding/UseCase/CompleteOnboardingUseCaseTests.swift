@@ -8,7 +8,7 @@ struct CompleteOnboardingUseCaseTests {
     // MARK: - Calls repository.setOnboardingSeen
 
     @Test("execute calls repository.setOnboardingSeen once")
-    func test_execute_callsSetOnboardingSeenOnce() async {
+    func execute_callsSetOnboardingSeenOnce() async {
         let repository = FakeOnboardingRepository()
         let useCase = CompleteOnboardingUseCase(repository: repository)
 
@@ -20,7 +20,7 @@ struct CompleteOnboardingUseCaseTests {
     // MARK: - Marks flag as seen after execute
 
     @Test("execute causes hasSeenOnboarding to return true")
-    func test_execute_marksOnboardingAsSeen() async {
+    func execute_marksOnboardingAsSeen() async {
         let repository = FakeOnboardingRepository()
         repository.hasSeen = false
         let useCase = CompleteOnboardingUseCase(repository: repository)
@@ -33,7 +33,7 @@ struct CompleteOnboardingUseCaseTests {
     // MARK: - Idempotent — calling twice still leaves flag set
 
     @Test("execute called twice increments callCount to 2 and hasSeen remains true")
-    func test_execute_calledTwice_idempotent() async {
+    func execute_calledTwice_idempotent() async {
         let repository = FakeOnboardingRepository()
         let useCase = CompleteOnboardingUseCase(repository: repository)
 

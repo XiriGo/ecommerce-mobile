@@ -7,6 +7,8 @@ import SwiftUI
 @MainActor
 @Observable
 final class AppRouter {
+    // MARK: - Internal
+
     // MARK: - Tab State
 
     private(set) var selectedTab: Tab = .home
@@ -57,7 +59,9 @@ final class AppRouter {
 
     /// Pops the top view from the current tab's navigation stack.
     func pop() {
-        guard !currentPath.isEmpty else { return }
+        guard !currentPath.isEmpty else {
+            return
+        }
         currentPath.removeLast()
     }
 
@@ -83,7 +87,11 @@ final class AppRouter {
 
     /// Presents the login screen as a fullscreen cover.
     func presentLogin(returnTo: Route? = nil) {
-        let returnString: String? = if let returnTo { routeToString(returnTo) } else { nil }
+        let returnString: String? = if let returnTo {
+            routeToString(returnTo)
+        } else {
+            nil
+        }
         presentedAuth = .login(returnTo: returnString)
     }
 
@@ -96,7 +104,9 @@ final class AppRouter {
 
     /// Handles an incoming deep link URL by parsing it and navigating accordingly.
     func handleDeepLink(_ url: URL) {
-        guard let route = DeepLinkParser.parse(url) else { return }
+        guard let route = DeepLinkParser.parse(url) else {
+            return
+        }
 
         if route.requiresAuth {
             presentLogin(returnTo: route)
@@ -114,17 +124,17 @@ final class AppRouter {
 
     func path(for tab: Tab) -> NavigationPath {
         switch tab {
-        case .home: return homePath
-        case .categories: return categoriesPath
-        case .cart: return cartPath
-        case .profile: return profilePath
+            case .home: homePath
+            case .categories: categoriesPath
+            case .cart: cartPath
+            case .profile: profilePath
         }
     }
 
     func bindingForPath(_ tab: Tab) -> Binding<NavigationPath> {
         Binding(
             get: { self.path(for: tab) },
-            set: { self.setPath($0, for: tab) }
+            set: { self.setPath($0, for: tab) },
         )
     }
 
@@ -132,106 +142,132 @@ final class AppRouter {
 
     private func setPath(_ path: NavigationPath, for tab: Tab) {
         switch tab {
-        case .home: homePath = path
-        case .categories: categoriesPath = path
-        case .cart: cartPath = path
-        case .profile: profilePath = path
+            case .home: homePath = path
+            case .categories: categoriesPath = path
+            case .cart: cartPath = path
+            case .profile: profilePath = path
         }
     }
 
     private func appendRoute(_ route: Route, to tab: Tab? = nil) {
         let targetTab = tab ?? selectedTab
-        var path = self.path(for: targetTab)
+        var path = path(for: targetTab)
         path.append(route)
         setPath(path, for: targetTab)
     }
 
     private func preferredTab(for route: Route) -> Tab {
         switch route {
-        case .home, .productSearch, .vendorStore, .productReviews, .writeReview:
-            return .home
+            case .home,
+                 .productReviews,
+                 .productSearch,
+                 .vendorStore,
+                 .writeReview:
+                .home
 
-        case .categories, .categoryProducts, .productList:
-            return .categories
+            case .categories,
+                 .categoryProducts,
+                 .productList:
+                .categories
 
-        case .cart, .checkout, .checkoutAddress, .checkoutShipping, .checkoutPayment, .orderConfirmation:
-            return .cart
+            case .cart,
+                 .checkout,
+                 .checkoutAddress,
+                 .checkoutPayment,
+                 .checkoutShipping,
+                 .orderConfirmation:
+                .cart
 
-        case .profile, .orderList, .orderDetail, .settings, .addressManagement, .wishlist,
-            .paymentMethods, .notifications, .recentlyViewed, .priceAlerts:
-            return .profile
+            case .addressManagement,
+                 .notifications,
+                 .orderDetail,
+                 .orderList,
+                 .paymentMethods,
+                 .priceAlerts,
+                 .profile,
+                 .recentlyViewed,
+                 .settings,
+                 .wishlist:
+                .profile
 
-        case .productDetail:
-            return selectedTab
+            case .productDetail:
+                selectedTab
 
-        case .login, .register, .forgotPassword, .onboarding:
-            return selectedTab
+            case .forgotPassword,
+                 .login,
+                 .onboarding,
+                 .register:
+                selectedTab
         }
     }
 
     private func routeToString(_ route: Route) -> String {
         switch route {
-        case .home: return "home"
+            case .home: return "home"
 
-        case .categories: return "categories"
+            case .categories: return "categories"
 
-        case .categoryProducts(let id, _): return "category/\(id)"
+            case let .categoryProducts(id, _): return "category/\(id)"
 
-        case .productList(let catId, let query):
-            var result = "products"
-            if let catId { result += "?categoryId=\(catId)" }
-            if let query { result += (catId != nil ? "&" : "?") + "query=\(query)" }
-            return result
+            case let .productList(catId, query):
+                var result = "products"
+                if let catId {
+                    result += "?categoryId=\(catId)"
+                }
+                if let query {
+                    result += (catId != nil ? "&" : "?") + "query=\(query)"
+                }
+                return result
 
-        case .productDetail(let id): return "product/\(id)"
+            case let .productDetail(id): return "product/\(id)"
 
-        case .productSearch: return "search"
+            case .productSearch: return "search"
 
-        case .vendorStore(let id): return "vendor/\(id)"
+            case let .vendorStore(id): return "vendor/\(id)"
 
-        case .productReviews(let id): return "reviews/\(id)"
+            case let .productReviews(id): return "reviews/\(id)"
 
-        case .writeReview(let id): return "write-review/\(id)"
+            case let .writeReview(id): return "write-review/\(id)"
 
-        case .cart: return "cart"
+            case .cart: return "cart"
 
-        case .checkout: return "checkout"
+            case .checkout: return "checkout"
 
-        case .checkoutAddress: return "checkout/address"
+            case .checkoutAddress: return "checkout/address"
 
-        case .checkoutShipping: return "checkout/shipping"
+            case .checkoutShipping: return "checkout/shipping"
 
-        case .checkoutPayment: return "checkout/payment"
+            case .checkoutPayment: return "checkout/payment"
 
-        case .orderConfirmation(let id): return "order-confirmation/\(id)"
+            case let .orderConfirmation(id): return "order-confirmation/\(id)"
 
-        case .profile: return "profile"
+            case .profile: return "profile"
 
-        case .orderList: return "orders"
+            case .orderList: return "orders"
 
-        case .orderDetail(let id): return "order/\(id)"
+            case let .orderDetail(id): return "order/\(id)"
 
-        case .settings: return "settings"
+            case .settings: return "settings"
 
-        case .addressManagement: return "addresses"
+            case .addressManagement: return "addresses"
 
-        case .wishlist: return "wishlist"
+            case .wishlist: return "wishlist"
 
-        case .paymentMethods: return "payment-methods"
+            case .paymentMethods: return "payment-methods"
 
-        case .notifications: return "notifications"
+            case .notifications: return "notifications"
 
-        case .recentlyViewed: return "recently-viewed"
+            case .recentlyViewed: return "recently-viewed"
 
-        case .priceAlerts: return "price-alerts"
+            case .priceAlerts: return "price-alerts"
 
-        case .login: return "login"
+            case .login: return "login"
 
-        case .register: return "register"
+            case .register: return "register"
 
-        case .forgotPassword: return "forgot-password"
+            case .forgotPassword: return "forgot-password"
 
-        case .onboarding: return "onboarding"
+            case .onboarding: return "onboarding"
         }
     }
 }

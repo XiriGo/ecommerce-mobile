@@ -5,9 +5,7 @@ import SwiftUI
 
 @main
 struct XiriGoEcommerceApp: App {
-    // MARK: - Properties
-
-    @State private var viewModel = Container.shared.onboardingViewModel()
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -20,18 +18,20 @@ struct XiriGoEcommerceApp: App {
 
     // MARK: - Private
 
+    @State private var viewModel = Container.shared.onboardingViewModel()
+
     @ViewBuilder
     private var rootView: some View {
         switch viewModel.uiState {
-        case .loading:
-            SplashScreen()
+            case .loading:
+                SplashScreen()
 
-        case .showOnboarding:
-            OnboardingScreen(viewModel: viewModel)
+            case .showOnboarding:
+                OnboardingScreen(viewModel: viewModel)
 
-        case .onboardingComplete:
-            MainTabView()
-                .background(XGColors.background.ignoresSafeArea())
+            case .onboardingComplete:
+                MainTabView()
+                    .background(XGColors.background.ignoresSafeArea())
         }
     }
 }

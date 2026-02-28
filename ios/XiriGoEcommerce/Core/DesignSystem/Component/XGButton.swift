@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - XGButtonStyle
+// MARK: - XGButtonVariant
 
 enum XGButtonVariant {
     case primary
@@ -12,15 +12,7 @@ enum XGButtonVariant {
 // MARK: - XGButton
 
 struct XGButton: View {
-    // MARK: - Properties
-
-    private let title: String
-    private let action: () -> Void
-    private let variant: XGButtonVariant
-    private let isEnabled: Bool
-    private let isLoading: Bool
-    private let leadingIcon: String?
-    private let fullWidth: Bool
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -31,7 +23,7 @@ struct XGButton: View {
         isLoading: Bool = false,
         leadingIcon: String? = nil,
         fullWidth: Bool = true,
-        action: @escaping () -> Void
+        action: @escaping () -> Void,
     ) {
         self.title = title
         self.action = action
@@ -41,6 +33,8 @@ struct XGButton: View {
         self.leadingIcon = leadingIcon
         self.fullWidth = fullWidth
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -59,11 +53,30 @@ struct XGButton: View {
 
     // MARK: - Private
 
+    private let title: String
+    private let action: () -> Void
+    private let variant: XGButtonVariant
+    private let isEnabled: Bool
+    private let isLoading: Bool
+    private let leadingIcon: String?
+    private let fullWidth: Bool
+
     private var buttonAction: () -> Void {
         isLoading ? {} : action
     }
 
-    @ViewBuilder
+    private var textColor: Color {
+        switch variant {
+            case .primary:
+                XGColors.onPrimary
+
+            case .outlined,
+                 .secondary,
+                 .text:
+                XGColors.primary
+        }
+    }
+
     private var buttonContent: some View {
         HStack(spacing: XGSpacing.sm) {
             if isLoading {
@@ -82,21 +95,13 @@ struct XGButton: View {
         .padding(.horizontal, XGSpacing.base)
         .padding(.vertical, XGSpacing.md)
     }
-
-    private var textColor: Color {
-        switch variant {
-        case .primary:
-            return XGColors.onPrimary
-
-        case .secondary, .outlined, .text:
-            return XGColors.primary
-        }
-    }
 }
 
 // MARK: - XGButtonStyleModifier
 
 private struct XGButtonStyleModifier: ButtonStyle {
+    // MARK: - Internal
+
     let variant: XGButtonVariant
 
     func makeBody(configuration: Configuration) -> some View {
@@ -112,39 +117,44 @@ private struct XGButtonStyleModifier: ButtonStyle {
 
     private var foregroundColor: Color {
         switch variant {
-        case .primary:
-            return XGColors.onPrimary
+            case .primary:
+                XGColors.onPrimary
 
-        case .secondary, .outlined, .text:
-            return XGColors.primary
-        }
-    }
-
-    @ViewBuilder
-    private func background(isPressed: Bool) -> some View {
-        switch variant {
-        case .primary:
-            RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                .fill(XGColors.primary)
-
-        case .secondary:
-            RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                .fill(XGColors.secondaryContainer)
-
-        case .outlined, .text:
-            Color.clear
+            case .outlined,
+                 .secondary,
+                 .text:
+                XGColors.primary
         }
     }
 
     @ViewBuilder
     private var borderOverlay: some View {
         switch variant {
-        case .outlined:
-            RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                .stroke(XGColors.outline, lineWidth: 1)
+            case .outlined:
+                RoundedRectangle(cornerRadius: XGCornerRadius.full)
+                    .stroke(XGColors.outline, lineWidth: 1)
 
-        case .primary, .secondary, .text:
-            EmptyView()
+            case .primary,
+                 .secondary,
+                 .text:
+                EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private func background(isPressed: Bool) -> some View {
+        switch variant {
+            case .primary:
+                RoundedRectangle(cornerRadius: XGCornerRadius.full)
+                    .fill(XGColors.primary)
+
+            case .secondary:
+                RoundedRectangle(cornerRadius: XGCornerRadius.full)
+                    .fill(XGColors.secondaryContainer)
+
+            case .outlined,
+                 .text:
+                Color.clear
         }
     }
 }

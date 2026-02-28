@@ -8,7 +8,7 @@ struct CheckOnboardingUseCaseTests {
     // MARK: - Returns false when onboarding not yet seen
 
     @Test("execute returns false when hasSeenOnboarding is false")
-    func test_execute_returnsfalse_whenOnboardingNotSeen() async {
+    func execute_returnsfalse_whenOnboardingNotSeen() async {
         let repository = FakeOnboardingRepository()
         repository.hasSeen = false
         let useCase = CheckOnboardingUseCase(repository: repository)
@@ -21,7 +21,7 @@ struct CheckOnboardingUseCaseTests {
     // MARK: - Returns true when onboarding already seen
 
     @Test("execute returns true when hasSeenOnboarding is true")
-    func test_execute_returnsTrue_whenOnboardingAlreadySeen() async {
+    func execute_returnsTrue_whenOnboardingAlreadySeen() async {
         let repository = FakeOnboardingRepository()
         repository.hasSeen = true
         let useCase = CheckOnboardingUseCase(repository: repository)
@@ -34,7 +34,7 @@ struct CheckOnboardingUseCaseTests {
     // MARK: - Delegates to repository
 
     @Test("execute delegates to repository.hasSeenOnboarding")
-    func test_execute_delegatesToRepository() async {
+    func execute_delegatesToRepository() async {
         let repository = FakeOnboardingRepository()
         repository.hasSeen = true
         let useCase = CheckOnboardingUseCase(repository: repository)

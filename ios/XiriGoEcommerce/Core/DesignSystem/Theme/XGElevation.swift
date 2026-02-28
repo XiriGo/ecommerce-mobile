@@ -29,7 +29,7 @@ extension View {
             color: XGColors.shadow.opacity(style.opacity),
             radius: style.radius,
             x: 0,
-            y: style.y
+            y: style.y,
         )
     }
 }

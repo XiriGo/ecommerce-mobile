@@ -3,23 +3,7 @@ import SwiftUI
 // MARK: - XGTextField
 
 struct XGTextField: View {
-    // MARK: - Properties
-
-    private let label: String
-    private let placeholder: String?
-    private let errorMessage: String?
-    private let helperText: String?
-    private let leadingIcon: String?
-    private let trailingIcon: String?
-    private let onTrailingIconTap: (() -> Void)?
-    private let isEnabled: Bool
-    private let isReadOnly: Bool
-    private let isPassword: Bool
-    private let maxLength: Int?
-
-    @Binding private var value: String
-    @FocusState private var isFocused: Bool
-    @State private var isPasswordVisible = false
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -35,9 +19,9 @@ struct XGTextField: View {
         isEnabled: Bool = true,
         isReadOnly: Bool = false,
         isPassword: Bool = false,
-        maxLength: Int? = nil
+        maxLength: Int? = nil,
     ) {
-        self._value = value
+        _value = value
         self.label = label
         self.placeholder = placeholder
         self.errorMessage = errorMessage
@@ -51,6 +35,8 @@ struct XGTextField: View {
         self.maxLength = maxLength
     }
 
+    // MARK: - Internal
+
     // MARK: - Body
 
     var body: some View {
@@ -63,6 +49,46 @@ struct XGTextField: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)
         .accessibilityHint(errorMessage ?? "")
+    }
+
+    // MARK: - Private
+
+    @Binding private var value: String
+    @FocusState private var isFocused: Bool
+    @State private var isPasswordVisible = false
+
+    private let label: String
+    private let placeholder: String?
+    private let errorMessage: String?
+    private let helperText: String?
+    private let leadingIcon: String?
+    private let trailingIcon: String?
+    private let onTrailingIconTap: (() -> Void)?
+    private let isEnabled: Bool
+    private let isReadOnly: Bool
+    private let isPassword: Bool
+    private let maxLength: Int?
+
+    // MARK: - Colors
+
+    private var borderColor: Color {
+        if errorMessage != nil {
+            return XGColors.error
+        }
+        if isFocused {
+            return XGColors.primary
+        }
+        return XGColors.outline
+    }
+
+    private var labelColor: Color {
+        if errorMessage != nil {
+            return XGColors.error
+        }
+        if isFocused {
+            return XGColors.primary
+        }
+        return XGColors.onSurfaceVariant
     }
 
     // MARK: - Subviews
@@ -90,13 +116,13 @@ struct XGTextField: View {
         .padding(.vertical, XGSpacing.md)
         .background(
             RoundedRectangle(cornerRadius: XGCornerRadius.medium)
-                .stroke(borderColor, lineWidth: isFocused ? 2 : 1)
+                .stroke(borderColor, lineWidth: isFocused ? 2 : 1),
         )
     }
 
     @ViewBuilder
     private var textField: some View {
-        if isPassword && !isPasswordVisible {
+        if isPassword, !isPasswordVisible {
             SecureField(placeholder ?? "", text: $value)
                 .font(XGTypography.bodyLarge)
                 .focused($isFocused)
@@ -128,7 +154,7 @@ struct XGTextField: View {
             .accessibilityLabel(
                 isPasswordVisible
                     ? String(localized: "common_hide_password")
-                    : String(localized: "common_show_password")
+                    : String(localized: "common_show_password"),
             )
         } else if let trailingIcon {
             Button {
@@ -143,7 +169,6 @@ struct XGTextField: View {
         }
     }
 
-    @ViewBuilder
     private var bottomTextView: some View {
         HStack {
             if let errorMessage {
@@ -165,28 +190,6 @@ struct XGTextField: View {
             }
         }
     }
-
-    // MARK: - Colors
-
-    private var borderColor: Color {
-        if errorMessage != nil {
-            return XGColors.error
-        }
-        if isFocused {
-            return XGColors.primary
-        }
-        return XGColors.outline
-    }
-
-    private var labelColor: Color {
-        if errorMessage != nil {
-            return XGColors.error
-        }
-        if isFocused {
-            return XGColors.primary
-        }
-        return XGColors.onSurfaceVariant
-    }
 }
 
 // MARK: - Previews
@@ -198,7 +201,7 @@ struct XGTextField: View {
             XGTextField(
                 value: $text,
                 label: "Email",
-                placeholder: "Enter your email"
+                placeholder: "Enter your email",
             )
             .padding()
         }
@@ -214,7 +217,7 @@ struct XGTextField: View {
                 value: $text,
                 label: "Email",
                 placeholder: "Enter your email",
-                errorMessage: "Invalid email address"
+                errorMessage: "Invalid email address",
             )
             .padding()
         }
@@ -230,7 +233,7 @@ struct XGTextField: View {
                 value: $text,
                 label: "Password",
                 placeholder: "Enter password",
-                isPassword: true
+                isPassword: true,
             )
             .padding()
         }

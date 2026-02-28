@@ -4,9 +4,7 @@ import Foundation
 
 /// Marks onboarding as completed so it is not shown on subsequent launches.
 struct CompleteOnboardingUseCase: Sendable {
-    // MARK: - Properties
-
-    private let repository: OnboardingRepository
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -14,9 +12,15 @@ struct CompleteOnboardingUseCase: Sendable {
         self.repository = repository
     }
 
+    // MARK: - Internal
+
     // MARK: - Execute
 
     func execute() async {
         await repository.setOnboardingSeen()
     }
+
+    // MARK: - Private
+
+    private let repository: OnboardingRepository
 }

@@ -1,5 +1,5 @@
-import Testing
 import SwiftUI
+import Testing
 @testable import XiriGoEcommerce
 
 // MARK: - XGBrandPatternTests
@@ -9,14 +9,14 @@ import SwiftUI
 @Suite("XGBrandPattern Tests")
 struct XGBrandPatternTests {
     @Test("XGBrandPattern initialises without crash")
-    func test_init_initialises() {
+    func init_initialises() {
         let pattern = XGBrandPattern()
         _ = pattern
         #expect(true)
     }
 
     @Test("XGBrandPattern is a View")
-    func test_xgBrandPattern_conformsToView() {
+    func xgBrandPattern_conformsToView() {
         let pattern: any View = XGBrandPattern()
         _ = pattern
         #expect(true)

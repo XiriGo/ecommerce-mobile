@@ -7,9 +7,11 @@ final class KeychainTokenStorage: TokenStorage, @unchecked Sendable {
     // MARK: - Lifecycle
 
     init() {
-        self.keychain = Keychain(service: Constants.service)
+        keychain = Keychain(service: Constants.service)
             .accessibility(.whenUnlockedThisDeviceOnly)
     }
+
+    // MARK: - Internal
 
     // MARK: - TokenStorage
 
@@ -27,10 +29,10 @@ final class KeychainTokenStorage: TokenStorage, @unchecked Sendable {
 
     // MARK: - Private
 
-    private let keychain: Keychain
-
     private enum Constants {
         static let service = "com.xirigo.ecommerce.auth"
         static let accessTokenKey = "access_token"
     }
+
+    private let keychain: Keychain
 }

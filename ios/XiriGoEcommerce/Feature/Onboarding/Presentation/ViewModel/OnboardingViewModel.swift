@@ -7,14 +7,19 @@ import Foundation
 @MainActor
 @Observable
 final class OnboardingViewModel {
-    // MARK: - Properties
+    // MARK: - Lifecycle
 
-    private enum Constants {
-        static let splashDurationSeconds: Int = 2
+    // MARK: - Init
+
+    init(
+        checkOnboarding: CheckOnboardingUseCase,
+        completeOnboarding: CompleteOnboardingUseCase,
+    ) {
+        self.checkOnboarding = checkOnboarding
+        self.completeOnboarding = completeOnboarding
     }
 
-    @ObservationIgnored private let checkOnboarding: CheckOnboardingUseCase
-    @ObservationIgnored private let completeOnboarding: CompleteOnboardingUseCase
+    // MARK: - Internal
 
     private(set) var uiState: OnboardingUiState = .loading
     var currentPage: Int = 0
@@ -27,18 +32,6 @@ final class OnboardingViewModel {
     var isLastPage: Bool {
         currentPage == pages.count - 1
     }
-
-    // MARK: - Init
-
-    init(
-        checkOnboarding: CheckOnboardingUseCase,
-        completeOnboarding: CompleteOnboardingUseCase
-    ) {
-        self.checkOnboarding = checkOnboarding
-        self.completeOnboarding = completeOnboarding
-    }
-
-    // MARK: - Actions
 
     /// Checks whether onboarding has been previously shown and updates state accordingly.
     /// Shows the splash screen for a minimum duration before transitioning.
@@ -59,4 +52,13 @@ final class OnboardingViewModel {
         await completeOnboarding.execute()
         uiState = .onboardingComplete
     }
+
+    // MARK: - Private
+
+    private enum Constants {
+        static let splashDurationSeconds: Int = 2
+    }
+
+    @ObservationIgnored private let checkOnboarding: CheckOnboardingUseCase
+    @ObservationIgnored private let completeOnboarding: CompleteOnboardingUseCase
 }
