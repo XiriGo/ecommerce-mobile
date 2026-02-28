@@ -10,7 +10,7 @@ final class NetworkMonitor: @unchecked Sendable {
     init() {
         let monitor = NWPathMonitor()
         self.monitor = monitor
-        let queue = DispatchQueue(label: "com.molt.marketplace.networkMonitor")
+        let queue = DispatchQueue(label: "com.xirigo.ecommerce.networkMonitor")
 
         monitor.pathUpdateHandler = { [weak self] path in
             let connected = path.status == .satisfied

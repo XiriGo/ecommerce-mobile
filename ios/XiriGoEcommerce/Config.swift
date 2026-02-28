@@ -18,11 +18,11 @@ enum Config {
 
     private static var apiBaseURLString: URL? {
         #if DEBUG
-        URL(string: "https://api-dev.molt.mt")
+        URL(string: "https://api-dev.xirigo.com")
         #elseif STAGING
-        URL(string: "https://api-staging.molt.mt")
+        URL(string: "https://api-staging.xirigo.com")
         #else
-        URL(string: "https://api.molt.mt")
+        URL(string: "https://api.xirigo.com")
         #endif
     }
 }

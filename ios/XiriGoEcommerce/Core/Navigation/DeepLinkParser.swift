@@ -3,7 +3,7 @@ import Foundation
 // MARK: - DeepLinkParser
 
 /// Parses deep link URLs into Route values.
-/// Supports `molt://` custom scheme and `https://molt.mt/` universal links.
+/// Supports `xirigo://` custom scheme and `https://xirigo.com/` universal links.
 enum DeepLinkParser {
     // MARK: - Internal
 
@@ -13,10 +13,10 @@ enum DeepLinkParser {
         let host = url.host?.lowercased() ?? ""
 
         switch scheme {
-        case "molt":
+        case "xirigo":
             return parseXGScheme(host: host, pathComponents: pathComponents(from: url))
 
-        case "https" where host == "molt.mt":
+        case "https" where host == "xirigo.com":
             return parseUniversalLink(pathComponents: pathComponents(from: url))
 
         default:

@@ -55,7 +55,7 @@ struct EndpointTests {
     private let baseURL: URL
 
     init() throws {
-        baseURL = try #require(URL(string: "https://api-test.molt.mt"))
+        baseURL = try #require(URL(string: "https://api-test.xirigo.com"))
     }
 
     // MARK: - Path
@@ -167,7 +167,7 @@ struct EndpointTests {
 
         let url = components.url
         #expect(url != nil)
-        #expect(url?.host == "api-test.molt.mt")
+        #expect(url?.host == "api-test.xirigo.com")
         #expect(url?.path == "/store/products")
     }
 

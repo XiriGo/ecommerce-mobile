@@ -12,21 +12,21 @@ struct LocalizableTests {
     func englishLocalizationExists() {
         let appName = localizedString("app_name", language: "en")
         #expect(appName != nil)
-        #expect(appName == "Molt Marketplace")
+        #expect(appName == "XiriGo Ecommerce")
     }
 
     @Test("Maltese localization is available")
     func malteseLocalizationExists() {
         let appName = localizedString("app_name", language: "mt")
         #expect(appName != nil)
-        #expect(appName == "Molt Marketplace")
+        #expect(appName == "XiriGo Ecommerce")
     }
 
     @Test("Turkish localization is available")
     func turkishLocalizationExists() {
         let appName = localizedString("app_name", language: "tr")
         #expect(appName != nil)
-        #expect(appName == "Molt Marketplace")
+        #expect(appName == "XiriGo Ecommerce")
     }
 
     // MARK: - Common Strings

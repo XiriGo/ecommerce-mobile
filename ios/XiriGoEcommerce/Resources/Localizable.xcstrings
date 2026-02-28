@@ -33,19 +33,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Molt Marketplace"
+            "value" : "XiriGo Ecommerce"
           }
         },
         "mt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Molt Marketplace"
+            "value" : "XiriGo Ecommerce"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Molt Marketplace"
+            "value" : "XiriGo Ecommerce"
           }
         }
       }
@@ -1022,19 +1022,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome to Molt"
+            "value" : "Welcome to XiriGo"
           }
         },
         "mt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Merħba f'Molt"
+            "value" : "Merħba f'XiriGo"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Molt'a Hoş Geldiniz"
+            "value" : "XiriGo'ya Hoş Geldiniz"
           }
         }
       }

@@ -30,7 +30,7 @@ final class KeychainTokenStorage: TokenStorage, @unchecked Sendable {
     private let keychain: Keychain
 
     private enum Constants {
-        static let service = "com.molt.marketplace.auth"
+        static let service = "com.xirigo.ecommerce.auth"
         static let accessTokenKey = "access_token"
     }
 }

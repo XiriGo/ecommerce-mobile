@@ -12,7 +12,7 @@ struct AppRouterDeepLinkTests {
     @Test("handleDeepLink with product URL switches to home tab and appends to home path")
     func test_handleDeepLink_validProductURL_switchesToHomeAndAppends() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "molt://product/prod_deep"))
+        let url = try #require(URL(string: "xirigo://product/prod_deep"))
         router.handleDeepLink(url)
         #expect(!router.homePath.isEmpty)
     }
@@ -20,7 +20,7 @@ struct AppRouterDeepLinkTests {
     @Test("handleDeepLink with cart URL switches to cart tab")
     func test_handleDeepLink_moltCart_switchesToCartTab() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "molt://cart"))
+        let url = try #require(URL(string: "xirigo://cart"))
         router.handleDeepLink(url)
         #expect(router.selectedTab == .cart)
     }
@@ -28,7 +28,7 @@ struct AppRouterDeepLinkTests {
     @Test("handleDeepLink with profile URL switches to profile tab")
     func test_handleDeepLink_moltProfile_switchesToProfileTab() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "molt://profile"))
+        let url = try #require(URL(string: "xirigo://profile"))
         router.handleDeepLink(url)
         #expect(router.selectedTab == .profile)
     }
@@ -36,7 +36,7 @@ struct AppRouterDeepLinkTests {
     @Test("handleDeepLink with category URL switches to categories tab")
     func test_handleDeepLink_moltCategory_switchesToCategoriesTab() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "molt://category/cat_electronics"))
+        let url = try #require(URL(string: "xirigo://category/cat_electronics"))
         router.handleDeepLink(url)
         #expect(router.selectedTab == .categories)
         #expect(!router.categoriesPath.isEmpty)
@@ -45,7 +45,7 @@ struct AppRouterDeepLinkTests {
     @Test("handleDeepLink with https product URL navigates to productDetail on home tab")
     func test_handleDeepLink_httpsProductURL_navigatesToProductDetail() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "https://molt.mt/product/prod_web"))
+        let url = try #require(URL(string: "https://xirigo.com/product/prod_web"))
         router.handleDeepLink(url)
         #expect(!router.homePath.isEmpty)
     }
@@ -55,7 +55,7 @@ struct AppRouterDeepLinkTests {
     @Test("handleDeepLink with order URL presents login since order requiresAuth")
     func test_handleDeepLink_moltOrder_presentsLoginInsteadOfNavigating() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "molt://order/ord_123"))
+        let url = try #require(URL(string: "xirigo://order/ord_123"))
         router.handleDeepLink(url)
         #expect(router.presentedAuth != nil)
         if case .login(let returnTo) = router.presentedAuth {
@@ -77,10 +77,10 @@ struct AppRouterDeepLinkTests {
         #expect(router.presentedAuth == nil)
     }
 
-    @Test("handleDeepLink with unrecognized molt host does nothing")
+    @Test("handleDeepLink with unrecognized xirigo host does nothing")
     func test_handleDeepLink_unrecognizedXGHost_doesNothing() throws {
         let router = AppRouter()
-        let url = try #require(URL(string: "molt://unknown/path"))
+        let url = try #require(URL(string: "xirigo://unknown/path"))
         router.handleDeepLink(url)
         #expect(router.selectedTab == .home)
         #expect(router.homePath.isEmpty)

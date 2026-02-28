@@ -46,7 +46,7 @@ enum RequestLogger {
 
     // MARK: - Private
 
-    private static let logger = Logger(subsystem: "com.molt.marketplace", category: "Network")
+    private static let logger = Logger(subsystem: "com.xirigo.ecommerce", category: "Network")
 
     private static func redactedHeaders(_ headers: [String: String]) -> String {
         var redacted = headers

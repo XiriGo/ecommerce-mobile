@@ -91,7 +91,7 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
     private let authStateManager: AuthStateManagerImpl
     private let refreshActor = RefreshActor()
     private static let logger = Logger(
-        subsystem: "com.molt.marketplace",
+        subsystem: "com.xirigo.ecommerce",
         category: "Auth"
     )
 

@@ -102,7 +102,7 @@ extension APIClient {
 
     /// Default base URL for test clients.
     private static let testBaseURL: URL = {
-        guard let url = URL(string: "https://api-test.molt.mt") else {
+        guard let url = URL(string: "https://api-test.xirigo.com") else {
             fatalError("Invalid test base URL constant — this is a programming error in test infrastructure.")
         }
         return url
