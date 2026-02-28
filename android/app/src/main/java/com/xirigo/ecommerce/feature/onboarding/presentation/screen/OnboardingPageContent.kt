@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
+import com.xirigo.ecommerce.core.designsystem.theme.XGTypography
 import com.xirigo.ecommerce.feature.onboarding.domain.model.OnboardingPage
 
 private const val DESCRIPTION_ALPHA = 0.8f
@@ -51,7 +51,7 @@ fun OnboardingPageContent(
 
         Text(
             text = stringResource(page.titleResId),
-            style = MaterialTheme.typography.headlineSmall,
+            style = XGTypography.headlineSmall,
             fontWeight = FontWeight.SemiBold,
             color = Color.White,
             textAlign = TextAlign.Center,
@@ -63,7 +63,7 @@ fun OnboardingPageContent(
 
         Text(
             text = stringResource(page.descriptionResId),
-            style = MaterialTheme.typography.bodyLarge,
+            style = XGTypography.bodyLarge,
             color = Color.White.copy(alpha = DESCRIPTION_ALPHA),
             textAlign = TextAlign.Center,
             maxLines = 3,

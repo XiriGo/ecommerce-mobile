@@ -19,6 +19,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 private val ActiveDotWidth = 18.dp
@@ -28,16 +29,13 @@ private val DotCornerRadius = 3.dp
 private val DotGap = 4.dp
 private const val ANIMATION_DURATION_MS = 300
 
-private val DefaultActiveColor = Color(0xFF6000FE)
-private val DefaultInactiveColor = Color(0xFFD1D5DB)
-
 @Composable
 fun XGPaginationDots(
     totalPages: Int,
     currentPage: Int,
     modifier: Modifier = Modifier,
-    activeColor: Color = DefaultActiveColor,
-    inactiveColor: Color = DefaultInactiveColor,
+    activeColor: Color = XGColors.PaginationDotsActive,
+    inactiveColor: Color = XGColors.PaginationDotsInactive,
 ) {
     Row(
         modifier = modifier.semantics {

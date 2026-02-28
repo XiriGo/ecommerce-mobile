@@ -7,13 +7,7 @@ import SwiftUI
 struct OnboardingScreen: View {
     // MARK: - Properties
 
-    @State private var viewModel: OnboardingViewModel
-
-    // MARK: - Init
-
-    init(viewModel: OnboardingViewModel) {
-        _viewModel = State(initialValue: viewModel)
-    }
+    @Bindable var viewModel: OnboardingViewModel
 
     // MARK: - Body
 
@@ -49,14 +43,12 @@ struct OnboardingScreen: View {
             VStack {
                 HStack {
                     Spacer()
-                    Button {
+                    XGButton(
+                        String(localized: "onboarding_skip_button"),
+                        variant: .text,
+                        fullWidth: false
+                    ) {
                         Task { await viewModel.onSkip() }
-                    } label: {
-                        Text(String(localized: "onboarding_skip_button"))
-                            .font(XGTypography.labelLarge)
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, XGSpacing.base)
-                            .padding(.vertical, XGSpacing.sm)
                     }
                     .accessibilityLabel(String(localized: "onboarding_skip_button_a11y"))
                     .padding(.trailing, XGSpacing.xs)
@@ -78,7 +70,7 @@ struct OnboardingScreen: View {
             }
 
             XGPaginationDots(
-                pageCount: viewModel.pages.count,
+                totalPages: viewModel.pages.count,
                 currentPage: viewModel.currentPage,
                 activeColor: .white,
                 inactiveColor: .white.opacity(0.4)
@@ -90,17 +82,11 @@ struct OnboardingScreen: View {
     // MARK: - Get Started Button
 
     private var getStartedButton: some View {
-        Button {
+        XGButton(
+            String(localized: "onboarding_get_started_button"),
+            variant: .primary
+        ) {
             Task { await viewModel.onGetStarted() }
-        } label: {
-            Text(String(localized: "onboarding_get_started_button"))
-                .font(XGTypography.labelLarge)
-                .fontWeight(.bold)
-                .foregroundStyle(Color(hex: "#6000FE"))
-                .frame(maxWidth: .infinity)
-                .frame(height: 56)
-                .background(Color(hex: "#94D63A"))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .padding(.horizontal, 20)
         .padding(.bottom, XGSpacing.xxl)

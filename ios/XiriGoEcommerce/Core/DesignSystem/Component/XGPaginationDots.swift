@@ -12,7 +12,7 @@ import SwiftUI
 struct XGPaginationDots: View {
     // MARK: - Properties
 
-    private let pageCount: Int
+    private let totalPages: Int
     private let currentPage: Int
     private let activeColor: Color
     private let inactiveColor: Color
@@ -28,12 +28,12 @@ struct XGPaginationDots: View {
     // MARK: - Init
 
     init(
-        pageCount: Int,
+        totalPages: Int,
         currentPage: Int,
-        activeColor: Color = Color(hex: "#6000FE"),
-        inactiveColor: Color = Color(hex: "#D1D5DB")
+        activeColor: Color = XGColors.paginationDotsActive,
+        inactiveColor: Color = XGColors.paginationDotsInactive
     ) {
-        self.pageCount = pageCount
+        self.totalPages = totalPages
         self.currentPage = currentPage
         self.activeColor = activeColor
         self.inactiveColor = inactiveColor
@@ -43,7 +43,7 @@ struct XGPaginationDots: View {
 
     var body: some View {
         HStack(spacing: dotGap) {
-            ForEach(0..<pageCount, id: \.self) { index in
+            ForEach(0..<totalPages, id: \.self) { index in
                 Capsule()
                     .fill(index == currentPage ? activeColor : inactiveColor)
                     .frame(
@@ -54,19 +54,19 @@ struct XGPaginationDots: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(String(localized: "onboarding_page_indicator_a11y \(currentPage + 1) \(pageCount)"))
+        .accessibilityLabel(String(localized: "onboarding_page_indicator_a11y \(currentPage + 1) \(totalPages)"))
     }
 }
 
 // MARK: - Previews
 
 #Preview("XGPaginationDots Page 0") {
-    XGPaginationDots(pageCount: 4, currentPage: 0)
+    XGPaginationDots(totalPages: 4, currentPage: 0)
         .padding()
 }
 
 #Preview("XGPaginationDots Page 2") {
-    XGPaginationDots(pageCount: 4, currentPage: 2)
+    XGPaginationDots(totalPages: 4, currentPage: 2)
         .padding()
 }
 
@@ -75,7 +75,7 @@ struct XGPaginationDots: View {
         Color(hex: "#6000FE")
             .ignoresSafeArea()
         XGPaginationDots(
-            pageCount: 4,
+            totalPages: 4,
             currentPage: 1,
             activeColor: .white,
             inactiveColor: .white.opacity(0.4)
@@ -84,6 +84,6 @@ struct XGPaginationDots: View {
 }
 
 #Preview("XGPaginationDots 3 Pages") {
-    XGPaginationDots(pageCount: 3, currentPage: 0)
+    XGPaginationDots(totalPages: 3, currentPage: 0)
         .padding()
 }

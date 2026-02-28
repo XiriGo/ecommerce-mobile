@@ -36,7 +36,7 @@ struct XGBrandGradient<Content: View>: View {
                 .init(color: Color(hex: "#6900FE"), location: 0.66),
                 .init(color: Color(hex: "#9000FE"), location: 1.00),
             ]),
-            center: .center,
+            center: UnitPoint(x: 0.5, y: 0.3),
             startRadius: 0,
             endRadius: 500
         )
@@ -54,7 +54,7 @@ struct XGBrandGradient<Content: View>: View {
                 .init(color: Color(hex: "#4200DA").opacity(0.81), location: 0.81),
                 .init(color: Color(hex: "#3C00D2").opacity(1.00), location: 0.90),
             ]),
-            center: .center,
+            center: UnitPoint(x: 0.5, y: 0.3),
             startRadius: 0,
             endRadius: 500
         )
