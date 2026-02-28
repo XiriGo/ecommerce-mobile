@@ -297,34 +297,120 @@ All list screens use offset-based pagination with these rules:
 
 ---
 
-## Design Transition Strategy (Dummy -> Figma)
+## Design System & Component Architecture
 
-### Phase 1: Dummy Screens (Current)
+### Design Source
 
-- Use Material 3 defaults (Android) and system styles (iOS) via `XGTheme`
-- All colors/spacing from `XGColors` / `XGSpacing` (which map to design tokens)
-- Feature screens use `XG*` design system components (XGButton, XGCard, etc.)
-- Focus on correct architecture, data flow, and business logic -- not pixel-perfect design
+Designs come from Adobe Illustrator SVG files in `XiriGo-Design/Svg/`. Design tokens are extracted into `shared/design-tokens/*.json`. The `XGTheme` on each platform reads these tokens.
 
-### Phase 2: Figma Design Arrives
+### XG* Component Rules
 
-When Figma designs are ready, **only these change**:
+1. **One component per file**: Each `XG*` component lives in its own file in `core/designsystem/component/`. No monolithic "ScreenComponents.kt" files.
+2. **Single responsibility**: Each component does one thing. `XGProductCard` renders a product card. `XGPriceText` renders a price. Never combine unrelated UI into one component.
+3. **Data + callbacks only**: Components accept domain data and event callbacks as parameters. Zero business logic inside components. Zero ViewModel references.
+4. **Reusable across features**: If a component appears in more than one screen, it MUST be in `core/designsystem/`. Never duplicate UI code in feature screens.
+5. **Token-driven**: All colors from `XGColors`, all spacing from `XGSpacing`, all typography from `XGTypography`. Zero magic numbers.
+6. **Preview mandatory**: Every component must have `@Preview` (Android) / `#Preview` (iOS) showing all variants (default, loading, error, empty, active, inactive).
 
-| What Changes | Files | Impact |
-|-------------|-------|--------|
-| Design tokens | `shared/design-tokens/*.json` | Colors, typography, spacing values |
-| Theme | `core/designsystem/theme/XG*.kt` / `.swift` | New color scheme, fonts, spacing |
-| Components | `core/designsystem/component/XG*.kt` / `.swift` | Visual appearance (padding, shapes, shadows) |
-| Assets | `res/drawable/` / `Assets.xcassets` | Icons, illustrations, placeholders |
+### Design Token Files
 
-**What NEVER changes**: ViewModels, UseCases, Repositories, DTOs, domain models, navigation, API integration, tests.
+| File | Content |
+|------|---------|
+| `shared/design-tokens/colors.json` | Brand, light/dark theme, semantic, category colors |
+| `shared/design-tokens/typography.json` | Poppins + Source Sans 3, type scale, price typography |
+| `shared/design-tokens/spacing.json` | Spacing scale, corner radius, elevation, layout specs |
+| `shared/design-tokens/gradients.json` | Brand gradient, hero overlay, daily deal, card fade |
+| `shared/design-tokens/components.json` | All XG* component specs with exact pixel values |
 
-### Rules for Figma-Safe Code
+### What Changes vs What Doesn't
 
-1. **No magic numbers in feature screens**: All dimensions from `XGSpacing`, all colors from `XGColors`
-2. **No raw platform components in feature screens**: Use `XGButton` not `Button`, `XGLoadingView` not `CircularProgressIndicator`
+| Changes (design layer) | Never Changes (architecture layer) |
+|------------------------|-----------------------------------|
+| `shared/design-tokens/*.json` | ViewModels, UseCases |
+| `core/designsystem/theme/XG*.kt/.swift` | Repositories, DTOs, domain models |
+| `core/designsystem/component/XG*.kt/.swift` | Navigation, API integration |
+| `res/drawable/` / `Assets.xcassets` | Tests, DI modules |
+
+### Rules for Feature Screens
+
+1. **No magic numbers**: All dimensions from `XGSpacing`, all colors from `XGColors`
+2. **No raw platform components**: Use `XGButton` not `Button`, `XGLoadingView` not `CircularProgressIndicator`
 3. **Component props, not visual props**: Feature screens pass data + events to components. Components decide how to render.
-4. **Preview with theme**: All `@Preview` / `#Preview` wrapped in `XGTheme` to reflect current design tokens
+4. **Preview with theme**: All `@Preview` / `#Preview` wrapped in `XGTheme`
+
+---
+
+## Image Loading Pattern
+
+All async images MUST use `XGImage` with a 3-state approach:
+
+### Image States
+
+1. **Loading**: Animated shimmer placeholder (gradient sweep, not spinner)
+2. **Success**: Fade-in transition (300ms crossfade)
+3. **Error**: Branded fallback image (product silhouette on light gray background)
+
+### Android Example (Coil)
+
+```kotlin
+XGImage(
+    url = product.thumbnailUrl,
+    contentDescription = product.name,
+    modifier = Modifier.size(160.dp),
+    // shimmer while loading, branded placeholder on error
+)
+```
+
+### iOS Example (AsyncImage / Nuke)
+
+```swift
+XGImage(
+    url: product.thumbnailUrl,
+    contentDescription: product.name
+)
+.frame(width: 160, height: 160)
+```
+
+### Image Loading Rules
+
+- **Never show broken image icon** -- always show branded fallback
+- **Never block UI on image load** -- images load asynchronously
+- **Cache aggressively** -- both memory and disk cache enabled
+- **Placeholder matches content size** -- shimmer fills exact same frame as final image
+- **Content mode**: `.fill` / `ContentScale.Crop` for product images, `.fit` / `ContentScale.Fit` for icons
+
+---
+
+## Mock Data → API Transition Pattern
+
+Features use **Clean Architecture with Repository pattern** for trivial mock→API swap.
+
+### Data Flow Architecture
+
+```text
+Screen → ViewModel → UseCase → Repository (interface) → [FakeImpl | RealImpl]
+```
+
+### Development Phase (Mock Data)
+
+1. Define `{Feature}Repository` **interface** in `domain/repository/`
+2. Create `Fake{Feature}Repository` in `data/repository/` — returns hardcoded sample data
+3. Bind fake in DI module: `bind(FeatureRepository).to(FakeFeatureRepository)`
+4. Feature screen works end-to-end with realistic mock data
+
+### Production Phase (Real API)
+
+1. Create `{Feature}RepositoryImpl` — calls Medusa API via Retrofit/URLSession
+2. Change ONE line in DI: `bind(FeatureRepository).to(FeatureRepositoryImpl)`
+3. Zero changes to ViewModel, UseCase, or Screen
+
+### Mock Data Quality Rules
+
+- **Realistic content**: Use real-looking product names, prices in EUR, rating values 1-5
+- **Realistic image URLs**: Use `https://picsum.photos/{width}/{height}` for development
+- **Match SVG design**: Mock data should produce screens that look like the design SVG
+- **Edge cases**: Include items with long names (2-line truncation), zero reviews, no discount
+- **Minimum items**: Lists should have enough items to test scrolling (6+ for horizontal, 10+ for vertical)
 
 ---
 

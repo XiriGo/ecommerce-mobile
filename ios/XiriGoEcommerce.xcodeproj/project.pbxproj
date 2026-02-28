@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -151,7 +151,7 @@
 /* Begin PBXFileReference section */
 		0382FA471D37515BEDAF6358 /* XGTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGTopBar.swift; sourceTree = "<group>"; };
 		045D2376F9E7AE3EFDE83E69 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		06D9B041B00661ABDD418E61 /* XiriGoEcommerceUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = XiriGoEcommerceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		06D9B041B00661ABDD418E61 /* XiriGoEcommerceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XiriGoEcommerceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		082276DA6DCAFD4B8B088809 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		11B9B008DF0173EB6E61A991 /* AuthMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMiddleware.swift; sourceTree = "<group>"; };
 		14056AE444514048DF9B188A /* APIClientRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientRequestTests.swift; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 		209B26A4E221B918AA79433C /* FakeTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTokenStorage.swift; sourceTree = "<group>"; };
 		20DE732ADCE781F05E0B491E /* ArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchitectureTests.swift; sourceTree = "<group>"; };
 		21CCAAAB27E9DE7B70C555AC /* RoutePropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePropertyTests.swift; sourceTree = "<group>"; };
-		22D1BFA12030F32436254DAA /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		22D1BFA12030F32436254DAA /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		22D4FD4D350505777EDC5738 /* XGTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGTheme.swift; sourceTree = "<group>"; };
 		23A66C4B817C45250309350E /* XGPriceTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGPriceTextTests.swift; sourceTree = "<group>"; };
 		26DCCC5D574760BC060DB26E /* AuthTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenResponse.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 		4209DAD34CD1726E871A18F6 /* PlaceholderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewTests.swift; sourceTree = "<group>"; };
 		4278B49BC2680177ACA7425F /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		51676C8E65FA09FBE2178013 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
-		543A39B28F9D0143661C2279 /* XiriGoEcommerce.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = XiriGoEcommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		543A39B28F9D0143661C2279 /* XiriGoEcommerce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XiriGoEcommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5488D322C33A08D9FF49D8D1 /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
 		554986508E1FAAE519489E49 /* XGErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGErrorView.swift; sourceTree = "<group>"; };
 		57F3745F38A45D147DD98A43 /* XGCornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGCornerRadius.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 		6D4CE4974A182531121F3021 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		6D8CDE3002609657E5319651 /* AuthStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManager.swift; sourceTree = "<group>"; };
 		6EF0E744DB08265D13F408B6 /* XGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGTextField.swift; sourceTree = "<group>"; };
-		71B33A62F40EA582ABBFABA6 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		71B33A62F40EA582ABBFABA6 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		7267015A12D991B5A85E63ED /* XGQuantityStepperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGQuantityStepperTests.swift; sourceTree = "<group>"; };
 		7344F45BDC80F00BC617E307 /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		73D9D536774232B399C7C79B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 		E0BBD74FD7BB8528E7B96D34 /* Container+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Extensions.swift"; sourceTree = "<group>"; };
 		E2B848AA0222E1996DCD712E /* XGTabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGTabBarTests.swift; sourceTree = "<group>"; };
 		E606D7BE8CD9A89FDA906555 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
-		E7B77C9F7F5E9F4241EFC99D /* XiriGoEcommerceTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = XiriGoEcommerceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7B77C9F7F5E9F4241EFC99D /* XiriGoEcommerceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XiriGoEcommerceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC758C677DF6D6828A75EB9 /* XGElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGElevation.swift; sourceTree = "<group>"; };
 		ECD7A7D1FC2E05D3CECAB961 /* JSONCoders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoders.swift; sourceTree = "<group>"; };
 		F09AE91841876054AC592D08 /* AuthStateManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManagerImpl.swift; sourceTree = "<group>"; };
@@ -843,7 +843,6 @@
 				695115BD8AFC60BAE296D3AB /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 				D5DDE920DCBE7907EB4200F3 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -1021,6 +1020,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = XiriGoEcommerce/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1048,6 +1048,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = XiriGoEcommerce/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1175,6 +1176,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = VT3X56P4ZL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = XiriGoEcommerce/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
