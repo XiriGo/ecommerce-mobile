@@ -17,6 +17,8 @@ struct XGProductCard: View {
         reviewCount: Int? = nil,
         isWishlisted: Bool = false,
         onWishlistToggle: (() -> Void)? = nil,
+        deliveryLabel: String? = nil,
+        onAddToCartAction: (() -> Void)? = nil,
         action: @escaping () -> Void,
     ) {
         self.imageUrl = imageUrl
@@ -28,6 +30,8 @@ struct XGProductCard: View {
         self.reviewCount = reviewCount
         self.isWishlisted = isWishlisted
         self.onWishlistToggle = onWishlistToggle
+        self.deliveryLabel = deliveryLabel
+        self.onAddToCartAction = onAddToCartAction
         self.action = action
     }
 
@@ -53,6 +57,11 @@ struct XGProductCard: View {
 
     // MARK: - Private
 
+    private enum ProductCardConstants {
+        static let deliveryFontSize: CGFloat = 10
+        static let addToCartSize: CGFloat = 32
+    }
+
     private let imageUrl: URL?
     private let title: String
     private let price: String
@@ -62,6 +71,8 @@ struct XGProductCard: View {
     private let reviewCount: Int?
     private let isWishlisted: Bool
     private let onWishlistToggle: (() -> Void)?
+    private let deliveryLabel: String?
+    private let onAddToCartAction: (() -> Void)?
     private let action: () -> Void
 
     // MARK: - Accessibility
@@ -88,21 +99,11 @@ struct XGProductCard: View {
                 .clipped()
 
             if let onWishlistToggle {
-                Button(action: onWishlistToggle) {
-                    Image(systemName: isWishlisted ? "heart.fill" : "heart")
-                        .foregroundStyle(isWishlisted ? XGColors.error : XGColors.onSurfaceVariant)
-                        .font(.system(size: XGSpacing.IconSize.medium))
-                        .padding(XGSpacing.sm)
-                        .background(XGColors.surface.opacity(0.8))
-                        .clipShape(Circle())
-                }
-                .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
-                .padding(XGSpacing.xs)
-                .accessibilityLabel(
-                    isWishlisted
-                        ? String(localized: "common_remove_from_wishlist")
-                        : String(localized: "common_add_to_wishlist"),
+                XGWishlistButton(
+                    isWishlisted: isWishlisted,
+                    onToggle: onWishlistToggle,
                 )
+                .padding(XGSpacing.xs)
             }
         }
     }
@@ -129,8 +130,44 @@ struct XGProductCard: View {
                     reviewCount: reviewCount,
                 )
             }
+
+            if let deliveryLabel {
+                deliveryBadge(deliveryLabel)
+            }
+
+            if onAddToCartAction != nil {
+                HStack {
+                    Spacer()
+                    addToCartButton
+                }
+            }
         }
         .padding(XGSpacing.cardPadding)
+    }
+
+    private var addToCartButton: some View {
+        Button {
+            onAddToCartAction?()
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: XGSpacing.IconSize.small))
+                .foregroundStyle(.white)
+                .frame(
+                    width: ProductCardConstants.addToCartSize,
+                    height: ProductCardConstants.addToCartSize,
+                )
+                .background(XGColors.brandSecondary)
+                .clipShape(Circle())
+                .accessibilityHidden(true)
+        }
+        .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
+        .accessibilityLabel(String(localized: "common_add_to_cart"))
+    }
+
+    private func deliveryBadge(_ label: String) -> some View {
+        Text(label)
+            .font(.system(size: ProductCardConstants.deliveryFontSize))
+            .foregroundStyle(XGColors.brandSecondary)
     }
 }
 
