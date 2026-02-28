@@ -2,7 +2,7 @@
 
 ## Overview
 
-Auth Infrastructure is the foundational authentication layer for the Molt Marketplace buyer app. It provides secure token storage, auth state management, session lifecycle (create, refresh, destroy), and the bridge between the network interceptor layer (M0-03) and all M1+ feature screens. This is a purely infrastructure feature — it contains no UI screens.
+Auth Infrastructure is the foundational authentication layer for the XiriGo Ecommerce buyer app. It provides secure token storage, auth state management, session lifecycle (create, refresh, destroy), and the bridge between the network interceptor layer (M0-03) and all M1+ feature screens. This is a purely infrastructure feature — it contains no UI screens.
 
 **Status**: Complete
 **Phase**: M0 (Foundation)
@@ -207,7 +207,7 @@ Handled by the existing `TokenRefreshAuthenticator` (Android) / `TokenRefreshAct
 
 | Concern | Android | iOS |
 |---------|---------|-----|
-| Token storage | Encrypted DataStore (`molt_auth_encrypted`) with Tink AEAD AES256_GCM; key in Android Keystore | Keychain via KeychainAccess; service `com.molt.marketplace.auth`; accessibility `.whenUnlockedThisDeviceOnly` |
+| Token storage | Encrypted DataStore (`molt_auth_encrypted`) with Tink AEAD AES256_GCM; key in Android Keystore | Keychain via KeychainAccess; service `com.xirigo.ecommerce.auth`; accessibility `.whenUnlockedThisDeviceOnly` |
 | Token in logs | Never — `Authorization` header value redacted in all HTTP logging | Never — same policy |
 | Token transmission | `Authorization: Bearer {token}` header only; never in URL query params | Same policy |
 | Backup exclusion | DataStore file excluded from Android auto-backup via `android:fullBackupContent` | Keychain `.whenUnlockedThisDeviceOnly` excludes from iCloud backup |
@@ -221,7 +221,7 @@ Handled by the existing `TokenRefreshAuthenticator` (Android) / `TokenRefreshAct
 
 ### Android
 
-Base path: `android/app/src/main/java/com/molt/marketplace/`
+Base path: `android/app/src/main/java/com/xirigo/ecommerce/`
 
 ```
 core/
@@ -248,13 +248,13 @@ core/
 
 ### iOS
 
-Base path: `ios/MoltMarketplace/`
+Base path: `ios/XiriGoEcommerce/`
 
 ```
 Core/
   Auth/
     TokenStorage.swift            # Protocol: getAccessToken, saveAccessToken, clearTokens; Sendable
-    KeychainTokenStorage.swift    # final class; KeychainAccess; service "com.molt.marketplace.auth"; .whenUnlockedThisDeviceOnly
+    KeychainTokenStorage.swift    # final class; KeychainAccess; service "com.xirigo.ecommerce.auth"; .whenUnlockedThisDeviceOnly
     AuthState.swift               # enum: loading, authenticated(token:), guest; Equatable, Sendable
     AuthStateManager.swift        # @MainActor protocol: authState, onLoginSuccess, onLogout, checkStoredToken
     AuthStateManagerImpl.swift    # @MainActor @Observable final class; nonisolated init for Factory DI
@@ -272,7 +272,7 @@ Core/
 
 ### Test Files
 
-**Android** base: `android/app/src/test/java/com/molt/marketplace/core/auth/`
+**Android** base: `android/app/src/test/java/com/xirigo/ecommerce/core/auth/`
 
 | File | Tests | Description |
 |------|-------|-------------|
@@ -282,7 +282,7 @@ Core/
 | `SessionManagerTest.kt` | 20 | login/register/logout/refreshToken flows; includes `FakeAuthApi` with call count tracking |
 | `AuthModuleTest.kt` | 14 | DI wiring contracts: `TokenStorage` round-trips, `SessionTokenProvider` delegation |
 
-**iOS** base: `ios/MoltMarketplaceTests/Core/Auth/`
+**iOS** base: `ios/XiriGoEcommerceTests/Core/Auth/`
 
 | File | Tests | Description |
 |------|-------|-------------|
@@ -307,7 +307,7 @@ Test patterns:
 - **Android**: `runTest` + Turbine `StateFlow` / `Flow` assertions; `Truth.assertThat`; backtick natural language test names
 - **iOS**: Swift Testing (`@Test`, `@Suite`, `#expect`); `MockURLProtocol` for HTTP-level tests; `@MainActor` for `@Observable` types; `@Suite(.serialized)` for shared `MockURLProtocol` state
 
-Also fixed: `android/app/src/test/java/com/molt/marketplace/core/di/NetworkModuleTest.kt` (stale reference to removed `provideTokenProvider()`).
+Also fixed: `android/app/src/test/java/com/xirigo/ecommerce/core/di/NetworkModuleTest.kt` (stale reference to removed `provideTokenProvider()`).
 
 ---
 

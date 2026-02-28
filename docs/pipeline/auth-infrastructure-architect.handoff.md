@@ -1,7 +1,7 @@
 # Handoff: auth-infrastructure -- Architect (Verified)
 
 ## Feature
-**M0-06: Auth Infrastructure** -- Authentication token storage, auth state management, session lifecycle, and token refresh for the Molt Marketplace buyer app.
+**M0-06: Auth Infrastructure** -- Authentication token storage, auth state management, session lifecycle, and token refresh for the XiriGo Ecommerce buyer app.
 
 ## Status
 VERIFIED -- Gap analysis complete. Spec is accurate, API contracts match, and existing code is accounted for.
@@ -26,7 +26,7 @@ VERIFIED -- Gap analysis complete. Spec is accurate, API contracts match, and ex
 | 3 | `core/network/TokenRefreshAuthenticator.kt` | OkHttp `Authenticator` with mutex-protected refresh via `TokenProvider.refreshToken()`, retry limit of 2 | Already functional. M0-06 provides a real `TokenProvider` implementation where `refreshToken()` calls `POST /auth/token/refresh` and stores the result. |
 | 4 | `core/di/NetworkModule.kt` | Provides `InMemoryTokenProvider` as the `TokenProvider` singleton; provides `AuthInterceptor`, `TokenRefreshAuthenticator`, authenticated/unauthenticated OkHttp clients | M0-06 must replace the `InMemoryTokenProvider` binding. The new `AuthModule` should provide a `TokenProvider` that delegates to `TokenStorage` + `SessionManager`. |
 | 5 | `core/di/Qualifiers.kt` | `@AuthenticatedClient`, `@UnauthenticatedClient`, dispatcher qualifiers | No changes needed. |
-| 6 | `core/di/StorageModule.kt` | Provides `DataStore<Preferences>` and Room `MoltDatabase` | No changes needed. M0-06 may use its own encrypted DataStore instance (separate from the general preferences DataStore). |
+| 6 | `core/di/StorageModule.kt` | Provides `DataStore<Preferences>` and Room `XGDatabase` | No changes needed. M0-06 may use its own encrypted DataStore instance (separate from the general preferences DataStore). |
 | 7 | `core/di/CoroutineModule.kt` | Provides dispatchers | No changes needed. |
 | 8 | `core/domain/error/AppError.kt` | Sealed class with Network, Server, NotFound, Unauthorized, Unknown | No changes needed. Auth flows map errors to these types. |
 | 9 | `core/network/ApiErrorMapper.kt` | Maps `Throwable` to `AppError` (HttpException, IOException, etc.) | No changes needed. SessionManager can use this for error mapping. |
@@ -35,7 +35,7 @@ VERIFIED -- Gap analysis complete. Spec is accurate, API contracts match, and ex
 
 ### 1.2 Android -- Needs to Be Created (New Files)
 
-All new files go in `android/app/src/main/java/com/molt/marketplace/core/auth/`:
+All new files go in `android/app/src/main/java/com/xirigo/ecommerce/core/auth/`:
 
 | # | File | Description |
 |---|------|-------------|
@@ -76,12 +76,12 @@ All new files go in `android/app/src/main/java/com/molt/marketplace/core/auth/`:
 
 ### 1.5 iOS -- Needs to Be Created (New Files)
 
-All new files go in `ios/MoltMarketplace/Core/Auth/`:
+All new files go in `ios/XiriGoEcommerce/Core/Auth/`:
 
 | # | File | Description |
 |---|------|-------------|
 | 1 | `TokenStorage.swift` | Protocol: `getAccessToken()`, `saveAccessToken(_:)`, `clearTokens()` |
-| 2 | `KeychainTokenStorage.swift` | Implementation using `KeychainAccess`. Service: `"com.molt.marketplace.auth"`. Accessibility: `.whenUnlockedThisDeviceOnly`. |
+| 2 | `KeychainTokenStorage.swift` | Implementation using `KeychainAccess`. Service: `"com.xirigo.ecommerce.auth"`. Accessibility: `.whenUnlockedThisDeviceOnly`. |
 | 3 | `AuthState.swift` | Enum: `loading`, `authenticated(token:)`, `guest`. Conforms to `Equatable, Sendable`. |
 | 4 | `AuthStateManager.swift` | Protocol: `authState`, `onLoginSuccess(token:)`, `onLogout()`, `checkStoredToken()` |
 | 5 | `AuthStateManagerImpl.swift` | `@MainActor @Observable final class`. |

@@ -2,13 +2,13 @@
 
 ## Overview
 
-The Network Layer provides the HTTP client infrastructure for the Molt Marketplace buyer app
+The Network Layer provides the HTTP client infrastructure for the XiriGo Ecommerce buyer app
 to communicate with the Medusa v2 REST API. It establishes the API client, interceptor/middleware
 chains, error handling, JSON serialization, pagination helpers, network monitoring, retry policy,
 and token management. All feature modules depend on this layer for their data-fetching needs.
 
 This is a **developer infrastructure** feature. It produces no user-facing screens, but its
-error-handling types surface in every feature's UI via `MoltErrorView` and localized error
+error-handling types surface in every feature's UI via `XGErrorView` and localized error
 messages.
 
 ### User Stories
@@ -70,9 +70,9 @@ Read from build configuration, already set up in M0-01:
 
 | Environment | Base URL |
 |-------------|----------|
-| Debug | `https://api-dev.molt.mt` |
-| Staging | `https://api-staging.molt.mt` |
-| Release | `https://api.molt.mt` |
+| Debug | `https://api-dev.xirigo.com` |
+| Staging | `https://api-staging.xirigo.com` |
+| Release | `https://api.xirigo.com` |
 
 - **Android**: `BuildConfig.API_BASE_URL` (String)
 - **iOS**: `Config.apiBaseURL` (URL)
@@ -338,8 +338,8 @@ An abstraction for providing the Medusa publishable API key. Read from build con
 
 Not applicable. This is an infrastructure feature with no user-facing screens.
 
-All errors surfaced by this layer are displayed through the existing `MoltErrorView` and
-`MoltLoadingView` design system components (created in M0-02). Feature screens handle the
+All errors surfaced by this layer are displayed through the existing `XGErrorView` and
+`XGLoadingView` design system components (created in M0-02). Feature screens handle the
 presentation of these states via their UiState sealed types.
 
 ---
@@ -406,13 +406,13 @@ or an `AppError` -- never a raw 401.
 
 | Trigger | Detection | Mapped Error | User Experience |
 |---------|-----------|-------------|-----------------|
-| Device has no internet | `IOException` (Android) / `URLError.notConnectedToInternet` (iOS) | `AppError.Network` | `MoltErrorView` with "Connection error. Please check your internet." and Retry button |
+| Device has no internet | `IOException` (Android) / `URLError.notConnectedToInternet` (iOS) | `AppError.Network` | `XGErrorView` with "Connection error. Please check your internet." and Retry button |
 
 ### 6.2 Request Timeout
 
 | Trigger | Detection | Mapped Error | User Experience |
 |---------|-----------|-------------|-----------------|
-| Server does not respond within timeout | `SocketTimeoutException` (Android) / `URLError.timedOut` (iOS) | `AppError.Network` | Same as no network -- `MoltErrorView` with retry |
+| Server does not respond within timeout | `SocketTimeoutException` (Android) / `URLError.timedOut` (iOS) | `AppError.Network` | Same as no network -- `XGErrorView` with retry |
 
 **Timeout configuration:**
 
@@ -466,13 +466,13 @@ or an `AppError` -- never a raw 401.
 
 | Trigger | Detection | Mapped Error | User Experience |
 |---------|-----------|-------------|-----------------|
-| Backend error | HTTP 500-599 | Retried up to 3 times with exponential backoff. Final failure: `AppError.Server(code: statusCode, message: parsed body or default)` | `MoltErrorView` with "Something went wrong. Please try again later." and Retry button |
+| Backend error | HTTP 500-599 | Retried up to 3 times with exponential backoff. Final failure: `AppError.Server(code: statusCode, message: parsed body or default)` | `XGErrorView` with "Something went wrong. Please try again later." and Retry button |
 
 ### 6.7 JSON Parse Error
 
 | Trigger | Detection | Mapped Error | User Experience |
 |---------|-----------|-------------|-----------------|
-| Unexpected response format | `SerializationException` (Android) / `DecodingError` (iOS) | `AppError.Unknown(message: "Failed to parse response")` | `MoltErrorView` with "An unexpected error occurred." |
+| Unexpected response format | `SerializationException` (Android) / `DecodingError` (iOS) | `AppError.Unknown(message: "Failed to parse response")` | `XGErrorView` with "An unexpected error occurred." |
 
 ### 6.8 Rate Limiting (429)
 
@@ -570,7 +570,7 @@ Not applicable for the network layer itself. All error messages produced by this
 are surfaced through localized string resources (`common_error_network`, `common_error_server`,
 etc.) which support:
 
-- **Dynamic Type** (iOS) / **Font Scale** (Android) -- handled by `MoltErrorView` component
+- **Dynamic Type** (iOS) / **Font Scale** (Android) -- handled by `XGErrorView` component
 - **Screen Reader** -- error messages are plain text, fully readable by TalkBack/VoiceOver
 - **Localization** -- error messages exist in all three languages (English, Maltese, Turkish)
 
@@ -857,7 +857,7 @@ enum HTTPMethod: String, Sendable {
 **Type**: Protocol or utility function, debug-only
 
 **Implementation:**
-- Uses `os.Logger(subsystem: "com.molt.marketplace", category: "Network")`
+- Uses `os.Logger(subsystem: "com.xirigo.ecommerce", category: "Network")`
 - Logs request: method, URL, headers (redacting Authorization token), body size
 - Logs response: status code, URL, body size, duration
 - Wrapped in `#if DEBUG` -- zero overhead in release builds
@@ -879,7 +879,7 @@ In `Container+Extensions.swift`:
 
 ### 11.1 Android Files
 
-Base path: `android/app/src/main/java/com/molt/marketplace/core/`
+Base path: `android/app/src/main/java/com/xirigo/ecommerce/core/`
 
 | # | File Path (relative to base) | Description |
 |---|------------------------------|-------------|
@@ -898,7 +898,7 @@ Base path: `android/app/src/main/java/com/molt/marketplace/core/`
 | 13 | `domain/error/AppError.kt` | Sealed class with 5 subtypes (`Network`, `Server`, `NotFound`, `Unauthorized`, `Unknown`) + `toUserMessageResId()` extension function. |
 | 14 | `di/NetworkModule.kt` | Hilt `@Module @InstallIn(SingletonComponent::class)` providing `Json`, `OkHttpClient`, `Retrofit`, `NetworkMonitor`, placeholder `TokenProvider`. |
 
-**Test files** (base: `android/app/src/test/java/com/molt/marketplace/core/`):
+**Test files** (base: `android/app/src/test/java/com/xirigo/ecommerce/core/`):
 
 | # | Test File | Tests |
 |---|-----------|-------|
@@ -910,7 +910,7 @@ Base path: `android/app/src/main/java/com/molt/marketplace/core/`
 
 ### 11.2 iOS Files
 
-Base path: `ios/MoltMarketplace/Core/`
+Base path: `ios/XiriGoEcommerce/Core/`
 
 | # | File Path (relative to base) | Description |
 |---|------------------------------|-------------|
@@ -927,7 +927,7 @@ Base path: `ios/MoltMarketplace/Core/`
 | 11 | `Network/TokenProvider.swift` | `protocol TokenProvider: Sendable` with `getAccessToken()`, `refreshToken()`, `clearTokens()` async functions. |
 | 12 | `Domain/Error/AppError.swift` | `enum AppError: Error, Equatable` with 5 cases + `extension Error { var toUserMessage: String }` using `String(localized:)`. |
 
-**Test files** (base: `ios/MoltMarketplaceTests/Core/`):
+**Test files** (base: `ios/XiriGoEcommerceTests/Core/`):
 
 | # | Test File | Tests |
 |---|-----------|-------|
@@ -970,7 +970,7 @@ The network layer is complete when:
 
 ### iOS
 
-- [ ] `xcodebuild -scheme MoltMarketplace-Debug build` succeeds with all network layer files
+- [ ] `xcodebuild -scheme XiriGoEcommerce-Debug build` succeeds with all network layer files
 - [ ] `APIClient.request()` correctly builds `URLRequest` from `Endpoint`
 - [ ] `APIClient.request()` injects Bearer token for authenticated endpoints
 - [ ] `APIClient.request()` attempts token refresh on 401 and retries
@@ -982,7 +982,7 @@ The network layer is complete when:
 - [ ] `NetworkMonitor.isConnected` reflects actual connectivity state
 - [ ] `AppError.toUserMessage` returns correct localized strings
 - [ ] Factory container provides `APIClient` and `NetworkMonitor` singletons
-- [ ] All unit tests pass: `xcodebuild test -scheme MoltMarketplace-Debug`
+- [ ] All unit tests pass: `xcodebuild test -scheme XiriGoEcommerce-Debug`
 - [ ] `RequestLogger` is compiled only in DEBUG builds
 - [ ] No strict concurrency warnings
 - [ ] URLSession request timeout is 60s

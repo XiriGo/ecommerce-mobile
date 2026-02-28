@@ -10,7 +10,7 @@ Implemented the Android network layer (M0-03) providing HTTP client infrastructu
 
 ### Production Code
 
-Base: `android/app/src/main/java/com/molt/marketplace/core/`
+Base: `android/app/src/main/java/com/xirigo/ecommerce/core/`
 
 | File | Description |
 |------|-------------|
@@ -31,7 +31,7 @@ Base: `android/app/src/main/java/com/molt/marketplace/core/`
 
 ### Test Code
 
-Base: `android/app/src/test/java/com/molt/marketplace/core/`
+Base: `android/app/src/test/java/com/xirigo/ecommerce/core/`
 
 | File | Tests |
 |------|-------|
@@ -60,7 +60,7 @@ Base: `android/app/src/test/java/com/molt/marketplace/core/`
 ## Verification
 
 - `./gradlew compileDebugKotlin` -- BUILD SUCCESSFUL
-- `./gradlew testDebugUnitTest --tests "com.molt.marketplace.core.*"` -- 49 tests PASSED
+- `./gradlew testDebugUnitTest --tests "com.xirigo.ecommerce.core.*"` -- 49 tests PASSED
 - No lint warnings in new code
 
 ## Dependencies

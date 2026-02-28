@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DI Setup establishes the dependency injection module structure for the Molt Marketplace buyer app.
+The DI Setup establishes the dependency injection module structure for the XiriGo Ecommerce buyer app.
 It creates the Hilt modules (Android) and Factory container registrations (iOS) that provide
 network, storage, coroutine/concurrency, and common infrastructure dependencies. It also defines the
 canonical pattern that every future feature module must follow when registering its own repositories,
@@ -38,7 +38,7 @@ in a consistent, testable, and compile-time-verified manner.
 
 | Dependency | What It Provides |
 |------------|-----------------|
-| **M0-01: App Scaffold** | `@HiltAndroidApp` (MoltApplication), `Container+Extensions.swift` (empty shell), Gradle/SPM dependencies declared, placeholder directories for `core/di/`, `core/network/`, environment config (`BuildConfig.API_BASE_URL`, `Config.apiBaseURL`) |
+| **M0-01: App Scaffold** | `@HiltAndroidApp` (XGApplication), `Container+Extensions.swift` (empty shell), Gradle/SPM dependencies declared, placeholder directories for `core/di/`, `core/network/`, environment config (`BuildConfig.API_BASE_URL`, `Config.apiBaseURL`) |
 
 ### Features That Depend on This
 
@@ -95,7 +95,7 @@ Each annotation is a `@Qualifier` + `@Retention(AnnotationRetention.BINARY)` Kot
 | `URLSession` (authenticated) | N/A | `Container.authenticatedSession` (.singleton) |
 | `URLSession` (unauthenticated) | N/A | `Container.unauthenticatedSession` (.singleton) |
 | `DataStore<Preferences>` | `StorageModule.providePreferencesDataStore()` | N/A (UserDefaults) |
-| `MoltDatabase` (Room) | `StorageModule.provideDatabase()` | N/A (SwiftData) |
+| `XGDatabase` (Room) | `StorageModule.provideDatabase()` | N/A (SwiftData) |
 | Token storage (encrypted) | `StorageModule.provideEncryptedDataStore()` | `Container.tokenStorage` (.singleton) |
 | `NetworkMonitor` | `NetworkModule.provideNetworkMonitor()` | `Container.networkMonitor` (.singleton) |
 
@@ -113,7 +113,7 @@ no `.cached`), so each ViewModel gets its own instance.
 
 ```
 @Database(entities = [], version = 1, exportSchema = false)
-abstract class MoltDatabase : RoomDatabase()
+abstract class XGDatabase : RoomDatabase()
 ```
 
 The entity list starts empty. Each feature that needs local structured storage will:
@@ -155,7 +155,7 @@ The following are provided as singletons (one instance for the entire app lifeti
 | `APIClient` (iOS) | Equivalent to Retrofit; wraps URLSession |
 | `DataStore<Preferences>` | Single-writer constraint; must be singleton |
 | Encrypted DataStore / Keychain token storage | Security-sensitive; single accessor |
-| `MoltDatabase` (Room) | Database connection pool; must be singleton |
+| `XGDatabase` (Room) | Database connection pool; must be singleton |
 | `NetworkMonitor` | Observes system connectivity; one observer is sufficient |
 | `Json` (Kotlin Serialization) | Immutable configuration; no reason to recreate |
 
@@ -231,7 +231,7 @@ Not applicable. This is an infrastructure feature with no user-facing UI element
 ### 8.1 Qualifiers.kt
 
 ```
-Package: com.molt.marketplace.core.di
+Package: com.xirigo.ecommerce.core.di
 
 Annotations defined:
   @Qualifier @Retention(BINARY) annotation class IoDispatcher
@@ -244,7 +244,7 @@ Annotations defined:
 ### 8.2 CoroutineModule.kt
 
 ```
-Package: com.molt.marketplace.core.di
+Package: com.xirigo.ecommerce.core.di
 @Module @InstallIn(SingletonComponent::class)
 
 Provides:
@@ -263,7 +263,7 @@ does not cancel sibling coroutines.
 ### 8.3 NetworkModule.kt
 
 ```
-Package: com.molt.marketplace.core.di
+Package: com.xirigo.ecommerce.core.di
 @Module @InstallIn(SingletonComponent::class)
 
 Provides:
@@ -320,7 +320,7 @@ Retrofit or direct OkHttpClient. This split is finalized in M0-06 when auth inte
 ### 8.4 StorageModule.kt
 
 ```
-Package: com.molt.marketplace.core.di
+Package: com.xirigo.ecommerce.core.di
 @Module @InstallIn(SingletonComponent::class)
 
 Provides:
@@ -332,8 +332,8 @@ Provides:
             The @Provides method returns application.preferencesDataStore
 
   @Provides @Singleton
-  fun provideDatabase(application: Application): MoltDatabase
-      -- Room.databaseBuilder(application, MoltDatabase::class.java, "molt_database")
+  fun provideDatabase(application: Application): XGDatabase
+      -- Room.databaseBuilder(application, XGDatabase::class.java, "molt_database")
            .fallbackToDestructiveMigration()  // Development only; replace with migrations before release
            .build()
 
@@ -347,14 +347,14 @@ Provides:
          The exact approach (EncryptedFile-backed DataStore vs wrapper) is specified in M0-06.
 ```
 
-### 8.5 MoltDatabase.kt
+### 8.5 XGDatabase.kt
 
 ```
-Package: com.molt.marketplace.core.data.local
-File location: core/data/local/MoltDatabase.kt
+Package: com.xirigo.ecommerce.core.data.local
+File location: core/data/local/XGDatabase.kt
 
 @Database(entities = [], version = 1, exportSchema = false)
-abstract class MoltDatabase : RoomDatabase()
+abstract class XGDatabase : RoomDatabase()
 
 -- Empty entity list. Features add entities as needed.
 -- Each feature's DAO is exposed as an abstract function:
@@ -370,7 +370,7 @@ This is the canonical pattern every feature must follow when registering depende
 **Repository binding** (required for every feature with a repository):
 
 ```
-Package: com.molt.marketplace.feature.<name>.di
+Package: com.xirigo.ecommerce.feature.<name>.di
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -478,7 +478,7 @@ The existing empty `Container+Extensions.swift` is modified to register core inf
 dependencies.
 
 ```
-File: ios/MoltMarketplace/Core/DI/Container+Extensions.swift
+File: ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift
 
 import Factory
 import Foundation
@@ -616,7 +616,7 @@ injecting fakes without modifying the DI container.
 
 ```swift
 import Testing
-@testable import MoltMarketplace
+@testable import XiriGoEcommerce
 
 @Suite(.serialized)
 struct ProductListViewModelTests {
@@ -693,10 +693,10 @@ by the DI layer.
 ### Android
 
 ```
-Interface: com.molt.marketplace.core.network.NetworkMonitor
+Interface: com.xirigo.ecommerce.core.network.NetworkMonitor
   val isConnected: StateFlow<Boolean>
 
-Implementation: com.molt.marketplace.core.network.NetworkMonitorImpl
+Implementation: com.xirigo.ecommerce.core.network.NetworkMonitorImpl
   Uses ConnectivityManager + NetworkCallback
   Emits connectivity changes as StateFlow<Boolean>
   Provided by NetworkModule as @Singleton
@@ -721,21 +721,21 @@ Implementation: Core/Network/NetworkMonitorImpl.swift
 
 ### 12.1 Android Files
 
-Base path: `android/app/src/main/java/com/molt/marketplace/`
+Base path: `android/app/src/main/java/com/xirigo/ecommerce/`
 
 | # | File Path (relative to base) | Description |
 |---|------------------------------|-------------|
 | 1 | `core/di/Qualifiers.kt` | `@Qualifier` annotations: `@IoDispatcher`, `@MainDispatcher`, `@DefaultDispatcher`, `@AuthenticatedClient`, `@UnauthenticatedClient` |
 | 2 | `core/di/CoroutineModule.kt` | `@Module @InstallIn(SingletonComponent::class)`. Provides `CoroutineDispatcher` for IO, Main, Default; provides application-scoped `CoroutineScope` |
 | 3 | `core/di/NetworkModule.kt` | `@Module @InstallIn(SingletonComponent::class)`. Provides `Json`, `OkHttpClient` (two qualifiers), `Retrofit`, `NetworkMonitor` |
-| 4 | `core/di/StorageModule.kt` | `@Module @InstallIn(SingletonComponent::class)`. Provides `DataStore<Preferences>`, `MoltDatabase` (Room) |
-| 5 | `core/data/local/MoltDatabase.kt` | `@Database(entities = [], version = 1)` abstract class. Empty shell; features add entities. |
+| 4 | `core/di/StorageModule.kt` | `@Module @InstallIn(SingletonComponent::class)`. Provides `DataStore<Preferences>`, `XGDatabase` (Room) |
+| 5 | `core/data/local/XGDatabase.kt` | `@Database(entities = [], version = 1)` abstract class. Empty shell; features add entities. |
 | 6 | `core/network/NetworkMonitor.kt` | Interface: `val isConnected: StateFlow<Boolean>` |
 | 7 | `core/network/NetworkMonitorImpl.kt` | Implementation using `ConnectivityManager` + `NetworkCallback` |
 
 ### 12.2 iOS Files
 
-Base path: `ios/MoltMarketplace/`
+Base path: `ios/XiriGoEcommerce/`
 
 | # | File Path (relative to base) | Action | Description |
 |---|------------------------------|--------|-------------|
@@ -758,12 +758,12 @@ implemented first, create minimal stub protocols so the container compiles:
 
 | # | Platform | File Path | Description |
 |---|----------|-----------|-------------|
-| 1 | Android | `app/src/test/java/com/molt/marketplace/core/di/CoroutineModuleTest.kt` | Verify dispatcher qualifiers provide correct types |
-| 2 | Android | `app/src/test/java/com/molt/marketplace/core/di/NetworkModuleTest.kt` | Verify Json config, OkHttpClient qualifiers, Retrofit base URL |
-| 3 | Android | `app/src/test/java/com/molt/marketplace/core/di/StorageModuleTest.kt` | Verify DataStore and Room database provision |
-| 4 | Android | `app/src/test/java/com/molt/marketplace/core/network/NetworkMonitorImplTest.kt` | Verify connectivity state emission |
-| 5 | iOS | `MoltMarketplaceTests/Core/DI/ContainerTests.swift` | Verify all container registrations resolve without crash |
-| 6 | iOS | `MoltMarketplaceTests/Core/Network/NetworkMonitorTests.swift` | Verify connectivity stream behavior |
+| 1 | Android | `app/src/test/java/com/xirigo/ecommerce/core/di/CoroutineModuleTest.kt` | Verify dispatcher qualifiers provide correct types |
+| 2 | Android | `app/src/test/java/com/xirigo/ecommerce/core/di/NetworkModuleTest.kt` | Verify Json config, OkHttpClient qualifiers, Retrofit base URL |
+| 3 | Android | `app/src/test/java/com/xirigo/ecommerce/core/di/StorageModuleTest.kt` | Verify DataStore and Room database provision |
+| 4 | Android | `app/src/test/java/com/xirigo/ecommerce/core/network/NetworkMonitorImplTest.kt` | Verify connectivity state emission |
+| 5 | iOS | `XiriGoEcommerceTests/Core/DI/ContainerTests.swift` | Verify all container registrations resolve without crash |
+| 6 | iOS | `XiriGoEcommerceTests/Core/Network/NetworkMonitorTests.swift` | Verify connectivity stream behavior |
 
 ---
 
@@ -776,9 +776,9 @@ The DI setup is complete when:
 - [ ] `./gradlew assembleDebug` succeeds without errors
 - [ ] All qualifier annotations compile without warnings
 - [ ] `NetworkModule` provides `Json`, two `OkHttpClient` instances, `Retrofit`, and `NetworkMonitor`
-- [ ] `StorageModule` provides `DataStore<Preferences>` and `MoltDatabase`
+- [ ] `StorageModule` provides `DataStore<Preferences>` and `XGDatabase`
 - [ ] `CoroutineModule` provides three dispatchers and an application-scoped `CoroutineScope`
-- [ ] `MoltDatabase` compiles as an empty Room database
+- [ ] `XGDatabase` compiles as an empty Room database
 - [ ] `NetworkMonitorImpl` emits connectivity state changes
 - [ ] Hilt component graph resolves without missing bindings
 - [ ] All unit tests in `core/di/` pass
@@ -786,7 +786,7 @@ The DI setup is complete when:
 
 ### iOS
 
-- [ ] `xcodebuild -scheme MoltMarketplace-Debug build` succeeds
+- [ ] `xcodebuild -scheme XiriGoEcommerce-Debug build` succeeds
 - [ ] `Container.shared.apiClient()` resolves a singleton instance
 - [ ] `Container.shared.tokenStorage()` resolves a singleton instance
 - [ ] `Container.shared.networkMonitor()` resolves a singleton instance
@@ -805,7 +805,7 @@ The DI setup is complete when:
 
 1. Start with `Qualifiers.kt` -- define all five qualifier annotations
 2. Create `CoroutineModule.kt` -- simplest module, provides dispatchers
-3. Create `MoltDatabase.kt` in `core/data/local/` -- empty Room database
+3. Create `XGDatabase.kt` in `core/data/local/` -- empty Room database
 4. Create `StorageModule.kt` -- provides DataStore and Room database
 5. Create `NetworkMonitor.kt` (interface) and `NetworkMonitorImpl.kt` in `core/network/`
 6. Create `NetworkModule.kt` -- provides Json, OkHttpClient variants, Retrofit, NetworkMonitor

@@ -22,33 +22,33 @@ Reviewed all 40 source files (20 Kotlin + 20 Swift), 32 test files (18 Android +
 
 | # | Component | Android | iOS | Spec Match |
 |---|-----------|---------|-----|------------|
-| 1 | MoltButton | PASS | PASS | All 4 variants, loading, disabled |
-| 2 | MoltTextField | PASS | PASS | Label, error, helper, password, maxLength |
+| 1 | XGButton | PASS | PASS | All 4 variants, loading, disabled |
+| 2 | XGTextField | PASS | PASS | Label, error, helper, password, maxLength |
 | 3 | MoltProductCard | PASS | PASS | Image, title, price, rating, wishlist |
 | 4 | MoltInfoCard | PASS | PASS | Title, subtitle, leading icon, trailing content |
 | 5 | MoltFilterChip | PASS | PASS | Selected/unselected, checkmark, leading icon |
 | 6 | MoltCategoryChip | PASS | PASS | Label, icon URL |
-| 7 | MoltTopBar | PASS | PASS | Title, back button, actions |
-| 8 | MoltBottomBar/MoltTabBar | PASS | PASS | Tabs, badge, selected state |
-| 9 | MoltLoadingView | PASS | PASS | Full-screen and inline variants |
-| 10 | MoltErrorView | PASS | PASS | Message, retry button, error icon |
-| 11 | MoltEmptyView | PASS | PASS | Message, icon, action button |
-| 12 | MoltImage | PASS | PASS | Async loading, shimmer placeholder, crossfade |
-| 13 | MoltBadge | PASS | PASS | Count (99+ cap), status (5 variants) |
-| 14 | MoltRatingBar | PASS | PASS | Stars, half-star, value, review count |
-| 15 | MoltPriceText | PASS | PASS | Regular/sale, 3 sizes, strikethrough |
-| 16 | MoltQuantityStepper | PASS | PASS | +/- buttons, min/max bounds |
+| 7 | XGTopBar | PASS | PASS | Title, back button, actions |
+| 8 | XGBottomBar/XGTabBar | PASS | PASS | Tabs, badge, selected state |
+| 9 | XGLoadingView | PASS | PASS | Full-screen and inline variants |
+| 10 | XGErrorView | PASS | PASS | Message, retry button, error icon |
+| 11 | XGEmptyView | PASS | PASS | Message, icon, action button |
+| 12 | XGImage | PASS | PASS | Async loading, shimmer placeholder, crossfade |
+| 13 | XGBadge | PASS | PASS | Count (99+ cap), status (5 variants) |
+| 14 | XGRatingBar | PASS | PASS | Stars, half-star, value, review count |
+| 15 | XGPriceText | PASS | PASS | Regular/sale, 3 sizes, strikethrough |
+| 16 | XGQuantityStepper | PASS | PASS | +/- buttons, min/max bounds |
 
 ### 1.2 Theme Files (6/6 on both platforms)
 
 | File | Android | iOS | Token Match |
 |------|---------|-----|-------------|
-| MoltColors | PASS | PASS | All light/dark/semantic colors match `colors.json` |
-| MoltTypography | PASS | PASS | All 15 styles match `typography.json` |
-| MoltSpacing | PASS | PASS | All 9 spacing values match `spacing.json` |
-| MoltCornerRadius | PASS | PASS | All 6 values match `spacing.json` |
-| MoltElevation | PASS | PASS | All 6 levels match `spacing.json` |
-| MoltTheme | PASS | PASS | Applies colorScheme + typography |
+| XGColors | PASS | PASS | All light/dark/semantic colors match `colors.json` |
+| XGTypography | PASS | PASS | All 15 styles match `typography.json` |
+| XGSpacing | PASS | PASS | All 9 spacing values match `spacing.json` |
+| XGCornerRadius | PASS | PASS | All 6 values match `spacing.json` |
+| XGElevation | PASS | PASS | All 6 levels match `spacing.json` |
+| XGTheme | PASS | PASS | Applies colorScheme + typography |
 
 ### 1.3 Design Token Verification
 
@@ -71,7 +71,7 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 | No `Any` type | PASS | PASS |
 | No force unwrap (`!!` / `!`) | PASS | PASS |
 | Immutable models | PASS | PASS -- all `struct`/`enum` |
-| `Molt*` components only | PASS (design system layer) | PASS |
+| `XG*` components only | PASS (design system layer) | PASS |
 | All strings localized | PASS (17 keys via `stringResource`) | PASS (22 keys via `String(localized:)`) |
 | Every composable has `@Preview` | PASS (2-5 per file) | PASS (2-5 per file) |
 | Explicit return types | PASS | PASS |
@@ -86,8 +86,8 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 | No TODO without issue | PASS | PASS |
 | Cyclomatic complexity <= 10 | PASS (with targeted `@Suppress` on complex composables) | PASS |
 | File length <= 400 lines | PASS (all files < 250 lines) | PASS (all files < 270 lines) |
-| All colors from MoltColors | PASS | PASS |
-| All spacing from MoltSpacing | PASS | PASS |
+| All colors from XGColors | PASS | PASS |
+| All spacing from XGSpacing | PASS | PASS |
 
 ---
 
@@ -97,14 +97,14 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 
 | Component | Android Param | iOS Param | Match |
 |-----------|--------------|-----------|-------|
-| MoltButton | `text: String` | `title: String` (positional) | Semantically equivalent |
-| MoltButton | `style: MoltButtonStyle` | `variant: MoltButtonVariant` | Enum name differs to avoid Swift `ButtonStyle` conflict -- acceptable |
-| MoltButton | `loading: Boolean` | `isLoading: Bool` | iOS uses `is` prefix per Swift naming convention -- OK |
-| MoltTextField | `onValueChange: (String) -> Unit` | `value: Binding<String>` | Platform-idiomatic -- OK |
+| XGButton | `text: String` | `title: String` (positional) | Semantically equivalent |
+| XGButton | `style: XGButtonStyle` | `variant: XGButtonVariant` | Enum name differs to avoid Swift `ButtonStyle` conflict -- acceptable |
+| XGButton | `loading: Boolean` | `isLoading: Bool` | iOS uses `is` prefix per Swift naming convention -- OK |
+| XGTextField | `onValueChange: (String) -> Unit` | `value: Binding<String>` | Platform-idiomatic -- OK |
 | MoltProductCard | `imageUrl: String?` | `imageUrl: URL?` | Platform-idiomatic types -- OK |
 | MoltProductCard | `rating: Float?` | `rating: Double?` | Platform-idiomatic -- OK |
-| MoltBottomBar | `onTabSelected: (Int) -> Unit` | `selectedIndex: Binding<Int>` | Platform-idiomatic -- OK |
-| MoltQuantityStepper | `onQuantityChange: (Int) -> Unit` | `quantity: Binding<Int>` + callback | Platform-idiomatic -- OK |
+| XGBottomBar | `onTabSelected: (Int) -> Unit` | `selectedIndex: Binding<Int>` | Platform-idiomatic -- OK |
+| XGQuantityStepper | `onQuantityChange: (Int) -> Unit` | `quantity: Binding<Int>` + callback | Platform-idiomatic -- OK |
 
 ### 3.2 Behavior Parity
 
@@ -123,7 +123,7 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 | Aspect | Android | iOS | Match |
 |--------|---------|-----|-------|
 | Product card aspect ratio | 16:9 | 16:9 | PASS |
-| Card corner radius | MoltCornerRadius.Medium (8dp) | MoltCornerRadius.medium (8pt) | PASS |
+| Card corner radius | XGCornerRadius.Medium (8dp) | XGCornerRadius.medium (8pt) | PASS |
 | Error icon | `Icons.Outlined.ErrorOutline` | `exclamationmark.circle` (SF Symbol) | PASS |
 | Empty icon default | `Icons.Outlined.Inbox` | `tray` (SF Symbol) | PASS |
 | Back arrow | `Icons.AutoMirrored.Filled.ArrowBack` | `chevron.left` (SF Symbol) | Platform-correct |
@@ -165,7 +165,7 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 | No sensitive data in logs | PASS -- no logging in design system |
 | No hardcoded API keys/URLs | PASS |
 | No auth tokens | PASS -- design system has no auth |
-| No hardcoded hex colors in components | PASS -- all via MoltColors |
+| No hardcoded hex colors in components | PASS -- all via XGColors |
 
 ---
 
@@ -180,7 +180,7 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 
 ### 6.2 Key Match with Spec
 
-All 17 keys from spec Section 5 are present in both platforms. iOS has 5 additional keys (`common_loading`, `common_show_password`, `common_hide_password`, `common_error_icon_description`, `Molt Marketplace`) that are reasonable additions for iOS-specific component needs.
+All 17 keys from spec Section 5 are present in both platforms. iOS has 5 additional keys (`common_loading`, `common_show_password`, `common_hide_password`, `common_error_icon_description`, `XiriGo Ecommerce`) that are reasonable additions for iOS-specific component needs.
 
 ---
 
@@ -196,43 +196,43 @@ None.
 
 ### Minor Issues (5)
 
-**M1. Android MoltColors missing `Shadow` token**
-- **File**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltColors.kt`
-- **Issue**: The `shadow` color token from `colors.json` (both light and dark: `#000000`) is defined in iOS `MoltColors.swift:59` as `static let shadow = Color.black` but is absent from the Android `MoltColors` object.
+**M1. Android XGColors missing `Shadow` token**
+- **File**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGColors.kt`
+- **Issue**: The `shadow` color token from `colors.json` (both light and dark: `#000000`) is defined in iOS `XGColors.swift:59` as `static let shadow = Color.black` but is absent from the Android `XGColors` object.
 - **Impact**: Low -- Android Material 3 `darkColorScheme`/`lightColorScheme` does not use a separate shadow parameter, so this has no runtime impact. However, for parity with iOS and the token JSON, it should be present.
 - **Severity**: Minor / Non-blocking
 
-**M2. Android MoltTextField password toggle uses text "H"/"S" instead of icons**
-- **File**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/java/com/molt/marketplace/core/designsystem/component/MoltTextField.kt:84`
+**M2. Android XGTextField password toggle uses text "H"/"S" instead of icons**
+- **File**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGTextField.kt:84`
 - **Issue**: The password visibility toggle renders `Text("H")` / `Text("S")` instead of Material Icons `Visibility` / `VisibilityOff`. The iOS version correctly uses SF Symbols `eye` / `eye.slash`.
 - **Impact**: Visual quality -- functional behavior is correct (toggle works). When Figma designs arrive, this will be replaced anyway.
 - **Severity**: Minor
 
-**M3. Android MoltTextField password toggle lacks accessibility label**
-- **File**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/java/com/molt/marketplace/core/designsystem/component/MoltTextField.kt:81`
+**M3. Android XGTextField password toggle lacks accessibility label**
+- **File**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGTextField.kt:81`
 - **Issue**: The password toggle `IconButton` has no `contentDescription`. iOS provides `common_show_password` / `common_hide_password` localized labels. Android should add equivalent accessibility labels.
 - **Severity**: Minor
 
-**M4. Android MoltButton fullWidth has no-op branch**
-- **File**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/java/com/molt/marketplace/core/designsystem/component/MoltButton.kt:85-99`
+**M4. Android XGButton fullWidth has no-op branch**
+- **File**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGButton.kt:85-99`
 - **Issue**: The `Primary` branch has `if (fullWidth) { Button(...) } else { Button(...) }` but both branches produce identical code. The `fillMaxWidth()` modifier is not applied in either case.
 - **Impact**: `fullWidth = false` does not actually constrain the button width. The parameter has no effect for Primary style.
 - **Severity**: Minor -- the default `fullWidth = true` is correct per spec and this will be refined when Figma arrives.
 
 **M5. Some magic dp/pt values in component code**
-- **Files**: `MoltButton.kt:62` (20.dp spinner), `MoltButton.kt:76` (18.dp icon), `MoltLoadingView.kt:53` (24.dp), `MoltChip.kt:77` (18.dp), `MoltRatingBar.kt:35` (16.dp default)
-- **Issue**: These values are not from `MoltSpacing` or `MoltCornerRadius` tokens. They are component-internal sizing (e.g., spinner diameter, icon size within button) that are not defined in the design token JSON.
+- **Files**: `XGButton.kt:62` (20.dp spinner), `XGButton.kt:76` (18.dp icon), `XGLoadingView.kt:53` (24.dp), `XGChip.kt:77` (18.dp), `XGRatingBar.kt:35` (16.dp default)
+- **Issue**: These values are not from `XGSpacing` or `XGCornerRadius` tokens. They are component-internal sizing (e.g., spinner diameter, icon size within button) that are not defined in the design token JSON.
 - **Impact**: Low -- these are reasonable component-internal defaults that don't have corresponding design tokens. When Figma arrives, they will be updated.
 - **Severity**: Nit
 
 ### Nits (2)
 
-**N1. iOS `MoltErrorView` uses `.outlined` variant for retry button; Android uses `.primary`**
-- **Files**: `MoltErrorView.kt:61` (Primary), `MoltErrorView.swift:38` (Outlined)
+**N1. iOS `XGErrorView` uses `.outlined` variant for retry button; Android uses `.primary`**
+- **Files**: `XGErrorView.kt:61` (Primary), `XGErrorView.swift:38` (Outlined)
 - **Impact**: Cosmetic only. Both are valid button styles for a retry action.
 
-**N2. iOS `MoltInfoCard` subtitle spacing uses `MoltSpacing.xxs`; Android uses `MoltSpacing.XS`**
-- **Files**: `MoltCard.kt:176` (`MoltSpacing.XS` = 4.dp), `MoltCard.swift:170` (`MoltSpacing.xxs` = 2pt)
+**N2. iOS `MoltInfoCard` subtitle spacing uses `XGSpacing.xxs`; Android uses `XGSpacing.XS`**
+- **Files**: `XGCard.kt:176` (`XGSpacing.XS` = 4.dp), `XGCard.swift:170` (`XGSpacing.xxs` = 2pt)
 - **Impact**: 2pt visual difference in info card subtitle spacing. Cosmetic only.
 
 ---
@@ -241,7 +241,7 @@ None.
 
 The implementations are functionally equivalent across platforms. Differences are limited to:
 
-1. **Platform-idiomatic naming**: `MoltButtonStyle` (Android) vs `MoltButtonVariant` (iOS) -- necessary to avoid SwiftUI `ButtonStyle` protocol conflict
+1. **Platform-idiomatic naming**: `XGButtonStyle` (Android) vs `XGButtonVariant` (iOS) -- necessary to avoid SwiftUI `ButtonStyle` protocol conflict
 2. **Platform-idiomatic data binding**: Callback-based (Android) vs `Binding<T>` (iOS)
 3. **Platform-idiomatic types**: `Float` (Android) vs `Double` (iOS) for rating, `String` vs `URL` for image URLs
 4. **Platform-correct touch targets**: 48dp (Android) vs 44pt (iOS) per platform HIG
@@ -257,10 +257,10 @@ All of these are expected and acceptable per the spec and CLAUDE.md guidelines.
 
 - All 14 components implemented on both platforms with matching behavior
 - All design tokens correctly mapped from JSON to platform constants
-- No CLAUDE.md rule violations (no `Any`, no force unwrap, all strings localized, all colors from MoltColors)
+- No CLAUDE.md rule violations (no `Any`, no force unwrap, all strings localized, all colors from XGColors)
 - Comprehensive test coverage (265+ tests across 36 files)
 - Proper accessibility support on both platforms
-- All previews present and wrapped in MoltTheme
+- All previews present and wrapped in XGTheme
 - Clean Architecture boundaries respected (design system is self-contained)
 
 The 5 minor issues documented above are non-blocking for merge and can be addressed in a follow-up cleanup PR or when Figma designs arrive.

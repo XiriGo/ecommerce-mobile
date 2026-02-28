@@ -185,7 +185,7 @@ Both Android and iOS implementations of the Network Layer have been reviewed aga
 
 **Pre-existing iOS failures** (not introduced by this feature):
 1. `Localization Tests` -- Maltese string value mismatch (pre-existing)
-2. `MoltEmptyView Tests` -- ViewInspector crash (pre-existing)
+2. `XGEmptyView Tests` -- ViewInspector crash (pre-existing)
 
 ---
 
@@ -225,64 +225,64 @@ Both platforms deliver a complete, well-structured, secure, and thoroughly teste
 ## Files Reviewed
 
 ### Android Production (14 files)
-- `android/app/src/main/java/com/molt/marketplace/core/domain/error/AppError.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/TokenProvider.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/MedusaErrorDto.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/ApiErrorMapper.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/AuthInterceptor.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/TokenRefreshAuthenticator.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/RetryInterceptor.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/LoggingInterceptor.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/NetworkConfig.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/OkHttpClientFactory.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/ApiClient.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/PaginationMeta.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/network/NetworkMonitor.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/di/NetworkModule.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/domain/error/AppError.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/TokenProvider.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/MedusaErrorDto.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/ApiErrorMapper.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/AuthInterceptor.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/TokenRefreshAuthenticator.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/RetryInterceptor.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/LoggingInterceptor.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/NetworkConfig.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/OkHttpClientFactory.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/ApiClient.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/PaginationMeta.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/NetworkMonitor.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/di/NetworkModule.kt`
 
 ### Android Tests (13 files)
-- `android/app/src/test/java/com/molt/marketplace/core/network/AuthInterceptorTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/TokenRefreshAuthenticatorTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/RetryInterceptorTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/ApiErrorMapperTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/domain/error/AppErrorTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/NetworkConfigTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/PaginationMetaTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/ApiClientTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/AuthInterceptorEdgeCasesTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/RetryInterceptorEdgeCasesTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/TokenRefreshAuthenticatorEdgeCasesTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/network/ApiErrorMapperEdgeCasesTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/domain/error/AppErrorEdgeCasesTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/AuthInterceptorTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/TokenRefreshAuthenticatorTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/RetryInterceptorTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/ApiErrorMapperTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/domain/error/AppErrorTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/NetworkConfigTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/PaginationMetaTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/ApiClientTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/AuthInterceptorEdgeCasesTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/RetryInterceptorEdgeCasesTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/TokenRefreshAuthenticatorEdgeCasesTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/network/ApiErrorMapperEdgeCasesTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/domain/error/AppErrorEdgeCasesTest.kt`
 
 ### iOS Production (14 files)
-- `ios/MoltMarketplace/Core/Domain/Error/AppError.swift`
-- `ios/MoltMarketplace/Core/Network/HTTPMethod.swift`
-- `ios/MoltMarketplace/Core/Network/Endpoint.swift`
-- `ios/MoltMarketplace/Core/Network/JSONCoders.swift`
-- `ios/MoltMarketplace/Core/Network/MedusaErrorDTO.swift`
-- `ios/MoltMarketplace/Core/Network/TokenProvider.swift`
-- `ios/MoltMarketplace/Core/Network/RetryPolicy.swift`
-- `ios/MoltMarketplace/Core/Network/AuthMiddleware.swift`
-- `ios/MoltMarketplace/Core/Network/APIClient.swift`
-- `ios/MoltMarketplace/Core/Network/PaginatedResponse.swift`
-- `ios/MoltMarketplace/Core/Network/NetworkConfig.swift`
-- `ios/MoltMarketplace/Core/Network/NetworkMonitor.swift`
-- `ios/MoltMarketplace/Core/Network/RequestLogger.swift`
-- `ios/MoltMarketplace/Core/DI/Container+Extensions.swift`
+- `ios/XiriGoEcommerce/Core/Domain/Error/AppError.swift`
+- `ios/XiriGoEcommerce/Core/Network/HTTPMethod.swift`
+- `ios/XiriGoEcommerce/Core/Network/Endpoint.swift`
+- `ios/XiriGoEcommerce/Core/Network/JSONCoders.swift`
+- `ios/XiriGoEcommerce/Core/Network/MedusaErrorDTO.swift`
+- `ios/XiriGoEcommerce/Core/Network/TokenProvider.swift`
+- `ios/XiriGoEcommerce/Core/Network/RetryPolicy.swift`
+- `ios/XiriGoEcommerce/Core/Network/AuthMiddleware.swift`
+- `ios/XiriGoEcommerce/Core/Network/APIClient.swift`
+- `ios/XiriGoEcommerce/Core/Network/PaginatedResponse.swift`
+- `ios/XiriGoEcommerce/Core/Network/NetworkConfig.swift`
+- `ios/XiriGoEcommerce/Core/Network/NetworkMonitor.swift`
+- `ios/XiriGoEcommerce/Core/Network/RequestLogger.swift`
+- `ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift`
 
 ### iOS Tests (11 files)
-- `ios/MoltMarketplaceTests/Core/Network/APIClientTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/AuthMiddlewareTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/RetryPolicyTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/AppErrorTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/MedusaErrorDTOTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/PaginatedResponseTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/NetworkConfigTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/JSONCodersTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/TokenProviderTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/EndpointTests.swift`
-- `ios/MoltMarketplaceTests/Core/Network/MockURLProtocol.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/APIClientTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/AuthMiddlewareTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/RetryPolicyTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/AppErrorTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/MedusaErrorDTOTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/PaginatedResponseTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/NetworkConfigTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/JSONCodersTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/TokenProviderTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/EndpointTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Network/MockURLProtocol.swift`
 
 ### Handoffs Reviewed
 - `docs/pipeline/network-layer-architect.handoff.md`

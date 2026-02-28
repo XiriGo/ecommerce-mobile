@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DI Setup establishes the dependency injection infrastructure for the Molt Marketplace buyer app. It creates the Hilt modules (Android) and Factory container registrations (iOS) that provide network, storage, coroutine, and common infrastructure dependencies as singletons. It also defines the canonical pattern that every M1+ feature module must follow when registering its own repositories, use cases, and ViewModels.
+The DI Setup establishes the dependency injection infrastructure for the XiriGo Ecommerce buyer app. It creates the Hilt modules (Android) and Factory container registrations (iOS) that provide network, storage, coroutine, and common infrastructure dependencies as singletons. It also defines the canonical pattern that every M1+ feature module must follow when registering its own repositories, use cases, and ViewModels.
 
 This is a pure infrastructure feature — no business logic, no UI screens.
 
@@ -15,7 +15,7 @@ This is a pure infrastructure feature — no business logic, no UI screens.
 
 - Five qualifier annotations for coroutine dispatchers and HTTP client variants (Android)
 - `CoroutineModule`: three dispatcher providers + app-scoped `CoroutineScope` with `SupervisorJob` (Android)
-- `StorageModule`: `DataStore<Preferences>` (general) + `MoltDatabase` Room shell (Android)
+- `StorageModule`: `DataStore<Preferences>` (general) + `XGDatabase` Room shell (Android)
 - `NetworkModule` updated with `@AuthenticatedClient` / `@UnauthenticatedClient` OkHttpClient split (Android)
 - `Container+Extensions.swift` verified with `apiClient`, `tokenProvider`, `networkMonitor` singletons (iOS)
 - `NetworkMonitor` interface + `NWPathMonitor`-based implementation (iOS)
@@ -26,7 +26,7 @@ This is a pure infrastructure feature — no business logic, no UI screens.
 
 | Depends On | What Is Needed |
 |-----------|----------------|
-| M0-01: App Scaffold | `@HiltAndroidApp` on `MoltApplication`, `Container+Extensions.swift` shell, `BuildConfig.API_BASE_URL`, `Config.apiBaseURL` |
+| M0-01: App Scaffold | `@HiltAndroidApp` on `XGApplication`, `Container+Extensions.swift` shell, `BuildConfig.API_BASE_URL`, `Config.apiBaseURL` |
 | M0-03: Network Layer | `NetworkModule.kt`, `OkHttpClientFactory`, `NetworkMonitor`, `APIClient`, `TokenProvider` already created |
 
 ### Features That Depend on This
@@ -72,18 +72,18 @@ Five `@Qualifier` annotations defined in `Qualifiers.kt` disambiguate multiple b
 | `Retrofit` | `NetworkModule.provideRetrofit()` | N/A |
 | `APIClient` | N/A | `Container.apiClient` (.singleton) |
 | `DataStore<Preferences>` | `StorageModule.providePreferencesDataStore()` | N/A (UserDefaults) |
-| `MoltDatabase` (Room) | `StorageModule.provideDatabase()` | N/A (SwiftData) |
+| `XGDatabase` (Room) | `StorageModule.provideDatabase()` | N/A (SwiftData) |
 | Token provider (no-op placeholder) | via `@Inject constructor` on `InMemoryTokenProvider` | `Container.tokenProvider` (.singleton) |
 | `NetworkMonitor` | via `@Inject constructor` + `@Singleton` | `Container.networkMonitor` (.singleton) |
 | App-scoped `CoroutineScope` | `CoroutineModule.provideApplicationScope()` | N/A (Swift `Task` / `actor`) |
 
 ### Room Database Shell (Android)
 
-`MoltDatabase` starts empty. Each feature that requires local structured storage:
+`XGDatabase` starts empty. Each feature that requires local structured storage:
 
 1. Creates its `@Entity` class in `feature/<name>/data/local/`
 2. Creates its `@Dao` interface in `feature/<name>/data/local/`
-3. Adds the entity to the `entities` array and exposes the DAO as an abstract function on `MoltDatabase`
+3. Adds the entity to the `entities` array and exposes the DAO as an abstract function on `XGDatabase`
 4. Increments the database version and provides a `Migration` object
 
 A `PlaceholderEntity` is present in M0-05 to satisfy the Room KSP annotation processor, which requires at least one entity. It is removed when the first real entity (e.g., `CartItem` in M2-01) is added.
@@ -219,7 +219,7 @@ struct ProductListViewModelTests {
 
 ### Android
 
-Base path: `android/app/src/main/java/com/molt/marketplace/`
+Base path: `android/app/src/main/java/com/xirigo/ecommerce/`
 
 ```
 core/
@@ -234,10 +234,10 @@ core/
                            # provideUnauthenticatedClient (@UnauthenticatedClient),
                            # provideRetrofit (uses @AuthenticatedClient)
     StorageModule.kt       # @Module @InstallIn(SingletonComponent::class)
-                           # providePreferencesDataStore, provideDatabase (MoltDatabase)
+                           # providePreferencesDataStore, provideDatabase (XGDatabase)
   data/
     local/
-      MoltDatabase.kt      # @Database(entities = [PlaceholderEntity::class], version = 1)
+      XGDatabase.kt      # @Database(entities = [PlaceholderEntity::class], version = 1)
                            # Abstract Room shell; features add entities
       PlaceholderEntity.kt # Minimal Room entity for KSP; removed when first real entity added
   network/
@@ -247,7 +247,7 @@ core/
 
 ### iOS
 
-Base path: `ios/MoltMarketplace/`
+Base path: `ios/XiriGoEcommerce/`
 
 ```
 Core/
@@ -269,13 +269,13 @@ Core/
 | Android | `core/di/QualifiersTest.kt` | 11 | All 5 qualifier annotations verified for `@Qualifier` + `BINARY` retention |
 | Android | `core/di/CoroutineModuleTest.kt` | 10 | Dispatcher types, `CoroutineScope` uses `SupervisorJob` + provided dispatcher |
 | Android | `core/di/NetworkModuleTest.kt` | 25 | Json config, `@AuthenticatedClient` has `AuthInterceptor`, `@UnauthenticatedClient` does not, Retrofit base URL |
-| Android | `core/di/StorageModuleTest.kt` | 9 | `MoltDatabase` in-memory creation, `DataStore` read/write (Robolectric) |
-| iOS | `MoltMarketplaceTests/Core/DI/ContainerTests.swift` | 14 | Resolution, singleton behavior, override mechanism, reset behavior, cross-registration independence |
-| iOS | `MoltMarketplaceTests/Core/Network/NetworkMonitorTests.swift` | 7 | Initialization, default `isConnected` state, `Sendable` conformance, independent instances, deinit safety |
+| Android | `core/di/StorageModuleTest.kt` | 9 | `XGDatabase` in-memory creation, `DataStore` read/write (Robolectric) |
+| iOS | `XiriGoEcommerceTests/Core/DI/ContainerTests.swift` | 14 | Resolution, singleton behavior, override mechanism, reset behavior, cross-registration independence |
+| iOS | `XiriGoEcommerceTests/Core/Network/NetworkMonitorTests.swift` | 7 | Initialization, default `isConnected` state, `Sendable` conformance, independent instances, deinit safety |
 
 Test base paths:
-- Android unit: `android/app/src/test/java/com/molt/marketplace/`
-- iOS: `ios/MoltMarketplaceTests/`
+- Android unit: `android/app/src/test/java/com/xirigo/ecommerce/`
+- iOS: `ios/XiriGoEcommerceTests/`
 
 ---
 
@@ -316,7 +316,7 @@ Test approach:
 |---------|---------------------|
 | M0-06: Auth Infrastructure | Add `KeychainTokenStorage` and wire `tokenStorage` into `Container`; replace `NoOpTokenProvider` / `InMemoryTokenProvider` with a real implementation; `@AuthenticatedClient` OkHttpClient already prepared |
 | All M1+ features | Create `Container+<Name>.swift` (iOS) or `<Name>Module.kt` (Android) following the canonical feature DI pattern above |
-| M2-01: Cart | Add `CartItem` `@Entity` to `MoltDatabase.entities`; expose `cartDao()` abstract function; increment DB version |
+| M2-01: Cart | Add `CartItem` `@Entity` to `XGDatabase.entities`; expose `cartDao()` abstract function; increment DB version |
 
 ---
 

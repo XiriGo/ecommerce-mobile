@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Molt Marketplace design tokens — Colors",
+  "description": "XiriGo Ecommerce design tokens — Colors",
   "light": {
     "primary": "#6750A4",
     "onPrimary": "#FFFFFF",

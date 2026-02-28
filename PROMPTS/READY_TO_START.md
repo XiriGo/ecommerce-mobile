@@ -158,7 +158,7 @@ Hepsi tamamen local/native — backend gerekmez.
 
 ## BEKLEMEDE — Backend Gerekli (5 feature)
 
-Bu feature'lar molt backend'de ilgili modüller tamamlanınca başlatılabilir:
+Bu feature'lar xirigo backend'de ilgili modüller tamamlanınca başlatılabilir:
 
 | Feature | Beklediği Backend Modülü | Durum |
 |---------|--------------------------|-------|

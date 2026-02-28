@@ -45,7 +45,7 @@ COMPLETE
 
 Covers:
 - **Overview**: What the feature provides, dependency table
-- **Architecture**: Route definitions (both platforms with code samples), tab definitions table, navigation state management (`MoltAppScaffold` / `AppRouter`), deep linking (URI pattern table, platform implementations), auth-gated navigation flow diagram
+- **Architecture**: Route definitions (both platforms with code samples), tab definitions table, navigation state management (`XGAppScaffold` / `AppRouter`), deep linking (URI pattern table, platform implementations), auth-gated navigation flow diagram
 - **Navigation Flows**: Tab back-stack behavior, per-tab stack structures, tab bar visibility rules
 - **Localization**: 10 new string keys in all three languages
 - **File Structure**: Complete file manifest for both Android and iOS with descriptions of each file, modified files table

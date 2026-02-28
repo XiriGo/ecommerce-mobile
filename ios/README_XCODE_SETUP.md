@@ -27,7 +27,7 @@ If the project won't open or shows errors, follow Manual Setup below.
 3. Choose: iOS → App
 4. Product Name: `XiriGoEcommerce`
 5. Team: (your team)
-6. Organization Identifier: `com.molt`
+6. Organization Identifier: `com.xirigo`
 7. Interface: **SwiftUI**
 8. Language: **Swift**
 9. Storage: None (we'll add SwiftData later)
@@ -145,7 +145,7 @@ If you have `xcodegen` installed, you can use the project.yml spec (create this 
 ```yaml
 name: XiriGoEcommerce
 options:
-  bundleIdPrefix: com.molt
+  bundleIdPrefix: com.xirigo
   deploymentTarget:
     iOS: 17.0
 settings:
@@ -158,7 +158,7 @@ targets:
     sources:
       - XiriGoEcommerce
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: com.molt.marketplace
+      PRODUCT_BUNDLE_IDENTIFIER: com.xirigo.marketplace
       INFOPLIST_FILE: XiriGoEcommerce/Resources/Info.plist
     dependencies:
       - package: Factory

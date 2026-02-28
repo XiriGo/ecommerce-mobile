@@ -57,12 +57,12 @@ Parse: `$ARGUMENTS` — feature name to review.
 - No business logic in UI layer
 
 ### 4. Design System Compliance
-- Feature screens use `Molt*` design system components exclusively
+- Feature screens use `XG*` design system components exclusively
 - No raw `MaterialTheme`, `Button`, `TextField`, `CircularProgressIndicator` in feature screens
-- All colors from `MoltColors`, all spacing from `MoltSpacing`
+- All colors from `XGColors`, all spacing from `XGSpacing`
 - No magic numbers for dimensions
 - Every screen has `@Preview` / `#Preview`
-- Previews wrapped in `MoltTheme`
+- Previews wrapped in `XGTheme`
 
 ### 5. Performance (Google/Meta Standards)
 - No N+1 data fetching patterns

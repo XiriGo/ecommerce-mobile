@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Molt Marketplace design tokens — Typography",
+  "description": "XiriGo Ecommerce design tokens — Typography",
   "note": "Android uses sp for font sizes and Material 3 type scale. iOS uses system font with Dynamic Type support.",
   "typeScale": {
     "displayLarge": { "fontSize": 57, "lineHeight": 64, "letterSpacing": -0.25, "fontWeight": "regular" },

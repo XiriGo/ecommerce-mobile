@@ -10,10 +10,10 @@ COMPLETE — All test files created. All tests pass. ktlint clean.
 
 | # | File | Tests | Description |
 |---|------|-------|-------------|
-| 1 | `app/src/test/java/com/molt/marketplace/core/di/QualifiersTest.kt` | 11 | Verifies all 5 qualifier annotations are `@Qualifier` and have `BINARY` retention |
-| 2 | `app/src/test/java/com/molt/marketplace/core/di/CoroutineModuleTest.kt` | 10 | Verifies IO/Main/Default dispatchers, CoroutineScope uses SupervisorJob + provided dispatcher |
-| 3 | `app/src/test/java/com/molt/marketplace/core/di/NetworkModuleTest.kt` | 25 | Verifies Json config, InMemoryTokenProvider, AuthInterceptor, TokenRefreshAuthenticator, OkHttpClient interceptor lists, timeouts, Retrofit base URL |
-| 4 | `app/src/test/java/com/molt/marketplace/core/di/StorageModuleTest.kt` | 9 | Verifies MoltDatabase creation (in-memory + named), open/close lifecycle, DataStore read/write (Robolectric) |
+| 1 | `app/src/test/java/com/xirigo/ecommerce/core/di/QualifiersTest.kt` | 11 | Verifies all 5 qualifier annotations are `@Qualifier` and have `BINARY` retention |
+| 2 | `app/src/test/java/com/xirigo/ecommerce/core/di/CoroutineModuleTest.kt` | 10 | Verifies IO/Main/Default dispatchers, CoroutineScope uses SupervisorJob + provided dispatcher |
+| 3 | `app/src/test/java/com/xirigo/ecommerce/core/di/NetworkModuleTest.kt` | 25 | Verifies Json config, InMemoryTokenProvider, AuthInterceptor, TokenRefreshAuthenticator, OkHttpClient interceptor lists, timeouts, Retrofit base URL |
+| 4 | `app/src/test/java/com/xirigo/ecommerce/core/di/StorageModuleTest.kt` | 9 | Verifies XGDatabase creation (in-memory + named), open/close lifecycle, DataStore read/write (Robolectric) |
 
 **Total: 55 tests, 0 failures**
 

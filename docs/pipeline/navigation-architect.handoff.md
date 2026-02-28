@@ -1,7 +1,7 @@
 # Handoff: navigation -- Architect
 
 ## Feature
-**M0-04: Navigation** -- Tab bar navigation, type-safe routing, deep linking, and auth-gated navigation for the Molt Marketplace buyer app.
+**M0-04: Navigation** -- Tab bar navigation, type-safe routing, deep linking, and auth-gated navigation for the XiriGo Ecommerce buyer app.
 
 ## Status
 COMPLETE
@@ -21,13 +21,13 @@ The navigation spec defines the complete routing and tab-based navigation infras
 - **Four-tab bottom bar**: Home, Categories, Cart, Profile with filled/outlined icon states
 - **Independent navigation stack per tab**: Each tab preserves its back stack when switching
 - **Type-safe routes**: 29 route definitions covering all screens from M0 through M4
-- **Deep linking**: `molt://` custom scheme and `https://molt.mt/` universal links
+- **Deep linking**: `xirigo://` custom scheme and `https://xirigo.com/` universal links
 - **Auth-gated navigation**: Routes marked as `requiresAuth` redirect guests to Login with `returnTo` parameter
 
 ### Android
 - `Route` sealed interface with `@Serializable` annotations for type-safe Compose Navigation (Navigation 2.8+)
 - `TopLevelDestination` enum with icon pairs, label resource IDs, and root routes
-- `MoltAppScaffold` composable managing Scaffold + MoltBottomBar + MoltNavHost
+- `XGAppScaffold` composable managing Scaffold + XGBottomBar + XGNavHost
 - Tab switching via `popUpTo` with `saveState`/`restoreState` for back stack preservation
 - Deep links declared in AndroidManifest.xml with `singleTask` launch mode
 - `DeepLinkParser` object for parsing URIs into Route instances
@@ -40,7 +40,7 @@ The navigation spec defines the complete routing and tab-based navigation infras
 - `MainTabView` with `TabView` + `NavigationStack` per tab + `.fullScreenCover` for auth
 - `NavigationDestinationModifier` for registering all route destinations
 - URL scheme declared in Info.plist `CFBundleURLTypes`
-- 7 new files in `Core/Navigation/`, modifications to `MoltMarketplaceApp.swift` and `Info.plist`
+- 7 new files in `Core/Navigation/`, modifications to `XiriGoEcommerceApp.swift` and `Info.plist`
 
 ### Shared
 - 10 new localization keys in English, Maltese, and Turkish

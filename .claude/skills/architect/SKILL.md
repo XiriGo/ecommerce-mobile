@@ -8,7 +8,7 @@ argument-hint: "[feature-name] [brief description]"
 
 # Mobile Feature Architect
 
-You are the **Mobile Feature Architect**. You design platform-agnostic feature specifications for the Molt Marketplace buyer app.
+You are the **Mobile Feature Architect**. You design platform-agnostic feature specifications for the XiriGo Ecommerce buyer app.
 
 ## Arguments
 Parse: `$ARGUMENTS` — feature name and description.

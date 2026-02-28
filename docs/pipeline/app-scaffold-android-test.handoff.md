@@ -10,7 +10,7 @@ All tests follow CLAUDE.md standards: JUnit 4, Truth assertions, no mocks for pl
 
 ### Unit Tests (5 files)
 
-1. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltColorsTest.kt`
+1. `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGColorsTest.kt`
    - 11 test methods
    - Verifies all 67 color constants match design tokens
    - Tests light theme colors (primary, secondary, tertiary, error, surface, outline)
@@ -18,23 +18,23 @@ All tests follow CLAUDE.md standards: JUnit 4, Truth assertions, no mocks for pl
    - Tests semantic colors (success, warning)
    - Tests e-commerce specific colors (price, rating, badge, divider, shimmer)
 
-2. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltSpacingTest.kt`
+2. `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacingTest.kt`
    - 4 test methods
    - Verifies 9 base spacing values (XXS to XXXL)
    - Verifies 7 layout spacing constants
    - Tests minimum touch target meets 48dp accessibility standard
    - Validates spacing values are in ascending order
 
-3. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/test/java/com/molt/marketplace/BuildConfigTest.kt`
+3. `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/test/java/com/xirigo/ecommerce/BuildConfigTest.kt`
    - 6 test methods
    - Validates application ID format
    - Validates version code is positive integer
    - Validates version name follows semantic versioning (x.y.z)
-   - Validates API_BASE_URL is HTTPS and contains "molt.mt"
+   - Validates API_BASE_URL is HTTPS and contains "xirigo.com"
    - Verifies debug flag in test environment
    - Verifies build type
 
-4. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/test/java/com/molt/marketplace/StringResourcesTest.kt`
+4. `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/test/java/com/xirigo/ecommerce/StringResourcesTest.kt`
    - 9 test methods
    - Tests app name localization for English, Maltese, Turkish
    - Tests all 12 common string resources exist in all 3 languages
@@ -44,19 +44,19 @@ All tests follow CLAUDE.md standards: JUnit 4, Truth assertions, no mocks for pl
    - Verifies no hardcoded strings (all via R.string resource IDs)
    - Uses `createContextForLocale()` helper for locale-specific testing
 
-5. `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/test/java/com/molt/marketplace/MoltApplicationTest.kt`
+5. `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/test/java/com/xirigo/ecommerce/XGApplicationTest.kt`
    - 3 test methods
    - Verifies @HiltAndroidApp annotation present
    - Verifies Timber initialization mechanism
-   - Verifies MoltApplication extends android.app.Application
+   - Verifies XGApplication extends android.app.Application
 
 ## Test Coverage
 
 | Component | Lines Covered | Tests |
 |-----------|---------------|-------|
-| MoltColors.kt | 100% | 11 tests (67 color assertions) |
-| MoltSpacing.kt | 100% | 4 tests (16 spacing assertions) |
-| MoltApplication.kt | 100% | 3 tests |
+| XGColors.kt | 100% | 11 tests (67 color assertions) |
+| XGSpacing.kt | 100% | 4 tests (16 spacing assertions) |
+| XGApplication.kt | 100% | 3 tests |
 | BuildConfig (generated) | 100% | 6 tests |
 | String Resources (3 locales) | 100% | 9 tests |
 
@@ -69,7 +69,7 @@ All tests follow CLAUDE.md standards: JUnit 4, Truth assertions, no mocks for pl
 The Android project requires the Gradle wrapper to be initialized. Since the wrapper JAR files are not committed to git, follow these steps:
 
 ```bash
-cd /Users/atakan/Documents/GitHub/atknatk/molt-mobile/android
+cd /Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android
 
 # Option 1: If you have Gradle installed globally (not currently available)
 gradle wrapper --gradle-version 8.11.1
@@ -97,7 +97,7 @@ Once Gradle wrapper is available:
 ./gradlew testDebugUnitTest jacocoTestReport
 
 # Run specific test class
-./gradlew test --tests com.molt.marketplace.core.designsystem.theme.MoltColorsTest
+./gradlew test --tests com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest
 
 # Run with info logging
 ./gradlew test --info
@@ -129,43 +129,43 @@ All 33 tests should pass with 100% coverage on tested components:
 ```
 > Task :app:testDebugUnitTest
 
-com.molt.marketplace.BuildConfigTest > application id should match namespace PASSED
-com.molt.marketplace.BuildConfigTest > version code should be positive PASSED
-com.molt.marketplace.BuildConfigTest > version name should follow semantic versioning pattern PASSED
-com.molt.marketplace.BuildConfigTest > api base url should be valid https url PASSED
-com.molt.marketplace.BuildConfigTest > debug build should have debug flag set PASSED
-com.molt.marketplace.BuildConfigTest > build type should be debug in unit tests PASSED
+com.xirigo.ecommerce.BuildConfigTest > application id should match namespace PASSED
+com.xirigo.ecommerce.BuildConfigTest > version code should be positive PASSED
+com.xirigo.ecommerce.BuildConfigTest > version name should follow semantic versioning pattern PASSED
+com.xirigo.ecommerce.BuildConfigTest > api base url should be valid https url PASSED
+com.xirigo.ecommerce.BuildConfigTest > debug build should have debug flag set PASSED
+com.xirigo.ecommerce.BuildConfigTest > build type should be debug in unit tests PASSED
 
-com.molt.marketplace.MoltApplicationTest > application class should be annotated with HiltAndroidApp PASSED
-com.molt.marketplace.MoltApplicationTest > application should initialize timber in debug builds PASSED
-com.molt.marketplace.MoltApplicationTest > application should extend android Application PASSED
+com.xirigo.ecommerce.XGApplicationTest > application class should be annotated with HiltAndroidApp PASSED
+com.xirigo.ecommerce.XGApplicationTest > application should initialize timber in debug builds PASSED
+com.xirigo.ecommerce.XGApplicationTest > application should extend android Application PASSED
 
-com.molt.marketplace.StringResourcesTest > app name should be localized in all languages PASSED
-com.molt.marketplace.StringResourcesTest > common strings should exist in english PASSED
-com.molt.marketplace.StringResourcesTest > common strings should exist in maltese PASSED
-com.molt.marketplace.StringResourcesTest > common strings should exist in turkish PASSED
-com.molt.marketplace.StringResourcesTest > english loading message should match expected value PASSED
-com.molt.marketplace.StringResourcesTest > maltese loading message should be translated PASSED
-com.molt.marketplace.StringResourcesTest > turkish loading message should be translated PASSED
-com.molt.marketplace.StringResourcesTest > all string resources should not contain hardcoded text in code PASSED
+com.xirigo.ecommerce.StringResourcesTest > app name should be localized in all languages PASSED
+com.xirigo.ecommerce.StringResourcesTest > common strings should exist in english PASSED
+com.xirigo.ecommerce.StringResourcesTest > common strings should exist in maltese PASSED
+com.xirigo.ecommerce.StringResourcesTest > common strings should exist in turkish PASSED
+com.xirigo.ecommerce.StringResourcesTest > english loading message should match expected value PASSED
+com.xirigo.ecommerce.StringResourcesTest > maltese loading message should be translated PASSED
+com.xirigo.ecommerce.StringResourcesTest > turkish loading message should be translated PASSED
+com.xirigo.ecommerce.StringResourcesTest > all string resources should not contain hardcoded text in code PASSED
 
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > primary colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > dark primary colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > secondary colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > dark secondary colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > error colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > semantic colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > price colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > rating colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > badge colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > utility colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > surface colors should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltColorsTest > outline colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > primary colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > dark primary colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > secondary colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > dark secondary colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > error colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > semantic colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > price colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > rating colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > badge colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > utility colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > surface colors should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGColorsTest > outline colors should match design tokens PASSED
 
-com.molt.marketplace.core.designsystem.theme.MoltSpacingTest > base spacing values should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltSpacingTest > layout spacing values should match design tokens PASSED
-com.molt.marketplace.core.designsystem.theme.MoltSpacingTest > minimum touch target should meet accessibility standards PASSED
-com.molt.marketplace.core.designsystem.theme.MoltSpacingTest > spacing values should be in ascending order PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGSpacingTest > base spacing values should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGSpacingTest > layout spacing values should match design tokens PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGSpacingTest > minimum touch target should meet accessibility standards PASSED
+com.xirigo.ecommerce.core.designsystem.theme.XGSpacingTest > spacing values should be in ascending order PASSED
 
 BUILD SUCCESSFUL in 12s
 33 tests completed, 33 succeeded
@@ -226,10 +226,10 @@ testImplementation(libs.coroutines.test)    // Coroutines Test (for future async
 
 ### Android Dev (M0-02 Design System Components)
 
-When implementing Molt* components, add corresponding tests:
-- `MoltButtonTest.kt` — Test all 3 button styles, loading state, enabled/disabled
-- `MoltLoadingViewTest.kt` — Test full-screen and inline variants
-- `MoltErrorViewTest.kt` — Test with/without retry callback
+When implementing XG* components, add corresponding tests:
+- `XGButtonTest.kt` — Test all 3 button styles, loading state, enabled/disabled
+- `XGLoadingViewTest.kt` — Test full-screen and inline variants
+- `XGErrorViewTest.kt` — Test with/without retry callback
 - Use `@RunWith(AndroidJUnit4::class)` and `composeTestRule` for Compose UI tests
 
 ## Commit Ready
@@ -241,11 +241,11 @@ git add android/app/src/test/
 git add docs/pipeline/app-scaffold-android-test.handoff.md
 git commit -m "test(scaffold): add Android app scaffold tests [agent:android-test] [platform:android]
 
-- Add MoltColorsTest (11 tests, 67 color assertions)
-- Add MoltSpacingTest (4 tests, 16 spacing assertions)
+- Add XGColorsTest (11 tests, 67 color assertions)
+- Add XGSpacingTest (4 tests, 16 spacing assertions)
 - Add BuildConfigTest (6 tests for API URL, version, build type)
 - Add StringResourcesTest (9 tests for en/mt/tr localization)
-- Add MoltApplicationTest (3 tests for Hilt and Timber setup)
+- Add XGApplicationTest (3 tests for Hilt and Timber setup)
 - Coverage: 100% on tested components (33 tests total)
 - All tests follow CLAUDE.md standards (JUnit 4 + Truth)
 "

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The App Scaffold is the foundational project structure for the Molt Marketplace buyer app.
+The App Scaffold is the foundational project structure for the XiriGo Ecommerce buyer app.
 It establishes the project skeleton, build system, dependency management, environment
 configuration, entry points, and placeholder directories for all future features.
 No business logic is implemented here; this is purely structural.
@@ -26,7 +26,7 @@ No business logic is implemented here; this is purely structural.
 | Splash screen (static logo) | Any feature screens |
 | Base resource files (strings, assets) | |
 | Placeholder directories for core + features | |
-| Design system theme shell (MoltTheme, MoltColors, MoltSpacing, MoltTypography) | |
+| Design system theme shell (XGTheme, XGColors, XGSpacing, XGTypography) | |
 
 ### Dependencies on Other Features
 
@@ -57,18 +57,18 @@ android/
     src/
       main/
         AndroidManifest.xml
-        java/com/molt/marketplace/
-          MoltApplication.kt          # @HiltAndroidApp entry point
+        java/com/xirigo/ecommerce/
+          XGApplication.kt          # @HiltAndroidApp entry point
           MainActivity.kt             # @AndroidEntryPoint, single-activity
           core/
             common/
               .gitkeep
             designsystem/
               theme/
-                MoltColors.kt         # Color constants from design tokens
-                MoltTypography.kt     # Typography from design tokens
-                MoltSpacing.kt        # Spacing constants
-                MoltTheme.kt          # @Composable theme wrapper
+                XGColors.kt         # Color constants from design tokens
+                XGTypography.kt     # Typography from design tokens
+                XGSpacing.kt        # Spacing constants
+                XGTheme.kt          # @Composable theme wrapper
               component/
                 .gitkeep              # Components added in M0-02
             di/
@@ -105,10 +105,10 @@ android/
       release/
         .gitkeep                      # Release build type placeholder
       test/
-        java/com/molt/marketplace/
+        java/com/xirigo/ecommerce/
           .gitkeep                    # Unit tests
       androidTest/
-        java/com/molt/marketplace/
+        java/com/xirigo/ecommerce/
           .gitkeep                    # Instrumented tests
 ```
 
@@ -249,19 +249,19 @@ Three build types with distinct configurations:
 
 | Build Type | `API_BASE_URL` | Debuggable | Minify | Signing |
 |-----------|----------------|------------|--------|---------|
-| `debug` | `https://api-dev.molt.mt` | true | false | debug keystore |
-| `staging` | `https://api-staging.molt.mt` | true | false | release keystore |
-| `release` | `https://api.molt.mt` | false | true (R8) | release keystore |
+| `debug` | `https://api-dev.xirigo.com` | true | false | debug keystore |
+| `staging` | `https://api-staging.xirigo.com` | true | false | release keystore |
+| `release` | `https://api.xirigo.com` | false | true (R8) | release keystore |
 
 **`app/build.gradle.kts`** key configuration:
 
 ```kotlin
 android {
-    namespace = "com.molt.marketplace"
+    namespace = "com.xirigo.ecommerce"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.molt.marketplace"
+        applicationId = "com.xirigo.ecommerce"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -273,13 +273,13 @@ android {
         debug {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_BASE_URL", "\"https://api-dev.molt.mt\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api-dev.xirigo.com\"")
             applicationIdSuffix = ".debug"
         }
         create("staging") {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_BASE_URL", "\"https://api-staging.molt.mt\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api-staging.xirigo.com\"")
             applicationIdSuffix = ".staging"
             signingConfig = signingConfigs.getByName("debug") // staging uses release keystore in CI
         }
@@ -291,7 +291,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_BASE_URL", "\"https://api.molt.mt\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api.xirigo.com\"")
         }
     }
 
@@ -311,10 +311,10 @@ android {
 }
 ```
 
-### 1.4 Entry Point: `MoltApplication.kt`
+### 1.4 Entry Point: `XGApplication.kt`
 
 ```
-Package: com.molt.marketplace
+Package: com.xirigo.ecommerce
 Annotation: @HiltAndroidApp
 Extends: Application()
 
@@ -327,15 +327,15 @@ Responsibilities:
 ### 1.5 Entry Point: `MainActivity.kt`
 
 ```
-Package: com.molt.marketplace
+Package: com.xirigo.ecommerce
 Annotation: @AndroidEntryPoint
 Extends: ComponentActivity()
 
 Responsibilities:
   - Install splash screen (installSplashScreen())
   - Enable edge-to-edge display (enableEdgeToEdge())
-  - Set content with MoltTheme { ... }
-  - In M0-01: show a placeholder "Molt Marketplace" text centered on screen
+  - Set content with XGTheme { ... }
+  - In M0-01: show a placeholder "XiriGo Ecommerce" text centered on screen
   - Navigation host added in M0-04
 ```
 
@@ -343,15 +343,15 @@ Responsibilities:
 
 ```xml
 <!-- res/values/themes.xml -->
-<style name="Theme.MoltMarketplace.Splash" parent="Theme.SplashScreen">
+<style name="Theme.XiriGoEcommerce.Splash" parent="Theme.SplashScreen">
     <item name="windowSplashScreenBackground">@color/splash_background</item>
     <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
-    <item name="postSplashScreenTheme">@style/Theme.MoltMarketplace</item>
+    <item name="postSplashScreenTheme">@style/Theme.XiriGoEcommerce</item>
 </style>
 ```
 
 - Splash background color: `#FFFBFE` (surface light)
-- Logo: placeholder vector drawable (simple "M" or Molt text)
+- Logo: placeholder vector drawable (simple "M" or XiriGo text)
 - Duration: system default (no artificial delay)
 
 ### 1.7 Base String Resources
@@ -359,7 +359,7 @@ Responsibilities:
 **`res/values/strings.xml`** (English -- default):
 ```xml
 <resources>
-    <string name="app_name">Molt Marketplace</string>
+    <string name="app_name">XiriGo Ecommerce</string>
     <string name="common_loading_message">Loading...</string>
     <string name="common_retry_button">Retry</string>
     <string name="common_error_network">Connection error. Please check your internet.</string>
@@ -377,7 +377,7 @@ Responsibilities:
 **`res/values-mt/strings.xml`** (Maltese):
 ```xml
 <resources>
-    <string name="app_name">Molt Marketplace</string>
+    <string name="app_name">XiriGo Ecommerce</string>
     <string name="common_loading_message">Qed jillowdja...</string>
     <string name="common_retry_button">Erga' ipprova</string>
     <string name="common_error_network">Problema fil-konnessjoni. Iccekja l-internet tieghek.</string>
@@ -395,7 +395,7 @@ Responsibilities:
 **`res/values-tr/strings.xml`** (Turkish):
 ```xml
 <resources>
-    <string name="app_name">Molt Marketplace</string>
+    <string name="app_name">XiriGo Ecommerce</string>
     <string name="common_loading_message">Yukleniyor...</string>
     <string name="common_retry_button">Tekrar Dene</string>
     <string name="common_error_network">Baglanti hatasi. Lutfen internetinizi kontrol edin.</string>
@@ -438,25 +438,25 @@ Responsibilities:
 
 ```
 ios/
-  MoltMarketplace.xcodeproj/
+  XiriGoEcommerce.xcodeproj/
     project.pbxproj
     xcshareddata/
       xcschemes/
-        MoltMarketplace-Debug.xcscheme
-        MoltMarketplace-Staging.xcscheme
-        MoltMarketplace-Release.xcscheme
-  MoltMarketplace/
-    MoltMarketplaceApp.swift          # @main SwiftUI App entry point
+        XiriGoEcommerce-Debug.xcscheme
+        XiriGoEcommerce-Staging.xcscheme
+        XiriGoEcommerce-Release.xcscheme
+  XiriGoEcommerce/
+    XiriGoEcommerceApp.swift          # @main SwiftUI App entry point
     Config.swift                       # Environment configuration
     Core/
       Common/
         .gitkeep
       DesignSystem/
         Theme/
-          MoltColors.swift             # Color constants from design tokens
-          MoltTypography.swift         # Font styles from design tokens
-          MoltSpacing.swift            # Spacing constants
-          MoltTheme.swift              # ViewModifier theme wrapper
+          XGColors.swift             # Color constants from design tokens
+          XGTypography.swift         # Font styles from design tokens
+          XGSpacing.swift            # Spacing constants
+          XGTheme.swift              # ViewModifier theme wrapper
         Component/
           .gitkeep                     # Components added in M0-02
       DI/
@@ -480,9 +480,9 @@ ios/
       Debug.xcconfig                   # Dev environment
       Staging.xcconfig                 # Staging environment
       Release.xcconfig                 # Production environment
-  MoltMarketplaceTests/
+  XiriGoEcommerceTests/
     .gitkeep
-  MoltMarketplaceUITests/
+  XiriGoEcommerceUITests/
     .gitkeep
   Package.swift                        # SPM dependencies (if using package-based approach)
 ```
@@ -514,25 +514,25 @@ Three xcconfig files:
 
 **`Configuration/Debug.xcconfig`**:
 ```
-API_BASE_URL = https:/$()/api-dev.molt.mt
+API_BASE_URL = https:/$()/api-dev.xirigo.com
 BUNDLE_ID_SUFFIX = .debug
-PRODUCT_BUNDLE_IDENTIFIER = com.molt.marketplace$(BUNDLE_ID_SUFFIX)
+PRODUCT_BUNDLE_IDENTIFIER = com.xirigo.ecommerce$(BUNDLE_ID_SUFFIX)
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG
 ```
 
 **`Configuration/Staging.xcconfig`**:
 ```
-API_BASE_URL = https:/$()/api-staging.molt.mt
+API_BASE_URL = https:/$()/api-staging.xirigo.com
 BUNDLE_ID_SUFFIX = .staging
-PRODUCT_BUNDLE_IDENTIFIER = com.molt.marketplace$(BUNDLE_ID_SUFFIX)
+PRODUCT_BUNDLE_IDENTIFIER = com.xirigo.ecommerce$(BUNDLE_ID_SUFFIX)
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = STAGING
 ```
 
 **`Configuration/Release.xcconfig`**:
 ```
-API_BASE_URL = https:/$()/api.molt.mt
+API_BASE_URL = https:/$()/api.xirigo.com
 BUNDLE_ID_SUFFIX =
-PRODUCT_BUNDLE_IDENTIFIER = com.molt.marketplace
+PRODUCT_BUNDLE_IDENTIFIER = com.xirigo.ecommerce
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE
 ```
 
@@ -545,10 +545,10 @@ Properties:
   - static let buildNumber: String
 ```
 
-### 2.4 Entry Point: `MoltMarketplaceApp.swift`
+### 2.4 Entry Point: `XiriGoEcommerceApp.swift`
 
 ```
-Struct: MoltMarketplaceApp
+Struct: XiriGoEcommerceApp
 Conforms to: App
 Annotation: @main
 
@@ -559,7 +559,7 @@ Body:
 
 Responsibilities:
   - Configure Factory DI container (if needed)
-  - In M0-01: show placeholder "Molt Marketplace" text centered
+  - In M0-01: show placeholder "XiriGo Ecommerce" text centered
 ```
 
 ### 2.5 Splash Screen (iOS)
@@ -584,7 +584,7 @@ UILaunchScreen:
 
 | Key | English (en) | Maltese (mt) | Turkish (tr) |
 |-----|------|---------|---------|
-| `app_name` | Molt Marketplace | Molt Marketplace | Molt Marketplace |
+| `app_name` | XiriGo Ecommerce | XiriGo Ecommerce | XiriGo Ecommerce |
 | `common_loading_message` | Loading... | Qed jillowdja... | Yukleniyor... |
 | `common_retry_button` | Retry | Erga' ipprova | Tekrar Dene |
 | `common_error_network` | Connection error. Please check your internet. | Problema fil-konnessjoni. Iccekja l-internet tieghek. | Baglanti hatasi. Lutfen internetinizi kontrol edin. |
@@ -614,7 +614,7 @@ UILaunchScreen:
 ## 3. Design System Theme Shell
 
 The scaffold includes the theme shell files. These provide the token values that all
-future `Molt*` components will reference. The actual components are added in M0-02.
+future `XG*` components will reference. The actual components are added in M0-02.
 
 ### 3.1 Color Tokens
 
@@ -771,18 +771,18 @@ Font families:
 | `extraLarge` | 16 |
 | `full` | 999 (pill shape) |
 
-### 3.5 MoltTheme Implementation Notes
+### 3.5 XGTheme Implementation Notes
 
-**Android** (`MoltTheme.kt`):
-- `@Composable fun MoltTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)`
-- Builds `lightColorScheme(...)` and `darkColorScheme(...)` from `MoltColors`
-- Sets `MaterialTheme(colorScheme, typography = MoltTypography, content = content)`
+**Android** (`XGTheme.kt`):
+- `@Composable fun XGTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)`
+- Builds `lightColorScheme(...)` and `darkColorScheme(...)` from `XGColors`
+- Sets `MaterialTheme(colorScheme, typography = XGTypography, content = content)`
 - Provides `CompositionLocalProvider` for any custom locals
 
-**iOS** (`MoltTheme.swift`):
+**iOS** (`XGTheme.swift`):
 - ViewModifier that applies color scheme overrides
 - Provides environment values for custom spacing, colors
-- Used via `.moltTheme()` modifier or wrapping in `MoltThemeView { content }`
+- Used via `.moltTheme()` modifier or wrapping in `XGThemeView { content }`
 
 ---
 
@@ -795,9 +795,9 @@ future use by the network layer (M0-03).
 
 | Environment | Base URL |
 |-------------|----------|
-| Development | `https://api-dev.molt.mt` |
-| Staging | `https://api-staging.molt.mt` |
-| Production | `https://api.molt.mt` |
+| Development | `https://api-dev.xirigo.com` |
+| Staging | `https://api-staging.xirigo.com` |
+| Production | `https://api.xirigo.com` |
 
 ---
 
@@ -810,7 +810,7 @@ future use by the network layer (M0-03).
 |                                  |
 |                                  |
 |                                  |
-|           [Molt Logo]            |
+|           [XiriGo Logo]            |
 |                                  |
 |           MOLT                   |
 |         MARKETPLACE              |
@@ -832,7 +832,7 @@ Duration: system default (no artificial delay)
 |                                  |
 |                                  |
 |                                  |
-|       Molt Marketplace           |  <-- headlineSmall, centered
+|       XiriGo Ecommerce           |  <-- headlineSmall, centered
 |                                  |
 |                                  |
 |                                  |
@@ -871,7 +871,7 @@ No error scenarios in M0-01. Base error string resources are created for future 
 ## 9. Accessibility
 
 ### Splash Screen
-- Logo has content description: "Molt Marketplace logo"
+- Logo has content description: "XiriGo Ecommerce logo"
 - No interactive elements
 
 ### Placeholder Screen
@@ -893,12 +893,12 @@ No error scenarios in M0-01. Base error string resources are created for future 
 | 5 | `android/app/build.gradle.kts` | App module: SDK versions, build types, dependencies |
 | 6 | `android/app/proguard-rules.pro` | R8 ProGuard rules (empty scaffold) |
 | 7 | `android/app/src/main/AndroidManifest.xml` | Manifest with application, activity, network config |
-| 8 | `android/app/src/main/java/com/molt/marketplace/MoltApplication.kt` | `@HiltAndroidApp` entry point |
-| 9 | `android/app/src/main/java/com/molt/marketplace/MainActivity.kt` | `@AndroidEntryPoint` single activity |
-| 10 | `android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltColors.kt` | Color constants |
-| 11 | `android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltTypography.kt` | Typography |
-| 12 | `android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltSpacing.kt` | Spacing constants |
-| 13 | `android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltTheme.kt` | Theme composable |
+| 8 | `android/app/src/main/java/com/xirigo/ecommerce/XGApplication.kt` | `@HiltAndroidApp` entry point |
+| 9 | `android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt` | `@AndroidEntryPoint` single activity |
+| 10 | `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGColors.kt` | Color constants |
+| 11 | `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGTypography.kt` | Typography |
+| 12 | `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacing.kt` | Spacing constants |
+| 13 | `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGTheme.kt` | Theme composable |
 | 14 | `android/app/src/main/res/values/strings.xml` | English strings |
 | 15 | `android/app/src/main/res/values/colors.xml` | Color resources |
 | 16 | `android/app/src/main/res/values/themes.xml` | Splash theme + app theme |
@@ -911,14 +911,14 @@ No error scenarios in M0-01. Base error string resources are created for future 
 | 23 | `android/app/src/main/res/drawable/ic_launcher_foreground.xml` | Adaptive icon foreground |
 
 **Placeholder directories** (with `.gitkeep`):
-- `android/app/src/main/java/com/molt/marketplace/core/common/`
-- `android/app/src/main/java/com/molt/marketplace/core/designsystem/component/`
-- `android/app/src/main/java/com/molt/marketplace/core/di/`
-- `android/app/src/main/java/com/molt/marketplace/core/domain/error/`
-- `android/app/src/main/java/com/molt/marketplace/core/network/`
-- `android/app/src/main/java/com/molt/marketplace/feature/`
-- `android/app/src/test/java/com/molt/marketplace/`
-- `android/app/src/androidTest/java/com/molt/marketplace/`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/common/`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/di/`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/domain/error/`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/network/`
+- `android/app/src/main/java/com/xirigo/ecommerce/feature/`
+- `android/app/src/test/java/com/xirigo/ecommerce/`
+- `android/app/src/androidTest/java/com/xirigo/ecommerce/`
 - `android/app/src/staging/`
 - `android/app/src/release/`
 
@@ -926,32 +926,32 @@ No error scenarios in M0-01. Base error string resources are created for future 
 
 | # | File Path | Description |
 |---|----------|-------------|
-| 1 | `ios/MoltMarketplace/MoltMarketplaceApp.swift` | `@main` SwiftUI App entry point |
-| 2 | `ios/MoltMarketplace/Config.swift` | Environment configuration reader |
-| 3 | `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltColors.swift` | Color constants |
-| 4 | `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTypography.swift` | Typography styles |
-| 5 | `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltSpacing.swift` | Spacing constants |
-| 6 | `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTheme.swift` | Theme ViewModifier |
-| 7 | `ios/MoltMarketplace/Core/DI/Container+Extensions.swift` | Factory DI registrations |
-| 8 | `ios/MoltMarketplace/Resources/Localizable.xcstrings` | String Catalog (en, mt, tr) |
-| 9 | `ios/MoltMarketplace/Resources/Assets.xcassets/` | Asset catalog (colors, icons, images) |
-| 10 | `ios/MoltMarketplace/Resources/Info.plist` | App configuration (launch screen, URLs) |
-| 11 | `ios/MoltMarketplace/Configuration/Debug.xcconfig` | Dev environment config |
-| 12 | `ios/MoltMarketplace/Configuration/Staging.xcconfig` | Staging environment config |
-| 13 | `ios/MoltMarketplace/Configuration/Release.xcconfig` | Production environment config |
+| 1 | `ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` | `@main` SwiftUI App entry point |
+| 2 | `ios/XiriGoEcommerce/Config.swift` | Environment configuration reader |
+| 3 | `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGColors.swift` | Color constants |
+| 4 | `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTypography.swift` | Typography styles |
+| 5 | `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGSpacing.swift` | Spacing constants |
+| 6 | `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTheme.swift` | Theme ViewModifier |
+| 7 | `ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift` | Factory DI registrations |
+| 8 | `ios/XiriGoEcommerce/Resources/Localizable.xcstrings` | String Catalog (en, mt, tr) |
+| 9 | `ios/XiriGoEcommerce/Resources/Assets.xcassets/` | Asset catalog (colors, icons, images) |
+| 10 | `ios/XiriGoEcommerce/Resources/Info.plist` | App configuration (launch screen, URLs) |
+| 11 | `ios/XiriGoEcommerce/Configuration/Debug.xcconfig` | Dev environment config |
+| 12 | `ios/XiriGoEcommerce/Configuration/Staging.xcconfig` | Staging environment config |
+| 13 | `ios/XiriGoEcommerce/Configuration/Release.xcconfig` | Production environment config |
 
 **Placeholder directories** (with `.gitkeep`):
-- `ios/MoltMarketplace/Core/Common/`
-- `ios/MoltMarketplace/Core/DesignSystem/Component/`
-- `ios/MoltMarketplace/Core/Domain/Error/`
-- `ios/MoltMarketplace/Core/Network/`
-- `ios/MoltMarketplace/Feature/`
-- `ios/MoltMarketplaceTests/`
-- `ios/MoltMarketplaceUITests/`
+- `ios/XiriGoEcommerce/Core/Common/`
+- `ios/XiriGoEcommerce/Core/DesignSystem/Component/`
+- `ios/XiriGoEcommerce/Core/Domain/Error/`
+- `ios/XiriGoEcommerce/Core/Network/`
+- `ios/XiriGoEcommerce/Feature/`
+- `ios/XiriGoEcommerceTests/`
+- `ios/XiriGoEcommerceUITests/`
 
 ### 10.3 Xcode Project
 
-The Xcode project file (`ios/MoltMarketplace.xcodeproj`) must be created with:
+The Xcode project file (`ios/XiriGoEcommerce.xcodeproj`) must be created with:
 - Three build configurations: Debug, Staging, Release
 - Each configuration linked to its `.xcconfig` file
 - SPM dependencies added as described in section 2.2
@@ -975,7 +975,7 @@ The scaffold is complete when:
 - [ ] Hilt DI initializes without crash
 
 ### iOS
-- [ ] `xcodebuild -scheme MoltMarketplace-Debug build` succeeds
+- [ ] `xcodebuild -scheme XiriGoEcommerce-Debug build` succeeds
 - [ ] App launches in simulator, shows splash then placeholder screen
 - [ ] `Config.apiBaseURL` returns correct URL per configuration
 - [ ] String Catalog loads all three languages
@@ -991,9 +991,9 @@ The scaffold is complete when:
 1. Start with `settings.gradle.kts` + `libs.versions.toml` -- establish all versions first
 2. Create `build.gradle.kts` (project) with plugin aliases
 3. Create `app/build.gradle.kts` with full dependency list and build types
-4. Create `MoltApplication.kt` with `@HiltAndroidApp` and Timber init
-5. Create `MainActivity.kt` with splash screen install and `MoltTheme` wrapper
-6. Create design system theme files (`MoltColors`, `MoltTypography`, `MoltSpacing`, `MoltTheme`)
+4. Create `XGApplication.kt` with `@HiltAndroidApp` and Timber init
+5. Create `MainActivity.kt` with splash screen install and `XGTheme` wrapper
+6. Create design system theme files (`XGColors`, `XGTypography`, `XGSpacing`, `XGTheme`)
 7. Create all resource files (strings, themes, drawables)
 8. Create placeholder directories with `.gitkeep`
 9. Verify: `./gradlew assembleDebug` passes
@@ -1003,8 +1003,8 @@ The scaffold is complete when:
 1. Create Xcode project with SPM dependencies
 2. Create xcconfig files for three environments
 3. Create `Config.swift` to read environment from Info.plist
-4. Create `MoltMarketplaceApp.swift` entry point
-5. Create design system theme files (`MoltColors`, `MoltTypography`, `MoltSpacing`, `MoltTheme`)
+4. Create `XiriGoEcommerceApp.swift` entry point
+5. Create design system theme files (`XGColors`, `XGTypography`, `XGSpacing`, `XGTheme`)
 6. Create `Container+Extensions.swift` for Factory DI
 7. Create String Catalog with all base keys in three languages
 8. Create asset catalog with placeholder icon and splash logo
@@ -1017,5 +1017,5 @@ The scaffold is complete when:
 - Use design token values from `shared/design-tokens/*.json` -- do not invent colors/spacing
 - English is the development language; provide Maltese and Turkish translations for base strings
 - No business logic, no network calls, no navigation -- just the shell
-- The placeholder screen text "Molt Marketplace" should use the `headlineSmall` typography token
-- All colors must come from `MoltColors`, all spacing from `MoltSpacing`
+- The placeholder screen text "XiriGo Ecommerce" should use the `headlineSmall` typography token
+- All colors must come from `XGColors`, all spacing from `XGSpacing`

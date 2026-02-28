@@ -10,11 +10,11 @@ COMPLETE -- 52 tests across 5 files (1 fake + 4 test suites). Pre-existing build
 
 | Artifact | Path | Action |
 |----------|------|--------|
-| FakeTokenStorage | `ios/MoltMarketplaceTests/Core/Auth/FakeTokenStorage.swift` | CREATED |
-| TokenStorageTests | `ios/MoltMarketplaceTests/Core/Auth/TokenStorageTests.swift` | CREATED |
-| AuthStateManagerTests | `ios/MoltMarketplaceTests/Core/Auth/AuthStateManagerTests.swift` | CREATED |
-| SessionManagerTests | `ios/MoltMarketplaceTests/Core/Auth/SessionManagerTests.swift` | CREATED |
-| AuthEndpointTests | `ios/MoltMarketplaceTests/Core/Auth/AuthEndpointTests.swift` | CREATED |
+| FakeTokenStorage | `ios/XiriGoEcommerceTests/Core/Auth/FakeTokenStorage.swift` | CREATED |
+| TokenStorageTests | `ios/XiriGoEcommerceTests/Core/Auth/TokenStorageTests.swift` | CREATED |
+| AuthStateManagerTests | `ios/XiriGoEcommerceTests/Core/Auth/AuthStateManagerTests.swift` | CREATED |
+| SessionManagerTests | `ios/XiriGoEcommerceTests/Core/Auth/SessionManagerTests.swift` | CREATED |
+| AuthEndpointTests | `ios/XiriGoEcommerceTests/Core/Auth/AuthEndpointTests.swift` | CREATED |
 | This Handoff | `docs/pipeline/auth-infrastructure-ios-test.handoff.md` | CREATED |
 
 ---

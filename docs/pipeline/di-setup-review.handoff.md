@@ -26,8 +26,8 @@ The architect handoff (`docs/pipeline/di-setup-architect.handoff.md`) performed 
 | `CoroutineModule` with 3 dispatchers + app-scoped `CoroutineScope` | DONE | `core/di/CoroutineModule.kt` -- `@Module @InstallIn(SingletonComponent::class) object`, 4 `@Provides` methods |
 | `NetworkModule` with `@AuthenticatedClient` / `@UnauthenticatedClient` split | DONE | `core/di/NetworkModule.kt` -- `provideAuthenticatedClient()` and `provideUnauthenticatedClient()` with correct qualifiers |
 | `Retrofit` uses `@AuthenticatedClient` | DONE | `provideRetrofit(@AuthenticatedClient okHttpClient: OkHttpClient, ...)` |
-| `StorageModule` with `DataStore<Preferences>` + `MoltDatabase` | DONE | `core/di/StorageModule.kt` -- both provisions present with `@Singleton` scope |
-| `MoltDatabase` Room shell | DONE | `core/data/local/MoltDatabase.kt` -- `@Database(entities = [PlaceholderEntity::class], version = 1, exportSchema = false)` |
+| `StorageModule` with `DataStore<Preferences>` + `XGDatabase` | DONE | `core/di/StorageModule.kt` -- both provisions present with `@Singleton` scope |
+| `XGDatabase` Room shell | DONE | `core/data/local/XGDatabase.kt` -- `@Database(entities = [PlaceholderEntity::class], version = 1, exportSchema = false)` |
 | `NetworkMonitor` with `StateFlow<Boolean>` | DONE | `core/network/NetworkMonitor.kt` -- concrete class with `@Inject constructor`, `@Singleton`, `ConnectivityManager` + `NetworkCallback` |
 
 #### iOS -- Spec Compliance
@@ -103,7 +103,7 @@ The architect handoff (`docs/pipeline/di-setup-architect.handoff.md`) performed 
 | HTTP client auth split | `@AuthenticatedClient` / `@UnauthenticatedClient` qualifiers | `APIClient` manages auth internally (endpoint-level `requiresAuth` flag) | Yes -- different mechanism, same result |
 | Feature DI pattern | `@Binds` in `ViewModelComponent` + `@Inject constructor` | `Container` extension with transient scope + init-based injection | Yes -- documented for both platforms |
 | Test replacement pattern | Manual construction with fakes; `@TestInstallIn` for integration | Init-based injection with fakes; `Container.shared.reset()` + `.register {}` for override | Yes |
-| Database shell | Room `MoltDatabase` with `PlaceholderEntity` | N/A (SwiftData, deferred) | N/A -- Android-only concern |
+| Database shell | Room `XGDatabase` with `PlaceholderEntity` | N/A (SwiftData, deferred) | N/A -- Android-only concern |
 | DataStore / preferences | `DataStore<Preferences>` via `StorageModule` | N/A (UserDefaults, deferred) | N/A -- Android-only concern |
 | CoroutineScope | App-scoped `CoroutineScope` with `SupervisorJob` | N/A (Swift `Task` / `actor`) | N/A -- Android-only concern |
 
@@ -124,7 +124,7 @@ The architect handoff (`docs/pipeline/di-setup-architect.handoff.md`) performed 
 | `QualifiersTest.kt` | 11 | All 5 annotations verified for `@Qualifier` + `BINARY` retention; all are annotation classes |
 | `CoroutineModuleTest.kt` | 10 | 3 dispatchers correct type, `CoroutineScope` with `SupervisorJob` + provided dispatcher, dispatcher distinctness |
 | `NetworkModuleTest.kt` | 25 | Json config flags (6 tests), `InMemoryTokenProvider` behavior (4 tests), `AuthInterceptor` + `TokenRefreshAuthenticator` creation (4 tests), client interceptor lists (2 tests), timeouts match `NetworkConfig` (3 tests), Retrofit creation + base URL (4 tests), converter factory presence (1 test), authenticated client usage (1 test) |
-| `StorageModuleTest.kt` | 9 | `MoltDatabase` creation/open/close/fallback (5 tests), `DataStore` creation/emit/read/write (4 tests, Robolectric) |
+| `StorageModuleTest.kt` | 9 | `XGDatabase` creation/open/close/fallback (5 tests), `DataStore` creation/emit/read/write (4 tests, Robolectric) |
 
 #### iOS Test Details
 
@@ -167,7 +167,7 @@ The architect handoff (`docs/pipeline/di-setup-architect.handoff.md`) performed 
 |---|----------|----------|----------|-------------|
 | 1 | Info | Android | `QualifiersTest.kt`, `CoroutineModuleTest.kt`, `StorageModuleTest.kt` | Test code uses `!!` (force unwrap). Acceptable in test code; each occurrence is preceded by a non-null assertion. |
 | 2 | Info | Android | `NetworkModule.kt:35-39` | `Json` configuration differs from spec: `encodeDefaults = false` (spec says `true`), `isLenient = true` (spec says `false`), added `coerceInputValues = true` and `namingStrategy = SnakeCase`. These are M0-03 decisions accepted by the architect. |
-| 3 | Info | Android | `MoltDatabase.kt:6` | Uses `PlaceholderEntity` instead of empty entity list. Necessary workaround for Room KSP; well-documented for removal when first real entity is added. |
+| 3 | Info | Android | `XGDatabase.kt:6` | Uses `PlaceholderEntity` instead of empty entity list. Necessary workaround for Room KSP; well-documented for removal when first real entity is added. |
 | 4 | Info | Both | NetworkMonitor | Both platforms use concrete classes instead of interface+impl. The architect explicitly approved this (spec discrepancy #2). |
 | 5 | Info | Android | `NetworkModuleTest.kt:155-171` | Client interceptor tests construct `OkHttpClient` manually rather than calling `provideAuthenticatedClient()` / `provideUnauthenticatedClient()` directly (which require Android Context). Tests verify the concept correctly but do not exercise the exact provider methods. Acceptable given that `StorageModuleTest` uses Robolectric for Context-dependent tests. |
 
@@ -179,31 +179,31 @@ The architect handoff (`docs/pipeline/di-setup-architect.handoff.md`) performed 
 
 | Platform | File | Path |
 |----------|------|------|
-| Android | `Qualifiers.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/Qualifiers.kt` |
-| Android | `CoroutineModule.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/CoroutineModule.kt` |
-| Android | `NetworkModule.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/NetworkModule.kt` |
-| Android | `StorageModule.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/StorageModule.kt` |
-| Android | `MoltDatabase.kt` | `android/app/src/main/java/com/molt/marketplace/core/data/local/MoltDatabase.kt` |
-| Android | `PlaceholderEntity.kt` | `android/app/src/main/java/com/molt/marketplace/core/data/local/PlaceholderEntity.kt` |
-| Android | `NetworkMonitor.kt` | `android/app/src/main/java/com/molt/marketplace/core/network/NetworkMonitor.kt` |
-| Android | `TokenProvider.kt` | `android/app/src/main/java/com/molt/marketplace/core/network/TokenProvider.kt` |
-| Android | `OkHttpClientFactory.kt` | `android/app/src/main/java/com/molt/marketplace/core/network/OkHttpClientFactory.kt` |
-| Android | `NetworkConfig.kt` | `android/app/src/main/java/com/molt/marketplace/core/network/NetworkConfig.kt` |
-| iOS | `Container+Extensions.swift` | `ios/MoltMarketplace/Core/DI/Container+Extensions.swift` |
-| iOS | `NetworkMonitor.swift` | `ios/MoltMarketplace/Core/Network/NetworkMonitor.swift` |
-| iOS | `APIClient.swift` | `ios/MoltMarketplace/Core/Network/APIClient.swift` |
-| iOS | `TokenProvider.swift` | `ios/MoltMarketplace/Core/Network/TokenProvider.swift` |
+| Android | `Qualifiers.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/Qualifiers.kt` |
+| Android | `CoroutineModule.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/CoroutineModule.kt` |
+| Android | `NetworkModule.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/NetworkModule.kt` |
+| Android | `StorageModule.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/StorageModule.kt` |
+| Android | `XGDatabase.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/data/local/XGDatabase.kt` |
+| Android | `PlaceholderEntity.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/data/local/PlaceholderEntity.kt` |
+| Android | `NetworkMonitor.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/network/NetworkMonitor.kt` |
+| Android | `TokenProvider.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/network/TokenProvider.kt` |
+| Android | `OkHttpClientFactory.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/network/OkHttpClientFactory.kt` |
+| Android | `NetworkConfig.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/network/NetworkConfig.kt` |
+| iOS | `Container+Extensions.swift` | `ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift` |
+| iOS | `NetworkMonitor.swift` | `ios/XiriGoEcommerce/Core/Network/NetworkMonitor.swift` |
+| iOS | `APIClient.swift` | `ios/XiriGoEcommerce/Core/Network/APIClient.swift` |
+| iOS | `TokenProvider.swift` | `ios/XiriGoEcommerce/Core/Network/TokenProvider.swift` |
 
 ### Test Files
 
 | Platform | File | Path |
 |----------|------|------|
-| Android | `QualifiersTest.kt` | `android/app/src/test/java/com/molt/marketplace/core/di/QualifiersTest.kt` |
-| Android | `CoroutineModuleTest.kt` | `android/app/src/test/java/com/molt/marketplace/core/di/CoroutineModuleTest.kt` |
-| Android | `NetworkModuleTest.kt` | `android/app/src/test/java/com/molt/marketplace/core/di/NetworkModuleTest.kt` |
-| Android | `StorageModuleTest.kt` | `android/app/src/test/java/com/molt/marketplace/core/di/StorageModuleTest.kt` |
-| iOS | `ContainerTests.swift` | `ios/MoltMarketplaceTests/Core/DI/ContainerTests.swift` |
-| iOS | `NetworkMonitorTests.swift` | `ios/MoltMarketplaceTests/Core/Network/NetworkMonitorTests.swift` |
+| Android | `QualifiersTest.kt` | `android/app/src/test/java/com/xirigo/ecommerce/core/di/QualifiersTest.kt` |
+| Android | `CoroutineModuleTest.kt` | `android/app/src/test/java/com/xirigo/ecommerce/core/di/CoroutineModuleTest.kt` |
+| Android | `NetworkModuleTest.kt` | `android/app/src/test/java/com/xirigo/ecommerce/core/di/NetworkModuleTest.kt` |
+| Android | `StorageModuleTest.kt` | `android/app/src/test/java/com/xirigo/ecommerce/core/di/StorageModuleTest.kt` |
+| iOS | `ContainerTests.swift` | `ios/XiriGoEcommerceTests/Core/DI/ContainerTests.swift` |
+| iOS | `NetworkMonitorTests.swift` | `ios/XiriGoEcommerceTests/Core/Network/NetworkMonitorTests.swift` |
 
 ### Handoff Files
 

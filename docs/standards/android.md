@@ -1,7 +1,7 @@
 # Android Standards — Kotlin + Jetpack Compose + Material 3
 
 > Extracted from `CLAUDE.md`. This is the authoritative reference for all Android development
-> in the Molt Marketplace project. Agents MUST follow these patterns exactly.
+> in the XiriGo Ecommerce project. Agents MUST follow these patterns exactly.
 
 ---
 
@@ -22,14 +22,14 @@
    - [Domain Error Pattern](#domain-error-pattern)
    - [Fake Repository for Tests](#fake-repository-for-tests)
 8. [Design System](#design-system)
-   - [Theme: MoltColors](#theme-moltcolors)
-   - [Theme: MoltSpacing](#theme-moltspacing)
-   - [Theme: MoltTheme](#theme-molttheme)
-   - [Component: MoltButton](#component-moltbutton)
-   - [Component: MoltLoadingView](#component-moltloadingview)
-   - [Component: MoltErrorView](#component-molterrorview)
-   - [Component: MoltEmptyView](#component-moltemptyview)
-   - [Component: MoltImage](#component-moltimage)
+   - [Theme: XGColors](#theme-moltcolors)
+   - [Theme: XGSpacing](#theme-moltspacing)
+   - [Theme: XGTheme](#theme-molttheme)
+   - [Component: XGButton](#component-moltbutton)
+   - [Component: XGLoadingView](#component-moltloadingview)
+   - [Component: XGErrorView](#component-molterrorview)
+   - [Component: XGEmptyView](#component-moltemptyview)
+   - [Component: XGImage](#component-moltimage)
 9. [Environment Configuration](#environment-configuration)
 10. [Localization](#localization)
 11. [Common Pitfalls](#common-pitfalls)
@@ -205,11 +205,11 @@ class ProductListViewModel @Inject constructor(
 ```kotlin
 // feature/product/presentation/screen/ProductListScreen.kt
 // NOTE: Import from core.designsystem — NEVER use Material 3 components directly
-import com.molt.marketplace.core.designsystem.component.MoltLoadingView
-import com.molt.marketplace.core.designsystem.component.MoltErrorView
-import com.molt.marketplace.core.designsystem.component.MoltLoadingIndicator
-import com.molt.marketplace.core.designsystem.theme.MoltSpacing
-import com.molt.marketplace.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
+import com.xirigo.ecommerce.core.designsystem.component.XGErrorView
+import com.xirigo.ecommerce.core.designsystem.component.MoltLoadingIndicator
+import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
 fun ProductListScreen(
@@ -242,8 +242,8 @@ private fun ProductListContent(
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
-        is ProductListUiState.Loading -> MoltLoadingView(modifier)
-        is ProductListUiState.Error -> MoltErrorView(
+        is ProductListUiState.Loading -> XGLoadingView(modifier)
+        is ProductListUiState.Error -> XGErrorView(
             message = uiState.message,
             onRetry = null, // or viewModel::onRetry
             modifier = modifier,
@@ -252,9 +252,9 @@ private fun ProductListContent(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = modifier,
-                horizontalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
-                verticalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
-                contentPadding = PaddingValues(MoltSpacing.ScreenPaddingHorizontal),
+                horizontalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
+                verticalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
+                contentPadding = PaddingValues(XGSpacing.ScreenPaddingHorizontal),
             ) {
                 items(uiState.products, key = { it.id }) { product ->
                     ProductCard(product = product, onClick = { onProductClick(product.id) })
@@ -273,7 +273,7 @@ private fun ProductListContent(
 @Preview
 @Composable
 private fun ProductListContentPreview() {
-    MoltTheme {
+    XGTheme {
         ProductListContent(
             uiState = ProductListUiState.Success(products = previewProducts()),
             onLoadMore = {},
@@ -371,9 +371,9 @@ class FakeProductRepository : ProductRepository {
 
 ## Design System
 
-All UI components live in `android/app/src/main/java/com/molt/marketplace/core/designsystem/`.
+All UI components live in `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/`.
 
-Feature screens **NEVER** use Material 3 or SwiftUI components directly -- they use `Molt*` wrappers.
+Feature screens **NEVER** use Material 3 or SwiftUI components directly -- they use `XG*` wrappers.
 
 ```
 shared/design-tokens/ (JSON)  -->  core/designsystem/ (platform code)  -->  feature/*/presentation/
@@ -389,30 +389,30 @@ shared/design-tokens/ (JSON)  -->  core/designsystem/ (platform code)  -->  feat
 ```
 core/designsystem/
   ├── theme/
-  │   ├── MoltTheme.kt          # @Composable wrapper, applies colorScheme + typography
-  │   ├── MoltColors.kt         # Custom ColorScheme from design tokens
-  │   ├── MoltTypography.kt     # Custom Typography from design tokens
-  │   └── MoltSpacing.kt        # Spacing constants object
+  │   ├── XGTheme.kt          # @Composable wrapper, applies colorScheme + typography
+  │   ├── XGColors.kt         # Custom ColorScheme from design tokens
+  │   ├── XGTypography.kt     # Custom Typography from design tokens
+  │   └── XGSpacing.kt        # Spacing constants object
   └── component/
-      ├── MoltButton.kt         # Primary/Secondary/Text button variants
-      ├── MoltCard.kt           # Product card, info card variants
-      ├── MoltTextField.kt      # Text field with label, error, icon
-      ├── MoltTopBar.kt         # Top app bar with back/action
-      ├── MoltBottomBar.kt      # Bottom navigation bar
-      ├── MoltLoadingView.kt    # Full-screen + inline loading
-      ├── MoltErrorView.kt      # Error with retry button
-      ├── MoltEmptyView.kt      # Empty state with illustration
-      ├── MoltImage.kt          # Coil image with placeholder/error
-      └── MoltBadge.kt          # Count badge, status badge
+      ├── XGButton.kt         # Primary/Secondary/Text button variants
+      ├── XGCard.kt           # Product card, info card variants
+      ├── XGTextField.kt      # Text field with label, error, icon
+      ├── XGTopBar.kt         # Top app bar with back/action
+      ├── XGBottomBar.kt      # Bottom navigation bar
+      ├── XGLoadingView.kt    # Full-screen + inline loading
+      ├── XGErrorView.kt      # Error with retry button
+      ├── XGEmptyView.kt      # Empty state with illustration
+      ├── XGImage.kt          # Coil image with placeholder/error
+      └── XGBadge.kt          # Count badge, status badge
 ```
 
-### Theme: MoltColors
+### Theme: XGColors
 
 ```kotlin
-// core/designsystem/theme/MoltColors.kt
+// core/designsystem/theme/XGColors.kt
 import androidx.compose.ui.graphics.Color
 
-object MoltColors {
+object XGColors {
     // Primary — updated when Figma arrives
     val Primary = Color(0xFF6750A4)
     val OnPrimary = Color(0xFFFFFFFF)
@@ -435,13 +435,13 @@ object MoltColors {
 }
 ```
 
-### Theme: MoltSpacing
+### Theme: XGSpacing
 
 ```kotlin
-// core/designsystem/theme/MoltSpacing.kt
+// core/designsystem/theme/XGSpacing.kt
 import androidx.compose.ui.unit.dp
 
-object MoltSpacing {
+object XGSpacing {
     val XXS = 2.dp
     val XS = 4.dp
     val SM = 8.dp
@@ -463,52 +463,52 @@ object MoltSpacing {
 }
 ```
 
-### Theme: MoltTheme
+### Theme: XGTheme
 
 ```kotlin
-// core/designsystem/theme/MoltTheme.kt
+// core/designsystem/theme/XGTheme.kt
 @Composable
-fun MoltTheme(
+fun XGTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
     val colorScheme = if (darkTheme) MoltDarkColorScheme else MoltLightColorScheme
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = MoltTypography,
+        typography = XGTypography,
         content = content,
     )
 }
 
-// Color schemes built from MoltColors — single source of truth
+// Color schemes built from XGColors — single source of truth
 private val MoltLightColorScheme = lightColorScheme(
-    primary = MoltColors.Primary,
-    onPrimary = MoltColors.OnPrimary,
-    primaryContainer = MoltColors.PrimaryContainer,
-    onPrimaryContainer = MoltColors.OnPrimaryContainer,
+    primary = XGColors.Primary,
+    onPrimary = XGColors.OnPrimary,
+    primaryContainer = XGColors.PrimaryContainer,
+    onPrimaryContainer = XGColors.OnPrimaryContainer,
     // ... map all design token colors
 )
 ```
 
-### Component: MoltButton
+### Component: XGButton
 
 ```kotlin
-// core/designsystem/component/MoltButton.kt
-enum class MoltButtonStyle { Primary, Secondary, Text }
+// core/designsystem/component/XGButton.kt
+enum class XGButtonStyle { Primary, Secondary, Text }
 
 @Composable
-fun MoltButton(
+fun XGButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    style: MoltButtonStyle = MoltButtonStyle.Primary,
+    style: XGButtonStyle = XGButtonStyle.Primary,
     enabled: Boolean = true,
     loading: Boolean = false,
 ) {
     when (style) {
-        MoltButtonStyle.Primary -> Button(
+        XGButtonStyle.Primary -> Button(
             onClick = onClick,
-            modifier = modifier.heightIn(min = MoltSpacing.MinTouchTarget),
+            modifier = modifier.heightIn(min = XGSpacing.MinTouchTarget),
             enabled = enabled && !loading,
         ) {
             if (loading) {
@@ -517,22 +517,22 @@ fun MoltButton(
                     strokeWidth = 2.dp,
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
-                Spacer(Modifier.width(MoltSpacing.SM))
+                Spacer(Modifier.width(XGSpacing.SM))
             }
             Text(text)
         }
-        MoltButtonStyle.Secondary -> OutlinedButton(/* same pattern */) { Text(text) }
-        MoltButtonStyle.Text -> TextButton(/* same pattern */) { Text(text) }
+        XGButtonStyle.Secondary -> OutlinedButton(/* same pattern */) { Text(text) }
+        XGButtonStyle.Text -> TextButton(/* same pattern */) { Text(text) }
     }
 }
 ```
 
-### Component: MoltLoadingView
+### Component: XGLoadingView
 
 ```kotlin
-// core/designsystem/component/MoltLoadingView.kt
+// core/designsystem/component/XGLoadingView.kt
 @Composable
-fun MoltLoadingView(modifier: Modifier = Modifier) {
+fun XGLoadingView(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator()
     }
@@ -540,66 +540,66 @@ fun MoltLoadingView(modifier: Modifier = Modifier) {
 
 @Composable
 fun MoltLoadingIndicator(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxWidth().padding(MoltSpacing.Base), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxWidth().padding(XGSpacing.Base), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
     }
 }
 ```
 
-### Component: MoltErrorView
+### Component: XGErrorView
 
 ```kotlin
-// core/designsystem/component/MoltErrorView.kt
+// core/designsystem/component/XGErrorView.kt
 @Composable
-fun MoltErrorView(
+fun XGErrorView(
     message: String,
     onRetry: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(MoltSpacing.Base),
+        modifier = modifier.fillMaxSize().padding(XGSpacing.Base),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(Icons.Outlined.ErrorOutline, contentDescription = null, modifier = Modifier.size(48.dp))
-        Spacer(Modifier.height(MoltSpacing.Base))
+        Spacer(Modifier.height(XGSpacing.Base))
         Text(message, style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
         if (onRetry != null) {
-            Spacer(Modifier.height(MoltSpacing.Base))
-            MoltButton(text = stringResource(R.string.common_retry_button), onClick = onRetry)
+            Spacer(Modifier.height(XGSpacing.Base))
+            XGButton(text = stringResource(R.string.common_retry_button), onClick = onRetry)
         }
     }
 }
 ```
 
-### Component: MoltEmptyView
+### Component: XGEmptyView
 
 ```kotlin
-// core/designsystem/component/MoltEmptyView.kt
+// core/designsystem/component/XGEmptyView.kt
 @Composable
-fun MoltEmptyView(
+fun XGEmptyView(
     message: String,
     modifier: Modifier = Modifier,
     icon: ImageVector = Icons.Outlined.Inbox,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(MoltSpacing.Base),
+        modifier = modifier.fillMaxSize().padding(XGSpacing.Base),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(icon, contentDescription = null, modifier = Modifier.size(64.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-        Spacer(Modifier.height(MoltSpacing.Base))
+        Spacer(Modifier.height(XGSpacing.Base))
         Text(message, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 ```
 
-### Component: MoltImage
+### Component: XGImage
 
 ```kotlin
-// core/designsystem/component/MoltImage.kt
+// core/designsystem/component/XGImage.kt
 @Composable
-fun MoltImage(
+fun XGImage(
     url: String?,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -630,10 +630,10 @@ fun MoltImage(
 android {
     buildTypes {
         debug {
-            buildConfigField("String", "API_BASE_URL", "\"https://api-dev.molt.com\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api-dev.xirigo.com\"")
         }
         release {
-            buildConfigField("String", "API_BASE_URL", "\"https://api.molt.com\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api.xirigo.com\"")
         }
     }
 }
@@ -893,28 +893,28 @@ try {
 
 Created once during app scaffold (M0-01). All features depend on these.
 
-Location: `android/app/src/main/java/com/molt/marketplace/core/designsystem/`
+Location: `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/`
 
-1. `theme/MoltColors.kt` -- Color constants from design tokens
-2. `theme/MoltTypography.kt` -- Typography from design tokens
-3. `theme/MoltSpacing.kt` -- Spacing constants
-4. `theme/MoltTheme.kt` -- @Composable theme wrapper
-5. `component/MoltButton.kt` -- Primary/Secondary/Text button
-6. `component/MoltCard.kt` -- Product card, info card
-7. `component/MoltTextField.kt` -- Text field with label/error
-8. `component/MoltTopBar.kt` -- Top app bar
-9. `component/MoltBottomBar.kt` -- Bottom navigation
-10. `component/MoltLoadingView.kt` -- Full-screen + inline loading
-11. `component/MoltErrorView.kt` -- Error with retry
-12. `component/MoltEmptyView.kt` -- Empty state
-13. `component/MoltImage.kt` -- Coil image with placeholder
-14. `component/MoltBadge.kt` -- Count/status badge
+1. `theme/XGColors.kt` -- Color constants from design tokens
+2. `theme/XGTypography.kt` -- Typography from design tokens
+3. `theme/XGSpacing.kt` -- Spacing constants
+4. `theme/XGTheme.kt` -- @Composable theme wrapper
+5. `component/XGButton.kt` -- Primary/Secondary/Text button
+6. `component/XGCard.kt` -- Product card, info card
+7. `component/XGTextField.kt` -- Text field with label/error
+8. `component/XGTopBar.kt` -- Top app bar
+9. `component/XGBottomBar.kt` -- Bottom navigation
+10. `component/XGLoadingView.kt` -- Full-screen + inline loading
+11. `component/XGErrorView.kt` -- Error with retry
+12. `component/XGEmptyView.kt` -- Empty state
+13. `component/XGImage.kt` -- Coil image with placeholder
+14. `component/XGBadge.kt` -- Count/status badge
 
 ### Per-Feature Files
 
 When implementing a feature, create these files in order.
 
-Location: `android/app/src/main/java/com/molt/marketplace/feature/{name}/`
+Location: `android/app/src/main/java/com/xirigo/ecommerce/feature/{name}/`
 
 1. `data/dto/{Name}Dto.kt` -- `@Serializable` data class
 2. `domain/model/{Name}.kt` -- domain data class
@@ -925,7 +925,7 @@ Location: `android/app/src/main/java/com/molt/marketplace/feature/{name}/`
 7. `domain/usecase/{Verb}{Name}UseCase.kt` -- business logic
 8. `presentation/state/{Screen}UiState.kt` -- sealed interface
 9. `presentation/viewmodel/{Screen}ViewModel.kt` -- @HiltViewModel
-10. `presentation/screen/{Screen}Screen.kt` -- @Composable + @Preview (uses Molt* components)
+10. `presentation/screen/{Screen}Screen.kt` -- @Composable + @Preview (uses XG* components)
 11. `di/{Name}Module.kt` -- Hilt @Module
 
 ### Naming Conventions
@@ -997,10 +997,10 @@ All list screens use offset-based pagination with these rules:
 
 ### Key File Locations
 
-- `android/app/src/main/java/com/molt/marketplace/` -- Android source root
-- `android/app/src/main/java/com/molt/marketplace/core/designsystem/` -- Design system (theme + components)
-- `android/app/src/main/java/com/molt/marketplace/core/` -- Core utilities, DI, network
-- `android/app/src/main/java/com/molt/marketplace/feature/` -- Feature modules
+- `android/app/src/main/java/com/xirigo/ecommerce/` -- Android source root
+- `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/` -- Design system (theme + components)
+- `android/app/src/main/java/com/xirigo/ecommerce/core/` -- Core utilities, DI, network
+- `android/app/src/main/java/com/xirigo/ecommerce/feature/` -- Feature modules
 - `android/app/src/main/res/` -- Android resources (strings, drawables, themes)
 - `android/app/build.gradle.kts` -- App-level Gradle configuration
 - `android/build.gradle.kts` -- Project-level Gradle configuration

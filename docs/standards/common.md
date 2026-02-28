@@ -1,6 +1,6 @@
 # Common Standards — Both Platforms
 
-This document contains all cross-platform and shared standards for the Molt Marketplace mobile app.
+This document contains all cross-platform and shared standards for the XiriGo Ecommerce mobile app.
 Both Android (Kotlin + Jetpack Compose) and iOS (Swift + SwiftUI) teams must follow these rules.
 
 ---
@@ -95,7 +95,7 @@ res/
     strings.xml
 ```
 
-**iOS** (`ios/MoltMarketplace/Resources/`):
+**iOS** (`ios/XiriGoEcommerce/Resources/`):
 ```
 Resources/
   Localizable.xcstrings    # All languages in one file (Xcode 15+ String Catalog)
@@ -282,10 +282,10 @@ All list screens use offset-based pagination with these rules:
 - [ ] All tests pass before merge
 
 ### UI/UX
-- [ ] Uses `Molt*` design system components (no raw Material 3 / SwiftUI components in feature screens)
-- [ ] All colors from `MoltColors`, all spacing from `MoltSpacing` (no magic numbers)
+- [ ] Uses `XG*` design system components (no raw Material 3 / SwiftUI components in feature screens)
+- [ ] All colors from `XGColors`, all spacing from `XGSpacing` (no magic numbers)
 - [ ] Responsive to different screen sizes
-- [ ] Loading and error states implemented (MoltLoadingView, MoltErrorView)
+- [ ] Loading and error states implemented (XGLoadingView, XGErrorView)
 - [ ] Accessibility labels present
 - [ ] No hardcoded strings (all localized)
 
@@ -301,9 +301,9 @@ All list screens use offset-based pagination with these rules:
 
 ### Phase 1: Dummy Screens (Current)
 
-- Use Material 3 defaults (Android) and system styles (iOS) via `MoltTheme`
-- All colors/spacing from `MoltColors` / `MoltSpacing` (which map to design tokens)
-- Feature screens use `Molt*` design system components (MoltButton, MoltCard, etc.)
+- Use Material 3 defaults (Android) and system styles (iOS) via `XGTheme`
+- All colors/spacing from `XGColors` / `XGSpacing` (which map to design tokens)
+- Feature screens use `XG*` design system components (XGButton, XGCard, etc.)
 - Focus on correct architecture, data flow, and business logic -- not pixel-perfect design
 
 ### Phase 2: Figma Design Arrives
@@ -313,18 +313,18 @@ When Figma designs are ready, **only these change**:
 | What Changes | Files | Impact |
 |-------------|-------|--------|
 | Design tokens | `shared/design-tokens/*.json` | Colors, typography, spacing values |
-| Theme | `core/designsystem/theme/Molt*.kt` / `.swift` | New color scheme, fonts, spacing |
-| Components | `core/designsystem/component/Molt*.kt` / `.swift` | Visual appearance (padding, shapes, shadows) |
+| Theme | `core/designsystem/theme/XG*.kt` / `.swift` | New color scheme, fonts, spacing |
+| Components | `core/designsystem/component/XG*.kt` / `.swift` | Visual appearance (padding, shapes, shadows) |
 | Assets | `res/drawable/` / `Assets.xcassets` | Icons, illustrations, placeholders |
 
 **What NEVER changes**: ViewModels, UseCases, Repositories, DTOs, domain models, navigation, API integration, tests.
 
 ### Rules for Figma-Safe Code
 
-1. **No magic numbers in feature screens**: All dimensions from `MoltSpacing`, all colors from `MoltColors`
-2. **No raw platform components in feature screens**: Use `MoltButton` not `Button`, `MoltLoadingView` not `CircularProgressIndicator`
+1. **No magic numbers in feature screens**: All dimensions from `XGSpacing`, all colors from `XGColors`
+2. **No raw platform components in feature screens**: Use `XGButton` not `Button`, `XGLoadingView` not `CircularProgressIndicator`
 3. **Component props, not visual props**: Feature screens pass data + events to components. Components decide how to render.
-4. **Preview with theme**: All `@Preview` / `#Preview` wrapped in `MoltTheme` to reflect current design tokens
+4. **Preview with theme**: All `@Preview` / `#Preview` wrapped in `XGTheme` to reflect current design tokens
 
 ---
 
@@ -449,5 +449,5 @@ When Figma designs are ready, **only these change**:
   - Android: `android:screenOrientation="portrait"` in AndroidManifest.xml
   - iOS: `UISupportedInterfaceOrientations` = portrait only in Info.plist
 - **Minimum screen**: Android 320dp width (minSdk 26), iOS 375pt width (iPhone SE 3rd gen)
-- **Dark mode**: Handled by `MoltTheme` -- no extra configuration needed
+- **Dark mode**: Handled by `XGTheme` -- no extra configuration needed
 - **Full guide**: `docs/guides/device-support.md`

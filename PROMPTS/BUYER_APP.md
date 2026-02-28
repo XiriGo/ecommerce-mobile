@@ -1,8 +1,8 @@
-# Molt Marketplace — Buyer Mobile App Requirements
+# XiriGo Ecommerce — Buyer Mobile App Requirements
 
 ## Overview
 
-Native mobile buyer application for the Molt Marketplace. Users can browse products from multiple vendors, search, filter, add to cart, checkout, track orders, and manage their profile. The app connects to the Medusa v2 backend via REST API.
+Native mobile buyer application for the XiriGo Ecommerce. Users can browse products from multiple vendors, search, filter, add to cart, checkout, track orders, and manage their profile. The app connects to the Medusa v2 backend via REST API.
 
 ---
 
@@ -23,14 +23,14 @@ Native mobile buyer application for the Molt Marketplace. Users can browse produ
 - **Corner Radius**: small (4), medium (8), large (12), extraLarge (16), full (999)
 - **Elevation**: level0-5
 - **Common Components**:
-  - `MoltButton` (primary, secondary, outlined, text variants)
-  - `MoltTextField` (with label, error, helper text)
-  - `MoltCard` (product card, info card)
-  - `MoltChip` (filter chip, category chip)
+  - `XGButton` (primary, secondary, outlined, text variants)
+  - `XGTextField` (with label, error, helper text)
+  - `XGCard` (product card, info card)
+  - `XGChip` (filter chip, category chip)
   - `LoadingView` (full screen, inline)
   - `ErrorView` (with retry button, message)
   - `EmptyView` (with illustration, message, action button)
-  - `MoltImage` (async loading with placeholder and error state)
+  - `XGImage` (async loading with placeholder and error state)
   - `RatingBar` (star rating display, 1-5)
   - `PriceText` (formatted price with currency, sale price strikethrough)
   - `Badge` (notification count, status indicator)
@@ -56,10 +56,10 @@ Native mobile buyer application for the Molt Marketplace. Users can browse produ
 - **Navigation Stack** per tab (independent back stacks)
 - **Type-safe routes**: Sealed class (Android) / Enum (iOS) with associated values for params
 - **Deep Links**:
-  - `molt://product/{id}` → Product Detail
-  - `molt://category/{id}` → Category Products
-  - `molt://order/{id}` → Order Detail
-  - `molt://cart` → Cart
+  - `xirigo://product/{id}` → Product Detail
+  - `xirigo://category/{id}` → Category Products
+  - `xirigo://order/{id}` → Order Detail
+  - `xirigo://cart` → Cart
 - **Modal sheets**: Login required, filters, sort options
 - **Transitions**: Default platform animations (Material motion / iOS push)
 

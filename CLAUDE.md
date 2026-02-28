@@ -1,8 +1,8 @@
-# CLAUDE.md - Molt Marketplace Mobile App
+# CLAUDE.md - XiriGo Ecommerce Mobile App
 
 ## Project Identity
 
-- **Project**: Molt Marketplace - Mobile Buyer App
+- **Project**: XiriGo Ecommerce - Mobile Buyer App
 - **Platforms**: Native Android + Native iOS
 - **Android**: Kotlin + Jetpack Compose + Material 3
 - **iOS**: Swift + SwiftUI
@@ -23,8 +23,8 @@ Each feature follows three layers:
 ### Feature Module Structure
 
 ```
-# Android: android/app/src/main/java/com/molt/marketplace/feature/<name>/
-# iOS:     ios/MoltMarketplace/Feature/<Name>/
+# Android: android/app/src/main/java/com/xirigo/ecommerce/feature/<name>/
+# iOS:     ios/XiriGoEcommerce/Feature/<Name>/
 
 feature/<name>/
   ├── data/
@@ -46,14 +46,14 @@ feature/<name>/
 ### Design System Layer
 
 All UI components live in a **shared design system module** that wraps platform components.
-Feature screens **NEVER** use Material 3 or SwiftUI components directly — they use `Molt*` wrappers.
+Feature screens **NEVER** use Material 3 or SwiftUI components directly — they use `XG*` wrappers.
 
-- **Android**: `android/app/src/main/java/com/molt/marketplace/core/designsystem/`
-- **iOS**: `ios/MoltMarketplace/Core/DesignSystem/`
+- **Android**: `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/`
+- **iOS**: `ios/XiriGoEcommerce/Core/DesignSystem/`
 - **Tokens**: `shared/design-tokens/` (JSON, updated from Figma)
 
-Components: `MoltButton`, `MoltCard`, `MoltTextField`, `MoltTopBar`, `MoltBottomBar`,
-`MoltLoadingView`, `MoltErrorView`, `MoltEmptyView`, `MoltImage`, `MoltBadge`
+Components: `XGButton`, `XGCard`, `XGTextField`, `XGTopBar`, `XGBottomBar`,
+`XGLoadingView`, `XGErrorView`, `XGEmptyView`, `XGImage`, `XGBadge`
 
 **Critical Rule**: When Figma designs arrive, only `core/designsystem/` files change. Zero feature screen edits needed.
 
@@ -69,7 +69,7 @@ Components: `MoltButton`, `MoltCard`, `MoltTextField`, `MoltTopBar`, `MoltBottom
 2. **No force unwrap** (`!!` in Kotlin, `!` in Swift)
 3. **Immutable models** — all data classes/structs are immutable
 4. **Domain layer isolation** — zero imports from data/ or presentation/
-5. **`Molt*` components only** in feature screens — no raw Material 3 or SwiftUI
+5. **`XG*` components only** in feature screens — no raw Material 3 or SwiftUI
 6. **All strings localized** — no hardcoded user-facing strings
 7. **Every screen has a Preview** — `@Preview` (Android) / `#Preview` (iOS)
 8. **Fakes over mocks** in tests — `Fake{Name}Repository` pattern
@@ -162,19 +162,19 @@ Full pipeline documentation: `docs/PIPELINE-GUIDE.md`
 
 ### Android
 
-- `android/app/src/main/java/com/molt/marketplace/` — Source root
-- `android/app/src/main/java/com/molt/marketplace/core/designsystem/` — Design system
-- `android/app/src/main/java/com/molt/marketplace/feature/` — Feature modules
+- `android/app/src/main/java/com/xirigo/ecommerce/` — Source root
+- `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/` — Design system
+- `android/app/src/main/java/com/xirigo/ecommerce/feature/` — Feature modules
 - `android/app/src/main/res/` — Resources (strings, drawables)
 - `android/app/build.gradle.kts` — App-level Gradle configuration
 - `android/config/detekt/detekt.yml` — Detekt lint rules
 
 ### iOS
 
-- `ios/MoltMarketplace/` — Source root
-- `ios/MoltMarketplace/Core/DesignSystem/` — Design system
-- `ios/MoltMarketplace/Feature/` — Feature modules
-- `ios/MoltMarketplace/Resources/` — Resources (localization, assets)
+- `ios/XiriGoEcommerce/` — Source root
+- `ios/XiriGoEcommerce/Core/DesignSystem/` — Design system
+- `ios/XiriGoEcommerce/Feature/` — Feature modules
+- `ios/XiriGoEcommerce/Resources/` — Resources (localization, assets)
 - `ios/Package.swift` — SPM dependencies
 - `ios/.swiftlint.yml` — SwiftLint rules
 
@@ -215,4 +215,4 @@ Required check for merge: `pr-gate-result`
 ---
 
 **Last Updated**: 2026-02-20
-**Maintained By**: Molt Development Team
+**Maintained By**: XiriGo Development Team

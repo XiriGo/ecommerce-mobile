@@ -1,7 +1,7 @@
 # Handoff: auth-infrastructure -- Android Dev
 
 ## Feature
-**M0-06: Auth Infrastructure** -- Android implementation of authentication token storage, auth state management, session lifecycle, and DI integration for the Molt Marketplace buyer app.
+**M0-06: Auth Infrastructure** -- Android implementation of authentication token storage, auth state management, session lifecycle, and DI integration for the XiriGo Ecommerce buyer app.
 
 ## Status
 COMPLETE -- All 12 new files created, 1 existing file modified, build passes.

@@ -1,9 +1,9 @@
 # Push Notifications Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide covers the complete push notification infrastructure for the Molt Marketplace mobile buyer app. Firebase Cloud Messaging (FCM) handles delivery for both platforms: directly on Android and via APNs relay on iOS.
+This guide covers the complete push notification infrastructure for the XiriGo Ecommerce mobile buyer app. Firebase Cloud Messaging (FCM) handles delivery for both platforms: directly on Android and via APNs relay on iOS.
 
 ---
 
@@ -56,7 +56,7 @@ Each device has its own FCM token. The backend stores all active tokens per cust
 
 ### Dependency
 
-`firebase-messaging-ktx` is already declared in the Firebase BOM block in `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts`:
+`firebase-messaging-ktx` is already declared in the Firebase BOM block in `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/build.gradle.kts`:
 
 ```kotlin
 implementation(platform(libs.firebase.bom))   // BOM: 33.8.0
@@ -67,10 +67,10 @@ implementation(libs.firebase.messaging)        // firebase-messaging-ktx
 
 Create `MoltFirebaseMessagingService` extending `FirebaseMessagingService`:
 
-**File**: `android/app/src/main/java/com/molt/marketplace/core/notification/MoltFirebaseMessagingService.kt`
+**File**: `android/app/src/main/java/com/xirigo/ecommerce/core/notification/MoltFirebaseMessagingService.kt`
 
 ```kotlin
-package com.molt.marketplace.core.notification
+package com.xirigo.ecommerce.core.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -81,8 +81,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.molt.marketplace.MainActivity
-import com.molt.marketplace.R
+import com.xirigo.ecommerce.MainActivity
+import com.xirigo.ecommerce.R
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -173,10 +173,10 @@ object NotificationType {
 
 Create channels at app startup (safe to call multiple times — no-op if already created):
 
-**File**: `android/app/src/main/java/com/molt/marketplace/core/notification/NotificationChannels.kt`
+**File**: `android/app/src/main/java/com/xirigo/ecommerce/core/notification/NotificationChannels.kt`
 
 ```kotlin
-package com.molt.marketplace.core.notification
+package com.xirigo.ecommerce.core.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -216,11 +216,11 @@ object NotificationChannels {
 }
 ```
 
-Call `NotificationChannels.createAll(this)` from `MoltApplication.onCreate()`.
+Call `NotificationChannels.createAll(this)` from `XGApplication.onCreate()`.
 
 ### AndroidManifest.xml Registration
 
-The `POST_NOTIFICATIONS` permission is already declared in `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/AndroidManifest.xml`:
+The `POST_NOTIFICATIONS` permission is already declared in `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/AndroidManifest.xml`:
 
 ```xml
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -258,12 +258,12 @@ Add the service inside `<application>`:
 
 In Xcode:
 
-1. Select the **MoltMarketplace** target.
+1. Select the **XiriGoEcommerce** target.
 2. Go to the **Signing & Capabilities** tab.
 3. Click **+ Capability** and add **Push Notifications**.
 4. Also add **Background Modes** and enable **Remote notifications** (required for silent pushes and background token refresh).
 
-This adds the necessary entitlements to `MoltMarketplace.entitlements`.
+This adds the necessary entitlements to `XiriGoEcommerce.entitlements`.
 
 ### SPM Dependency
 
@@ -273,7 +273,7 @@ This adds the necessary entitlements to `MoltMarketplace.entitlements`.
 
 The app uses SwiftUI `@main`. Add an `AppDelegate` adaptor to handle push notification callbacks:
 
-**File**: `ios/MoltMarketplace/AppDelegate.swift`
+**File**: `ios/XiriGoEcommerce/AppDelegate.swift`
 
 ```swift
 import UIKit
@@ -311,14 +311,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 }
 ```
 
-Update `MoltMarketplaceApp.swift` to attach the delegate:
+Update `XiriGoEcommerceApp.swift` to attach the delegate:
 
 ```swift
-// ios/MoltMarketplace/MoltMarketplaceApp.swift
+// ios/XiriGoEcommerce/XiriGoEcommerceApp.swift
 import SwiftUI
 
 @main
-struct MoltMarketplaceApp: App {
+struct XiriGoEcommerceApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
@@ -332,7 +332,7 @@ struct MoltMarketplaceApp: App {
 ### FCM Token Refresh Delegate
 
 ```swift
-// ios/MoltMarketplace/AppDelegate.swift (extension)
+// ios/XiriGoEcommerce/AppDelegate.swift (extension)
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let token = fcmToken else { return }
@@ -348,7 +348,7 @@ extension AppDelegate: MessagingDelegate {
 ### Foreground Notification Delegate
 
 ```swift
-// ios/MoltMarketplace/AppDelegate.swift (extension)
+// ios/XiriGoEcommerce/AppDelegate.swift (extension)
 extension AppDelegate: UNUserNotificationCenterDelegate {
 
     // Called when a notification arrives while the app is in the foreground
@@ -422,16 +422,16 @@ fun NotificationPermissionRationale(
         title = { Text(stringResource(R.string.notification_permission_title)) },
         text = { Text(stringResource(R.string.notification_permission_rationale)) },
         confirmButton = {
-            MoltButton(
+            XGButton(
                 text = stringResource(R.string.notification_permission_enable),
                 onClick = onConfirm,
             )
         },
         dismissButton = {
-            MoltButton(
+            XGButton(
                 text = stringResource(R.string.common_cancel_button),
                 onClick = onDismiss,
-                style = MoltButtonStyle.Text,
+                style = XGButtonStyle.Text,
             )
         },
     )
@@ -441,7 +441,7 @@ fun NotificationPermissionRationale(
 **Android 13+ (API 33) — Runtime Permission**:
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/notification/NotificationPermissionHelper.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/notification/NotificationPermissionHelper.kt
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
@@ -495,7 +495,7 @@ data class NotificationPermissionState(
 **iOS**:
 
 ```swift
-// ios/MoltMarketplace/Core/Notification/NotificationPermissionManager.swift
+// ios/XiriGoEcommerce/Core/Notification/NotificationPermissionManager.swift
 import UserNotifications
 import UIKit
 
@@ -558,7 +558,7 @@ The backend sends a mixed notification + data payload. Both `notification` and `
   "data": {
     "type": "order_status",
     "order_id": "ord_abc123",
-    "deep_link": "molt://order/ord_abc123"
+    "deep_link": "xirigo://order/ord_abc123"
   }
 }
 ```
@@ -579,11 +579,11 @@ The backend sends a mixed notification + data payload. Both `notification` and `
 
 | Type | Channel (Android) | Title Example | Body Example | Deep Link |
 |------|-------------------|--------------|--------------|-----------|
-| `order_status` | `order_updates` | "Order Confirmed" | "Your order #1234 has been confirmed." | `molt://order/{order_id}` |
-| `order_status` | `order_updates` | "Order Shipped!" | "Your order #1234 has been shipped." | `molt://order/{order_id}` |
-| `order_status` | `order_updates` | "Order Delivered" | "Your order #1234 has been delivered." | `molt://order/{order_id}` |
-| `promotion` | `promotions` | "Flash Sale!" | "50% off all electronics today." | `molt://category/{category_id}` |
-| `price_alert` | `promotions` | "Price Drop!" | "Product X is now EUR 29.99" | `molt://product/{product_id}` |
+| `order_status` | `order_updates` | "Order Confirmed" | "Your order #1234 has been confirmed." | `xirigo://order/{order_id}` |
+| `order_status` | `order_updates` | "Order Shipped!" | "Your order #1234 has been shipped." | `xirigo://order/{order_id}` |
+| `order_status` | `order_updates` | "Order Delivered" | "Your order #1234 has been delivered." | `xirigo://order/{order_id}` |
+| `promotion` | `promotions` | "Flash Sale!" | "50% off all electronics today." | `xirigo://category/{category_id}` |
+| `price_alert` | `promotions` | "Price Drop!" | "Product X is now EUR 29.99" | `xirigo://product/{product_id}` |
 
 ### Order Status Progression
 
@@ -604,17 +604,17 @@ Notification tap extracts `deep_link` from the data payload and routes to the ap
 
 | Scheme | Example | Target Screen |
 |--------|---------|---------------|
-| `molt://order/{order_id}` | `molt://order/ord_abc123` | Order Detail |
-| `molt://product/{product_id}` | `molt://product/prod_xyz` | Product Detail |
-| `molt://category/{category_id}` | `molt://category/electronics` | Category / Product List |
-| `molt://home` | `molt://home` | Home tab |
+| `xirigo://order/{order_id}` | `xirigo://order/ord_abc123` | Order Detail |
+| `xirigo://product/{product_id}` | `xirigo://product/prod_xyz` | Product Detail |
+| `xirigo://category/{category_id}` | `xirigo://category/electronics` | Category / Product List |
+| `xirigo://home` | `xirigo://home` | Home tab |
 
 ### Android — Handling Tap (Cold Start + Warm Start)
 
 FCM delivers the tap intent to `MainActivity`. Extract the deep link from the intent extras:
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/MainActivity.kt
+// android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt
 override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     handleNotificationDeepLink(intent)
@@ -644,10 +644,10 @@ private fun handleNotificationDeepLink(intent: Intent) {
 The `UNUserNotificationCenterDelegate.didReceive` callback (in `AppDelegate`) calls `DeepLinkParser.handle(url:)` which posts a URL to `AppRouter` (defined in `Core/Navigation/` per M0-04 spec):
 
 ```swift
-// ios/MoltMarketplace/Core/Navigation/DeepLinkParser.swift
+// ios/XiriGoEcommerce/Core/Navigation/DeepLinkParser.swift
 enum DeepLinkParser {
     static func handle(url: URL) {
-        guard url.scheme == "molt" else { return }
+        guard url.scheme == "xirigo" else { return }
         NotificationCenter.default.post(
             name: .deepLinkReceived,
             object: url
@@ -672,7 +672,7 @@ enum DeepLinkParser {
 
 ### In-App Banner
 
-For foreground promotional notifications, show a non-disruptive in-app banner using `MoltBadge` or a custom overlay. The banner appears at the top of the current screen for ~3 seconds and taps through to the deep link.
+For foreground promotional notifications, show a non-disruptive in-app banner using `XGBadge` or a custom overlay. The banner appears at the top of the current screen for ~3 seconds and taps through to the deep link.
 
 ```kotlin
 // Android — collect in a LaunchedEffect at the root composable level
@@ -704,11 +704,11 @@ The unread notification count is stored locally on device:
 
 ### Badge Display
 
-The count is shown on the Profile tab using `MoltBadge`:
+The count is shown on the Profile tab using `XGBadge`:
 
 ```kotlin
-// Android — Profile tab in MoltBottomBar
-MoltBadge(count = notificationUnreadCount) {
+// Android — Profile tab in XGBottomBar
+XGBadge(count = notificationUnreadCount) {
     Icon(Icons.Outlined.Person, contentDescription = null)
 }
 ```
@@ -732,7 +732,7 @@ MoltBadge(count = notificationUnreadCount) {
 Sync the app icon badge number with the local count:
 
 ```swift
-// ios/MoltMarketplace/Core/Notification/BadgeManager.swift
+// ios/XiriGoEcommerce/Core/Notification/BadgeManager.swift
 import UIKit
 import UserNotifications
 
@@ -841,22 +841,22 @@ The backend stores `(customer_id, token, platform, updated_at)`. On sending a no
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/AndroidManifest.xml` | `POST_NOTIFICATIONS` permission (already present), service registration |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts` | `firebase-messaging-ktx` dependency (already present) |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` | Firebase BOM `33.8.0`, messaging artifact alias |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/java/com/molt/marketplace/MainActivity.kt` | Deep link handling on notification tap |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/MoltMarketplaceApp.swift` | `@UIApplicationDelegateAdaptor(AppDelegate.self)` attachment |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Config.swift` | `bundleVersion` used in force-update checks |
-| `ios/MoltMarketplace/AppDelegate.swift` | APNs / FCM delegate setup (to be created) |
-| `android/app/src/main/java/com/molt/marketplace/core/notification/MoltFirebaseMessagingService.kt` | FCM service (to be created) |
-| `android/app/src/main/java/com/molt/marketplace/core/notification/NotificationChannels.kt` | Channel creation (to be created) |
-| `ios/MoltMarketplace/Core/Notification/NotificationPermissionManager.swift` | Permission request logic (to be created) |
-| `ios/MoltMarketplace/Core/Notification/BadgeManager.swift` | Badge count management (to be created) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/AndroidManifest.xml` | `POST_NOTIFICATIONS` permission (already present), service registration |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/build.gradle.kts` | `firebase-messaging-ktx` dependency (already present) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml` | Firebase BOM `33.8.0`, messaging artifact alias |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt` | Deep link handling on notification tap |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` | `@UIApplicationDelegateAdaptor(AppDelegate.self)` attachment |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift` | `bundleVersion` used in force-update checks |
+| `ios/XiriGoEcommerce/AppDelegate.swift` | APNs / FCM delegate setup (to be created) |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/notification/MoltFirebaseMessagingService.kt` | FCM service (to be created) |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/notification/NotificationChannels.kt` | Channel creation (to be created) |
+| `ios/XiriGoEcommerce/Core/Notification/NotificationPermissionManager.swift` | Permission request logic (to be created) |
+| `ios/XiriGoEcommerce/Core/Notification/BadgeManager.swift` | Badge count management (to be created) |
 
 ### Related Guides
 
 | Guide | Path |
 |-------|------|
-| Firebase Setup | `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/guides/firebase-setup.md` |
-| Device Support | `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/guides/device-support.md` |
+| Firebase Setup | `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/guides/firebase-setup.md` |
+| Device Support | `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/guides/device-support.md` |
 | Navigation Spec | `shared/feature-specs/navigation.md` (M0-04) |

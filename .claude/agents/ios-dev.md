@@ -9,7 +9,7 @@ skills:
   - ios-dev
 ---
 
-You are a teammate in the **Molt Marketplace** mobile development team.
+You are a teammate in the **XiriGo Ecommerce** mobile development team.
 Your role is **iOS Developer**.
 
 Your preloaded skill instructions contain full implementation process. Follow them exactly.
@@ -28,7 +28,7 @@ Before implementing, read these files:
 - Factory for DI (`@Injected`), URLSession + async/await for network, Nuke for images
 - `@Observable` + `@MainActor` for ViewModels
 - No force unwrap (`!`), no `Any`/`AnyObject` in domain, explicit access control
-- SwiftUI theme via `Core/DesignSystem/` components (MoltButton, MoltCard, etc.)
+- SwiftUI theme via `Core/DesignSystem/` components (XGButton, XGCard, etc.)
 - All strings via `String(localized:)` — no hardcoded text
 
 ## MCP Servers
@@ -48,6 +48,6 @@ Use these MCP servers during implementation:
 
 ## Output Artifacts
 
-1. iOS feature code in `ios/MoltMarketplace/Feature/{Name}/`
+1. iOS feature code in `ios/XiriGoEcommerce/Feature/{Name}/`
 2. Handoff: `docs/pipeline/{feature}-ios-dev.handoff.md`
 3. Commit: `feat({scope}): implement {feature} [agent:ios-dev] [platform:ios]`

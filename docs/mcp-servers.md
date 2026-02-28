@@ -1,4 +1,4 @@
-# MCP Servers — Molt Mobile
+# MCP Servers — XiriGo Mobile
 
 Bu doküman, projede kullanılan MCP (Model Context Protocol) sunucularını ve her birinin hangi teknoloji/kütüphane için kullanılacağını açıklar.
 

@@ -67,14 +67,14 @@ REQUIREMENTS = {
         "Typography: Display/Headline/Title/Body/Label in Large/Medium/Small",
         "Spacing: 4dp/pt increments (4, 8, 12, 16, 24, 32, 48, 64)",
         "Corner Radius: small (4), medium (8), large (12), extraLarge (16), full (999)",
-        "MoltButton: primary, secondary, outlined, text variants",
-        "MoltTextField: with label, error, helper text",
-        "MoltCard: product card, info card variants",
-        "MoltChip: filter chip, category chip",
+        "XGButton: primary, secondary, outlined, text variants",
+        "XGTextField: with label, error, helper text",
+        "XGCard: product card, info card variants",
+        "XGChip: filter chip, category chip",
         "LoadingView: full screen + inline variants",
         "ErrorView: with retry button and message",
         "EmptyView: with illustration, message, action button",
-        "MoltImage: async loading with placeholder and error state",
+        "XGImage: async loading with placeholder and error state",
         "RatingBar: star rating display (1-5)",
         "PriceText: formatted price with currency, sale price strikethrough",
         "Badge: notification count, status indicator",
@@ -93,7 +93,7 @@ REQUIREMENTS = {
         "Tab Bar: Home (house), Categories (grid), Cart (cart + badge), Profile (person)",
         "Navigation Stack per tab (independent back stacks)",
         "Type-safe routes: Sealed class (Android) / Enum (iOS) with params",
-        "Deep Links: molt://product/{id}, molt://category/{id}, molt://order/{id}, molt://cart",
+        "Deep Links: xirigo://product/{id}, xirigo://category/{id}, xirigo://order/{id}, xirigo://cart",
         "Modal sheets: Login required, filters, sort options",
         "Default platform animations (Material motion / iOS push)",
     ],
@@ -426,13 +426,13 @@ def build_issue_body(feature, dep_issues):
     # Determine feature type for paths
     is_infra = name in INFRA_FEATURES
     if is_infra:
-        android_path = f"`android/app/src/main/java/com/molt/marketplace/core/{name.replace('-', '')}/`"
-        ios_path = f"`ios/MoltMarketplace/Core/{name.replace('-', '').title()}/`"
+        android_path = f"`android/app/src/main/java/com/xirigo/ecommerce/core/{name.replace('-', '')}/`"
+        ios_path = f"`ios/XiriGoEcommerce/Core/{name.replace('-', '').title()}/`"
     else:
         clean_name = name.replace("-", "")
-        android_path = f"`android/app/src/main/java/com/molt/marketplace/feature/{clean_name}/`"
+        android_path = f"`android/app/src/main/java/com/xirigo/ecommerce/feature/{clean_name}/`"
         pascal_name = "".join(w.capitalize() for w in name.split("-"))
-        ios_path = f"`ios/MoltMarketplace/Feature/{pascal_name}/`"
+        ios_path = f"`ios/XiriGoEcommerce/Feature/{pascal_name}/`"
 
     body = f"""## Overview
 
@@ -450,7 +450,7 @@ def build_issue_body(feature, dep_issues):
 - [ ] Min 60fps scroll performance (no frame drops)
 - [ ] Accessibility: content descriptions on all interactive elements
 - [ ] All strings localized (en, mt, tr) - no hardcoded strings
-- [ ] Molt* design system components used (no raw Material 3 / SwiftUI in screens)
+- [ ] XG* design system components used (no raw Material 3 / SwiftUI in screens)
 
 ## API Endpoints
 
@@ -636,7 +636,7 @@ def main():
         add_result = subprocess.run(
             ["gh", "project", "item-add", str(PROJECT_NUMBER),
              "--owner", PROJECT_OWNER,
-             "--url", f"https://github.com/atknatk/molt-mobile/issues/{issue_num}"],
+             "--url", f"https://github.com/XiriGo/ecommerce-mobile/issues/{issue_num}"],
             capture_output=True, text=True, timeout=30
         )
 

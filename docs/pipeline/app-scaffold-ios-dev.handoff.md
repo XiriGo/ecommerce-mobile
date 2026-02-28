@@ -10,12 +10,12 @@
 
 ## Implementation Summary
 
-Successfully implemented the iOS app scaffold for Molt Marketplace following the architecture spec and CLAUDE.md standards. The scaffold establishes the complete project foundation with:
+Successfully implemented the iOS app scaffold for XiriGo Ecommerce following the architecture spec and CLAUDE.md standards. The scaffold establishes the complete project foundation with:
 
 - Xcode project structure with SPM dependency management
 - Three build configurations (Debug, Staging, Release) with environment-specific settings
 - SwiftUI app entry point with placeholder screen
-- Design system theme shell (MoltColors, MoltSpacing, MoltTypography, MoltTheme)
+- Design system theme shell (XGColors, XGSpacing, XGTypography, XGTheme)
 - Localization support (String Catalog for en/mt/tr)
 - Factory DI container setup
 - Clean Architecture directory structure
@@ -25,39 +25,39 @@ Successfully implemented the iOS app scaffold for Molt Marketplace following the
 ## Files Created
 
 ### Core Files (2)
-1. `/ios/MoltMarketplace/MoltMarketplaceApp.swift` — SwiftUI @main entry point
-2. `/ios/MoltMarketplace/Config.swift` — Environment configuration reader
+1. `/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` — SwiftUI @main entry point
+2. `/ios/XiriGoEcommerce/Config.swift` — Environment configuration reader
 
 ### Design System Theme (4)
-3. `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltColors.swift` — Color constants
-4. `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltSpacing.swift` — Spacing constants
-5. `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTypography.swift` — Typography styles
-6. `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTheme.swift` — Theme ViewModifier
+3. `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGColors.swift` — Color constants
+4. `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGSpacing.swift` — Spacing constants
+5. `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTypography.swift` — Typography styles
+6. `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTheme.swift` — Theme ViewModifier
 
 ### DI (1)
-7. `/ios/MoltMarketplace/Core/DI/Container+Extensions.swift` — Factory container
+7. `/ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift` — Factory container
 
 ### Resources (2)
-8. `/ios/MoltMarketplace/Resources/Localizable.xcstrings` — String Catalog (en/mt/tr)
-9. `/ios/MoltMarketplace/Resources/Info.plist` — App configuration
+8. `/ios/XiriGoEcommerce/Resources/Localizable.xcstrings` — String Catalog (en/mt/tr)
+9. `/ios/XiriGoEcommerce/Resources/Info.plist` — App configuration
 
 ### Configuration (3)
-10. `/ios/MoltMarketplace/Configuration/Debug.xcconfig` — Dev environment
-11. `/ios/MoltMarketplace/Configuration/Staging.xcconfig` — Staging environment
-12. `/ios/MoltMarketplace/Configuration/Release.xcconfig` — Production environment
+10. `/ios/XiriGoEcommerce/Configuration/Debug.xcconfig` — Dev environment
+11. `/ios/XiriGoEcommerce/Configuration/Staging.xcconfig` — Staging environment
+12. `/ios/XiriGoEcommerce/Configuration/Release.xcconfig` — Production environment
 
 ### Project Files (2)
 13. `/ios/Package.swift` — SPM dependencies
-14. `/ios/MoltMarketplace.xcodeproj/project.pbxproj` — Xcode project
+14. `/ios/XiriGoEcommerce.xcodeproj/project.pbxproj` — Xcode project
 
 ### Placeholder Directories (7 .gitkeep files)
-- `/ios/MoltMarketplace/Core/Common/`
-- `/ios/MoltMarketplace/Core/DesignSystem/Component/`
-- `/ios/MoltMarketplace/Core/Domain/Error/`
-- `/ios/MoltMarketplace/Core/Network/`
-- `/ios/MoltMarketplace/Feature/`
-- `/ios/MoltMarketplaceTests/`
-- `/ios/MoltMarketplaceUITests/`
+- `/ios/XiriGoEcommerce/Core/Common/`
+- `/ios/XiriGoEcommerce/Core/DesignSystem/Component/`
+- `/ios/XiriGoEcommerce/Core/Domain/Error/`
+- `/ios/XiriGoEcommerce/Core/Network/`
+- `/ios/XiriGoEcommerce/Feature/`
+- `/ios/XiriGoEcommerceTests/`
+- `/ios/XiriGoEcommerceUITests/`
 
 **Total**: 13 implementation files + 7 placeholder directories
 
@@ -73,11 +73,11 @@ Successfully implemented the iOS app scaffold for Molt Marketplace following the
 
 ### Design System Theme ✓
 All theme files implemented following CLAUDE.md patterns:
-- `MoltColors` — 27 color tokens (light theme) + semantic e-commerce colors
-- `MoltSpacing` — 9 base spacing + 7 layout constants
-- `MoltTypography` — 15 text styles (Display, Headline, Title, Body, Label)
-- `MoltTheme` — ViewModifier for theme application
-- `MoltCornerRadius` — 6 radius tokens
+- `XGColors` — 27 color tokens (light theme) + semantic e-commerce colors
+- `XGSpacing` — 9 base spacing + 7 layout constants
+- `XGTypography` — 15 text styles (Display, Headline, Title, Body, Label)
+- `XGTheme` — ViewModifier for theme application
+- `XGCornerRadius` — 6 radius tokens
 
 ### Localization ✓
 String Catalog with 12 base keys in 3 languages:
@@ -89,9 +89,9 @@ All strings follow `<feature>_<screen>_<element>_<description>` naming.
 
 ### Environment Configuration ✓
 Three xcconfig files with correct environment URLs:
-- Debug → `https://api-dev.molt.mt`
-- Staging → `https://api-staging.molt.mt`
-- Release → `https://api.molt.mt`
+- Debug → `https://api-dev.xirigo.com`
+- Staging → `https://api-staging.xirigo.com`
+- Release → `https://api.xirigo.com`
 
 Bundle IDs correctly suffixed per environment.
 
@@ -120,7 +120,7 @@ All required dependencies declared in Package.swift:
 ### SwiftUI Standards ✓
 - [x] Simple body implementation
 - [x] Preview block for ContentView
-- [x] Theme tokens via MoltColors/MoltSpacing
+- [x] Theme tokens via XGColors/XGSpacing
 - [x] No magic numbers
 
 ### Project Settings ✓
@@ -141,8 +141,8 @@ Since this is a scaffold, the Xcode project requires manual setup in Xcode to:
 4. Add Assets.xcassets with placeholder images
 
 **Next Steps for Build**:
-- Open `ios/MoltMarketplace.xcodeproj` in Xcode
-- Add all source files from `MoltMarketplace/` to the target
+- Open `ios/XiriGoEcommerce.xcodeproj` in Xcode
+- Add all source files from `XiriGoEcommerce/` to the target
 - File → Add Package Dependencies → paste URLs from Package.swift
 - Product → Scheme → Edit Scheme → duplicate for Staging/Release configs
 - Add placeholder app icon and splash logo to Assets.xcassets
@@ -151,7 +151,7 @@ Since this is a scaffold, the Xcode project requires manual setup in Xcode to:
 ### Expected Behavior
 When complete, the app should:
 1. Show splash screen with surface background
-2. Transition to placeholder screen with "Molt Marketplace" text
+2. Transition to placeholder screen with "XiriGo Ecommerce" text
 3. `Config.apiBaseURL` returns correct URL per configuration
 4. String localization works for all three languages
 
@@ -204,8 +204,8 @@ These limitations are expected for M0-01. The Xcode project will be fully config
 
 ### For Next Feature (M0-02)
 The design system theme shell is ready. M0-02 will implement:
-- `Core/DesignSystem/Component/` — MoltButton, MoltCard, MoltTextField, etc.
-- All `Molt*` components will reference the theme constants created here
+- `Core/DesignSystem/Component/` — XGButton, XGCard, XGTextField, etc.
+- All `XG*` components will reference the theme constants created here
 
 ---
 
@@ -235,7 +235,7 @@ feat(scaffold): implement iOS app scaffold [agent:ios-dev] [platform:ios]
 - Create Xcode project with SPM dependencies
 - Add three build configurations (Debug/Staging/Release)
 - Implement SwiftUI app entry point with placeholder screen
-- Create design system theme shell (MoltColors, MoltSpacing, MoltTypography, MoltTheme)
+- Create design system theme shell (XGColors, XGSpacing, XGTypography, XGTheme)
 - Add String Catalog with en/mt/tr base strings
 - Set up Factory DI container
 - Create Clean Architecture directory structure

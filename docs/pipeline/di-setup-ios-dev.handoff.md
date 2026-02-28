@@ -29,9 +29,9 @@ All iOS source files for DI infrastructure already existed from M0-03 (Network L
 
 | Artifact | Path |
 |----------|------|
-| Container Registrations (modified) | `ios/MoltMarketplace/Core/DI/Container+Extensions.swift` |
-| Container Tests (new) | `ios/MoltMarketplaceTests/Core/DI/ContainerTests.swift` |
-| NetworkMonitor Tests (new) | `ios/MoltMarketplaceTests/Core/Network/NetworkMonitorTests.swift` |
+| Container Registrations (modified) | `ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift` |
+| Container Tests (new) | `ios/XiriGoEcommerceTests/Core/DI/ContainerTests.swift` |
+| NetworkMonitor Tests (new) | `ios/XiriGoEcommerceTests/Core/Network/NetworkMonitorTests.swift` |
 | This Handoff | `docs/pipeline/di-setup-ios-dev.handoff.md` |
 
 ## Container Registrations

@@ -1,9 +1,9 @@
 # Local Storage Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide covers every storage layer used in the Molt Marketplace mobile app. It is a platform infrastructure reference for developers implementing any feature that reads from or writes to local storage.
+This guide covers every storage layer used in the XiriGo Ecommerce mobile app. It is a platform infrastructure reference for developers implementing any feature that reads from or writes to local storage.
 
 ---
 
@@ -31,8 +31,8 @@ The app uses four distinct storage layers. Each has a specific purpose and must 
 | URLCache | — | Built-in (Foundation) |
 
 Declared in:
-- Android: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml`
-- iOS: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Core/DI/Container+Extensions.swift`
+- Android: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml`
+- iOS: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift`
 
 ---
 
@@ -43,7 +43,7 @@ Declared in:
 Room is configured with a single `AppDatabase` class. Use `fallbackToDestructiveMigration()` during development; replace with explicit `Migration` classes before the first public release (see Section 8).
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/AppDatabase.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/AppDatabase.kt
 @Database(
     entities = [
         CartItemEntity::class,
@@ -69,7 +69,7 @@ Database location: internal storage under the app's data directory, not accessib
 #### CartItemEntity
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/entity/CartItemEntity.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/entity/CartItemEntity.kt
 @Entity(tableName = "cart_items")
 data class CartItemEntity(
     @PrimaryKey val id: String,               // Medusa line item ID
@@ -86,7 +86,7 @@ data class CartItemEntity(
 #### WishlistItemEntity
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/entity/WishlistItemEntity.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/entity/WishlistItemEntity.kt
 @Entity(tableName = "wishlist_items")
 data class WishlistItemEntity(
     @PrimaryKey val id: String,               // Local UUID (no backend)
@@ -102,7 +102,7 @@ data class WishlistItemEntity(
 #### RecentSearchEntity
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/entity/RecentSearchEntity.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/entity/RecentSearchEntity.kt
 @Entity(tableName = "recent_searches")
 data class RecentSearchEntity(
     @PrimaryKey val id: String,               // Local UUID
@@ -114,7 +114,7 @@ data class RecentSearchEntity(
 #### RecentlyViewedEntity
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/entity/RecentlyViewedEntity.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/entity/RecentlyViewedEntity.kt
 @Entity(tableName = "recently_viewed")
 data class RecentlyViewedEntity(
     @PrimaryKey val id: String,               // Local UUID
@@ -131,7 +131,7 @@ data class RecentlyViewedEntity(
 #### CartItemDao
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/dao/CartItemDao.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/dao/CartItemDao.kt
 @Dao
 interface CartItemDao {
     @Query("SELECT * FROM cart_items ORDER BY createdAt ASC")
@@ -160,7 +160,7 @@ interface CartItemDao {
 #### WishlistItemDao
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/dao/WishlistItemDao.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/dao/WishlistItemDao.kt
 @Dao
 interface WishlistItemDao {
     @Query("SELECT * FROM wishlist_items ORDER BY addedAt DESC")
@@ -183,7 +183,7 @@ interface WishlistItemDao {
 #### RecentSearchDao
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/dao/RecentSearchDao.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/dao/RecentSearchDao.kt
 @Dao
 interface RecentSearchDao {
     @Query("SELECT * FROM recent_searches ORDER BY timestamp DESC LIMIT 10")
@@ -206,7 +206,7 @@ interface RecentSearchDao {
 #### RecentlyViewedDao
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/dao/RecentlyViewedDao.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/dao/RecentlyViewedDao.kt
 @Dao
 interface RecentlyViewedDao {
     @Query("SELECT * FROM recently_viewed ORDER BY viewedAt DESC LIMIT 50")
@@ -229,7 +229,7 @@ interface RecentlyViewedDao {
 ### Hilt Module
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/di/DatabaseModule.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/di/DatabaseModule.kt
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
@@ -257,12 +257,12 @@ object DatabaseModule {
 Configure the container once at the app entry point. All models are registered together.
 
 ```swift
-// ios/MoltMarketplace/MoltMarketplaceApp.swift
+// ios/XiriGoEcommerce/XiriGoEcommerceApp.swift
 import SwiftUI
 import SwiftData
 
 @main
-struct MoltMarketplaceApp: App {
+struct XiriGoEcommerceApp: App {
 
     private let modelContainer: ModelContainer = {
         let schema = Schema([
@@ -295,7 +295,7 @@ struct MoltMarketplaceApp: App {
 #### CartItem
 
 ```swift
-// ios/MoltMarketplace/Core/Database/CartItem.swift
+// ios/XiriGoEcommerce/Core/Database/CartItem.swift
 import SwiftData
 import Foundation
 
@@ -335,7 +335,7 @@ final class CartItem {
 #### WishlistItem
 
 ```swift
-// ios/MoltMarketplace/Core/Database/WishlistItem.swift
+// ios/XiriGoEcommerce/Core/Database/WishlistItem.swift
 import SwiftData
 import Foundation
 
@@ -372,7 +372,7 @@ final class WishlistItem {
 #### RecentSearch
 
 ```swift
-// ios/MoltMarketplace/Core/Database/RecentSearch.swift
+// ios/XiriGoEcommerce/Core/Database/RecentSearch.swift
 import SwiftData
 import Foundation
 
@@ -393,7 +393,7 @@ final class RecentSearch {
 #### RecentlyViewed
 
 ```swift
-// ios/MoltMarketplace/Core/Database/RecentlyViewed.swift
+// ios/XiriGoEcommerce/Core/Database/RecentlyViewed.swift
 import SwiftData
 import Foundation
 
@@ -458,7 +458,7 @@ Proto DataStore is type-safe and async. It replaces `SharedPreferences` for all 
 // android/app/src/main/proto/app_preferences.proto
 syntax = "proto3";
 
-option java_package = "com.molt.marketplace.core.datastore";
+option java_package = "com.xirigo.ecommerce.core.datastore";
 option java_multiple_files = true;
 
 message AppPreferences {
@@ -471,7 +471,7 @@ message AppPreferences {
 #### DataStore Singleton
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/datastore/AppPreferencesSerializer.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/datastore/AppPreferencesSerializer.kt
 object AppPreferencesSerializer : Serializer<AppPreferences> {
     override val defaultValue: AppPreferences = AppPreferences.getDefaultInstance()
     override suspend fun readFrom(input: InputStream): AppPreferences =
@@ -480,7 +480,7 @@ object AppPreferencesSerializer : Serializer<AppPreferences> {
         t.writeTo(output)
 }
 
-// android/app/src/main/java/com/molt/marketplace/core/di/DataStoreModule.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/di/DataStoreModule.kt
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
@@ -525,7 +525,7 @@ Use `@AppStorage` for SwiftUI-bound values and `UserDefaults.standard` with a ty
 #### Settings Keys
 
 ```swift
-// ios/MoltMarketplace/Core/Storage/AppStorageKeys.swift
+// ios/XiriGoEcommerce/Core/Storage/AppStorageKeys.swift
 enum AppStorageKey {
     static let onboardingCompleted = "onboarding_completed"
     static let notificationsEnabled = "notifications_enabled"
@@ -544,7 +544,7 @@ enum AppStorageKey {
 #### Typed Wrapper for Non-SwiftUI Access
 
 ```swift
-// ios/MoltMarketplace/Core/Storage/AppPreferences.swift
+// ios/XiriGoEcommerce/Core/Storage/AppPreferences.swift
 final class AppPreferences {
     private let defaults: UserDefaults
 
@@ -583,7 +583,7 @@ Tink provides AEAD (Authenticated Encryption with Associated Data) — the token
 // android/app/src/main/proto/auth_tokens.proto
 syntax = "proto3";
 
-option java_package = "com.molt.marketplace.core.datastore";
+option java_package = "com.xirigo.ecommerce.core.datastore";
 option java_multiple_files = true;
 
 message AuthTokens {
@@ -594,7 +594,7 @@ message AuthTokens {
 ```
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/datastore/AuthTokenSerializer.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/datastore/AuthTokenSerializer.kt
 class AuthTokenSerializer(
     private val tinkEncryptor: TinkEncryptor,
 ) : Serializer<AuthTokens> {
@@ -617,7 +617,7 @@ class AuthTokenSerializer(
     }
 }
 
-// android/app/src/main/java/com/molt/marketplace/core/di/SecurityModule.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/di/SecurityModule.kt
 @Module
 @InstallIn(SingletonComponent::class)
 object SecurityModule {
@@ -678,7 +678,7 @@ suspend fun clearTokens() {
 `KeychainAccess 4.2.2` wraps Apple's Keychain Services. It is declared as an SPM dependency in the iOS project.
 
 ```swift
-// ios/MoltMarketplace/Core/Storage/AuthTokenStorage.swift
+// ios/XiriGoEcommerce/Core/Storage/AuthTokenStorage.swift
 import KeychainAccess
 
 final class AuthTokenStorage {
@@ -691,7 +691,7 @@ final class AuthTokenStorage {
         static let accessTokenExpiry = "access_token_expiry"
     }
 
-    init(service: String = "com.molt.marketplace") {
+    init(service: String = "com.xirigo.ecommerce") {
         self.keychain = Keychain(service: service)
             .accessibility(.afterFirstUnlock)           // survives device reboot, excluded from iCloud backup
     }
@@ -756,10 +756,10 @@ final class AuthTokenStorage {
 #### Factory Registration (iOS DI)
 
 ```swift
-// ios/MoltMarketplace/Core/DI/Container+Extensions.swift
+// ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift
 extension Container {
     var authTokenStorage: Factory<AuthTokenStorage> {
-        self { AuthTokenStorage(service: "com.molt.marketplace") }
+        self { AuthTokenStorage(service: "com.xirigo.ecommerce") }
             .singleton
     }
 }
@@ -813,7 +813,7 @@ Emit updated cart state to UI
 #### Android (OkHttp)
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/network/NetworkModule.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/network/NetworkModule.kt
 val cacheDir = File(context.cacheDir, "http_cache")
 val cache = Cache(cacheDir, maxSize = 10L * 1024L * 1024L) // 10 MB
 
@@ -836,7 +836,7 @@ OkHttpClient.Builder()
 #### iOS (URLCache)
 
 ```swift
-// ios/MoltMarketplace/Core/Network/URLSessionConfiguration+App.swift
+// ios/XiriGoEcommerce/Core/Network/URLSessionConfiguration+App.swift
 extension URLSessionConfiguration {
     static var appDefault: URLSessionConfiguration {
         let config = URLSessionConfiguration.default
@@ -944,11 +944,11 @@ Once the app ships, destructive migration is not acceptable — users would lose
 **Android — Explicit Room Migrations**:
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/database/AppDatabase.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/AppDatabase.kt
 @Database(entities = [...], version = 2)  // increment version on every change
 abstract class AppDatabase : RoomDatabase() { ... }
 
-// android/app/src/main/java/com/molt/marketplace/core/database/migrations/Migration1To2.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/database/migrations/Migration1To2.kt
 val MIGRATION_1_TO_2 = object : Migration(1, 2) {
     override fun migrate(db: SupportSQLiteDatabase) {
         // Example: add a column to recently_viewed
@@ -976,7 +976,7 @@ ksp {
 **iOS — SwiftData VersionedSchema + MigrationPlan**:
 
 ```swift
-// ios/MoltMarketplace/Core/Database/AppSchema.swift
+// ios/XiriGoEcommerce/Core/Database/AppSchema.swift
 enum AppSchemaV1: VersionedSchema {
     static var versionIdentifier = Schema.Version(1, 0, 0)
     static var models: [any PersistentModel.Type] = [
@@ -1048,11 +1048,11 @@ Verify the exclude flag is not overridden anywhere:
 
 ```swift
 // Correct — iCloud backup excluded by default with .afterFirstUnlock
-Keychain(service: "com.molt.marketplace")
+Keychain(service: "com.xirigo.ecommerce")
     .accessibility(.afterFirstUnlock)
 
 // Never do this — would include tokens in iCloud backup
-Keychain(service: "com.molt.marketplace")
+Keychain(service: "com.xirigo.ecommerce")
     .accessibility(.afterFirstUnlockThisDeviceOnly)  // device-only is fine too
     // Do not set .synchronizable(true) — this would sync to iCloud
 ```
@@ -1073,20 +1073,20 @@ Auth tokens are the only truly sensitive data, and they are stored in a separate
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` | `datastore = "1.1.4"`, `tink = "1.16.0"`, `room = "2.7.1"` |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts` | Storage dependency declarations |
-| `android/app/src/main/java/com/molt/marketplace/core/database/AppDatabase.kt` | Room database class (to be created) |
-| `android/app/src/main/java/com/molt/marketplace/core/di/DatabaseModule.kt` | Hilt Room module (to be created) |
-| `android/app/src/main/java/com/molt/marketplace/core/di/DataStoreModule.kt` | Hilt DataStore module (to be created) |
-| `android/app/src/main/java/com/molt/marketplace/core/di/SecurityModule.kt` | Hilt Tink module (to be created) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml` | `datastore = "1.1.4"`, `tink = "1.16.0"`, `room = "2.7.1"` |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/build.gradle.kts` | Storage dependency declarations |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/database/AppDatabase.kt` | Room database class (to be created) |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/di/DatabaseModule.kt` | Hilt Room module (to be created) |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/di/DataStoreModule.kt` | Hilt DataStore module (to be created) |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/di/SecurityModule.kt` | Hilt Tink module (to be created) |
 | `android/app/src/main/proto/app_preferences.proto` | AppPreferences proto schema (to be created) |
 | `android/app/src/main/proto/auth_tokens.proto` | AuthTokens proto schema (to be created) |
 | `android/app/src/main/res/xml/backup_rules.xml` | Auto-backup exclusion rules (to be created) |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/MoltMarketplaceApp.swift` | Add `ModelContainer` configuration here |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Core/DI/Container+Extensions.swift` | Register `AuthTokenStorage` singleton |
-| `ios/MoltMarketplace/Core/Database/CartItem.swift` | CartItem SwiftData model (to be created) |
-| `ios/MoltMarketplace/Core/Database/WishlistItem.swift` | WishlistItem SwiftData model (to be created) |
-| `ios/MoltMarketplace/Core/Database/RecentSearch.swift` | RecentSearch SwiftData model (to be created) |
-| `ios/MoltMarketplace/Core/Database/RecentlyViewed.swift` | RecentlyViewed SwiftData model (to be created) |
-| `ios/MoltMarketplace/Core/Storage/AuthTokenStorage.swift` | Keychain token storage (to be created) |
-| `ios/MoltMarketplace/Core/Storage/AppPreferences.swift` | UserDefaults wrapper (to be created) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` | Add `ModelContainer` configuration here |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift` | Register `AuthTokenStorage` singleton |
+| `ios/XiriGoEcommerce/Core/Database/CartItem.swift` | CartItem SwiftData model (to be created) |
+| `ios/XiriGoEcommerce/Core/Database/WishlistItem.swift` | WishlistItem SwiftData model (to be created) |
+| `ios/XiriGoEcommerce/Core/Database/RecentSearch.swift` | RecentSearch SwiftData model (to be created) |
+| `ios/XiriGoEcommerce/Core/Database/RecentlyViewed.swift` | RecentlyViewed SwiftData model (to be created) |
+| `ios/XiriGoEcommerce/Core/Storage/AuthTokenStorage.swift` | Keychain token storage (to be created) |
+| `ios/XiriGoEcommerce/Core/Storage/AppPreferences.swift` | UserDefaults wrapper (to be created) |

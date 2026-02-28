@@ -1,5 +1,5 @@
 # =============================================================================
-# Detekt Configuration — Molt Marketplace Android
+# Detekt Configuration — XiriGo Ecommerce Android
 # =============================================================================
 # Strict FAANG-level static analysis (Google + Meta + Airbnb standards)
 # Reference: https://detekt.dev/docs/rules/
@@ -347,7 +347,7 @@ naming:
 
   InvalidPackageDeclaration:
     active: true
-    rootPackage: 'com.molt.marketplace'
+    rootPackage: 'com.xirigo.ecommerce'
     requireRootInDeclaration: true
 
   LambdaParameterNaming:

@@ -33,14 +33,14 @@ Covers:
 - Token pipeline diagram (JSON → theme → component → feature)
 - Design token tables: colors (light/dark/semantic), typography (15 styles), spacing, corner radius, elevation
 - Component catalog: table of all 14 components with description, Android file, iOS file
-- Component detail: MoltButton variants, MoltTabItem fields, MoltBadgeStatus values
-- Usage examples: Android import pattern, iOS import pattern, MoltTheme application
+- Component detail: XGButton variants, XGTabItem fields, XGBadgeStatus values
+- Usage examples: Android import pattern, iOS import pattern, XGTheme application
 - Theme customization process for when Figma designs arrive (4-step process)
 - Localization: 17 string keys across en / mt / tr
 - File structure: annotated directory tree for Android (20 Kotlin files) and iOS (20 Swift files)
 - Architecture compliance rules (both platforms)
 - Testing: Android ~90 tests (15 files, 14 UI + 2 unit) / iOS ~175 tests (16 files), combined ~265 tests across 31 files
-- Platform-specific implementation notes (Coil vs AsyncImage, MoltButtonVariant naming, Swift 6 concurrency)
+- Platform-specific implementation notes (Coil vs AsyncImage, XGButtonVariant naming, Swift 6 concurrency)
 
 ### CHANGELOG.md Update
 
@@ -61,16 +61,16 @@ Entry added under `## [Unreleased] > ### Added > #### M0-02: Design System`:
 - `docs/pipeline/design-system-ios-test.handoff.md` — iOS test handoff
 - `docs/features/app-scaffold.md` — Pattern reference
 - `CHANGELOG.md` — Existing changelog
-- `android/app/src/main/java/com/molt/marketplace/core/designsystem/component/MoltButton.kt` — Source verification
-- `ios/MoltMarketplace/Core/DesignSystem/Component/MoltButton.swift` — Source verification
-- `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltSpacing.swift` — Source verification (IconSize/AvatarSize nested enums)
+- `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGButton.kt` — Source verification
+- `ios/XiriGoEcommerce/Core/DesignSystem/Component/XGButton.swift` — Source verification
+- `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGSpacing.swift` — Source verification (IconSize/AvatarSize nested enums)
 
 ---
 
 ## Key Findings from Source Code
 
-1. **iOS uses `MoltButtonVariant`** (not `MoltButtonStyle`) — named to avoid conflict with SwiftUI's `ButtonStyle` protocol. Documented in both the component catalog and platform notes.
-2. **iOS `MoltSpacing`** includes `IconSize` and `AvatarSize` as nested enums (not in the architect spec) — added to the spacing section.
+1. **iOS uses `XGButtonVariant`** (not `XGButtonStyle`) — named to avoid conflict with SwiftUI's `ButtonStyle` protocol. Documented in both the component catalog and platform notes.
+2. **iOS `XGSpacing`** includes `IconSize` and `AvatarSize` as nested enums (not in the architect spec) — added to the spacing section.
 3. **iOS image loading uses `AsyncImage`** (not NukeUI `LazyImage`) — swappable with zero API change when NukeUI SPM dependency is added. Documented in platform notes.
 4. **Android localization has 17 keys** (not 18 as in the architect spec) — using the actual count from the android-dev handoff.
 5. **iOS localization has 22 keys** — slightly more than Android due to additional string variants in the String Catalog.

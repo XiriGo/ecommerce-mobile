@@ -1,9 +1,9 @@
 # Force Update Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide covers the force update and maintenance mode mechanisms for the Molt Marketplace mobile buyer app. Both features are driven by Firebase Remote Config and checked on every app launch.
+This guide covers the force update and maintenance mode mechanisms for the XiriGo Ecommerce mobile buyer app. Both features are driven by Firebase Remote Config and checked on every app launch.
 
 ---
 
@@ -100,7 +100,7 @@ Examples:
 ### Android
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/update/VersionChecker.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/update/VersionChecker.kt
 
 /**
  * Returns true if [current] is strictly less than [minimum].
@@ -135,7 +135,7 @@ val forceUpdate = isVersionLessThan(currentVersion, minimumVersion)
 ### iOS
 
 ```swift
-// ios/MoltMarketplace/Core/Update/VersionChecker.swift
+// ios/XiriGoEcommerce/Core/Update/VersionChecker.swift
 
 /// Returns true if `current` is strictly less than `minimum`.
 /// Both strings must follow MAJOR.MINOR.PATCH semantic versioning.
@@ -164,7 +164,7 @@ let minimumVersion = RemoteConfig.remoteConfig()
 let forceUpdate = isVersionLessThan(currentVersion, minimum: minimumVersion)
 ```
 
-`Config.bundleVersion` reads `CFBundleShortVersionString` from the app bundle. See `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Config.swift`.
+`Config.bundleVersion` reads `CFBundleShortVersionString` from the app bundle. See `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift`.
 
 ---
 
@@ -183,7 +183,7 @@ Shown when `current < min_supported_version`. The user cannot dismiss it. The on
 #### Android
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/update/ForceUpdateDialog.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/update/ForceUpdateDialog.kt
 @Composable
 fun ForceUpdateDialog(onUpdateClick: () -> Unit) {
     AlertDialog(
@@ -191,7 +191,7 @@ fun ForceUpdateDialog(onUpdateClick: () -> Unit) {
         title = { Text(stringResource(R.string.update_force_title)) },
         text = { Text(stringResource(R.string.update_force_message)) },
         confirmButton = {
-            MoltButton(
+            XGButton(
                 text = stringResource(R.string.update_force_button),
                 onClick = onUpdateClick,
             )
@@ -208,16 +208,16 @@ fun ForceUpdateDialog(onUpdateClick: () -> Unit) {
 #### iOS
 
 ```swift
-// ios/MoltMarketplace/Core/Update/ForceUpdateView.swift
+// ios/XiriGoEcommerce/Core/Update/ForceUpdateView.swift
 struct ForceUpdateView: View {
     let onUpdate: () -> Void
 
     var body: some View {
-        VStack(spacing: MoltSpacing.lg) {
+        VStack(spacing: XGSpacing.lg) {
             Spacer()
             Image(systemName: "arrow.down.circle")
                 .font(.system(size: 64))
-                .foregroundStyle(MoltColors.primary)
+                .foregroundStyle(XGColors.primary)
 
             Text(String(localized: "update_force_title"))
                 .font(.title2)
@@ -229,12 +229,12 @@ struct ForceUpdateView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
 
-            MoltButton(String(localized: "update_force_button"), action: onUpdate)
-                .padding(.horizontal, MoltSpacing.xl)
+            XGButton(String(localized: "update_force_button"), action: onUpdate)
+                .padding(.horizontal, XGSpacing.xl)
 
             Spacer()
         }
-        .padding(MoltSpacing.base)
+        .padding(XGSpacing.base)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
         .interactiveDismissDisabled(true)
@@ -257,7 +257,7 @@ fun SoftUpdateBanner(onUpdateClick: () -> Unit, onDismiss: () -> Unit) {
         color = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Row(
-            modifier = Modifier.padding(MoltSpacing.Base),
+            modifier = Modifier.padding(XGSpacing.Base),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -266,14 +266,14 @@ fun SoftUpdateBanner(onUpdateClick: () -> Unit, onDismiss: () -> Unit) {
                 modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.bodyMedium,
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(MoltSpacing.SM)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM)) {
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(R.string.update_soft_later_button))
                 }
-                MoltButton(
+                XGButton(
                     text = stringResource(R.string.update_soft_button),
                     onClick = onUpdateClick,
-                    style = MoltButtonStyle.Secondary,
+                    style = XGButtonStyle.Secondary,
                 )
             }
         }
@@ -287,7 +287,7 @@ Add to `android/app/src/main/res/values/strings.xml` and corresponding locale fi
 
 ```xml
 <string name="update_force_title">Update Required</string>
-<string name="update_force_message">A new version of Molt Marketplace is available. Please update to continue.</string>
+<string name="update_force_message">A new version of XiriGo Ecommerce is available. Please update to continue.</string>
 <string name="update_force_button">Update Now</string>
 <string name="update_soft_message">A new version is available</string>
 <string name="update_soft_button">Update</string>
@@ -296,7 +296,7 @@ Add to `android/app/src/main/res/values/strings.xml` and corresponding locale fi
 <string name="maintenance_message">We\'re updating our systems. Please try again later.</string>
 ```
 
-Add the same keys to `ios/MoltMarketplace/Resources/Localizable.xcstrings`.
+Add the same keys to `ios/XiriGoEcommerce/Resources/Localizable.xcstrings`.
 
 ---
 
@@ -307,9 +307,9 @@ Opening the store listing uses a deep link URI. The URI scheme that opens the st
 ### Android
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/update/StoreNavigator.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/update/StoreNavigator.kt
 object StoreNavigator {
-    private const val PACKAGE_NAME = "com.molt.marketplace"
+    private const val PACKAGE_NAME = "com.xirigo.ecommerce"
 
     fun openPlayStore(context: Context) {
         val marketUri = Uri.parse("market://details?id=$PACKAGE_NAME")
@@ -332,7 +332,7 @@ object StoreNavigator {
 ### iOS
 
 ```swift
-// ios/MoltMarketplace/Core/Update/StoreNavigator.swift
+// ios/XiriGoEcommerce/Core/Update/StoreNavigator.swift
 enum StoreNavigator {
     // Replace APP_ID with the actual numeric App Store ID after publication
     private static let appStoreID = "APP_ID"
@@ -368,7 +368,7 @@ The version and maintenance check runs in a dedicated ViewModel at the root of t
 ### Android ViewModel
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/core/update/AppUpdateViewModel.kt
+// android/app/src/main/java/com/xirigo/ecommerce/core/update/AppUpdateViewModel.kt
 @HiltViewModel
 class AppUpdateViewModel @Inject constructor(
     private val remoteConfig: FirebaseRemoteConfig,
@@ -416,7 +416,7 @@ sealed interface AppUpdateUiState {
 ### iOS ViewModel
 
 ```swift
-// ios/MoltMarketplace/Core/Update/AppUpdateViewModel.swift
+// ios/XiriGoEcommerce/Core/Update/AppUpdateViewModel.swift
 @MainActor @Observable
 final class AppUpdateViewModel {
     private(set) var uiState: AppUpdateUiState = .loading
@@ -461,7 +461,7 @@ enum AppUpdateUiState {
 ### Root View Integration
 
 ```swift
-// ios/MoltMarketplace/MoltMarketplaceApp.swift (sketch)
+// ios/XiriGoEcommerce/XiriGoEcommerceApp.swift (sketch)
 struct RootView: View {
     @State private var updateViewModel = AppUpdateViewModel()
 
@@ -469,7 +469,7 @@ struct RootView: View {
         Group {
             switch updateViewModel.uiState {
             case .loading:
-                MoltLoadingView()
+                XGLoadingView()
             case .maintenance:
                 MaintenanceView()
             case .forceUpdate:
@@ -496,7 +496,7 @@ fun MaintenanceScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(MoltSpacing.Base),
+            .padding(XGSpacing.Base),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -506,12 +506,12 @@ fun MaintenanceScreen() {
             modifier = Modifier.size(64.dp),
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Spacer(Modifier.height(MoltSpacing.Base))
+        Spacer(Modifier.height(XGSpacing.Base))
         Text(
             text = stringResource(R.string.maintenance_title),
             style = MaterialTheme.typography.headlineSmall,
         )
-        Spacer(Modifier.height(MoltSpacing.SM))
+        Spacer(Modifier.height(XGSpacing.SM))
         Text(
             text = stringResource(R.string.maintenance_message),
             style = MaterialTheme.typography.bodyMedium,
@@ -526,7 +526,7 @@ fun MaintenanceScreen() {
 // iOS maintenance screen
 struct MaintenanceView: View {
     var body: some View {
-        VStack(spacing: MoltSpacing.base) {
+        VStack(spacing: XGSpacing.base) {
             Spacer()
             Image(systemName: "wrench.and.screwdriver")
                 .font(.system(size: 64))
@@ -539,7 +539,7 @@ struct MaintenanceView: View {
                 .foregroundStyle(.secondary)
             Spacer()
         }
-        .padding(MoltSpacing.base)
+        .padding(XGSpacing.base)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .interactiveDismissDisabled(true)
     }
@@ -566,7 +566,7 @@ For manual QA, use the Firebase Remote Config Console to override values per dev
 
 ### Debug Builds: Immediate Fetch
 
-In debug builds, `minimumFetchIntervalInSeconds = 0` means every app launch fetches fresh values from the console. Set test values in the dev Firebase project (`molt-marketplace-dev`) without affecting production.
+In debug builds, `minimumFetchIntervalInSeconds = 0` means every app launch fetches fresh values from the console. Set test values in the dev Firebase project (`xirigo-ecommerce-dev`) without affecting production.
 
 ### Unit Tests
 
@@ -643,10 +643,10 @@ class VersionCheckerTest {
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts` | `BuildConfig.VERSION_NAME` source (`versionName = "1.0.0"`) |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Config.swift` | `Config.bundleVersion` reads `CFBundleShortVersionString` |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/build.gradle.kts` | `BuildConfig.VERSION_NAME` source (`versionName = "1.0.0"`) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift` | `Config.bundleVersion` reads `CFBundleShortVersionString` |
 | `docs/guides/firebase-setup.md` | Remote Config setup, default values, fetch configuration |
 | `android/app/src/main/res/xml/remote_config_defaults.xml` | Default values for `min_supported_version_android`, `maintenance_mode` |
-| `ios/MoltMarketplace/Resources/RemoteConfigDefaults.plist` | Default values for `min_supported_version_ios`, `maintenance_mode` |
+| `ios/XiriGoEcommerce/Resources/RemoteConfigDefaults.plist` | Default values for `min_supported_version_ios`, `maintenance_mode` |
 | `android/app/src/main/res/values/strings.xml` | `update_force_title`, `update_force_message`, `maintenance_title` strings |
-| `ios/MoltMarketplace/Resources/Localizable.xcstrings` | Same strings for iOS |
+| `ios/XiriGoEcommerce/Resources/Localizable.xcstrings` | Same strings for iOS |

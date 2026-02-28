@@ -23,7 +23,7 @@ M0-03 (Network Layer) has already been implemented. The spec was written assumin
 
 #### Android
 
-| File | Path (relative to `android/app/src/main/java/com/molt/marketplace/`) | What It Provides |
+| File | Path (relative to `android/app/src/main/java/com/xirigo/ecommerce/`) | What It Provides |
 |------|----------------------------------------------------------------------|-----------------|
 | `NetworkModule.kt` | `core/di/NetworkModule.kt` | `Json`, single `OkHttpClient` (with auth interceptor + authenticator), `Retrofit`, `TokenProvider` (no-op), `AuthInterceptor`, `TokenRefreshAuthenticator` |
 | `NetworkMonitor.kt` | `core/network/NetworkMonitor.kt` | Concrete class (not interface) with `@Inject constructor`, `ConnectivityManager` + `NetworkCallback`, exposes `StateFlow<Boolean>` |
@@ -34,11 +34,11 @@ M0-03 (Network Layer) has already been implemented. The spec was written assumin
 | `ApiClient.kt` | `core/network/ApiClient.kt` | `object` with `createRetrofit()` factory method |
 | `LoggingInterceptor.kt` | `core/network/LoggingInterceptor.kt` | Debug logging interceptor |
 | `RetryInterceptor.kt` | `core/network/RetryInterceptor.kt` | Retry with backoff |
-| `MoltApplication.kt` | `MoltApplication.kt` | `@HiltAndroidApp` annotation, Timber init |
+| `XGApplication.kt` | `XGApplication.kt` | `@HiltAndroidApp` annotation, Timber init |
 
 #### iOS
 
-| File | Path (relative to `ios/MoltMarketplace/`) | What It Provides |
+| File | Path (relative to `ios/XiriGoEcommerce/`) | What It Provides |
 |------|-------------------------------------------|-----------------|
 | `Container+Extensions.swift` | `Core/DI/Container+Extensions.swift` | Registers `tokenProvider` (.singleton), `apiClient` (.singleton), `networkMonitor` (.singleton) |
 | `APIClient.swift` | `Core/Network/APIClient.swift` | Concrete `final class` (not a protocol). Handles request building, auth token injection, 401 refresh, retry, error mapping. Creates its own `URLSession` internally. |
@@ -68,8 +68,8 @@ M0-03 (Network Layer) has already been implemented. The spec was written assumin
 |---|------|------|-------------|
 | 1 | `Qualifiers.kt` | `core/di/Qualifiers.kt` | Five `@Qualifier` annotations: `@IoDispatcher`, `@MainDispatcher`, `@DefaultDispatcher`, `@AuthenticatedClient`, `@UnauthenticatedClient` |
 | 2 | `CoroutineModule.kt` | `core/di/CoroutineModule.kt` | `@Module @InstallIn(SingletonComponent::class)` providing three dispatchers and an app-scoped `CoroutineScope` |
-| 3 | `StorageModule.kt` | `core/di/StorageModule.kt` | `@Module @InstallIn(SingletonComponent::class)` providing `DataStore<Preferences>` and `MoltDatabase` |
-| 4 | `MoltDatabase.kt` | `core/data/local/MoltDatabase.kt` | `@Database(entities = [], version = 1, exportSchema = false)` empty Room database shell |
+| 3 | `StorageModule.kt` | `core/di/StorageModule.kt` | `@Module @InstallIn(SingletonComponent::class)` providing `DataStore<Preferences>` and `XGDatabase` |
+| 4 | `XGDatabase.kt` | `core/data/local/XGDatabase.kt` | `@Database(entities = [], version = 1, exportSchema = false)` empty Room database shell |
 
 ### Files to MODIFY
 
@@ -82,7 +82,7 @@ M0-03 (Network Layer) has already been implemented. The spec was written assumin
 #### 1. Qualifiers.kt
 
 ```kotlin
-package com.molt.marketplace.core.di
+package com.xirigo.ecommerce.core.di
 
 import javax.inject.Qualifier
 
@@ -110,7 +110,7 @@ annotation class UnauthenticatedClient
 #### 2. CoroutineModule.kt
 
 ```kotlin
-package com.molt.marketplace.core.di
+package com.xirigo.ecommerce.core.di
 
 import dagger.Module
 import dagger.Provides
@@ -210,13 +210,13 @@ fun provideRetrofit(
 #### 4. StorageModule.kt
 
 ```kotlin
-package com.molt.marketplace.core.di
+package com.xirigo.ecommerce.core.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.molt.marketplace.core.data.local.MoltDatabase
+import com.xirigo.ecommerce.core.data.local.XGDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -241,38 +241,38 @@ object StorageModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context,
-    ): MoltDatabase = Room.databaseBuilder(
+    ): XGDatabase = Room.databaseBuilder(
         context,
-        MoltDatabase::class.java,
+        XGDatabase::class.java,
         "molt_database",
     ).fallbackToDestructiveMigration().build()
 }
 ```
 
-#### 5. MoltDatabase.kt
+#### 5. XGDatabase.kt
 
 ```kotlin
-package com.molt.marketplace.core.data.local
+package com.xirigo.ecommerce.core.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(entities = [], version = 1, exportSchema = false)
-abstract class MoltDatabase : RoomDatabase()
+abstract class XGDatabase : RoomDatabase()
 ```
 
 ### Android Test Files to CREATE
 
 | # | File | Path |
 |---|------|------|
-| 1 | `CoroutineModuleTest.kt` | `app/src/test/java/com/molt/marketplace/core/di/CoroutineModuleTest.kt` |
-| 2 | `NetworkModuleTest.kt` | `app/src/test/java/com/molt/marketplace/core/di/NetworkModuleTest.kt` |
-| 3 | `StorageModuleTest.kt` | `app/src/test/java/com/molt/marketplace/core/di/StorageModuleTest.kt` |
+| 1 | `CoroutineModuleTest.kt` | `app/src/test/java/com/xirigo/ecommerce/core/di/CoroutineModuleTest.kt` |
+| 2 | `NetworkModuleTest.kt` | `app/src/test/java/com/xirigo/ecommerce/core/di/NetworkModuleTest.kt` |
+| 3 | `StorageModuleTest.kt` | `app/src/test/java/com/xirigo/ecommerce/core/di/StorageModuleTest.kt` |
 
 Test focus:
 - `CoroutineModuleTest`: Verify dispatchers are correct types (IO, Main, Default); verify `CoroutineScope` uses `SupervisorJob`
 - `NetworkModuleTest`: Verify `Json` config flags; verify two `OkHttpClient` instances differ (authenticated has interceptor, unauthenticated does not); verify `Retrofit` base URL
-- `StorageModuleTest`: Verify `DataStore` and `MoltDatabase` can be created (use Robolectric context)
+- `StorageModuleTest`: Verify `DataStore` and `XGDatabase` can be created (use Robolectric context)
 
 ---
 
@@ -307,8 +307,8 @@ The spec originally listed several tasks that are no longer applicable:
 
 | # | File | Path |
 |---|------|------|
-| 1 | `ContainerTests.swift` | `MoltMarketplaceTests/Core/DI/ContainerTests.swift` |
-| 2 | `NetworkMonitorTests.swift` | `MoltMarketplaceTests/Core/Network/NetworkMonitorTests.swift` |
+| 1 | `ContainerTests.swift` | `XiriGoEcommerceTests/Core/DI/ContainerTests.swift` |
+| 2 | `NetworkMonitorTests.swift` | `XiriGoEcommerceTests/Core/Network/NetworkMonitorTests.swift` |
 
 Test focus:
 - `ContainerTests`: Verify `Container.shared.apiClient()` resolves singleton; verify `Container.shared.networkMonitor()` resolves singleton; verify `Container.shared.tokenProvider()` resolves `NoOpTokenProvider`; verify singletons return the same instance on second resolution
@@ -390,8 +390,8 @@ final class ProductListViewModel {
 - [ ] `CoroutineModule` provides three dispatchers and an app-scoped `CoroutineScope`
 - [ ] `NetworkModule` provides two `OkHttpClient` instances with correct qualifiers
 - [ ] `NetworkModule` provides `Retrofit` using `@AuthenticatedClient` client
-- [ ] `StorageModule` provides `DataStore<Preferences>` and `MoltDatabase`
-- [ ] `MoltDatabase` compiles as empty Room database
+- [ ] `StorageModule` provides `DataStore<Preferences>` and `XGDatabase`
+- [ ] `XGDatabase` compiles as empty Room database
 - [ ] Existing `NetworkMonitor` still resolves via Hilt (via `@Inject constructor`)
 - [ ] All unit tests pass
 - [ ] App launches on emulator without DI-related crashes
@@ -412,7 +412,7 @@ final class ProductListViewModel {
 
 | Agent | Effort | Description |
 |-------|--------|-------------|
-| **Android Dev** | Medium | Create 4 new files (`Qualifiers.kt`, `CoroutineModule.kt`, `StorageModule.kt`, `MoltDatabase.kt`). Modify 1 file (`NetworkModule.kt` to add client qualifiers). Write 3 test files. |
+| **Android Dev** | Medium | Create 4 new files (`Qualifiers.kt`, `CoroutineModule.kt`, `StorageModule.kt`, `XGDatabase.kt`). Modify 1 file (`NetworkModule.kt` to add client qualifiers). Write 3 test files. |
 | **iOS Dev** | Low | All source files already exist from M0-03. Write 2 test files to verify existing container registrations and `NetworkMonitor`. |
 
 ---

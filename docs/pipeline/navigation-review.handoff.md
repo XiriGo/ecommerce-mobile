@@ -39,13 +39,13 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 
 | URI Pattern | Android | iOS | Status |
 |-------------|---------|-----|--------|
-| molt://product/{id} | PASS | PASS | PASS |
-| molt://category/{id} | PASS | PASS | PASS |
-| molt://cart | PASS | PASS | PASS |
-| molt://order/{id} | PASS | PASS | PASS |
-| molt://profile | PASS | PASS | PASS |
-| https://molt.mt/product/{id} | PASS | PASS | PASS |
-| https://molt.mt/category/{id} | PASS | PASS | PASS |
+| xirigo://product/{id} | PASS | PASS | PASS |
+| xirigo://category/{id} | PASS | PASS | PASS |
+| xirigo://cart | PASS | PASS | PASS |
+| xirigo://order/{id} | PASS | PASS | PASS |
+| xirigo://profile | PASS | PASS | PASS |
+| https://xirigo.com/product/{id} | PASS | PASS | PASS |
+| https://xirigo.com/category/{id} | PASS | PASS | PASS |
 | Invalid/unrecognized -> null/nil | PASS | PASS | PASS |
 
 ### Bottom Bar Visibility
@@ -69,7 +69,7 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 
 | Requirement | Android | iOS | Status |
 |-------------|---------|-----|--------|
-| Badge on Cart tab | Wired in MoltAppScaffold | Wired via AppRouter.cartBadgeCount | PASS |
+| Badge on Cart tab | Wired in XGAppScaffold | Wired via AppRouter.cartBadgeCount | PASS |
 | Hidden when 0 | cartBadgeCount = 0 (hardcoded) | cartBadgeCount = 0 (default) | PASS |
 
 ### Localization
@@ -97,10 +97,10 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 | No force unwrap `!!` | PASS (source) | Source code has zero `!!`. Tests have 8 uses in DeepLinkParserEdgeCasesTest (see Warning W-01) |
 | Immutable models | PASS | All routes are data object / data class (immutable) |
 | Domain isolation | PASS | Navigation is in `core/` layer, no cross-boundary violations |
-| Molt* components only | PASS | Uses MoltBottomBar, MoltTheme, MoltSpacing |
+| XG* components only | PASS | Uses XGBottomBar, XGTheme, XGSpacing |
 | All strings localized | PASS | stringResource() used throughout |
-| @Preview present | PASS | PlaceholderScreen and MoltAppScaffold both have previews |
-| File length <= 400 lines | PASS | Largest file: MoltNavHost.kt at 231 lines |
+| @Preview present | PASS | PlaceholderScreen and XGAppScaffold both have previews |
+| File length <= 400 lines | PASS | Largest file: XGNavHost.kt at 231 lines |
 | Function complexity <= 10 | PASS | All functions are simple |
 | @Suppress annotations | PASS | Appropriate: ktlint function-naming, LongMethod, ReturnCount |
 
@@ -112,7 +112,7 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 | No force unwrap `!` | PASS (source) | Source code has zero force unwraps. Test files use `URL(string:)!` (acceptable in tests) |
 | Immutable models | PASS | Route and Tab are enums (value types); AppRouter uses private(set) |
 | Domain isolation | PASS | Navigation is in Core/ layer |
-| Molt* components only | PASS | Uses MoltTabBar, MoltSpacing, MoltColors, MoltTypography |
+| XG* components only | PASS | Uses XGTabBar, XGSpacing, XGColors, XGTypography |
 | All strings localized | PASS | String(localized:) used throughout |
 | #Preview present | PASS | MainTabView (2 previews), PlaceholderView (1), RouteView (2) |
 | @MainActor @Observable | PASS | AppRouter correctly annotated |
@@ -149,7 +149,7 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 
 | Item | Android | iOS | Impact |
 |------|---------|-----|--------|
-| http:// scheme handling | Accepts `http://molt.mt/` (alongside https) | Rejects `http://molt.mt/` (only accepts https) | W-02: Minor inconsistency. Android DeepLinkParser.extractPathSegments handles both "https" and "http" in the same `when` branch. iOS DeepLinkParser only matches `case "https"`. See section 5 Warnings. |
+| http:// scheme handling | Accepts `http://xirigo.com/` (alongside https) | Rejects `http://xirigo.com/` (only accepts https) | W-02: Minor inconsistency. Android DeepLinkParser.extractPathSegments handles both "https" and "http" in the same `when` branch. iOS DeepLinkParser only matches `case "https"`. See section 5 Warnings. |
 
 ---
 
@@ -164,7 +164,7 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 | RouteAuthTest.kt | 19 | Unit | Every route's isAuthRequired value |
 | RouteSerializationTest.kt | 44 | Unit | Round-trip serialization for all 28 routes |
 | TopLevelDestinationTest.kt | 11 | Unit | Count, routes, labels, icons, order |
-| MoltAppScaffoldTest.kt | 9 | Compose UI | Tab rendering, selection, switching, badge, bottom bar |
+| XGAppScaffoldTest.kt | 9 | Compose UI | Tab rendering, selection, switching, badge, bottom bar |
 | PlaceholderScreenTest.kt | 10 | Compose UI | Title, subtitle, coexistence |
 | **Total** | **134 + 4** | | |
 
@@ -192,7 +192,7 @@ The Navigation feature (M0-04) is well-implemented on both Android and iOS platf
 
 ### W-01: Force unwrap `!!` in Android test code
 
-**File**: `android/app/src/test/java/com/molt/marketplace/core/navigation/DeepLinkParserEdgeCasesTest.kt`
+**File**: `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/DeepLinkParserEdgeCasesTest.kt`
 **Lines**: 216, 224, 232, 240, 252, 260, 268, 276
 
 Eight test assertions use `result!!.isAuthRequired` and `result!!.propertyName`. While force unwraps in test code are generally acceptable (tests should fail loudly), the project's CLAUDE.md rule states "No force unwrap (`!!` in Kotlin)". The test assertions already verify `isNotNull()` before the `!!` usage, so the unwrap is safe, but for strict rule compliance, these could be refactored to use `assertThat(result).isNotNull()` followed by a safe cast with `as?` and `assertThat(...)`.
@@ -202,25 +202,25 @@ Eight test assertions use `result!!.isAuthRequired` and `result!!.propertyName`.
 
 ### W-02: http:// scheme inconsistency between platforms
 
-**File**: `android/app/src/main/java/com/molt/marketplace/core/navigation/DeepLinkParser.kt:24` vs `ios/MoltMarketplace/Core/Navigation/DeepLinkParser.swift:18`
+**File**: `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/DeepLinkParser.kt:24` vs `ios/XiriGoEcommerce/Core/Navigation/DeepLinkParser.swift:18`
 
-Android accepts both `http://molt.mt/` and `https://molt.mt/` deep links. iOS only accepts `https://molt.mt/`. The spec (section 2.4) only specifies `https://molt.mt/` patterns. Android's behavior is more permissive than specified.
+Android accepts both `http://xirigo.com/` and `https://xirigo.com/` deep links. iOS only accepts `https://xirigo.com/`. The spec (section 2.4) only specifies `https://xirigo.com/` patterns. Android's behavior is more permissive than specified.
 
 **Severity**: Low
 **Action**: Either restrict Android to https-only, or extend iOS to accept http as well. Recommend restricting Android to https-only to match spec and iOS behavior. Not blocking.
 
 ### W-03: iOS Route missing Codable conformance
 
-**File**: `ios/MoltMarketplace/Core/Navigation/Route.swift:7`
+**File**: `ios/XiriGoEcommerce/Core/Navigation/Route.swift:7`
 
 The spec (section 2.2) states iOS Route should conform to `Hashable, Codable`. The implementation only conforms to `Hashable`. This is acceptable for M0-04 since Codable is not needed for NavigationPath (which uses Hashable), but may be needed for state restoration or returnTo serialization in M0-06.
 
 **Severity**: Low
 **Action**: Add Codable conformance when M0-06 Auth Infrastructure is implemented. Not blocking.
 
-### W-04: Hardcoded strings in Android MoltNavHost
+### W-04: Hardcoded strings in Android XGNavHost
 
-**File**: `android/app/src/main/java/com/molt/marketplace/core/navigation/MoltNavHost.kt:59,65`
+**File**: `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/XGNavHost.kt:59,65`
 
 Two placeholder screen titles use hardcoded English strings ("Category Products", "Products") instead of string resources. All other tab root screens correctly use `stringResource()`. These are temporary placeholders that will be replaced when M1-05/M1-06 are implemented.
 
@@ -281,39 +281,39 @@ The Navigation feature (M0-04) meets all critical requirements from the architec
 ## Files Reviewed
 
 ### Android Source (7 files)
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/Route.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/TopLevelDestination.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/MoltNavHost.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/MoltAppScaffold.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/NavigationExtensions.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/DeepLinkParser.kt`
-- `android/app/src/main/java/com/molt/marketplace/core/navigation/PlaceholderScreen.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/Route.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/TopLevelDestination.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/XGNavHost.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/XGAppScaffold.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/NavigationExtensions.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/DeepLinkParser.kt`
+- `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/PlaceholderScreen.kt`
 
 ### iOS Source (8 files)
-- `ios/MoltMarketplace/Core/Navigation/Tab.swift`
-- `ios/MoltMarketplace/Core/Navigation/Route.swift`
-- `ios/MoltMarketplace/Core/Navigation/AppRouter.swift`
-- `ios/MoltMarketplace/Core/Navigation/MainTabView.swift`
-- `ios/MoltMarketplace/Core/Navigation/NavigationDestinationModifier.swift`
-- `ios/MoltMarketplace/Core/Navigation/RouteView.swift`
-- `ios/MoltMarketplace/Core/Navigation/DeepLinkParser.swift`
-- `ios/MoltMarketplace/Core/Navigation/PlaceholderView.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/Tab.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/Route.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/AppRouter.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/MainTabView.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/NavigationDestinationModifier.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/RouteView.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/DeepLinkParser.swift`
+- `ios/XiriGoEcommerce/Core/Navigation/PlaceholderView.swift`
 
 ### Android Tests (7 files)
-- `android/app/src/test/java/com/molt/marketplace/core/navigation/DeepLinkParserTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/navigation/DeepLinkParserEdgeCasesTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/navigation/RouteAuthTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/navigation/RouteSerializationTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/navigation/TopLevelDestinationTest.kt`
-- `android/app/src/androidTest/java/com/molt/marketplace/core/navigation/MoltAppScaffoldTest.kt`
-- `android/app/src/androidTest/java/com/molt/marketplace/core/navigation/PlaceholderScreenTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/DeepLinkParserTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/DeepLinkParserEdgeCasesTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/RouteAuthTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/RouteSerializationTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/TopLevelDestinationTest.kt`
+- `android/app/src/androidTest/java/com/xirigo/ecommerce/core/navigation/XGAppScaffoldTest.kt`
+- `android/app/src/androidTest/java/com/xirigo/ecommerce/core/navigation/PlaceholderScreenTest.kt`
 
 ### iOS Tests (5 files)
-- `ios/MoltMarketplaceTests/Core/Navigation/TabTests.swift`
-- `ios/MoltMarketplaceTests/Core/Navigation/RouteTests.swift`
-- `ios/MoltMarketplaceTests/Core/Navigation/DeepLinkParserTests.swift`
-- `ios/MoltMarketplaceTests/Core/Navigation/AppRouterTests.swift`
-- `ios/MoltMarketplaceTests/Core/Navigation/PlaceholderViewTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Navigation/TabTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Navigation/RouteTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Navigation/DeepLinkParserTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Navigation/AppRouterTests.swift`
+- `ios/XiriGoEcommerceTests/Core/Navigation/PlaceholderViewTests.swift`
 
 ### Handoff Files (4 files)
 - `docs/pipeline/navigation-android-dev.handoff.md`
@@ -328,4 +328,4 @@ The Navigation feature (M0-04) meets all critical requirements from the architec
 - `android/app/src/main/res/values/strings.xml`
 - `android/app/src/main/res/values-mt/strings.xml`
 - `android/app/src/main/res/values-tr/strings.xml`
-- `ios/MoltMarketplace/Resources/Localizable.xcstrings`
+- `ios/XiriGoEcommerce/Resources/Localizable.xcstrings`

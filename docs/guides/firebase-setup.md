@@ -1,9 +1,9 @@
 # Firebase Setup Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide covers the complete Firebase setup for the Molt Marketplace mobile buyer app. Firebase is used for Analytics, Crashlytics, Cloud Messaging (FCM/APNs), and Remote Config on both platforms.
+This guide covers the complete Firebase setup for the XiriGo Ecommerce mobile buyer app. Firebase is used for Analytics, Crashlytics, Cloud Messaging (FCM/APNs), and Remote Config on both platforms.
 
 ---
 
@@ -11,14 +11,14 @@ This guide covers the complete Firebase setup for the Molt Marketplace mobile bu
 
 ### Create the Firebase Project
 
-1. Open the [Firebase Console](https://console.firebase.google.com/) and sign in with the Molt Google account.
+1. Open the [Firebase Console](https://console.firebase.google.com/) and sign in with the XiriGo Google account.
 2. Click **Add project**.
-3. Enter the project name. Use the naming pattern `molt-marketplace-<env>`:
-   - `molt-marketplace-dev` — development
-   - `molt-marketplace-staging` — staging
-   - `molt-marketplace-prod` — production
+3. Enter the project name. Use the naming pattern `xirigo-ecommerce-<env>`:
+   - `xirigo-ecommerce-dev` — development
+   - `xirigo-ecommerce-staging` — staging
+   - `xirigo-ecommerce-prod` — production
 4. Enable Google Analytics when prompted (required for Crashlytics breadcrumbs and A/B testing).
-5. Select an existing Google Analytics account or create a new one named `Molt Marketplace`.
+5. Select an existing Google Analytics account or create a new one named `XiriGo Ecommerce`.
 6. Click **Create project**.
 
 ### Environment Strategy
@@ -27,9 +27,9 @@ The project uses three build variants — debug, staging, and release — each w
 
 | Firebase Project | Android App ID | iOS Bundle ID | Build Variant |
 |-----------------|----------------|---------------|---------------|
-| `molt-marketplace-dev` | `com.molt.marketplace.debug` | `com.molt.marketplace.debug` | debug |
-| `molt-marketplace-staging` | `com.molt.marketplace.staging` | `com.molt.marketplace.staging` | staging |
-| `molt-marketplace-prod` | `com.molt.marketplace` | `com.molt.marketplace` | release |
+| `xirigo-ecommerce-dev` | `com.xirigo.ecommerce.debug` | `com.xirigo.ecommerce.debug` | debug |
+| `xirigo-ecommerce-staging` | `com.xirigo.ecommerce.staging` | `com.xirigo.ecommerce.staging` | staging |
+| `xirigo-ecommerce-prod` | `com.xirigo.ecommerce` | `com.xirigo.ecommerce` | release |
 
 Separate projects ensure analytics data, crash reports, and Remote Config values are fully isolated between environments.
 
@@ -39,10 +39,10 @@ Within each Firebase project:
 
 1. Click **Add app** and choose the Android icon.
 2. Enter the **Android package name** for the environment:
-   - Dev: `com.molt.marketplace.debug`
-   - Staging: `com.molt.marketplace.staging`
-   - Prod: `com.molt.marketplace`
-3. Enter the **App nickname** (e.g., `Molt Marketplace Android Dev`).
+   - Dev: `com.xirigo.ecommerce.debug`
+   - Staging: `com.xirigo.ecommerce.staging`
+   - Prod: `com.xirigo.ecommerce`
+3. Enter the **App nickname** (e.g., `XiriGo Ecommerce Android Dev`).
 4. Enter the **Debug signing certificate SHA-1**. Obtain it by running:
    ```bash
    cd android
@@ -59,10 +59,10 @@ Within each Firebase project:
 
 1. Click **Add app** and choose the iOS icon.
 2. Enter the **iOS bundle ID** for the environment:
-   - Dev: `com.molt.marketplace.debug`
-   - Staging: `com.molt.marketplace.staging`
-   - Prod: `com.molt.marketplace`
-3. Enter the **App nickname** (e.g., `Molt Marketplace iOS Dev`).
+   - Dev: `com.xirigo.ecommerce.debug`
+   - Staging: `com.xirigo.ecommerce.staging`
+   - Prod: `com.xirigo.ecommerce`
+3. Enter the **App nickname** (e.g., `XiriGo Ecommerce iOS Dev`).
 4. Leave the **App Store ID** blank until the app is published.
 5. Click **Register app**.
 6. Download `GoogleService-Info.plist`. Do not place it yet — see Section 2.
@@ -77,7 +77,7 @@ Within each Firebase project:
 | File | Platform | Placement Path |
 |------|----------|---------------|
 | `google-services.json` | Android | `android/app/google-services.json` |
-| `GoogleService-Info.plist` | iOS | `ios/MoltMarketplace/Resources/GoogleService-Info.plist` |
+| `GoogleService-Info.plist` | iOS | `ios/XiriGoEcommerce/Resources/GoogleService-Info.plist` |
 
 For multi-environment builds, place environment-specific files at build time — see Section 9 for the CI/CD strategy.
 
@@ -88,7 +88,7 @@ These files contain API keys and project identifiers. They must never be committ
 ```
 # Firebase configuration files (never commit)
 android/app/google-services.json
-ios/MoltMarketplace/Resources/GoogleService-Info.plist
+ios/XiriGoEcommerce/Resources/GoogleService-Info.plist
 ```
 
 Each developer and CI/CD runner must obtain these files from a secure source (see Section 9).
@@ -104,7 +104,7 @@ After placing the files, verify each contains the correct project/bundle IDs.
     {
       "client_info": {
         "android_client_info": {
-          "package_name": "com.molt.marketplace.debug"
+          "package_name": "com.xirigo.ecommerce.debug"
         }
       }
     }
@@ -115,7 +115,7 @@ After placing the files, verify each contains the correct project/bundle IDs.
 **GoogleService-Info.plist** — check `BUNDLE_ID`:
 ```xml
 <key>BUNDLE_ID</key>
-<string>com.molt.marketplace.debug</string>
+<string>com.xirigo.ecommerce.debug</string>
 ```
 
 ---
@@ -165,7 +165,7 @@ dependencies {
 }
 ```
 
-No call to `FirebaseApp.initializeApp()` is required in `MoltApplication.kt`.
+No call to `FirebaseApp.initializeApp()` is required in `XGApplication.kt`.
 
 ---
 
@@ -173,18 +173,18 @@ No call to `FirebaseApp.initializeApp()` is required in `MoltApplication.kt`.
 
 ### SPM Dependency
 
-Firebase is declared as an SPM dependency. The relevant packages are pulled from the Firebase Apple SDK. The iOS app scaffold at `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/MoltMarketplaceApp.swift` does not yet call `FirebaseApp.configure()`. Add this call as shown below.
+Firebase is declared as an SPM dependency. The relevant packages are pulled from the Firebase Apple SDK. The iOS app scaffold at `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` does not yet call `FirebaseApp.configure()`. Add this call as shown below.
 
 ### Add FirebaseCore Import and Configure Call
 
-Edit `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/MoltMarketplaceApp.swift`:
+Edit `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift`:
 
 ```swift
 import SwiftUI
 import FirebaseCore
 
 @main
-struct MoltMarketplaceApp: App {
+struct XiriGoEcommerceApp: App {
 
     init() {
         FirebaseApp.configure()
@@ -205,8 +205,8 @@ struct MoltMarketplaceApp: App {
 
 After downloading `GoogleService-Info.plist`:
 
-1. In Xcode, drag `GoogleService-Info.plist` into the `MoltMarketplace/Resources/` group.
-2. In the file addition dialog, ensure **Add to target: MoltMarketplace** is checked.
+1. In Xcode, drag `GoogleService-Info.plist` into the `XiriGoEcommerce/Resources/` group.
+2. In the file addition dialog, ensure **Add to target: XiriGoEcommerce** is checked.
 3. Verify the file appears under **Build Phases > Copy Bundle Resources** in the target settings.
 
 ---
@@ -398,7 +398,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
 
-// In MoltApplication or an AppInitializer
+// In XGApplication or an AppInitializer
 val remoteConfig = Firebase.remoteConfig
 
 val configSettings = remoteConfigSettings {
@@ -426,7 +426,7 @@ val reviewsEnabled  = Firebase.remoteConfig.getBoolean("feature_reviews_enabled"
 
 ### iOS — Remote Config Setup
 
-Create a `RemoteConfigDefaults.plist` file at `ios/MoltMarketplace/Resources/RemoteConfigDefaults.plist`:
+Create a `RemoteConfigDefaults.plist` file at `ios/XiriGoEcommerce/Resources/RemoteConfigDefaults.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -517,7 +517,7 @@ Firebase.crashlytics.log("User tapped Add to Cart for product $productId")
 
 Crashlytics requires dSYM files for symbolication (translating memory addresses to readable stack traces). Add the upload script as a build phase in Xcode:
 
-1. In Xcode, select the **MoltMarketplace** target.
+1. In Xcode, select the **XiriGoEcommerce** target.
 2. Go to **Build Phases**.
 3. Click **+** and choose **New Run Script Phase**.
 4. Name it `Upload Crashlytics dSYMs`.
@@ -572,13 +572,13 @@ The build variants in `android/app/build.gradle.kts` use different `applicationI
 ```kotlin
 buildTypes {
     debug {
-        applicationIdSuffix = ".debug"     // matches com.molt.marketplace.debug in firebase-dev
+        applicationIdSuffix = ".debug"     // matches com.xirigo.ecommerce.debug in firebase-dev
     }
     create("staging") {
-        applicationIdSuffix = ".staging"   // matches com.molt.marketplace.staging in firebase-staging
+        applicationIdSuffix = ".staging"   // matches com.xirigo.ecommerce.staging in firebase-staging
     }
     release {
-        // no suffix                        // matches com.molt.marketplace in firebase-prod
+        // no suffix                        // matches com.xirigo.ecommerce in firebase-prod
     }
 }
 ```
@@ -591,7 +591,7 @@ Steps for a new developer:
 
 1. Request access to the Firebase dev project config files from the team lead.
 2. Place `google-services.json` at `android/app/google-services.json`.
-3. Place `GoogleService-Info.plist` at `ios/MoltMarketplace/Resources/GoogleService-Info.plist`.
+3. Place `GoogleService-Info.plist` at `ios/XiriGoEcommerce/Resources/GoogleService-Info.plist`.
 4. Verify both files are listed in `.gitignore` and are not staged for commit:
    ```bash
    git status  # these files must NOT appear here
@@ -629,7 +629,7 @@ Store config files as GitHub Actions secrets:
 - name: Decode GoogleService-Info.plist (debug)
   run: |
     echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_DEBUG }}" | base64 --decode \
-      > ios/MoltMarketplace/Resources/GoogleService-Info.plist
+      > ios/XiriGoEcommerce/Resources/GoogleService-Info.plist
 ```
 
 Use the appropriate secret name (`_DEBUG`, `_STAGING`, or `_RELEASE`) based on the build variant being assembled in that workflow job.
@@ -640,13 +640,13 @@ Use the appropriate secret name (`_DEBUG`, `_STAGING`, or `_RELEASE`) based on t
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts` | Firebase BOM + service dependencies, build variants |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` | Firebase BOM version (`33.8.0`), plugin declarations |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/build.gradle.kts` | `gms` and `firebase-crashlytics` plugin declarations |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/MoltMarketplaceApp.swift` | Add `FirebaseApp.configure()` here |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Config.swift` | App version for force update comparison |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/.gitignore` | Add Firebase config files here |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/build.gradle.kts` | Firebase BOM + service dependencies, build variants |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml` | Firebase BOM version (`33.8.0`), plugin declarations |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/build.gradle.kts` | `gms` and `firebase-crashlytics` plugin declarations |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` | Add `FirebaseApp.configure()` here |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift` | App version for force update comparison |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/.gitignore` | Add Firebase config files here |
 | `android/app/google-services.json` | Android Firebase config — gitignored, from secure storage |
-| `ios/MoltMarketplace/Resources/GoogleService-Info.plist` | iOS Firebase config — gitignored, from secure storage |
+| `ios/XiriGoEcommerce/Resources/GoogleService-Info.plist` | iOS Firebase config — gitignored, from secure storage |
 | `android/app/src/main/res/xml/remote_config_defaults.xml` | Remote Config default values (Android) |
-| `ios/MoltMarketplace/Resources/RemoteConfigDefaults.plist` | Remote Config default values (iOS) |
+| `ios/XiriGoEcommerce/Resources/RemoteConfigDefaults.plist` | Remote Config default values (iOS) |

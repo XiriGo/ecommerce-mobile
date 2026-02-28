@@ -2,7 +2,7 @@
 
 ## Overview
 
-The app-scaffold feature establishes the complete foundational project structure for the Molt Marketplace mobile buyer app on both Android and iOS platforms. This scaffold provides the base architecture, dependency management, design system theme shell, localization framework, and build configuration required for all future features.
+The app-scaffold feature establishes the complete foundational project structure for the XiriGo Ecommerce mobile buyer app on both Android and iOS platforms. This scaffold provides the base architecture, dependency management, design system theme shell, localization framework, and build configuration required for all future features.
 
 **Status**: Complete
 **Phase**: M0 (Foundation)
@@ -27,7 +27,7 @@ The app-scaffold feature establishes the complete foundational project structure
    - Color constants from design tokens
    - Typography styles
    - Spacing constants
-   - Theme wrapper components (MoltTheme)
+   - Theme wrapper components (XGTheme)
 
 4. **Localization Framework**
    - Support for three languages: English, Maltese, Turkish
@@ -40,8 +40,8 @@ The app-scaffold feature establishes the complete foundational project structure
    - iOS: Factory container setup
 
 6. **Application Entry Point**
-   - Android: MoltApplication + MainActivity with splash screen
-   - iOS: MoltMarketplaceApp + Config with launch screen
+   - Android: XGApplication + MainActivity with splash screen
+   - iOS: XiriGoEcommerceApp + Config with launch screen
 
 ## Android Implementation
 
@@ -59,14 +59,14 @@ The app-scaffold feature establishes the complete foundational project structure
 **Application Files**
 - `/android/app/src/main/AndroidManifest.xml` — Main manifest
 - `/android/app/src/debug/AndroidManifest.xml` — Debug manifest
-- `/android/app/src/main/java/com/molt/marketplace/MoltApplication.kt` — @HiltAndroidApp entry
-- `/android/app/src/main/java/com/molt/marketplace/MainActivity.kt` — @AndroidEntryPoint main activity
+- `/android/app/src/main/java/com/xirigo/ecommerce/XGApplication.kt` — @HiltAndroidApp entry
+- `/android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt` — @AndroidEntryPoint main activity
 
 **Design System Theme**
-- `/android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltColors.kt`
-- `/android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltTypography.kt`
-- `/android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltSpacing.kt`
-- `/android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltTheme.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGColors.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGTypography.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacing.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGTheme.kt`
 
 **Resources**
 - `/android/app/src/main/res/values/strings.xml` — English strings
@@ -82,9 +82,9 @@ The app-scaffold feature establishes the complete foundational project structure
 
 | Build Type | Base URL | Debuggable | Minify | App ID Suffix |
 |-----------|----------|------------|--------|---------------|
-| debug | https://api-dev.molt.mt | true | false | .debug |
-| staging | https://api-staging.molt.mt | true | false | .staging |
-| release | https://api.molt.mt | false | true (R8) | none |
+| debug | https://api-dev.xirigo.com | true | false | .debug |
+| staging | https://api-staging.xirigo.com | true | false | .staging |
+| release | https://api.xirigo.com | false | true (R8) | none |
 
 ### SDK Versions
 
@@ -111,25 +111,25 @@ The app-scaffold feature establishes the complete foundational project structure
 
 ### Design System Theme
 
-**MoltColors.kt** — 67 color constants:
+**XGColors.kt** — 67 color constants:
 - Primary, secondary, tertiary palettes (light + dark)
 - Error colors
 - Surface and background colors
 - Semantic colors (success, warning)
 - E-commerce specific colors (priceRegular, priceSale, priceOriginal, ratingStarFilled, ratingStarEmpty, badgeBackground, badgeText, divider, shimmer)
 
-**MoltTypography.kt** — 15 text styles:
+**XGTypography.kt** — 15 text styles:
 - Display (Large, Medium, Small)
 - Headline (Large, Medium, Small)
 - Title (Large, Medium, Small)
 - Body (Large, Medium, Small)
 - Label (Large, Medium, Small)
 
-**MoltSpacing.kt** — 16 spacing constants:
+**XGSpacing.kt** — 16 spacing constants:
 - Base spacing: XXS (2dp) to XXXL (64dp)
 - Layout spacing: ScreenPaddingHorizontal, CardPadding, ListItemSpacing, SectionSpacing, ProductGridSpacing, MinTouchTarget
 
-**MoltTheme.kt** — @Composable wrapper applying Material 3 theme with custom color scheme and typography
+**XGTheme.kt** — @Composable wrapper applying Material 3 theme with custom color scheme and typography
 
 ### Localization
 
@@ -154,43 +154,43 @@ All strings follow `<feature>_<screen>_<element>_<description>` naming conventio
 ### File Structure (13 files)
 
 **Application Files**
-- `/ios/MoltMarketplace/MoltMarketplaceApp.swift` — SwiftUI @main entry
-- `/ios/MoltMarketplace/Config.swift` — Environment configuration
+- `/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` — SwiftUI @main entry
+- `/ios/XiriGoEcommerce/Config.swift` — Environment configuration
 
 **Design System Theme**
-- `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltColors.swift`
-- `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTypography.swift`
-- `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltSpacing.swift`
-- `/ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTheme.swift`
+- `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGColors.swift`
+- `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTypography.swift`
+- `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGSpacing.swift`
+- `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTheme.swift`
 
 **DI**
-- `/ios/MoltMarketplace/Core/DI/Container+Extensions.swift` — Factory container
+- `/ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift` — Factory container
 
 **Resources**
-- `/ios/MoltMarketplace/Resources/Localizable.xcstrings` — String Catalog
-- `/ios/MoltMarketplace/Resources/Info.plist` — App configuration
+- `/ios/XiriGoEcommerce/Resources/Localizable.xcstrings` — String Catalog
+- `/ios/XiriGoEcommerce/Resources/Info.plist` — App configuration
 
 **Configuration**
-- `/ios/MoltMarketplace/Configuration/Debug.xcconfig`
-- `/ios/MoltMarketplace/Configuration/Staging.xcconfig`
-- `/ios/MoltMarketplace/Configuration/Release.xcconfig`
+- `/ios/XiriGoEcommerce/Configuration/Debug.xcconfig`
+- `/ios/XiriGoEcommerce/Configuration/Staging.xcconfig`
+- `/ios/XiriGoEcommerce/Configuration/Release.xcconfig`
 
 **Project Files**
 - `/ios/Package.swift` — SPM dependencies
-- `/ios/MoltMarketplace.xcodeproj/project.pbxproj` — Xcode project (requires manual setup)
+- `/ios/XiriGoEcommerce.xcodeproj/project.pbxproj` — Xcode project (requires manual setup)
 
 ### Build Configurations
 
 | Configuration | Base URL | Build Settings |
 |--------------|----------|----------------|
-| Debug | https://api-dev.molt.mt | Debuggable, no optimization |
-| Staging | https://api-staging.molt.mt | Debuggable, no optimization |
-| Release | https://api.molt.mt | Optimized, bitcode enabled |
+| Debug | https://api-dev.xirigo.com | Debuggable, no optimization |
+| Staging | https://api-staging.xirigo.com | Debuggable, no optimization |
+| Release | https://api.xirigo.com | Optimized, bitcode enabled |
 
 Bundle IDs correctly suffixed per environment:
-- Debug: `com.molt.marketplace.debug`
-- Staging: `com.molt.marketplace.staging`
-- Release: `com.molt.marketplace`
+- Debug: `com.xirigo.ecommerce.debug`
+- Staging: `com.xirigo.ecommerce.staging`
+- Release: `com.xirigo.ecommerce`
 
 ### Platform Versions
 
@@ -214,20 +214,20 @@ Bundle IDs correctly suffixed per environment:
 
 ### Design System Theme
 
-**MoltColors.swift** — 32 color constants:
+**XGColors.swift** — 32 color constants:
 - Primary palette (primary, onPrimary, primaryContainer, onPrimaryContainer)
 - Semantic colors (success, onSuccess, warning, error)
 - E-commerce colors (priceRegular, priceSale, priceOriginal, ratingStarFilled, ratingStarEmpty, badgeBackground, badgeText, divider, shimmer)
 - Hex string to Color conversion extension
 
-**MoltTypography.swift** — 15 text styles matching Android:
+**XGTypography.swift** — 15 text styles matching Android:
 - Display, Headline, Title, Body, Label (Large, Medium, Small variants)
 
-**MoltSpacing.swift** — 16 spacing constants matching Android:
+**XGSpacing.swift** — 16 spacing constants matching Android:
 - Base spacing: xxs (2pt) to xxxl (64pt)
 - Layout spacing: screenPaddingHorizontal, cardPadding, listItemSpacing, sectionSpacing, productGridSpacing, minTouchTarget (44pt for Apple HIG)
 
-**MoltTheme.swift** — ViewModifier applying theme colors and typography
+**XGTheme.swift** — ViewModifier applying theme colors and typography
 
 ### Localization
 
@@ -240,38 +240,38 @@ Format: Single `.xcstrings` file, Xcode manages all translations.
 ### Android Tests (33 test methods)
 
 **Unit Tests** (5 files):
-1. `MoltColorsTest.kt` — 11 tests, 67 color assertions
-2. `MoltSpacingTest.kt` — 4 tests, 16 spacing assertions
+1. `XGColorsTest.kt` — 11 tests, 67 color assertions
+2. `XGSpacingTest.kt` — 4 tests, 16 spacing assertions
 3. `BuildConfigTest.kt` — 6 tests (API URL, version, build type)
 4. `StringResourcesTest.kt` — 9 tests (en/mt/tr localization)
-5. `MoltApplicationTest.kt` — 3 tests (Hilt, Timber setup)
+5. `XGApplicationTest.kt` — 3 tests (Hilt, Timber setup)
 
 **Framework**: JUnit 4 + Truth assertions
 **Coverage**: 100% of tested components
 
 **Test Locations**:
-- `/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltColorsTest.kt`
-- `/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltSpacingTest.kt`
-- `/android/app/src/test/java/com/molt/marketplace/BuildConfigTest.kt`
-- `/android/app/src/test/java/com/molt/marketplace/StringResourcesTest.kt`
-- `/android/app/src/test/java/com/molt/marketplace/MoltApplicationTest.kt`
+- `/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGColorsTest.kt`
+- `/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacingTest.kt`
+- `/android/app/src/test/java/com/xirigo/ecommerce/BuildConfigTest.kt`
+- `/android/app/src/test/java/com/xirigo/ecommerce/StringResourcesTest.kt`
+- `/android/app/src/test/java/com/xirigo/ecommerce/XGApplicationTest.kt`
 
 ### iOS Tests (50 test methods)
 
 **Unit Tests** (4 files):
 1. `ConfigTests.swift` — 7 tests (environment URLs, versioning)
-2. `MoltColorsTests.swift` — 17 tests (color validation, hex parsing, contrast ratios)
-3. `MoltSpacingTests.swift` — 16 tests (spacing values, accessibility)
+2. `XGColorsTests.swift` — 17 tests (color validation, hex parsing, contrast ratios)
+3. `XGSpacingTests.swift` — 16 tests (spacing values, accessibility)
 4. `LocalizableTests.swift` — 17 tests (localization completeness for all 3 languages)
 
 **Framework**: Swift Testing (@Test macro)
 **Coverage**: 100% of testable scaffold code
 
 **Test Locations**:
-- `/ios/MoltMarketplaceTests/ConfigTests.swift`
-- `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltColorsTests.swift`
-- `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltSpacingTests.swift`
-- `/ios/MoltMarketplaceTests/Resources/LocalizableTests.swift`
+- `/ios/XiriGoEcommerceTests/ConfigTests.swift`
+- `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGColorsTests.swift`
+- `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGSpacingTests.swift`
+- `/ios/XiriGoEcommerceTests/Resources/LocalizableTests.swift`
 
 ### Test Coverage Summary
 
@@ -367,28 +367,28 @@ Both limitations are expected for M0-01. Assets and complete configuration will 
 Implement reusable UI components that reference the theme shell created here:
 
 **Android** (`core/designsystem/component/`):
-- MoltButton.kt — Primary/Secondary/Text button variants
-- MoltCard.kt — Product card, info card
-- MoltTextField.kt — Text field with label/error
-- MoltTopBar.kt — Top app bar
-- MoltBottomBar.kt — Bottom navigation
-- MoltLoadingView.kt — Full-screen + inline loading
-- MoltErrorView.kt — Error with retry
-- MoltEmptyView.kt — Empty state
-- MoltImage.kt — Coil image with placeholder
-- MoltBadge.kt — Count/status badge
+- XGButton.kt — Primary/Secondary/Text button variants
+- XGCard.kt — Product card, info card
+- XGTextField.kt — Text field with label/error
+- XGTopBar.kt — Top app bar
+- XGBottomBar.kt — Bottom navigation
+- XGLoadingView.kt — Full-screen + inline loading
+- XGErrorView.kt — Error with retry
+- XGEmptyView.kt — Empty state
+- XGImage.kt — Coil image with placeholder
+- XGBadge.kt — Count/status badge
 
 **iOS** (`Core/DesignSystem/Component/`):
-- MoltButton.swift — Primary/Secondary/Text button variants
-- MoltCard.swift — Product card, info card
-- MoltTextField.swift — Text field with label/error
-- MoltTopBar.swift — Navigation bar wrapper
-- MoltTabBar.swift — Tab bar wrapper
-- MoltLoadingView.swift — Full-screen + inline loading
-- MoltErrorView.swift — Error with retry
-- MoltEmptyView.swift — Empty state
-- MoltImage.swift — Nuke image with placeholder
-- MoltBadge.swift — Count/status badge
+- XGButton.swift — Primary/Secondary/Text button variants
+- XGCard.swift — Product card, info card
+- XGTextField.swift — Text field with label/error
+- XGTopBar.swift — Navigation bar wrapper
+- XGTabBar.swift — Tab bar wrapper
+- XGLoadingView.swift — Full-screen + inline loading
+- XGErrorView.swift — Error with retry
+- XGEmptyView.swift — Empty state
+- XGImage.swift — Nuke image with placeholder
+- XGBadge.swift — Count/status badge
 
 ### M0-03: Network Layer
 
@@ -422,17 +422,17 @@ Add authentication foundations:
 ## Design Transition Strategy
 
 This scaffold implements **Phase 1: Dummy Screens** as per CLAUDE.md:
-- Uses Material 3 defaults (Android) and system styles (iOS) via MoltTheme
-- All colors/spacing from MoltColors/MoltSpacing (design tokens)
-- Feature screens will use Molt* design system components
+- Uses Material 3 defaults (Android) and system styles (iOS) via XGTheme
+- All colors/spacing from XGColors/XGSpacing (design tokens)
+- Feature screens will use XG* design system components
 - Focus on architecture and business logic, not pixel-perfect design
 
 **When Figma designs arrive (Phase 2)**:
 
 Only these files change:
 - `shared/design-tokens/*.json` — New color, typography, spacing values
-- `core/designsystem/theme/Molt*.kt` / `.swift` — Updated theme constants
-- `core/designsystem/component/Molt*.kt` / `.swift` — Visual appearance tweaks
+- `core/designsystem/theme/XG*.kt` / `.swift` — Updated theme constants
+- `core/designsystem/component/XG*.kt` / `.swift` — Visual appearance tweaks
 - `res/drawable/` / `Assets.xcassets` — New icons and illustrations
 
 **What NEVER changes**: ViewModels, UseCases, Repositories, DTOs, domain models, navigation, API integration, tests.
@@ -447,13 +447,13 @@ Only these files change:
 
 ## Documentation References
 
-- **Architecture Spec**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/shared/feature-specs/app-scaffold.md`
-- **CLAUDE.md Standards**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/CLAUDE.md`
-- **Android Handoff**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/pipeline/app-scaffold-android-dev.handoff.md`
-- **iOS Handoff**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/pipeline/app-scaffold-ios-dev.handoff.md`
-- **Android Test Handoff**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/pipeline/app-scaffold-android-test.handoff.md`
-- **iOS Test Handoff**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/pipeline/app-scaffold-ios-test.handoff.md`
-- **Architect Handoff**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/pipeline/app-scaffold-architect.handoff.md`
+- **Architecture Spec**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/shared/feature-specs/app-scaffold.md`
+- **CLAUDE.md Standards**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/CLAUDE.md`
+- **Android Handoff**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/pipeline/app-scaffold-android-dev.handoff.md`
+- **iOS Handoff**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/pipeline/app-scaffold-ios-dev.handoff.md`
+- **Android Test Handoff**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/pipeline/app-scaffold-android-test.handoff.md`
+- **iOS Test Handoff**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/pipeline/app-scaffold-ios-test.handoff.md`
+- **Architect Handoff**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/pipeline/app-scaffold-architect.handoff.md`
 
 ---
 

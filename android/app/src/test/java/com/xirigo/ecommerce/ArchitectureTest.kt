@@ -16,7 +16,7 @@ import java.io.File
  */
 class ArchitectureTest {
 
-    private val sourceRoot = File("src/main/java/com/molt/marketplace")
+    private val sourceRoot = File("src/main/java/com/xirigo/ecommerce")
 
     private fun findKotlinFiles(directory: File): List<File> {
         if (!directory.exists()) return emptyList()

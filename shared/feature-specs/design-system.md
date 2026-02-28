@@ -12,21 +12,21 @@
 
 ## 1. Overview
 
-The Molt Design System is the shared UI component library for both Android (Jetpack Compose) and iOS (SwiftUI). It provides a single source of truth for visual tokens (colors, typography, spacing) and reusable UI components (`Molt*` wrappers) that all feature screens consume.
+The XiriGo Design System is the shared UI component library for both Android (Jetpack Compose) and iOS (SwiftUI). It provides a single source of truth for visual tokens (colors, typography, spacing) and reusable UI components (`XG*` wrappers) that all feature screens consume.
 
-**Key principle**: Feature screens never import raw platform components (Material 3, SwiftUI primitives). They only import `Molt*` components from `core/designsystem`. When Figma designs arrive, only files under `core/designsystem/` change. Zero feature-screen edits needed.
+**Key principle**: Feature screens never import raw platform components (Material 3, SwiftUI primitives). They only import `XG*` components from `core/designsystem`. When Figma designs arrive, only files under `core/designsystem/` change. Zero feature-screen edits needed.
 
 ### Token Pipeline
 
 ```
 shared/design-tokens/*.json  -->  core/designsystem/theme/  -->  core/designsystem/component/  -->  feature/*/presentation/
-        (source)                    (platform constants)           (Molt* wrappers)                  (consumers)
+        (source)                    (platform constants)           (XG* wrappers)                  (consumers)
 ```
 
 ### Dependencies
 
 - **Depends on**: M0-01 App Scaffold (project structure, Gradle/SPM config)
-- **Blocks**: All M1+ features (every screen uses Molt* components)
+- **Blocks**: All M1+ features (every screen uses XG* components)
 
 ---
 
@@ -221,7 +221,7 @@ Font weight mapping:
 
 ## 3. Component Catalog
 
-### 3.1 MoltButton
+### 3.1 XGButton
 
 **Description**: Standard action button with multiple visual variants and a loading state.
 
@@ -231,14 +231,14 @@ Font weight mapping:
 |-----------|------|---------|-------------|
 | `text` / `title` | `String` | required | Button label text (localized) |
 | `onClick` / `action` | `() -> Unit` / `() -> Void` | required | Tap callback |
-| `style` | `MoltButtonStyle` | `.primary` | Visual variant |
+| `style` | `XGButtonStyle` | `.primary` | Visual variant |
 | `enabled` | `Boolean` / `Bool` | `true` | Interactive state |
 | `loading` | `Boolean` / `Bool` | `false` | Shows spinner, disables interaction |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 | `leadingIcon` | `ImageVector?` / `String?` | `null` / `nil` | Optional leading icon |
 | `fullWidth` | `Boolean` / `Bool` | `true` (primary/secondary), `false` (text) | Stretch to fill width |
 
-#### MoltButtonStyle Enum
+#### XGButtonStyle Enum
 
 | Value | Android Mapping | iOS Mapping | Visual |
 |-------|-----------------|-------------|--------|
@@ -261,12 +261,12 @@ Font weight mapping:
 
 #### Platform-Specific Notes
 
-- Android: Minimum height `MoltSpacing.MinTouchTarget` (48dp). Uses `MaterialTheme.colorScheme` for colors.
-- iOS: Minimum height `MoltSpacing.minTouchTarget` (44pt). Uses native `ButtonStyle` conformance.
+- Android: Minimum height `XGSpacing.MinTouchTarget` (48dp). Uses `MaterialTheme.colorScheme` for colors.
+- iOS: Minimum height `XGSpacing.minTouchTarget` (44pt). Uses native `ButtonStyle` conformance.
 
 ---
 
-### 3.2 MoltTextField
+### 3.2 XGTextField
 
 **Description**: Text input field with label, error message, helper text, and optional icons.
 
@@ -305,12 +305,12 @@ Font weight mapping:
 
 #### Platform-Specific Notes
 
-- Android: Wraps `OutlinedTextField`. Corner radius `MoltCornerRadius.medium` (8dp).
+- Android: Wraps `OutlinedTextField`. Corner radius `XGCornerRadius.medium` (8dp).
 - iOS: Custom `TextField` wrapper with `.textFieldStyle(.roundedBorder)` appearance overridden. Uses `@FocusState` for focus management.
 
 ---
 
-### 3.3 MoltCard
+### 3.3 XGCard
 
 **Description**: Container component for displaying content cards in different layouts.
 
@@ -369,12 +369,12 @@ Font weight mapping:
 
 #### Platform-Specific Notes
 
-- Android: Wraps `Card` composable. Padding `MoltSpacing.CardPadding`. Corner radius `MoltCornerRadius.medium`.
+- Android: Wraps `Card` composable. Padding `XGSpacing.CardPadding`. Corner radius `XGCornerRadius.medium`.
 - iOS: Wraps content in `VStack` with `.background(RoundedRectangle)`. Shadow from elevation token.
 
 ---
 
-### 3.4 MoltChip
+### 3.4 XGChip
 
 **Description**: Compact element for filters, categories, and selections.
 
@@ -412,12 +412,12 @@ Font weight mapping:
 
 #### Platform-Specific Notes
 
-- Android: Wraps `FilterChip` (Material 3). Corner radius `MoltCornerRadius.small`.
-- iOS: Custom `Button` with capsule shape. Uses `MoltColors.secondaryContainer` when selected.
+- Android: Wraps `FilterChip` (Material 3). Corner radius `XGCornerRadius.small`.
+- iOS: Custom `Button` with capsule shape. Uses `XGColors.secondaryContainer` when selected.
 
 ---
 
-### 3.5 MoltTopBar
+### 3.5 XGTopBar
 
 **Description**: Top application bar with navigation and action buttons.
 
@@ -427,10 +427,10 @@ Font weight mapping:
 |-----------|------|---------|-------------|
 | `title` | `String` | required | Bar title text |
 | `onBackClick` | `(() -> Unit)?` / `(() -> Void)?` | `nil` | Back button callback (nil = no back button) |
-| `actions` | `@Composable RowScope.() -> Unit` / `[MoltTopBarAction]` | empty | Action buttons (right side) |
+| `actions` | `@Composable RowScope.() -> Unit` / `[XGTopBarAction]` | empty | Action buttons (right side) |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-#### MoltTopBarAction (iOS convenience)
+#### XGTopBarAction (iOS convenience)
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -451,7 +451,7 @@ Font weight mapping:
 
 ---
 
-### 3.6 MoltBottomBar (Android) / MoltTabBar (iOS)
+### 3.6 XGBottomBar (Android) / XGTabBar (iOS)
 
 **Description**: Bottom tab navigation bar with tab items and optional badge counts.
 
@@ -459,12 +459,12 @@ Font weight mapping:
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `items` | `List<MoltTabItem>` / `[MoltTabItem]` | required | Tab definitions |
+| `items` | `List<XGTabItem>` / `[XGTabItem]` | required | Tab definitions |
 | `selectedIndex` | `Int` | required | Currently selected tab index |
 | `onTabSelected` | `(Int) -> Unit` / `(Int) -> Void` | required | Tab selection callback |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-#### MoltTabItem
+#### XGTabItem
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -494,13 +494,13 @@ Font weight mapping:
 
 ---
 
-### 3.7 MoltLoadingView
+### 3.7 XGLoadingView
 
 **Description**: Loading state indicators for full-screen and inline contexts.
 
 #### Variants
 
-##### MoltLoadingView (Full Screen)
+##### XGLoadingView (Full Screen)
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -528,7 +528,7 @@ Horizontally centered, smaller indicator for list footers and inline loading.
 
 ---
 
-### 3.8 MoltErrorView
+### 3.8 XGErrorView
 
 **Description**: Error state display with message and optional retry action.
 
@@ -558,12 +558,12 @@ Horizontally centered, smaller indicator for list footers and inline loading.
 
 #### Platform-Specific Notes
 
-- Android: Error icon = `Icons.Outlined.ErrorOutline`. Retry button uses `MoltButton`.
-- iOS: Error icon = SF Symbol `exclamationmark.circle`. Retry button uses `MoltButton`.
+- Android: Error icon = `Icons.Outlined.ErrorOutline`. Retry button uses `XGButton`.
+- iOS: Error icon = SF Symbol `exclamationmark.circle`. Retry button uses `XGButton`.
 
 ---
 
-### 3.9 MoltEmptyView
+### 3.9 XGEmptyView
 
 **Description**: Empty state display with illustration, message, and optional action.
 
@@ -596,7 +596,7 @@ Horizontally centered, smaller indicator for list footers and inline loading.
 
 ---
 
-### 3.10 MoltImage
+### 3.10 XGImage
 
 **Description**: Async image loader with placeholder and error fallback.
 
@@ -613,7 +613,7 @@ Horizontally centered, smaller indicator for list footers and inline loading.
 
 #### States
 
-- **Loading**: Shimmer color (`MoltColors.shimmer`) solid fill
+- **Loading**: Shimmer color (`XGColors.shimmer`) solid fill
 - **Success**: Actual image with crossfade animation (250ms)
 - **Error**: Same shimmer color as placeholder (or `R.drawable.placeholder` on Android)
 
@@ -629,7 +629,7 @@ Horizontally centered, smaller indicator for list footers and inline loading.
 
 ---
 
-### 3.11 MoltBadge
+### 3.11 XGBadge
 
 **Description**: Small count or status indicator badge, typically overlaid on icons.
 
@@ -651,19 +651,19 @@ Display logic:
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `status` | `MoltBadgeStatus` | required | Status type |
+| `status` | `XGBadgeStatus` | required | Status type |
 | `label` | `String` | required | Status text (localized) |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-#### MoltBadgeStatus Enum
+#### XGBadgeStatus Enum
 
 | Value | Background | Text Color | Usage |
 |-------|-----------|------------|-------|
-| `success` | `MoltColors.success` | `MoltColors.onSuccess` | Order delivered, in stock |
-| `warning` | `MoltColors.warning` | `MoltColors.onWarning` | Low stock, pending |
-| `error` | `MoltColors.error` | `MoltColors.onError` | Out of stock, cancelled |
-| `info` | `MoltColors.info` | `MoltColors.onInfo` | Processing, info |
-| `neutral` | `MoltColors.surfaceVariant` | `MoltColors.onSurfaceVariant` | Default status |
+| `success` | `XGColors.success` | `XGColors.onSuccess` | Order delivered, in stock |
+| `warning` | `XGColors.warning` | `XGColors.onWarning` | Low stock, pending |
+| `error` | `XGColors.error` | `XGColors.onError` | Out of stock, cancelled |
+| `info` | `XGColors.info` | `XGColors.onInfo` | Processing, info |
+| `neutral` | `XGColors.surfaceVariant` | `XGColors.onSurfaceVariant` | Default status |
 
 #### Accessibility
 
@@ -677,7 +677,7 @@ Display logic:
 
 ---
 
-### 3.12 MoltRatingBar
+### 3.12 XGRatingBar
 
 **Description**: Read-only star rating display showing a value between 1 and 5.
 
@@ -713,12 +713,12 @@ For each star position `i` (1-based):
 
 #### Platform-Specific Notes
 
-- Android: Custom composable with `Canvas` or `Icon` per star. Uses `MoltColors.RatingStarFilled` / `MoltColors.RatingStarEmpty`.
+- Android: Custom composable with `Canvas` or `Icon` per star. Uses `XGColors.RatingStarFilled` / `XGColors.RatingStarEmpty`.
 - iOS: `HStack` of `Image(systemName: "star.fill")` / `Image(systemName: "star.leadinghalf.filled")` / `Image(systemName: "star")`.
 
 ---
 
-### 3.13 MoltPriceText
+### 3.13 XGPriceText
 
 **Description**: Formatted price display with currency symbol, sale price, and strikethrough for original price.
 
@@ -729,10 +729,10 @@ For each star position `i` (1-based):
 | `price` | `String` | required | Formatted current price (e.g., "29.99") |
 | `originalPrice` | `String?` | `nil` | Original price before discount |
 | `currencySymbol` | `String` | `"EUR"` | Currency symbol/code |
-| `size` | `MoltPriceSize` | `.medium` | Text size variant |
+| `size` | `XGPriceSize` | `.medium` | Text size variant |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-#### MoltPriceSize Enum
+#### XGPriceSize Enum
 
 | Value | Price Style | Original Price Style |
 |-------|------------|---------------------|
@@ -772,7 +772,7 @@ EUR 29.99
 
 ---
 
-### 3.14 MoltQuantityStepper
+### 3.14 XGQuantityStepper
 
 **Description**: Increment/decrement control for item quantities.
 
@@ -812,64 +812,64 @@ EUR 29.99
 
 ### 4.1 Android
 
-**Root**: `android/app/src/main/java/com/molt/marketplace/core/designsystem/`
+**Root**: `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/`
 
 ```
 core/designsystem/
   theme/
-    MoltColors.kt          -- Color object (light, dark, semantic) from colors.json
-    MoltTypography.kt      -- Typography object from typography.json
-    MoltSpacing.kt         -- Spacing object from spacing.json
-    MoltCornerRadius.kt    -- Corner radius object from spacing.json
-    MoltElevation.kt       -- Elevation object from spacing.json
-    MoltTheme.kt           -- @Composable MoltTheme wrapper (applies colorScheme + typography)
+    XGColors.kt          -- Color object (light, dark, semantic) from colors.json
+    XGTypography.kt      -- Typography object from typography.json
+    XGSpacing.kt         -- Spacing object from spacing.json
+    XGCornerRadius.kt    -- Corner radius object from spacing.json
+    XGElevation.kt       -- Elevation object from spacing.json
+    XGTheme.kt           -- @Composable XGTheme wrapper (applies colorScheme + typography)
   component/
-    MoltButton.kt          -- MoltButton + MoltButtonStyle enum
-    MoltTextField.kt       -- MoltTextField
-    MoltCard.kt            -- MoltProductCard + MoltInfoCard
-    MoltChip.kt            -- MoltFilterChip + MoltCategoryChip
-    MoltTopBar.kt          -- MoltTopBar
-    MoltBottomBar.kt       -- MoltBottomBar + MoltTabItem
-    MoltLoadingView.kt     -- MoltLoadingView + MoltLoadingIndicator
-    MoltErrorView.kt       -- MoltErrorView
-    MoltEmptyView.kt       -- MoltEmptyView
-    MoltImage.kt           -- MoltImage
-    MoltBadge.kt           -- MoltCountBadge + MoltStatusBadge + MoltBadgeStatus enum
-    MoltRatingBar.kt       -- MoltRatingBar
-    MoltPriceText.kt       -- MoltPriceText + MoltPriceSize enum
-    MoltQuantityStepper.kt -- MoltQuantityStepper
+    XGButton.kt          -- XGButton + XGButtonStyle enum
+    XGTextField.kt       -- XGTextField
+    XGCard.kt            -- MoltProductCard + MoltInfoCard
+    XGChip.kt            -- MoltFilterChip + MoltCategoryChip
+    XGTopBar.kt          -- XGTopBar
+    XGBottomBar.kt       -- XGBottomBar + XGTabItem
+    XGLoadingView.kt     -- XGLoadingView + MoltLoadingIndicator
+    XGErrorView.kt       -- XGErrorView
+    XGEmptyView.kt       -- XGEmptyView
+    XGImage.kt           -- XGImage
+    XGBadge.kt           -- MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum
+    XGRatingBar.kt       -- XGRatingBar
+    XGPriceText.kt       -- XGPriceText + XGPriceSize enum
+    XGQuantityStepper.kt -- XGQuantityStepper
 ```
 
 **Total files**: 6 theme + 14 component = **20 Kotlin files**
 
 ### 4.2 iOS
 
-**Root**: `ios/MoltMarketplace/Core/DesignSystem/`
+**Root**: `ios/XiriGoEcommerce/Core/DesignSystem/`
 
 ```
 Core/DesignSystem/
   Theme/
-    MoltColors.swift       -- MoltColors enum (light, dark, semantic) + Color(hex:) extension
-    MoltTypography.swift   -- MoltTypography enum from typography.json
-    MoltSpacing.swift      -- MoltSpacing enum from spacing.json
-    MoltCornerRadius.swift -- MoltCornerRadius enum from spacing.json
-    MoltElevation.swift    -- MoltElevation enum (shadow helpers)
-    MoltTheme.swift        -- MoltTheme ViewModifier (applies color + typography environment)
+    XGColors.swift       -- XGColors enum (light, dark, semantic) + Color(hex:) extension
+    XGTypography.swift   -- XGTypography enum from typography.json
+    XGSpacing.swift      -- XGSpacing enum from spacing.json
+    XGCornerRadius.swift -- XGCornerRadius enum from spacing.json
+    XGElevation.swift    -- XGElevation enum (shadow helpers)
+    XGTheme.swift        -- XGTheme ViewModifier (applies color + typography environment)
   Component/
-    MoltButton.swift       -- MoltButton view + MoltButtonStyle enum
-    MoltTextField.swift    -- MoltTextField view
-    MoltCard.swift         -- MoltProductCard + MoltInfoCard views
-    MoltChip.swift         -- MoltFilterChip + MoltCategoryChip views
-    MoltTopBar.swift       -- MoltTopBar view
-    MoltTabBar.swift       -- MoltTabBar view + MoltTabItem struct
-    MoltLoadingView.swift  -- MoltLoadingView + MoltLoadingIndicator views
-    MoltErrorView.swift    -- MoltErrorView
-    MoltEmptyView.swift    -- MoltEmptyView
-    MoltImage.swift        -- MoltImage view (NukeUI)
-    MoltBadge.swift        -- MoltCountBadge + MoltStatusBadge + MoltBadgeStatus enum
-    MoltRatingBar.swift    -- MoltRatingBar view
-    MoltPriceText.swift    -- MoltPriceText view + MoltPriceSize enum
-    MoltQuantityStepper.swift -- MoltQuantityStepper view
+    XGButton.swift       -- XGButton view + XGButtonStyle enum
+    XGTextField.swift    -- XGTextField view
+    XGCard.swift         -- MoltProductCard + MoltInfoCard views
+    XGChip.swift         -- MoltFilterChip + MoltCategoryChip views
+    XGTopBar.swift       -- XGTopBar view
+    XGTabBar.swift       -- XGTabBar view + XGTabItem struct
+    XGLoadingView.swift  -- XGLoadingView + MoltLoadingIndicator views
+    XGErrorView.swift    -- XGErrorView
+    XGEmptyView.swift    -- XGEmptyView
+    XGImage.swift        -- XGImage view (NukeUI)
+    XGBadge.swift        -- MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum
+    XGRatingBar.swift    -- XGRatingBar view
+    XGPriceText.swift    -- XGPriceText view + XGPriceSize enum
+    XGQuantityStepper.swift -- XGQuantityStepper view
 ```
 
 **Total files**: 6 theme + 14 component = **20 Swift files**
@@ -917,17 +917,17 @@ Every component file must include at least one preview demonstrating:
 ```kotlin
 @Preview(showBackground = true)
 @Composable
-private fun MoltButtonPrimaryPreview() {
-    MoltTheme {
-        MoltButton(text = "Add to Cart", onClick = {})
+private fun XGButtonPrimaryPreview() {
+    XGTheme {
+        XGButton(text = "Add to Cart", onClick = {})
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun MoltButtonLoadingPreview() {
-    MoltTheme {
-        MoltButton(text = "Loading", onClick = {}, loading = true)
+private fun XGButtonLoadingPreview() {
+    XGTheme {
+        XGButton(text = "Loading", onClick = {}, loading = true)
     }
 }
 ```
@@ -935,12 +935,12 @@ private fun MoltButtonLoadingPreview() {
 ### iOS Preview Pattern
 
 ```swift
-#Preview("MoltButton Primary") {
-    MoltButton("Add to Cart") { }
+#Preview("XGButton Primary") {
+    XGButton("Add to Cart") { }
 }
 
-#Preview("MoltButton Loading") {
-    MoltButton("Loading", isLoading: true) { }
+#Preview("XGButton Loading") {
+    XGButton("Loading", isLoading: true) { }
 }
 ```
 
@@ -955,7 +955,7 @@ private fun MoltButtonLoadingPreview() {
 - [ ] All typography styles from `typography.json` mapped to platform text styles
 - [ ] All spacing tokens from `spacing.json` mapped to platform dimension constants
 - [ ] Corner radius and elevation tokens mapped
-- [ ] `MoltTheme` wrapper applies color scheme + typography to content tree
+- [ ] `XGTheme` wrapper applies color scheme + typography to content tree
 
 ### Components
 
@@ -977,7 +977,7 @@ private fun MoltButtonLoadingPreview() {
 ### Previews
 
 - [ ] Every component file has at least one `@Preview` / `#Preview`
-- [ ] Previews wrapped in `MoltTheme`
+- [ ] Previews wrapped in `XGTheme`
 - [ ] Both light and dark previews for theme-dependent components
 
 ### Quality
@@ -997,9 +997,9 @@ private fun MoltButtonLoadingPreview() {
 This spec uses Material 3 defaults and system fonts. When Figma designs arrive:
 
 1. **Update** `shared/design-tokens/*.json` with new values
-2. **Update** theme files (`MoltColors`, `MoltTypography`, `MoltSpacing`) to read new tokens
+2. **Update** theme files (`XGColors`, `XGTypography`, `XGSpacing`) to read new tokens
 3. **Update** component files to match new visual specs (padding, shapes, shadows)
-4. **Do NOT change** any feature screen code -- the `Molt*` API contracts stay stable
+4. **Do NOT change** any feature screen code -- the `XG*` API contracts stay stable
 
 The component API (parameters, callbacks, types) defined in this spec is the stable contract. Visual implementation behind these APIs is what changes when Figma arrives.
 

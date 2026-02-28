@@ -10,41 +10,41 @@
 
 ## Summary
 
-Implemented the complete Molt Design System component library for Android (Jetpack Compose + Material 3). All 14 components plus 2 additional theme files are created, following the architect's spec at `shared/feature-specs/design-system.md`.
+Implemented the complete XiriGo Design System component library for Android (Jetpack Compose + Material 3). All 14 components plus 2 additional theme files are created, following the architect's spec at `shared/feature-specs/design-system.md`.
 
 ## Theme Files Created
 
 | File | Description |
 |------|-------------|
-| `MoltCornerRadius.kt` | Corner radius constants (None, Small, Medium, Large, ExtraLarge, Full) |
-| `MoltElevation.kt` | Elevation constants (Level0 through Level5) |
+| `XGCornerRadius.kt` | Corner radius constants (None, Small, Medium, Large, ExtraLarge, Full) |
+| `XGElevation.kt` | Elevation constants (Level0 through Level5) |
 
 ## Theme Files Updated
 
 | File | Change |
 |------|--------|
-| `MoltColors.kt` | Added missing semantic colors: `OnWarning`, `Info`, `OnInfo` |
+| `XGColors.kt` | Added missing semantic colors: `OnWarning`, `Info`, `OnInfo` |
 
 ## Components Created (14/14)
 
-All files under `android/app/src/main/java/com/molt/marketplace/core/designsystem/component/`:
+All files under `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/`:
 
 | # | File | Components | Previews |
 |---|------|-----------|----------|
-| 1 | `MoltButton.kt` | MoltButton + MoltButtonStyle enum | 4 (primary, secondary, loading, disabled) |
-| 2 | `MoltTextField.kt` | MoltTextField | 3 (default, error, password) |
-| 3 | `MoltCard.kt` | MoltProductCard + MoltInfoCard | 3 (product, wishlisted, info) |
-| 4 | `MoltChip.kt` | MoltFilterChip + MoltCategoryChip | 3 (unselected, selected, category) |
-| 5 | `MoltTopBar.kt` | MoltTopBar | 2 (default, with back) |
-| 6 | `MoltBottomBar.kt` | MoltBottomBar + MoltTabItem | 2 (home selected, cart selected) |
-| 7 | `MoltLoadingView.kt` | MoltLoadingView + MoltLoadingIndicator | 2 (fullscreen, inline) |
-| 8 | `MoltErrorView.kt` | MoltErrorView | 2 (with retry, without retry) |
-| 9 | `MoltEmptyView.kt` | MoltEmptyView | 2 (default, with action) |
-| 10 | `MoltImage.kt` | MoltImage | 2 (placeholder, with URL) |
-| 11 | `MoltBadge.kt` | MoltCountBadge + MoltStatusBadge + MoltBadgeStatus enum | 5 (count, overflow, success, error, warning) |
-| 12 | `MoltRatingBar.kt` | MoltRatingBar | 3 (half star, low, full) |
-| 13 | `MoltPriceText.kt` | MoltPriceText + MoltPriceSize enum | 4 (regular, sale, large, small) |
-| 14 | `MoltQuantityStepper.kt` | MoltQuantityStepper | 3 (normal, min, max) |
+| 1 | `XGButton.kt` | XGButton + XGButtonStyle enum | 4 (primary, secondary, loading, disabled) |
+| 2 | `XGTextField.kt` | XGTextField | 3 (default, error, password) |
+| 3 | `XGCard.kt` | MoltProductCard + MoltInfoCard | 3 (product, wishlisted, info) |
+| 4 | `XGChip.kt` | MoltFilterChip + MoltCategoryChip | 3 (unselected, selected, category) |
+| 5 | `XGTopBar.kt` | XGTopBar | 2 (default, with back) |
+| 6 | `XGBottomBar.kt` | XGBottomBar + XGTabItem | 2 (home selected, cart selected) |
+| 7 | `XGLoadingView.kt` | XGLoadingView + MoltLoadingIndicator | 2 (fullscreen, inline) |
+| 8 | `XGErrorView.kt` | XGErrorView | 2 (with retry, without retry) |
+| 9 | `XGEmptyView.kt` | XGEmptyView | 2 (default, with action) |
+| 10 | `XGImage.kt` | XGImage | 2 (placeholder, with URL) |
+| 11 | `XGBadge.kt` | MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum | 5 (count, overflow, success, error, warning) |
+| 12 | `XGRatingBar.kt` | XGRatingBar | 3 (half star, low, full) |
+| 13 | `XGPriceText.kt` | XGPriceText + XGPriceSize enum | 4 (regular, sale, large, small) |
+| 14 | `XGQuantityStepper.kt` | XGQuantityStepper | 3 (normal, min, max) |
 
 ## Localization
 
@@ -69,49 +69,49 @@ String keys: `common_error_generic`, `common_empty_message`, `common_navigate_ba
 
 ## Design Decisions
 
-1. **Coil 3 Image Loading**: Used `ColorPainter(MoltColors.Shimmer)` for placeholder/error states instead of drawable resource IDs, as Coil 3 API uses `Image` type not resource IDs. This matches the spec's shimmer color approach.
+1. **Coil 3 Image Loading**: Used `ColorPainter(XGColors.Shimmer)` for placeholder/error states instead of drawable resource IDs, as Coil 3 API uses `Image` type not resource IDs. This matches the spec's shimmer color approach.
 2. **Star Rating**: Used `Icons.AutoMirrored.Filled.StarHalf` instead of deprecated `Icons.Filled.StarHalf` for RTL support.
 3. **Composable Complexity**: UI composable functions naturally exceed detekt's default complexity thresholds due to multiple optional parameters and conditional rendering. Added targeted `@Suppress` annotations per function.
-4. **MoltButton fullWidth**: Defaults to `true` for Primary/Secondary styles and `false` for Text style, matching spec behavior.
+4. **XGButton fullWidth**: Defaults to `true` for Primary/Secondary styles and `false` for Text style, matching spec behavior.
 
 ## Architecture Compliance
 
-- All colors from `MoltColors` -- no hardcoded hex values in components
-- All spacing from `MoltSpacing` -- no magic number dp values
-- All corner radii from `MoltCornerRadius`
-- All elevations from `MoltElevation`
+- All colors from `XGColors` -- no hardcoded hex values in components
+- All spacing from `XGSpacing` -- no magic number dp values
+- All corner radii from `XGCornerRadius`
+- All elevations from `XGElevation`
 - All user-facing strings via `stringResource(R.string.xxx)`
 - No `Any` type usage
 - No force unwrap (`!!`)
 - All data classes/enums are immutable
 - Every composable has `modifier: Modifier = Modifier` as first optional parameter
-- Every file has `@Preview` functions wrapped in `MoltTheme`
+- Every file has `@Preview` functions wrapped in `XGTheme`
 - All interactive elements meet 48dp minimum touch target
 - All interactive elements have `contentDescription` for accessibility
 
 ## Files Changed
 
 ```
-android/app/src/main/java/com/molt/marketplace/core/designsystem/
+android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/
   theme/
-    MoltColors.kt                    (modified - added OnWarning, Info, OnInfo)
-    MoltCornerRadius.kt              (new)
-    MoltElevation.kt                 (new)
+    XGColors.kt                    (modified - added OnWarning, Info, OnInfo)
+    XGCornerRadius.kt              (new)
+    XGElevation.kt                 (new)
   component/
-    MoltButton.kt                    (new)
-    MoltTextField.kt                 (new)
-    MoltCard.kt                      (new)
-    MoltChip.kt                      (new)
-    MoltTopBar.kt                    (new)
-    MoltBottomBar.kt                 (new)
-    MoltLoadingView.kt               (new)
-    MoltErrorView.kt                 (new)
-    MoltEmptyView.kt                 (new)
-    MoltImage.kt                     (new)
-    MoltBadge.kt                     (new)
-    MoltRatingBar.kt                 (new)
-    MoltPriceText.kt                 (new)
-    MoltQuantityStepper.kt           (new)
+    XGButton.kt                    (new)
+    XGTextField.kt                 (new)
+    XGCard.kt                      (new)
+    XGChip.kt                      (new)
+    XGTopBar.kt                    (new)
+    XGBottomBar.kt                 (new)
+    XGLoadingView.kt               (new)
+    XGErrorView.kt                 (new)
+    XGEmptyView.kt                 (new)
+    XGImage.kt                     (new)
+    XGBadge.kt                     (new)
+    XGRatingBar.kt                 (new)
+    XGPriceText.kt                 (new)
+    XGQuantityStepper.kt           (new)
 
 android/app/src/main/res/
   values/strings.xml                 (modified - 17 keys added)

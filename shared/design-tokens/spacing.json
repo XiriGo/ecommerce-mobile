@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Molt Marketplace design tokens — Spacing & Layout",
+  "description": "XiriGo Ecommerce design tokens — Spacing & Layout",
   "spacing": {
     "xxs": 2,
     "xs": 4,

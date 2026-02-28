@@ -2,7 +2,7 @@
 
 ## Overview
 
-Auth Infrastructure is the foundational authentication layer for the Molt Marketplace buyer
+Auth Infrastructure is the foundational authentication layer for the XiriGo Ecommerce buyer
 app. It provides secure token storage, auth state management, session lifecycle (create, refresh,
 destroy), and the auth interceptor/middleware integration point used by the network layer (M0-03).
 This is a purely infrastructure layer -- it contains no screens or UI. Login, Register, and
@@ -597,7 +597,7 @@ points:
 ### 8.2 Network Security
 
 - All auth endpoints use HTTPS. Cleartext traffic is blocked in production via `network_security_config.xml` (Android) and App Transport Security (iOS).
-- Certificate pinning for `api.molt.mt` in production builds (implementation detail in M0-03 network layer).
+- Certificate pinning for `api.xirigo.com` in production builds (implementation detail in M0-03 network layer).
 
 ### 8.3 Biometric Key Hook
 
@@ -640,7 +640,7 @@ These interfaces are defined but not implemented in M0-06. No DI registration un
 
 ### 9.1 Android Files
 
-Base path: `android/app/src/main/java/com/molt/marketplace/core/auth/`
+Base path: `android/app/src/main/java/com/xirigo/ecommerce/core/auth/`
 
 | # | File | Description |
 |---|------|-------------|
@@ -665,7 +665,7 @@ Base path: `android/app/src/main/java/com/molt/marketplace/core/auth/`
 
 ### 9.2 iOS Files
 
-Base path: `ios/MoltMarketplace/Core/Auth/`
+Base path: `ios/XiriGoEcommerce/Core/Auth/`
 
 | # | File | Description |
 |---|------|-------------|
@@ -714,7 +714,7 @@ because the auth infrastructure spec is the canonical source for auth-related st
 
 ### 9.4 Test Files
 
-**Android** (base: `android/app/src/test/java/com/molt/marketplace/core/auth/`):
+**Android** (base: `android/app/src/test/java/com/xirigo/ecommerce/core/auth/`):
 
 | # | File | Description |
 |---|------|-------------|
@@ -724,7 +724,7 @@ because the auth infrastructure spec is the canonical source for auth-related st
 | 4 | `SessionManagerTest.kt` | Tests: login success flow, login 401 failure, register success flow, register 422 failure, logout always clears local state, refreshToken success, refreshToken failure clears state |
 | 5 | `AuthInterceptorTest.kt` | Tests: adds auth header when token exists, skips header when no token, triggers refresh on 401, retries with new token, concurrent 401 handling (single refresh) |
 
-**iOS** (base: `ios/MoltMarketplaceTests/Core/Auth/`):
+**iOS** (base: `ios/XiriGoEcommerceTests/Core/Auth/`):
 
 | # | File | Description |
 |---|------|-------------|
@@ -772,7 +772,7 @@ because the auth infrastructure spec is the canonical source for auth-related st
 2. **Create `AuthEndpoint.swift`** -- enum conforming to `Endpoint` protocol with 5 cases. Map each to correct HTTP method, path, and body.
 3. **Create `AuthState.swift`** -- enum with `Equatable, Sendable` conformance.
 4. **Create `TokenStorage.swift` protocol** then `KeychainTokenStorage.swift`:
-   - Use `KeychainAccess` with service identifier `"com.molt.marketplace.auth"`.
+   - Use `KeychainAccess` with service identifier `"com.xirigo.ecommerce.auth"`.
    - Set accessibility to `.whenUnlockedThisDeviceOnly`.
    - Mark class as `final class` conforming to `TokenStorage & Sendable`.
 5. **Create `AuthStateManager.swift` protocol** then `AuthStateManagerImpl.swift`:

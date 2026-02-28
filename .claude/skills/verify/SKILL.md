@@ -48,9 +48,9 @@ Use the detected name in xcodebuild `-destination` flag.
 5. **Suppress Check**: `grep -rn '@Suppress(' --include='*.kt' android/app/src/` (must return empty)
 
 ### iOS
-1. **Build**: `cd ios && xcodebuild build -scheme MoltMarketplace -destination 'platform=iOS Simulator,name=$IOS_SIM'`
+1. **Build**: `cd ios && xcodebuild build -scheme XiriGoEcommerce -destination 'platform=iOS Simulator,name=$IOS_SIM'`
 2. **Lint**: `cd ios && swiftlint lint --strict`
-3. **Tests**: `cd ios && xcodebuild test -scheme MoltMarketplace -destination 'platform=iOS Simulator,name=$IOS_SIM'`
+3. **Tests**: `cd ios && xcodebuild test -scheme XiriGoEcommerce -destination 'platform=iOS Simulator,name=$IOS_SIM'`
 4. **Suppress Check**: `grep -rn 'swiftlint:disable' --include='*.swift' ios/` (must return empty)
 
 ## Output

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Network Layer provides the HTTP client infrastructure for the Molt Marketplace mobile app to communicate with the Medusa v2 REST API. It is a developer infrastructure feature with no user-facing screens.
+The Network Layer provides the HTTP client infrastructure for the XiriGo Ecommerce mobile app to communicate with the Medusa v2 REST API. It is a developer infrastructure feature with no user-facing screens.
 
 **Status**: Complete
 **Phase**: M0 (Foundation)
@@ -35,7 +35,7 @@ Feature Repositories (data layer)
 core/network/         <- HTTP client, interceptors, authenticator, retry, logging
          |
          v
-Medusa v2 REST API    <- api-dev.molt.mt / api-staging.molt.mt / api.molt.mt
+Medusa v2 REST API    <- api-dev.xirigo.com / api-staging.xirigo.com / api.xirigo.com
 ```
 
 `AppError` lives in `core/domain/error/` so the domain layer is isolated from transport details. ViewModels receive `AppError` values; they never interact with the network layer directly.
@@ -195,7 +195,7 @@ This does not replace error handling. API call failures still produce `AppError.
 
 **Android**: `LoggingInterceptor` wrapping OkHttp's `HttpLoggingInterceptor` with `Timber`. Level `BODY` in debug, `NONE` in release (network interceptor, sees wire-level requests).
 
-**iOS**: `RequestLogger` using `os.Logger(subsystem: "com.molt.marketplace", category: "Network")`. Authorization token is redacted. Entire implementation is wrapped in `#if DEBUG`.
+**iOS**: `RequestLogger` using `os.Logger(subsystem: "com.xirigo.ecommerce", category: "Network")`. Authorization token is redacted. Entire implementation is wrapped in `#if DEBUG`.
 
 ---
 
@@ -235,9 +235,9 @@ Feature Repository
 
 | Environment | URL |
 |-------------|-----|
-| Debug | `https://api-dev.molt.mt` |
-| Staging | `https://api-staging.molt.mt` |
-| Release | `https://api.molt.mt` |
+| Debug | `https://api-dev.xirigo.com` |
+| Staging | `https://api-staging.xirigo.com` |
+| Release | `https://api.xirigo.com` |
 
 **Android**: `BuildConfig.API_BASE_URL`
 **iOS**: `Config.apiBaseURL`
@@ -419,7 +419,7 @@ struct HomeView: View {
 
     var body: some View {
         if !networkMonitor.isConnected {
-            MoltErrorView(message: String(localized: "common_error_network"))
+            XGErrorView(message: String(localized: "common_error_network"))
         }
         // ... rest of view
     }
@@ -432,7 +432,7 @@ struct HomeView: View {
 
 ### Android
 
-**Root**: `android/app/src/main/java/com/molt/marketplace/core/`
+**Root**: `android/app/src/main/java/com/xirigo/ecommerce/core/`
 
 ```
 core/
@@ -458,7 +458,7 @@ core/
 
 **Interceptor chain order**: `AuthInterceptor` (application) → `RetryInterceptor` (application) → `LoggingInterceptor` (network)
 
-**Test files** (`android/app/src/test/java/com/molt/marketplace/core/`):
+**Test files** (`android/app/src/test/java/com/xirigo/ecommerce/core/`):
 
 | File | Tests |
 |------|-------|
@@ -480,7 +480,7 @@ Total: **133 tests, 0 failures**
 
 ### iOS
 
-**Root**: `ios/MoltMarketplace/Core/`
+**Root**: `ios/XiriGoEcommerce/Core/`
 
 ```
 Core/
@@ -504,7 +504,7 @@ Core/
     Container+Extensions.swift      # Factory registrations: tokenProvider, apiClient, networkMonitor
 ```
 
-**Test files** (`ios/MoltMarketplaceTests/Core/Network/`):
+**Test files** (`ios/XiriGoEcommerceTests/Core/Network/`):
 
 | File | Tests |
 |------|-------|
@@ -545,7 +545,7 @@ Total: **~141 tests** (+ `MockURLProtocol.swift` test infrastructure)
 
 Two pre-existing failures in the iOS test suite are **not introduced by the network layer**:
 - `LocalizableTests.swift` — Maltese string exact-match assertions fail due to Unicode character differences
-- `MoltEmptyViewTests.swift` — Test runner crash (ViewInspector API incompatibility)
+- `XGEmptyViewTests.swift` — Test runner crash (ViewInspector API incompatibility)
 
 ---
 

@@ -4,7 +4,7 @@
 
 The Navigation feature establishes the app's tab-based navigation structure, type-safe routing
 for all screens across milestones M0 through M4, deep linking support, and auth-gated navigation.
-This replaces the placeholder "Molt Marketplace" text screen with a fully functional four-tab
+This replaces the placeholder "XiriGo Ecommerce" text screen with a fully functional four-tab
 layout, where each tab maintains its own independent navigation stack.
 
 ### User Stories
@@ -29,15 +29,15 @@ layout, where each tab maintains its own independent navigation stack.
 | Deep link parsing and routing | DI module registrations (M0-05) |
 | Cart badge count display | Cart business logic (M2-01) |
 | Tab state preservation on switch | Screen implementations (M1+) |
-| Return-to-destination after login | MoltBottomBar/MoltTabBar component internals (M0-02) |
+| Return-to-destination after login | XGBottomBar/XGTabBar component internals (M0-02) |
 | Placeholder content per tab (temporary) | |
 
 ### Dependencies on Other Features
 
 | Feature | What This Feature Needs |
 |---------|------------------------|
-| M0-01: App Scaffold | `MainActivity.kt`, `MoltMarketplaceApp.swift`, `MoltTheme`, project structure |
-| M0-02: Design System | `MoltBottomBar` (Android), `MoltTabBar` (iOS) components |
+| M0-01: App Scaffold | `MainActivity.kt`, `XiriGoEcommerceApp.swift`, `XGTheme`, project structure |
+| M0-02: Design System | `XGBottomBar` (Android), `XGTabBar` (iOS) components |
 
 ### Features That Depend on This
 
@@ -85,7 +85,7 @@ the Profile tab root shows the Login screen. When authenticated, it shows the Pr
 
 ```
 Enum: TopLevelDestination
-Package: com.molt.marketplace.core.navigation
+Package: com.xirigo.ecommerce.core.navigation
 
 Properties:
   - route: Route (the root route for this tab's nav graph)
@@ -130,7 +130,7 @@ not yet implemented render a placeholder view with the route name until their mi
 
 ```
 Sealed interface: Route
-Package: com.molt.marketplace.core.navigation
+Package: com.xirigo.ecommerce.core.navigation
 Annotation: @Serializable on each route
 
 All routes use Kotlin Serialization for type-safe Compose Navigation (Navigation 2.8+).
@@ -297,13 +297,13 @@ var requiresAuth: Bool (computed property via switch)
 
 | URI Pattern | Target Route | Auth Required |
 |-------------|-------------|---------------|
-| `molt://product/{id}` | `ProductDetail(productId: id)` | No |
-| `molt://category/{id}` | `CategoryProducts(categoryId: id, categoryName: "")` | No |
-| `molt://cart` | `Cart` | No |
-| `molt://order/{id}` | `OrderDetail(orderId: id)` | Yes |
-| `molt://profile` | `Profile` | Partial |
-| `https://molt.mt/product/{id}` | `ProductDetail(productId: id)` | No |
-| `https://molt.mt/category/{id}` | `CategoryProducts(categoryId: id, categoryName: "")` | No |
+| `xirigo://product/{id}` | `ProductDetail(productId: id)` | No |
+| `xirigo://category/{id}` | `CategoryProducts(categoryId: id, categoryName: "")` | No |
+| `xirigo://cart` | `Cart` | No |
+| `xirigo://order/{id}` | `OrderDetail(orderId: id)` | Yes |
+| `xirigo://profile` | `Profile` | Partial |
+| `https://xirigo.com/product/{id}` | `ProductDetail(productId: id)` | No |
+| `https://xirigo.com/category/{id}` | `CategoryProducts(categoryId: id, categoryName: "")` | No |
 
 **Android**: Defined via `deepLinks` parameter in `composable()` within NavHost.
 Also declared in `AndroidManifest.xml` for `https://` links:
@@ -313,14 +313,14 @@ Also declared in `AndroidManifest.xml` for `https://` links:
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
     <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="molt" />
-    <data android:scheme="https" android:host="molt.mt" />
+    <data android:scheme="xirigo" />
+    <data android:scheme="https" android:host="xirigo.com" />
 </intent-filter>
 ```
 
 **iOS**: Handled via `onOpenURL` modifier in `MainTabView`.
-URL scheme `molt` declared in Info.plist `CFBundleURLTypes`.
-Universal links via associated domains (`applinks:molt.mt`).
+URL scheme `xirigo` declared in Info.plist `CFBundleURLTypes`.
+Universal links via associated domains (`applinks:xirigo.com`).
 
 ---
 
@@ -564,7 +564,7 @@ These are pushed onto the **current tab's** navigation stack, not a separate sta
 
 ### 4.5 Deep Link Handling
 
-1. App receives a deep link URL (via `molt://` scheme or `https://molt.mt/` universal link).
+1. App receives a deep link URL (via `xirigo://` scheme or `https://xirigo.com/` universal link).
 2. Parse the URL to extract the route and parameters.
 3. If the route requires auth and the user is not authenticated:
    a. Navigate to Login with `returnTo` set to the deep link route.
@@ -595,7 +595,7 @@ The tab bar is hidden for the following screen types:
 | Checkout sub-screens (Address, Shipping, Payment) | No | Focused checkout flow |
 | OrderConfirmation | No | Fullscreen confirmation |
 
-**Android implementation**: The `MoltAppScaffold` conditionally shows `MoltBottomBar` based on the current route.
+**Android implementation**: The `XGAppScaffold` conditionally shows `XGBottomBar` based on the current route.
 **iOS implementation**: `MainTabView` presents auth/onboarding flows as fullscreen covers. Checkout sub-screens use a nested `NavigationStack` without the tab bar.
 
 ---
@@ -607,7 +607,7 @@ The tab bar is hidden for the following screen types:
 **Android**:
 
 ```
-Class: NavigationState (managed by MoltAppScaffold)
+Class: NavigationState (managed by XGAppScaffold)
 
 Properties:
   - navController: NavHostController (single controller for the entire nav graph)
@@ -661,7 +661,7 @@ The cart badge count is an integer representing the total number of items in the
 
 - **Source**: Cart feature (M2-01) exposes a `cartItemCount: Flow<Int>` (Android) / `AsyncStream<Int>` (iOS).
 - **Until M2-01 is implemented**: Badge count is hardcoded to `0` and the badge is hidden.
-- **Android**: `MoltAppScaffold` observes the cart count and passes it to `MoltBottomBar`.
+- **Android**: `XGAppScaffold` observes the cart count and passes it to `XGBottomBar`.
 - **iOS**: `AppRouter.cartBadgeCount` is updated by the cart feature. `MainTabView` reads it.
 - **Display rules**: Hidden when `0`. Shows count for `1..99`. Shows `"99+"` for `>= 100`.
 
@@ -715,7 +715,7 @@ Add to `Localizable.xcstrings` String Catalog for all three languages.
 
 | Scenario | Behavior |
 |----------|----------|
-| URL scheme matches (`molt://`) but path is unrecognized | Ignore silently, show Home tab |
+| URL scheme matches (`xirigo://`) but path is unrecognized | Ignore silently, show Home tab |
 | URL has valid route but missing required parameter | Ignore silently, show Home tab |
 | URL has valid route but parameter value is empty string | Ignore silently, show Home tab |
 
@@ -723,7 +723,7 @@ Add to `Localizable.xcstrings` String Catalog for all three languages.
 
 | Scenario | Behavior |
 |----------|----------|
-| `molt://order/123` received while user is logged out | Navigate to Login with `returnTo` = `OrderDetail(orderId: "123")` |
+| `xirigo://order/123` received while user is logged out | Navigate to Login with `returnTo` = `OrderDetail(orderId: "123")` |
 | User completes login | Navigate to `OrderDetail(orderId: "123")` |
 | User cancels/dismisses login | Navigate to Home tab |
 
@@ -755,8 +755,8 @@ Add to `Localizable.xcstrings` String Catalog for all three languages.
 | Cart badge | "Cart, %d items in cart" | "Cart, %d items in cart" |
 | Cart badge (0 items) | "Cart" (no badge announced) | "Cart" (no badge announced) |
 
-- **Android**: `MoltBottomBar` uses `NavigationBar` which provides automatic semantics. Badge count is added via `BadgedBox` with `contentDescription`.
-- **iOS**: `MoltTabBar` uses `TabView` which provides automatic VoiceOver semantics. Badge is added via `.badge()` modifier.
+- **Android**: `XGBottomBar` uses `NavigationBar` which provides automatic semantics. Badge count is added via `BadgedBox` with `contentDescription`.
+- **iOS**: `XGTabBar` uses `TabView` which provides automatic VoiceOver semantics. Badge is added via `.badge()` modifier.
 
 ### 8.2 Navigation
 
@@ -777,24 +777,24 @@ Add to `Localizable.xcstrings` String Catalog for all three languages.
 
 ### 9.1 Android Files
 
-Base path: `android/app/src/main/java/com/molt/marketplace/core/navigation/`
+Base path: `android/app/src/main/java/com/xirigo/ecommerce/core/navigation/`
 
 | # | File | Description |
 |---|------|-------------|
 | 1 | `Route.kt` | Sealed interface `Route` with all `@Serializable` route objects/data classes. Includes `requiresAuth` computed property. |
 | 2 | `TopLevelDestination.kt` | Enum `TopLevelDestination` with `HOME`, `CATEGORIES`, `CART`, `PROFILE`. Each entry has `route`, `selectedIcon`, `unselectedIcon`, `labelResId`. |
-| 3 | `MoltNavHost.kt` | `@Composable fun MoltNavHost(navController, modifier)` -- defines all `composable()` destinations with deep link registrations. Unimplemented screens show placeholder composable. |
-| 4 | `MoltAppScaffold.kt` | `@Composable fun MoltAppScaffold()` -- top-level Scaffold with `MoltBottomBar` and `MoltNavHost`. Manages tab selection, back stack save/restore, bottom bar visibility, cart badge count. |
+| 3 | `XGNavHost.kt` | `@Composable fun XGNavHost(navController, modifier)` -- defines all `composable()` destinations with deep link registrations. Unimplemented screens show placeholder composable. |
+| 4 | `XGAppScaffold.kt` | `@Composable fun XGAppScaffold()` -- top-level Scaffold with `XGBottomBar` and `XGNavHost`. Manages tab selection, back stack save/restore, bottom bar visibility, cart badge count. |
 | 5 | `NavigationExtensions.kt` | Extension functions on `NavController`: `navigateToTopLevel(destination)`, `navigateToRoute(route)`, `navigateWithAuthCheck(route, authState)`. Helper for deep link parsing. |
-| 6 | `DeepLinkParser.kt` | Object `DeepLinkParser` with `fun parse(uri: Uri): Route?` -- parses `molt://` and `https://molt.mt/` URIs into `Route` instances. Returns null for invalid links. |
+| 6 | `DeepLinkParser.kt` | Object `DeepLinkParser` with `fun parse(uri: Uri): Route?` -- parses `xirigo://` and `https://xirigo.com/` URIs into `Route` instances. Returns null for invalid links. |
 | 7 | `PlaceholderScreen.kt` | `@Composable fun PlaceholderScreen(title: String, icon: ImageVector)` -- temporary placeholder for unimplemented screens. Shows icon + title + "Coming soon" text. |
 
 **Modify existing**:
 
 | # | File | Change |
 |---|------|--------|
-| 1 | `MainActivity.kt` | Replace placeholder `Box { Text(...) }` with `MoltAppScaffold()`. Add deep link intent handling in `onCreate` and `onNewIntent`. |
-| 2 | `AndroidManifest.xml` | Add `<intent-filter>` for `molt://` scheme and `https://molt.mt` host on `MainActivity`. Add `android:launchMode="singleTask"` to `MainActivity`. |
+| 1 | `MainActivity.kt` | Replace placeholder `Box { Text(...) }` with `XGAppScaffold()`. Add deep link intent handling in `onCreate` and `onNewIntent`. |
+| 2 | `AndroidManifest.xml` | Add `<intent-filter>` for `xirigo://` scheme and `https://xirigo.com` host on `MainActivity`. Add `android:launchMode="singleTask"` to `MainActivity`. |
 
 **String resources to add** (all three language files):
 
@@ -806,7 +806,7 @@ Base path: `android/app/src/main/java/com/molt/marketplace/core/navigation/`
 
 **Test files**:
 
-Base path: `android/app/src/test/java/com/molt/marketplace/core/navigation/`
+Base path: `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/`
 
 | # | File | Description |
 |---|------|-------------|
@@ -816,24 +816,24 @@ Base path: `android/app/src/test/java/com/molt/marketplace/core/navigation/`
 
 ### 9.2 iOS Files
 
-Base path: `ios/MoltMarketplace/Core/Navigation/`
+Base path: `ios/XiriGoEcommerce/Core/Navigation/`
 
 | # | File | Description |
 |---|------|-------------|
 | 1 | `Tab.swift` | Enum `Tab: String, CaseIterable, Identifiable` with `home`, `categories`, `cart`, `profile`. Properties: `title`, `systemImage`, `selectedSystemImage`. |
 | 2 | `Route.swift` | Enum `Route: Hashable` with all screen destinations and associated values. Includes `requiresAuth: Bool` computed property. |
 | 3 | `AppRouter.swift` | `@MainActor @Observable final class AppRouter` -- manages `selectedTab`, `NavigationPath` per tab, auth presentation, deep link handling. |
-| 4 | `MainTabView.swift` | `struct MainTabView: View` -- root `TabView` with `NavigationStack` per tab. Uses `MoltTabBar` for tab bar rendering. Presents auth flows as `.fullScreenCover`. |
+| 4 | `MainTabView.swift` | `struct MainTabView: View` -- root `TabView` with `NavigationStack` per tab. Uses `XGTabBar` for tab bar rendering. Presents auth flows as `.fullScreenCover`. |
 | 5 | `NavigationDestinationModifier.swift` | `ViewModifier` that registers `.navigationDestination(for: Route.self)` with a `@ViewBuilder` switch over all routes. Unimplemented routes show `PlaceholderView`. |
-| 6 | `DeepLinkParser.swift` | `enum DeepLinkParser` with `static func parse(_ url: URL) -> Route?` -- parses `molt://` and `https://molt.mt/` URLs into `Route`. Returns nil for invalid links. |
+| 6 | `DeepLinkParser.swift` | `enum DeepLinkParser` with `static func parse(_ url: URL) -> Route?` -- parses `xirigo://` and `https://xirigo.com/` URLs into `Route`. Returns nil for invalid links. |
 | 7 | `PlaceholderView.swift` | `struct PlaceholderView: View` -- temporary placeholder for unimplemented screens. Shows SF Symbol icon + title + "Coming soon". |
 
 **Modify existing**:
 
 | # | File | Change |
 |---|------|--------|
-| 1 | `MoltMarketplaceApp.swift` | Replace `ContentView()` with `MainTabView()`. Remove `ContentView` struct. Inject `AppRouter` into environment. |
-| 2 | `Info.plist` | Add `CFBundleURLTypes` entry for `molt` URL scheme. |
+| 1 | `XiriGoEcommerceApp.swift` | Replace `ContentView()` with `MainTabView()`. Remove `ContentView` struct. Inject `AppRouter` into environment. |
+| 2 | `Info.plist` | Add `CFBundleURLTypes` entry for `xirigo` URL scheme. |
 
 **String resources to add**:
 
@@ -843,7 +843,7 @@ Base path: `ios/MoltMarketplace/Core/Navigation/`
 
 **Test files**:
 
-Base path: `ios/MoltMarketplaceTests/Core/Navigation/`
+Base path: `ios/XiriGoEcommerceTests/Core/Navigation/`
 
 | # | File | Description |
 |---|------|-------------|
@@ -863,9 +863,9 @@ Base path: `ios/MoltMarketplaceTests/Core/Navigation/`
 
 3. **Create `DeepLinkParser.kt`** -- pure function, no dependencies. Easy to unit test.
 
-4. **Create `PlaceholderScreen.kt`** -- simple composable used as a fallback. Uses `MoltEmptyView` pattern (icon + text).
+4. **Create `PlaceholderScreen.kt`** -- simple composable used as a fallback. Uses `XGEmptyView` pattern (icon + text).
 
-5. **Create `MoltNavHost.kt`** -- single `NavHost` with nested navigation graphs per tab:
+5. **Create `XGNavHost.kt`** -- single `NavHost` with nested navigation graphs per tab:
    ```
    NavHost(navController, startDestination = Route.Home) {
        // Home tab graph
@@ -877,15 +877,15 @@ Base path: `ios/MoltMarketplaceTests/Core/Navigation/`
    }
    ```
 
-6. **Create `MoltAppScaffold.kt`** -- wraps `Scaffold` + `MoltBottomBar` + `MoltNavHost`:
+6. **Create `XGAppScaffold.kt`** -- wraps `Scaffold` + `XGBottomBar` + `XGNavHost`:
    - Use `navController.currentBackStackEntryAsState()` to determine selected tab.
    - Use `navController.navigate(destination.route) { popUpTo(...) { saveState = true }; restoreState = true; launchSingleTop = true }` for tab switching.
    - Conditionally show/hide bottom bar based on current route.
-   - Pass cart badge count to `MoltBottomBar` (hardcoded to 0 until M2-01).
+   - Pass cart badge count to `XGBottomBar` (hardcoded to 0 until M2-01).
 
 7. **Create `NavigationExtensions.kt`** -- keep `NavController` extensions clean and reusable.
 
-8. **Modify `MainActivity.kt`** -- replace placeholder with `MoltAppScaffold()`. Handle deep link intents:
+8. **Modify `MainActivity.kt`** -- replace placeholder with `XGAppScaffold()`. Handle deep link intents:
    ```kotlin
    override fun onNewIntent(intent: Intent) {
        super.onNewIntent(intent)
@@ -931,9 +931,9 @@ Base path: `ios/MoltMarketplaceTests/Core/Navigation/`
    .fullScreenCover(item: $router.presentedAuth) { route in ... }
    ```
 
-8. **Modify `MoltMarketplaceApp.swift`** -- replace `ContentView()` with `MainTabView()`. Create and inject `AppRouter` via `@State` or `@Environment`.
+8. **Modify `XiriGoEcommerceApp.swift`** -- replace `ContentView()` with `MainTabView()`. Create and inject `AppRouter` via `@State` or `@Environment`.
 
-9. **Update `Info.plist`** -- add `CFBundleURLTypes` with `molt` scheme.
+9. **Update `Info.plist`** -- add `CFBundleURLTypes` with `xirigo` scheme.
 
 10. **Add strings** to `Localizable.xcstrings`.
 
@@ -942,7 +942,7 @@ Base path: `ios/MoltMarketplaceTests/Core/Navigation/`
 ### 10.3 Common Rules (Both Platforms)
 
 - Follow `CLAUDE.md` exactly for naming conventions, file locations, architecture patterns.
-- **Tab bar component** (`MoltBottomBar` / `MoltTabBar`) is from M0-02. If not yet implemented, create a minimal version in the navigation module that can be replaced later.
+- **Tab bar component** (`XGBottomBar` / `XGTabBar`) is from M0-02. If not yet implemented, create a minimal version in the navigation module that can be replaced later.
 - **All user-facing strings** must be localized (use string resource keys, never hardcoded).
 - **Placeholder screens** are temporary. They will be replaced feature-by-feature in M1+. Use the `PlaceholderScreen`/`PlaceholderView` composable/view for consistency.
 - **Auth gating** is wired in M0-04 but non-functional until M0-06 provides the auth state. Use a stub/default that treats the user as logged out.
@@ -975,5 +975,5 @@ The navigation feature is complete when:
 - [ ] `DeepLinkParserTests` pass: all valid patterns resolve, all invalid patterns return nil.
 - [ ] `RouteTests` pass: all auth-required routes correctly identified.
 - [ ] `AppRouterTests` pass: tab switching, navigation, pop-to-root work correctly.
-- [ ] `xcodebuild -scheme MoltMarketplace-Debug build` succeeds.
+- [ ] `xcodebuild -scheme XiriGoEcommerce-Debug build` succeeds.
 - [ ] No strict concurrency warnings from new files.

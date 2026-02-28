@@ -20,11 +20,11 @@ The guide covers 9 topics in full:
 | Portrait Lock | `android:screenOrientation="portrait"` in `AndroidManifest.xml` | `UISupportedInterfaceOrientations` in `Info.plist` |
 | Screen Size Adaptation | `WindowWidthSizeClass` (Compact/Medium/Expanded) | `horizontalSizeClass` (.compact/.regular) |
 | Safe Area / Notch | `enableEdgeToEdge()` + `Modifier.windowInsetsPadding()` | SwiftUI automatic + `.safeAreaInset()` |
-| Dynamic Type | `sp` units via `MoltTypography`, test at 200% | `.dynamicTypeSize`, Accessibility Inspector |
-| Dark Mode | `isSystemInDarkTheme()` in `MoltTheme` | `@Environment(\.colorScheme)` in `MoltThemeModifier` |
+| Dynamic Type | `sp` units via `XGTypography`, test at 200% | `.dynamicTypeSize`, Accessibility Inspector |
+| Dark Mode | `isSystemInDarkTheme()` in `XGTheme` | `@Environment(\.colorScheme)` in `XGThemeModifier` |
 | Status/Nav Bar | `enableEdgeToEdge()`, `SystemBarStyle` for overrides | `.preferredColorScheme()`, `.toolbarBackground(.hidden)` |
 | Min Screen Size | 320dp, no hardcoded widths | 375pt (iPhone SE 3rd gen) |
-| Touch Targets | `MoltSpacing.MinTouchTarget` = 48dp | `MoltSpacing.minTouchTarget` = 44pt |
+| Touch Targets | `XGSpacing.MinTouchTarget` = 48dp | `XGSpacing.minTouchTarget` = 44pt |
 
 ### 2. CHANGELOG Entry
 
@@ -42,12 +42,12 @@ Added under `[Unreleased] > Added > Infrastructure Guides`:
 All code snippets in the guide were validated against actual source files:
 
 - `android/app/src/main/AndroidManifest.xml` — orientation attribute location confirmed (not yet set; guide documents the required configuration)
-- `android/app/src/main/java/com/molt/marketplace/MainActivity.kt` — `enableEdgeToEdge()` call confirmed at line 23
-- `android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltTheme.kt` — `isSystemInDarkTheme()` and color scheme switching confirmed
-- `android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/MoltSpacing.kt` — `MinTouchTarget = 48.dp` confirmed at line 24
-- `ios/MoltMarketplace/Resources/Info.plist` — orientation key location confirmed (key not yet set; guide documents the required configuration)
-- `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltTheme.swift` — `@Environment(\.colorScheme)` usage confirmed
-- `ios/MoltMarketplace/Core/DesignSystem/Theme/MoltSpacing.swift` — `minTouchTarget = 44` confirmed at line 23
+- `android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt` — `enableEdgeToEdge()` call confirmed at line 23
+- `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGTheme.kt` — `isSystemInDarkTheme()` and color scheme switching confirmed
+- `android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacing.kt` — `MinTouchTarget = 48.dp` confirmed at line 24
+- `ios/XiriGoEcommerce/Resources/Info.plist` — orientation key location confirmed (key not yet set; guide documents the required configuration)
+- `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGTheme.swift` — `@Environment(\.colorScheme)` usage confirmed
+- `ios/XiriGoEcommerce/Core/DesignSystem/Theme/XGSpacing.swift` — `minTouchTarget = 44` confirmed at line 23
 
 ### Notes on Current Manifest State
 

@@ -11,23 +11,23 @@ Implemented the full navigation infrastructure for the Android app including typ
 
 ## Files Created
 
-### Navigation Core (`android/app/src/main/java/com/molt/marketplace/core/navigation/`)
+### Navigation Core (`android/app/src/main/java/com/xirigo/ecommerce/core/navigation/`)
 
 | File | Description |
 |------|-------------|
 | `Route.kt` | Sealed interface with all 28 @Serializable route definitions (M0-M4). Includes `isAuthRequired` computed property with exhaustive `when`. |
 | `TopLevelDestination.kt` | Enum with HOME, CATEGORIES, CART, PROFILE entries. Each has route, icons (filled/outlined), and label resource ID. |
-| `DeepLinkParser.kt` | Object with `parse(Uri): Route?` for `molt://` and `https://molt.mt/` deep links. Returns null for invalid URIs. |
+| `DeepLinkParser.kt` | Object with `parse(Uri): Route?` for `xirigo://` and `https://xirigo.com/` deep links. Returns null for invalid URIs. |
 | `PlaceholderScreen.kt` | Composable showing icon + title + "Coming soon" text. Used for all unimplemented screens. |
-| `MoltNavHost.kt` | Single NavHost with all 28 composable destinations. Uses PlaceholderScreen for each. |
+| `XGNavHost.kt` | Single NavHost with all 28 composable destinations. Uses PlaceholderScreen for each. |
 | `NavigationExtensions.kt` | `navigateToTopLevel()` with saveState/restoreState for tab switching. `navigateToRoute()` for push navigation. |
-| `MoltAppScaffold.kt` | Top-level Scaffold with MoltBottomBar + MoltNavHost. Handles tab selection, bottom bar visibility, cart badge (hardcoded 0). |
+| `XGAppScaffold.kt` | Top-level Scaffold with XGBottomBar + XGNavHost. Handles tab selection, bottom bar visibility, cart badge (hardcoded 0). |
 
-### Tests (`android/app/src/test/java/com/molt/marketplace/core/navigation/`)
+### Tests (`android/app/src/test/java/com/xirigo/ecommerce/core/navigation/`)
 
 | File | Description |
 |------|-------------|
-| `DeepLinkParserTest.kt` | 15 tests: valid molt://, valid https://molt.mt/, missing params, empty IDs, wrong host, unsupported scheme. |
+| `DeepLinkParserTest.kt` | 15 tests: valid xirigo://, valid https://xirigo.com/, missing params, empty IDs, wrong host, unsupported scheme. |
 | `RouteAuthTest.kt` | 19 tests: every route verified for correct `isAuthRequired` value. |
 | `TopLevelDestinationTest.kt` | 11 tests: count, routes, labels, icons, ordering. |
 
@@ -35,8 +35,8 @@ Implemented the full navigation infrastructure for the Android app including typ
 
 | File | Change |
 |------|--------|
-| `MainActivity.kt` | Replaced placeholder Box/Text with MoltAppScaffold(). Added onNewIntent for deep links. |
-| `AndroidManifest.xml` | Added `launchMode="singleTask"`, intent filters for `molt://` scheme and `https://molt.mt` host. |
+| `MainActivity.kt` | Replaced placeholder Box/Text with XGAppScaffold(). Added onNewIntent for deep links. |
+| `AndroidManifest.xml` | Added `launchMode="singleTask"`, intent filters for `xirigo://` scheme and `https://xirigo.com` host. |
 | `res/values/strings.xml` | Added 10 navigation string keys (en). |
 | `res/values-mt/strings.xml` | Added 10 navigation string keys (mt). |
 | `res/values-tr/strings.xml` | Added 10 navigation string keys (tr). |
@@ -55,12 +55,12 @@ Implemented the full navigation infrastructure for the Android app including typ
 ## Build Verification
 
 - `./gradlew assembleDebug` -- PASS
-- `./gradlew testDebugUnitTest --tests "com.molt.marketplace.core.navigation.*"` -- PASS (45 tests)
+- `./gradlew testDebugUnitTest --tests "com.xirigo.ecommerce.core.navigation.*"` -- PASS (45 tests)
 - No detekt issues in navigation files
 - No ktlint issues in navigation files (auto-formatted)
 
 ## Integration Points for Future Features
 
 - M0-06 (Auth): Replace hardcoded LoggedOut state in NavigationExtensions with real auth state check
-- M2-01 (Cart): Replace `cartBadgeCount = 0` in MoltAppScaffold with real cart state observation
-- M1+ (All features): Replace PlaceholderScreen calls in MoltNavHost with real screen composables
+- M2-01 (Cart): Replace `cartBadgeCount = 0` in XGAppScaffold with real cart state observation
+- M1+ (All features): Replace PlaceholderScreen calls in XGNavHost with real screen composables

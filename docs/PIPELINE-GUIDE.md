@@ -1,4 +1,4 @@
-# Molt Mobile — Agentic Pipeline Guide
+# XiriGo Mobile — Agentic Pipeline Guide
 
 ## Quick Reference
 
@@ -59,7 +59,7 @@ Yeni bir feature eklemek istediginde bu komutu kullan. GitHub Issue'yu full temp
 2. Full template ile GitHub Issue olusturur (requirements, API endpoints, acceptance criteria, pipeline checklist)
 3. Label'lari atar: `type:feature` + `platform:both` + `phase:m1` + `priority:p2` + `status:ready`
 4. Milestone'a atar (M0-M4)
-5. GitHub Project "Molt Mobile Roadmap" board'a ekler
+5. GitHub Project "XiriGo Mobile Roadmap" board'a ekler
 6. Dependency'leri kontrol eder — hepsi closed ise `status:ready`, degilse `status:blocked`
 7. `scripts/issue-map.json`'i gunceller ve commit eder
 
@@ -101,9 +101,9 @@ Architect → [Android Dev ‖ iOS Dev] → [Android Tester ‖ iOS Tester] → 
 |---|------|-------|-------|
 | 1 | Feature spec tasarla | Architect | `shared/feature-specs/{name}.md` |
 | 2 | Android implement et | Android Dev | `android/app/.../feature/{name}/` |
-| 3 | iOS implement et | iOS Dev | `ios/MoltMarketplace/Feature/{Name}/` |
+| 3 | iOS implement et | iOS Dev | `ios/XiriGoEcommerce/Feature/{Name}/` |
 | 4 | Android test yaz | Android Tester | `android/app/src/test/.../` |
-| 5 | iOS test yaz | iOS Tester | `ios/MoltMarketplaceTests/` |
+| 5 | iOS test yaz | iOS Tester | `ios/XiriGoEcommerceTests/` |
 | 6 | Dokumantasyon yaz | Doc Writer | `docs/features/{name}.md` + CHANGELOG |
 | 7 | Cross-platform review | Reviewer | `docs/pipeline/{name}-review.handoff.md` |
 | 8 | Quality gate | Team Lead | ktlint + detekt + SwiftLint + test |
@@ -308,7 +308,7 @@ FAANG standardlarinda cross-platform review yapar.
 1. **Spec Compliance** — Tum ekranlar/state'ler implement edilmis mi
 2. **Code Quality** — No `Any`, no `!!`, no force unwrap, explicit types
 3. **Architecture** — Clean Architecture katmanlari, dependency direction
-4. **Design System** — `Molt*` component kullanimi, magic number yok
+4. **Design System** — `XG*` component kullanimi, magic number yok
 5. **Performance** — N+1 yok, gereksiz recomposition yok, key parametresi
 6. **Memory & Thread Safety** — Leak yok, `[weak self]`, structured concurrency
 7. **Error Handling** — Try/catch + domain error mapping, no silent swallow
@@ -417,7 +417,7 @@ GitHub Settings > Branches > Branch protection rules > `develop`:
 
 - **Android**: No `Any`, no `!!`, no `var` state, explicit return types, `@Stable`, `@HiltViewModel`
 - **iOS**: No force unwrap (`!`), no `Any`, `@MainActor` + `@Observable` on ViewModels, `final class`
-- **Her ikisi**: Immutable models, domain errors as sealed/enum, no hardcoded strings, `Molt*` components
+- **Her ikisi**: Immutable models, domain errors as sealed/enum, no hardcoded strings, `XG*` components
 
 ### Architecture Tests
 

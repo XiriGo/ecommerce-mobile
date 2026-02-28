@@ -1,9 +1,9 @@
 # Security Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide covers the platform security measures implemented in the Molt Marketplace mobile buyer app. It is a reference for developers implementing any feature that touches storage, network, or sensitive data.
+This guide covers the platform security measures implemented in the XiriGo Ecommerce mobile buyer app. It is a reference for developers implementing any feature that touches storage, network, or sensitive data.
 
 ---
 
@@ -16,7 +16,7 @@ Full implementation details are in `shared/feature-specs/auth-infrastructure.md`
 | Token | Android | iOS |
 |-------|---------|-----|
 | Access token | Proto DataStore encrypted with Google Tink (AES256-GCM, Android Keystore-backed key) | KeychainAccess (`.afterFirstUnlock`) |
-| Refresh token | Same encrypted DataStore file (`auth_tokens.pb.enc`) | Same Keychain service (`com.molt.marketplace`) |
+| Refresh token | Same encrypted DataStore file (`auth_tokens.pb.enc`) | Same Keychain service (`com.xirigo.ecommerce`) |
 | Token expiry | Stored alongside tokens in same encrypted location | `access_token_expiry` key in Keychain |
 
 ### Rules
@@ -93,11 +93,11 @@ The following rules are present in the project:
 }
 
 # Project-specific serializable classes
--keep,includedescriptorclasses class com.molt.marketplace.**$$serializer { *; }
--keepclassmembers class com.molt.marketplace.** {
+-keep,includedescriptorclasses class com.xirigo.ecommerce.**$$serializer { *; }
+-keepclassmembers class com.xirigo.ecommerce.** {
     *** Companion;
 }
--keepclasseswithmembers class com.molt.marketplace.** {
+-keepclasseswithmembers class com.xirigo.ecommerce.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
 ```
@@ -108,7 +108,7 @@ The following rules are present in the project:
 
 ```proguard
 # Room — keep entity and DAO classes
--keep class com.molt.marketplace.core.database.** { *; }
+-keep class com.xirigo.ecommerce.core.database.** { *; }
 -keepclassmembers class * {
     @androidx.room.* <methods>;
 }
@@ -159,18 +159,18 @@ All three API environments use HTTPS:
 
 | Environment | Base URL |
 |-------------|---------|
-| Debug | `https://api-dev.molt.mt` |
-| Staging | `https://api-staging.molt.mt` |
-| Release | `https://api.molt.mt` |
+| Debug | `https://api-dev.xirigo.com` |
+| Staging | `https://api-staging.xirigo.com` |
+| Release | `https://api.xirigo.com` |
 
-These are defined in `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Config.swift`.
+These are defined in `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift`.
 
 ### Local Development Exception
 
 If a developer needs to connect to a local Medusa instance over HTTP, add a scoped exception for `localhost` only — never a blanket exception:
 
 ```xml
-<!-- ios/MoltMarketplace/Resources/Info.plist (debug builds only) -->
+<!-- ios/XiriGoEcommerce/Resources/Info.plist (debug builds only) -->
 <key>NSAppTransportSecurity</key>
 <dict>
     <key>NSExceptionDomains</key>
@@ -209,7 +209,7 @@ The existing `network_security_config.xml` enforces HTTPS and trusts only system
 
     <!-- Production domain — pin primary + backup certificates -->
     <domain-config>
-        <domain includeSubdomains="true">api.molt.mt</domain>
+        <domain includeSubdomains="true">api.xirigo.com</domain>
         <pin-set expiration="2027-01-01">
             <!-- Primary certificate SHA-256 pin -->
             <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
@@ -230,7 +230,7 @@ The existing `network_security_config.xml` enforces HTTPS and trusts only system
 To obtain the SHA-256 pin for a domain:
 
 ```bash
-openssl s_client -connect api.molt.mt:443 -servername api.molt.mt 2>/dev/null \
+openssl s_client -connect api.xirigo.com:443 -servername api.xirigo.com 2>/dev/null \
   | openssl x509 -pubkey -noout \
   | openssl pkey -pubin -outform der \
   | openssl dgst -sha256 -binary \
@@ -244,12 +244,12 @@ Replace the placeholder pin values with the real output before shipping.
 iOS does not support declarative pinning in a config file. Implement pinning via `URLSessionDelegate`:
 
 ```swift
-// ios/MoltMarketplace/Core/Network/PinningDelegate.swift
+// ios/XiriGoEcommerce/Core/Network/PinningDelegate.swift
 import Foundation
 import CryptoKit
 
 final class PinningDelegate: NSObject, URLSessionDelegate {
-    // SHA-256 pins for api.molt.mt — update before certificate expiry
+    // SHA-256 pins for api.xirigo.com — update before certificate expiry
     private let pinnedHashes: Set<String> = [
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=", // primary
         "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", // backup
@@ -298,7 +298,7 @@ final class PinningDelegate: NSObject, URLSessionDelegate {
 Inject this delegate when creating the production `URLSession`:
 
 ```swift
-// ios/MoltMarketplace/Core/Network/APIClient.swift (production builds)
+// ios/XiriGoEcommerce/Core/Network/APIClient.swift (production builds)
 #if !DEBUG
 let session = URLSession(
     configuration: .appDefault,
@@ -330,12 +330,12 @@ Never log PII or credentials. This applies to all log statements in every layer.
 
 #### Android (Timber)
 
-Timber is the logging library (`timber:5.0.1`). In release builds, no Timber trees are planted — all `Timber.*` calls are no-ops. In debug builds, a `DebugTree` is planted in `MoltApplication`.
+Timber is the logging library (`timber:5.0.1`). In release builds, no Timber trees are planted — all `Timber.*` calls are no-ops. In debug builds, a `DebugTree` is planted in `XGApplication`.
 
 For additional safety, implement a redacting tree for staging builds:
 
 ```kotlin
-// android/app/src/main/java/com/molt/marketplace/MoltApplication.kt
+// android/app/src/main/java/com/xirigo/ecommerce/XGApplication.kt
 class RedactingTree : Timber.DebugTree() {
     private val sensitivePatterns = listOf(
         Regex("""(access_token|refresh_token|password|Authorization)["\s:=]+[^\s"&,}]+"""),
@@ -366,7 +366,7 @@ Use `os.Logger` with `.private` privacy level for any value that could contain P
 ```swift
 import os
 
-private let logger = Logger(subsystem: "com.molt.marketplace", category: "Network")
+private let logger = Logger(subsystem: "com.xirigo.ecommerce", category: "Network")
 
 // Mark user-controlled values as private — they appear as <private> in Console
 logger.debug("Login attempt for: \(userEmail, privacy: .private)")
@@ -408,7 +408,7 @@ SecureField("Password", text: $password)
 
 ### Screenshot Prevention
 
-Screenshot prevention is not implemented. Molt Marketplace is an e-commerce app; no page contains sensitive financial data beyond the Stripe PaymentSheet (which Stripe's SDK already protects). Adding `FLAG_SECURE` (Android) or setting `allowsScreenshots = false` (iOS) would harm usability without material security benefit.
+Screenshot prevention is not implemented. XiriGo Ecommerce is an e-commerce app; no page contains sensitive financial data beyond the Stripe PaymentSheet (which Stripe's SDK already protects). Adding `FLAG_SECURE` (Android) or setting `allowsScreenshots = false` (iOS) would harm usability without material security benefit.
 
 ---
 
@@ -456,7 +456,7 @@ Reference both in `AndroidManifest.xml`:
     ... >
 ```
 
-The manifest already has `android:allowBackup="true"` at `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/AndroidManifest.xml`. The XML rule files need to be created and referenced.
+The manifest already has `android:allowBackup="true"` at `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/AndroidManifest.xml`. The XML rule files need to be created and referenced.
 
 **What is backed up**: `molt_marketplace.db` (cart, wishlist, recent searches), `app_preferences.pb` (theme, onboarding flag — non-sensitive).
 
@@ -467,8 +467,8 @@ The manifest already has `android:allowBackup="true"` at `/Users/atakan/Document
 Keychain items stored with `.afterFirstUnlock` accessibility are excluded from iCloud Backup by default. Auth tokens use this accessibility level in `AuthTokenStorage`:
 
 ```swift
-// ios/MoltMarketplace/Core/Storage/AuthTokenStorage.swift
-Keychain(service: "com.molt.marketplace")
+// ios/XiriGoEcommerce/Core/Storage/AuthTokenStorage.swift
+Keychain(service: "com.xirigo.ecommerce")
     .accessibility(.afterFirstUnlock)  // not synchronized to iCloud — correct
 ```
 
@@ -513,10 +513,10 @@ For local size estimates:
 ```bash
 cd ios
 xcodebuild archive \
-  -project MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -configuration Release \
-  -archivePath build/MoltMarketplace.xcarchive
+  -archivePath build/XiriGoEcommerce.xcarchive
 # Check the .ipa produced from the archive
 ```
 
@@ -580,11 +580,11 @@ Before merging a dependency update PR:
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/build.gradle.kts` | R8 config: `isMinifyEnabled`, `isShrinkResources`, `proguardFiles` |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/proguard-rules.pro` | Current ProGuard/R8 keep rules |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/res/xml/network_security_config.xml` | HTTPS enforcement, debug user CAs |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/main/AndroidManifest.xml` | `networkSecurityConfig`, `allowBackup`, `dataExtractionRules` attributes |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` | `tink = "1.16.0"`, `datastore = "1.1.4"`, `timber = "5.0.1"` |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace/Config.swift` | API base URLs per environment |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/build.gradle.kts` | R8 config: `isMinifyEnabled`, `isShrinkResources`, `proguardFiles` |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/proguard-rules.pro` | Current ProGuard/R8 keep rules |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/res/xml/network_security_config.xml` | HTTPS enforcement, debug user CAs |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/AndroidManifest.xml` | `networkSecurityConfig`, `allowBackup`, `dataExtractionRules` attributes |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml` | `tink = "1.16.0"`, `datastore = "1.1.4"`, `timber = "5.0.1"` |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift` | API base URLs per environment |
 | `shared/feature-specs/auth-infrastructure.md` | Full auth token storage specification |
 | `docs/guides/local-storage.md` | Encrypted DataStore + Keychain implementation details |

@@ -12,23 +12,23 @@
 
 | File | Description |
 |------|-------------|
-| `ios/MoltMarketplace/Core/Navigation/Tab.swift` | `Tab` enum (home, categories, cart, profile) with SF Symbol icons and localized titles |
-| `ios/MoltMarketplace/Core/Navigation/Route.swift` | `Route` enum with all M0-M4 screen destinations, `requiresAuth` computed property |
-| `ios/MoltMarketplace/Core/Navigation/AppRouter.swift` | `@MainActor @Observable` router managing per-tab NavigationPaths, tab selection, auth presentation, deep linking |
-| `ios/MoltMarketplace/Core/Navigation/MainTabView.swift` | Root TabView with 4 independent NavigationStacks, MoltTabBar integration, fullscreen auth cover, onOpenURL handling |
-| `ios/MoltMarketplace/Core/Navigation/NavigationDestinationModifier.swift` | ViewModifier registering `.navigationDestination(for: Route.self)` |
-| `ios/MoltMarketplace/Core/Navigation/RouteView.swift` | Maps Route to View (all placeholders until M1+) |
-| `ios/MoltMarketplace/Core/Navigation/DeepLinkParser.swift` | Parses `molt://` and `https://molt.mt/` URLs into Route values |
-| `ios/MoltMarketplace/Core/Navigation/PlaceholderView.swift` | Temporary placeholder with icon, title, and "Coming soon" text |
+| `ios/XiriGoEcommerce/Core/Navigation/Tab.swift` | `Tab` enum (home, categories, cart, profile) with SF Symbol icons and localized titles |
+| `ios/XiriGoEcommerce/Core/Navigation/Route.swift` | `Route` enum with all M0-M4 screen destinations, `requiresAuth` computed property |
+| `ios/XiriGoEcommerce/Core/Navigation/AppRouter.swift` | `@MainActor @Observable` router managing per-tab NavigationPaths, tab selection, auth presentation, deep linking |
+| `ios/XiriGoEcommerce/Core/Navigation/MainTabView.swift` | Root TabView with 4 independent NavigationStacks, XGTabBar integration, fullscreen auth cover, onOpenURL handling |
+| `ios/XiriGoEcommerce/Core/Navigation/NavigationDestinationModifier.swift` | ViewModifier registering `.navigationDestination(for: Route.self)` |
+| `ios/XiriGoEcommerce/Core/Navigation/RouteView.swift` | Maps Route to View (all placeholders until M1+) |
+| `ios/XiriGoEcommerce/Core/Navigation/DeepLinkParser.swift` | Parses `xirigo://` and `https://xirigo.com/` URLs into Route values |
+| `ios/XiriGoEcommerce/Core/Navigation/PlaceholderView.swift` | Temporary placeholder with icon, title, and "Coming soon" text |
 
 ### Modified Files
 
 | File | Change |
 |------|--------|
-| `ios/MoltMarketplace/MoltMarketplaceApp.swift` | Replaced ContentView with MainTabView as root |
-| `ios/MoltMarketplace/Resources/Info.plist` | Added CFBundleURLTypes for `molt` URL scheme |
-| `ios/MoltMarketplace/Resources/Localizable.xcstrings` | Added nav_tab_*, nav_placeholder_*, nav_profile_*, nav_cart_*, common_back_button strings (en, mt, tr) |
-| `ios/MoltMarketplace.xcodeproj/project.pbxproj` | Added Navigation group and all 8 source files to project |
+| `ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` | Replaced ContentView with MainTabView as root |
+| `ios/XiriGoEcommerce/Resources/Info.plist` | Added CFBundleURLTypes for `xirigo` URL scheme |
+| `ios/XiriGoEcommerce/Resources/Localizable.xcstrings` | Added nav_tab_*, nav_placeholder_*, nav_profile_*, nav_cart_*, common_back_button strings (en, mt, tr) |
+| `ios/XiriGoEcommerce.xcodeproj/project.pbxproj` | Added Navigation group and all 8 source files to project |
 
 ---
 
@@ -37,9 +37,9 @@
 - **Tab management**: `Tab` enum (CaseIterable, Identifiable) defines 4 tabs
 - **Route definitions**: `Route` enum with associated values for all M0-M4 screens, `Hashable` conformance for NavigationPath
 - **Router**: `AppRouter` (@Observable, @MainActor) manages 4 NavigationPaths, selectedTab, presentedAuth, cartBadgeCount
-- **Tab layout**: ZStack with opacity-based tab switching (preserves all tab states) + MoltTabBar overlay
+- **Tab layout**: ZStack with opacity-based tab switching (preserves all tab states) + XGTabBar overlay
 - **Navigation destination**: Single ViewModifier applied to each tab's root, maps Route -> RouteView
-- **Deep linking**: `DeepLinkParser` static methods parse molt:// and https://molt.mt/ URLs
+- **Deep linking**: `DeepLinkParser` static methods parse xirigo:// and https://xirigo.com/ URLs
 - **Auth gating**: `Route.requiresAuth` computed property, AppRouter redirects to login for auth-required routes
 
 ## Key Design Decisions
@@ -51,7 +51,7 @@
 
 ## Build Verification
 
-- [x] `xcodebuild -scheme MoltMarketplace build` succeeds
+- [x] `xcodebuild -scheme XiriGoEcommerce build` succeeds
 - [x] Zero warnings from new files
 - [x] Zero strict concurrency issues
 - [x] App launches with 4-tab layout

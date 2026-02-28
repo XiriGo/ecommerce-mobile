@@ -16,7 +16,7 @@ COMPLETE -- All 11 new files created, 1 existing file modified. Build verified.
 | 4 | `Core/Auth/AuthEndpoint.swift` | Enum conforming to `Endpoint` with 5 cases: login, register, createSession, destroySession, refreshToken |
 | 5 | `Core/Auth/AuthState.swift` | Enum with `loading`, `authenticated(token:)`, `guest` cases. Conforms to `Equatable, Sendable`. |
 | 6 | `Core/Auth/TokenStorage.swift` | Protocol: `getAccessToken()`, `saveAccessToken(_:)`, `clearTokens()`. Conforms to `Sendable`. |
-| 7 | `Core/Auth/KeychainTokenStorage.swift` | `final class` implementation using KeychainAccess. Service: `com.molt.marketplace.auth`. Accessibility: `.whenUnlockedThisDeviceOnly`. |
+| 7 | `Core/Auth/KeychainTokenStorage.swift` | `final class` implementation using KeychainAccess. Service: `com.xirigo.ecommerce.auth`. Accessibility: `.whenUnlockedThisDeviceOnly`. |
 | 8 | `Core/Auth/AuthStateManager.swift` | `@MainActor` protocol: `authState`, `onLoginSuccess(token:)`, `onLogout()`, `checkStoredToken()` |
 | 9 | `Core/Auth/AuthStateManagerImpl.swift` | `@MainActor @Observable final class`. Holds `authState` property, coordinates with `TokenStorage`. Uses `nonisolated init` for DI compatibility. |
 | 10 | `Core/Auth/SessionManager.swift` | `final class` conforming to `TokenProvider`. Coordinates `APIClient` + `TokenStorage` + `AuthStateManager`. Contains private `RefreshActor` for mutex-protected token refresh and `EmptyResponse` for void endpoints. |

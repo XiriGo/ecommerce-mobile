@@ -10,7 +10,7 @@ import android.net.Uri
 class DeepLinkParserTest {
 
     @Test
-    fun `parse molt product deep link returns ProductDetail`() {
+    fun `parse xirigo product deep link returns ProductDetail`() {
         val uri = Uri.parse("xirigo://product/prod_123")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isEqualTo(Route.ProductDetail(productId = "prod_123"))
@@ -24,7 +24,7 @@ class DeepLinkParserTest {
     }
 
     @Test
-    fun `parse molt category deep link returns CategoryProducts`() {
+    fun `parse xirigo category deep link returns CategoryProducts`() {
         val uri = Uri.parse("xirigo://category/cat_789")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isEqualTo(Route.CategoryProducts(categoryId = "cat_789", categoryName = ""))
@@ -38,21 +38,21 @@ class DeepLinkParserTest {
     }
 
     @Test
-    fun `parse molt cart deep link returns Cart`() {
+    fun `parse xirigo cart deep link returns Cart`() {
         val uri = Uri.parse("xirigo://cart")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isEqualTo(Route.Cart)
     }
 
     @Test
-    fun `parse molt order deep link returns OrderDetail`() {
+    fun `parse xirigo order deep link returns OrderDetail`() {
         val uri = Uri.parse("xirigo://order/order_001")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isEqualTo(Route.OrderDetail(orderId = "order_001"))
     }
 
     @Test
-    fun `parse molt profile deep link returns Profile`() {
+    fun `parse xirigo profile deep link returns Profile`() {
         val uri = Uri.parse("xirigo://profile")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isEqualTo(Route.Profile)

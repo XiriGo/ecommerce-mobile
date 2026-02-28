@@ -49,7 +49,7 @@ class DeepLinkParserEdgeCasesTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun `parse http scheme for molt dot mt host returns ProductDetail`() {
+    fun `parse http scheme for xirigo dot com host returns ProductDetail`() {
         // The parser accepts both "https" and "http" schemes for xirigo.com hosts.
         // Both map to the same branch that checks host == "xirigo.com".
         val uri = Uri.parse("http://xirigo.com/product/prod_http")
@@ -58,7 +58,7 @@ class DeepLinkParserEdgeCasesTest {
     }
 
     @Test
-    fun `parse https with subdomain of molt dot mt returns null`() {
+    fun `parse https with subdomain of xirigo dot com returns null`() {
         val uri = Uri.parse("https://store.xirigo.com/product/prod_123")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isNull()
@@ -66,13 +66,13 @@ class DeepLinkParserEdgeCasesTest {
 
     @Test
     fun `parse https with similar but wrong host returns null`() {
-        val uri = Uri.parse("https://molt.com/product/123")
+        val uri = Uri.parse("https://xirigo.com/product/123")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isNull()
     }
 
     @Test
-    fun `parse molt scheme with no host returns null`() {
+    fun `parse xirigo scheme with no host returns null`() {
         // xirigo:// with no host segment
         val uri = Uri.parse("xirigo://")
         val result = DeepLinkParser.parse(uri)

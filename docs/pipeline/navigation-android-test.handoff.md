@@ -10,10 +10,10 @@ COMPLETE
 
 | Artifact | Path |
 |----------|------|
-| Route Serialization Tests | `android/app/src/test/java/com/molt/marketplace/core/navigation/RouteSerializationTest.kt` |
-| DeepLink Edge Case Tests | `android/app/src/test/java/com/molt/marketplace/core/navigation/DeepLinkParserEdgeCasesTest.kt` |
-| AppScaffold UI Tests | `android/app/src/androidTest/java/com/molt/marketplace/core/navigation/MoltAppScaffoldTest.kt` |
-| PlaceholderScreen UI Tests | `android/app/src/androidTest/java/com/molt/marketplace/core/navigation/PlaceholderScreenTest.kt` |
+| Route Serialization Tests | `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/RouteSerializationTest.kt` |
+| DeepLink Edge Case Tests | `android/app/src/test/java/com/xirigo/ecommerce/core/navigation/DeepLinkParserEdgeCasesTest.kt` |
+| AppScaffold UI Tests | `android/app/src/androidTest/java/com/xirigo/ecommerce/core/navigation/XGAppScaffoldTest.kt` |
+| PlaceholderScreen UI Tests | `android/app/src/androidTest/java/com/xirigo/ecommerce/core/navigation/PlaceholderScreenTest.kt` |
 | This Handoff | `docs/pipeline/navigation-android-test.handoff.md` |
 
 ## Test Summary
@@ -24,7 +24,7 @@ COMPLETE
 |------|------|-------|-----------------|
 | `RouteSerializationTest.kt` | Unit (JUnit 4) | 44 | All 20 data-object routes and 14 data-class routes serialize/deserialize via `@Serializable`; JSON structure verification; data-class equality contract; singleton identity for data objects |
 | `DeepLinkParserEdgeCasesTest.kt` | Unit (Robolectric) | 30 | URL-encoded blank IDs, missing host, null scheme, http scheme accepted, wrong host/subdomain, unsupported schemes (ftp/file/market), missing required params for all routes, extra path segments ignored, query params ignored, auth flag propagation, ID/name extraction from parsed routes |
-| `MoltAppScaffoldTest.kt` | Compose UI | 9 | All 4 tab labels displayed, Home selected by default, tab switching to Categories/Cart/Profile, return to Home, cart badge hidden at zero, bottom bar visible on Home/Categories routes, placeholder content rendered per tab |
+| `XGAppScaffoldTest.kt` | Compose UI | 9 | All 4 tab labels displayed, Home selected by default, tab switching to Categories/Cart/Profile, return to Home, cart badge hidden at zero, bottom bar visible on Home/Categories routes, placeholder content rendered per tab |
 | `PlaceholderScreenTest.kt` | Compose UI | 10 | Title rendered for 5 distinct routes (Home, Categories, Cart, Profile, Product Detail), "Coming soon" subtitle always present, title + subtitle coexist, different titles produce distinct text nodes |
 
 ### Pre-existing Tests from Developer (3 files, 45 tests)
@@ -44,7 +44,7 @@ COMPLETE
 | `DeepLinkParser.kt` | Happy paths only | Edge cases: blank IDs, extra segments, query params, http scheme, wrong host, all scheme variants |
 | `Route.kt` | Auth flag only | Serialization round-trip for every variant; JSON structure; equality contract |
 | `TopLevelDestination.kt` | Basic properties | Fully covered by pre-existing tests |
-| `MoltAppScaffold.kt` | 0% | Tab rendering, selection, switching, badge, bottom bar visibility |
+| `XGAppScaffold.kt` | 0% | Tab rendering, selection, switching, badge, bottom bar visibility |
 | `PlaceholderScreen.kt` | 0% | Title rendering, subtitle rendering, coexistence |
 
 ## Lint / Quality
@@ -58,7 +58,7 @@ COMPLETE
 Key test patterns to verify:
 - `RouteSerializationTest` uses concrete serializers (e.g., `encodeToString<Route.ProductDetail>`) not the polymorphic parent, matching how Compose Navigation 2.8+ serializes back-stack entries.
 - `DeepLinkParserEdgeCasesTest` uses `@RunWith(RobolectricTestRunner::class)` because `Uri.parse()` requires Android SDK.
-- `MoltAppScaffoldTest` and `PlaceholderScreenTest` are in `src/androidTest/` (instrumented) using `createComposeRule`.
+- `XGAppScaffoldTest` and `PlaceholderScreenTest` are in `src/androidTest/` (instrumented) using `createComposeRule`.
 
 ## Next Agent: Doc Writer
 

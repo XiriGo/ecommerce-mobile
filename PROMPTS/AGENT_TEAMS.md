@@ -198,7 +198,7 @@ Follow CLAUDE.md iOS coding standards.
 ```
 Use the android-tester subagent to write tests for the {feature-name} feature on Android.
 
-Read all source files in android/app/src/main/java/com/molt/marketplace/feature/{name}/
+Read all source files in android/app/src/main/java/com/xirigo/ecommerce/feature/{name}/
 Coverage target: >= 80% lines, >= 70% branches.
 Use JUnit 4, Truth, MockK, Turbine, Compose UI Test.
 Prefer Fake repositories over mocks.
@@ -209,7 +209,7 @@ Prefer Fake repositories over mocks.
 ```
 Use the ios-tester subagent to write tests for the {feature-name} feature on iOS.
 
-Read all source files in ios/MoltMarketplace/Feature/{Name}/
+Read all source files in ios/XiriGoEcommerce/Feature/{Name}/
 Coverage target: >= 80% lines, >= 70% branches.
 Use Swift Testing (@Test), ViewInspector, swift-snapshot-testing.
 Prefer Fake repositories over mocks.
@@ -281,8 +281,8 @@ Do NOT implement — only create shared/feature-specs/{feature-name}.md
 
 ```
 Use the reviewer subagent to check cross-platform consistency between
-android/app/src/main/java/com/molt/marketplace/feature/{name}/ and
-ios/MoltMarketplace/Feature/{Name}/.
+android/app/src/main/java/com/xirigo/ecommerce/feature/{name}/ and
+ios/XiriGoEcommerce/Feature/{Name}/.
 Verify: same behavior, same states, same error handling, same navigation flow.
 ```
 

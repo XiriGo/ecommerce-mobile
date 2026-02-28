@@ -17,7 +17,7 @@ Successfully documented the app-scaffold feature with comprehensive feature READ
 
 ### 1. Feature README
 
-**File**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/features/app-scaffold.md`
+**File**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/features/app-scaffold.md`
 
 **Sections**:
 - Overview: Feature purpose, status, platforms
@@ -37,7 +37,7 @@ Successfully documented the app-scaffold feature with comprehensive feature READ
 
 ### 2. CHANGELOG Entry
 
-**File**: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/CHANGELOG.md`
+**File**: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/CHANGELOG.md`
 
 **Added under `[Unreleased] > Added`**:
 
@@ -133,11 +133,11 @@ All file counts, version numbers, and technical details verified against actual 
 ### File Paths Verified
 
 All file paths are absolute paths as required by documentation standards:
-- Android source: `/android/app/src/main/java/com/molt/marketplace/...`
-- iOS source: `/ios/MoltMarketplace/...`
-- Android tests: `/android/app/src/test/java/com/molt/marketplace/...`
-- iOS tests: `/ios/MoltMarketplaceTests/...`
-- Handoffs: `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/pipeline/...`
+- Android source: `/android/app/src/main/java/com/xirigo/ecommerce/...`
+- iOS source: `/ios/XiriGoEcommerce/...`
+- Android tests: `/android/app/src/test/java/com/xirigo/ecommerce/...`
+- iOS tests: `/ios/XiriGoEcommerceTests/...`
+- Handoffs: `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/pipeline/...`
 
 ---
 
@@ -194,7 +194,7 @@ Documentation emphasizes behavioral parity:
 
 ### Running the App (iOS)
 
-1. Open `/ios/MoltMarketplace.xcodeproj` in Xcode
+1. Open `/ios/XiriGoEcommerce.xcodeproj` in Xcode
 2. Add all source files to target
 3. Resolve SPM dependencies (File → Add Package Dependencies)
 4. Configure schemes for Debug/Staging/Release

@@ -1,9 +1,9 @@
 # CI/CD Pipeline Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide covers the GitHub Actions CI/CD pipelines for the Molt Marketplace mobile app. Both platforms run as separate workflows with distinct job chains.
+This guide covers the GitHub Actions CI/CD pipelines for the XiriGo Ecommerce mobile app. Both platforms run as separate workflows with distinct job chains.
 
 ---
 
@@ -146,7 +146,7 @@ Runs after `lint` passes. Uses SPM cache.
 | Run tests | `xcodebuild test-without-building` |
 | Upload results | `actions/upload-artifact@v4` → `ios-test-results` |
 
-Scheme used: `MoltMarketplace`
+Scheme used: `XiriGoEcommerce`
 Destination: `platform=iOS Simulator,name=iPhone 16`
 Code signing: `CODE_SIGNING_ALLOWED=NO` (no certificates on CI)
 Results path: `ios/build/*.xcresult`
@@ -157,7 +157,7 @@ Retention: 14 days
 SPM packages are cached using the `Package.resolved` hash:
 
 ```
-key: spm-${{ hashFiles('ios/MoltMarketplace.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+key: spm-${{ hashFiles('ios/XiriGoEcommerce.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
 restore-keys: spm-
 ```
 
@@ -317,22 +317,22 @@ swiftformat --lint .
 
 # Build for testing
 xcodebuild build-for-testing \
-  -project MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -destination 'platform=iOS Simulator,name=iPhone 16' \
   CODE_SIGNING_ALLOWED=NO
 
 # Run tests
 xcodebuild test-without-building \
-  -project MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -destination 'platform=iOS Simulator,name=iPhone 16' \
   CODE_SIGNING_ALLOWED=NO
 
 # Combined build + test in one step
 xcodebuild test \
-  -project MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -destination 'platform=iOS Simulator,name=iPhone 16' \
   CODE_SIGNING_ALLOWED=NO
 ```
@@ -359,11 +359,11 @@ No secrets are required for the current debug-only CI pipeline. When secrets are
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/.github/workflows/android-ci.yml` | Android CI workflow |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/.github/workflows/ios-ci.yml` | iOS CI workflow |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` | Android dependency + tool versions |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/wrapper/gradle-wrapper.properties` | Gradle version (9.2.1) |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace.xcodeproj/xcshareddata/xcschemes/MoltMarketplace.xcscheme` | Xcode scheme used by CI |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` | SPM lock file (cache key source) |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/docs/guides/testing-strategy.md` | Full test strategy, coverage thresholds, fixture management |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/CLAUDE.md` | Project standards, coverage thresholds (>= 80% lines/functions) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/.github/workflows/android-ci.yml` | Android CI workflow |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/.github/workflows/ios-ci.yml` | iOS CI workflow |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml` | Android dependency + tool versions |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/wrapper/gradle-wrapper.properties` | Gradle version (9.2.1) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce.xcodeproj/xcshareddata/xcschemes/XiriGoEcommerce.xcscheme` | Xcode scheme used by CI |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` | SPM lock file (cache key source) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/docs/guides/testing-strategy.md` | Full test strategy, coverage thresholds, fixture management |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/CLAUDE.md` | Project standards, coverage thresholds (>= 80% lines/functions) |

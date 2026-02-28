@@ -72,8 +72,8 @@ Wait — that is 6. The 7th is already embedded above: the cross-test isolation 
 
 | Artifact | Path | Action |
 |----------|------|--------|
-| Container Tests (expanded) | `ios/MoltMarketplaceTests/Core/DI/ContainerTests.swift` | MODIFIED |
-| NetworkMonitor Tests (expanded) | `ios/MoltMarketplaceTests/Core/Network/NetworkMonitorTests.swift` | MODIFIED |
+| Container Tests (expanded) | `ios/XiriGoEcommerceTests/Core/DI/ContainerTests.swift` | MODIFIED |
+| NetworkMonitor Tests (expanded) | `ios/XiriGoEcommerceTests/Core/Network/NetworkMonitorTests.swift` | MODIFIED |
 | This Handoff | `docs/pipeline/di-setup-ios-test.handoff.md` | NEW |
 
 ## Coverage Assessment

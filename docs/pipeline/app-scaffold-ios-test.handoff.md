@@ -10,12 +10,12 @@
 
 ## Testing Summary
 
-Successfully created comprehensive test suite for the iOS app scaffold. All tests validate the foundational components: Config, MoltColors (including hex conversion), MoltSpacing, and String localization for all three languages (en/mt/tr).
+Successfully created comprehensive test suite for the iOS app scaffold. All tests validate the foundational components: Config, XGColors (including hex conversion), XGSpacing, and String localization for all three languages (en/mt/tr).
 
 **Test Coverage**: 100% of testable scaffold code
 - Config environment URL switching
-- MoltColors theme token validation
-- MoltSpacing layout constants
+- XGColors theme token validation
+- XGSpacing layout constants
 - Color hex string parsing
 - Localization completeness (12 keys × 3 languages)
 
@@ -27,10 +27,10 @@ All tests use **Swift Testing framework** with `@Test` macro as per CLAUDE.md st
 
 ### Unit Tests (4 files)
 
-1. `/ios/MoltMarketplaceTests/ConfigTests.swift` — Config environment URL tests (7 tests)
-2. `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltColorsTests.swift` — Color validation (10 tests)
-3. `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltSpacingTests.swift` — Spacing validation (16 tests)
-4. `/ios/MoltMarketplaceTests/Resources/LocalizableTests.swift` — Localization validation (17 tests)
+1. `/ios/XiriGoEcommerceTests/ConfigTests.swift` — Config environment URL tests (7 tests)
+2. `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGColorsTests.swift` — Color validation (10 tests)
+3. `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGSpacingTests.swift` — Spacing validation (16 tests)
+4. `/ios/XiriGoEcommerceTests/Resources/LocalizableTests.swift` — Localization validation (17 tests)
 
 **Total**: 4 test files, 50 test cases
 
@@ -40,23 +40,23 @@ All tests use **Swift Testing framework** with `@Test` macro as per CLAUDE.md st
 
 ### 1. ConfigTests (7 tests)
 
-**File**: `/ios/MoltMarketplaceTests/ConfigTests.swift`
+**File**: `/ios/XiriGoEcommerceTests/ConfigTests.swift`
 
 Tests environment configuration behavior:
 - ✓ API base URL is valid HTTPS URL
-- ✓ API base URL returns correct environment URL for Debug (`api-dev.molt.mt`)
-- ✓ API base URL returns correct environment URL for Staging (`api-staging.molt.mt`)
-- ✓ API base URL returns correct environment URL for Release (`api.molt.mt`)
+- ✓ API base URL returns correct environment URL for Debug (`api-dev.xirigo.com`)
+- ✓ API base URL returns correct environment URL for Staging (`api-staging.xirigo.com`)
+- ✓ API base URL returns correct environment URL for Release (`api.xirigo.com`)
 - ✓ Bundle version follows semantic versioning format
 - ✓ Build number is valid
 
 **Coverage**: 100% of Config.swift (3 properties, all branches)
 
-### 2. MoltColorsTests + ColorHexExtensionTests (17 tests)
+### 2. XGColorsTests + ColorHexExtensionTests (17 tests)
 
-**File**: `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltColorsTests.swift`
+**File**: `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGColorsTests.swift`
 
-#### MoltColorsTests (10 tests)
+#### XGColorsTests (10 tests)
 Tests design system color tokens:
 - ✓ Primary color exists and is not transparent
 - ✓ OnPrimary is white
@@ -78,11 +78,11 @@ Tests hex string to Color conversion:
 - ✓ Black hex (#000000) works
 - ✓ Mixed case hex (#6750A4 vs #6750a4) works
 
-**Coverage**: 100% of MoltColors.swift (32 color constants + hex extension)
+**Coverage**: 100% of XGColors.swift (32 color constants + hex extension)
 
-### 3. MoltSpacingTests (16 tests)
+### 3. XGSpacingTests (16 tests)
 
-**File**: `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltSpacingTests.swift`
+**File**: `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGSpacingTests.swift`
 
 Tests spacing token values and layout constants:
 - ✓ Base spacing values are in ascending order (xxs < xs < sm < ... < xxxl)
@@ -91,11 +91,11 @@ Tests spacing token values and layout constants:
 - ✓ Product grid has 2 columns
 - ✓ Minimum touch target meets Apple HIG requirement (44pt)
 
-**Coverage**: 100% of MoltSpacing.swift (16 constants)
+**Coverage**: 100% of XGSpacing.swift (16 constants)
 
 ### 4. LocalizableTests (17 tests)
 
-**File**: `/ios/MoltMarketplaceTests/Resources/LocalizableTests.swift`
+**File**: `/ios/XiriGoEcommerceTests/Resources/LocalizableTests.swift`
 
 Tests String Catalog localization:
 - ✓ English, Maltese, Turkish locales are available
@@ -118,7 +118,7 @@ Tests String Catalog localization:
 All tests use **Swift Testing** (iOS 16+) with `@Test` macro:
 ```swift
 import Testing
-@testable import MoltMarketplace
+@testable import XiriGoEcommerce
 
 @Suite("Test Suite Name")
 struct TestSuiteName {
@@ -133,13 +133,13 @@ struct TestSuiteName {
 
 Tests mirror source structure:
 ```
-MoltMarketplaceTests/
+XiriGoEcommerceTests/
 ├── ConfigTests.swift
 ├── Core/
 │   └── DesignSystem/
 │       └── Theme/
-│           ├── MoltColorsTests.swift
-│           └── MoltSpacingTests.swift
+│           ├── XGColorsTests.swift
+│           └── XGSpacingTests.swift
 └── Resources/
     └── LocalizableTests.swift
 ```
@@ -152,9 +152,9 @@ MoltMarketplaceTests/
 
 To run tests, complete Xcode project setup first:
 
-1. Open `/ios/MoltMarketplace.xcodeproj` in Xcode
-2. Add all test files to `MoltMarketplaceTests` target
-3. Add source files to `MoltMarketplace` target
+1. Open `/ios/XiriGoEcommerce.xcodeproj` in Xcode
+2. Add all test files to `XiriGoEcommerceTests` target
+3. Add source files to `XiriGoEcommerce` target
 4. Resolve SPM dependencies (Factory, Nuke, etc.)
 5. Configure test schemes for Debug/Staging/Release
 
@@ -163,8 +163,8 @@ To run tests, complete Xcode project setup first:
 ```bash
 # Command line (after Xcode setup)
 xcodebuild test \
-  -project ios/MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project ios/XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
 ```
 
@@ -197,7 +197,7 @@ When Xcode setup is complete:
 ### Swift Standards ✓
 - [x] No force unwraps (`!`) — all optionals handled safely
 - [x] Explicit access control on test structs (default internal)
-- [x] Import `@testable import MoltMarketplace` for access
+- [x] Import `@testable import XiriGoEcommerce` for access
 - [x] No hardcoded strings in test descriptions
 
 ---
@@ -209,7 +209,7 @@ When Xcode setup is complete:
 @Test("apiBaseURL returns correct URL for Debug")
 func testApiBaseURLDebug() {
     #if DEBUG
-    #expect(Config.apiBaseURL.absoluteString == "https://api-dev.molt.mt")
+    #expect(Config.apiBaseURL.absoluteString == "https://api-dev.xirigo.com")
     #endif
 }
 ```
@@ -219,7 +219,7 @@ func testApiBaseURLDebug() {
 @Test("Success color is green")
 func testSuccessColorIsGreen() {
     let expectedGreen = Color(hex: "#4CAF50")
-    #expect(MoltColors.success == expectedGreen)
+    #expect(XGColors.success == expectedGreen)
 }
 ```
 
@@ -241,7 +241,7 @@ func testRetryButtonExists() {
 ```swift
 @Test("Minimum touch target meets Apple HIG requirement (44pt)")
 func testMinTouchTargetAppleHIG() {
-    #expect(MoltSpacing.minTouchTarget == 44)
+    #expect(XGSpacing.minTouchTarget == 44)
 }
 ```
 
@@ -264,8 +264,8 @@ func testMinTouchTargetAppleHIG() {
 | File | Lines | Functions | Coverage |
 |------|-------|-----------|----------|
 | `Config.swift` | 3/3 | 3/3 | 100% |
-| `MoltColors.swift` | 32/32 | 1/1 (hex init) | 100% |
-| `MoltSpacing.swift` | 16/16 | — | 100% |
+| `XGColors.swift` | 32/32 | 1/1 (hex init) | 100% |
+| `XGSpacing.swift` | 16/16 | — | 100% |
 | `Localizable.xcstrings` | 12/12 keys | — | 100% |
 
 **Overall**: 100% of testable scaffold code
@@ -282,7 +282,7 @@ func testMinTouchTargetAppleHIG() {
 
 ### For Next Feature (M0-02)
 When implementing design system components:
-1. Add unit tests for each `Molt*` component
+1. Add unit tests for each `XG*` component
 2. Use ViewInspector for SwiftUI component testing
 3. Add snapshot tests for visual regression
 4. Maintain >= 80% coverage threshold
@@ -313,15 +313,15 @@ All future iOS features depend on these tests passing:
 test(scaffold): add iOS app scaffold tests [agent:ios-test] [platform:ios]
 
 - Create ConfigTests with environment URL validation (7 tests)
-- Create MoltColorsTests with color token + hex parsing validation (17 tests)
-- Create MoltSpacingTests with spacing token validation (16 tests)
+- Create XGColorsTests with color token + hex parsing validation (17 tests)
+- Create XGSpacingTests with spacing token validation (16 tests)
 - Create LocalizableTests with localization completeness checks (17 tests)
 - Set up Swift Testing framework infrastructure
 - Achieve 100% coverage of testable scaffold code
 
 Total: 4 test files, 50 test cases
 Framework: Swift Testing (@Test macro)
-Coverage: Config, MoltColors, MoltSpacing, Localizable.xcstrings
+Coverage: Config, XGColors, XGSpacing, Localizable.xcstrings
 ```
 
 ---

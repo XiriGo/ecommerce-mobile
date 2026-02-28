@@ -9,7 +9,7 @@
 
 ## Review Summary
 
-Comprehensive review of the app-scaffold implementation for both Android and iOS platforms. The scaffold establishes a solid foundation for the Molt Marketplace buyer app.
+Comprehensive review of the app-scaffold implementation for both Android and iOS platforms. The scaffold establishes a solid foundation for the XiriGo Ecommerce buyer app.
 
 **Overall Assessment**: ✅ APPROVED
 
@@ -30,18 +30,18 @@ Comprehensive review of the app-scaffold implementation for both Android and iOS
 - [x] Project-level Gradle configuration (build.gradle.kts, settings.gradle.kts)
 - [x] Version catalog (libs.versions.toml) with all required dependencies
 - [x] App-level Gradle configuration with 3 build types
-- [x] MoltApplication (@HiltAndroidApp)
+- [x] XGApplication (@HiltAndroidApp)
 - [x] MainActivity (@AndroidEntryPoint, splash screen)
-- [x] Design system theme shell (MoltColors, MoltTypography, MoltSpacing, MoltTheme)
+- [x] Design system theme shell (XGColors, XGTypography, XGSpacing, XGTheme)
 - [x] String resources for 3 languages (en, mt, tr)
 - [x] Network security config
 - [x] ProGuard rules
 - [x] Placeholder directories (core/, feature/, test/)
 
 **iOS (13 files + fix)** — All files from spec manifest present:
-- [x] MoltMarketplaceApp (@main SwiftUI App)
+- [x] XiriGoEcommerceApp (@main SwiftUI App)
 - [x] Config.swift (environment URL reader)
-- [x] Design system theme shell (MoltColors, MoltTypography, MoltSpacing, MoltTheme)
+- [x] Design system theme shell (XGColors, XGTypography, XGSpacing, XGTheme)
 - [x] String Catalog (Localizable.xcstrings) with 3 languages
 - [x] Container+Extensions.swift (Factory DI)
 - [x] Three xcconfig files (Debug, Staging, Release)
@@ -64,9 +64,9 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 #### Android Code Quality
 
 **Verified Files**:
-- `/android/app/src/main/java/com/molt/marketplace/MoltApplication.kt`
-- `/android/app/src/main/java/com/molt/marketplace/MainActivity.kt`
-- `/android/app/src/main/java/com/molt/marketplace/core/designsystem/theme/*.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/XGApplication.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt`
+- `/android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/theme/*.kt`
 - `/android/app/build.gradle.kts`
 
 **Standards Compliance**:
@@ -80,7 +80,7 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 - [x] BuildConfig.DEBUG check — ✅ Present
 - [x] Clean Architecture layers — ✅ Package structure correct
 - [x] No hardcoded strings — ✅ All via stringResource()
-- [x] Material 3 theming — ✅ MoltTheme wrapper implemented
+- [x] Material 3 theming — ✅ XGTheme wrapper implemented
 
 **Build Configuration**:
 - [x] minSdk 26, targetSdk 35, compileSdk 35 — ✅ Matches spec
@@ -95,14 +95,14 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 #### iOS Code Quality
 
 **Verified Files**:
-- `/ios/MoltMarketplace/MoltMarketplaceApp.swift`
-- `/ios/MoltMarketplace/Config.swift`
-- `/ios/MoltMarketplace/Core/DesignSystem/Theme/*.swift`
-- `/ios/MoltMarketplace/Core/DI/Container+Extensions.swift`
+- `/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift`
+- `/ios/XiriGoEcommerce/Config.swift`
+- `/ios/XiriGoEcommerce/Core/DesignSystem/Theme/*.swift`
+- `/ios/XiriGoEcommerce/Core/DI/Container+Extensions.swift`
 
 **Standards Compliance**:
 - [x] No force unwrap (`!`) — ⚠️ ONE VIOLATION FOUND (acceptable in Config.swift)
-  - `Config.swift:6`: `URL(string: "https://api-dev.molt.mt")!`
+  - `Config.swift:6`: `URL(string: "https://api-dev.xirigo.com")!`
   - **Acceptable**: Environment URL is hardcoded constant, will never fail
 - [x] No `Any` type — Verified: All types explicitly declared
 - [x] Explicit access control — Verified: `enum`, `static let`, `internal` (default) correct
@@ -111,7 +111,7 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 - [x] `final class` by default — Verified: No classes defined (enums used)
 - [x] Prefer value types — ✅ All types are enums (value types)
 - [x] @Observable for ViewModels — N/A (no ViewModels in scaffold)
-- [x] No hardcoded strings — ⚠️ ContentView has hardcoded "Molt Marketplace" (placeholder screen only, acceptable)
+- [x] No hardcoded strings — ⚠️ ContentView has hardcoded "XiriGo Ecommerce" (placeholder screen only, acceptable)
 
 **Platform Configuration**:
 - [x] iOS 17.0 minimum — ✅ Matches spec
@@ -131,11 +131,11 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 
 **Behavioral Parity Verified**:
 - [x] Three build configurations (Debug, Staging, Release) — ✅ Both platforms
-- [x] Same environment URLs — ✅ api-dev.molt.mt, api-staging.molt.mt, api.molt.mt
+- [x] Same environment URLs — ✅ api-dev.xirigo.com, api-staging.xirigo.com, api.xirigo.com
 - [x] Same localization keys (12 base strings × 3 languages) — ✅ Verified
 - [x] Same design token values (colors, spacing, typography) — ✅ Verified
 - [x] Same Clean Architecture structure — ✅ core/, feature/ (Android), Core/, Feature/ (iOS)
-- [x] Same placeholder screen approach — ✅ Centered "Molt Marketplace" text
+- [x] Same placeholder screen approach — ✅ Centered "XiriGo Ecommerce" text
 
 **Intentional Platform Differences** (as per CLAUDE.md):
 - [x] UI framework (Compose vs SwiftUI) — ✅ Correct
@@ -153,11 +153,11 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 ### 4. Test Coverage ✅
 
 **Android Tests** (33 tests, 5 files):
-- `/android/app/src/test/java/com/molt/marketplace/BuildConfigTest.kt` — 6 tests
-- `/android/app/src/test/java/com/molt/marketplace/MoltApplicationTest.kt` — 3 tests
-- `/android/app/src/test/java/com/molt/marketplace/StringResourcesTest.kt` — 9 tests
-- `/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltColorsTest.kt` — 11 tests
-- `/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltSpacingTest.kt` — 4 tests
+- `/android/app/src/test/java/com/xirigo/ecommerce/BuildConfigTest.kt` — 6 tests
+- `/android/app/src/test/java/com/xirigo/ecommerce/XGApplicationTest.kt` — 3 tests
+- `/android/app/src/test/java/com/xirigo/ecommerce/StringResourcesTest.kt` — 9 tests
+- `/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGColorsTest.kt` — 11 tests
+- `/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacingTest.kt` — 4 tests
 
 **Coverage**:
 - Lines: 100% (on testable scaffold code)
@@ -165,10 +165,10 @@ All missing files are documented in handoffs as "Known Limitations" and are acce
 - Branches: 100%
 
 **iOS Tests** (50 tests, 4 files):
-- `/ios/MoltMarketplaceTests/ConfigTests.swift` — 7 tests
-- `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltColorsTests.swift` — 17 tests (10 + 7 hex parsing)
-- `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltSpacingTests.swift` — 16 tests
-- `/ios/MoltMarketplaceTests/Resources/LocalizableTests.swift` — 17 tests (localization completeness)
+- `/ios/XiriGoEcommerceTests/ConfigTests.swift` — 7 tests
+- `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGColorsTests.swift` — 17 tests (10 + 7 hex parsing)
+- `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGSpacingTests.swift` — 16 tests
+- `/ios/XiriGoEcommerceTests/Resources/LocalizableTests.swift` — 17 tests (localization completeness)
 
 **Coverage**:
 - Lines: 100% (on testable scaffold code)
@@ -226,7 +226,7 @@ gradle wrapper --gradle-version 8.11.1
 #### iOS Build Status
 
 **Cannot verify build without Xcode project setup**. Expected behavior:
-1. Open `MoltMarketplace.xcodeproj` in Xcode
+1. Open `XiriGoEcommerce.xcodeproj` in Xcode
 2. Add all source files to target
 3. Add SPM dependencies via Xcode UI (File → Add Package Dependencies)
 4. Configure schemes for Debug/Staging/Release
@@ -251,16 +251,16 @@ gradle wrapper --gradle-version 8.11.1
 **Issue**: Package.swift defined the app as an SPM library target with:
 ```swift
 products: [
-    .library(name: "MoltMarketplace", targets: ["MoltMarketplace"])
+    .library(name: "XiriGoEcommerce", targets: ["XiriGoEcommerce"])
 ]
 targets: [
-    .target(name: "MoltMarketplace", dependencies: [...])
+    .target(name: "XiriGoEcommerce", dependencies: [...])
 ]
 ```
 
 This caused SPM build errors:
-- "Source files for target MoltMarketplace should be located under 'Sources/MoltMarketplace'"
-- "target 'MoltMarketplace' referenced in product 'MoltMarketplace' is empty"
+- "Source files for target XiriGoEcommerce should be located under 'Sources/XiriGoEcommerce'"
+- "target 'XiriGoEcommerce' referenced in product 'XiriGoEcommerce' is empty"
 
 **Root Cause**: According to CLAUDE.md:
 > **iOS**: `ios/Package.swift` — Swift Package Manager dependencies
@@ -268,7 +268,7 @@ This caused SPM build errors:
 SPM Package.swift is ONLY for declaring external package dependencies. The app target itself MUST be managed by the Xcode project (.xcodeproj), NOT by Package.swift.
 
 **Fix Applied**: Replaced Package.swift with documentation-only comment file listing external dependency URLs. Dependencies should be added via Xcode UI:
-1. Open MoltMarketplace.xcodeproj in Xcode
+1. Open XiriGoEcommerce.xcodeproj in Xcode
 2. File → Add Package Dependencies
 3. Paste URLs from Package.swift comments
 
@@ -282,11 +282,11 @@ SPM Package.swift is ONLY for declaring external package dependencies. The app t
 
 ### ⚠️ iOS: One Force Unwrap in Config.swift
 
-**File**: `/ios/MoltMarketplace/Config.swift`
+**File**: `/ios/XiriGoEcommerce/Config.swift`
 **Line**: 6
 
 ```swift
-return URL(string: "https://api-dev.molt.mt")!
+return URL(string: "https://api-dev.xirigo.com")!
 ```
 
 **CLAUDE.md Rule**: "No force unwrap (`!`): Always use `guard let`, `if let`, or nil coalescing (`??`)."
@@ -300,11 +300,11 @@ return URL(string: "https://api-dev.molt.mt")!
 
 ### ⚠️ iOS: Hardcoded String in ContentView
 
-**File**: `/ios/MoltMarketplace/MoltMarketplaceApp.swift`
+**File**: `/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift`
 **Line**: 22
 
 ```swift
-Text("Molt Marketplace")
+Text("XiriGo Ecommerce")
 ```
 
 **CLAUDE.md Rule**: "No hardcoded strings: Use `String(localized:)` or `.localizable` pattern."

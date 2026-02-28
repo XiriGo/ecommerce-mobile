@@ -1,7 +1,7 @@
 # iOS Standards — Swift + SwiftUI
 
 Extracted from the project's `CLAUDE.md`. This is the authoritative reference for all iOS development
-in the Molt Marketplace app. Agents and developers must follow these patterns exactly.
+in the XiriGo Ecommerce app. Agents and developers must follow these patterns exactly.
 
 ---
 
@@ -22,13 +22,13 @@ in the Molt Marketplace app. Agents and developers must follow these patterns ex
   - [Domain Error Pattern](#domain-error-pattern)
   - [Fake Repository for Tests](#fake-repository-for-tests)
 - [Design System](#design-system)
-  - [Theme: MoltColors.swift](#theme-moltcolorsswift)
-  - [Theme: MoltSpacing.swift](#theme-moltspacingswift)
-  - [Component: MoltButton.swift](#component-moltbuttonswift)
-  - [Component: MoltLoadingView.swift](#component-moltloadingviewswift)
-  - [Component: MoltErrorView.swift](#component-molterrorviewswift)
-  - [Component: MoltEmptyView.swift](#component-moltemptyviewswift)
-  - [Component: MoltImage.swift](#component-moltimageswift)
+  - [Theme: XGColors.swift](#theme-moltcolorsswift)
+  - [Theme: XGSpacing.swift](#theme-moltspacingswift)
+  - [Component: XGButton.swift](#component-moltbuttonswift)
+  - [Component: XGLoadingView.swift](#component-moltloadingviewswift)
+  - [Component: XGErrorView.swift](#component-molterrorviewswift)
+  - [Component: XGEmptyView.swift](#component-moltemptyviewswift)
+  - [Component: XGImage.swift](#component-moltimageswift)
 - [Localization](#localization)
 - [Environment Configuration](#environment-configuration)
 - [Security](#security)
@@ -230,9 +230,9 @@ struct ProductListView: View {
         Group {
             switch viewModel.uiState {
             case .loading:
-                MoltLoadingView()
+                XGLoadingView()
             case .error(let message):
-                MoltErrorView(
+                XGErrorView(
                     message: message,
                     onRetry: { Task { await viewModel.loadProducts() } }
                 )
@@ -240,14 +240,14 @@ struct ProductListView: View {
                 ScrollView {
                     LazyVGrid(
                         columns: [GridItem(.flexible()), GridItem(.flexible())],
-                        spacing: MoltSpacing.productGridSpacing
+                        spacing: XGSpacing.productGridSpacing
                     ) {
                         ForEach(products) { product in
                             ProductCard(product: product)
                                 .onTapGesture { viewModel.onProductTap(product.id) }
                         }
                     }
-                    .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+                    .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
 
                     if isLoadingMore {
                         MoltLoadingIndicator()
@@ -355,7 +355,7 @@ extension Error {
 ### Fake Repository for Tests
 
 ```swift
-// MoltMarketplaceTests/Fakes/FakeProductRepository.swift
+// XiriGoEcommerceTests/Fakes/FakeProductRepository.swift
 final class FakeProductRepository: ProductRepository, @unchecked Sendable {
     var products: [Product] = []
     var errorToThrow: AppError?
@@ -382,7 +382,7 @@ final class FakeProductRepository: ProductRepository, @unchecked Sendable {
 ### Design System Layer Structure
 
 All UI components live in a shared design system module that wraps platform components.
-Feature screens **NEVER** use raw SwiftUI components directly -- they use `Molt*` wrappers.
+Feature screens **NEVER** use raw SwiftUI components directly -- they use `XG*` wrappers.
 
 ```
 shared/design-tokens/ (JSON)  ->  Core/DesignSystem/ (Swift code)  ->  Feature/*/Presentation/
@@ -391,36 +391,36 @@ shared/design-tokens/ (JSON)  ->  Core/DesignSystem/ (Swift code)  ->  Feature/*
    updates these               when Figma arrives                  on design change
 ```
 
-**Directory layout** (`ios/MoltMarketplace/Core/DesignSystem/`):
+**Directory layout** (`ios/XiriGoEcommerce/Core/DesignSystem/`):
 ```
 Core/DesignSystem/
   +-- Theme/
-  |   +-- MoltTheme.swift       # ViewModifier, applies color + typography
-  |   +-- MoltColors.swift      # Color constants from design tokens
-  |   +-- MoltTypography.swift  # Font styles from design tokens
-  |   +-- MoltSpacing.swift     # Spacing constants enum
+  |   +-- XGTheme.swift       # ViewModifier, applies color + typography
+  |   +-- XGColors.swift      # Color constants from design tokens
+  |   +-- XGTypography.swift  # Font styles from design tokens
+  |   +-- XGSpacing.swift     # Spacing constants enum
   +-- Component/
-      +-- MoltButton.swift      # Primary/Secondary/Text button variants
-      +-- MoltCard.swift        # Product card, info card variants
-      +-- MoltTextField.swift   # Text field with label, error, icon
-      +-- MoltTopBar.swift      # NavigationBar wrapper
-      +-- MoltTabBar.swift      # Tab bar wrapper
-      +-- MoltLoadingView.swift # Full-screen + inline loading
-      +-- MoltErrorView.swift   # Error with retry button
-      +-- MoltEmptyView.swift   # Empty state with illustration
-      +-- MoltImage.swift       # Nuke image with placeholder/error
-      +-- MoltBadge.swift       # Count badge, status badge
+      +-- XGButton.swift      # Primary/Secondary/Text button variants
+      +-- XGCard.swift        # Product card, info card variants
+      +-- XGTextField.swift   # Text field with label, error, icon
+      +-- XGTopBar.swift      # NavigationBar wrapper
+      +-- XGTabBar.swift      # Tab bar wrapper
+      +-- XGLoadingView.swift # Full-screen + inline loading
+      +-- XGErrorView.swift   # Error with retry button
+      +-- XGEmptyView.swift   # Empty state with illustration
+      +-- XGImage.swift       # Nuke image with placeholder/error
+      +-- XGBadge.swift       # Count badge, status badge
 ```
 
 **Critical Rule**: Feature screens import `Core/DesignSystem` components. When Figma designs arrive, only files under `Core/DesignSystem/` change. Zero feature screen edits needed.
 
-### Theme: MoltColors.swift
+### Theme: XGColors.swift
 
 ```swift
-// Core/DesignSystem/Theme/MoltColors.swift
+// Core/DesignSystem/Theme/XGColors.swift
 import SwiftUI
 
-enum MoltColors {
+enum XGColors {
     // Primary — updated when Figma arrives
     static let primary = Color(hex: "#6750A4")
     static let onPrimary = Color.white
@@ -457,13 +457,13 @@ extension Color {
 }
 ```
 
-### Theme: MoltSpacing.swift
+### Theme: XGSpacing.swift
 
 ```swift
-// Core/DesignSystem/Theme/MoltSpacing.swift
+// Core/DesignSystem/Theme/XGSpacing.swift
 import SwiftUI
 
-enum MoltSpacing {
+enum XGSpacing {
     static let xxs: CGFloat = 2
     static let xs: CGFloat = 4
     static let sm: CGFloat = 8
@@ -485,21 +485,21 @@ enum MoltSpacing {
 }
 ```
 
-### Component: MoltButton.swift
+### Component: XGButton.swift
 
 ```swift
-// Core/DesignSystem/Component/MoltButton.swift
+// Core/DesignSystem/Component/XGButton.swift
 import SwiftUI
 
-enum MoltButtonStyle { case primary, secondary, text }
+enum XGButtonStyle { case primary, secondary, text }
 
-struct MoltButton: View {
+struct XGButton: View {
     let title: String
-    let style: MoltButtonStyle
+    let style: XGButtonStyle
     let isLoading: Bool
     let action: () -> Void
 
-    init(_ title: String, style: MoltButtonStyle = .primary, isLoading: Bool = false, action: @escaping () -> Void) {
+    init(_ title: String, style: XGButtonStyle = .primary, isLoading: Bool = false, action: @escaping () -> Void) {
         self.title = title
         self.style = style
         self.isLoading = isLoading
@@ -508,15 +508,15 @@ struct MoltButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: MoltSpacing.sm) {
+            HStack(spacing: XGSpacing.sm) {
                 if isLoading {
                     ProgressView()
-                        .tint(style == .primary ? .white : MoltColors.primary)
+                        .tint(style == .primary ? .white : XGColors.primary)
                 }
                 Text(title)
             }
             .frame(maxWidth: style == .text ? nil : .infinity)
-            .frame(minHeight: MoltSpacing.minTouchTarget)
+            .frame(minHeight: XGSpacing.minTouchTarget)
         }
         .disabled(isLoading)
         .buttonStyle(moltButtonStyle)
@@ -533,11 +533,11 @@ struct MoltButton: View {
 }
 ```
 
-### Component: MoltLoadingView.swift
+### Component: XGLoadingView.swift
 
 ```swift
-// Core/DesignSystem/Component/MoltLoadingView.swift
-struct MoltLoadingView: View {
+// Core/DesignSystem/Component/XGLoadingView.swift
+struct XGLoadingView: View {
     var body: some View {
         VStack {
             Spacer()
@@ -555,21 +555,21 @@ struct MoltLoadingIndicator: View {
             ProgressView()
             Spacer()
         }
-        .padding(MoltSpacing.base)
+        .padding(XGSpacing.base)
     }
 }
 ```
 
-### Component: MoltErrorView.swift
+### Component: XGErrorView.swift
 
 ```swift
-// Core/DesignSystem/Component/MoltErrorView.swift
-struct MoltErrorView: View {
+// Core/DesignSystem/Component/XGErrorView.swift
+struct XGErrorView: View {
     let message: String
     var onRetry: (() -> Void)?
 
     var body: some View {
-        VStack(spacing: MoltSpacing.base) {
+        VStack(spacing: XGSpacing.base) {
             Spacer()
             Image(systemName: "exclamationmark.circle")
                 .font(.system(size: 48))
@@ -578,26 +578,26 @@ struct MoltErrorView: View {
                 .font(.body)
                 .multilineTextAlignment(.center)
             if let onRetry {
-                MoltButton(String(localized: "common_retry_button"), action: onRetry)
+                XGButton(String(localized: "common_retry_button"), action: onRetry)
                     .frame(width: 200)
             }
             Spacer()
         }
-        .padding(MoltSpacing.base)
+        .padding(XGSpacing.base)
     }
 }
 ```
 
-### Component: MoltEmptyView.swift
+### Component: XGEmptyView.swift
 
 ```swift
-// Core/DesignSystem/Component/MoltEmptyView.swift
-struct MoltEmptyView: View {
+// Core/DesignSystem/Component/XGEmptyView.swift
+struct XGEmptyView: View {
     let message: String
     var systemImage: String = "tray"
 
     var body: some View {
-        VStack(spacing: MoltSpacing.base) {
+        VStack(spacing: XGSpacing.base) {
             Spacer()
             Image(systemName: systemImage)
                 .font(.system(size: 64))
@@ -607,19 +607,19 @@ struct MoltEmptyView: View {
                 .foregroundStyle(.secondary)
             Spacer()
         }
-        .padding(MoltSpacing.base)
+        .padding(XGSpacing.base)
     }
 }
 ```
 
-### Component: MoltImage.swift
+### Component: XGImage.swift
 
 ```swift
-// Core/DesignSystem/Component/MoltImage.swift
+// Core/DesignSystem/Component/XGImage.swift
 import NukeUI
 import SwiftUI
 
-struct MoltImage: View {
+struct XGImage: View {
     let url: URL?
     var contentMode: SwiftUI.ContentMode = .fill
 
@@ -630,9 +630,9 @@ struct MoltImage: View {
                     .resizable()
                     .aspectRatio(contentMode: contentMode)
             } else if state.error != nil {
-                Color(MoltColors.shimmer)
+                Color(XGColors.shimmer)
             } else {
-                Color(MoltColors.shimmer)
+                Color(XGColors.shimmer)
             }
         }
         .transition(.opacity.animation(.easeInOut(duration: 0.25)))
@@ -655,7 +655,7 @@ struct MoltImage: View {
 ### File Structure
 
 ```
-ios/MoltMarketplace/Resources/
+ios/XiriGoEcommerce/Resources/
   Localizable.xcstrings    # All languages in one file (Xcode 15+ String Catalog)
   -- or --
   en.lproj/Localizable.strings   # English (default)
@@ -722,9 +722,9 @@ String(localized: "\(count) items in cart")
 enum Config {
     static let apiBaseURL: URL = {
         #if DEBUG
-        return URL(string: "https://api-dev.molt.com")!
+        return URL(string: "https://api-dev.xirigo.com")!
         #else
-        return URL(string: "https://api.molt.com")!
+        return URL(string: "https://api.xirigo.com")!
         #endif
     }()
 }
@@ -837,15 +837,15 @@ When a lint rule is structurally incompatible with certain files (e.g., design t
 # .swiftlint.yml - exclude design system tokens from no_magic_numbers
 no_magic_numbers:
   excluded:
-    - "MoltMarketplace/Core/DesignSystem/Theme/*"
-    - "MoltMarketplace/Core/DesignSystem/Component/*"
+    - "XiriGoEcommerce/Core/DesignSystem/Theme/*"
+    - "XiriGoEcommerce/Core/DesignSystem/Component/*"
 
 # Higher length limits for test files
 file_length:
   warning: 300
   error: 400
   excluded:
-    - "MoltMarketplaceTests/**"
+    - "XiriGoEcommerceTests/**"
 ```
 
 ---
@@ -886,28 +886,28 @@ file_length:
 
 Created once during app scaffold (M0-01). All features depend on these.
 
-Location: `ios/MoltMarketplace/Core/DesignSystem/`
+Location: `ios/XiriGoEcommerce/Core/DesignSystem/`
 
-1. `Theme/MoltColors.swift` -- Color constants from design tokens
-2. `Theme/MoltTypography.swift` -- Font styles from design tokens
-3. `Theme/MoltSpacing.swift` -- Spacing constants
-4. `Theme/MoltTheme.swift` -- ViewModifier theme wrapper
-5. `Component/MoltButton.swift` -- Primary/Secondary/Text button
-6. `Component/MoltCard.swift` -- Product card, info card
-7. `Component/MoltTextField.swift` -- Text field with label/error
-8. `Component/MoltTopBar.swift` -- Navigation bar wrapper
-9. `Component/MoltTabBar.swift` -- Tab bar wrapper
-10. `Component/MoltLoadingView.swift` -- Full-screen + inline loading
-11. `Component/MoltErrorView.swift` -- Error with retry
-12. `Component/MoltEmptyView.swift` -- Empty state
-13. `Component/MoltImage.swift` -- Nuke image with placeholder
-14. `Component/MoltBadge.swift` -- Count/status badge
+1. `Theme/XGColors.swift` -- Color constants from design tokens
+2. `Theme/XGTypography.swift` -- Font styles from design tokens
+3. `Theme/XGSpacing.swift` -- Spacing constants
+4. `Theme/XGTheme.swift` -- ViewModifier theme wrapper
+5. `Component/XGButton.swift` -- Primary/Secondary/Text button
+6. `Component/XGCard.swift` -- Product card, info card
+7. `Component/XGTextField.swift` -- Text field with label/error
+8. `Component/XGTopBar.swift` -- Navigation bar wrapper
+9. `Component/XGTabBar.swift` -- Tab bar wrapper
+10. `Component/XGLoadingView.swift` -- Full-screen + inline loading
+11. `Component/XGErrorView.swift` -- Error with retry
+12. `Component/XGEmptyView.swift` -- Empty state
+13. `Component/XGImage.swift` -- Nuke image with placeholder
+14. `Component/XGBadge.swift` -- Count/status badge
 
 ### Per-Feature Files
 
 When implementing a feature, create these files in order.
 
-Location: `ios/MoltMarketplace/Feature/{Name}/`
+Location: `ios/XiriGoEcommerce/Feature/{Name}/`
 
 1. `Data/{Name}DTO.swift` -- Codable struct
 2. `Domain/{Name}.swift` -- domain struct
@@ -918,7 +918,7 @@ Location: `ios/MoltMarketplace/Feature/{Name}/`
 7. `Domain/{Verb}{Name}UseCase.swift` -- business logic
 8. `Presentation/{Screen}UiState.swift` -- enum
 9. `Presentation/{Screen}ViewModel.swift` -- @Observable @MainActor
-10. `Presentation/{Screen}View.swift` -- SwiftUI View + #Preview (uses Molt* components)
+10. `Presentation/{Screen}View.swift` -- SwiftUI View + #Preview (uses XG* components)
 11. Register in `Container+Extensions.swift` (Factory)
 
 ---
@@ -976,10 +976,10 @@ Imports must follow this order, separated by blank lines:
 
 | Type | Location |
 |------|----------|
-| Unit (ViewModel) | `MoltMarketplaceTests/**/ViewModel/*Tests.swift` |
-| Unit (UseCase) | `MoltMarketplaceTests/**/UseCase/*Tests.swift` |
-| Unit (Repository) | `MoltMarketplaceTests/**/Repository/*Tests.swift` |
-| UI | `MoltMarketplaceUITests/**/*UITests.swift` |
+| Unit (ViewModel) | `XiriGoEcommerceTests/**/ViewModel/*Tests.swift` |
+| Unit (UseCase) | `XiriGoEcommerceTests/**/UseCase/*Tests.swift` |
+| Unit (Repository) | `XiriGoEcommerceTests/**/Repository/*Tests.swift` |
+| UI | `XiriGoEcommerceUITests/**/*UITests.swift` |
 
 ### Test Rules
 
@@ -1015,10 +1015,10 @@ Imports must follow this order, separated by blank lines:
 - [ ] All tests pass before merge
 
 ### UI/UX
-- [ ] Uses `Molt*` design system components (no raw SwiftUI components in feature screens)
-- [ ] All colors from `MoltColors`, all spacing from `MoltSpacing` (no magic numbers)
+- [ ] Uses `XG*` design system components (no raw SwiftUI components in feature screens)
+- [ ] All colors from `XGColors`, all spacing from `XGSpacing` (no magic numbers)
 - [ ] Responsive to different screen sizes
-- [ ] Loading and error states implemented (MoltLoadingView, MoltErrorView)
+- [ ] Loading and error states implemented (XGLoadingView, XGErrorView)
 - [ ] Accessibility labels present
 - [ ] No hardcoded strings (all localized)
 
@@ -1034,9 +1034,9 @@ Imports must follow this order, separated by blank lines:
 
 ### Phase 1: Dummy Screens (Current)
 
-- Use system styles via `MoltTheme`
-- All colors/spacing from `MoltColors` / `MoltSpacing` (which map to design tokens)
-- Feature screens use `Molt*` design system components (MoltButton, MoltCard, etc.)
+- Use system styles via `XGTheme`
+- All colors/spacing from `XGColors` / `XGSpacing` (which map to design tokens)
+- Feature screens use `XG*` design system components (XGButton, XGCard, etc.)
 - Focus on correct architecture, data flow, and business logic -- not pixel-perfect design
 
 ### Phase 2: Figma Design Arrives
@@ -1046,18 +1046,18 @@ When Figma designs are ready, **only these change**:
 | What Changes | Files | Impact |
 |-------------|-------|--------|
 | Design tokens | `shared/design-tokens/*.json` | Colors, typography, spacing values |
-| Theme | `Core/DesignSystem/Theme/Molt*.swift` | New color scheme, fonts, spacing |
-| Components | `Core/DesignSystem/Component/Molt*.swift` | Visual appearance (padding, shapes, shadows) |
+| Theme | `Core/DesignSystem/Theme/XG*.swift` | New color scheme, fonts, spacing |
+| Components | `Core/DesignSystem/Component/XG*.swift` | Visual appearance (padding, shapes, shadows) |
 | Assets | `Assets.xcassets` | Icons, illustrations, placeholders |
 
 **What NEVER changes**: ViewModels, UseCases, Repositories, DTOs, domain models, navigation, API integration, tests.
 
 ### Rules for Figma-Safe Code
 
-1. **No magic numbers in feature screens**: All dimensions from `MoltSpacing`, all colors from `MoltColors`
-2. **No raw platform components in feature screens**: Use `MoltButton` not `Button`, `MoltLoadingView` not `ProgressView`
+1. **No magic numbers in feature screens**: All dimensions from `XGSpacing`, all colors from `XGColors`
+2. **No raw platform components in feature screens**: Use `XGButton` not `Button`, `XGLoadingView` not `ProgressView`
 3. **Component props, not visual props**: Feature screens pass data + events to components. Components decide how to render.
-4. **Preview with theme**: All `#Preview` wrapped in `MoltTheme` to reflect current design tokens
+4. **Preview with theme**: All `#Preview` wrapped in `XGTheme` to reflect current design tokens
 
 ---
 
@@ -1098,7 +1098,7 @@ domain/ X presentation/ (forbidden)
 - Domain layer: ZERO imports from `data/` or `presentation/`
 - Presentation layer: ZERO imports from `data/`
 - ViewModels: Must have `@MainActor` and `@Observable`
-- Feature screens: Must use `Molt*` components, no raw SwiftUI
+- Feature screens: Must use `XG*` components, no raw SwiftUI
 
 ### API Safety
 
@@ -1124,21 +1124,21 @@ domain/ X presentation/ (forbidden)
 
 ### Design System Compliance
 
-- Feature screens: `Molt*` components ONLY (no raw `Button`, `TextField`, `ProgressView`)
-- All colors from `MoltColors` -- no hardcoded hex values in feature code
-- All spacing from `MoltSpacing` -- no magic numbers for dimensions
-- Every view has `#Preview` wrapped in `MoltTheme`
+- Feature screens: `XG*` components ONLY (no raw `Button`, `TextField`, `ProgressView`)
+- All colors from `XGColors` -- no hardcoded hex values in feature code
+- All spacing from `XGSpacing` -- no magic numbers for dimensions
+- Every view has `#Preview` wrapped in `XGTheme`
 
 ---
 
 ## Key File Locations
 
-- `ios/MoltMarketplace/` -- iOS source root
-- `ios/MoltMarketplace/Core/DesignSystem/` -- Design system (theme + components)
-- `ios/MoltMarketplace/Core/` -- Core utilities, DI, network
-- `ios/MoltMarketplace/Feature/` -- Feature modules
-- `ios/MoltMarketplace/Resources/` -- iOS resources (assets, localization)
-- `ios/MoltMarketplace.xcodeproj/` -- Xcode project file
+- `ios/XiriGoEcommerce/` -- iOS source root
+- `ios/XiriGoEcommerce/Core/DesignSystem/` -- Design system (theme + components)
+- `ios/XiriGoEcommerce/Core/` -- Core utilities, DI, network
+- `ios/XiriGoEcommerce/Feature/` -- Feature modules
+- `ios/XiriGoEcommerce/Resources/` -- iOS resources (assets, localization)
+- `ios/XiriGoEcommerce.xcodeproj/` -- Xcode project file
 - `ios/Package.swift` -- Swift Package Manager dependencies
 
 ---
@@ -1180,7 +1180,7 @@ All list screens use offset-based pagination with these rules:
 - **Phone-first**: No special tablet layouts. Grid columns adapt by width class (Compact=2, Medium=3, Expanded=4).
 - **Portrait-only**: All screens locked to portrait orientation via `UISupportedInterfaceOrientations` = portrait only in Info.plist
 - **Minimum screen**: 375pt width (iPhone SE 3rd gen)
-- **Dark mode**: Handled by `MoltTheme` -- no extra configuration needed
+- **Dark mode**: Handled by `XGTheme` -- no extra configuration needed
 
 ---
 

@@ -8,7 +8,7 @@ argument-hint: "[feature-name]"
 
 # Documentation Agent
 
-You write feature documentation for the Molt Marketplace mobile app.
+You write feature documentation for the XiriGo Ecommerce mobile app.
 
 ## Arguments
 Parse: `$ARGUMENTS` — feature name.

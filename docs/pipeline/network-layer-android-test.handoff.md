@@ -12,7 +12,7 @@ across 8 new test files, targeting previously uncovered classes, edge cases, and
 
 ## Test Files Added
 
-Base: `android/app/src/test/java/com/molt/marketplace/core/`
+Base: `android/app/src/test/java/com/xirigo/ecommerce/core/`
 
 | File | New Tests | Areas Covered |
 |------|-----------|---------------|
@@ -49,8 +49,8 @@ Base: `android/app/src/test/java/com/molt/marketplace/core/`
 
 ```
 ./gradlew :app:testDebugUnitTest \
-  --tests "com.molt.marketplace.core.network.*" \
-  --tests "com.molt.marketplace.core.domain.error.*"
+  --tests "com.xirigo.ecommerce.core.network.*" \
+  --tests "com.xirigo.ecommerce.core.domain.error.*"
 ```
 
 Result: **BUILD SUCCESSFUL** — 133 tests, 0 failures, 0 errors

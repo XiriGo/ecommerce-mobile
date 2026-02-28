@@ -34,7 +34,7 @@ Parse: `$ARGUMENTS` — feature name and optional platform filter.
 - **UseCase**: Mock repository, test business logic
 - **Repository**: URLProtocol for API testing
 - **UI**: ViewInspector or XCUITest
-- Location: `ios/MoltMarketplaceTests/` and `ios/MoltMarketplaceUITests/`
+- Location: `ios/XiriGoEcommerceTests/` and `ios/XiriGoEcommerceUITests/`
 
 ## Rules
 - Each test independent (no shared mutable state)

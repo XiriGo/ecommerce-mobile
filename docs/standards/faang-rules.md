@@ -40,7 +40,7 @@ domain/ ✗ presentation/ (forbidden)
 - Presentation layer: ZERO imports from `data/`
 - ViewModels: No `android.content.Context` or `android.app.*` imports (Android)
 - ViewModels: Must have `@MainActor` and `@Observable` (iOS)
-- Feature screens: Must use `Molt*` components, no raw Material 3 / SwiftUI
+- Feature screens: Must use `XG*` components, no raw Material 3 / SwiftUI
 
 ## API Safety
 
@@ -66,10 +66,10 @@ domain/ ✗ presentation/ (forbidden)
 
 ## Design System Compliance
 
-- Feature screens: `Molt*` components ONLY (no raw `Button`, `TextField`, `ProgressView`)
-- All colors from `MoltColors` — no hardcoded hex values in feature code
-- All spacing from `MoltSpacing` — no magic numbers for dimensions
-- Every screen composable has `@Preview` / `#Preview` wrapped in `MoltTheme`
+- Feature screens: `XG*` components ONLY (no raw `Button`, `TextField`, `ProgressView`)
+- All colors from `XGColors` — no hardcoded hex values in feature code
+- All spacing from `XGSpacing` — no magic numbers for dimensions
+- Every screen composable has `@Preview` / `#Preview` wrapped in `XGTheme`
 
 ## Zero Lint Suppression Policy
 
@@ -103,6 +103,6 @@ The quality gate (`/verify`) checks for suppression markers. Any `@Suppress` or 
 ```bash
 # Runs automatically via pre-commit hook
 grep -rn '@Suppress' --include='*.kt' android/app/src/main/
-grep -rn 'swiftlint:disable' --include='*.swift' ios/MoltMarketplace/ ios/MoltMarketplaceTests/
+grep -rn 'swiftlint:disable' --include='*.swift' ios/XiriGoEcommerce/ ios/XiriGoEcommerceTests/
 # Both must return zero results
 ```

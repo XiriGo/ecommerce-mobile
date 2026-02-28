@@ -19,7 +19,7 @@ Tests cover the full requirement list: `AppError`, `RetryPolicy`, `MedusaErrorDT
 
 ## Test Files Created
 
-All files located under `ios/MoltMarketplaceTests/Core/Network/`:
+All files located under `ios/XiriGoEcommerceTests/Core/Network/`:
 
 | File | Suites | Tests |
 |------|--------|-------|
@@ -173,15 +173,15 @@ These failures existed before this feature branch and are unrelated to network t
    the actual localization string (with Unicode special characters) differs from test hardcoded
    values. Pre-existing in `LocalizableTests.swift`.
 
-2. **`MoltEmptyView Tests`** — Test runner crashes when running the `"EmptyView body is a valid View"`
-   test. Pre-existing issue in `MoltEmptyViewTests.swift` (likely a ViewInspector API incompatibility).
+2. **`XGEmptyView Tests`** — Test runner crashes when running the `"EmptyView body is a valid View"`
+   test. Pre-existing issue in `XGEmptyViewTests.swift` (likely a ViewInspector API incompatibility).
 
 ---
 
 ## Files Modified
 
-- `ios/MoltMarketplace.xcodeproj/project.pbxproj` — Added 11 new test file references and
-  build file entries for the `MoltMarketplaceTests` target. Added `Network` group under
+- `ios/XiriGoEcommerce.xcodeproj/project.pbxproj` — Added 11 new test file references and
+  build file entries for the `XiriGoEcommerceTests` target. Added `Network` group under
   `Core` in the test target group tree.
 
 ---

@@ -10,17 +10,17 @@ COMPLETE -- All source files created/modified. Build passes. Existing tests pass
 
 | # | File | Absolute Path | Description |
 |---|------|---------------|-------------|
-| 1 | `Qualifiers.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/Qualifiers.kt` | 5 `@Qualifier` annotations: `@IoDispatcher`, `@MainDispatcher`, `@DefaultDispatcher`, `@AuthenticatedClient`, `@UnauthenticatedClient` |
-| 2 | `CoroutineModule.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/CoroutineModule.kt` | `@Module @InstallIn(SingletonComponent)` providing 3 dispatchers + app-scoped `CoroutineScope` with `SupervisorJob` |
-| 3 | `StorageModule.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/StorageModule.kt` | `@Module @InstallIn(SingletonComponent)` providing `DataStore<Preferences>` and `MoltDatabase` (Room) |
-| 4 | `MoltDatabase.kt` | `android/app/src/main/java/com/molt/marketplace/core/data/local/MoltDatabase.kt` | `@Database(entities = [PlaceholderEntity::class], version = 1)` Room database shell |
-| 5 | `PlaceholderEntity.kt` | `android/app/src/main/java/com/molt/marketplace/core/data/local/PlaceholderEntity.kt` | Minimal Room entity required by Room annotation processor (to be removed when first real entity is added) |
+| 1 | `Qualifiers.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/Qualifiers.kt` | 5 `@Qualifier` annotations: `@IoDispatcher`, `@MainDispatcher`, `@DefaultDispatcher`, `@AuthenticatedClient`, `@UnauthenticatedClient` |
+| 2 | `CoroutineModule.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/CoroutineModule.kt` | `@Module @InstallIn(SingletonComponent)` providing 3 dispatchers + app-scoped `CoroutineScope` with `SupervisorJob` |
+| 3 | `StorageModule.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/StorageModule.kt` | `@Module @InstallIn(SingletonComponent)` providing `DataStore<Preferences>` and `XGDatabase` (Room) |
+| 4 | `XGDatabase.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/data/local/XGDatabase.kt` | `@Database(entities = [PlaceholderEntity::class], version = 1)` Room database shell |
+| 5 | `PlaceholderEntity.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/data/local/PlaceholderEntity.kt` | Minimal Room entity required by Room annotation processor (to be removed when first real entity is added) |
 
 ## Files Modified
 
 | # | File | Absolute Path | Changes |
 |---|------|---------------|---------|
-| 1 | `NetworkModule.kt` | `android/app/src/main/java/com/molt/marketplace/core/di/NetworkModule.kt` | Renamed `provideOkHttpClient()` to `provideAuthenticatedClient()` with `@AuthenticatedClient` qualifier. Added `provideUnauthenticatedClient()` with `@UnauthenticatedClient` qualifier (same timeout/cache config, no auth interceptors). Updated `provideRetrofit()` to accept `@AuthenticatedClient`-qualified client. Added imports for `Cache`, `File`, `TimeUnit`, `LoggingInterceptor`, `NetworkConfig`. |
+| 1 | `NetworkModule.kt` | `android/app/src/main/java/com/xirigo/ecommerce/core/di/NetworkModule.kt` | Renamed `provideOkHttpClient()` to `provideAuthenticatedClient()` with `@AuthenticatedClient` qualifier. Added `provideUnauthenticatedClient()` with `@UnauthenticatedClient` qualifier (same timeout/cache config, no auth interceptors). Updated `provideRetrofit()` to accept `@AuthenticatedClient`-qualified client. Added imports for `Cache`, `File`, `TimeUnit`, `LoggingInterceptor`, `NetworkConfig`. |
 
 ## Key Design Decisions
 
@@ -57,7 +57,7 @@ COMPLETE -- All source files created/modified. Build passes. Existing tests pass
 
 ### StorageModuleTest (requires Robolectric)
 - Verify `DataStore<Preferences>` can be provided (use Robolectric `ApplicationProvider`)
-- Verify `MoltDatabase` can be built in-memory for test
+- Verify `XGDatabase` can be built in-memory for test
 
 ---
 

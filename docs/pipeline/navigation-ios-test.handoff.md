@@ -11,8 +11,8 @@
 ## Summary
 
 Unit tests for the iOS Navigation feature (M0-04) have been written and placed in
-`ios/MoltMarketplaceTests/Core/Navigation/`. All tests use the Swift Testing framework
-(`@Test` macro, `@Suite`) with `@testable import MoltMarketplace`. No external mock
+`ios/XiriGoEcommerceTests/Core/Navigation/`. All tests use the Swift Testing framework
+(`@Test` macro, `@Suite`) with `@testable import XiriGoEcommerce`. No external mock
 libraries are used; all dependencies are value types (enums, structs) or the `AppRouter`
 class itself.
 
@@ -29,7 +29,7 @@ class itself.
 | `PlaceholderViewTests.swift` | PlaceholderView Tests | 25 |
 | **Total** | | **~167** |
 
-All files: `ios/MoltMarketplaceTests/Core/Navigation/`
+All files: `ios/XiriGoEcommerceTests/Core/Navigation/`
 
 ---
 
@@ -57,14 +57,14 @@ All files: `ios/MoltMarketplaceTests/Core/Navigation/`
 - `categoryProducts` title uses name or falls back to "Category" on empty name
 
 ### DeepLinkParserTests.swift
-- **molt:// product**: valid id, numeric id, missing id (→ nil)
-- **molt:// category**: valid id, missing id (→ nil)
-- **molt:// cart**: parses to `.cart`
-- **molt:// order**: valid id (→ `orderDetail`), missing id (→ nil)
-- **molt:// profile**: parses to `.profile`
-- **https://molt.mt/ product**: valid id, missing id (→ nil)
-- **https://molt.mt/ category**: valid id, missing id (→ nil)
-- **Invalid/unrecognized**: unknown molt host, unknown https path, empty https path,
+- **xirigo:// product**: valid id, numeric id, missing id (→ nil)
+- **xirigo:// category**: valid id, missing id (→ nil)
+- **xirigo:// cart**: parses to `.cart`
+- **xirigo:// order**: valid id (→ `orderDetail`), missing id (→ nil)
+- **xirigo:// profile**: parses to `.profile`
+- **https://xirigo.com/ product**: valid id, missing id (→ nil)
+- **https://xirigo.com/ category**: valid id, missing id (→ nil)
+- **Invalid/unrecognized**: unknown xirigo host, unknown https path, empty https path,
   different https host, http scheme, ftp scheme (all → nil)
 - **Edge cases**: empty id after trailing slash, extra path segments
 - **Auth check on parsed routes**: order → `requiresAuth == true`, product/cart/profile → false
@@ -110,7 +110,7 @@ All files: `ios/MoltMarketplaceTests/Core/Navigation/`
 - `NavigationPath` is not directly inspectable beyond `.isEmpty` in Swift Testing without
   ViewInspector setup for the full view hierarchy. Tests verify path emptiness rather than
   specific appended routes.
-- Deep link tests for empty trailing-slash URLs (`molt://product/`) verify the guard condition
+- Deep link tests for empty trailing-slash URLs (`xirigo://product/`) verify the guard condition
   via conditional checking rather than a hard `#expect(route == nil)` to accommodate platform
   URL parsing variance.
 
@@ -128,11 +128,11 @@ All files: `ios/MoltMarketplaceTests/Core/Navigation/`
 ## Artifacts
 
 ```
-ios/MoltMarketplaceTests/Core/Navigation/TabTests.swift
-ios/MoltMarketplaceTests/Core/Navigation/RouteTests.swift
-ios/MoltMarketplaceTests/Core/Navigation/DeepLinkParserTests.swift
-ios/MoltMarketplaceTests/Core/Navigation/AppRouterTests.swift
-ios/MoltMarketplaceTests/Core/Navigation/PlaceholderViewTests.swift
+ios/XiriGoEcommerceTests/Core/Navigation/TabTests.swift
+ios/XiriGoEcommerceTests/Core/Navigation/RouteTests.swift
+ios/XiriGoEcommerceTests/Core/Navigation/DeepLinkParserTests.swift
+ios/XiriGoEcommerceTests/Core/Navigation/AppRouterTests.swift
+ios/XiriGoEcommerceTests/Core/Navigation/PlaceholderViewTests.swift
 docs/pipeline/navigation-ios-test.handoff.md
 ```
 

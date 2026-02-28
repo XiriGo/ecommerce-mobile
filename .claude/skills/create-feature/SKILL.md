@@ -95,8 +95,8 @@ _(from shared/api-contracts/)_
 | Spec | `shared/feature-specs/{name}.md` |
 | API Contract | `shared/api-contracts/{relevant}.json` |
 | Branch | `feature/{pipeline_id}` |
-| Android Path | `android/app/src/main/java/com/molt/marketplace/feature/{name}/` |
-| iOS Path | `ios/MoltMarketplace/Feature/{Name}/` |
+| Android Path | `android/app/src/main/java/com/xirigo/ecommerce/feature/{name}/` |
+| iOS Path | `ios/XiriGoEcommerce/Feature/{Name}/` |
 
 ## Dependencies
 {Depends on #N — one per line, or "None" if no dependencies}
@@ -185,8 +185,8 @@ Capture the new issue number from the output URL.
 ### Step 5: Add to Project Board
 
 ```bash
-# Get project number (Molt Mobile Roadmap)
-PROJECT_NUM=$(gh project list --format json | jq -r '.projects[] | select(.title == "Molt Mobile Roadmap") | .number')
+# Get project number (XiriGo Mobile Roadmap)
+PROJECT_NUM=$(gh project list --format json | jq -r '.projects[] | select(.title == "XiriGo Mobile Roadmap") | .number')
 
 # Add issue to project
 gh project item-add $PROJECT_NUM --owner {owner} --url {issue_url}
@@ -255,7 +255,7 @@ Pipeline:   /pipeline-run {pipeline_id} --issue {number}
 2. **Template is mandatory** — every issue uses the full template, no shortcuts
 3. **Labels are mandatory** — type + platform + phase + priority + status
 4. **Milestone is mandatory** — always assigned based on phase
-5. **Project board placement is mandatory** — always added to "Molt Mobile Roadmap"
+5. **Project board placement is mandatory** — always added to "XiriGo Mobile Roadmap"
 6. **Issue map must be updated** — `scripts/issue-map.json` is the source of truth for ID→number mapping
 7. **Dependencies are verified** — check actual issue state, not assumptions
 8. **Same traceability** — issue created here is indistinguishable from migration-created issues

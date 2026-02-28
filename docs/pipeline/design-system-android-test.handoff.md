@@ -20,31 +20,31 @@ Comprehensive tests were written for all design system components and theme toke
 
 | File | Package | Coverage |
 |------|---------|----------|
-| `theme/MoltCornerRadiusTest.kt` | `com.molt.marketplace.core.designsystem.theme` | All corner radius values verified against design tokens; ordering and boundary checks |
-| `theme/MoltElevationTest.kt` | `com.molt.marketplace.core.designsystem.theme` | All elevation levels verified; ascending order; Level0 = zero |
+| `theme/XGCornerRadiusTest.kt` | `com.xirigo.ecommerce.core.designsystem.theme` | All corner radius values verified against design tokens; ordering and boundary checks |
+| `theme/XGElevationTest.kt` | `com.xirigo.ecommerce.core.designsystem.theme` | All elevation levels verified; ascending order; Level0 = zero |
 
 Previously existing (kept):
-- `theme/MoltColorsTest.kt` — Color token values
-- `theme/MoltSpacingTest.kt` — Spacing values, accessibility minimum touch target
+- `theme/XGColorsTest.kt` — Color token values
+- `theme/XGSpacingTest.kt` — Spacing values, accessibility minimum touch target
 
 ### Compose UI Tests (`android/app/src/androidTest/`)
 
 | File | Component(s) Tested | Key Scenarios |
 |------|-------------------|---------------|
-| `component/MoltButtonTest.kt` | `MoltButton` | All 4 variants (Primary, Secondary, Outlined, Text); loading state disables click + shows progress indicator; disabled state; click callback; leading icon |
-| `component/MoltTextFieldTest.kt` | `MoltTextField` | Label, placeholder, error state, helper text, error overrides helper, password toggle, value callback, maxLength counter, maxLength truncation |
-| `component/MoltCardTest.kt` | `MoltProductCard`, `MoltInfoCard` | Product card title/price/vendor rendering; click callback; wishlist toggle (add/remove CD); info card title, subtitle, click |
-| `component/MoltChipTest.kt` | `MoltFilterChip`, `MoltCategoryChip` | Unselected/selected label; click callback; selected state; multiple clicks; category chip label and click |
-| `component/MoltTopBarTest.kt` | `MoltTopBar` | Title display; back button absent when null; back button present and clickable; action button click; title-only variant |
-| `component/MoltBottomBarTest.kt` | `MoltBottomBar`, `MoltTabItem` | All tabs rendered; selected state; tab click with index callback; badge count display; zero badge hidden; 99+ cap; tab switching |
-| `component/MoltLoadingViewTest.kt` | `MoltLoadingView`, `MoltLoadingIndicator` | Progress indicator content description; render-without-crash for both variants |
-| `component/MoltErrorViewTest.kt` | `MoltErrorView` | Message displayed; retry button present/absent; retry click fires callback; render-without-crash |
-| `component/MoltEmptyViewTest.kt` | `MoltEmptyView` | Message displayed; action button shown/hidden (requires both label + callback); action click; custom icon; render-without-crash |
-| `component/MoltImageTest.kt` | `MoltImage` | Null URL renders shimmer (no crash); non-null URL renders AsyncImage with CD; null content description variants |
-| `component/MoltBadgeTest.kt` | `MoltCountBadge`, `MoltStatusBadge` | Zero/negative count hidden; 1–99 displayed; 100+ capped at "99+"; all 5 status badge variants (Success/Warning/Error/Info/Neutral) |
-| `component/MoltRatingBarTest.kt` | `MoltRatingBar` | showValue flag; review count display; full/zero/half ratings; accessibility content description; combined showValue + reviewCount |
-| `component/MoltPriceTextTest.kt` | `MoltPriceText` | Regular price format; custom currency symbol; sale price with both prices; accessibility descriptions; all 3 size variants |
-| `component/MoltQuantityStepperTest.kt` | `MoltQuantityStepper` | Current quantity display; increase/decrease callbacks; min/max button disable; custom min/max enforcement; render-without-crash |
+| `component/XGButtonTest.kt` | `XGButton` | All 4 variants (Primary, Secondary, Outlined, Text); loading state disables click + shows progress indicator; disabled state; click callback; leading icon |
+| `component/XGTextFieldTest.kt` | `XGTextField` | Label, placeholder, error state, helper text, error overrides helper, password toggle, value callback, maxLength counter, maxLength truncation |
+| `component/XGCardTest.kt` | `MoltProductCard`, `MoltInfoCard` | Product card title/price/vendor rendering; click callback; wishlist toggle (add/remove CD); info card title, subtitle, click |
+| `component/XGChipTest.kt` | `MoltFilterChip`, `MoltCategoryChip` | Unselected/selected label; click callback; selected state; multiple clicks; category chip label and click |
+| `component/XGTopBarTest.kt` | `XGTopBar` | Title display; back button absent when null; back button present and clickable; action button click; title-only variant |
+| `component/XGBottomBarTest.kt` | `XGBottomBar`, `XGTabItem` | All tabs rendered; selected state; tab click with index callback; badge count display; zero badge hidden; 99+ cap; tab switching |
+| `component/XGLoadingViewTest.kt` | `XGLoadingView`, `MoltLoadingIndicator` | Progress indicator content description; render-without-crash for both variants |
+| `component/XGErrorViewTest.kt` | `XGErrorView` | Message displayed; retry button present/absent; retry click fires callback; render-without-crash |
+| `component/XGEmptyViewTest.kt` | `XGEmptyView` | Message displayed; action button shown/hidden (requires both label + callback); action click; custom icon; render-without-crash |
+| `component/XGImageTest.kt` | `XGImage` | Null URL renders shimmer (no crash); non-null URL renders AsyncImage with CD; null content description variants |
+| `component/XGBadgeTest.kt` | `MoltCountBadge`, `MoltStatusBadge` | Zero/negative count hidden; 1–99 displayed; 100+ capped at "99+"; all 5 status badge variants (Success/Warning/Error/Info/Neutral) |
+| `component/XGRatingBarTest.kt` | `XGRatingBar` | showValue flag; review count display; full/zero/half ratings; accessibility content description; combined showValue + reviewCount |
+| `component/XGPriceTextTest.kt` | `XGPriceText` | Regular price format; custom currency symbol; sale price with both prices; accessibility descriptions; all 3 size variants |
+| `component/XGQuantityStepperTest.kt` | `XGQuantityStepper` | Current quantity display; increase/decrease callbacks; min/max button disable; custom min/max enforcement; render-without-crash |
 
 ---
 
@@ -68,15 +68,15 @@ Previously existing (kept):
 - State variants (loading, disabled, selected) all covered
 
 ### Error / Edge Paths
-- Null props handled without crash (MoltImage, MoltErrorView retry null, etc.)
-- Zero counts hidden (MoltCountBadge, MoltBottomBar badge)
-- Overflow counts capped (99+ for MoltCountBadge and MoltBottomBar)
-- Min/max bounds respected in MoltQuantityStepper
+- Null props handled without crash (XGImage, XGErrorView retry null, etc.)
+- Zero counts hidden (MoltCountBadge, XGBottomBar badge)
+- Overflow counts capped (99+ for MoltCountBadge and XGBottomBar)
+- Min/max bounds respected in XGQuantityStepper
 
 ### Accessibility
-- Content descriptions verified: MoltLoadingView, MoltRatingBar, MoltPriceText, MoltQuantityStepper
+- Content descriptions verified: XGLoadingView, XGRatingBar, XGPriceText, XGQuantityStepper
 - Wishlist button content description changes with `isWishlisted` state
-- Navigate back content description on MoltTopBar
+- Navigate back content description on XGTopBar
 
 ---
 

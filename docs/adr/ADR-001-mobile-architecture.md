@@ -7,7 +7,7 @@ Accepted
 2026-02-10
 
 ## Context
-Molt Marketplace needs native mobile buyer applications for both Android and iOS. The backend is built on Medusa v2.13.1 with REST APIs. We need to decide on:
+XiriGo Ecommerce needs native mobile buyer applications for both Android and iOS. The backend is built on Medusa v2.13.1 with REST APIs. We need to decide on:
 1. Technology stack for each platform
 2. App architecture pattern
 3. Development orchestration approach

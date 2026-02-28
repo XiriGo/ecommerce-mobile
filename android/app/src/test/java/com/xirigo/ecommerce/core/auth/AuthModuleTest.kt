@@ -140,7 +140,7 @@ class AuthModuleTest {
     fun `SessionManager can be constructed and login invokes AuthApi`() = runTest {
         fakeAuthApi.loginResponse = AuthTokenResponse("module-token")
 
-        val result = sessionManager.login("user@molt.com", "pass")
+        val result = sessionManager.login("user@xirigo.com", "pass")
 
         assertThat(result.isSuccess).isTrue()
         assertThat(fakeAuthApi.lastLoginRequest).isNotNull()
@@ -150,7 +150,7 @@ class AuthModuleTest {
     fun `SessionManager register invokes AuthApi`() = runTest {
         fakeAuthApi.registerResponse = AuthTokenResponse("register-token")
 
-        val result = sessionManager.register("new@molt.com", "secret")
+        val result = sessionManager.register("new@xirigo.com", "secret")
 
         assertThat(result.isSuccess).isTrue()
         assertThat(fakeAuthApi.lastRegisterRequest).isNotNull()

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the Molt Marketplace Mobile App will be documented in this file.
+All notable changes to the XiriGo Ecommerce Mobile App will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 #### M0-06: Auth Infrastructure
 
-- **Auth Infrastructure**: Encrypted token storage, auth state management, session lifecycle, and token provider integration for the Molt Marketplace buyer app (Android + iOS)
+- **Auth Infrastructure**: Encrypted token storage, auth state management, session lifecycle, and token provider integration for the XiriGo Ecommerce buyer app (Android + iOS)
   - `TokenStorage` interface + `EncryptedTokenStorage` (Android, dedicated DataStore with Tink AES256_GCM encryption) / `KeychainTokenStorage` (iOS, KeychainAccess with `.whenUnlockedThisDeviceOnly`) for encrypted-at-rest JWT storage
   - `AuthState` sealed interface (Android) / enum (iOS): `Loading`, `Authenticated(token: String)`, `Guest` — annotated `@Stable` (Android) / `Equatable, Sendable` (iOS)
   - `AuthStateManager` interface + `AuthStateManagerImpl`: observable `StateFlow<AuthState>` (Android, `@Singleton`) / `@MainActor @Observable` class (iOS) with `checkStoredToken()`, `onLoginSuccess(token:)`, `onLogout()`
@@ -30,7 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **DI Setup**: Hilt modules (Android) + Factory container registrations (iOS) for network, storage, coroutine, and common infrastructure dependencies (Android + iOS)
   - Five `@Qualifier` annotations (`@IoDispatcher`, `@MainDispatcher`, `@DefaultDispatcher`, `@AuthenticatedClient`, `@UnauthenticatedClient`) in `Qualifiers.kt` (Android)
   - `CoroutineModule`: three `CoroutineDispatcher` providers + app-scoped `CoroutineScope` with `SupervisorJob` + `@DefaultDispatcher` (Android)
-  - `StorageModule`: `DataStore<Preferences>` (general preferences) + `MoltDatabase` Room abstract class shell with `PlaceholderEntity` (required by Room KSP; removed when first real entity is added in M2-01) (Android)
+  - `StorageModule`: `DataStore<Preferences>` (general preferences) + `XGDatabase` Room abstract class shell with `PlaceholderEntity` (required by Room KSP; removed when first real entity is added in M2-01) (Android)
   - `NetworkModule` updated with `@AuthenticatedClient` / `@UnauthenticatedClient` OkHttpClient split; `Retrofit` updated to use `@AuthenticatedClient` client (Android)
   - `Container+Extensions.swift` verified with `apiClient`, `tokenProvider`, `networkMonitor` singletons; feature DI pattern documented as inline MARK comments (iOS)
   - `NetworkMonitor` concrete `@Observable` class using `NWPathMonitor`; registered as `.singleton` in Container (iOS — from M0-03, verified in M0-05)
@@ -44,20 +44,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 #### M0-04: Navigation
 
 - **Navigation**: Type-safe tab-based routing and navigation infrastructure (Android + iOS)
-  - Four-tab bottom bar (Home, Categories, Cart, Profile) using `MoltBottomBar` (Android) / `MoltTabBar` (iOS) from M0-02 Design System
+  - Four-tab bottom bar (Home, Categories, Cart, Profile) using `XGBottomBar` (Android) / `XGTabBar` (iOS) from M0-02 Design System
   - Independent per-tab navigation stack with back-stack preservation on tab switch (`saveState`/`restoreState` on Android; four `NavigationPath` instances in `AppRouter` on iOS)
   - 29 type-safe route definitions covering all M0–M4 screens (`@Serializable` sealed interface on Android; `Hashable` enum with associated values on iOS)
   - `isAuthRequired` / `requiresAuth` computed property on `Route` for 14 auth-protected destinations
   - Auth-gated navigation with `returnTo` redirect: guests attempting auth-required routes are redirected to Login and returned to their intended destination after login
-  - Deep link parsing for `molt://` custom scheme and `https://molt.mt/` universal links (`DeepLinkParser` object/enum with stateless `parse()` function)
+  - Deep link parsing for `xirigo://` custom scheme and `https://xirigo.com/` universal links (`DeepLinkParser` object/enum with stateless `parse()` function)
   - Deep link intent filters and `singleTask` launch mode declared in `AndroidManifest.xml`; `CFBundleURLTypes` registered in iOS `Info.plist`
-  - Cart badge count wired to `MoltBottomBar`/`MoltTabBar` (defaults to 0 and hidden until M2-01 provides cart count)
+  - Cart badge count wired to `XGBottomBar`/`XGTabBar` (defaults to 0 and hidden until M2-01 provides cart count)
   - Auth gating wired with stub (always guest) until M0-06 Auth Infrastructure provides `AuthStateProvider`
   - Placeholder screens (`PlaceholderScreen` / `PlaceholderView`) for all unimplemented routes, replaced feature-by-feature in M1+
   - Tab bar hidden for fullscreen flows: Login, Register, ForgotPassword, Onboarding, all Checkout sub-screens, OrderConfirmation
   - 10 new localization keys in English, Maltese, and Turkish (tab labels, placeholder copy, guest profile prompt, cart badge description)
 - **Tests**: ~138 Android tests (7 files, JUnit 4 + Truth + Compose UI Test + Robolectric) + ~167 iOS tests (5 files, Swift Testing) — ~305 total
-  - Android: `DeepLinkParserTest` (15), `RouteAuthTest` (19), `TopLevelDestinationTest` (11), `RouteSerializationTest` (~44), `DeepLinkParserEdgeCasesTest` (~28), `MoltAppScaffoldTest` (~11), `PlaceholderScreenTest` (~10)
+  - Android: `DeepLinkParserTest` (15), `RouteAuthTest` (19), `TopLevelDestinationTest` (11), `RouteSerializationTest` (~44), `DeepLinkParserEdgeCasesTest` (~28), `XGAppScaffoldTest` (~11), `PlaceholderScreenTest` (~10)
   - iOS: `TabTests` (26), `RouteTests` (42), `DeepLinkParserTests` (30), `AppRouterTests` (44), `PlaceholderViewTests` (25)
 
 #### M0-03: Network Layer
@@ -83,46 +83,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 #### M0-02: Design System
 
-- **Design System**: 14 reusable `Molt*` UI components implemented on both Android and iOS (Android + iOS)
-  - `MoltButton` (4 variants: primary, secondary, outlined, text; loading state; leading icon)
-  - `MoltTextField` (label, placeholder, error message, helper text, password toggle, maxLength counter)
-  - `MoltCard` (`MoltProductCard` with image/price/rating/wishlist + `MoltInfoCard` generic)
-  - `MoltChip` (`MoltFilterChip` with selected state + `MoltCategoryChip`)
-  - `MoltTopBar` (back button, title, action slots with badge support)
-  - `MoltBottomBar` / `MoltTabBar` (4-tab navigation with cart badge count)
-  - `MoltLoadingView` (full-screen spinner) + `MoltLoadingIndicator` (inline)
-  - `MoltErrorView` (error icon, message, optional retry)
-  - `MoltEmptyView` (icon, message, optional action)
-  - `MoltImage` (async image with shimmer placeholder and crossfade)
-  - `MoltBadge` (`MoltCountBadge` 0/1–99/99+ + `MoltStatusBadge` 5 statuses)
-  - `MoltRatingBar` (read-only, half-star precision, optional value and review count)
-  - `MoltPriceText` (currency display, sale strikethrough, 3 size variants)
-  - `MoltQuantityStepper` (increment/decrement with min/max enforcement)
+- **Design System**: 14 reusable `XG*` UI components implemented on both Android and iOS (Android + iOS)
+  - `XGButton` (4 variants: primary, secondary, outlined, text; loading state; leading icon)
+  - `XGTextField` (label, placeholder, error message, helper text, password toggle, maxLength counter)
+  - `XGCard` (`MoltProductCard` with image/price/rating/wishlist + `MoltInfoCard` generic)
+  - `XGChip` (`MoltFilterChip` with selected state + `MoltCategoryChip`)
+  - `XGTopBar` (back button, title, action slots with badge support)
+  - `XGBottomBar` / `XGTabBar` (4-tab navigation with cart badge count)
+  - `XGLoadingView` (full-screen spinner) + `MoltLoadingIndicator` (inline)
+  - `XGErrorView` (error icon, message, optional retry)
+  - `XGEmptyView` (icon, message, optional action)
+  - `XGImage` (async image with shimmer placeholder and crossfade)
+  - `XGBadge` (`MoltCountBadge` 0/1–99/99+ + `MoltStatusBadge` 5 statuses)
+  - `XGRatingBar` (read-only, half-star precision, optional value and review count)
+  - `XGPriceText` (currency display, sale strikethrough, 3 size variants)
+  - `XGQuantityStepper` (increment/decrement with min/max enforcement)
 - **Design tokens**: Full color palette (28 light + 28 dark + 15 semantic tokens), 15 typography styles, 9 base spacing tokens, layout constants, 6 corner radius levels, 6 elevation levels (Android + iOS)
-- **Theme support**: `MoltTheme` composable wrapper (Android) / `ViewModifier` (iOS) with automatic light/dark mode switching (Android + iOS)
+- **Theme support**: `XGTheme` composable wrapper (Android) / `ViewModifier` (iOS) with automatic light/dark mode switching (Android + iOS)
 - **Localization**: 17 design system string keys (common accessibility labels, tab names, action strings) in English, Maltese, and Turkish (Android + iOS)
 - **Tests**: ~90 Android Compose UI tests (15 files) + ~175 iOS Swift Testing tests (16 files); 14/14 components covered on both platforms (Android + iOS)
 
 #### M0-01: App Scaffold
 
 - **Android project structure** with Gradle KTS and version catalog (`libs.versions.toml`)
-  - 23 implementation files (MoltApplication, MainActivity, design system theme shell)
+  - 23 implementation files (XGApplication, MainActivity, design system theme shell)
   - Three build types: debug, staging, release with environment-specific API URLs
   - Hilt DI setup (@HiltAndroidApp, @AndroidEntryPoint)
   - Android 12+ splash screen with edge-to-edge support
   - Network security configuration (HTTPS enforced)
   - SDK: minSdk 26, targetSdk 35, compileSdk 35, Kotlin 2.1.10, Compose BOM 2026.01.01
 - **iOS project structure** with Xcode and SPM dependencies
-  - 13 implementation files (MoltMarketplaceApp, Config, design system theme shell)
+  - 13 implementation files (XiriGoEcommerceApp, Config, design system theme shell)
   - Three xcconfig files: Debug, Staging, Release with environment-specific API URLs
   - Factory DI container setup
   - SwiftUI entry point with placeholder screen
   - iOS 17.0 minimum, Swift 6.0, Strict Concurrency Complete
 - **Design system theme shell** (both platforms)
-  - MoltColors: 67 Android colors / 32 iOS colors from design tokens
-  - MoltTypography: 15 text styles (Display, Headline, Title, Body, Label)
-  - MoltSpacing: 16 spacing constants (base + layout)
-  - MoltTheme: Composable theme wrapper (Android) / ViewModifier (iOS)
+  - XGColors: 67 Android colors / 32 iOS colors from design tokens
+  - XGTypography: 15 text styles (Display, Headline, Title, Body, Label)
+  - XGSpacing: 16 spacing constants (base + layout)
+  - XGTheme: Composable theme wrapper (Android) / ViewModifier (iOS)
 - **Base localization resources** (both platforms)
   - Three languages: English (en), Maltese (mt), Turkish (tr)
   - 12 common string resources

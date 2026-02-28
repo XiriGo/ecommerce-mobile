@@ -23,7 +23,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SCHEME: MoltMarketplace
+  SCHEME: XiriGoEcommerce
   DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
 
 jobs:

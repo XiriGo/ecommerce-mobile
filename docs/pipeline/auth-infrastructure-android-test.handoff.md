@@ -10,7 +10,7 @@ COMPLETE — All 5 test files created, 1 stale existing test file fixed, all 65 
 
 ## Files Created
 
-Base path: `android/app/src/test/java/com/molt/marketplace/core/auth/`
+Base path: `android/app/src/test/java/com/xirigo/ecommerce/core/auth/`
 
 | # | File | Tests | Description |
 |---|------|-------|-------------|
@@ -85,10 +85,10 @@ test(auth): add auth infrastructure tests [agent:android-test] [platform:android
 ```
 
 **Staged files:**
-- `android/app/src/test/java/com/molt/marketplace/core/auth/FakeTokenStorage.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/auth/TokenStorageTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/auth/AuthStateManagerTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/auth/SessionManagerTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/auth/AuthModuleTest.kt`
-- `android/app/src/test/java/com/molt/marketplace/core/di/NetworkModuleTest.kt` (stale fix)
+- `android/app/src/test/java/com/xirigo/ecommerce/core/auth/FakeTokenStorage.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/auth/TokenStorageTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/auth/AuthStateManagerTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/auth/SessionManagerTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/auth/AuthModuleTest.kt`
+- `android/app/src/test/java/com/xirigo/ecommerce/core/di/NetworkModuleTest.kt` (stale fix)
 - `docs/pipeline/auth-infrastructure-android-test.handoff.md`

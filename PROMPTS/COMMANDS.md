@@ -1,6 +1,6 @@
-# Molt Mobile — Tüm Pipeline Komutları
+# XiriGo Mobile — Tüm Pipeline Komutları
 
-Bu dosyadaki komutları **molt-mobile dizininde** Claude Code'a yapıştır.
+Bu dosyadaki komutları **ecommerce-mobile dizininde** Claude Code'a yapıştır.
 Her komut bir Agent Team pipeline başlatır.
 
 > **Not**: `android/` ve `ios/` dizinleri boş scaffold. İlk olarak M0-01 çalıştırılmalı.
@@ -23,8 +23,8 @@ Android projesini oluştur:
 5. android/gradle.properties — Kotlin, Compose, AndroidX flags
 6. android/gradle/wrapper/gradle-wrapper.properties — Gradle 8.x
 7. android/app/src/main/AndroidManifest.xml — Internet permission, Application class
-8. android/app/src/main/java/com/molt/marketplace/MoltApp.kt — @HiltAndroidApp Application class
-9. android/app/src/main/java/com/molt/marketplace/MainActivity.kt — @AndroidEntryPoint, setContent with MoltTheme
+8. android/app/src/main/java/com/xirigo/ecommerce/MoltApp.kt — @HiltAndroidApp Application class
+9. android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt — @AndroidEntryPoint, setContent with XGTheme
 10. android/app/proguard-rules.pro — R8 rules
 
 CLAUDE.md'deki Android dependency listesine uy. Tüm versiyon numaralarını version catalog'a koy.
@@ -34,13 +34,13 @@ CLAUDE.md'deki Android dependency listesine uy. Tüm versiyon numaralarını ver
 ```
 iOS projesini oluştur:
 
-1. ios/MoltMarketplace.xcodeproj veya ios/Package.swift — Swift 6.2, min iOS 17.0, target iOS 18.0
-2. ios/MoltMarketplace/App/MoltMarketplaceApp.swift — @main App struct
-3. ios/MoltMarketplace/App/ContentView.swift — Root TabView
-4. ios/MoltMarketplace/App/Assets.xcassets — AppIcon, AccentColor
-5. ios/MoltMarketplace/App/Info.plist — CFBundleDisplayName, NSAppTransportSecurity
+1. ios/XiriGoEcommerce.xcodeproj veya ios/Package.swift — Swift 6.2, min iOS 17.0, target iOS 18.0
+2. ios/XiriGoEcommerce/App/XiriGoEcommerceApp.swift — @main App struct
+3. ios/XiriGoEcommerce/App/ContentView.swift — Root TabView
+4. ios/XiriGoEcommerce/App/Assets.xcassets — AppIcon, AccentColor
+5. ios/XiriGoEcommerce/App/Info.plist — CFBundleDisplayName, NSAppTransportSecurity
 6. SPM Dependencies: Factory, Nuke (NukeUI), KeychainAccess, SwiftLint, SwiftFormat, Sentry, Firebase (Analytics, Crashlytics, RemoteConfig, Messaging), Stripe (StripePaymentSheet), GooglePlaces
-7. Test targets: MoltMarketplaceTests, MoltMarketplaceUITests
+7. Test targets: XiriGoEcommerceTests, XiriGoEcommerceUITests
 8. SPM Test Dependencies: ViewInspector, swift-snapshot-testing
 
 CLAUDE.md'deki iOS dependency listesine uy.
@@ -256,7 +256,7 @@ CLAUDE.md'deki iOS dependency listesine uy.
 
 ## BEKLEMEDE — Backend Gerekli
 
-Bu komutlar molt backend'de ilgili modüller tamamlanınca çalıştırılır:
+Bu komutlar xirigo backend'de ilgili modüller tamamlanınca çalıştırılır:
 
 ### M3-04 payment-methods (Stripe provider setup gerekli)
 ```

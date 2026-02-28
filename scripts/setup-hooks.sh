@@ -1,5 +1,5 @@
 #!/bin/bash
-# setup-hooks.sh — Install git pre-commit hook for the Molt Marketplace project
+# setup-hooks.sh — Install git pre-commit hook for the XiriGo Ecommerce project
 #
 # Usage: ./scripts/setup-hooks.sh
 #

@@ -7,7 +7,7 @@
 
 ## Files Created
 
-Base path: `ios/MoltMarketplace/Core/`
+Base path: `ios/XiriGoEcommerce/Core/`
 
 | # | File | Description |
 |---|------|-------------|

@@ -1,6 +1,6 @@
 # Testing Standards
 
-Extracted from the project's `CLAUDE.md` — the single source of truth for Molt Marketplace testing conventions.
+Extracted from the project's `CLAUDE.md` — the single source of truth for XiriGo Ecommerce testing conventions.
 
 ---
 
@@ -14,10 +14,10 @@ Extracted from the project's `CLAUDE.md` — the single source of truth for Molt
 
 | Type | Android Location | iOS Location |
 |------|-----------------|--------------|
-| Unit (ViewModel) | `app/src/test/**/viewmodel/*Test.kt` | `MoltMarketplaceTests/**/ViewModel/*Tests.swift` |
-| Unit (UseCase) | `app/src/test/**/usecase/*Test.kt` | `MoltMarketplaceTests/**/UseCase/*Tests.swift` |
-| Unit (Repository) | `app/src/test/**/repository/*Test.kt` | `MoltMarketplaceTests/**/Repository/*Tests.swift` |
-| UI | `app/src/androidTest/**/*Test.kt` | `MoltMarketplaceUITests/**/*UITests.swift` |
+| Unit (ViewModel) | `app/src/test/**/viewmodel/*Test.kt` | `XiriGoEcommerceTests/**/ViewModel/*Tests.swift` |
+| Unit (UseCase) | `app/src/test/**/usecase/*Test.kt` | `XiriGoEcommerceTests/**/UseCase/*Tests.swift` |
+| Unit (Repository) | `app/src/test/**/repository/*Test.kt` | `XiriGoEcommerceTests/**/Repository/*Tests.swift` |
+| UI | `app/src/androidTest/**/*Test.kt` | `XiriGoEcommerceUITests/**/*UITests.swift` |
 
 ## Test Rules
 
@@ -54,7 +54,7 @@ class FakeProductRepository : ProductRepository {
 ## iOS: Fake Repository Pattern
 
 ```swift
-// MoltMarketplaceTests/Fakes/FakeProductRepository.swift
+// XiriGoEcommerceTests/Fakes/FakeProductRepository.swift
 final class FakeProductRepository: ProductRepository, @unchecked Sendable {
     var products: [Product] = []
     var errorToThrow: AppError?

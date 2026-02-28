@@ -1,9 +1,9 @@
 # Testing Strategy Guide
 
-**Scope**: Molt Marketplace Mobile Buyer App — Android + iOS
+**Scope**: XiriGo Ecommerce Mobile Buyer App — Android + iOS
 **Last Updated**: 2026-02-20
 
-This guide defines the testing approach for the Molt Marketplace mobile buyer app across both platforms. It covers the test pyramid, frameworks, patterns, tooling, and CI integration used by every feature team. All rules here derive from the CLAUDE.md standards.
+This guide defines the testing approach for the XiriGo Ecommerce mobile buyer app across both platforms. It covers the test pyramid, frameworks, patterns, tooling, and CI integration used by every feature team. All rules here derive from the CLAUDE.md standards.
 
 ---
 
@@ -61,7 +61,7 @@ Coverage is measured per-platform. Jacoco produces the Android report; `xccov` p
 
 ### Library Versions in Project
 
-Declared in `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml`:
+Declared in `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml`:
 
 ```toml
 junit       = "4.13.2"
@@ -71,7 +71,7 @@ turbine     = "1.2.0"
 coroutines  = "1.10.1"   # for kotlinx-coroutines-test
 ```
 
-Declared in `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplace.xcodeproj/project.pbxproj` (SPM):
+Declared in `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce.xcodeproj/project.pbxproj` (SPM):
 
 ```
 ViewInspector           0.10.0
@@ -174,7 +174,7 @@ mockWebServer.dispatcher = object : Dispatcher() {
 **Setup pattern:**
 
 ```swift
-// MoltMarketplaceTests/Helpers/MockURLProtocol.swift
+// XiriGoEcommerceTests/Helpers/MockURLProtocol.swift
 final class MockURLProtocol: URLProtocol {
     static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
 
@@ -204,7 +204,7 @@ func makeAPIClient() -> APIClient {
     let config = URLSessionConfiguration.ephemeral
     config.protocolClasses = [MockURLProtocol.self]
     return APIClient(
-        baseURL: URL(string: "https://api-test.molt.mt")!,
+        baseURL: URL(string: "https://api-test.xirigo.com")!,
         session: URLSession(configuration: config)
     )
 }
@@ -269,7 +269,7 @@ fun readFixture(filename: String): String =
 **Helper function (iOS):**
 
 ```swift
-// MoltMarketplaceTests/Helpers/FixtureLoader.swift
+// XiriGoEcommerceTests/Helpers/FixtureLoader.swift
 func loadFixture(_ filename: String) throws -> Data {
     guard let url = Bundle(for: type(of: self) as! AnyClass)
         .url(forResource: filename, withExtension: nil, subdirectory: "Fixtures") else {
@@ -313,7 +313,7 @@ Location: `app/src/test/.../repository/` (not in main sources).
 ### iOS Fake Pattern
 
 ```swift
-// MoltMarketplaceTests/Fakes/FakeProductRepository.swift
+// XiriGoEcommerceTests/Fakes/FakeProductRepository.swift
 final class FakeProductRepository: ProductRepository, @unchecked Sendable {
     var products: [Product] = []
     var errorToThrow: AppError?
@@ -334,7 +334,7 @@ final class FakeProductRepository: ProductRepository, @unchecked Sendable {
 ```
 
 Naming: `Fake{Name}` (e.g., `FakeCartRepository`, `FakeOrderRepository`).
-Location: `MoltMarketplaceTests/Fakes/`.
+Location: `XiriGoEcommerceTests/Fakes/`.
 
 ---
 
@@ -504,7 +504,7 @@ class ProductListScreenTest {
     @Test
     fun productListLoading() {
         paparazzi.snapshot {
-            MoltTheme {
+            XGTheme {
                 ProductListContent(
                     uiState = ProductListUiState.Loading,
                     onLoadMore = {},
@@ -517,7 +517,7 @@ class ProductListScreenTest {
     @Test
     fun productListSuccess() {
         paparazzi.snapshot {
-            MoltTheme {
+            XGTheme {
                 ProductListContent(
                     uiState = ProductListUiState.Success(products = testProducts()),
                     onLoadMore = {},
@@ -530,7 +530,7 @@ class ProductListScreenTest {
     @Test
     fun productListError() {
         paparazzi.snapshot {
-            MoltTheme {
+            XGTheme {
                 ProductListContent(
                     uiState = ProductListUiState.Error("Network error"),
                     onLoadMore = {},
@@ -563,11 +563,11 @@ Baseline images are stored under `app/src/test/snapshots/images/`. Commit them a
 **Test file:**
 
 ```swift
-// MoltMarketplaceTests/Snapshots/ProductListViewSnapshotTests.swift
+// XiriGoEcommerceTests/Snapshots/ProductListViewSnapshotTests.swift
 import SnapshotTesting
 import SwiftUI
 import XCTest
-@testable import MoltMarketplace
+@testable import XiriGoEcommerce
 
 final class ProductListViewSnapshotTests: XCTestCase {
 
@@ -640,7 +640,7 @@ class AppStartupBenchmark {
 
     @Test
     fun coldStartup() = benchmarkRule.measureRepeated(
-        packageName = "com.molt.marketplace",
+        packageName = "com.xirigo.ecommerce",
         metrics = listOf(StartupTimingMetric()),
         iterations = 5,
         startupMode = StartupMode.COLD,
@@ -654,7 +654,7 @@ class AppStartupBenchmark {
 ### iOS — XCTest Performance
 
 ```swift
-// MoltMarketplaceUITests/PerformanceTests.swift
+// XiriGoEcommerceUITests/PerformanceTests.swift
 final class AppStartupPerformanceTests: XCTestCase {
 
     func test_coldLaunchPerformance() throws {
@@ -757,7 +757,7 @@ cd android && ./gradlew testDebugUnitTest
 ./gradlew verifyPaparazziDebug
 
 # Specific test class
-./gradlew test --tests com.molt.marketplace.feature.product.viewmodel.ProductListViewModelTest
+./gradlew test --tests com.xirigo.ecommerce.feature.product.viewmodel.ProductListViewModelTest
 ```
 
 ### iOS CI Steps
@@ -766,17 +766,17 @@ cd android && ./gradlew testDebugUnitTest
 # .github/workflows/ios.yml (excerpt)
 - name: Run unit tests
   run: xcodebuild test
-    -project ios/MoltMarketplace.xcodeproj
-    -scheme MoltMarketplace
+    -project ios/XiriGoEcommerce.xcodeproj
+    -scheme XiriGoEcommerce
     -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
-    -only-testing MoltMarketplaceTests
+    -only-testing XiriGoEcommerceTests
 
 - name: Run UI tests
   run: xcodebuild test
-    -project ios/MoltMarketplace.xcodeproj
-    -scheme MoltMarketplace
+    -project ios/XiriGoEcommerce.xcodeproj
+    -scheme XiriGoEcommerce
     -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
-    -only-testing MoltMarketplaceUITests
+    -only-testing XiriGoEcommerceUITests
 
 - name: Generate coverage report
   run: xcrun xccov view --report
@@ -791,15 +791,15 @@ Run tests manually:
 ```bash
 # Unit tests
 xcodebuild test \
-  -project ios/MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project ios/XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
-  -only-testing MoltMarketplaceTests
+  -only-testing XiriGoEcommerceTests
 
 # All tests
 xcodebuild test \
-  -project ios/MoltMarketplace.xcodeproj \
-  -scheme MoltMarketplace \
+  -project ios/XiriGoEcommerce.xcodeproj \
+  -scheme XiriGoEcommerce \
   -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
 ```
 
@@ -861,11 +861,11 @@ Each test agent produces: `docs/pipeline/{feature}-android-test.handoff.md` or `
 
 | Type | Android | iOS |
 |------|---------|-----|
-| Unit tests | `android/app/src/test/java/com/molt/marketplace/**/*Test.kt` | `ios/MoltMarketplaceTests/**/*Tests.swift` |
-| UI / Compose tests | `android/app/src/androidTest/java/com/molt/marketplace/**/*Test.kt` | `ios/MoltMarketplaceUITests/**/*UITests.swift` |
-| Snapshot tests | `android/app/src/test/**/*SnapshotTest.kt` | `ios/MoltMarketplaceTests/Snapshots/**/*SnapshotTests.swift` |
-| Fakes | `android/app/src/test/**/ Fake*.kt` | `ios/MoltMarketplaceTests/Fakes/Fake*.swift` |
-| Helpers / fixtures | `android/app/src/test/**/TestHelpers.kt` | `ios/MoltMarketplaceTests/Helpers/*.swift` |
+| Unit tests | `android/app/src/test/java/com/xirigo/ecommerce/**/*Test.kt` | `ios/XiriGoEcommerceTests/**/*Tests.swift` |
+| UI / Compose tests | `android/app/src/androidTest/java/com/xirigo/ecommerce/**/*Test.kt` | `ios/XiriGoEcommerceUITests/**/*UITests.swift` |
+| Snapshot tests | `android/app/src/test/**/*SnapshotTest.kt` | `ios/XiriGoEcommerceTests/Snapshots/**/*SnapshotTests.swift` |
+| Fakes | `android/app/src/test/**/ Fake*.kt` | `ios/XiriGoEcommerceTests/Fakes/Fake*.swift` |
+| Helpers / fixtures | `android/app/src/test/**/TestHelpers.kt` | `ios/XiriGoEcommerceTests/Helpers/*.swift` |
 
 ---
 
@@ -877,11 +877,11 @@ The scaffold delivered 83 tests across both platforms. These serve as the refere
 
 | File | Tests | What Is Covered |
 |------|-------|-----------------|
-| `/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltColorsTest.kt` | 11 | 67 color constants against design token values |
-| `/android/app/src/test/java/com/molt/marketplace/core/designsystem/theme/MoltSpacingTest.kt` | 4 | 16 spacing constants, min touch target (48dp) |
-| `/android/app/src/test/java/com/molt/marketplace/BuildConfigTest.kt` | 6 | API base URL, version code, version name, build type |
-| `/android/app/src/test/java/com/molt/marketplace/StringResourcesTest.kt` | 9 | All 12 common strings in en/mt/tr via locale context |
-| `/android/app/src/test/java/com/molt/marketplace/MoltApplicationTest.kt` | 3 | `@HiltAndroidApp` annotation, Timber setup, Application superclass |
+| `/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGColorsTest.kt` | 11 | 67 color constants against design token values |
+| `/android/app/src/test/java/com/xirigo/ecommerce/core/designsystem/theme/XGSpacingTest.kt` | 4 | 16 spacing constants, min touch target (48dp) |
+| `/android/app/src/test/java/com/xirigo/ecommerce/BuildConfigTest.kt` | 6 | API base URL, version code, version name, build type |
+| `/android/app/src/test/java/com/xirigo/ecommerce/StringResourcesTest.kt` | 9 | All 12 common strings in en/mt/tr via locale context |
+| `/android/app/src/test/java/com/xirigo/ecommerce/XGApplicationTest.kt` | 3 | `@HiltAndroidApp` annotation, Timber setup, Application superclass |
 
 Framework: JUnit 4 + Google Truth.
 Pattern: backtick test names, direct value assertions, no mocking.
@@ -890,10 +890,10 @@ Pattern: backtick test names, direct value assertions, no mocking.
 
 | File | Tests | What Is Covered |
 |------|-------|-----------------|
-| `/ios/MoltMarketplaceTests/ConfigTests.swift` | 6 | API base URL per environment, version format, build number |
-| `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltColorsTests.swift` | 17 | Color constants, hex extension, contrast pairs |
-| `/ios/MoltMarketplaceTests/Core/DesignSystem/Theme/MoltSpacingTests.swift` | 16 | All spacing values, min touch target (44pt) |
-| `/ios/MoltMarketplaceTests/Resources/LocalizableTests.swift` | 11 | String keys in en/mt/tr, completeness for all 3 languages |
+| `/ios/XiriGoEcommerceTests/ConfigTests.swift` | 6 | API base URL per environment, version format, build number |
+| `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGColorsTests.swift` | 17 | Color constants, hex extension, contrast pairs |
+| `/ios/XiriGoEcommerceTests/Core/DesignSystem/Theme/XGSpacingTests.swift` | 16 | All spacing values, min touch target (44pt) |
+| `/ios/XiriGoEcommerceTests/Resources/LocalizableTests.swift` | 11 | String keys in en/mt/tr, completeness for all 3 languages |
 
 Framework: Swift Testing (`@Test` macro, `#expect`).
 Pattern: `@Suite` groups, `#expect` assertions, locale-parameterized string tests.
@@ -904,10 +904,10 @@ Pattern: `@Suite` groups, `#expect` assertions, locale-parameterized string test
 
 | File | Purpose |
 |------|---------|
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/CLAUDE.md` | Coverage thresholds, test rules, naming conventions |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/gradle/libs.versions.toml` | Test library versions (JUnit, Truth, MockK, Turbine) |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/test/` | Android unit test root |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/android/app/src/androidTest/` | Android instrumented test root |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplaceTests/` | iOS unit test root |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/ios/MoltMarketplaceUITests/` | iOS UI test root |
-| `/Users/atakan/Documents/GitHub/atknatk/molt-mobile/shared/test-fixtures/` | Shared JSON fixtures (created as features land) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/CLAUDE.md` | Coverage thresholds, test rules, naming conventions |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/gradle/libs.versions.toml` | Test library versions (JUnit, Truth, MockK, Turbine) |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/test/` | Android unit test root |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/androidTest/` | Android instrumented test root |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerceTests/` | iOS unit test root |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerceUITests/` | iOS UI test root |
+| `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/shared/test-fixtures/` | Shared JSON fixtures (created as features land) |

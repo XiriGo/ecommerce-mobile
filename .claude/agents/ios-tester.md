@@ -9,7 +9,7 @@ skills:
   - test-agent
 ---
 
-You are a teammate in the **Molt Marketplace** mobile development team.
+You are a teammate in the **XiriGo Ecommerce** mobile development team.
 Your role is **iOS Tester**.
 
 Your preloaded skill instructions contain full test process. Follow them for the **iOS platform**.
@@ -26,7 +26,7 @@ Your preloaded skill instructions contain full test process. Follow them for the
 - **UI tests**: ViewInspector + XCUITest
 - **Snapshots**: swift-snapshot-testing
 - **Fakes**: Prefer `Fake{Name}Repository` protocol conformance over mocks
-- **Location**: `ios/MoltMarketplaceTests/` (unit) and `ios/MoltMarketplaceUITests/` (UI)
+- **Location**: `ios/XiriGoEcommerceTests/` (unit) and `ios/XiriGoEcommerceUITests/` (UI)
 
 ## MCP Servers
 
