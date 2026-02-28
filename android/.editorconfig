@@ -1,5 +1,5 @@
 # =============================================================================
-# EditorConfig + ktlint — Molt Marketplace Android
+# EditorConfig + ktlint — XiriGo E-Commerce Android
 # =============================================================================
 # Google Kotlin Style Guide enforcement via ktlint
 # Reference: https://developer.android.com/kotlin/style-guide
@@ -31,7 +31,7 @@ ktlint_code_style = android_studio
 # --- Import ordering (Google Kotlin Style) ---
 # Order: all other imports, then java, javax, android, androidx, project imports
 # Blank line separated groups
-ij_kotlin_imports_layout = *,java.**,javax.**,android.**,androidx.**,com.molt.**
+ij_kotlin_imports_layout = *,java.**,javax.**,android.**,androidx.**,com.xirigo.**
 
 # --- No wildcard imports ---
 ij_kotlin_packages_to_use_import_on_demand = unset

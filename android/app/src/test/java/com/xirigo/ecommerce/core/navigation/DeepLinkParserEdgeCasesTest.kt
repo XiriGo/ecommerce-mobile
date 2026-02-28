@@ -66,7 +66,7 @@ class DeepLinkParserEdgeCasesTest {
 
     @Test
     fun `parse https with similar but wrong host returns null`() {
-        val uri = Uri.parse("https://xirigo.com/product/123")
+        val uri = Uri.parse("https://notxirigo.com/product/123")
         val result = DeepLinkParser.parse(uri)
         assertThat(result).isNull()
     }

@@ -1,5 +1,5 @@
 #!/bin/bash
-# pre-commit — Git pre-commit hook for the Molt Marketplace project
+# pre-commit — Git pre-commit hook for the Xirigo E-Commerce project
 #
 # Runs code quality checks on staged files:
 # - ktlintCheck for staged .kt files (Android)

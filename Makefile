@@ -1,5 +1,5 @@
 # =============================================================================
-# Molt Marketplace — Build, Lint & Test
+# Xirigo E-Commerce — Build, Lint & Test
 # =============================================================================
 # Usage:  make help
 # =============================================================================
@@ -12,7 +12,7 @@ SHELL := /bin/bash
 # ---------------------------------------------------------------------------
 ANDROID_DIR  := android
 IOS_DIR      := ios
-IOS_SCHEME   := MoltMarketplace
+IOS_SCHEME   := XiriGoEcommerce
 
 # Auto-detect latest available iPhone simulator (fallback: iPhone 16)
 IOS_SIM := $(shell xcrun simctl list devices available 2>/dev/null \
@@ -44,7 +44,7 @@ NC     := \033[0m
 # ---------------------------------------------------------------------------
 help: ## Show this help
 	@echo ""
-	@echo -e "$(BOLD)Molt Marketplace$(NC) — Build & Test"
+	@echo -e "$(BOLD)Xirigo E-Commerce$(NC) — Build & Test"
 	@echo -e "iOS Simulator: $(CYAN)$(IOS_SIM)$(NC)"
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \

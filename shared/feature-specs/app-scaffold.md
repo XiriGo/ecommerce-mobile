@@ -812,8 +812,8 @@ future use by the network layer (M0-03).
 |                                  |
 |           [XiriGo Logo]            |
 |                                  |
-|           MOLT                   |
-|         MARKETPLACE              |
+|           XiriGo                   |
+|         Ecommerce              |
 |                                  |
 |                                  |
 |                                  |

@@ -22,6 +22,7 @@ android/local.properties
 android/captures/
 android/.externalNativeBuild/
 android/.cxx/
+android/.kotlin
 *.apk
 *.aab
 *.jks
@@ -58,7 +59,7 @@ coverage/
 *.tmp
 *.bak
 
-# Xcode user data  
+# Xcode user data
 *.xcuserstate
 xcuserdata/
 ios/build/
@@ -66,3 +67,6 @@ ios/.swiftpm/
 
 # Android build artifacts
 android/gradle/gradle-daemon-jvm.properties
+
+
+XiriGo-Design/
