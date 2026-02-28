@@ -73,6 +73,8 @@ Components: `XGButton`, `XGCard`, `XGTextField`, `XGTopBar`, `XGBottomBar`,
 6. **All strings localized** — no hardcoded user-facing strings
 7. **Every screen has a Preview** — `@Preview` (Android) / `#Preview` (iOS)
 8. **Fakes over mocks** in tests — `Fake{Name}Repository` pattern
+9. **SVG = visual reference only** — use design tokens, not hardcoded hex/pixels from SVGs
+10. **Extend, don't recreate** — always check existing code before creating new files (see `docs/standards/common.md`)
 
 ## Detailed Standards (Split by Domain)
 

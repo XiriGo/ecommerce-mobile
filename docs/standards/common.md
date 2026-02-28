@@ -303,6 +303,21 @@ All list screens use offset-based pagination with these rules:
 
 Designs come from Adobe Illustrator SVG files in `XiriGo-Design/Svg/`. Design tokens are extracted into `shared/design-tokens/*.json`. The `XGTheme` on each platform reads these tokens.
 
+### SVG & Design Asset Rules (CRITICAL)
+
+1. **SVG files are VISUAL REFERENCE ONLY**: Do NOT extract hex colors, pixel dimensions, or gradient stops from SVG files and hardcode them into code. SVGs show design intent and layout — not implementation specs.
+2. **Use design tokens**: All colors via `XGColors.*`, spacing via `XGSpacing.*`, typography via `XGTypography.*`, gradients via `gradients.json`. Never hardcode `#6000FE` or `350×192` from SVG analysis.
+3. **Use ready-made PNG/image assets when available**: If `XiriGo-Design/Png_Pattern/` or asset catalogs contain ready-made images (backgrounds, patterns, icons), use them directly via `Image()`. Do NOT recreate them in code with gradients, shaders, or canvas drawing.
+4. **Responsive layouts**: All dimensions must be responsive. No hardcoded pixel widths/heights from SVG coordinates. Use relative sizing, flexible frames, and design token spacing.
+5. **Native platform components**: Build UI with native Jetpack Compose / SwiftUI components wrapped in `XG*` design system wrappers. Do NOT try to replicate SVG layers as coded canvas drawings.
+
+### Existing Code Rules (CRITICAL)
+
+1. **Check before creating**: Before creating any file, component, or screen — check if it already exists. Use `Glob` and `Grep` to search the codebase.
+2. **Extend, don't recreate**: If a screen or component already exists, refactor/extend it. Do NOT create a new file that duplicates or replaces existing code without explicit instruction.
+3. **Component inventory in issues**: Issue descriptions mark components as `NEW`, `EXISTS`, `UPDATE`, or `VERIFY`. Follow these statuses strictly. If a component is marked `EXISTS`, do NOT recreate it.
+4. **Preserve working code**: When adding Clean Architecture layers (ViewModel, UseCase, Repository) to an existing screen, keep the existing UI and refactor it to consume the new ViewModel — don't rewrite the screen from scratch.
+
 ### XG* Component Rules
 
 1. **One component per file**: Each `XG*` component lives in its own file in `core/designsystem/component/`. No monolithic "ScreenComponents.kt" files.
