@@ -58,7 +58,6 @@ opt_in_rules:
   - closure_spacing
   - vertical_whitespace_closing_braces
   - vertical_whitespace_opening_braces
-  - vertical_whitespace_between_cases
   - multiline_arguments
   - multiline_arguments_brackets
   - multiline_parameters
@@ -94,7 +93,6 @@ opt_in_rules:
   - flatmap_over_map_reduce
   - reduce_boolean
   - reduce_into
-  - sorted_imports
   - redundant_nil_coalescing
   - toggle_bool
   - joined_default_parameter
@@ -224,13 +222,6 @@ nesting:
 trailing_comma:
   mandatory_comma: true
 
-# --- Indentation ---
-indentation_width:
-  indentation_width: 4
-  include_comments: true
-  include_compiler_directives: true
-  include_multiline_strings: false
-
 # --- Number separator ---
 number_separator:
   minimum_length: 5
@@ -264,10 +255,6 @@ attributes:
     - '@propertyWrapper'
     - '@resultBuilder'
     - '@ViewBuilder'
-
-# --- Sorted imports ---
-sorted_imports:
-  severity: warning
 
 # --- Enum case associated values ---
 enum_case_associated_values_count:
