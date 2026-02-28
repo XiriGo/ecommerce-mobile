@@ -5,6 +5,7 @@ import Testing
 // MARK: - XGFilterChipTests
 
 @Suite("XGFilterChip Tests")
+@MainActor
 struct XGFilterChipTests {
     @Test("FilterChip initialises with label")
     func init_withLabel_initialises() {
@@ -56,6 +57,7 @@ struct XGFilterChipTests {
 // MARK: - XGCategoryChipTests
 
 @Suite("XGCategoryChip Tests")
+@MainActor
 struct XGCategoryChipTests {
     @Test("CategoryChip initialises with label")
     func test_init_withLabel_initialises() {

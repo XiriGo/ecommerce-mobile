@@ -7,6 +7,7 @@ import Testing
 /// Logic-level tests for XGBrandGradient.
 /// Verifies both init overloads and content forwarding contract.
 @Suite("XGBrandGradient Tests")
+@MainActor
 struct XGBrandGradientTests {
     // MARK: - Initialisation
 

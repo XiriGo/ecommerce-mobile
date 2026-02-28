@@ -7,6 +7,7 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - PlaceholderViewTests
 
 @Suite("PlaceholderView Tests")
+@MainActor
 struct PlaceholderViewTests {
     // MARK: - Initialisation
 

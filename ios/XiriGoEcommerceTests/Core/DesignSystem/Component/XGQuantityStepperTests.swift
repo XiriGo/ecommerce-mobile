@@ -5,6 +5,7 @@ import Testing
 // MARK: - XGQuantityStepperTests
 
 @Suite("XGQuantityStepper Tests")
+@MainActor
 struct XGQuantityStepperTests {
     // MARK: - Internal
 

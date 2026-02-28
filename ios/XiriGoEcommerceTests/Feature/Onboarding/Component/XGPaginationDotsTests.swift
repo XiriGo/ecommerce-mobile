@@ -8,6 +8,7 @@ import Testing
 /// Verifies initialization contracts for page count, current page, and color parameters.
 /// View rendering is structural (SwiftUI body); snapshot coverage is handled in UI tests.
 @Suite("XGPaginationDots Tests")
+@MainActor
 struct XGPaginationDotsTests {
     // MARK: - Initialization
 

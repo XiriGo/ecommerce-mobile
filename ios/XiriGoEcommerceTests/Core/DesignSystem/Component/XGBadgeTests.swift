@@ -7,6 +7,7 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - XGCountBadgeTests
 
 @Suite("XGCountBadge Tests")
+@MainActor
 struct XGCountBadgeTests {
     // MARK: - Internal
 
@@ -150,6 +151,7 @@ struct XGBadgeStatusTests {
 // MARK: - XGStatusBadgeTests
 
 @Suite("XGStatusBadge Tests")
+@MainActor
 struct XGStatusBadgeTests {
     @Test("StatusBadge initialises with success status and label")
     func init_success_initialises() {

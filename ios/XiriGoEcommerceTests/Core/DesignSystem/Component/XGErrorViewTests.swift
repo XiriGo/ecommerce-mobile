@@ -6,6 +6,7 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - XGErrorViewTests
 
 @Suite("XGErrorView Tests")
+@MainActor
 struct XGErrorViewTests {
     // MARK: - Initialisation
 

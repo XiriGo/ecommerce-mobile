@@ -33,6 +33,7 @@ struct XGButtonVariantTests {
 /// uses private body helpers; accessibility and disabled-state logic is tested
 /// via the public API contract (title + variant combinations).
 @Suite("XGButton Logic Tests")
+@MainActor
 struct XGButtonModelTests {
     @Test("Button action is called when not loading")
     func action_calledWhenNotLoading() {

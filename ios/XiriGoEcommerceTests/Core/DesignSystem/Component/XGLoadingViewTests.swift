@@ -6,6 +6,7 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - XGLoadingViewTests
 
 @Suite("XGLoadingView Tests")
+@MainActor
 struct XGLoadingViewTests {
     @Test("XGLoadingView initialises without parameters")
     func init_noParameters_initialises() {
@@ -26,6 +27,7 @@ struct XGLoadingViewTests {
 // MARK: - XGLoadingIndicatorTests
 
 @Suite("XGLoadingIndicator Tests")
+@MainActor
 struct XGLoadingIndicatorTests {
     @Test("XGLoadingIndicator initialises without parameters")
     func test_init_noParameters_initialises() {

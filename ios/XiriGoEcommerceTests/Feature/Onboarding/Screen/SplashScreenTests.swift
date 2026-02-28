@@ -9,6 +9,7 @@ import Testing
 /// XGBrandPattern, and XGLogoMark. Full pixel-level snapshot testing
 /// would be done via swift-snapshot-testing in a UI test target.
 @Suite("SplashScreen Tests")
+@MainActor
 struct SplashScreenTests {
     @Test("SplashScreen initialises without crash")
     func init_initialises() {

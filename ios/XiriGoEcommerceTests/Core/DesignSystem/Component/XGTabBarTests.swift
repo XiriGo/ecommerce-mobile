@@ -5,6 +5,7 @@ import Testing
 // MARK: - XGTabItemTests
 
 @Suite("XGTabItem Tests")
+@MainActor
 struct XGTabItemTests {
     @Test("TabItem stores id correctly")
     func init_id_storedCorrectly() {
@@ -64,6 +65,7 @@ struct XGTabItemTests {
 // MARK: - XGTabBarTests
 
 @Suite("XGTabBar Tests")
+@MainActor
 struct XGTabBarTests {
     @Test("TabBar initialises with items and selectedIndex binding")
     func init_withItemsAndBinding_initialises() {

@@ -5,6 +5,7 @@ import Testing
 // MARK: - XGProductCardTests
 
 @Suite("XGProductCard Tests")
+@MainActor
 struct XGProductCardTests {
     // MARK: - Initialisation
 
@@ -114,6 +115,7 @@ struct XGProductCardTests {
 // MARK: - XGInfoCardTests
 
 @Suite("XGInfoCard Tests")
+@MainActor
 struct XGInfoCardTests {
     @Test("InfoCard initialises with title only")
     func init_withTitleOnly_initialises() {

@@ -52,6 +52,7 @@ struct XGTopBarActionTests {
 // MARK: - XGTopBarTests
 
 @Suite("XGTopBar Tests")
+@MainActor
 struct XGTopBarTests {
     @Test("TopBar initialises with title only")
     func init_withTitleOnly_initialises() {

@@ -5,6 +5,7 @@ import Testing
 // MARK: - XGTextFieldTests
 
 @Suite("XGTextField Tests")
+@MainActor
 struct XGTextFieldTests {
     // MARK: - Initialisation
 

@@ -102,6 +102,7 @@ struct OnboardingScreenTests {
 // MARK: - OnboardingPageContentTests
 
 @Suite("OnboardingPageContent Tests")
+@MainActor
 struct OnboardingPageContentTests {
     @Test("OnboardingPageContent initialises with first page without crash")
     func init_firstPage_initialises() {

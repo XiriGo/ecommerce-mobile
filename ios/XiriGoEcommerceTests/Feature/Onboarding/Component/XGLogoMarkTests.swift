@@ -7,6 +7,7 @@ import Testing
 /// Logic-level tests for XGLogoMark.
 /// Verifies default and custom size initialisation.
 @Suite("XGLogoMark Tests")
+@MainActor
 struct XGLogoMarkTests {
     // MARK: - Initialisation
 

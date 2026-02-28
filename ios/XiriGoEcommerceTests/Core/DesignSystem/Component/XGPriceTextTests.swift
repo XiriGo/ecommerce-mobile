@@ -47,6 +47,7 @@ struct XGPriceSizeTests {
 // MARK: - XGPriceTextTests
 
 @Suite("XGPriceText Tests")
+@MainActor
 struct XGPriceTextTests {
     // MARK: - Internal
 

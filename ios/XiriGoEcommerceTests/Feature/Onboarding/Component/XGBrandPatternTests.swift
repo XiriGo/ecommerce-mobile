@@ -7,6 +7,7 @@ import Testing
 /// Logic-level tests for XGBrandPattern.
 /// Verifies initialisation and View protocol conformance.
 @Suite("XGBrandPattern Tests")
+@MainActor
 struct XGBrandPatternTests {
     @Test("XGBrandPattern initialises without crash")
     func init_initialises() {

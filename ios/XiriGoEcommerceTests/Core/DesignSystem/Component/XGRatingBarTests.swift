@@ -6,6 +6,7 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - XGRatingBarTests
 
 @Suite("XGRatingBar Tests")
+@MainActor
 struct XGRatingBarTests {
     // MARK: - Internal
 
