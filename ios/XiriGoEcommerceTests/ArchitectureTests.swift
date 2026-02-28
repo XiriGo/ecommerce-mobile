@@ -89,7 +89,7 @@ struct ArchitectureTests {
 
     // MARK: - Rule 3: Feature screens must use design system components
 
-    @Test("Feature screens must use Molt design system components instead of raw SwiftUI")
+    @Test("Feature screens must use XG design system components instead of raw SwiftUI")
     func featureScreensMustUseDesignSystem() {
         let allFiles = Self.findSwiftFiles(in: Self.sourceRoot)
 
@@ -99,10 +99,10 @@ struct ArchitectureTests {
             return path.contains("/Feature/") && path.contains("/Presentation/")
         }
 
-        // Map of raw SwiftUI components to their Molt equivalents
+        // Map of raw SwiftUI components to their XG equivalents
         let forbiddenPatterns: [(pattern: String, replacement: String)] = [
-            ("ProgressView(", "MoltLoadingView or MoltLoadingIndicator"),
-            ("ProgressView {", "MoltLoadingView or MoltLoadingIndicator"),
+            ("ProgressView(", "XGLoadingView or XGLoadingIndicator"),
+            ("ProgressView {", "XGLoadingView or XGLoadingIndicator"),
         ]
 
         var violations: [String] = []

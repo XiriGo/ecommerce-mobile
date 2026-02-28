@@ -12,41 +12,41 @@ struct ProfileScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: MoltSpacing.sectionSpacing) {
+            VStack(spacing: XGSpacing.sectionSpacing) {
                 guestHeader
                 menuSection
             }
-            .padding(.bottom, MoltSpacing.xl)
+            .padding(.bottom, XGSpacing.xl)
         }
-        .background(MoltColors.background.ignoresSafeArea())
+        .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_profile"))
     }
 
     // MARK: - Guest Header
 
     private var guestHeader: some View {
-        VStack(spacing: MoltSpacing.base) {
+        VStack(spacing: XGSpacing.base) {
             ZStack {
                 Circle()
                     .fill(.ultraThinMaterial)
-                    .frame(width: MoltSpacing.AvatarSize.extraLarge, height: MoltSpacing.AvatarSize.extraLarge)
+                    .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
                     .overlay(
                         Circle()
-                            .stroke(MoltColors.outlineVariant, lineWidth: 1)
+                            .stroke(XGColors.outlineVariant, lineWidth: 1)
                     )
 
                 Image(systemName: "person.fill")
-                    .font(.system(size: MoltSpacing.IconSize.extraLarge))
-                    .foregroundStyle(MoltColors.onSurfaceVariant)
+                    .font(.system(size: XGSpacing.IconSize.extraLarge))
+                    .foregroundStyle(XGColors.onSurfaceVariant)
             }
 
             Text(String(localized: "nav_profile_guest_title"))
-                .font(MoltTypography.bodyLarge)
-                .foregroundStyle(MoltColors.onSurfaceVariant)
+                .font(XGTypography.bodyLarge)
+                .foregroundStyle(XGColors.onSurfaceVariant)
                 .multilineTextAlignment(.center)
 
-            HStack(spacing: MoltSpacing.md) {
-                MoltButton(
+            HStack(spacing: XGSpacing.md) {
+                XGButton(
                     String(localized: "nav_profile_guest_login_button"),
                     variant: .primary,
                     fullWidth: false
@@ -54,7 +54,7 @@ struct ProfileScreen: View {
                     router.presentLogin()
                 }
 
-                MoltButton(
+                XGButton(
                     String(localized: "nav_profile_guest_register_button"),
                     variant: .outlined,
                     fullWidth: false
@@ -63,46 +63,46 @@ struct ProfileScreen: View {
                 }
             }
         }
-        .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
-        .padding(.top, MoltSpacing.lg)
+        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
+        .padding(.top, XGSpacing.lg)
     }
 
     // MARK: - Menu Section
 
     private var menuSection: some View {
-        VStack(spacing: MoltSpacing.xs) {
+        VStack(spacing: XGSpacing.xs) {
             ForEach(ProfileMenuItem.items, id: \.id) { item in
                 menuRow(item)
             }
         }
-        .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
     }
 
     private func menuRow(_ item: ProfileMenuItem) -> some View {
         Button {
             router.navigate(to: item.route)
         } label: {
-            HStack(spacing: MoltSpacing.md) {
+            HStack(spacing: XGSpacing.md) {
                 Image(systemName: item.icon)
-                    .foregroundStyle(MoltColors.primary)
-                    .font(.system(size: MoltSpacing.IconSize.medium))
-                    .frame(width: MoltSpacing.IconSize.large)
+                    .foregroundStyle(XGColors.primary)
+                    .font(.system(size: XGSpacing.IconSize.medium))
+                    .frame(width: XGSpacing.IconSize.large)
                     .accessibilityHidden(true)
 
                 Text(item.title)
-                    .font(MoltTypography.bodyLarge)
-                    .foregroundStyle(MoltColors.onSurface)
+                    .font(XGTypography.bodyLarge)
+                    .foregroundStyle(XGColors.onSurface)
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .foregroundStyle(MoltColors.onSurfaceVariant)
-                    .font(.system(size: MoltSpacing.IconSize.small))
+                    .foregroundStyle(XGColors.onSurfaceVariant)
+                    .font(.system(size: XGSpacing.IconSize.small))
                     .accessibilityHidden(true)
             }
-            .padding(MoltSpacing.cardPadding)
+            .padding(XGSpacing.cardPadding)
             .background(.regularMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: MoltCornerRadius.medium))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         }
         .accessibilityLabel(item.title)
     }

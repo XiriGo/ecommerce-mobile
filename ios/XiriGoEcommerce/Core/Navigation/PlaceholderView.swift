@@ -20,26 +20,26 @@ struct PlaceholderView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: MoltSpacing.base) {
+        VStack(spacing: XGSpacing.base) {
             Spacer()
 
             Image(systemName: systemImage)
-                .font(.system(size: MoltSpacing.xxxl))
-                .foregroundStyle(MoltColors.onSurfaceVariant)
+                .font(.system(size: XGSpacing.xxxl))
+                .foregroundStyle(XGColors.onSurfaceVariant)
                 .accessibilityHidden(true)
 
             Text(title)
-                .font(MoltTypography.headlineSmall)
-                .foregroundStyle(MoltColors.onSurface)
+                .font(XGTypography.headlineSmall)
+                .foregroundStyle(XGColors.onSurface)
 
             Text(String(localized: "nav_placeholder_coming_soon"))
-                .font(MoltTypography.bodyMedium)
-                .foregroundStyle(MoltColors.onSurfaceVariant)
+                .font(XGTypography.bodyMedium)
+                .foregroundStyle(XGColors.onSurfaceVariant)
 
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(MoltColors.background.ignoresSafeArea())
+        .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(title)
     }
 }

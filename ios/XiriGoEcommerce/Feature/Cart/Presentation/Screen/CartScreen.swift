@@ -11,7 +11,7 @@ struct CartScreen: View {
     // MARK: - Body
 
     var body: some View {
-        MoltEmptyView(
+        XGEmptyView(
             message: String(localized: "cart_empty_message"),
             systemImage: "bag",
             actionLabel: String(localized: "cart_start_shopping"),
@@ -19,7 +19,7 @@ struct CartScreen: View {
                 router.selectTab(.home)
             }
         )
-        .background(MoltColors.background.ignoresSafeArea())
+        .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_cart"))
     }
 }

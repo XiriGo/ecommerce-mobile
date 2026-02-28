@@ -15,7 +15,7 @@ struct XiriGoEcommerceApp: App {
     var body: some Scene {
         WindowGroup {
             MainTabView()
-                .background(MoltColors.background.ignoresSafeArea())
+                .background(XGColors.background.ignoresSafeArea())
         }
     }
 }

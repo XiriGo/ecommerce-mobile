@@ -14,7 +14,7 @@ enum DeepLinkParser {
 
         switch scheme {
         case "molt":
-            return parseMoltScheme(host: host, pathComponents: pathComponents(from: url))
+            return parseXGScheme(host: host, pathComponents: pathComponents(from: url))
 
         case "https" where host == "molt.mt":
             return parseUniversalLink(pathComponents: pathComponents(from: url))
@@ -30,7 +30,7 @@ enum DeepLinkParser {
         url.pathComponents.filter { $0 != "/" }
     }
 
-    private static func parseMoltScheme(host: String, pathComponents: [String]) -> Route? {
+    private static func parseXGScheme(host: String, pathComponents: [String]) -> Route? {
         switch host {
         case "product":
             return parseProductRoute(pathComponents: pathComponents)

@@ -78,7 +78,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with unrecognized molt host does nothing")
-    func test_handleDeepLink_unrecognizedMoltHost_doesNothing() throws {
+    func test_handleDeepLink_unrecognizedXGHost_doesNothing() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "molt://unknown/path"))
         router.handleDeepLink(url)

@@ -15,50 +15,50 @@ struct CategoriesScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: MoltSpacing.sectionSpacing) {
+            VStack(spacing: XGSpacing.sectionSpacing) {
                 searchSection
                 categoryGrid
             }
-            .padding(.bottom, MoltSpacing.xl)
+            .padding(.bottom, XGSpacing.xl)
         }
-        .background(MoltColors.background.ignoresSafeArea())
+        .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_categories"))
     }
 
     // MARK: - Search Section
 
     private var searchSection: some View {
-        HStack(spacing: MoltSpacing.sm) {
+        HStack(spacing: XGSpacing.sm) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(MoltColors.onSurfaceVariant)
-                .font(.system(size: MoltSpacing.IconSize.medium))
+                .foregroundStyle(XGColors.onSurfaceVariant)
+                .font(.system(size: XGSpacing.IconSize.medium))
 
             TextField(
                 String(localized: "categories_search_placeholder"),
                 text: $searchText
             )
-            .font(MoltTypography.bodyLarge)
+            .font(XGTypography.bodyLarge)
 
             if !searchText.isEmpty {
                 Button {
                     searchText = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(MoltColors.onSurfaceVariant)
+                        .foregroundStyle(XGColors.onSurfaceVariant)
                 }
                 .accessibilityLabel(String(localized: "common_cancel_button"))
             }
         }
-        .padding(.horizontal, MoltSpacing.md)
-        .padding(.vertical, MoltSpacing.md)
+        .padding(.horizontal, XGSpacing.md)
+        .padding(.vertical, XGSpacing.md)
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: MoltCornerRadius.full))
+        .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
         .overlay(
-            RoundedRectangle(cornerRadius: MoltCornerRadius.full)
-                .stroke(MoltColors.outlineVariant, lineWidth: 1)
+            RoundedRectangle(cornerRadius: XGCornerRadius.full)
+                .stroke(XGColors.outlineVariant, lineWidth: 1)
         )
-        .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
-        .padding(.top, MoltSpacing.sm)
+        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
+        .padding(.top, XGSpacing.sm)
     }
 
     // MARK: - Category Grid
@@ -66,48 +66,48 @@ struct CategoriesScreen: View {
     private var categoryGrid: some View {
         LazyVGrid(
             columns: [
-                GridItem(.flexible(), spacing: MoltSpacing.md),
-                GridItem(.flexible(), spacing: MoltSpacing.md),
+                GridItem(.flexible(), spacing: XGSpacing.md),
+                GridItem(.flexible(), spacing: XGSpacing.md),
             ],
-            spacing: MoltSpacing.md
+            spacing: XGSpacing.md
         ) {
             ForEach(filteredCategories, id: \.id) { category in
                 categoryCard(category)
             }
         }
-        .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
     }
 
     private func categoryCard(_ category: CategoryItem) -> some View {
         Button {
             router.navigate(to: .categoryProducts(categoryId: category.id, categoryName: category.name))
         } label: {
-            VStack(spacing: MoltSpacing.md) {
+            VStack(spacing: XGSpacing.md) {
                 Image(systemName: category.icon)
-                    .font(.system(size: MoltSpacing.IconSize.extraLarge))
-                    .foregroundStyle(MoltColors.primary)
+                    .font(.system(size: XGSpacing.IconSize.extraLarge))
+                    .foregroundStyle(XGColors.primary)
                     .accessibilityHidden(true)
 
-                VStack(spacing: MoltSpacing.xxs) {
+                VStack(spacing: XGSpacing.xxs) {
                     Text(category.name)
-                        .font(MoltTypography.titleMedium)
-                        .foregroundStyle(MoltColors.onSurface)
+                        .font(XGTypography.titleMedium)
+                        .foregroundStyle(XGColors.onSurface)
 
                     Text(String(localized: "categories_item_count \(category.itemCount)"))
-                        .font(MoltTypography.bodySmall)
-                        .foregroundStyle(MoltColors.onSurfaceVariant)
+                        .font(XGTypography.bodySmall)
+                        .foregroundStyle(XGColors.onSurfaceVariant)
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, MoltSpacing.lg)
-            .padding(.horizontal, MoltSpacing.md)
+            .padding(.vertical, XGSpacing.lg)
+            .padding(.horizontal, XGSpacing.md)
             .background(.regularMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: MoltCornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
             .overlay(
-                RoundedRectangle(cornerRadius: MoltCornerRadius.large)
-                    .stroke(MoltColors.outlineVariant.opacity(0.5), lineWidth: 1)
+                RoundedRectangle(cornerRadius: XGCornerRadius.large)
+                    .stroke(XGColors.outlineVariant.opacity(0.5), lineWidth: 1)
             )
-            .moltElevation(MoltElevation.level1)
+            .moltElevation(XGElevation.level1)
         }
         .accessibilityLabel(category.name)
         .accessibilityHint(String(localized: "categories_item_count \(category.itemCount)"))

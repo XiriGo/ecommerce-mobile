@@ -12,7 +12,7 @@ struct HomeScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: MoltSpacing.sectionSpacing) {
+            VStack(spacing: XGSpacing.sectionSpacing) {
                 welcomeHeader
                 searchBar
                 featuredBanners
@@ -20,27 +20,27 @@ struct HomeScreen: View {
                 popularProductsSection
                 newArrivalsSection
             }
-            .padding(.bottom, MoltSpacing.xl)
+            .padding(.bottom, XGSpacing.xl)
         }
-        .background(MoltColors.background.ignoresSafeArea())
+        .background(XGColors.background.ignoresSafeArea())
         .navigationTitle(String(localized: "nav_tab_home"))
     }
 
     // MARK: - Welcome Header
 
     private var welcomeHeader: some View {
-        VStack(alignment: .leading, spacing: MoltSpacing.xs) {
+        VStack(alignment: .leading, spacing: XGSpacing.xs) {
             Text(String(localized: "home_welcome_title"))
-                .font(MoltTypography.headlineMedium)
-                .foregroundStyle(MoltColors.onSurface)
+                .font(XGTypography.headlineMedium)
+                .foregroundStyle(XGColors.onSurface)
 
             Text(String(localized: "home_welcome_subtitle"))
-                .font(MoltTypography.bodyLarge)
-                .foregroundStyle(MoltColors.onSurfaceVariant)
+                .font(XGTypography.bodyLarge)
+                .foregroundStyle(XGColors.onSurfaceVariant)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
-        .padding(.top, MoltSpacing.sm)
+        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
+        .padding(.top, XGSpacing.sm)
     }
 
     // MARK: - Search Bar
@@ -49,43 +49,43 @@ struct HomeScreen: View {
         Button {
             router.navigate(to: .productSearch)
         } label: {
-            HStack(spacing: MoltSpacing.sm) {
+            HStack(spacing: XGSpacing.sm) {
                 Image(systemName: "magnifyingglass")
-                    .foregroundStyle(MoltColors.onSurfaceVariant)
-                    .font(.system(size: MoltSpacing.IconSize.medium))
+                    .foregroundStyle(XGColors.onSurfaceVariant)
+                    .font(.system(size: XGSpacing.IconSize.medium))
 
                 Text(String(localized: "home_search_placeholder"))
-                    .font(MoltTypography.bodyLarge)
-                    .foregroundStyle(MoltColors.onSurfaceVariant)
+                    .font(XGTypography.bodyLarge)
+                    .foregroundStyle(XGColors.onSurfaceVariant)
 
                 Spacer()
             }
-            .padding(.horizontal, MoltSpacing.md)
-            .padding(.vertical, MoltSpacing.md)
+            .padding(.horizontal, XGSpacing.md)
+            .padding(.vertical, XGSpacing.md)
             .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: MoltCornerRadius.full))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
             .overlay(
-                RoundedRectangle(cornerRadius: MoltCornerRadius.full)
-                    .stroke(MoltColors.outlineVariant, lineWidth: 1)
+                RoundedRectangle(cornerRadius: XGCornerRadius.full)
+                    .stroke(XGColors.outlineVariant, lineWidth: 1)
             )
         }
-        .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
         .accessibilityLabel(String(localized: "home_search_placeholder"))
     }
 
     // MARK: - Featured Banners
 
     private var featuredBanners: some View {
-        VStack(alignment: .leading, spacing: MoltSpacing.md) {
+        VStack(alignment: .leading, spacing: XGSpacing.md) {
             sectionHeader(String(localized: "home_featured_title"))
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: MoltSpacing.md) {
+                HStack(spacing: XGSpacing.md) {
                     ForEach(HomeBanner.samples, id: \.id) { banner in
                         featuredBannerCard(banner)
                     }
                 }
-                .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+                .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
             }
         }
     }
@@ -98,35 +98,35 @@ struct HomeScreen: View {
                 endPoint: .bottomTrailing
             )
 
-            VStack(alignment: .leading, spacing: MoltSpacing.xs) {
+            VStack(alignment: .leading, spacing: XGSpacing.xs) {
                 Text(banner.title)
-                    .font(MoltTypography.headlineSmall)
+                    .font(XGTypography.headlineSmall)
                     .foregroundStyle(.white)
 
                 Text(banner.subtitle)
-                    .font(MoltTypography.bodyMedium)
+                    .font(XGTypography.bodyMedium)
                     .foregroundStyle(.white.opacity(0.85))
             }
-            .padding(MoltSpacing.lg)
+            .padding(XGSpacing.lg)
         }
         .frame(width: 280, height: 160)
-        .clipShape(RoundedRectangle(cornerRadius: MoltCornerRadius.large))
-        .moltElevation(MoltElevation.level2)
+        .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+        .moltElevation(XGElevation.level2)
     }
 
     // MARK: - Categories Section
 
     private var categoriesSection: some View {
-        VStack(alignment: .leading, spacing: MoltSpacing.md) {
+        VStack(alignment: .leading, spacing: XGSpacing.md) {
             sectionHeader(String(localized: "home_categories_title"))
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: MoltSpacing.base) {
+                HStack(spacing: XGSpacing.base) {
                     ForEach(HomeCategory.samples, id: \.id) { category in
                         categoryItem(category)
                     }
                 }
-                .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+                .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
             }
         }
     }
@@ -135,27 +135,27 @@ struct HomeScreen: View {
         Button {
             router.navigate(to: .categoryProducts(categoryId: category.id, categoryName: category.name))
         } label: {
-            VStack(spacing: MoltSpacing.sm) {
+            VStack(spacing: XGSpacing.sm) {
                 ZStack {
                     Circle()
                         .fill(.ultraThinMaterial)
-                        .frame(width: MoltSpacing.AvatarSize.extraLarge, height: MoltSpacing.AvatarSize.extraLarge)
+                        .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
                         .overlay(
                             Circle()
-                                .stroke(MoltColors.outlineVariant.opacity(0.5), lineWidth: 1)
+                                .stroke(XGColors.outlineVariant.opacity(0.5), lineWidth: 1)
                         )
 
                     Image(systemName: category.icon)
-                        .font(.system(size: MoltSpacing.IconSize.large))
-                        .foregroundStyle(MoltColors.primary)
+                        .font(.system(size: XGSpacing.IconSize.large))
+                        .foregroundStyle(XGColors.primary)
                 }
 
                 Text(category.name)
-                    .font(MoltTypography.labelMedium)
-                    .foregroundStyle(MoltColors.onSurface)
+                    .font(XGTypography.labelMedium)
+                    .foregroundStyle(XGColors.onSurface)
                     .lineLimit(1)
             }
-            .frame(width: MoltSpacing.AvatarSize.extraLarge)
+            .frame(width: XGSpacing.AvatarSize.extraLarge)
         }
         .accessibilityLabel(category.name)
     }
@@ -163,18 +163,18 @@ struct HomeScreen: View {
     // MARK: - Popular Products Section
 
     private var popularProductsSection: some View {
-        VStack(alignment: .leading, spacing: MoltSpacing.md) {
+        VStack(alignment: .leading, spacing: XGSpacing.md) {
             sectionHeader(String(localized: "home_popular_title"))
 
             LazyVGrid(
                 columns: [
-                    GridItem(.flexible(), spacing: MoltSpacing.productGridSpacing),
-                    GridItem(.flexible(), spacing: MoltSpacing.productGridSpacing),
+                    GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
+                    GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
                 ],
-                spacing: MoltSpacing.productGridSpacing
+                spacing: XGSpacing.productGridSpacing
             ) {
                 ForEach(HomeProduct.popularSamples, id: \.id) { product in
-                    MoltProductCard(
+                    XGProductCard(
                         imageUrl: nil,
                         title: product.title,
                         price: product.price,
@@ -188,20 +188,20 @@ struct HomeScreen: View {
                     )
                 }
             }
-            .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+            .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
         }
     }
 
     // MARK: - New Arrivals Section
 
     private var newArrivalsSection: some View {
-        VStack(alignment: .leading, spacing: MoltSpacing.md) {
+        VStack(alignment: .leading, spacing: XGSpacing.md) {
             sectionHeader(String(localized: "home_new_arrivals_title"))
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: MoltSpacing.md) {
+                HStack(spacing: XGSpacing.md) {
                     ForEach(HomeProduct.newArrivalSamples, id: \.id) { product in
-                        MoltProductCard(
+                        XGProductCard(
                             imageUrl: nil,
                             title: product.title,
                             price: product.price,
@@ -213,7 +213,7 @@ struct HomeScreen: View {
                         .frame(width: 180)
                     }
                 }
-                .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+                .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
             }
         }
     }
@@ -222,9 +222,9 @@ struct HomeScreen: View {
 
     private func sectionHeader(_ title: String) -> some View {
         Text(title)
-            .font(MoltTypography.titleLarge)
-            .foregroundStyle(MoltColors.onSurface)
-            .padding(.horizontal, MoltSpacing.screenPaddingHorizontal)
+            .font(XGTypography.titleLarge)
+            .foregroundStyle(XGColors.onSurface)
+            .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
     }
 }
 
@@ -241,19 +241,19 @@ private struct HomeBanner: Identifiable {
             id: "1",
             title: String(localized: "home_banner_season_title"),
             subtitle: String(localized: "home_banner_season_subtitle"),
-            gradientColors: [MoltColors.primary, MoltColors.tertiary]
+            gradientColors: [XGColors.primary, XGColors.tertiary]
         ),
         HomeBanner(
             id: "2",
             title: String(localized: "home_banner_new_title"),
             subtitle: String(localized: "home_banner_new_subtitle"),
-            gradientColors: [MoltColors.secondary, MoltColors.primary]
+            gradientColors: [XGColors.secondary, XGColors.primary]
         ),
         HomeBanner(
             id: "3",
             title: String(localized: "home_banner_deals_title"),
             subtitle: String(localized: "home_banner_deals_subtitle"),
-            gradientColors: [MoltColors.tertiary, MoltColors.secondary]
+            gradientColors: [XGColors.tertiary, XGColors.secondary]
         ),
     ]
 }
