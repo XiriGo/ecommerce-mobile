@@ -24,11 +24,11 @@ tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configure
 }
 
 android {
-    namespace = "com.molt.marketplace"
+    namespace = "com.xirigo.ecommerce"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.molt.marketplace"
+        applicationId = "com.xirigo.ecommerce"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

@@ -19,10 +19,10 @@
 -keepclasseswithmembers class kotlinx.serialization.json.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
--keep,includedescriptorclasses class com.molt.marketplace.**$$serializer { *; }
--keepclassmembers class com.molt.marketplace.** {
+-keep,includedescriptorclasses class com.xirigo.ecommerce.**$$serializer { *; }
+-keepclassmembers class com.xirigo.ecommerce.** {
     *** Companion;
 }
--keepclasseswithmembers class com.molt.marketplace.** {
+-keepclasseswithmembers class com.xirigo.ecommerce.** {
     kotlinx.serialization.KSerializer serializer(...);
 }

@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MoltMarketplace"
+rootProject.name = "XiriGoEcommerce"
 include(":app")
