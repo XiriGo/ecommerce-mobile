@@ -28,7 +28,7 @@ class BuildConfigTest {
     fun `api base url should be valid https url`() {
         assertThat(BuildConfig.API_BASE_URL).isNotEmpty()
         assertThat(BuildConfig.API_BASE_URL).startsWith("https://")
-        assertThat(BuildConfig.API_BASE_URL).contains("molt.mt")
+        assertThat(BuildConfig.API_BASE_URL).contains("xirigo.com")
     }
 
     @Test

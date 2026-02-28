@@ -3,7 +3,7 @@ package com.xirigo.ecommerce.core.navigation
 import android.net.Uri
 
 /**
- * Parses deep link URIs (molt:// and https://molt.mt/) into Route objects.
+ * Parses deep link URIs (xirigo:// and https://xirigo.com/) into Route objects.
  * Returns null for invalid or unrecognized links.
  */
 object DeepLinkParser {
@@ -16,8 +16,8 @@ object DeepLinkParser {
     private fun extractPathSegments(uri: Uri): List<String>? {
         val scheme = uri.scheme ?: return null
         return when (scheme) {
-            "molt" -> uri.host?.let { host -> listOf(host) + uri.pathSegments }
-            "https", "http" -> uri.host?.takeIf { it == "molt.mt" }?.let { uri.pathSegments }
+            "xirigo" -> uri.host?.let { host -> listOf(host) + uri.pathSegments }
+            "https", "http" -> uri.host?.takeIf { it == "xirigo.com" }?.let { uri.pathSegments }
             else -> null
         }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Molt Marketplace</string>
+    <string name="app_name">XiriGo Ecommerce</string>
     <string name="common_loading_message">Loading...</string>
     <string name="common_retry_button">Retry</string>
     <string name="common_error_network">Connection error. Please check your internet.</string>
@@ -43,7 +43,7 @@
     <string name="common_back_button">Back</string>
 
     <!-- Home Screen -->
-    <string name="home_welcome_title">Welcome to Molt</string>
+    <string name="home_welcome_title">Welcome to XiriGo</string>
     <string name="home_welcome_subtitle">Discover amazing products at great prices</string>
     <string name="home_search_hint">Search products, brands, categories...</string>
     <string name="home_banner_summer_title">Summer Sale</string>

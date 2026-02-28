@@ -3,7 +3,7 @@ package com.xirigo.ecommerce.core.navigation
 import kotlinx.serialization.Serializable
 
 /**
- * Sealed interface defining all type-safe routes in the Molt Marketplace app.
+ * Sealed interface defining all type-safe routes in the XiriGo Ecommerce app.
  * Routes span milestones M0 through M4. Unimplemented routes render placeholder screens.
  */
 sealed interface Route {

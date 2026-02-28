@@ -24,17 +24,17 @@ class StringResourcesTest {
         // English
         val contextEn = createContextForLocale("en")
         val appNameEn = contextEn.getString(R.string.app_name)
-        assertThat(appNameEn).isEqualTo("Molt Marketplace")
+        assertThat(appNameEn).isEqualTo("XiriGo Ecommerce")
 
         // Maltese
         val contextMt = createContextForLocale("mt")
         val appNameMt = contextMt.getString(R.string.app_name)
-        assertThat(appNameMt).isEqualTo("Molt Marketplace")
+        assertThat(appNameMt).isEqualTo("XiriGo Ecommerce")
 
         // Turkish
         val contextTr = createContextForLocale("tr")
         val appNameTr = contextTr.getString(R.string.app_name)
-        assertThat(appNameTr).isEqualTo("Molt Marketplace")
+        assertThat(appNameTr).isEqualTo("XiriGo Ecommerce")
     }
 
     @Test

@@ -44,13 +44,13 @@ android {
         debug {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_BASE_URL", "\"https://api-dev.molt.mt\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api-dev.xirigo.com\"")
             applicationIdSuffix = ".debug"
         }
         create("staging") {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_BASE_URL", "\"https://api-staging.molt.mt\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api-staging.xirigo.com\"")
             applicationIdSuffix = ".staging"
             signingConfig = signingConfigs.getByName("debug")
         }
@@ -62,7 +62,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            buildConfigField("String", "API_BASE_URL", "\"https://api.molt.mt\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api.xirigo.com\"")
         }
     }
 

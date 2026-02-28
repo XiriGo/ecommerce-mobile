@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Molt Marketplace</string>
+    <string name="app_name">XiriGo Ecommerce</string>
     <string name="common_loading_message">Qed jillowdja...</string>
     <string name="common_retry_button">Erga\' ipprova</string>
     <string name="common_error_network">Problema fil-konnessjoni. Iccekja l-internet tieghek.</string>

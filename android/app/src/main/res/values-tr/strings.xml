@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Molt Marketplace</string>
+    <string name="app_name">XiriGo Ecommerce</string>
     <string name="common_loading_message">Yukleniyor...</string>
     <string name="common_retry_button">Tekrar Dene</string>
     <string name="common_error_network">Baglanti hatasi. Lutfen internetinizi kontrol edin.</string>
@@ -43,7 +43,7 @@
     <string name="common_back_button">Geri</string>
 
     <!-- Home Screen -->
-    <string name="home_welcome_title">Molt\'a Hosgeldiniz</string>
+    <string name="home_welcome_title">XiriGo\'ya Hosgeldiniz</string>
     <string name="home_welcome_subtitle">Harika urunleri uygun fiyatlarla kesfedin</string>
     <string name="home_search_hint">Urun, marka, kategori ara...</string>
     <string name="home_banner_summer_title">Yaz Indirimi</string>
