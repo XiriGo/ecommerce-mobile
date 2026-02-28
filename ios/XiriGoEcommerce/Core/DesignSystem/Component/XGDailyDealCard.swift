@@ -61,6 +61,7 @@ struct XGDailyDealCard: View {
         static let titleFontSize: CGFloat = 20
         static let countdownFontSize: CGFloat = 12
         static let imageSize: CGFloat = 100
+        static let titleMaxLines = 2
     }
 
     private enum TimeConstants {

@@ -5,12 +5,12 @@
 ### Key Patterns
 
 #### Xcode Project File Management
-- All new Swift files (both source and test) MUST be added to the Xcode project via `xcodeproj` Ruby gem
-- Use `group.new_group('Name', 'Name')` — MUST pass both display name AND path to get correct folder resolution
-- The second argument to `new_group` is the path (relative to parent group). Without it, `real_path` resolves to parent's path
-- After adding groups, verify with `group.real_path` before adding files — path must resolve to actual disk directory
+- The `xcodeproj` Ruby gem fails to parse pbxproj files with unquoted `+` in path values (e.g., `Container+Home.swift`). Use manual editing instead.
+- When manually editing pbxproj, add: PBXBuildFile, PBXFileReference, PBXGroup entries, children reference, and Sources buildPhase entry.
+- Files with `+` in filename MUST be quoted in pbxproj: `name = "File+Name.swift"; path = "File+Name.swift";`
 - Design system components (`XGBrand*.swift`, `XGLogoMark.swift`, `XGPaginationDots.swift`) were added by iOS dev but NOT in the Xcode project — always check with `grep "FileName" project.pbxproj`
 - Feature source files may be on disk but not in the Xcode project — always verify before running tests
+- Always add `import Foundation` to test files that use `Date`, `URL`, or other Foundation types
 
 #### Container+Onboarding Pattern (MainActor)
 - `@MainActor @Observable` ViewModels have `@MainActor`-isolated inits

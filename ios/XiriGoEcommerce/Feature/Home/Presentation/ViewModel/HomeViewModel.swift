@@ -78,9 +78,18 @@ final class HomeViewModel {
     }
 
     func refresh() async {
+        let existingWishedIds: Set<String> = if case let .success(data) = uiState {
+            data.wishedProductIds
+        } else {
+            []
+        }
         isRefreshing = true
         await loadHomeData()
         isRefreshing = false
+        if case var .success(data) = uiState, !existingWishedIds.isEmpty {
+            data.wishedProductIds = existingWishedIds
+            uiState = .success(data: data)
+        }
     }
 
     // MARK: - Private

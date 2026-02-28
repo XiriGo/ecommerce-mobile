@@ -14,6 +14,11 @@ struct HomeScreen: View {
 
     // MARK: - Internal
 
+    @Environment(AppRouter.self)
+    var router
+
+    @State var viewModel: HomeViewModel
+
     var body: some View {
         Group {
             switch viewModel.uiState {
@@ -36,11 +41,6 @@ struct HomeScreen: View {
     }
 
     // MARK: - Private
-
-    @Environment(AppRouter.self)
-    private var router
-
-    @State private var viewModel: HomeViewModel
 
     private func successContent(_ data: HomeScreenData) -> some View {
         ScrollView {

@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 // MARK: - HomeScreen + Sections
@@ -15,7 +16,7 @@ extension HomeScreen {
 
     // MARK: - Banner Auto-Scroll
 
-    var bannerTimer: Timer.TimerPublisher {
+    var bannerTimer: Publishers.Autoconnect<Timer.TimerPublisher> {
         Timer.publish(every: BannerConstants.autoScrollInterval, on: .main, in: .common).autoconnect()
     }
 
