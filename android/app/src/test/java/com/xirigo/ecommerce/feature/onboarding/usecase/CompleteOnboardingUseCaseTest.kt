@@ -1,11 +1,11 @@
 package com.xirigo.ecommerce.feature.onboarding.usecase
 
 import com.google.common.truth.Truth.assertThat
-import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
-import com.xirigo.ecommerce.feature.onboarding.repository.FakeOnboardingRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
+import com.xirigo.ecommerce.feature.onboarding.repository.FakeOnboardingRepository
 
 class CompleteOnboardingUseCaseTest {
 

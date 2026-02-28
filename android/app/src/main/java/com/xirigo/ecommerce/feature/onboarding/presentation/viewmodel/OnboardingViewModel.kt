@@ -1,12 +1,5 @@
 package com.xirigo.ecommerce.feature.onboarding.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.feature.onboarding.domain.model.OnboardingPage
-import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CheckOnboardingUseCase
-import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
-import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +7,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.feature.onboarding.domain.model.OnboardingPage
+import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CheckOnboardingUseCase
+import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
+import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
@@ -60,7 +60,7 @@ class OnboardingViewModel @Inject constructor(
     companion object {
         private const val SPLASH_DURATION_MS = 2_000L
 
-        val pages: List<OnboardingPage> = listOf(
+        val Pages: List<OnboardingPage> = listOf(
             OnboardingPage(
                 titleResId = R.string.onboarding_page_browse_title,
                 descriptionResId = R.string.onboarding_page_browse_description,

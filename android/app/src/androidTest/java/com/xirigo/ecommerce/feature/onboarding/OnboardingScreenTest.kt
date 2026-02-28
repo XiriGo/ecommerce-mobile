@@ -3,7 +3,6 @@ package com.xirigo.ecommerce.feature.onboarding
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -35,7 +34,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.component.XGBrandGradient
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
@@ -68,7 +66,7 @@ private fun TestOnboardingContent(
     onGetStarted: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val pages = OnboardingViewModel.pages
+    val pages = OnboardingViewModel.Pages
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val isLastPage = currentPage == pages.size - 1
 

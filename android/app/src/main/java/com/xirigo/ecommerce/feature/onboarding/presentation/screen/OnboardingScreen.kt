@@ -40,10 +40,7 @@ private val SkipTopPadding = 16.dp
 private val SkipEndPadding = 20.dp
 
 @Composable
-fun OnboardingScreen(
-    viewModel: OnboardingViewModel = hiltViewModel(),
-    onNavigateToMain: () -> Unit,
-) {
+fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel(), onNavigateToMain: () -> Unit) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentPage by viewModel.currentPage.collectAsStateWithLifecycle()
 
@@ -73,7 +70,7 @@ private fun OnboardingContent(
     onGetStarted: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val pages = OnboardingViewModel.pages
+    val pages = OnboardingViewModel.Pages
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val isLastPage = currentPage == pages.size - 1
 

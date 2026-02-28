@@ -13,10 +13,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
-fun XGLogoMark(
-    modifier: Modifier = Modifier,
-    size: Dp = 120.dp,
-) {
+fun XGLogoMark(modifier: Modifier = Modifier, size: Dp = 120.dp) {
     Image(
         painter = painterResource(R.drawable.splash_logo),
         contentDescription = stringResource(R.string.onboarding_logo_a11y),

@@ -1,5 +1,6 @@
 package com.xirigo.ecommerce
 
+import dagger.hilt.android.AndroidEntryPoint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +16,6 @@ import com.xirigo.ecommerce.feature.onboarding.presentation.screen.OnboardingScr
 import com.xirigo.ecommerce.feature.onboarding.presentation.screen.SplashScreen
 import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
 import com.xirigo.ecommerce.feature.onboarding.presentation.viewmodel.OnboardingViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

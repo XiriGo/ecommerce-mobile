@@ -1,14 +1,14 @@
 package com.xirigo.ecommerce.feature.onboarding.data.repository
 
+import kotlinx.coroutines.flow.first
+import timber.log.Timber
+import java.io.IOException
+import javax.inject.Inject
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.xirigo.ecommerce.feature.onboarding.domain.repository.OnboardingRepository
-import kotlinx.coroutines.flow.first
-import timber.log.Timber
-import java.io.IOException
-import javax.inject.Inject
 
 class OnboardingRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>,

@@ -29,10 +29,7 @@ import com.xirigo.ecommerce.feature.onboarding.domain.model.OnboardingPage
 private const val DESCRIPTION_ALPHA = 0.8f
 
 @Composable
-fun OnboardingPageContent(
-    page: OnboardingPage,
-    modifier: Modifier = Modifier,
-) {
+fun OnboardingPageContent(page: OnboardingPage, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()

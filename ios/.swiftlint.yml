@@ -30,6 +30,8 @@ analyzer_rules:
 disabled_rules:
   # sorted_imports: Conflicts with SwiftFormat importgrouping (testable-bottom)
   - sorted_imports
+  # switch_case_alignment: Conflicts with SwiftFormat --indentcase true
+  - switch_case_alignment
 
 # --- Opt-in rules ---
 opt_in_rules:

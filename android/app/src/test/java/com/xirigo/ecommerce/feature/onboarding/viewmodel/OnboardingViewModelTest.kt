@@ -2,17 +2,17 @@ package com.xirigo.ecommerce.feature.onboarding.viewmodel
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CheckOnboardingUseCase
-import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
-import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
-import com.xirigo.ecommerce.feature.onboarding.presentation.viewmodel.OnboardingViewModel
-import com.xirigo.ecommerce.feature.onboarding.repository.FakeOnboardingRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CheckOnboardingUseCase
+import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
+import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
+import com.xirigo.ecommerce.feature.onboarding.presentation.viewmodel.OnboardingViewModel
+import com.xirigo.ecommerce.feature.onboarding.repository.FakeOnboardingRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class OnboardingViewModelTest {
@@ -236,14 +236,14 @@ class OnboardingViewModelTest {
 
     @Test
     fun `pages list contains exactly 4 onboarding pages`() {
-        assertThat(OnboardingViewModel.pages).hasSize(4)
+        assertThat(OnboardingViewModel.Pages).hasSize(4)
     }
 
     @Test
     fun `pages list has distinct resource IDs for each page`() {
-        val titleIds = OnboardingViewModel.pages.map { it.titleResId }
-        val descriptionIds = OnboardingViewModel.pages.map { it.descriptionResId }
-        val illustrationIds = OnboardingViewModel.pages.map { it.illustrationResId }
+        val titleIds = OnboardingViewModel.Pages.map { it.titleResId }
+        val descriptionIds = OnboardingViewModel.Pages.map { it.descriptionResId }
+        val illustrationIds = OnboardingViewModel.Pages.map { it.illustrationResId }
 
         assertThat(titleIds.distinct()).hasSize(4)
         assertThat(descriptionIds.distinct()).hasSize(4)

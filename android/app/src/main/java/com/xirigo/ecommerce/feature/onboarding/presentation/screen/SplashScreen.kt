@@ -1,46 +1,35 @@
 package com.xirigo.ecommerce.feature.onboarding.presentation.screen
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.xirigo.ecommerce.core.designsystem.component.XGBrandGradient
-import com.xirigo.ecommerce.core.designsystem.component.XGBrandPattern
+import androidx.compose.ui.unit.dp
+import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.component.XGLogoMark
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+private val LogoSize = 120.dp
+
 @Composable
 fun SplashScreen(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
-        XGBrandGradient()
-
-        XGBrandPattern()
-
-        Box(
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.xg_brand_pattern),
+            contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            XGLogoMark()
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0.0f to Color.Transparent,
-                            0.7f to Color.Transparent,
-                            1.0f to Color.Black.copy(alpha = 0.3f),
-                        ),
-                    ),
-                ),
+            contentScale = ContentScale.Crop,
         )
+
+        XGLogoMark(size = LogoSize)
     }
 }
 

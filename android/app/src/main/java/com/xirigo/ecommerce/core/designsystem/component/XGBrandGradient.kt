@@ -31,10 +31,7 @@ private val DarkOverlayStops = arrayOf(
 )
 
 @Composable
-fun XGBrandGradient(
-    modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit = {},
-) {
+fun XGBrandGradient(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit = {}) {
     Box(
         modifier = modifier
             .fillMaxSize()
