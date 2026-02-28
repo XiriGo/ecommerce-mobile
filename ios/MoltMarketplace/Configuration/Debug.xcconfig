@@ -1,8 +1,0 @@
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
-
-// Debug Environment Configuration
-API_BASE_URL = https:/$()/api-dev.molt.mt
-BUNDLE_ID_SUFFIX = .debug
-PRODUCT_BUNDLE_IDENTIFIER = com.molt.marketplace$(BUNDLE_ID_SUFFIX)
-SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG

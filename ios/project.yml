@@ -1,6 +1,6 @@
-name: MoltMarketplace
+name: XiriGoEcommerce
 options:
-  bundleIdPrefix: com.molt
+  bundleIdPrefix: com.xirigo
   deploymentTarget:
     iOS: 17.0
   createIntermediateGroups: true
@@ -18,25 +18,25 @@ configs:
   Staging: release
   Release: release
 configFiles:
-  Debug: MoltMarketplace/Configuration/Debug.xcconfig
-  Staging: MoltMarketplace/Configuration/Staging.xcconfig
-  Release: MoltMarketplace/Configuration/Release.xcconfig
+  Debug: XiriGoEcommerce/Configuration/Debug.xcconfig
+  Staging: XiriGoEcommerce/Configuration/Staging.xcconfig
+  Release: XiriGoEcommerce/Configuration/Release.xcconfig
 targets:
-  MoltMarketplace:
+  XiriGoEcommerce:
     type: application
     platform: iOS
     sources:
-      - path: MoltMarketplace
+      - path: XiriGoEcommerce
         excludes:
           - "**/.gitkeep"
           - "**/Configuration"
     resources:
-      - path: MoltMarketplace/Resources
+      - path: XiriGoEcommerce/Resources
     info:
-      path: MoltMarketplace/Resources/Info.plist
+      path: XiriGoEcommerce/Resources/Info.plist
     settings:
       base:
-        PRODUCT_NAME: MoltMarketplace
+        PRODUCT_NAME: XiriGoEcommerce
         PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_BUNDLE_IDENTIFIER)
         MARKETING_VERSION: 1.0.0
         CURRENT_PROJECT_VERSION: 1
@@ -68,32 +68,32 @@ targets:
         product: FirebaseRemoteConfig
       - package: Sentry
         product: Sentry
-  MoltMarketplaceTests:
+  XiriGoEcommerceTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - MoltMarketplaceTests
+      - XiriGoEcommerceTests
     settings:
       base:
         GENERATE_INFOPLIST_FILE: true
-        PRODUCT_BUNDLE_IDENTIFIER: com.molt.marketplace.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.xirigo.ecommerce.tests
     dependencies:
-      - target: MoltMarketplace
+      - target: XiriGoEcommerce
       - package: ViewInspector
         product: ViewInspector
       - package: SnapshotTesting
         product: SnapshotTesting
-  MoltMarketplaceUITests:
+  XiriGoEcommerceUITests:
     type: bundle.ui-testing
     platform: iOS
     sources:
-      - MoltMarketplaceUITests
+      - XiriGoEcommerceUITests
     settings:
       base:
         GENERATE_INFOPLIST_FILE: true
-        PRODUCT_BUNDLE_IDENTIFIER: com.molt.marketplace.uitests
+        PRODUCT_BUNDLE_IDENTIFIER: com.xirigo.ecommerce.uitests
     dependencies:
-      - target: MoltMarketplace
+      - target: XiriGoEcommerce
 packages:
   Factory:
     url: https://github.com/hmlongco/Factory
@@ -117,26 +117,26 @@ packages:
     url: https://github.com/pointfreeco/swift-snapshot-testing
     from: 1.17.0
 schemes:
-  MoltMarketplace:
+  XiriGoEcommerce:
     build:
       targets:
-        MoltMarketplace: all
+        XiriGoEcommerce: all
     run:
       config: Debug
     test:
       config: Debug
       targets:
-        - MoltMarketplaceTests
+        - XiriGoEcommerceTests
     profile:
       config: Release
     analyze:
       config: Debug
     archive:
       config: Release
-  MoltMarketplace-Staging:
+  XiriGoEcommerce-Staging:
     build:
       targets:
-        MoltMarketplace: all
+        XiriGoEcommerce: all
     run:
       config: Staging
     test:

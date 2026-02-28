@@ -13,7 +13,7 @@ brew install xcodegen
 ### Step 2: Open in Xcode
 
 ```bash
-open ios/MoltMarketplace.xcodeproj
+open ios/XiriGoEcommerce.xcodeproj
 ```
 
 If the project won't open or shows errors, follow Manual Setup below.
@@ -25,7 +25,7 @@ If the project won't open or shows errors, follow Manual Setup below.
 1. Open Xcode
 2. File → New → Project
 3. Choose: iOS → App
-4. Product Name: `MoltMarketplace`
+4. Product Name: `XiriGoEcommerce`
 5. Team: (your team)
 6. Organization Identifier: `com.molt`
 7. Interface: **SwiftUI**
@@ -35,19 +35,19 @@ If the project won't open or shows errors, follow Manual Setup below.
 
 ### 2. Configure Build Settings
 
-1. Select project in navigator → MoltMarketplace target
+1. Select project in navigator → XiriGoEcommerce target
 2. General tab:
    - Deployment Info → iOS 17.0
    - Supported Orientations: Portrait only (iPhone), All (iPad)
 
 ### 3. Add Source Files
 
-1. Delete the default `ContentView.swift` and `MoltMarketplaceApp.swift` created by Xcode
-2. Right-click MoltMarketplace group → Add Files to "MoltMarketplace"
-3. Select entire `MoltMarketplace` folder
+1. Delete the default `ContentView.swift` and `XiriGoEcommerceApp.swift` created by Xcode
+2. Right-click XiriGoEcommerce group → Add Files to "XiriGoEcommerce"
+3. Select entire `XiriGoEcommerce` folder
 4. **Check**: "Copy items if needed" = NO (already in place)
 5. **Check**: "Create groups"
-6. **Check**: Add to targets → MoltMarketplace
+6. **Check**: Add to targets → XiriGoEcommerce
 7. Click Add
 
 ### 4. Add SPM Dependencies
@@ -78,15 +78,15 @@ For each:
 4. Keep "Release"
 
 For each configuration, set Base Configuration:
-- Debug → `MoltMarketplace/Configuration/Debug.xcconfig`
-- Staging → `MoltMarketplace/Configuration/Staging.xcconfig`
-- Release → `MoltMarketplace/Configuration/Release.xcconfig`
+- Debug → `XiriGoEcommerce/Configuration/Debug.xcconfig`
+- Staging → `XiriGoEcommerce/Configuration/Staging.xcconfig`
+- Release → `XiriGoEcommerce/Configuration/Release.xcconfig`
 
 ### 6. Configure Info.plist
 
-1. Select MoltMarketplace target → Build Settings
+1. Select XiriGoEcommerce target → Build Settings
 2. Search for "Info.plist"
-3. Set "Info.plist File" to: `MoltMarketplace/Resources/Info.plist`
+3. Set "Info.plist File" to: `XiriGoEcommerce/Resources/Info.plist`
 
 ### 7. Configure Build Schemes
 
@@ -101,9 +101,9 @@ For each configuration, set Base Configuration:
 ```bash
 # From terminal
 cd ios
-xcodebuild -scheme MoltMarketplace -configuration Debug build
-xcodebuild -scheme MoltMarketplace -configuration Staging build
-xcodebuild -scheme MoltMarketplace -configuration Release build
+xcodebuild -scheme XiriGoEcommerce -configuration Debug build
+xcodebuild -scheme XiriGoEcommerce -configuration Staging build
+xcodebuild -scheme XiriGoEcommerce -configuration Release build
 ```
 
 Or in Xcode:
@@ -123,7 +123,7 @@ git commit -m "fix(scaffold): configure Xcode project with all source files and 
 - [ ] Project builds without errors (Staging)  
 - [ ] Project builds without errors (Release)
 - [ ] App launches in simulator
-- [ ] Shows placeholder screen with "Molt Marketplace" text
+- [ ] Shows placeholder screen with "XiriGo Ecommerce" text
 - [ ] `Config.apiBaseURL` returns correct URL per configuration
 - [ ] All Swift files compile without warnings
 - [ ] No strict concurrency warnings
@@ -143,7 +143,7 @@ git commit -m "fix(scaffold): configure Xcode project with all source files and 
 If you have `xcodegen` installed, you can use the project.yml spec (create this file):
 
 ```yaml
-name: MoltMarketplace
+name: XiriGoEcommerce
 options:
   bundleIdPrefix: com.molt
   deploymentTarget:
@@ -152,14 +152,14 @@ settings:
   SWIFT_VERSION: 6.0
   IPHONEOS_DEPLOYMENT_TARGET: 17.0
 targets:
-  MoltMarketplace:
+  XiriGoEcommerce:
     type: application
     platform: iOS
     sources:
-      - MoltMarketplace
+      - XiriGoEcommerce
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.molt.marketplace
-      INFOPLIST_FILE: MoltMarketplace/Resources/Info.plist
+      INFOPLIST_FILE: XiriGoEcommerce/Resources/Info.plist
     dependencies:
       - package: Factory
       - package: Nuke

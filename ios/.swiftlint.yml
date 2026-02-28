@@ -1,5 +1,5 @@
 # =============================================================================
-# SwiftLint Configuration — Molt Marketplace iOS
+# SwiftLint Configuration — XiriGo Ecommerce iOS
 # =============================================================================
 # Strict FAANG-level rules (Google Swift Style + Airbnb standards)
 # Reference: https://realm.github.io/SwiftLint/rule-directory.html
@@ -7,12 +7,12 @@
 
 # --- Source inclusion / exclusion ---
 included:
-  - MoltMarketplace
-  - MoltMarketplaceTests
-  - MoltMarketplaceUITests
+  - XiriGoEcommerce
+  - XiriGoEcommerceTests
+  - XiriGoEcommerceUITests
 
 excluded:
-  - MoltMarketplace.xcodeproj
+  - XiriGoEcommerce.xcodeproj
   - Pods
   - .build
   - DerivedData
