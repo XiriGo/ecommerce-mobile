@@ -1,32 +1,161 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "XiriGo Ecommerce design tokens — Typography",
-  "note": "Android uses sp for font sizes and Material 3 type scale. iOS uses system font with Dynamic Type support.",
-  "typeScale": {
-    "displayLarge": { "fontSize": 57, "lineHeight": 64, "letterSpacing": -0.25, "fontWeight": "regular" },
-    "displayMedium": { "fontSize": 45, "lineHeight": 52, "letterSpacing": 0, "fontWeight": "regular" },
-    "displaySmall": { "fontSize": 36, "lineHeight": 44, "letterSpacing": 0, "fontWeight": "regular" },
-    "headlineLarge": { "fontSize": 32, "lineHeight": 40, "letterSpacing": 0, "fontWeight": "regular" },
-    "headlineMedium": { "fontSize": 28, "lineHeight": 36, "letterSpacing": 0, "fontWeight": "regular" },
-    "headlineSmall": { "fontSize": 24, "lineHeight": 32, "letterSpacing": 0, "fontWeight": "regular" },
-    "titleLarge": { "fontSize": 22, "lineHeight": 28, "letterSpacing": 0, "fontWeight": "regular" },
-    "titleMedium": { "fontSize": 16, "lineHeight": 24, "letterSpacing": 0.15, "fontWeight": "medium" },
-    "titleSmall": { "fontSize": 14, "lineHeight": 20, "letterSpacing": 0.1, "fontWeight": "medium" },
-    "bodyLarge": { "fontSize": 16, "lineHeight": 24, "letterSpacing": 0.5, "fontWeight": "regular" },
-    "bodyMedium": { "fontSize": 14, "lineHeight": 20, "letterSpacing": 0.25, "fontWeight": "regular" },
-    "bodySmall": { "fontSize": 12, "lineHeight": 16, "letterSpacing": 0.4, "fontWeight": "regular" },
-    "labelLarge": { "fontSize": 14, "lineHeight": 20, "letterSpacing": 0.1, "fontWeight": "medium" },
-    "labelMedium": { "fontSize": 12, "lineHeight": 16, "letterSpacing": 0.5, "fontWeight": "medium" },
-    "labelSmall": { "fontSize": 11, "lineHeight": 16, "letterSpacing": 0.5, "fontWeight": "medium" }
+  "description": "XiriGo Ecommerce design tokens — Typography. Extracted from XiriGo-Design SVG files.",
+  "source": "XiriGo-Design/Svg/XiriGo_Logo_Design.svg (typography specimen), XiriGo_App_01–04.svg",
+
+  "fontFamily": {
+    "primary": "Poppins",
+    "price": "Source Sans 3",
+    "_note": "Poppins tum UI metinleri icin kullanilir. Source Sans 3 yalnizca fiyat gosterimi icin kullanilir (Black weight). Her iki font da projeye embed edilmelidir — sistem fontlari kullanilmaz.",
+    "android": {
+      "primary": "Poppins (embed via res/font/)",
+      "price": "SourceSans3 (embed via res/font/)"
+    },
+    "ios": {
+      "primary": "Poppins (embed via Info.plist UIAppFonts)",
+      "price": "SourceSans3-Black (embed via Info.plist UIAppFonts)"
+    }
   },
-  "fontWeights": {
+
+  "fontWeight": {
     "regular": 400,
     "medium": 500,
-    "semibold": 600,
-    "bold": 700
+    "semiBold": 600,
+    "bold": 700,
+    "black": 800
   },
-  "fontFamily": {
-    "android": "sans-serif (system default, Roboto)",
-    "ios": "SF Pro (system default)"
+
+  "typeScale": {
+    "micro": {
+      "fontSize": 10,
+      "lineHeight": 14,
+      "fontFamily": "primary",
+      "fontWeight": "regular",
+      "usage": "Delivery deadline text, micro labels ('Order before 23:59, delivered Monday')"
+    },
+    "caption": {
+      "fontSize": 12,
+      "lineHeight": 16,
+      "fontFamily": "primary",
+      "fontWeight": "regular",
+      "usage": "Product card title, review count, badge labels, countdown timer, social divider text"
+    },
+    "captionMedium": {
+      "fontSize": 12,
+      "lineHeight": 16,
+      "fontFamily": "primary",
+      "fontWeight": "medium",
+      "usage": "'OR CONTINUE WITH' divider text"
+    },
+    "captionSemiBold": {
+      "fontSize": 12,
+      "lineHeight": 16,
+      "fontFamily": "primary",
+      "fontWeight": "semiBold",
+      "usage": "Product card name on grid cards"
+    },
+    "body": {
+      "fontSize": 14,
+      "lineHeight": 20,
+      "fontFamily": "primary",
+      "fontWeight": "regular",
+      "usage": "Form labels, body text, banner subtitle, links"
+    },
+    "bodyMedium": {
+      "fontSize": 14,
+      "lineHeight": 20,
+      "fontFamily": "primary",
+      "fontWeight": "medium",
+      "usage": "'Forgot Password?' link, filter pill text, 'See All' link"
+    },
+    "bodySemiBold": {
+      "fontSize": 14,
+      "lineHeight": 20,
+      "fontFamily": "primary",
+      "fontWeight": "semiBold",
+      "usage": "'Trending this week' subtitle, tag text"
+    },
+    "bodyLarge": {
+      "fontSize": 16,
+      "lineHeight": 22,
+      "fontFamily": "primary",
+      "fontWeight": "regular",
+      "usage": "Search placeholder, welcome text, input placeholder text"
+    },
+    "subtitle": {
+      "fontSize": 18,
+      "lineHeight": 26,
+      "fontFamily": "primary",
+      "fontWeight": "semiBold",
+      "usage": "Section headings ('Categories', 'New Arrivals', 'Popular Products', 'Filtreler')"
+    },
+    "subtitleBold": {
+      "fontSize": 18,
+      "lineHeight": 26,
+      "fontFamily": "primary",
+      "fontWeight": "bold",
+      "usage": "CTA button text ('First', 'Apply')"
+    },
+    "title": {
+      "fontSize": 20,
+      "lineHeight": 28,
+      "fontFamily": "primary",
+      "fontWeight": "semiBold",
+      "usage": "Deal card product name ('Nike Air Zoom')"
+    },
+    "headline": {
+      "fontSize": 24,
+      "lineHeight": 32,
+      "fontFamily": "primary",
+      "fontWeight": "semiBold",
+      "usage": "Hero banner headline ('Urban Fashion Collection')"
+    },
+    "display": {
+      "fontSize": 28,
+      "lineHeight": 36,
+      "fontFamily": "primary",
+      "fontWeight": "bold",
+      "usage": "Large display text, promotional headers"
+    }
+  },
+
+  "priceTypography": {
+    "_note": "Fiyat gosterimi 3 parcali bir composite yapidir — currency symbol + integer + decimal. Hepsi Source Sans 3 Black kullanir. Bu bir custom component olarak uygulanmalidir (XGPriceText).",
+    "currencySymbol": {
+      "fontSize": 22.78,
+      "fontFamily": "price",
+      "fontWeight": "black",
+      "usage": "Currency symbol (₺, €, $)"
+    },
+    "integer": {
+      "fontSize": 27.33,
+      "fontFamily": "price",
+      "fontWeight": "black",
+      "usage": "Price integer part (e.g. '149')"
+    },
+    "decimal": {
+      "fontSize": 18.98,
+      "fontFamily": "price",
+      "fontWeight": "black",
+      "usage": "Price decimal part (e.g. ',99')"
+    },
+    "small": {
+      "currencySymbol": { "fontSize": 14, "fontFamily": "price", "fontWeight": "black" },
+      "integer": { "fontSize": 18, "fontFamily": "price", "fontWeight": "black" },
+      "decimal": { "fontSize": 14, "fontFamily": "price", "fontWeight": "black" }
+    },
+    "strikethrough": {
+      "fontSize": 15.18,
+      "fontFamily": "primary",
+      "fontWeight": "medium",
+      "textDecoration": "line-through",
+      "color": "#8E8E93",
+      "usage": "Original price before discount"
+    }
+  },
+
+  "turkishGlyphs": {
+    "_note": "Tasarim Turkce locale iceriyor. Font embed sirasinda Turkce karakterlerin desteklendiginden emin olunmali.",
+    "required": ["Ç", "ç", "Ğ", "ğ", "İ", "i", "Ö", "ö", "Ü", "ü", "Ş", "ş"]
   }
 }
