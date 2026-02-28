@@ -59,4 +59,5 @@
     <string name="onboarding_illustration_a11y_compare">Illustrazzjoni ta\' tqabbil tal-prezzijiet</string>
     <string name="onboarding_illustration_a11y_checkout">Illustrazzjoni ta\' checkout sigur</string>
     <string name="onboarding_illustration_a11y_track">Illustrazzjoni ta\' tracking tal-ordni</string>
+    <string name="onboarding_logo_a11y">Logo ta\' XiriGo</string>
 </resources>

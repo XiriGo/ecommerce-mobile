@@ -104,4 +104,5 @@
     <string name="onboarding_illustration_a11y_compare">Illustration of price comparison</string>
     <string name="onboarding_illustration_a11y_checkout">Illustration of secure checkout</string>
     <string name="onboarding_illustration_a11y_track">Illustration of order tracking</string>
+    <string name="onboarding_logo_a11y">XiriGo logo</string>
 </resources>

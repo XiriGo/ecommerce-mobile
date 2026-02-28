@@ -104,4 +104,5 @@
     <string name="onboarding_illustration_a11y_compare">Fiyat karsilastirma illustrasyonu</string>
     <string name="onboarding_illustration_a11y_checkout">Guvenli odeme illustrasyonu</string>
     <string name="onboarding_illustration_a11y_track">Siparis takibi illustrasyonu</string>
+    <string name="onboarding_logo_a11y">XiriGo logosu</string>
 </resources>
