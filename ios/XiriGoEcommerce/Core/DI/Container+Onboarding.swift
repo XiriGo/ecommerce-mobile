@@ -24,10 +24,12 @@ extension Container {
 
     var onboardingViewModel: Factory<OnboardingViewModel> {
         self {
-            OnboardingViewModel(
-                checkOnboarding: self.checkOnboardingUseCase(),
-                completeOnboarding: self.completeOnboardingUseCase()
-            )
+            MainActor.assumeIsolated {
+                OnboardingViewModel(
+                    checkOnboarding: self.checkOnboardingUseCase(),
+                    completeOnboarding: self.completeOnboardingUseCase()
+                )
+            }
         }
     }
 }
