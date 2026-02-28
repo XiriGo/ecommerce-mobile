@@ -3,45 +3,47 @@ import SwiftUI
 // MARK: - XGTopBarAction
 
 struct XGTopBarAction: Identifiable {
-    let id = UUID()
-    let icon: String
-    let accessibilityLabel: String
-    let badgeCount: Int?
-    let action: () -> Void
+    // MARK: - Lifecycle
 
     init(
         icon: String,
         accessibilityLabel: String,
         badgeCount: Int? = nil,
-        action: @escaping () -> Void
+        action: @escaping () -> Void,
     ) {
         self.icon = icon
         self.accessibilityLabel = accessibilityLabel
         self.badgeCount = badgeCount
         self.action = action
     }
+
+    // MARK: - Internal
+
+    let id = UUID()
+    let icon: String
+    let accessibilityLabel: String
+    let badgeCount: Int?
+    let action: () -> Void
 }
 
 // MARK: - XGTopBar
 
 struct XGTopBar: View {
-    // MARK: - Properties
-
-    private let title: String
-    private let onBackTap: (() -> Void)?
-    private let actions: [XGTopBarAction]
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(
         title: String,
         onBackTap: (() -> Void)? = nil,
-        actions: [XGTopBarAction] = []
+        actions: [XGTopBarAction] = [],
     ) {
         self.title = title
         self.onBackTap = onBackTap
         self.actions = actions
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -74,7 +76,10 @@ struct XGTopBar: View {
 
     // MARK: - Private
 
-    @ViewBuilder
+    private let title: String
+    private let onBackTap: (() -> Void)?
+    private let actions: [XGTopBarAction]
+
     private func actionButton(for item: XGTopBarAction) -> some View {
         Button(action: item.action) {
             ZStack(alignment: .topTrailing) {
@@ -99,7 +104,7 @@ extension View {
     func xgTopBar(
         title: String,
         onBackTap: (() -> Void)? = nil,
-        actions: [XGTopBarAction] = []
+        actions: [XGTopBarAction] = [],
     ) -> some View {
         VStack(spacing: 0) {
             XGTopBar(title: title, onBackTap: onBackTap, actions: actions)
@@ -124,6 +129,6 @@ extension View {
         actions: [
             XGTopBarAction(icon: "magnifyingglass", accessibilityLabel: "Search") {},
             XGTopBarAction(icon: "cart", accessibilityLabel: "Cart", badgeCount: 3) {},
-        ]
+        ],
     )
 }

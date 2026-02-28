@@ -1,0 +1,67 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Balance beam -->
+    <path
+        android:pathData="M100,30 L100,100"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round" />
+
+    <!-- Balance top bar -->
+    <path
+        android:pathData="M45,60 L155,60"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round" />
+
+    <!-- Left pan -->
+    <path
+        android:pathData="M30,90 Q30,110 55,110 Q80,110 80,90"
+        android:strokeColor="#94D63A"
+        android:strokeWidth="3"
+        android:fillColor="#94D63A"
+        android:fillAlpha="0.2" />
+
+    <!-- Left strings -->
+    <path
+        android:pathData="M45,60 L30,90 M45,60 L80,90"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+
+    <!-- Right pan -->
+    <path
+        android:pathData="M120,80 Q120,100 145,100 Q170,100 170,80"
+        android:strokeColor="#94D63A"
+        android:strokeWidth="3"
+        android:fillColor="#94D63A"
+        android:fillAlpha="0.2" />
+
+    <!-- Right strings -->
+    <path
+        android:pathData="M155,60 L120,80 M155,60 L170,80"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+
+    <!-- Base -->
+    <path
+        android:pathData="M75,100 L125,100 L115,110 L85,110 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.3" />
+
+    <!-- Price tags -->
+    <path
+        android:pathData="M40,130 L80,130 Q85,130 85,135 L85,165 Q85,170 80,170 L40,170 Q35,170 35,165 L35,135 Q35,130 40,130"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.15" />
+
+    <path
+        android:pathData="M120,130 L160,130 Q165,130 165,135 L165,165 Q165,170 160,170 L120,170 Q115,170 115,165 L115,135 Q115,130 120,130"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.15" />
+</vector>

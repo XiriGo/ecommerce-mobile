@@ -2,18 +2,22 @@ import Foundation
 import Testing
 @testable import XiriGoEcommerce
 
-// MARK: - Test Helpers
+// MARK: - ProductResponse
 
 private struct ProductResponse: Decodable, Sendable {
     let id: String
     let title: String
 }
 
+// MARK: - TestEndpoint
+
 private struct TestEndpoint: Endpoint {
     var path: String
     var method: HTTPMethod
     var requiresAuth: Bool = false
 }
+
+// MARK: - BodyEndpoint
 
 private struct BodyEndpoint: Endpoint {
     struct Payload: Encodable, Sendable {
@@ -29,17 +33,21 @@ private struct BodyEndpoint: Endpoint {
 
 @Suite("APIClient Request Tests")
 struct APIClientRequestTests {
+    // MARK: - Lifecycle
+
     init() {
         MockURLProtocol.reset()
     }
 
+    // MARK: - Internal
+
     // MARK: - Successful Request
 
     @Test("request succeeds and decodes response for 200 status code")
-    func test_request_200Response_decodesSuccessfully() async throws {
+    func request_200Response_decodesSuccessfully() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_123", "title": "Test Product" }
-        """)
+            { "id": "prod_123", "title": "Test Product" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/products/prod_123", method: .get)
@@ -50,15 +58,15 @@ struct APIClientRequestTests {
     }
 
     @Test("request decodes snake_case response fields to camelCase")
-    func test_request_snakeCaseResponse_decodedToCamelCase() async throws {
+    func request_snakeCaseResponse_decodedToCamelCase() async throws {
         struct VariantResponse: Decodable, Sendable {
             let variantId: String
             let unitPrice: Int
         }
 
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "variant_id": "var_001", "unit_price": 1999 }
-        """)
+            { "variant_id": "var_001", "unit_price": 1999 }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/variants/var_001", method: .get)
@@ -71,10 +79,10 @@ struct APIClientRequestTests {
     // MARK: - 4xx Error Mapping
 
     @Test("404 response throws notFound AppError")
-    func test_request_404Response_throwsNotFoundError() async {
+    func request_404Response_throwsNotFoundError() async {
         MockURLProtocol.stub(statusCode: 404, json: """
-        { "type": "not_found", "message": "Product was not found" }
-        """)
+            { "type": "not_found", "message": "Product was not found" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/products/invalid", method: .get)
@@ -85,10 +93,10 @@ struct APIClientRequestTests {
     }
 
     @Test("401 response with no auth endpoint throws unauthorized AppError")
-    func test_request_401ResponseNoAuth_throwsUnauthorizedError() async {
+    func request_401ResponseNoAuth_throwsUnauthorizedError() async {
         MockURLProtocol.stub(statusCode: 401, json: """
-        { "type": "unauthorized", "message": "Unauthorized" }
-        """)
+            { "type": "unauthorized", "message": "Unauthorized" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/protected", method: .get, requiresAuth: false)
@@ -99,10 +107,10 @@ struct APIClientRequestTests {
     }
 
     @Test("403 response throws unauthorized AppError with access denied message")
-    func test_request_403Response_throwsUnauthorizedError() async {
+    func request_403Response_throwsUnauthorizedError() async {
         MockURLProtocol.stub(statusCode: 403, json: """
-        { "type": "forbidden", "message": "Access denied" }
-        """)
+            { "type": "forbidden", "message": "Access denied" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/admin", method: .get)
@@ -113,10 +121,10 @@ struct APIClientRequestTests {
     }
 
     @Test("422 response throws server AppError with validation message")
-    func test_request_422Response_throwsServerError() async {
+    func request_422Response_throwsServerError() async {
         MockURLProtocol.stub(statusCode: 422, json: """
-        { "type": "invalid_data", "message": "Email is already in use" }
-        """)
+            { "type": "invalid_data", "message": "Email is already in use" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/customers", method: .post)
@@ -127,26 +135,26 @@ struct APIClientRequestTests {
     }
 
     @Test("429 response throws server AppError with rate limit message")
-    func test_request_429Response_throwsServerError() async {
+    func request_429Response_throwsServerError() async {
         MockURLProtocol.stub(statusCode: 429, json: """
-        { "type": "rate_limit", "message": "Too many requests. Please try again later." }
-        """)
+            { "type": "rate_limit", "message": "Too many requests. Please try again later." }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/products", method: .get)
 
         await #expect(
-            throws: AppError.server(code: 429, message: "Too many requests. Please try again later.")
+            throws: AppError.server(code: 429, message: "Too many requests. Please try again later."),
         ) {
             let _: ProductResponse = try await client.request(endpoint)
         }
     }
 
     @Test("400 response throws server AppError with parsed message")
-    func test_request_400Response_throwsServerError() async {
+    func request_400Response_throwsServerError() async {
         MockURLProtocol.stub(statusCode: 400, json: """
-        { "type": "invalid_data", "message": "Bad request" }
-        """)
+            { "type": "invalid_data", "message": "Bad request" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/carts", method: .post)
@@ -159,7 +167,7 @@ struct APIClientRequestTests {
     // MARK: - Network Error
 
     @Test("network-level error maps to AppError.network")
-    func test_request_urlError_notConnected_throwsNetworkError() async {
+    func request_urlError_notConnected_throwsNetworkError() async {
         MockURLProtocol.stubNetworkError(.notConnectedToInternet)
 
         let client = APIClient.makeTestClient()
@@ -171,7 +179,7 @@ struct APIClientRequestTests {
     }
 
     @Test("connection timeout maps to network error")
-    func test_request_urlError_timedOut_throwsNetworkError() async {
+    func request_urlError_timedOut_throwsNetworkError() async {
         MockURLProtocol.stubNetworkError(.timedOut)
 
         let client = APIClient.makeTestClient()
@@ -185,10 +193,10 @@ struct APIClientRequestTests {
     // MARK: - Body Encoding
 
     @Test("POST request with body has Content-Type application/json header")
-    func test_request_postWithBody_hasContentTypeHeader() async throws {
+    func request_postWithBody_hasContentTypeHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "cart_1", "title": "Cart" }
-        """)
+            { "id": "cart_1", "title": "Cart" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = BodyEndpoint()
@@ -203,7 +211,7 @@ struct APIClientRequestTests {
     // MARK: - Error Parsing Fallback
 
     @Test("404 without parseable body uses default not found message")
-    func test_request_404WithEmptyBody_usesDefaultMessage() async {
+    func request_404WithEmptyBody_usesDefaultMessage() async {
         MockURLProtocol.stub(statusCode: 404, json: "")
 
         let client = APIClient.makeTestClient()

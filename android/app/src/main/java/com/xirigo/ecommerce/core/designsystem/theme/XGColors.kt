@@ -99,4 +99,14 @@ object XGColors {
 
     val Divider = Color(0xFFCAC4D0)
     val Shimmer = Color(0xFFE7E0EC)
+
+    // Brand Colors
+    val BrandPrimary = Color(0xFF6000FE)
+    val BrandOnPrimary = Color(0xFFFFFFFF)
+    val BrandSecondary = Color(0xFF94D63A)
+    val BrandOnSecondary = Color(0xFF6000FE)
+
+    // Pagination Dots
+    val PaginationDotsActive = Color(0xFF6000FE)
+    val PaginationDotsInactive = Color(0xFFD1D5DB)
 }

@@ -11,21 +11,21 @@ struct AppRouterNavigationTests {
     // MARK: - navigate(to:) — public routes
 
     @Test("navigate to productSearch appends to current tab path")
-    func test_navigate_productSearch_appendsToHomePath() {
+    func navigate_productSearch_appendsToHomePath() {
         let router = AppRouter()
         router.navigate(to: .productSearch)
         #expect(!router.homePath.isEmpty)
     }
 
     @Test("navigate to productDetail appends to current tab path")
-    func test_navigate_productDetail_appendsToHomePath() {
+    func navigate_productDetail_appendsToHomePath() {
         let router = AppRouter()
         router.navigate(to: .productDetail(productId: "prod_1"))
         #expect(!router.homePath.isEmpty)
     }
 
     @Test("navigate to categories tab route appends to categories path when on categories tab")
-    func test_navigate_categoriesRoute_whileOnCategoriesTab_appendsToCategoriesPath() {
+    func navigate_categoriesRoute_whileOnCategoriesTab_appendsToCategoriesPath() {
         let router = AppRouter()
         router.selectTab(.categories)
         router.navigate(to: .categoryProducts(categoryId: "cat_1", categoryName: "Test"))
@@ -34,7 +34,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("navigate to cart route while on cart tab appends to cart path")
-    func test_navigate_cartRoute_whileOnCartTab_appendsToCartPath() {
+    func navigate_cartRoute_whileOnCartTab_appendsToCartPath() {
         let router = AppRouter()
         router.selectTab(.cart)
         router.navigate(to: .cart)
@@ -44,7 +44,7 @@ struct AppRouterNavigationTests {
     // MARK: - navigate(to:) — auth-required routes
 
     @Test("navigate to auth-required route presents login instead of navigating")
-    func test_navigate_authRequiredRoute_presentsLogin() {
+    func navigate_authRequiredRoute_presentsLogin() {
         let router = AppRouter()
         router.navigate(to: .checkout)
         #expect(router.presentedAuth != nil)
@@ -52,10 +52,10 @@ struct AppRouterNavigationTests {
     }
 
     @Test("navigate to checkout presents login with returnTo checkout")
-    func test_navigate_checkout_presentsLoginWithReturnToCheckout() {
+    func navigate_checkout_presentsLoginWithReturnToCheckout() {
         let router = AppRouter()
         router.navigate(to: .checkout)
-        if case .login(let returnTo) = router.presentedAuth {
+        if case let .login(returnTo) = router.presentedAuth {
             #expect(returnTo != nil)
         } else {
             Issue.record("Expected presentedAuth to be .login")
@@ -63,30 +63,28 @@ struct AppRouterNavigationTests {
     }
 
     @Test("navigate to wishlist presents login")
-    func test_navigate_wishlist_presentsLogin() {
+    func navigate_wishlist_presentsLogin() {
         let router = AppRouter()
         router.navigate(to: .wishlist)
         #expect(router.presentedAuth != nil)
     }
 
     @Test("navigate to settings presents login")
-    func test_navigate_settings_presentsLogin() {
+    func navigate_settings_presentsLogin() {
         let router = AppRouter()
         router.navigate(to: .settings)
         #expect(router.presentedAuth != nil)
     }
 
     @Test("navigate to orderList presents login")
-    func test_navigate_orderList_presentsLogin() {
+    func navigate_orderList_presentsLogin() {
         let router = AppRouter()
         router.navigate(to: .orderList)
         #expect(router.presentedAuth != nil)
     }
 
-    // MARK: - pop()
-
     @Test("pop removes last item from current tab path")
-    func test_pop_nonEmptyPath_removesLastItem() {
+    func pop_nonEmptyPath_removesLastItem() {
         let router = AppRouter()
         router.navigate(to: .productSearch)
         #expect(!router.homePath.isEmpty)
@@ -95,7 +93,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("pop on empty path does nothing")
-    func test_pop_emptyPath_doesNothing() {
+    func pop_emptyPath_doesNothing() {
         let router = AppRouter()
         #expect(router.homePath.isEmpty)
         router.pop() // should not crash
@@ -105,7 +103,7 @@ struct AppRouterNavigationTests {
     // MARK: - popToRoot()
 
     @Test("popToRoot clears current tab navigation path")
-    func test_popToRoot_nonEmptyPath_clearsPath() {
+    func popToRoot_nonEmptyPath_clearsPath() {
         let router = AppRouter()
         router.navigate(to: .productSearch)
         router.navigate(to: .productDetail(productId: "p1"))
@@ -114,14 +112,14 @@ struct AppRouterNavigationTests {
     }
 
     @Test("popToRoot on already-root path keeps path empty")
-    func test_popToRoot_emptyPath_remainsEmpty() {
+    func popToRoot_emptyPath_remainsEmpty() {
         let router = AppRouter()
         router.popToRoot()
         #expect(router.homePath.isEmpty)
     }
 
     @Test("popToRoot only clears selected tab path, not other tabs")
-    func test_popToRoot_selectedTab_doesNotClearOtherTabPaths() {
+    func popToRoot_selectedTab_doesNotClearOtherTabPaths() {
         let router = AppRouter()
         router.selectTab(.categories)
         router.navigate(to: .categoryProducts(categoryId: "c1", categoryName: "Fashion"))
@@ -137,7 +135,7 @@ struct AppRouterNavigationTests {
     // MARK: - popToRoot(tab:)
 
     @Test("popToRoot(tab:) clears specified tab path")
-    func test_popToRoot_tab_clearsSpecifiedTabPath() {
+    func popToRoot_tab_clearsSpecifiedTabPath() {
         let router = AppRouter()
         router.selectTab(.categories)
         router.navigate(to: .categoryProducts(categoryId: "c1", categoryName: "Electronics"))
@@ -147,7 +145,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("popToRoot(tab:) does not affect other tabs")
-    func test_popToRoot_tab_doesNotAffectOtherTabs() {
+    func popToRoot_tab_doesNotAffectOtherTabs() {
         let router = AppRouter()
 
         // Populate home tab
@@ -168,7 +166,7 @@ struct AppRouterNavigationTests {
     // MARK: - popAllToRoot()
 
     @Test("popAllToRoot clears all tab paths")
-    func test_popAllToRoot_clearsAllPaths() {
+    func popAllToRoot_clearsAllPaths() {
         let router = AppRouter()
 
         router.selectTab(.home)
@@ -188,7 +186,7 @@ struct AppRouterNavigationTests {
     // MARK: - path(for:)
 
     @Test("path(for: .home) returns homePath")
-    func test_pathForTab_home_returnsHomePath() {
+    func pathForTab_home_returnsHomePath() {
         let router = AppRouter()
         router.navigate(to: .productSearch)
         let path = router.path(for: .home)
@@ -196,7 +194,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("path(for: .categories) returns categoriesPath")
-    func test_pathForTab_categories_returnsCategoriesPath() {
+    func pathForTab_categories_returnsCategoriesPath() {
         let router = AppRouter()
         router.selectTab(.categories)
         router.navigate(to: .categoryProducts(categoryId: "c1", categoryName: "Test"))
@@ -205,7 +203,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("path(for: .cart) returns cartPath")
-    func test_pathForTab_cart_returnsCartPath() {
+    func pathForTab_cart_returnsCartPath() {
         let router = AppRouter()
         router.selectTab(.cart)
         router.navigate(to: .cart)
@@ -214,7 +212,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("path(for: .profile) returns profilePath")
-    func test_pathForTab_profile_returnsProfilePath() {
+    func pathForTab_profile_returnsProfilePath() {
         let router = AppRouter()
         router.selectTab(.profile)
         router.navigate(to: .profile)
@@ -225,7 +223,7 @@ struct AppRouterNavigationTests {
     // MARK: - currentPath computed property
 
     @Test("currentPath getter returns path for selectedTab")
-    func test_currentPath_getter_returnsSelectedTabPath() {
+    func currentPath_getter_returnsSelectedTabPath() {
         let router = AppRouter()
         router.selectTab(.categories)
         router.navigate(to: .categoryProducts(categoryId: "c1", categoryName: "Test"))
@@ -234,7 +232,7 @@ struct AppRouterNavigationTests {
     }
 
     @Test("currentPath setter updates path for selectedTab")
-    func test_currentPath_setter_updatesSelectedTabPath() {
+    func currentPath_setter_updatesSelectedTabPath() {
         let router = AppRouter()
         var newPath = NavigationPath()
         newPath.append(Route.productSearch)

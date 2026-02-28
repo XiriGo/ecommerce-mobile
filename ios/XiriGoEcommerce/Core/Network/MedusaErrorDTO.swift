@@ -3,10 +3,6 @@ import Foundation
 // MARK: - MedusaErrorDTO
 
 struct MedusaErrorDTO: Decodable, Sendable {
-    let type: String
-    let message: String
-    let code: String?
-
     // MARK: - Lifecycle
 
     init(type: String, message: String, code: String? = nil) {
@@ -14,4 +10,10 @@ struct MedusaErrorDTO: Decodable, Sendable {
         self.message = message
         self.code = code
     }
+
+    // MARK: - Internal
+
+    let type: String
+    let message: String
+    let code: String?
 }

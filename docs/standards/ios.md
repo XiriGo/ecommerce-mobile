@@ -790,6 +790,7 @@ enum Config {
 - **Don't**: Force unwrap optionals --> **Do**: Use `guard let`, `if let`, or `??`
 - **Don't**: Use `DispatchQueue.main.async` --> **Do**: Use `@MainActor` and async/await
 - **Don't**: Create retain cycles with `self` in closures --> **Do**: Use `[weak self]` or `[unowned self]`
+- **Don't**: Create files without adding them to the Xcode project --> **Do**: Always add every new `.swift` file to `XiriGoEcommerce.xcodeproj/project.pbxproj` (both target membership and file reference). Files on disk but missing from the Xcode project will not compile and will cause build failures downstream.
 
 ---
 
@@ -920,6 +921,12 @@ Location: `ios/XiriGoEcommerce/Feature/{Name}/`
 9. `Presentation/{Screen}ViewModel.swift` -- @Observable @MainActor
 10. `Presentation/{Screen}View.swift` -- SwiftUI View + #Preview (uses XG* components)
 11. Register in `Container+Extensions.swift` (Factory)
+
+> **CRITICAL**: Every new `.swift` file MUST be added to the Xcode project file
+> (`XiriGoEcommerce.xcodeproj/project.pbxproj`). This includes both file references
+> and target membership. Use `xcodebuild` or Xcode to verify. Files that exist on
+> disk but are not in `project.pbxproj` will NOT compile and will break the build
+> for downstream agents (testers, reviewers).
 
 ---
 

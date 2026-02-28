@@ -9,57 +9,67 @@ enum AuthEndpoint: Endpoint {
     case destroySession
     case refreshToken
 
+    // MARK: - Internal
+
     // MARK: - Endpoint
 
     var path: String {
         switch self {
-        case .login:
-            "/auth/customer/emailpass"
+            case .login:
+                "/auth/customer/emailpass"
 
-        case .register:
-            "/auth/customer/emailpass/register"
+            case .register:
+                "/auth/customer/emailpass/register"
 
-        case .createSession:
-            "/auth/session"
+            case .createSession:
+                "/auth/session"
 
-        case .destroySession:
-            "/auth/session"
+            case .destroySession:
+                "/auth/session"
 
-        case .refreshToken:
-            "/auth/token/refresh"
+            case .refreshToken:
+                "/auth/token/refresh"
         }
     }
 
     var method: HTTPMethod {
         switch self {
-        case .login, .register, .createSession, .refreshToken:
-            .post
+            case .createSession,
+                 .login,
+                 .refreshToken,
+                 .register:
+                .post
 
-        case .destroySession:
-            .delete
+            case .destroySession:
+                .delete
         }
     }
 
     var body: (any Encodable & Sendable)? {
         switch self {
-        case let .login(email, password):
-            LoginRequest(email: email, password: password)
+            case let .login(email, password):
+                LoginRequest(email: email, password: password)
 
-        case let .register(email, password):
-            RegisterRequest(email: email, password: password)
+            case let .register(email, password):
+                RegisterRequest(email: email, password: password)
 
-        case .createSession, .destroySession, .refreshToken:
-            nil
+            case .createSession,
+                 .destroySession,
+                 .refreshToken:
+                nil
         }
     }
 
     var requiresAuth: Bool {
         switch self {
-        case .login, .register:
-            false
+            case .login,
+                 .register:
+                false
 
-        case .createSession, .destroySession, .refreshToken:
-            true
+            case .createSession,
+                 .destroySession,
+                 .refreshToken:
+                true
         }
     }
 }

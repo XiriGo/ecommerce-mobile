@@ -6,20 +6,20 @@ import Testing
 @Suite("XGButtonVariant Tests")
 struct XGButtonVariantTests {
     @Test("All four button variants exist")
-    func test_variants_allCasesExist() {
+    func variants_allCasesExist() {
         let variants: [XGButtonVariant] = [.primary, .secondary, .outlined, .text]
         #expect(variants.count == 4)
     }
 
     @Test("Primary variant is distinct from secondary")
-    func test_primaryVariant_isDistinctFromSecondary() {
+    func primaryVariant_isDistinctFromSecondary() {
         let primary = XGButtonVariant.primary
         let secondary = XGButtonVariant.secondary
         #expect(primary != secondary)
     }
 
     @Test("Outlined variant is distinct from text")
-    func test_outlinedVariant_isDistinctFromText() {
+    func outlinedVariant_isDistinctFromText() {
         let outlined = XGButtonVariant.outlined
         let text = XGButtonVariant.text
         #expect(outlined != text)
@@ -33,9 +33,10 @@ struct XGButtonVariantTests {
 /// uses private body helpers; accessibility and disabled-state logic is tested
 /// via the public API contract (title + variant combinations).
 @Suite("XGButton Logic Tests")
+@MainActor
 struct XGButtonModelTests {
     @Test("Button action is called when not loading")
-    func test_action_calledWhenNotLoading() {
+    func action_calledWhenNotLoading() {
         // Use a no-op closure to avoid Swift 6 Sendable data-race warning on captured mutable var
         let button = XGButton("Tap Me") {}
         _ = button
@@ -43,7 +44,7 @@ struct XGButtonModelTests {
     }
 
     @Test("Button can be initialised with all variants")
-    func test_init_allVariantsInitialise() {
+    func init_allVariantsInitialise() {
         let variants: [XGButtonVariant] = [.primary, .secondary, .outlined, .text]
         for variant in variants {
             let button = XGButton("Test", variant: variant) {}
@@ -54,28 +55,28 @@ struct XGButtonModelTests {
     }
 
     @Test("Button with isLoading true initialises correctly")
-    func test_init_loadingState_initialises() {
+    func init_loadingState_initialises() {
         let button = XGButton("Loading", isLoading: true) {}
         _ = button
         #expect(true)
     }
 
     @Test("Button with isEnabled false initialises correctly")
-    func test_init_disabledState_initialises() {
+    func init_disabledState_initialises() {
         let button = XGButton("Disabled", isEnabled: false) {}
         _ = button
         #expect(true)
     }
 
     @Test("Button with leading icon initialises correctly")
-    func test_init_withLeadingIcon_initialises() {
+    func init_withLeadingIcon_initialises() {
         let button = XGButton("Cart", leadingIcon: "cart") {}
         _ = button
         #expect(true)
     }
 
     @Test("Text variant has fullWidth false by default")
-    func test_textVariant_defaultFullWidthIsFalse() {
+    func textVariant_defaultFullWidthIsFalse() {
         // Per the init logic: fullWidth defaults to (variant != .text)
         // Text variant → fullWidth = false
         // We verify by constructing and confirming no crash
@@ -85,7 +86,7 @@ struct XGButtonModelTests {
     }
 
     @Test("Non-text variants have fullWidth true by default")
-    func test_nonTextVariants_defaultFullWidthIsTrue() {
+    func nonTextVariants_defaultFullWidthIsTrue() {
         let variants: [XGButtonVariant] = [.primary, .secondary, .outlined]
         for variant in variants {
             let button = XGButton("Btn", variant: variant) {}
@@ -95,7 +96,7 @@ struct XGButtonModelTests {
     }
 
     @Test("Button title is passed correctly")
-    func test_init_title_passedThrough() {
+    func init_title_passedThrough() {
         // The button's accessibility label is the title — constructing verifies the string contract
         let title = "Add to Cart"
         let button = XGButton(title) {}

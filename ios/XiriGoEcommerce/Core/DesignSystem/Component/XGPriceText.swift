@@ -7,19 +7,21 @@ enum XGPriceSize {
     case medium
     case large
 
+    // MARK: - Internal
+
     var priceFont: Font {
         switch self {
-        case .small: return XGTypography.bodySmall
-        case .medium: return XGTypography.titleMedium
-        case .large: return XGTypography.headlineSmall
+            case .small: XGTypography.bodySmall
+            case .medium: XGTypography.titleMedium
+            case .large: XGTypography.headlineSmall
         }
     }
 
     var originalPriceFont: Font {
         switch self {
-        case .small: return XGTypography.labelSmall
-        case .medium: return XGTypography.bodySmall
-        case .large: return XGTypography.bodyMedium
+            case .small: XGTypography.labelSmall
+            case .medium: XGTypography.bodySmall
+            case .large: XGTypography.bodyMedium
         }
     }
 }
@@ -27,12 +29,7 @@ enum XGPriceSize {
 // MARK: - XGPriceText
 
 struct XGPriceText: View {
-    // MARK: - Properties
-
-    private let price: String
-    private let originalPrice: String?
-    private let currencySymbol: String
-    private let size: XGPriceSize
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -40,13 +37,15 @@ struct XGPriceText: View {
         price: String,
         originalPrice: String? = nil,
         currencySymbol: String = "EUR",
-        size: XGPriceSize = .medium
+        size: XGPriceSize = .medium,
     ) {
         self.price = price
         self.originalPrice = originalPrice
         self.currencySymbol = currencySymbol
         self.size = size
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -69,6 +68,11 @@ struct XGPriceText: View {
 
     // MARK: - Private
 
+    private let price: String
+    private let originalPrice: String?
+    private let currencySymbol: String
+    private let size: XGPriceSize
+
     private var hasSale: Bool {
         originalPrice != nil
     }
@@ -76,11 +80,11 @@ struct XGPriceText: View {
     private var accessibilityDescription: String {
         if let originalPrice {
             return String(
-                localized: "common_sale_price_label \(currencySymbol) \(price) \(currencySymbol) \(originalPrice)"
+                localized: "common_sale_price_label \(currencySymbol) \(price) \(currencySymbol) \(originalPrice)",
             )
         }
         return String(
-            localized: "common_price_label \(currencySymbol) \(price)"
+            localized: "common_price_label \(currencySymbol) \(price)",
         )
     }
 }

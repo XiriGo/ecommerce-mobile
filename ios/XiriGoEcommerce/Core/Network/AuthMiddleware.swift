@@ -37,8 +37,7 @@ actor TokenRefreshActor {
         let task = Task<String?, Error> {
             defer { activeRefreshTask = nil }
             do {
-                let newToken = try await tokenProvider.refreshToken()
-                return newToken
+                return try await tokenProvider.refreshToken()
             } catch {
                 await tokenProvider.clearTokens()
                 throw error

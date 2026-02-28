@@ -3,12 +3,7 @@ import SwiftUI
 // MARK: - XGFilterChip
 
 struct XGFilterChip: View {
-    // MARK: - Properties
-
-    private let label: String
-    private let isSelected: Bool
-    private let leadingIcon: String?
-    private let action: () -> Void
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -16,13 +11,15 @@ struct XGFilterChip: View {
         label: String,
         isSelected: Bool = false,
         leadingIcon: String? = nil,
-        action: @escaping () -> Void
+        action: @escaping () -> Void,
     ) {
         self.label = label
         self.isSelected = isSelected
         self.leadingIcon = leadingIcon
         self.action = action
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -53,6 +50,11 @@ struct XGFilterChip: View {
 
     // MARK: - Private
 
+    private let label: String
+    private let isSelected: Bool
+    private let leadingIcon: String?
+    private let action: () -> Void
+
     private var chipForeground: Color {
         isSelected ? XGColors.onSecondaryContainer : XGColors.onSurfaceVariant
     }
@@ -73,23 +75,21 @@ struct XGFilterChip: View {
 // MARK: - XGCategoryChip
 
 struct XGCategoryChip: View {
-    // MARK: - Properties
-
-    private let label: String
-    private let iconUrl: URL?
-    private let action: () -> Void
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(
         label: String,
         iconUrl: URL? = nil,
-        action: @escaping () -> Void
+        action: @escaping () -> Void,
     ) {
         self.label = label
         self.iconUrl = iconUrl
         self.action = action
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -100,7 +100,7 @@ struct XGCategoryChip: View {
                     XGImage(url: iconUrl)
                         .frame(
                             width: XGSpacing.IconSize.medium,
-                            height: XGSpacing.IconSize.medium
+                            height: XGSpacing.IconSize.medium,
                         )
                         .clipShape(Circle())
                 }
@@ -116,6 +116,12 @@ struct XGCategoryChip: View {
         }
         .accessibilityLabel(label)
     }
+
+    // MARK: - Private
+
+    private let label: String
+    private let iconUrl: URL?
+    private let action: () -> Void
 }
 
 // MARK: - Previews

@@ -41,4 +41,23 @@
     <string name="nav_profile_guest_register_button">Ohlok Kont</string>
     <string name="nav_cart_badge_description">%d oggetti fil-kartella</string>
     <string name="common_back_button">Lura</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip_button">Aqbez</string>
+    <string name="onboarding_get_started_button">Ibda</string>
+    <string name="onboarding_page_browse_title">Esplora Eluf ta\' Prodotti</string>
+    <string name="onboarding_page_browse_description">Esplora firxa wiesgha ta\' prodotti minn diversi bejjiegha f\'post wiehed</string>
+    <string name="onboarding_page_compare_title">Qabbel Bejjiegha u Prezzijiet</string>
+    <string name="onboarding_page_compare_description">Sib l-ahjar offerti billi tqabbel il-prezzijiet bejn bejjiegha differenti</string>
+    <string name="onboarding_page_checkout_title">Checkout Mghaggel u Sigur</string>
+    <string name="onboarding_page_checkout_description">Hallas b\'mod sigur b\'ghazliet ta\' hlas multipli u processing mghaggel</string>
+    <string name="onboarding_page_track_title">Segwi l-Ordnijiet Tieghek</string>
+    <string name="onboarding_page_track_description">Ibqa aggiornat bi tracking tal-ordni f\'hin reali mix-xiri sal-kunsinna</string>
+    <string name="onboarding_skip_button_a11y">Aqbez l-onboarding</string>
+    <string name="onboarding_page_indicator_a11y">Pagna %1$d minn %2$d</string>
+    <string name="onboarding_illustration_a11y_browse">Illustrazzjoni ta\' browsing fis-suq</string>
+    <string name="onboarding_illustration_a11y_compare">Illustrazzjoni ta\' tqabbil tal-prezzijiet</string>
+    <string name="onboarding_illustration_a11y_checkout">Illustrazzjoni ta\' checkout sigur</string>
+    <string name="onboarding_illustration_a11y_track">Illustrazzjoni ta\' tracking tal-ordni</string>
+    <string name="onboarding_logo_a11y">Logo ta\' XiriGo</string>
 </resources>

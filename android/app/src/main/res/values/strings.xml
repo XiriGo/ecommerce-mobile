@@ -86,4 +86,23 @@
     <string name="profile_menu_addresses">Addresses</string>
     <string name="profile_menu_payment_methods">Payment Methods</string>
     <string name="profile_menu_settings">Settings</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip_button">Skip</string>
+    <string name="onboarding_get_started_button">Get Started</string>
+    <string name="onboarding_page_browse_title">Browse Thousands of Products</string>
+    <string name="onboarding_page_browse_description">Explore a wide range of products from multiple vendors in one place</string>
+    <string name="onboarding_page_compare_title">Compare Vendors &amp; Prices</string>
+    <string name="onboarding_page_compare_description">Find the best deals by comparing prices across different vendors</string>
+    <string name="onboarding_page_checkout_title">Fast &amp; Secure Checkout</string>
+    <string name="onboarding_page_checkout_description">Pay securely with multiple payment options and fast processing</string>
+    <string name="onboarding_page_track_title">Track Your Orders</string>
+    <string name="onboarding_page_track_description">Stay updated with real-time order tracking from purchase to delivery</string>
+    <string name="onboarding_skip_button_a11y">Skip onboarding</string>
+    <string name="onboarding_page_indicator_a11y">Page %1$d of %2$d</string>
+    <string name="onboarding_illustration_a11y_browse">Illustration of marketplace browsing</string>
+    <string name="onboarding_illustration_a11y_compare">Illustration of price comparison</string>
+    <string name="onboarding_illustration_a11y_checkout">Illustration of secure checkout</string>
+    <string name="onboarding_illustration_a11y_track">Illustration of order tracking</string>
+    <string name="onboarding_logo_a11y">XiriGo logo</string>
 </resources>

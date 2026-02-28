@@ -8,6 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M4-05: App Onboarding
+
+- **App onboarding**: 4-page horizontal pager shown on first launch only; returns immediately to main app on subsequent launches via DataStore (Android) / UserDefaults (iOS) flag (#35) (Android + iOS)
+- **Splash screen**: Branded 4-layer background — `XGBrandGradient` base + `XGBrandPattern` X-tile overlay + `XGLogoMark` centered + `XGBrandGradient` dark overlay — displayed during the onboarding flag check (Android + iOS)
+- **XGBrandGradient**: New design system component — reusable brand radial gradient background with 2-layer composition; used on Splash, Login (M1-01), and Home hero (M1-04) (Android + iOS)
+- **XGBrandPattern**: New design system component — tiled white X-motif pattern overlay at 6% opacity for branded surfaces (Android + iOS)
+- **XGLogoMark**: New design system component — two-chevron logo mark (green `#94D63A` + white `#FFFFFF`), scalable via `size` parameter (Android + iOS)
+- **XGPaginationDots**: New design system component — animated horizontal pagination indicator with pill-shaped active dot (18dp) and circle inactive dots (6dp); reused on Home hero carousel and flash sale banner (Android + iOS)
+- **Localization**: 10 content strings + 6 accessibility strings for onboarding screens in English, Maltese, and Turkish (Android + iOS)
+- **Tests**: Android — 3 unit test files (`CheckOnboardingUseCaseTest`, `CompleteOnboardingUseCaseTest`, `OnboardingViewModelTest`) + `FakeOnboardingRepository`; iOS — 3 unit test files (`CheckOnboardingUseCaseTests`, `CompleteOnboardingUseCaseTests`, `OnboardingViewModelTests`) + `FakeOnboardingRepository` (Android + iOS)
+
 #### M0-06: Auth Infrastructure
 
 - **Auth Infrastructure**: Encrypted token storage, auth state management, session lifecycle, and token provider integration for the XiriGo Ecommerce buyer app (Android + iOS)

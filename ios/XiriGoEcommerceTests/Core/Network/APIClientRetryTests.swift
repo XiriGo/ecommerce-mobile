@@ -2,12 +2,14 @@ import Foundation
 import Testing
 @testable import XiriGoEcommerce
 
-// MARK: - Test Helpers
+// MARK: - ProductResponse
 
 private struct ProductResponse: Decodable, Sendable {
     let id: String
     let title: String
 }
+
+// MARK: - TestEndpoint
 
 private struct TestEndpoint: Endpoint {
     var path: String
@@ -19,27 +21,18 @@ private struct TestEndpoint: Endpoint {
 
 @Suite("APIClient Retry Tests")
 struct APIClientRetryTests {
+    // MARK: - Lifecycle
+
     init() {
         MockURLProtocol.reset()
     }
 
-    // MARK: - Helpers
-
-    private func makeRetryPolicy(maxRetries: Int) -> RetryPolicy {
-        RetryPolicy(
-            maxRetries: maxRetries,
-            baseDelay: 0,
-            backoffMultiplier: 1,
-            maxDelay: 0,
-            jitterFactor: 0,
-            retryableStatusCodes: [500, 502, 503, 504]
-        )
-    }
+    // MARK: - Internal
 
     // MARK: - 5xx Retry
 
     @Test("5xx response with retry policy exhausted throws server AppError")
-    func test_request_500ResponseRetryExhausted_throwsServerError() async {
+    func request_500ResponseRetryExhausted_throwsServerError() async {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
@@ -48,11 +41,11 @@ struct APIClientRetryTests {
                 url: requestURL,
                 statusCode: 500,
                 httpVersion: "HTTP/1.1",
-                headerFields: ["Content-Type": "application/json"]
+                headerFields: ["Content-Type": "application/json"],
             ))
             let data = Data("""
-            { "type": "internal_server_error", "message": "Server error" }
-            """.utf8)
+                { "type": "internal_server_error", "message": "Server error" }
+                """.utf8)
             return (response, data)
         }
 
@@ -68,7 +61,7 @@ struct APIClientRetryTests {
     }
 
     @Test("5xx then 200 response succeeds after retry")
-    func test_request_500ThenSuccess_succeedsAfterRetry() async throws {
+    func request_500ThenSuccess_succeedsAfterRetry() async throws {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
@@ -78,10 +71,10 @@ struct APIClientRetryTests {
                     url: requestURL,
                     statusCode: 500,
                     httpVersion: "HTTP/1.1",
-                    headerFields: ["Content-Type": "application/json"]
+                    headerFields: ["Content-Type": "application/json"],
                 ))
                 let data = Data(
-                    "{ \"type\": \"error\", \"message\": \"temp error\" }".utf8
+                    "{ \"type\": \"error\", \"message\": \"temp error\" }".utf8,
                 )
                 return (response, data)
             } else {
@@ -89,10 +82,10 @@ struct APIClientRetryTests {
                     url: requestURL,
                     statusCode: 200,
                     httpVersion: "HTTP/1.1",
-                    headerFields: ["Content-Type": "application/json"]
+                    headerFields: ["Content-Type": "application/json"],
                 ))
                 let data = Data(
-                    "{ \"id\": \"prod_456\", \"title\": \"Recovered\" }".utf8
+                    "{ \"id\": \"prod_456\", \"title\": \"Recovered\" }".utf8,
                 )
                 return (response, data)
             }
@@ -108,7 +101,7 @@ struct APIClientRetryTests {
     }
 
     @Test("non-retryable 4xx is not retried")
-    func test_request_4xxError_isNotRetried() async {
+    func request_4xxError_isNotRetried() async {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
@@ -117,10 +110,10 @@ struct APIClientRetryTests {
                 url: requestURL,
                 statusCode: 404,
                 httpVersion: "HTTP/1.1",
-                headerFields: ["Content-Type": "application/json"]
+                headerFields: ["Content-Type": "application/json"],
             ))
             let data = Data(
-                "{ \"type\": \"not_found\", \"message\": \"Not found\" }".utf8
+                "{ \"type\": \"not_found\", \"message\": \"Not found\" }".utf8,
             )
             return (response, data)
         }
@@ -133,5 +126,20 @@ struct APIClientRetryTests {
         }
 
         #expect(callCount == 1)
+    }
+
+    // MARK: - Private
+
+    // MARK: - Helpers
+
+    private func makeRetryPolicy(maxRetries: Int) -> RetryPolicy {
+        RetryPolicy(
+            maxRetries: maxRetries,
+            baseDelay: 0,
+            backoffMultiplier: 1,
+            maxDelay: 0,
+            jitterFactor: 0,
+            retryableStatusCodes: [500, 502, 503, 504],
+        )
     }
 }

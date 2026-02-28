@@ -6,16 +6,17 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - XGLoadingViewTests
 
 @Suite("XGLoadingView Tests")
+@MainActor
 struct XGLoadingViewTests {
     @Test("XGLoadingView initialises without parameters")
-    func test_init_noParameters_initialises() {
+    func init_noParameters_initialises() {
         let view = XGLoadingView()
         _ = view
         #expect(true)
     }
 
     @Test("XGLoadingView body is a valid View", .disabled(swiftUIDisabledReason))
-    func test_body_isValidView() {
+    func body_isValidView() {
         let view = XGLoadingView()
         let body = view.body
         _ = body
@@ -26,6 +27,7 @@ struct XGLoadingViewTests {
 // MARK: - XGLoadingIndicatorTests
 
 @Suite("XGLoadingIndicator Tests")
+@MainActor
 struct XGLoadingIndicatorTests {
     @Test("XGLoadingIndicator initialises without parameters")
     func test_init_noParameters_initialises() {
@@ -43,7 +45,7 @@ struct XGLoadingIndicatorTests {
     }
 
     @Test("XGLoadingView and XGLoadingIndicator are distinct types")
-    func test_types_areDistinct() {
+    func types_areDistinct() {
         let full = XGLoadingView()
         let inline = XGLoadingIndicator()
         // Different types confirm separate full-screen vs inline components

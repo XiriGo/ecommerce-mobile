@@ -5,22 +5,23 @@ import Testing
 // MARK: - XGProductCardTests
 
 @Suite("XGProductCard Tests")
+@MainActor
 struct XGProductCardTests {
     // MARK: - Initialisation
 
     @Test("ProductCard initialises with required properties")
-    func test_init_withRequiredProperties_initialises() {
+    func init_withRequiredProperties_initialises() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Sample Product",
-            price: "29.99"
+            price: "29.99",
         ) {}
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard initialises with all optional properties")
-    func test_init_withAllProperties_initialises() {
+    func init_withAllProperties_initialises() {
         let card = XGProductCard(
             imageUrl: URL(string: "https://example.com/image.jpg"),
             title: "Premium Headphones",
@@ -31,80 +32,80 @@ struct XGProductCardTests {
             reviewCount: 123,
             isWishlisted: false,
             onWishlistToggle: {},
-            action: {}
+            action: {},
         )
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard initialises in wishlisted state")
-    func test_init_wishlisted_initialises() {
+    func init_wishlisted_initialises() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Product",
             price: "9.99",
             isWishlisted: true,
             onWishlistToggle: {},
-            action: {}
+            action: {},
         )
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard initialises without wishlist toggle")
-    func test_init_withoutWishlistToggle_initialises() {
+    func init_withoutWishlistToggle_initialises() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Product",
-            price: "9.99"
+            price: "9.99",
         ) {}
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard tap action closure is captured")
-    func test_init_tapAction_closureCaptured() {
+    func init_tapAction_closureCaptured() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Product",
-            price: "9.99"
+            price: "9.99",
         ) {}
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard wishlist toggle closure is captured")
-    func test_init_wishlistToggle_closureCaptured() {
+    func init_wishlistToggle_closureCaptured() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Product",
             price: "9.99",
             onWishlistToggle: {},
-            action: {}
+            action: {},
         )
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard with nil originalPrice has no sale price")
-    func test_init_nilOriginalPrice_noSalePrice() {
+    func init_nilOriginalPrice_noSalePrice() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Product",
             price: "9.99",
-            originalPrice: nil
+            originalPrice: nil,
         ) {}
         _ = card
         #expect(true)
     }
 
     @Test("ProductCard with vendorName initialises correctly")
-    func test_init_withVendorName_initialises() {
+    func init_withVendorName_initialises() {
         let card = XGProductCard(
             imageUrl: nil,
             title: "Product",
             price: "9.99",
-            vendorName: "Store Name"
+            vendorName: "Store Name",
         ) {}
         _ = card
         #expect(true)
@@ -114,43 +115,44 @@ struct XGProductCardTests {
 // MARK: - XGInfoCardTests
 
 @Suite("XGInfoCard Tests")
+@MainActor
 struct XGInfoCardTests {
     @Test("InfoCard initialises with title only")
-    func test_init_withTitleOnly_initialises() {
+    func init_withTitleOnly_initialises() {
         let card = XGInfoCard(title: "Shipping Address")
         _ = card
         #expect(true)
     }
 
     @Test("InfoCard initialises with subtitle")
-    func test_init_withSubtitle_initialises() {
+    func init_withSubtitle_initialises() {
         let card = XGInfoCard(
             title: "Shipping Address",
-            subtitle: "123 Main Street, Valletta"
+            subtitle: "123 Main Street, Valletta",
         )
         _ = card
         #expect(true)
     }
 
     @Test("InfoCard initialises with leading icon")
-    func test_init_withLeadingIcon_initialises() {
+    func init_withLeadingIcon_initialises() {
         let card = XGInfoCard(
             title: "Payment",
-            leadingIcon: "creditcard"
+            leadingIcon: "creditcard",
         )
         _ = card
         #expect(true)
     }
 
     @Test("InfoCard initialises with action closure")
-    func test_init_withAction_closureCaptured() {
+    func init_withAction_closureCaptured() {
         let card = XGInfoCard(title: "Edit", action: {})
         _ = card
         #expect(true)
     }
 
     @Test("InfoCard initialises with trailing content")
-    func test_init_withTrailingContent_initialises() {
+    func init_withTrailingContent_initialises() {
         let card = XGInfoCard(title: "Item") {
             EmptyView()
         }

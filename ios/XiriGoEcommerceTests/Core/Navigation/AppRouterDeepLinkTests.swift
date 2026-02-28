@@ -10,7 +10,7 @@ struct AppRouterDeepLinkTests {
     // MARK: - handleDeepLink — valid public routes
 
     @Test("handleDeepLink with product URL switches to home tab and appends to home path")
-    func test_handleDeepLink_validProductURL_switchesToHomeAndAppends() throws {
+    func handleDeepLink_validProductURL_switchesToHomeAndAppends() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://product/prod_deep"))
         router.handleDeepLink(url)
@@ -18,7 +18,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with cart URL switches to cart tab")
-    func test_handleDeepLink_xgCart_switchesToCartTab() throws {
+    func handleDeepLink_xgCart_switchesToCartTab() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://cart"))
         router.handleDeepLink(url)
@@ -26,7 +26,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with profile URL switches to profile tab")
-    func test_handleDeepLink_xgProfile_switchesToProfileTab() throws {
+    func handleDeepLink_xgProfile_switchesToProfileTab() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://profile"))
         router.handleDeepLink(url)
@@ -34,7 +34,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with category URL switches to categories tab")
-    func test_handleDeepLink_xgCategory_switchesToCategoriesTab() throws {
+    func handleDeepLink_xgCategory_switchesToCategoriesTab() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://category/cat_electronics"))
         router.handleDeepLink(url)
@@ -43,7 +43,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with https product URL navigates to productDetail on home tab")
-    func test_handleDeepLink_httpsProductURL_navigatesToProductDetail() throws {
+    func handleDeepLink_httpsProductURL_navigatesToProductDetail() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "https://xirigo.com/product/prod_web"))
         router.handleDeepLink(url)
@@ -53,12 +53,12 @@ struct AppRouterDeepLinkTests {
     // MARK: - handleDeepLink — auth-required routes
 
     @Test("handleDeepLink with order URL presents login since order requiresAuth")
-    func test_handleDeepLink_xgOrder_presentsLoginInsteadOfNavigating() throws {
+    func handleDeepLink_xgOrder_presentsLoginInsteadOfNavigating() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://order/ord_123"))
         router.handleDeepLink(url)
         #expect(router.presentedAuth != nil)
-        if case .login(let returnTo) = router.presentedAuth {
+        if case let .login(returnTo) = router.presentedAuth {
             #expect(returnTo != nil)
         } else {
             Issue.record("Expected login to be presented for auth-required deep link")
@@ -68,7 +68,7 @@ struct AppRouterDeepLinkTests {
     // MARK: - handleDeepLink — invalid URLs
 
     @Test("handleDeepLink with invalid URL does nothing")
-    func test_handleDeepLink_invalidURL_doesNothing() throws {
+    func handleDeepLink_invalidURL_doesNothing() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "https://example.com/unknown/path"))
         router.handleDeepLink(url)
@@ -78,7 +78,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with unrecognized xirigo host does nothing")
-    func test_handleDeepLink_unrecognizedXGHost_doesNothing() throws {
+    func handleDeepLink_unrecognizedXGHost_doesNothing() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://unknown/path"))
         router.handleDeepLink(url)

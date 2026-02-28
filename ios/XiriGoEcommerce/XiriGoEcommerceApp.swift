@@ -1,21 +1,37 @@
+import Factory
 import SwiftUI
 
 // MARK: - XiriGoEcommerceApp
 
 @main
 struct XiriGoEcommerceApp: App {
-    // MARK: - Lifecycle
-
-    init() {
-        // DI container setup will be added in M0-05
-    }
-
     // MARK: - Internal
+
+    // MARK: - Body
 
     var body: some Scene {
         WindowGroup {
-            MainTabView()
-                .background(XGColors.background.ignoresSafeArea())
+            rootView
+                .task { await viewModel.checkOnboardingStatus() }
+        }
+    }
+
+    // MARK: - Private
+
+    @State private var viewModel = Container.shared.onboardingViewModel()
+
+    @ViewBuilder
+    private var rootView: some View {
+        switch viewModel.uiState {
+            case .loading:
+                SplashScreen()
+
+            case .showOnboarding:
+                OnboardingScreen(viewModel: viewModel)
+
+            case .onboardingComplete:
+                MainTabView()
+                    .background(XGColors.background.ignoresSafeArea())
         }
     }
 }

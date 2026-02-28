@@ -74,6 +74,18 @@ enum XGColors {
     static let badgeText = Color.white
     static let divider = Color(hex: "#CAC4D0")
     static let shimmer = Color(hex: "#E7E0EC")
+
+    // MARK: - Brand Colors
+
+    static let brandPrimary = Color(hex: "#6000FE")
+    static let brandOnPrimary = Color.white
+    static let brandSecondary = Color(hex: "#94D63A")
+    static let brandOnSecondary = Color(hex: "#6000FE")
+
+    // MARK: - Pagination Dots
+
+    static let paginationDotsActive = Color(hex: "#6000FE")
+    static let paginationDotsInactive = Color(hex: "#D1D5DB")
 }
 
 // MARK: - Color Extension for Hex Support
@@ -88,7 +100,7 @@ extension Color {
         self.init(
             red: Double((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: Double((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: Double(rgbValue & 0x0000FF) / 255.0
+            blue: Double(rgbValue & 0x0000FF) / 255.0,
         )
     }
 }

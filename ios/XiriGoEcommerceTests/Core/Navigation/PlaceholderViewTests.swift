@@ -7,32 +7,33 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 // MARK: - PlaceholderViewTests
 
 @Suite("PlaceholderView Tests")
+@MainActor
 struct PlaceholderViewTests {
     // MARK: - Initialisation
 
     @Test("PlaceholderView initialises with title and systemImage")
-    func test_init_titleAndSystemImage_initialises() {
+    func init_titleAndSystemImage_initialises() {
         let view = PlaceholderView(title: "Home", systemImage: "house")
         _ = view
         #expect(true)
     }
 
     @Test("PlaceholderView initialises with product detail title")
-    func test_init_productDetailTitle_initialises() {
+    func init_productDetailTitle_initialises() {
         let view = PlaceholderView(title: "Product Detail", systemImage: "bag")
         _ = view
         #expect(true)
     }
 
     @Test("PlaceholderView initialises with empty title")
-    func test_init_emptyTitle_initialises() {
+    func init_emptyTitle_initialises() {
         let view = PlaceholderView(title: "", systemImage: "questionmark")
         _ = view
         #expect(true)
     }
 
     @Test("PlaceholderView initialises with empty systemImage")
-    func test_init_emptySystemImage_initialises() {
+    func init_emptySystemImage_initialises() {
         let view = PlaceholderView(title: "Test", systemImage: "")
         _ = view
         #expect(true)
@@ -41,7 +42,7 @@ struct PlaceholderViewTests {
     // MARK: - Body
 
     @Test("PlaceholderView body is a valid View", .disabled(swiftUIDisabledReason))
-    func test_body_isValidView() {
+    func body_isValidView() {
         let view = PlaceholderView(title: "Categories", systemImage: "square.grid.2x2")
         let body = view.body
         _ = body
@@ -49,7 +50,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("PlaceholderView body renders for each route's title and icon", .disabled(swiftUIDisabledReason))
-    func test_body_allRouteTitlesAndIcons_render() {
+    func body_allRouteTitlesAndIcons_render() {
         let entries: [(String, String)] = [
             ("Home", "house"),
             ("Categories", "square.grid.2x2"),
@@ -92,7 +93,7 @@ struct PlaceholderViewTests {
     // MARK: - Route.title integration
 
     @Test("PlaceholderView with home route title initialises correctly")
-    func test_init_homeRouteTitle_initialises() {
+    func init_homeRouteTitle_initialises() {
         let title = Route.home.title
         let view = PlaceholderView(title: title, systemImage: "house")
         _ = view
@@ -100,7 +101,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("PlaceholderView with categoryProducts route title uses category name")
-    func test_init_categoryProductsRouteTitle_usesCategoryName() {
+    func init_categoryProductsRouteTitle_usesCategoryName() {
         let route = Route.categoryProducts(categoryId: "cat_1", categoryName: "Electronics")
         let title = route.title
         let view = PlaceholderView(title: title, systemImage: "square.grid.2x2")
@@ -109,7 +110,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("PlaceholderView with productDetail route title initialises correctly")
-    func test_init_productDetailRouteTitle_initialises() {
+    func init_productDetailRouteTitle_initialises() {
         let title = Route.productDetail(productId: "prod_123").title
         let view = PlaceholderView(title: title, systemImage: "bag")
         _ = view
@@ -117,7 +118,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("PlaceholderView with orderDetail route title initialises correctly")
-    func test_init_orderDetailRouteTitle_initialises() {
+    func init_orderDetailRouteTitle_initialises() {
         let title = Route.orderDetail(orderId: "ord_456").title
         let view = PlaceholderView(title: title, systemImage: "doc.text")
         _ = view
@@ -125,7 +126,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("PlaceholderView with vendorStore route title initialises correctly")
-    func test_init_vendorStoreRouteTitle_initialises() {
+    func init_vendorStoreRouteTitle_initialises() {
         let title = Route.vendorStore(vendorId: "v_1").title
         let view = PlaceholderView(title: title, systemImage: "storefront")
         _ = view
@@ -133,7 +134,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("PlaceholderView with login route title initialises correctly")
-    func test_init_loginRouteTitle_initialises() {
+    func init_loginRouteTitle_initialises() {
         let title = Route.login(returnTo: nil).title
         let view = PlaceholderView(title: title, systemImage: "person.circle")
         _ = view
@@ -143,7 +144,7 @@ struct PlaceholderViewTests {
     // MARK: - RouteView integration
 
     @Test("RouteView for home route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_homeRoute_rendersBody() {
+    func routeView_homeRoute_rendersBody() {
         let view = RouteView(route: .home)
         let body = view.body
         _ = body
@@ -151,7 +152,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for categories route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_categoriesRoute_rendersBody() {
+    func routeView_categoriesRoute_rendersBody() {
         let view = RouteView(route: .categories)
         let body = view.body
         _ = body
@@ -159,7 +160,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for cart route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_cartRoute_rendersBody() {
+    func routeView_cartRoute_rendersBody() {
         let view = RouteView(route: .cart)
         let body = view.body
         _ = body
@@ -167,7 +168,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for profile route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_profileRoute_rendersBody() {
+    func routeView_profileRoute_rendersBody() {
         let view = RouteView(route: .profile)
         let body = view.body
         _ = body
@@ -175,7 +176,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for productDetail route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_productDetailRoute_rendersBody() {
+    func routeView_productDetailRoute_rendersBody() {
         let view = RouteView(route: .productDetail(productId: "prod_test"))
         let body = view.body
         _ = body
@@ -183,7 +184,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for checkout route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_checkoutRoute_rendersBody() {
+    func routeView_checkoutRoute_rendersBody() {
         let view = RouteView(route: .checkout)
         let body = view.body
         _ = body
@@ -191,7 +192,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for login route renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_loginRoute_rendersBody() {
+    func routeView_loginRoute_rendersBody() {
         let view = RouteView(route: .login(returnTo: nil))
         let body = view.body
         _ = body
@@ -199,7 +200,7 @@ struct PlaceholderViewTests {
     }
 
     @Test("RouteView for all routes renders without crash", .disabled(swiftUIDisabledReason))
-    func test_routeView_allRoutes_renderBody() {
+    func routeView_allRoutes_renderBody() {
         let routes: [Route] = [
             .home,
             .categories,

@@ -1,5 +1,4 @@
 import Foundation
-
 import os
 
 // MARK: - SessionManager
@@ -13,7 +12,7 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
     init(
         apiClient: APIClient,
         tokenStorage: TokenStorage,
-        authStateManager: AuthStateManagerImpl
+        authStateManager: AuthStateManagerImpl,
     ) {
         self.apiClient = apiClient
         self.tokenStorage = tokenStorage
@@ -25,7 +24,7 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
     /// Full login flow: authenticate, save token, create session, update state.
     func login(email: String, password: String) async throws {
         let response: AuthTokenResponse = try await apiClient.request(
-            AuthEndpoint.login(email: email, password: password)
+            AuthEndpoint.login(email: email, password: password),
         )
 
         guard !response.token.isEmpty else {
@@ -40,7 +39,7 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
     /// Full registration flow: register, save token, create session, update state.
     func register(email: String, password: String) async throws {
         let response: AuthTokenResponse = try await apiClient.request(
-            AuthEndpoint.register(email: email, password: password)
+            AuthEndpoint.register(email: email, password: password),
         )
 
         guard !response.token.isEmpty else {
@@ -67,7 +66,7 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
     func refreshToken() async throws -> String? {
         try await refreshActor.refresh { [apiClient, tokenStorage, authStateManager] in
             let response: AuthTokenResponse = try await apiClient.request(
-                AuthEndpoint.refreshToken
+                AuthEndpoint.refreshToken,
             )
 
             guard !response.token.isEmpty else {
@@ -86,21 +85,22 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
 
     // MARK: - Private
 
+    private static let logger = Logger(
+        subsystem: "com.xirigo.ecommerce",
+        category: "Auth",
+    )
+
     private let apiClient: APIClient
     private let tokenStorage: TokenStorage
     private let authStateManager: AuthStateManagerImpl
     private let refreshActor = RefreshActor()
-    private static let logger = Logger(
-        subsystem: "com.xirigo.ecommerce",
-        category: "Auth"
-    )
 
     /// Creates a session on the server. Failure is logged but does not
     /// propagate -- the token is already valid at this point.
     private func createSessionSilently(token: String) async {
         do {
             let _: EmptyResponse = try await apiClient.request(
-                AuthEndpoint.createSession
+                AuthEndpoint.createSession,
             )
         } catch {
             Self.logger.warning("Session creation failed (non-blocking): \(error.localizedDescription)")
@@ -112,7 +112,7 @@ final class SessionManager: TokenProvider, @unchecked Sendable {
     private func destroySessionSilently() async {
         do {
             let _: EmptyResponse = try await apiClient.request(
-                AuthEndpoint.destroySession
+                AuthEndpoint.destroySession,
             )
         } catch {
             Self.logger.warning("Session destruction failed (non-blocking): \(error.localizedDescription)")
@@ -129,7 +129,7 @@ private struct EmptyResponse: Decodable {}
 
 /// Serializes token refresh calls so only one refresh is in-flight at a time.
 private actor RefreshActor {
-    private var activeTask: Task<String?, Error>?
+    // MARK: - Internal
 
     func refresh(using operation: @Sendable @escaping () async throws -> String?) async throws -> String? {
         if let activeTask {
@@ -144,4 +144,8 @@ private actor RefreshActor {
         activeTask = task
         return try await task.value
     }
+
+    // MARK: - Private
+
+    private var activeTask: Task<String?, Error>?
 }

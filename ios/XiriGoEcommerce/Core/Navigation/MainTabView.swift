@@ -5,15 +5,15 @@ import SwiftUI
 /// Root view of the application. Displays a four-tab layout using native TabView
 /// for iOS Liquid Glass treatment. Each tab maintains its own independent NavigationStack.
 struct MainTabView: View {
-    // MARK: - Properties
-
-    @State private var router: AppRouter
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(router: AppRouter = AppRouter()) {
         _router = State(initialValue: router)
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -55,6 +55,32 @@ struct MainTabView: View {
         .environment(router)
     }
 
+    // MARK: - Private
+
+    @State private var router: AppRouter
+
+    // MARK: - Bindings
+
+    private var tabSelection: Binding<Tab> {
+        Binding(
+            get: { router.selectedTab },
+            set: { newTab in
+                router.selectTab(newTab)
+            },
+        )
+    }
+
+    private var authBinding: Binding<Route?> {
+        Binding(
+            get: { router.presentedAuth },
+            set: { newValue in
+                if newValue == nil {
+                    router.dismissAuth()
+                }
+            },
+        )
+    }
+
     // MARK: - Tabs
 
     private var homeTab: some View {
@@ -84,34 +110,14 @@ struct MainTabView: View {
                 .xgNavigationDestinations()
         }
     }
-
-    // MARK: - Bindings
-
-    private var tabSelection: Binding<Tab> {
-        Binding(
-            get: { router.selectedTab },
-            set: { newTab in
-                router.selectTab(newTab)
-            }
-        )
-    }
-
-    private var authBinding: Binding<Route?> {
-        Binding(
-            get: { router.presentedAuth },
-            set: { newValue in
-                if newValue == nil {
-                    router.dismissAuth()
-                }
-            }
-        )
-    }
 }
 
 // MARK: - Route + Identifiable
 
 extension Route: Identifiable {
-    var id: Int { hashValue }
+    var id: Int {
+        hashValue
+    }
 }
 
 // MARK: - Previews

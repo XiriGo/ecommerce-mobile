@@ -3,6 +3,7 @@ import Testing
 @testable import XiriGoEcommerce
 
 // MARK: - AuthMiddlewareTests
+
 // Tests for TokenRefreshActor (AuthMiddleware) serialization behavior
 
 @Suite("TokenRefreshActor Tests")
@@ -10,7 +11,7 @@ struct AuthMiddlewareTests {
     // MARK: - Successful Refresh
 
     @Test("refreshIfNeeded returns new token when refresh succeeds")
-    func test_refreshIfNeeded_successfulRefresh_returnsNewToken() async throws {
+    func refreshIfNeeded_successfulRefresh_returnsNewToken() async throws {
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "expired_token"
         tokenProvider.refreshResult = .success("fresh_token")
@@ -22,7 +23,7 @@ struct AuthMiddlewareTests {
     }
 
     @Test("refreshIfNeeded returns nil when refresh returns nil")
-    func test_refreshIfNeeded_refreshReturnsNil_returnsNil() async throws {
+    func refreshIfNeeded_refreshReturnsNil_returnsNil() async throws {
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = nil
         tokenProvider.refreshResult = .success(nil)
@@ -36,7 +37,7 @@ struct AuthMiddlewareTests {
     // MARK: - Already Refreshed by Another Request
 
     @Test("refreshIfNeeded returns current token when token already refreshed by another request")
-    func test_refreshIfNeeded_tokenAlreadyRefreshed_returnsCurrentToken() async throws {
+    func refreshIfNeeded_tokenAlreadyRefreshed_returnsCurrentToken() async throws {
         let tokenProvider = FakeTokenProvider()
         // Current token differs from the failed token, meaning another request already refreshed
         tokenProvider.accessToken = "already_fresh_token"
@@ -52,7 +53,7 @@ struct AuthMiddlewareTests {
     }
 
     @Test("refreshIfNeeded performs refresh when failed token matches current token")
-    func test_refreshIfNeeded_failedTokenMatchesCurrent_performsRefresh() async throws {
+    func refreshIfNeeded_failedTokenMatchesCurrent_performsRefresh() async throws {
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "same_token"
         tokenProvider.refreshResult = .success("refreshed_token")
@@ -67,7 +68,7 @@ struct AuthMiddlewareTests {
     // MARK: - Token is Nil
 
     @Test("refreshIfNeeded with nil current token and nil failed token performs refresh")
-    func test_refreshIfNeeded_bothTokensNil_performsRefresh() async throws {
+    func refreshIfNeeded_bothTokensNil_performsRefresh() async throws {
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = nil
         tokenProvider.refreshResult = .success("brand_new_token")
@@ -82,7 +83,7 @@ struct AuthMiddlewareTests {
     // MARK: - Refresh Failure
 
     @Test("refreshIfNeeded clears tokens and throws when refresh fails")
-    func test_refreshIfNeeded_refreshFails_clearsTokensAndThrows() async {
+    func refreshIfNeeded_refreshFails_clearsTokensAndThrows() async {
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "expired_token"
         tokenProvider.refreshResult = .failure(AppError.unauthorized(message: "Refresh failed"))
@@ -99,7 +100,7 @@ struct AuthMiddlewareTests {
     // MARK: - Concurrent Refresh Serialization
 
     @Test("concurrent refresh attempts only trigger one actual refresh call")
-    func test_refreshIfNeeded_concurrentCalls_onlyOneRefreshPerformed() async throws {
+    func refreshIfNeeded_concurrentCalls_onlyOneRefreshPerformed() async {
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "expired_token"
 
@@ -125,21 +126,27 @@ struct AuthMiddlewareTests {
     }
 }
 
-// MARK: - TokenInjectionTests (via APIClient integration)
+// MARK: - TokenInjectionTests
 
 @Suite("Auth Token Injection Tests")
 struct TokenInjectionTests {
+    // MARK: - Lifecycle
+
     init() {
         MockURLProtocol.reset()
     }
 
-    @Test("authenticated endpoint receives Bearer token header")
-    func test_tokenInjection_authenticatedEndpoint_hasAuthorizationHeader() async throws {
-        MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "order_1", "title": "Order" }
-        """)
+    // MARK: - Internal
 
-        struct SimpleResponse: Decodable { let id: String; let title: String }
+    @Test("authenticated endpoint receives Bearer token header")
+    func tokenInjection_authenticatedEndpoint_hasAuthorizationHeader() async throws {
+        MockURLProtocol.stub(statusCode: 200, json: """
+            { "id": "order_1", "title": "Order" }
+            """)
+
+        struct SimpleResponse: Decodable { let id: String
+            let title: String
+        }
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "user_jwt_abc"
@@ -158,12 +165,14 @@ struct TokenInjectionTests {
     }
 
     @Test("unauthenticated endpoint receives no Authorization header")
-    func test_tokenInjection_unauthenticatedEndpoint_hasNoAuthorizationHeader() async throws {
+    func tokenInjection_unauthenticatedEndpoint_hasNoAuthorizationHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_1", "title": "Product" }
-        """)
+            { "id": "prod_1", "title": "Product" }
+            """)
 
-        struct SimpleResponse: Decodable { let id: String; let title: String }
+        struct SimpleResponse: Decodable { let id: String
+            let title: String
+        }
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "user_jwt_abc"
@@ -182,12 +191,14 @@ struct TokenInjectionTests {
     }
 
     @Test("no token scenario leaves Authorization header absent")
-    func test_tokenInjection_noToken_authorizationHeaderAbsent() async throws {
+    func tokenInjection_noToken_authorizationHeaderAbsent() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_1", "title": "Product" }
-        """)
+            { "id": "prod_1", "title": "Product" }
+            """)
 
-        struct SimpleResponse: Decodable { let id: String; let title: String }
+        struct SimpleResponse: Decodable { let id: String
+            let title: String
+        }
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = nil

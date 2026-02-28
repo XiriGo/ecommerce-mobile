@@ -3,45 +3,47 @@ import SwiftUI
 // MARK: - XGImage
 
 struct XGImage: View {
-    // MARK: - Properties
-
-    private let url: URL?
-    private let contentMode: ContentMode
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(
         url: URL?,
-        contentMode: ContentMode = .fill
+        contentMode: ContentMode = .fill,
     ) {
         self.url = url
         self.contentMode = contentMode
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
     var body: some View {
         AsyncImage(url: url) { phase in
             switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: contentMode)
-                    .transition(.opacity.animation(.easeInOut(duration: 0.25)))
+                case let .success(image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: contentMode)
+                        .transition(.opacity.animation(.easeInOut(duration: 0.25)))
 
-            case .failure:
-                placeholderView
+                case .failure:
+                    placeholderView
 
-            case .empty:
-                placeholderView
+                case .empty:
+                    placeholderView
 
-            @unknown default:
-                placeholderView
+                @unknown default:
+                    placeholderView
             }
         }
     }
 
     // MARK: - Private
+
+    private let url: URL?
+    private let contentMode: ContentMode
 
     private var placeholderView: some View {
         Rectangle()

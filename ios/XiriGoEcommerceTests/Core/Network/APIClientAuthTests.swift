@@ -2,18 +2,22 @@ import Foundation
 import Testing
 @testable import XiriGoEcommerce
 
-// MARK: - Test Helpers
+// MARK: - ProductResponse
 
 private struct ProductResponse: Decodable, Sendable {
     let id: String
     let title: String
 }
 
+// MARK: - TestEndpoint
+
 private struct TestEndpoint: Endpoint {
     var path: String
     var method: HTTPMethod
     var requiresAuth: Bool = false
 }
+
+// MARK: - AuthEndpoint
 
 private struct AuthEndpoint: Endpoint {
     var path: String = "/store/orders"
@@ -25,17 +29,21 @@ private struct AuthEndpoint: Endpoint {
 
 @Suite("APIClient Auth Tests")
 struct APIClientAuthTests {
+    // MARK: - Lifecycle
+
     init() {
         MockURLProtocol.reset()
     }
 
+    // MARK: - Internal
+
     // MARK: - Auth Token Injection
 
     @Test("auth endpoint has Authorization header injected with token")
-    func test_request_authEndpoint_withToken_hasAuthorizationHeader() async throws {
+    func request_authEndpoint_withToken_hasAuthorizationHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "order_1", "title": "Order" }
-        """)
+            { "id": "order_1", "title": "Order" }
+            """)
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "my_jwt_token"
@@ -49,10 +57,10 @@ struct APIClientAuthTests {
     }
 
     @Test("auth endpoint with no token does not inject Authorization header")
-    func test_request_authEndpoint_withNoToken_hasNoAuthorizationHeader() async throws {
+    func request_authEndpoint_withNoToken_hasNoAuthorizationHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "order_1", "title": "Order" }
-        """)
+            { "id": "order_1", "title": "Order" }
+            """)
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = nil
@@ -66,10 +74,10 @@ struct APIClientAuthTests {
     }
 
     @Test("non-auth endpoint does not inject Authorization header even with token available")
-    func test_request_nonAuthEndpoint_withToken_hasNoAuthorizationHeader() async throws {
+    func request_nonAuthEndpoint_withToken_hasNoAuthorizationHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_1", "title": "Product" }
-        """)
+            { "id": "prod_1", "title": "Product" }
+            """)
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "my_jwt_token"
@@ -85,7 +93,7 @@ struct APIClientAuthTests {
     // MARK: - 401 Token Refresh
 
     @Test("401 response triggers token refresh and retries with new token")
-    func test_request_401WithRefreshSuccess_retriesWithNewToken() async throws {
+    func request_401WithRefreshSuccess_retriesWithNewToken() async throws {
         var callCount = 0
         MockURLProtocol.requestHandler = { request in
             callCount += 1
@@ -95,10 +103,10 @@ struct APIClientAuthTests {
                     url: requestURL,
                     statusCode: 401,
                     httpVersion: "HTTP/1.1",
-                    headerFields: ["Content-Type": "application/json"]
+                    headerFields: ["Content-Type": "application/json"],
                 ))
                 let data = Data(
-                    "{ \"type\": \"unauthorized\", \"message\": \"Unauthorized\" }".utf8
+                    "{ \"type\": \"unauthorized\", \"message\": \"Unauthorized\" }".utf8,
                 )
                 return (response, data)
             } else {
@@ -106,10 +114,10 @@ struct APIClientAuthTests {
                     url: requestURL,
                     statusCode: 200,
                     httpVersion: "HTTP/1.1",
-                    headerFields: ["Content-Type": "application/json"]
+                    headerFields: ["Content-Type": "application/json"],
                 ))
                 let data = Data(
-                    "{ \"id\": \"order_1\", \"title\": \"Order\" }".utf8
+                    "{ \"id\": \"order_1\", \"title\": \"Order\" }".utf8,
                 )
                 return (response, data)
             }
@@ -134,10 +142,10 @@ struct APIClientAuthTests {
     }
 
     @Test("401 response with failed token refresh clears tokens and throws unauthorized")
-    func test_request_401WithRefreshFailure_clearsTokensAndThrowsUnauthorized() async {
+    func request_401WithRefreshFailure_clearsTokensAndThrowsUnauthorized() async {
         MockURLProtocol.stub(statusCode: 401, json: """
-        { "type": "unauthorized", "message": "Unauthorized" }
-        """)
+            { "type": "unauthorized", "message": "Unauthorized" }
+            """)
 
         let tokenProvider = FakeTokenProvider()
         tokenProvider.accessToken = "expired_token"
@@ -156,10 +164,10 @@ struct APIClientAuthTests {
     // MARK: - Publishable API Key Header
 
     @Test("publishable API key is added as x-publishable-api-key header")
-    func test_request_publishableApiKey_isAddedAsHeader() async throws {
+    func request_publishableApiKey_isAddedAsHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_1", "title": "Product" }
-        """)
+            { "id": "prod_1", "title": "Product" }
+            """)
 
         let client = APIClient.makeTestClient(publishableApiKey: "pk_test_abc123")
         let endpoint = TestEndpoint(path: "/store/products", method: .get)
@@ -171,10 +179,10 @@ struct APIClientAuthTests {
     }
 
     @Test("no publishable API key means no x-publishable-api-key header")
-    func test_request_noPublishableApiKey_headerIsAbsent() async throws {
+    func request_noPublishableApiKey_headerIsAbsent() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_1", "title": "Product" }
-        """)
+            { "id": "prod_1", "title": "Product" }
+            """)
 
         let client = APIClient.makeTestClient(publishableApiKey: nil)
         let endpoint = TestEndpoint(path: "/store/products", method: .get)
@@ -188,10 +196,10 @@ struct APIClientAuthTests {
     // MARK: - Accept Header
 
     @Test("all requests include Accept application/json header")
-    func test_request_allRequests_haveAcceptJsonHeader() async throws {
+    func request_allRequests_haveAcceptJsonHeader() async throws {
         MockURLProtocol.stub(statusCode: 200, json: """
-        { "id": "prod_1", "title": "Product" }
-        """)
+            { "id": "prod_1", "title": "Product" }
+            """)
 
         let client = APIClient.makeTestClient()
         let endpoint = TestEndpoint(path: "/store/products", method: .get)

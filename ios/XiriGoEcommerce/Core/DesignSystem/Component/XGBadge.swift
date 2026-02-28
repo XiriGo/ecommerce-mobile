@@ -9,23 +9,25 @@ enum XGBadgeStatus {
     case info
     case neutral
 
+    // MARK: - Internal
+
     var backgroundColor: Color {
         switch self {
-        case .success: return XGColors.success
-        case .warning: return XGColors.warning
-        case .error: return XGColors.error
-        case .info: return XGColors.info
-        case .neutral: return XGColors.surfaceVariant
+            case .success: XGColors.success
+            case .warning: XGColors.warning
+            case .error: XGColors.error
+            case .info: XGColors.info
+            case .neutral: XGColors.surfaceVariant
         }
     }
 
     var textColor: Color {
         switch self {
-        case .success: return XGColors.onSuccess
-        case .warning: return XGColors.onWarning
-        case .error: return XGColors.onError
-        case .info: return XGColors.onInfo
-        case .neutral: return XGColors.onSurfaceVariant
+            case .success: XGColors.onSuccess
+            case .warning: XGColors.onWarning
+            case .error: XGColors.onError
+            case .info: XGColors.onInfo
+            case .neutral: XGColors.onSurfaceVariant
         }
     }
 }
@@ -33,15 +35,15 @@ enum XGBadgeStatus {
 // MARK: - XGCountBadge
 
 struct XGCountBadge: View {
-    // MARK: - Properties
-
-    private let count: Int
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
     init(count: Int) {
         self.count = count
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -55,12 +57,14 @@ struct XGCountBadge: View {
                 .background(XGColors.badgeBackground)
                 .clipShape(Capsule())
                 .accessibilityLabel(
-                    String(localized: "common_notifications_count \(count)")
+                    String(localized: "common_notifications_count \(count)"),
                 )
         }
     }
 
     // MARK: - Private
+
+    private let count: Int
 
     private var hasItems: Bool {
         count >= 1
@@ -74,10 +78,7 @@ struct XGCountBadge: View {
 // MARK: - XGStatusBadge
 
 struct XGStatusBadge: View {
-    // MARK: - Properties
-
-    private let status: XGBadgeStatus
-    private let label: String
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -85,6 +86,8 @@ struct XGStatusBadge: View {
         self.status = status
         self.label = label
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -98,6 +101,11 @@ struct XGStatusBadge: View {
             .clipShape(Capsule())
             .accessibilityLabel(label)
     }
+
+    // MARK: - Private
+
+    private let status: XGBadgeStatus
+    private let label: String
 }
 
 // MARK: - Previews

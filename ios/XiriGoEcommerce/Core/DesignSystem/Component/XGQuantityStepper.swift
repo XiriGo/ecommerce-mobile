@@ -3,12 +3,7 @@ import SwiftUI
 // MARK: - XGQuantityStepper
 
 struct XGQuantityStepper: View {
-    // MARK: - Properties
-
-    @Binding private var quantity: Int
-    private let minQuantity: Int
-    private let maxQuantity: Int
-    private let onQuantityChange: (Int) -> Void
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -16,13 +11,15 @@ struct XGQuantityStepper: View {
         quantity: Binding<Int>,
         minQuantity: Int = 1,
         maxQuantity: Int = 99,
-        onQuantityChange: @escaping (Int) -> Void
+        onQuantityChange: @escaping (Int) -> Void,
     ) {
-        self._quantity = quantity
+        _quantity = quantity
         self.minQuantity = minQuantity
         self.maxQuantity = maxQuantity
         self.onQuantityChange = onQuantityChange
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -35,16 +32,32 @@ struct XGQuantityStepper: View {
         .accessibilityElement(children: .combine)
         .accessibilityAdjustableAction { direction in
             switch direction {
-            case .increment:
-                increaseQuantity()
+                case .increment:
+                    increaseQuantity()
 
-            case .decrement:
-                decreaseQuantity()
+                case .decrement:
+                    decreaseQuantity()
 
-            @unknown default:
-                break
+                @unknown default:
+                    break
             }
         }
+    }
+
+    // MARK: - Private
+
+    @Binding private var quantity: Int
+
+    private let minQuantity: Int
+    private let maxQuantity: Int
+    private let onQuantityChange: (Int) -> Void
+
+    private var canDecrease: Bool {
+        quantity > minQuantity
+    }
+
+    private var canIncrease: Bool {
+        quantity < maxQuantity
     }
 
     // MARK: - Subviews
@@ -69,7 +82,7 @@ struct XGQuantityStepper: View {
             .foregroundStyle(XGColors.onSurface)
             .frame(minWidth: XGSpacing.xl)
             .accessibilityLabel(
-                String(localized: "common_quantity_value \(quantity)")
+                String(localized: "common_quantity_value \(quantity)"),
             )
     }
 
@@ -87,24 +100,18 @@ struct XGQuantityStepper: View {
         .accessibilityLabel(String(localized: "common_increase_quantity"))
     }
 
-    // MARK: - Private
-
-    private var canDecrease: Bool {
-        quantity > minQuantity
-    }
-
-    private var canIncrease: Bool {
-        quantity < maxQuantity
-    }
-
     private func decreaseQuantity() {
-        guard canDecrease else { return }
+        guard canDecrease else {
+            return
+        }
         quantity -= 1
         onQuantityChange(quantity)
     }
 
     private func increaseQuantity() {
-        guard canIncrease else { return }
+        guard canIncrease else {
+            return
+        }
         quantity += 1
         onQuantityChange(quantity)
     }
@@ -119,7 +126,7 @@ struct XGQuantityStepper: View {
         var body: some View {
             XGQuantityStepper(
                 quantity: $quantity,
-                onQuantityChange: { _ in }
+                onQuantityChange: { _ in },
             )
             .padding()
         }
@@ -134,7 +141,7 @@ struct XGQuantityStepper: View {
         var body: some View {
             XGQuantityStepper(
                 quantity: $quantity,
-                onQuantityChange: { _ in }
+                onQuantityChange: { _ in },
             )
             .padding()
         }
@@ -149,7 +156,7 @@ struct XGQuantityStepper: View {
         var body: some View {
             XGQuantityStepper(
                 quantity: $quantity,
-                onQuantityChange: { _ in }
+                onQuantityChange: { _ in },
             )
             .padding()
         }

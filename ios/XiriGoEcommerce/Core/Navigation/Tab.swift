@@ -9,36 +9,40 @@ enum Tab: String, CaseIterable, Identifiable, Sendable {
     case cart
     case profile
 
+    // MARK: - Internal
+
     // MARK: - Identifiable
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     // MARK: - Display Properties
 
     var title: String {
         switch self {
-        case .home: return String(localized: "nav_tab_home")
-        case .categories: return String(localized: "nav_tab_categories")
-        case .cart: return String(localized: "nav_tab_cart")
-        case .profile: return String(localized: "nav_tab_profile")
+            case .home: String(localized: "nav_tab_home")
+            case .categories: String(localized: "nav_tab_categories")
+            case .cart: String(localized: "nav_tab_cart")
+            case .profile: String(localized: "nav_tab_profile")
         }
     }
 
     var systemImage: String {
         switch self {
-        case .home: return "house"
-        case .categories: return "square.grid.2x2"
-        case .cart: return "cart"
-        case .profile: return "person"
+            case .home: "house"
+            case .categories: "square.grid.2x2"
+            case .cart: "cart"
+            case .profile: "person"
         }
     }
 
     var selectedSystemImage: String {
         switch self {
-        case .home: return "house.fill"
-        case .categories: return "square.grid.2x2.fill"
-        case .cart: return "cart.fill"
-        case .profile: return "person.fill"
+            case .home: "house.fill"
+            case .categories: "square.grid.2x2.fill"
+            case .cart: "cart.fill"
+            case .profile: "person.fill"
         }
     }
 }

@@ -4,9 +4,7 @@ import SwiftUI
 
 /// User profile screen with guest state and menu items.
 struct ProfileScreen: View {
-    // MARK: - Properties
-
-    @Environment(AppRouter.self) private var router
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -22,49 +20,63 @@ struct ProfileScreen: View {
         .navigationTitle(String(localized: "nav_tab_profile"))
     }
 
+    // MARK: - Private
+
+    @Environment(AppRouter.self)
+    private var router
+
     // MARK: - Guest Header
 
     private var guestHeader: some View {
         VStack(spacing: XGSpacing.base) {
-            ZStack {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
-                    .overlay(
-                        Circle()
-                            .stroke(XGColors.outlineVariant, lineWidth: 1)
-                    )
-
-                Image(systemName: "person.fill")
-                    .font(.system(size: XGSpacing.IconSize.extraLarge))
-                    .foregroundStyle(XGColors.onSurfaceVariant)
-            }
+            guestAvatar
 
             Text(String(localized: "nav_profile_guest_title"))
                 .font(XGTypography.bodyLarge)
                 .foregroundStyle(XGColors.onSurfaceVariant)
                 .multilineTextAlignment(.center)
 
-            HStack(spacing: XGSpacing.md) {
-                XGButton(
-                    String(localized: "nav_profile_guest_login_button"),
-                    variant: .primary,
-                    fullWidth: false
-                ) {
-                    router.presentLogin()
-                }
-
-                XGButton(
-                    String(localized: "nav_profile_guest_register_button"),
-                    variant: .outlined,
-                    fullWidth: false
-                ) {
-                    router.navigate(to: .register)
-                }
-            }
+            guestActionButtons
         }
         .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
         .padding(.top, XGSpacing.lg)
+    }
+
+    private var guestAvatar: some View {
+        ZStack {
+            Circle()
+                .fill(.ultraThinMaterial)
+                .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
+                .overlay(
+                    Circle()
+                        .stroke(XGColors.outlineVariant, lineWidth: 1),
+                )
+
+            Image(systemName: "person.fill")
+                .font(.system(size: XGSpacing.IconSize.extraLarge))
+                .foregroundStyle(XGColors.onSurfaceVariant)
+                .accessibilityHidden(true)
+        }
+    }
+
+    private var guestActionButtons: some View {
+        HStack(spacing: XGSpacing.md) {
+            XGButton(
+                String(localized: "nav_profile_guest_login_button"),
+                variant: .primary,
+                fullWidth: false,
+            ) {
+                router.presentLogin()
+            }
+
+            XGButton(
+                String(localized: "nav_profile_guest_register_button"),
+                variant: .outlined,
+                fullWidth: false,
+            ) {
+                router.navigate(to: .register)
+            }
+        }
     }
 
     // MARK: - Menu Section
@@ -108,52 +120,52 @@ struct ProfileScreen: View {
     }
 }
 
-// MARK: - Profile Menu Item
+// MARK: - ProfileMenuItem
 
 private struct ProfileMenuItem: Identifiable {
+    static let items: [Self] = [
+        Self(
+            id: "orders",
+            title: String(localized: "profile_menu_orders"),
+            icon: "list.clipboard",
+            route: .orderList,
+        ),
+        Self(
+            id: "wishlist",
+            title: String(localized: "profile_menu_wishlist"),
+            icon: "heart",
+            route: .wishlist,
+        ),
+        Self(
+            id: "addresses",
+            title: String(localized: "profile_menu_addresses"),
+            icon: "mappin.and.ellipse",
+            route: .addressManagement,
+        ),
+        Self(
+            id: "payment",
+            title: String(localized: "profile_menu_payment"),
+            icon: "creditcard",
+            route: .paymentMethods,
+        ),
+        Self(
+            id: "notifications",
+            title: String(localized: "profile_menu_notifications"),
+            icon: "bell",
+            route: .notifications,
+        ),
+        Self(
+            id: "settings",
+            title: String(localized: "profile_menu_settings"),
+            icon: "gearshape",
+            route: .settings,
+        ),
+    ]
+
     let id: String
     let title: String
     let icon: String
     let route: Route
-
-    static let items: [ProfileMenuItem] = [
-        ProfileMenuItem(
-            id: "orders",
-            title: String(localized: "profile_menu_orders"),
-            icon: "list.clipboard",
-            route: .orderList
-        ),
-        ProfileMenuItem(
-            id: "wishlist",
-            title: String(localized: "profile_menu_wishlist"),
-            icon: "heart",
-            route: .wishlist
-        ),
-        ProfileMenuItem(
-            id: "addresses",
-            title: String(localized: "profile_menu_addresses"),
-            icon: "mappin.and.ellipse",
-            route: .addressManagement
-        ),
-        ProfileMenuItem(
-            id: "payment",
-            title: String(localized: "profile_menu_payment"),
-            icon: "creditcard",
-            route: .paymentMethods
-        ),
-        ProfileMenuItem(
-            id: "notifications",
-            title: String(localized: "profile_menu_notifications"),
-            icon: "bell",
-            route: .notifications
-        ),
-        ProfileMenuItem(
-            id: "settings",
-            title: String(localized: "profile_menu_settings"),
-            icon: "gearshape",
-            route: .settings
-        ),
-    ]
 }
 
 // MARK: - Previews

@@ -16,7 +16,13 @@ protocol TokenProvider: Sendable {
 /// Placeholder implementation that always returns nil. Replaced by the
 /// real Keychain-backed implementation in M0-06.
 final class NoOpTokenProvider: TokenProvider, @unchecked Sendable {
-    func getAccessToken() async -> String? { nil }
-    func refreshToken() async throws -> String? { nil }
+    func getAccessToken() async -> String? {
+        nil
+    }
+
+    func refreshToken() async throws -> String? {
+        nil
+    }
+
     func clearTokens() async {}
 }

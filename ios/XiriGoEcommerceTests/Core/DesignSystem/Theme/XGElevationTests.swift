@@ -8,7 +8,7 @@ struct XGElevationTests {
     // MARK: - Level0 (No Elevation)
 
     @Test("Level0 has zero radius and zero opacity")
-    func test_level0_hasNoShadow() {
+    func level0_hasNoShadow() {
         #expect(XGElevation.level0.radius == 0)
         #expect(XGElevation.level0.y == 0)
         #expect(XGElevation.level0.opacity == 0)
@@ -17,7 +17,7 @@ struct XGElevationTests {
     // MARK: - Level1 (Lowest Elevation)
 
     @Test("Level1 has low radius and low opacity")
-    func test_level1_hasLowShadow() {
+    func level1_hasLowShadow() {
         #expect(XGElevation.level1.radius == 1)
         #expect(XGElevation.level1.y == 1)
         #expect(XGElevation.level1.opacity == 0.15)
@@ -26,7 +26,7 @@ struct XGElevationTests {
     // MARK: - Level2
 
     @Test("Level2 has medium-low radius")
-    func test_level2_hasMediumLowShadow() {
+    func level2_hasMediumLowShadow() {
         #expect(XGElevation.level2.radius == 3)
         #expect(XGElevation.level2.y == 2)
         #expect(XGElevation.level2.opacity == 0.20)
@@ -35,7 +35,7 @@ struct XGElevationTests {
     // MARK: - Level3
 
     @Test("Level3 has medium radius")
-    func test_level3_hasMediumShadow() {
+    func level3_hasMediumShadow() {
         #expect(XGElevation.level3.radius == 6)
         #expect(XGElevation.level3.y == 4)
         #expect(XGElevation.level3.opacity == 0.25)
@@ -44,7 +44,7 @@ struct XGElevationTests {
     // MARK: - Level4
 
     @Test("Level4 has high radius")
-    func test_level4_hasHighShadow() {
+    func level4_hasHighShadow() {
         #expect(XGElevation.level4.radius == 8)
         #expect(XGElevation.level4.y == 6)
         #expect(XGElevation.level4.opacity == 0.25)
@@ -53,7 +53,7 @@ struct XGElevationTests {
     // MARK: - Level5 (Highest Elevation)
 
     @Test("Level5 has highest radius and opacity")
-    func test_level5_hasHighestShadow() {
+    func level5_hasHighestShadow() {
         #expect(XGElevation.level5.radius == 12)
         #expect(XGElevation.level5.y == 8)
         #expect(XGElevation.level5.opacity == 0.30)
@@ -62,7 +62,7 @@ struct XGElevationTests {
     // MARK: - Ascending Order
 
     @Test("Shadow radius increases with elevation level")
-    func test_levels_radiusIsAscending() {
+    func levels_radiusIsAscending() {
         #expect(XGElevation.level0.radius < XGElevation.level1.radius)
         #expect(XGElevation.level1.radius < XGElevation.level2.radius)
         #expect(XGElevation.level2.radius < XGElevation.level3.radius)
@@ -71,7 +71,7 @@ struct XGElevationTests {
     }
 
     @Test("Shadow y-offset increases with elevation level")
-    func test_levels_yOffsetIsAscending() {
+    func levels_yOffsetIsAscending() {
         #expect(XGElevation.level0.y < XGElevation.level1.y)
         #expect(XGElevation.level1.y < XGElevation.level2.y)
         #expect(XGElevation.level2.y < XGElevation.level3.y)
@@ -82,19 +82,19 @@ struct XGElevationTests {
     // MARK: - ShadowStyle struct
 
     @Test("ShadowStyle stores radius correctly")
-    func test_shadowStyle_storesRadius() {
+    func shadowStyle_storesRadius() {
         let style = ShadowStyle(radius: 5, y: 3, opacity: 0.2)
         #expect(style.radius == 5)
     }
 
     @Test("ShadowStyle stores y-offset correctly")
-    func test_shadowStyle_storesYOffset() {
+    func shadowStyle_storesYOffset() {
         let style = ShadowStyle(radius: 5, y: 3, opacity: 0.2)
         #expect(style.y == 3)
     }
 
     @Test("ShadowStyle stores opacity correctly")
-    func test_shadowStyle_storesOpacity() {
+    func shadowStyle_storesOpacity() {
         let style = ShadowStyle(radius: 5, y: 3, opacity: 0.2)
         #expect(style.opacity == 0.2)
     }

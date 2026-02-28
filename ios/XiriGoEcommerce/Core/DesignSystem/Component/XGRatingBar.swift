@@ -3,13 +3,7 @@ import SwiftUI
 // MARK: - XGRatingBar
 
 struct XGRatingBar: View {
-    // MARK: - Properties
-
-    private let rating: Double
-    private let maxRating: Int
-    private let starSize: CGFloat
-    private let showValue: Bool
-    private let reviewCount: Int?
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -18,7 +12,7 @@ struct XGRatingBar: View {
         maxRating: Int = 5,
         starSize: CGFloat = 16,
         showValue: Bool = false,
-        reviewCount: Int? = nil
+        reviewCount: Int? = nil,
     ) {
         self.rating = rating
         self.maxRating = maxRating
@@ -26,6 +20,8 @@ struct XGRatingBar: View {
         self.showValue = showValue
         self.reviewCount = reviewCount
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -51,9 +47,23 @@ struct XGRatingBar: View {
 
     // MARK: - Private
 
+    private let rating: Double
+    private let maxRating: Int
+    private let starSize: CGFloat
+    private let showValue: Bool
+    private let reviewCount: Int?
+
+    private var accessibilityDescription: String {
+        var desc = String(localized: "common_rating_description \(rating) \(maxRating)")
+        if let reviewCount {
+            desc += " " + String(localized: "common_reviews_count \(reviewCount)")
+        }
+        return desc
+    }
+
     private var starsView: some View {
         HStack(spacing: XGSpacing.xxs) {
-            ForEach(1...maxRating, id: \.self) { position in
+            ForEach(1 ... maxRating, id: \.self) { position in
                 starImage(for: position)
                     .font(.system(size: starSize))
             }
@@ -76,14 +86,6 @@ struct XGRatingBar: View {
                 .foregroundStyle(XGColors.ratingStarEmpty)
                 .accessibilityHidden(true)
         }
-    }
-
-    private var accessibilityDescription: String {
-        var desc = String(localized: "common_rating_description \(rating) \(maxRating)")
-        if let reviewCount {
-            desc += " " + String(localized: "common_reviews_count \(reviewCount)")
-        }
-        return desc
     }
 }
 

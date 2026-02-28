@@ -5,57 +5,58 @@ import Testing
 // MARK: - XGTabItemTests
 
 @Suite("XGTabItem Tests")
+@MainActor
 struct XGTabItemTests {
     @Test("TabItem stores id correctly")
-    func test_init_id_storedCorrectly() {
+    func init_id_storedCorrectly() {
         let item = XGTabItem(id: 2, label: "Cart", icon: "cart", selectedIcon: "cart.fill")
         #expect(item.id == 2)
     }
 
     @Test("TabItem stores label correctly")
-    func test_init_label_storedCorrectly() {
+    func init_label_storedCorrectly() {
         let item = XGTabItem(id: 0, label: "Home", icon: "house", selectedIcon: "house.fill")
         #expect(item.label == "Home")
     }
 
     @Test("TabItem stores icon correctly")
-    func test_init_icon_storedCorrectly() {
+    func init_icon_storedCorrectly() {
         let item = XGTabItem(id: 0, label: "Home", icon: "house", selectedIcon: "house.fill")
         #expect(item.icon == "house")
     }
 
     @Test("TabItem stores selectedIcon correctly")
-    func test_init_selectedIcon_storedCorrectly() {
+    func init_selectedIcon_storedCorrectly() {
         let item = XGTabItem(id: 0, label: "Home", icon: "house", selectedIcon: "house.fill")
         #expect(item.selectedIcon == "house.fill")
     }
 
     @Test("TabItem has no badge count by default")
-    func test_init_defaultBadgeCountIsNil() {
+    func init_defaultBadgeCountIsNil() {
         let item = XGTabItem(id: 0, label: "Home", icon: "house", selectedIcon: "house.fill")
         #expect(item.badgeCount == nil)
     }
 
     @Test("TabItem stores badge count when provided")
-    func test_init_withBadgeCount_storedCorrectly() {
+    func init_withBadgeCount_storedCorrectly() {
         let item = XGTabItem(
             id: 2,
             label: "Cart",
             icon: "cart",
             selectedIcon: "cart.fill",
-            badgeCount: 3
+            badgeCount: 3,
         )
         #expect(item.badgeCount == 3)
     }
 
     @Test("TabItem with zero badge count stores zero")
-    func test_init_zeroBadgeCount_storedAsZero() {
+    func init_zeroBadgeCount_storedAsZero() {
         let item = XGTabItem(
             id: 0,
             label: "Home",
             icon: "house",
             selectedIcon: "house.fill",
-            badgeCount: 0
+            badgeCount: 0,
         )
         #expect(item.badgeCount == 0)
     }
@@ -64,9 +65,10 @@ struct XGTabItemTests {
 // MARK: - XGTabBarTests
 
 @Suite("XGTabBar Tests")
+@MainActor
 struct XGTabBarTests {
     @Test("TabBar initialises with items and selectedIndex binding")
-    func test_init_withItemsAndBinding_initialises() {
+    func init_withItemsAndBinding_initialises() {
         var selectedIndex = 0
         let binding = Binding(get: { selectedIndex }, set: { selectedIndex = $0 })
         let items = [
@@ -79,7 +81,7 @@ struct XGTabBarTests {
     }
 
     @Test("Updating selectedIndex binding reflects new selection")
-    func test_selectedIndex_binding_updatesValue() {
+    func selectedIndex_binding_updatesValue() {
         var selectedIndex = 0
         let binding = Binding(get: { selectedIndex }, set: { selectedIndex = $0 })
         binding.wrappedValue = 2
@@ -87,7 +89,7 @@ struct XGTabBarTests {
     }
 
     @Test("TabBar initialises with single item")
-    func test_init_withSingleItem_initialises() {
+    func init_withSingleItem_initialises() {
         var selectedIndex = 0
         let binding = Binding(get: { selectedIndex }, set: { selectedIndex = $0 })
         let items = [
@@ -99,7 +101,7 @@ struct XGTabBarTests {
     }
 
     @Test("TabBar initialises with badge on item")
-    func test_init_withBadgeOnItem_initialises() {
+    func init_withBadgeOnItem_initialises() {
         var selectedIndex = 0
         let binding = Binding(get: { selectedIndex }, set: { selectedIndex = $0 })
         let items = [
@@ -109,7 +111,7 @@ struct XGTabBarTests {
                 label: "Cart",
                 icon: "cart",
                 selectedIcon: "cart.fill",
-                badgeCount: 5
+                badgeCount: 5,
             ),
         ]
         let tabBar = XGTabBar(items: items, selectedIndex: binding)

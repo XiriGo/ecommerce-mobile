@@ -9,7 +9,7 @@ struct AuthStateManagerTests {
     // MARK: - Initial State
 
     @Test("initial authState is loading")
-    func test_initialState_isLoading() {
+    func initialState_isLoading() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
         #expect(manager.authState == .loading)
@@ -18,7 +18,7 @@ struct AuthStateManagerTests {
     // MARK: - checkStoredToken
 
     @Test("checkStoredToken with no stored token transitions to guest")
-    func test_checkStoredToken_noToken_setsGuestState() async {
+    func checkStoredToken_noToken_setsGuestState() async {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 
@@ -28,7 +28,7 @@ struct AuthStateManagerTests {
     }
 
     @Test("checkStoredToken with stored token transitions to authenticated")
-    func test_checkStoredToken_withToken_setsAuthenticatedState() async {
+    func checkStoredToken_withToken_setsAuthenticatedState() async {
         let storage = FakeTokenStorage()
         storage.storedToken = "stored_jwt_token"
         let manager = AuthStateManagerImpl(tokenStorage: storage)
@@ -41,7 +41,7 @@ struct AuthStateManagerTests {
     // MARK: - onLoginSuccess
 
     @Test("onLoginSuccess transitions state to authenticated with provided token")
-    func test_onLoginSuccess_setsAuthenticatedState() {
+    func onLoginSuccess_setsAuthenticatedState() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 
@@ -51,7 +51,7 @@ struct AuthStateManagerTests {
     }
 
     @Test("onLoginSuccess saves token to storage")
-    func test_onLoginSuccess_savesTokenToStorage() {
+    func onLoginSuccess_savesTokenToStorage() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 
@@ -62,7 +62,7 @@ struct AuthStateManagerTests {
     }
 
     @Test("onLoginSuccess called twice uses latest token")
-    func test_onLoginSuccess_calledTwice_statesReflectsLastToken() {
+    func onLoginSuccess_calledTwice_statesReflectsLastToken() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 
@@ -76,7 +76,7 @@ struct AuthStateManagerTests {
     // MARK: - onLogout
 
     @Test("onLogout transitions state to guest")
-    func test_onLogout_setsGuestState() {
+    func onLogout_setsGuestState() {
         let storage = FakeTokenStorage()
         storage.storedToken = "existing_token"
         let manager = AuthStateManagerImpl(tokenStorage: storage)
@@ -88,7 +88,7 @@ struct AuthStateManagerTests {
     }
 
     @Test("onLogout clears token from storage")
-    func test_onLogout_clearsTokenFromStorage() {
+    func onLogout_clearsTokenFromStorage() {
         let storage = FakeTokenStorage()
         storage.storedToken = "some_token"
         let manager = AuthStateManagerImpl(tokenStorage: storage)
@@ -101,7 +101,7 @@ struct AuthStateManagerTests {
     }
 
     @Test("onLogout from loading state still sets guest")
-    func test_onLogout_fromLoadingState_setsGuest() {
+    func onLogout_fromLoadingState_setsGuest() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 
@@ -113,7 +113,7 @@ struct AuthStateManagerTests {
     // MARK: - State Transition Sequence
 
     @Test("full login-then-logout cycle transitions correctly through states")
-    func test_loginThenLogout_cycleTransitionsCorrectly() {
+    func loginThenLogout_cycleTransitionsCorrectly() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 
@@ -127,7 +127,7 @@ struct AuthStateManagerTests {
     }
 
     @Test("login after logout transitions back to authenticated")
-    func test_loginAfterLogout_transitionsBackToAuthenticated() {
+    func loginAfterLogout_transitionsBackToAuthenticated() {
         let storage = FakeTokenStorage()
         let manager = AuthStateManagerImpl(tokenStorage: storage)
 

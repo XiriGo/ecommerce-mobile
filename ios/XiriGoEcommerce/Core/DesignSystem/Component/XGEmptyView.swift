@@ -3,12 +3,7 @@ import SwiftUI
 // MARK: - XGEmptyView
 
 struct XGEmptyView: View {
-    // MARK: - Properties
-
-    private let message: String
-    private let systemImage: String
-    private let actionLabel: String?
-    private let onAction: (() -> Void)?
+    // MARK: - Lifecycle
 
     // MARK: - Init
 
@@ -16,13 +11,15 @@ struct XGEmptyView: View {
         message: String,
         systemImage: String = "tray",
         actionLabel: String? = nil,
-        onAction: (() -> Void)? = nil
+        onAction: (() -> Void)? = nil,
     ) {
         self.message = message
         self.systemImage = systemImage
         self.actionLabel = actionLabel
         self.onAction = onAction
     }
+
+    // MARK: - Internal
 
     // MARK: - Body
 
@@ -43,20 +40,27 @@ struct XGEmptyView: View {
                     actionLabel,
                     variant: .outlined,
                     fullWidth: false,
-                    action: onAction
+                    action: onAction,
                 )
             }
         }
         .padding(XGSpacing.base)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+
+    // MARK: - Private
+
+    private let message: String
+    private let systemImage: String
+    private let actionLabel: String?
+    private let onAction: (() -> Void)?
 }
 
 // MARK: - Previews
 
 #Preview("XGEmptyView Default") {
     XGEmptyView(
-        message: String(localized: "common_empty_message")
+        message: String(localized: "common_empty_message"),
     )
 }
 
@@ -65,6 +69,6 @@ struct XGEmptyView: View {
         message: "Your cart is empty",
         systemImage: "cart",
         actionLabel: "Browse Products",
-        onAction: {}
+        onAction: {},
     )
 }
