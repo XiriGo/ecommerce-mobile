@@ -1,0 +1,193 @@
+package com.xirigo.ecommerce.feature.onboarding.presentation.screen
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.component.XGBrandGradient
+import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
+import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
+import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
+import com.xirigo.ecommerce.feature.onboarding.presentation.viewmodel.OnboardingViewModel
+
+private val GetStartedButtonHeight = 56.dp
+private val GetStartedCornerRadius = 10.dp
+private val GetStartedHorizontalPadding = 20.dp
+private val GetStartedBottomMargin = 80.dp
+private val DotsBottomMargin = 32.dp
+private val SkipTopPadding = 16.dp
+private val SkipEndPadding = 20.dp
+
+private val BrandSecondary = Color(0xFF94D63A)
+private val BrandOnSecondary = Color(0xFF6000FE)
+
+private val PaginationActiveOnDark = Color.White
+private val PaginationInactiveOnDark = Color.White.copy(alpha = 0.4f)
+
+@Composable
+fun OnboardingScreen(
+    viewModel: OnboardingViewModel = hiltViewModel(),
+    onNavigateToMain: () -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val currentPage by viewModel.currentPage.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiState) {
+        if (uiState is OnboardingUiState.OnboardingComplete) {
+            onNavigateToMain()
+        }
+    }
+
+    when (uiState) {
+        is OnboardingUiState.Loading -> SplashScreen()
+        is OnboardingUiState.ShowOnboarding -> OnboardingContent(
+            currentPage = currentPage,
+            onPageChanged = viewModel::onPageChanged,
+            onSkip = viewModel::onSkip,
+            onGetStarted = viewModel::onGetStarted,
+        )
+        is OnboardingUiState.OnboardingComplete -> Unit
+    }
+}
+
+@Composable
+private fun OnboardingContent(
+    currentPage: Int,
+    onPageChanged: (Int) -> Unit,
+    onSkip: () -> Unit,
+    onGetStarted: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val pages = OnboardingViewModel.pages
+    val pagerState = rememberPagerState(pageCount = { pages.size })
+    val isLastPage = currentPage == pages.size - 1
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            onPageChanged(page)
+        }
+    }
+
+    Box(modifier = modifier.fillMaxSize()) {
+        XGBrandGradient()
+
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize(),
+        ) { pageIndex ->
+            OnboardingPageContent(page = pages[pageIndex])
+        }
+
+        AnimatedVisibility(
+            visible = !isLastPage,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .statusBarsPadding()
+                .padding(top = SkipTopPadding, end = SkipEndPadding),
+        ) {
+            TextButton(onClick = onSkip) {
+                Text(
+                    text = stringResource(R.string.onboarding_skip_button),
+                    color = Color.White,
+                )
+            }
+        }
+
+        AnimatedVisibility(
+            visible = isLastPage,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(
+                    start = GetStartedHorizontalPadding,
+                    end = GetStartedHorizontalPadding,
+                    bottom = GetStartedBottomMargin,
+                ),
+        ) {
+            Button(
+                onClick = onGetStarted,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(GetStartedButtonHeight),
+                shape = RoundedCornerShape(GetStartedCornerRadius),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = BrandSecondary,
+                    contentColor = BrandOnSecondary,
+                ),
+            ) {
+                Text(text = stringResource(R.string.onboarding_get_started_button))
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(bottom = DotsBottomMargin),
+        ) {
+            XGPaginationDots(
+                totalPages = pages.size,
+                currentPage = currentPage,
+                activeColor = PaginationActiveOnDark,
+                inactiveColor = PaginationInactiveOnDark,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun OnboardingContentFirstPagePreview() {
+    XGTheme {
+        OnboardingContent(
+            currentPage = 0,
+            onPageChanged = {},
+            onSkip = {},
+            onGetStarted = {},
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun OnboardingContentLastPagePreview() {
+    XGTheme {
+        OnboardingContent(
+            currentPage = 3,
+            onPageChanged = {},
+            onSkip = {},
+            onGetStarted = {},
+        )
+    }
+}
