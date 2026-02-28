@@ -2,6 +2,7 @@ package com.xirigo.ecommerce.feature.home.presentation.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -60,15 +61,15 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = HomeUiState.Loading
             try {
-                val bannersDeferred = async { getBanners() }
-                val categoriesDeferred = async { getCategories() }
-                val popularDeferred = async { getPopularProducts() }
-                val dealDeferred = async { getDailyDeal() }
-                val arrivalsDeferred = async { getNewArrivals() }
-                val flashDeferred = async { getFlashSale() }
+                val data = coroutineScope {
+                    val bannersDeferred = async { getBanners() }
+                    val categoriesDeferred = async { getCategories() }
+                    val popularDeferred = async { getPopularProducts() }
+                    val dealDeferred = async { getDailyDeal() }
+                    val arrivalsDeferred = async { getNewArrivals() }
+                    val flashDeferred = async { getFlashSale() }
 
-                _uiState.value = HomeUiState.Success(
-                    data = HomeScreenData(
+                    HomeScreenData(
                         banners = bannersDeferred.await(),
                         categories = categoriesDeferred.await(),
                         popularProducts = popularDeferred.await(),
@@ -76,8 +77,9 @@ class HomeViewModel @Inject constructor(
                         newArrivals = arrivalsDeferred.await(),
                         flashSale = flashDeferred.await(),
                         wishedProductIds = emptySet(),
-                    ),
-                )
+                    )
+                }
+                _uiState.value = HomeUiState.Success(data = data)
             } catch (e: IOException) {
                 _uiState.value = HomeUiState.Error(
                     message = e.message ?: "A network error occurred",
@@ -90,20 +92,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _isRefreshing.value = true
             try {
-                val bannersDeferred = async { getBanners() }
-                val categoriesDeferred = async { getCategories() }
-                val popularDeferred = async { getPopularProducts() }
-                val dealDeferred = async { getDailyDeal() }
-                val arrivalsDeferred = async { getNewArrivals() }
-                val flashDeferred = async { getFlashSale() }
-
                 val currentWished = (_uiState.value as? HomeUiState.Success)
                     ?.data
                     ?.wishedProductIds
                     ?: emptySet()
 
-                _uiState.value = HomeUiState.Success(
-                    data = HomeScreenData(
+                val data = coroutineScope {
+                    val bannersDeferred = async { getBanners() }
+                    val categoriesDeferred = async { getCategories() }
+                    val popularDeferred = async { getPopularProducts() }
+                    val dealDeferred = async { getDailyDeal() }
+                    val arrivalsDeferred = async { getNewArrivals() }
+                    val flashDeferred = async { getFlashSale() }
+
+                    HomeScreenData(
                         banners = bannersDeferred.await(),
                         categories = categoriesDeferred.await(),
                         popularProducts = popularDeferred.await(),
@@ -111,8 +113,9 @@ class HomeViewModel @Inject constructor(
                         newArrivals = arrivalsDeferred.await(),
                         flashSale = flashDeferred.await(),
                         wishedProductIds = currentWished,
-                    ),
-                )
+                    )
+                }
+                _uiState.value = HomeUiState.Success(data = data)
             } catch (e: IOException) {
                 _uiState.value = HomeUiState.Error(
                     message = e.message ?: "A network error occurred",
