@@ -37,6 +37,41 @@ Parse: `$ARGUMENTS`
 Create an agent team with the following structure. Use **delegate mode**
 (Shift+Tab) so you focus purely on coordination, not implementation.
 
+### Git Worktree Isolation (CRITICAL)
+
+All agents that write code MUST run in isolated git worktrees using
+`isolation: "worktree"` on the Agent tool. This prevents merge conflicts
+when parallel agents (Android Dev ‖ iOS Dev, Android Tester ‖ iOS Tester)
+commit simultaneously.
+
+**Workflow**:
+1. Spawn agent with `isolation: "worktree"` — agent gets its own repo copy + branch
+2. Agent commits in its worktree branch
+3. When agent finishes, the result includes the worktree branch name
+4. Team Lead merges the worktree branch into the feature branch:
+   ```bash
+   git merge <worktree-branch> --no-edit
+   ```
+5. Worktree is auto-cleaned if no changes; otherwise branch remains for merge
+
+**Which agents use worktrees**:
+
+| Agent | Worktree? | Reason |
+|-------|-----------|--------|
+| `architect` | YES | Writes spec files |
+| `android-dev` | YES | Writes Android code (parallel with iOS) |
+| `ios-dev` | YES | Writes iOS code (parallel with Android) |
+| `android-tester` | YES | Writes Android tests (parallel with iOS) |
+| `ios-tester` | YES | Writes iOS tests (parallel with Android) |
+| `doc-writer` | YES | Writes docs |
+| `reviewer` | YES | May write fix commits |
+
+After EACH agent completes, merge their worktree branch before spawning
+dependent agents:
+```bash
+git merge <worktree-branch> --no-edit
+```
+
 ### Available Subagents
 
 This project defines specialized subagents in `.claude/agents/`. Each subagent
@@ -70,13 +105,20 @@ Create these tasks in the shared task list:
 
 ### Teammate Spawn Prompts
 
-Spawn teammates with these prompts. The subagent definitions in `.claude/agents/`
-provide the base configuration (model, tools, skills, memory). Your spawn prompt
-adds the feature-specific context. Replace `{feature}` and `{scope}` with actual values.
+Spawn teammates with these prompts. **All agents MUST be spawned with
+`isolation: "worktree"`** so they work in isolated repo copies.
+
+The subagent definitions in `.claude/agents/` provide the base configuration
+(model, tools, skills, memory). Your spawn prompt adds the feature-specific
+context. Replace `{feature}` and `{scope}` with actual values.
+
+> **IMPORTANT**: Agents in worktrees commit to their own branch. After each
+> agent finishes, the Team Lead merges the worktree branch into the feature
+> branch before spawning dependent agents.
 
 ---
 
-**Teammate: Architect** (subagent type: `architect`)
+**Teammate: Architect** (subagent type: `architect`, isolation: `worktree`)
 
 ```
 Your task: design a platform-agnostic spec for feature `{feature}`.
@@ -97,7 +139,7 @@ git commit -m "docs(specs): add {feature} specification [agent:architect]"
 
 ---
 
-**Teammate: Android Dev** (subagent type: `android-dev`)
+**Teammate: Android Dev** (subagent type: `android-dev`, isolation: `worktree`)
 
 ```
 Implement feature `{feature}` for Android.
@@ -114,7 +156,7 @@ git commit -m "feat({scope}): implement {feature} [agent:android-dev] [platform:
 
 ---
 
-**Teammate: iOS Dev** (subagent type: `ios-dev`)
+**Teammate: iOS Dev** (subagent type: `ios-dev`, isolation: `worktree`)
 
 ```
 Implement feature `{feature}` for iOS.
@@ -132,7 +174,7 @@ git commit -m "feat({scope}): implement {feature} [agent:ios-dev] [platform:ios]
 
 ---
 
-**Teammate: Android Tester** (subagent type: `android-tester`)
+**Teammate: Android Tester** (subagent type: `android-tester`, isolation: `worktree`)
 
 ```
 Write tests for feature `{feature}` on Android.
@@ -149,7 +191,7 @@ git commit -m "test({scope}): add {feature} tests [agent:android-test] [platform
 
 ---
 
-**Teammate: iOS Tester** (subagent type: `ios-tester`)
+**Teammate: iOS Tester** (subagent type: `ios-tester`, isolation: `worktree`)
 
 ```
 Write tests for feature `{feature}` on iOS.
@@ -166,7 +208,7 @@ git commit -m "test({scope}): add {feature} tests [agent:ios-test] [platform:ios
 
 ---
 
-**Teammate: Doc Writer** (subagent type: `doc-writer`)
+**Teammate: Doc Writer** (subagent type: `doc-writer`, isolation: `worktree`)
 
 ```
 Document feature `{feature}`.
@@ -186,7 +228,7 @@ git commit -m "docs({scope}): add {feature} documentation [agent:doc]"
 
 ---
 
-**Teammate: Reviewer** (subagent type: `reviewer`)
+**Teammate: Reviewer** (subagent type: `reviewer`, isolation: `worktree`)
 
 ```
 Review BOTH Android and iOS implementations of feature `{feature}`.
@@ -211,22 +253,32 @@ git commit -m "chore({scope}): review approved for {feature} [agent:review]"
 
 1. **Delegate mode**: Enable it. You do NOT write code — only coordinate.
 2. **Git operations**: YOU create the feature branch, final push, and PR.
-3. **GitHub issue tracking**: If `--issue N` was provided, comment on the issue
+   Teammates work in worktrees — YOU merge their branches back.
+3. **Worktree merge workflow**: After EACH agent completes:
+   ```bash
+   # Agent result includes worktree branch name, e.g. "worktree/architect-abc123"
+   git merge <worktree-branch> --no-edit
+   ```
+   Always merge sequentially: architect first, then devs, then testers, etc.
+   For parallel agents (android-dev ‖ ios-dev), merge one then the other —
+   they modify different directories so conflicts are unlikely.
+4. **GitHub issue tracking**: If `--issue N` was provided, comment on the issue
    after each pipeline stage completes:
    ```bash
    gh issue comment {N} --body "✅ **{stage}** completed by {agent}"
    ```
-4. **Verification gates**: After teammates finish, verify files exist.
-5. **Quality gate (Task 8)**: After reviewer approves, run verification yourself:
+5. **Verification gates**: After teammates finish and branches are merged,
+   verify files exist on the feature branch.
+6. **Quality gate (Task 8)**: After reviewer approves, run verification yourself:
    ```bash
    cd android && ./gradlew ktlintCheck && ./gradlew detekt && ./gradlew test && cd ..
    ```
    If any check fails, send the failure back to the relevant developer teammate.
    Max 2 fix rounds before escalating to user.
-6. **Review feedback loop**: If reviewer requests changes, the reviewer
+7. **Review feedback loop**: If reviewer requests changes, the reviewer
    messages the relevant developer teammate directly. Wait for the fix
    and re-review (max 2 rounds).
-7. **After ALL tasks complete**:
+8. **After ALL tasks complete**:
    ```bash
    git push -u origin feature/{pipeline_id}
    gh pr create --base develop \
@@ -260,16 +312,18 @@ git commit -m "chore({scope}): review approved for {feature} [agent:review]"
    # Enable auto-merge
    gh pr merge --auto --squash
    ```
-8. **Clean up the team** after PR is created.
+9. **Clean up the team** after PR is created.
 
 ## Rules
 
-1. YOU handle all git branch/push/PR operations — teammates only commit
-2. Android Dev and iOS Dev MUST run in parallel (both depend on Architect only)
-3. Android Tester and iOS Tester MUST run in parallel
-4. Reviewer can message teammates directly for fixes
-5. On failure after 2 retries: STOP and report to user
-6. Always instruct teammates to read CLAUDE.md first
-7. Subagent definitions provide base config — your spawn prompts add feature context
-8. PR body MUST include `Closes #{issue_number}` to auto-close the GitHub issue
-9. Quality gate (Task 8) is mandatory — never skip lint or test checks
+1. YOU handle all git branch/push/PR operations — teammates only commit in worktrees
+2. ALL code-writing agents MUST use `isolation: "worktree"` — no exceptions
+3. Android Dev and iOS Dev MUST run in parallel (both depend on Architect only)
+4. Android Tester and iOS Tester MUST run in parallel
+5. Reviewer can message teammates directly for fixes
+6. On failure after 2 retries: STOP and report to user
+7. Always instruct teammates to read CLAUDE.md first
+8. Subagent definitions provide base config — your spawn prompts add feature context
+9. PR body MUST include `Closes #{issue_number}` to auto-close the GitHub issue
+10. Quality gate (Task 8) is mandatory — never skip lint or test checks
+11. After each worktree agent finishes, merge their branch before spawning dependents
