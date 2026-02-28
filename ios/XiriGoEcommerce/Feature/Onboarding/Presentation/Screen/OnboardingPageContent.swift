@@ -5,6 +5,17 @@ import SwiftUI
 /// Single onboarding page view displaying an illustration, title, and description.
 /// Content is driven by localized string keys from `OnboardingPage`.
 struct OnboardingPageContent: View {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let illustrationSize: CGFloat = 200
+        static let placeholderFontSize: CGFloat = 80
+        static let placeholderOpacity: Double = 0.6
+        static let titleLineLimit = 2
+        static let descriptionOpacity: Double = 0.8
+        static let descriptionLineLimit = 3
+    }
+
     // MARK: - Properties
 
     private let page: OnboardingPage
@@ -41,13 +52,19 @@ struct OnboardingPageContent: View {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 200)
+                .frame(
+                    width: Constants.illustrationSize,
+                    height: Constants.illustrationSize
+                )
                 .accessibilityLabel(illustrationAccessibilityLabel)
         } else {
             Image(systemName: placeholderSystemImage)
-                .font(.system(size: 80))
-                .foregroundStyle(.white.opacity(0.6))
-                .frame(width: 200, height: 200)
+                .font(.system(size: Constants.placeholderFontSize))
+                .foregroundStyle(.white.opacity(Constants.placeholderOpacity))
+                .frame(
+                    width: Constants.illustrationSize,
+                    height: Constants.illustrationSize
+                )
                 .accessibilityLabel(illustrationAccessibilityLabel)
         }
     }
@@ -58,25 +75,29 @@ struct OnboardingPageContent: View {
             .fontWeight(.semibold)
             .foregroundStyle(.white)
             .multilineTextAlignment(.center)
-            .lineLimit(2)
+            .lineLimit(Constants.titleLineLimit)
             .accessibilityAddTraits(.isHeader)
     }
 
     private var description: some View {
         Text(String(localized: page.descriptionKey))
             .font(XGTypography.bodyLarge)
-            .foregroundStyle(.white.opacity(0.8))
+            .foregroundStyle(.white.opacity(Constants.descriptionOpacity))
             .multilineTextAlignment(.center)
-            .lineLimit(3)
+            .lineLimit(Constants.descriptionLineLimit)
     }
 
     /// SF Symbol fallback for when illustration assets are not yet provided.
     private var placeholderSystemImage: String {
         switch page.id {
         case 0: return "bag"
+
         case 1: return "scalemass"
+
         case 2: return "lock.shield"
+
         case 3: return "shippingbox"
+
         default: return "photo"
         }
     }
@@ -85,12 +106,16 @@ struct OnboardingPageContent: View {
         switch page.id {
         case 0:
             return String(localized: "onboarding_illustration_a11y_browse")
+
         case 1:
             return String(localized: "onboarding_illustration_a11y_compare")
+
         case 2:
             return String(localized: "onboarding_illustration_a11y_checkout")
+
         case 3:
             return String(localized: "onboarding_illustration_a11y_track")
+
         default:
             return ""
         }

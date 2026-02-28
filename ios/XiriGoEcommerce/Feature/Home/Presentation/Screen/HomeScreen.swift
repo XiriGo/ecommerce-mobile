@@ -4,9 +4,20 @@ import SwiftUI
 
 /// Main home screen displaying featured content, categories, and product sections.
 struct HomeScreen: View {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let bannerSubtitleOpacity: Double = 0.85
+        static let bannerWidth: CGFloat = 280
+        static let bannerHeight: CGFloat = 160
+        static let categoryBorderOpacity: Double = 0.5
+        static let newArrivalCardWidth: CGFloat = 180
+    }
+
     // MARK: - Properties
 
-    @Environment(AppRouter.self) private var router
+    @Environment(AppRouter.self)
+    private var router
 
     // MARK: - Body
 
@@ -53,6 +64,7 @@ struct HomeScreen: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(XGColors.onSurfaceVariant)
                     .font(.system(size: XGSpacing.IconSize.medium))
+                    .accessibilityHidden(true)
 
                 Text(String(localized: "home_search_placeholder"))
                     .font(XGTypography.bodyLarge)
@@ -105,11 +117,11 @@ struct HomeScreen: View {
 
                 Text(banner.subtitle)
                     .font(XGTypography.bodyMedium)
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(.white.opacity(Constants.bannerSubtitleOpacity))
             }
             .padding(XGSpacing.lg)
         }
-        .frame(width: 280, height: 160)
+        .frame(width: Constants.bannerWidth, height: Constants.bannerHeight)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
         .xgElevation(XGElevation.level2)
     }
@@ -142,7 +154,7 @@ struct HomeScreen: View {
                         .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
                         .overlay(
                             Circle()
-                                .stroke(XGColors.outlineVariant.opacity(0.5), lineWidth: 1)
+                                .stroke(XGColors.outlineVariant.opacity(Constants.categoryBorderOpacity), lineWidth: 1)
                         )
 
                     Image(systemName: category.icon)
@@ -210,7 +222,7 @@ struct HomeScreen: View {
                                 router.navigate(to: .productDetail(productId: product.id))
                             }
                         )
-                        .frame(width: 180)
+                        .frame(width: Constants.newArrivalCardWidth)
                     }
                 }
                 .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
@@ -226,129 +238,6 @@ struct HomeScreen: View {
             .foregroundStyle(XGColors.onSurface)
             .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
     }
-}
-
-// MARK: - Sample Data Models
-
-private struct HomeBanner: Identifiable {
-    let id: String
-    let title: String
-    let subtitle: String
-    let gradientColors: [Color]
-
-    static let samples: [HomeBanner] = [
-        HomeBanner(
-            id: "1",
-            title: String(localized: "home_banner_season_title"),
-            subtitle: String(localized: "home_banner_season_subtitle"),
-            gradientColors: [XGColors.primary, XGColors.tertiary]
-        ),
-        HomeBanner(
-            id: "2",
-            title: String(localized: "home_banner_new_title"),
-            subtitle: String(localized: "home_banner_new_subtitle"),
-            gradientColors: [XGColors.secondary, XGColors.primary]
-        ),
-        HomeBanner(
-            id: "3",
-            title: String(localized: "home_banner_deals_title"),
-            subtitle: String(localized: "home_banner_deals_subtitle"),
-            gradientColors: [XGColors.tertiary, XGColors.secondary]
-        ),
-    ]
-}
-
-private struct HomeCategory: Identifiable {
-    let id: String
-    let name: String
-    let icon: String
-
-    static let samples: [HomeCategory] = [
-        HomeCategory(id: "cat_1", name: String(localized: "home_category_electronics"), icon: "desktopcomputer"),
-        HomeCategory(id: "cat_2", name: String(localized: "home_category_fashion"), icon: "tshirt"),
-        HomeCategory(id: "cat_3", name: String(localized: "home_category_home"), icon: "house"),
-        HomeCategory(id: "cat_4", name: String(localized: "home_category_sports"), icon: "figure.run"),
-        HomeCategory(id: "cat_5", name: String(localized: "home_category_books"), icon: "book"),
-    ]
-}
-
-private struct HomeProduct: Identifiable {
-    let id: String
-    let title: String
-    let price: String
-    let originalPrice: String?
-    let vendor: String
-    let rating: Double?
-    let reviewCount: Int?
-
-    static let popularSamples: [HomeProduct] = [
-        HomeProduct(
-            id: "prod_1",
-            title: String(localized: "home_product_headphones"),
-            price: "$79.99",
-            originalPrice: "$129.99",
-            vendor: "TechZone",
-            rating: 4.5,
-            reviewCount: 234
-        ),
-        HomeProduct(
-            id: "prod_2",
-            title: String(localized: "home_product_sneakers"),
-            price: "$59.99",
-            originalPrice: nil,
-            vendor: "SportStyle",
-            rating: 4.2,
-            reviewCount: 89
-        ),
-        HomeProduct(
-            id: "prod_3",
-            title: String(localized: "home_product_watch"),
-            price: "$199.99",
-            originalPrice: "$249.99",
-            vendor: "LuxTime",
-            rating: 4.8,
-            reviewCount: 456
-        ),
-        HomeProduct(
-            id: "prod_4",
-            title: String(localized: "home_product_backpack"),
-            price: "$39.99",
-            originalPrice: nil,
-            vendor: "TravelGear",
-            rating: 4.0,
-            reviewCount: 67
-        ),
-    ]
-
-    static let newArrivalSamples: [HomeProduct] = [
-        HomeProduct(
-            id: "new_1",
-            title: String(localized: "home_product_keyboard"),
-            price: "$149.99",
-            originalPrice: nil,
-            vendor: "TechZone",
-            rating: nil,
-            reviewCount: nil
-        ),
-        HomeProduct(
-            id: "new_2",
-            title: String(localized: "home_product_jacket"),
-            price: "$89.99",
-            originalPrice: nil,
-            vendor: "UrbanWear",
-            rating: nil,
-            reviewCount: nil
-        ),
-        HomeProduct(
-            id: "new_3",
-            title: String(localized: "home_product_lamp"),
-            price: "$44.99",
-            originalPrice: nil,
-            vendor: "HomeDesign",
-            rating: nil,
-            reviewCount: nil
-        ),
-    ]
 }
 
 // MARK: - Previews

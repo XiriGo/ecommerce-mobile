@@ -6,7 +6,8 @@ import SwiftUI
 struct CartScreen: View {
     // MARK: - Properties
 
-    @Environment(AppRouter.self) private var router
+    @Environment(AppRouter.self)
+    private var router
 
     // MARK: - Body
 

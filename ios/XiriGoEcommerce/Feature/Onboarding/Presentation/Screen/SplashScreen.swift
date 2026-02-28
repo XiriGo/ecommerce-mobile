@@ -10,6 +10,14 @@ import SwiftUI
 ///
 /// Displayed while `OnboardingUiState == .loading`.
 struct SplashScreen: View {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let logoSize: CGFloat = 120
+        static let vignetteOpacity: Double = 0.3
+        static let vignetteHeight: CGFloat = 200
+    }
+
     // MARK: - Body
 
     var body: some View {
@@ -17,7 +25,7 @@ struct SplashScreen: View {
             ZStack {
                 XGBrandPattern()
 
-                XGLogoMark(size: 120)
+                XGLogoMark(size: Constants.logoSize)
 
                 vignetteOverlay
             }
@@ -33,12 +41,12 @@ struct SplashScreen: View {
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color.black.opacity(0),
-                    Color.black.opacity(0.3),
+                    Color.black.opacity(Constants.vignetteOpacity),
                 ]),
                 startPoint: .top,
                 endPoint: .bottom
             )
-            .frame(height: 200)
+            .frame(height: Constants.vignetteHeight)
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)

@@ -5,6 +5,12 @@ import SwiftUI
 /// Horizontal pager with 4 onboarding pages, pagination dots, Skip button, and Get Started button.
 /// Uses `TabView` with `.page` style for swipeable content.
 struct OnboardingScreen: View {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let inactiveDotOpacity: Double = 0.4
+        static let getStartedHorizontalPadding: CGFloat = 20
+    }
     // MARK: - Properties
 
     @Bindable var viewModel: OnboardingViewModel
@@ -73,7 +79,7 @@ struct OnboardingScreen: View {
                 totalPages: viewModel.pages.count,
                 currentPage: viewModel.currentPage,
                 activeColor: .white,
-                inactiveColor: .white.opacity(0.4)
+                inactiveColor: .white.opacity(Constants.inactiveDotOpacity)
             )
             .padding(.bottom, XGSpacing.xl)
         }
@@ -88,7 +94,7 @@ struct OnboardingScreen: View {
         ) {
             Task { await viewModel.onGetStarted() }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, Constants.getStartedHorizontalPadding)
         .padding(.bottom, XGSpacing.xxl)
     }
 }

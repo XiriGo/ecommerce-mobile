@@ -6,7 +6,8 @@ import SwiftUI
 struct ProfileScreen: View {
     // MARK: - Properties
 
-    @Environment(AppRouter.self) private var router
+    @Environment(AppRouter.self)
+    private var router
 
     // MARK: - Body
 
@@ -26,45 +27,54 @@ struct ProfileScreen: View {
 
     private var guestHeader: some View {
         VStack(spacing: XGSpacing.base) {
-            ZStack {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
-                    .overlay(
-                        Circle()
-                            .stroke(XGColors.outlineVariant, lineWidth: 1)
-                    )
-
-                Image(systemName: "person.fill")
-                    .font(.system(size: XGSpacing.IconSize.extraLarge))
-                    .foregroundStyle(XGColors.onSurfaceVariant)
-            }
+            guestAvatar
 
             Text(String(localized: "nav_profile_guest_title"))
                 .font(XGTypography.bodyLarge)
                 .foregroundStyle(XGColors.onSurfaceVariant)
                 .multilineTextAlignment(.center)
 
-            HStack(spacing: XGSpacing.md) {
-                XGButton(
-                    String(localized: "nav_profile_guest_login_button"),
-                    variant: .primary,
-                    fullWidth: false
-                ) {
-                    router.presentLogin()
-                }
-
-                XGButton(
-                    String(localized: "nav_profile_guest_register_button"),
-                    variant: .outlined,
-                    fullWidth: false
-                ) {
-                    router.navigate(to: .register)
-                }
-            }
+            guestActionButtons
         }
         .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
         .padding(.top, XGSpacing.lg)
+    }
+
+    private var guestAvatar: some View {
+        ZStack {
+            Circle()
+                .fill(.ultraThinMaterial)
+                .frame(width: XGSpacing.AvatarSize.extraLarge, height: XGSpacing.AvatarSize.extraLarge)
+                .overlay(
+                    Circle()
+                        .stroke(XGColors.outlineVariant, lineWidth: 1)
+                )
+
+            Image(systemName: "person.fill")
+                .font(.system(size: XGSpacing.IconSize.extraLarge))
+                .foregroundStyle(XGColors.onSurfaceVariant)
+                .accessibilityHidden(true)
+        }
+    }
+
+    private var guestActionButtons: some View {
+        HStack(spacing: XGSpacing.md) {
+            XGButton(
+                String(localized: "nav_profile_guest_login_button"),
+                variant: .primary,
+                fullWidth: false
+            ) {
+                router.presentLogin()
+            }
+
+            XGButton(
+                String(localized: "nav_profile_guest_register_button"),
+                variant: .outlined,
+                fullWidth: false
+            ) {
+                router.navigate(to: .register)
+            }
+        }
     }
 
     // MARK: - Menu Section
@@ -116,38 +126,38 @@ private struct ProfileMenuItem: Identifiable {
     let icon: String
     let route: Route
 
-    static let items: [ProfileMenuItem] = [
-        ProfileMenuItem(
+    static let items: [Self] = [
+        Self(
             id: "orders",
             title: String(localized: "profile_menu_orders"),
             icon: "list.clipboard",
             route: .orderList
         ),
-        ProfileMenuItem(
+        Self(
             id: "wishlist",
             title: String(localized: "profile_menu_wishlist"),
             icon: "heart",
             route: .wishlist
         ),
-        ProfileMenuItem(
+        Self(
             id: "addresses",
             title: String(localized: "profile_menu_addresses"),
             icon: "mappin.and.ellipse",
             route: .addressManagement
         ),
-        ProfileMenuItem(
+        Self(
             id: "payment",
             title: String(localized: "profile_menu_payment"),
             icon: "creditcard",
             route: .paymentMethods
         ),
-        ProfileMenuItem(
+        Self(
             id: "notifications",
             title: String(localized: "profile_menu_notifications"),
             icon: "bell",
             route: .notifications
         ),
-        ProfileMenuItem(
+        Self(
             id: "settings",
             title: String(localized: "profile_menu_settings"),
             icon: "gearshape",
