@@ -4,9 +4,14 @@ import Foundation
 
 /// Manages onboarding state, page navigation, skip, and get-started actions.
 /// Coordinates `CheckOnboardingUseCase` and `CompleteOnboardingUseCase`.
-@MainActor @Observable
+@MainActor
+@Observable
 final class OnboardingViewModel {
     // MARK: - Properties
+
+    private enum Constants {
+        static let splashDurationSeconds: Int = 2
+    }
 
     @ObservationIgnored private let checkOnboarding: CheckOnboardingUseCase
     @ObservationIgnored private let completeOnboarding: CompleteOnboardingUseCase
@@ -36,8 +41,10 @@ final class OnboardingViewModel {
     // MARK: - Actions
 
     /// Checks whether onboarding has been previously shown and updates state accordingly.
+    /// Shows the splash screen for a minimum duration before transitioning.
     func checkOnboardingStatus() async {
         let hasSeen = await checkOnboarding.execute()
+        try? await Task.sleep(for: .seconds(Constants.splashDurationSeconds))
         uiState = hasSeen ? .onboardingComplete : .showOnboarding
     }
 

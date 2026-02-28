@@ -8,6 +8,7 @@ import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CheckOnboardingUse
 import com.xirigo.ecommerce.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
 import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,6 +30,7 @@ class OnboardingViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val hasSeen = checkOnboarding()
+            delay(SPLASH_DURATION_MS)
             _uiState.value = if (hasSeen) {
                 OnboardingUiState.OnboardingComplete
             } else {
@@ -56,6 +58,8 @@ class OnboardingViewModel @Inject constructor(
     }
 
     companion object {
+        private const val SPLASH_DURATION_MS = 2_000L
+
         val pages: List<OnboardingPage> = listOf(
             OnboardingPage(
                 titleResId = R.string.onboarding_page_browse_title,
