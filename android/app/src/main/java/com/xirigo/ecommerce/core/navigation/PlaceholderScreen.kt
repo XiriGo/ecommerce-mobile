@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.theme.MoltSpacing
-import com.xirigo.ecommerce.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
 fun PlaceholderScreen(
@@ -36,11 +36,11 @@ fun PlaceholderScreen(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.size(MoltSpacing.XXXL),
+            modifier = Modifier.size(XGSpacing.XXXL),
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        Spacer(modifier = Modifier.height(MoltSpacing.Base))
+        Spacer(modifier = Modifier.height(XGSpacing.Base))
 
         Text(
             text = title,
@@ -48,7 +48,7 @@ fun PlaceholderScreen(
             textAlign = TextAlign.Center,
         )
 
-        Spacer(modifier = Modifier.height(MoltSpacing.SM))
+        Spacer(modifier = Modifier.height(XGSpacing.SM))
 
         Text(
             text = stringResource(R.string.nav_placeholder_coming_soon),
@@ -62,7 +62,7 @@ fun PlaceholderScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PlaceholderScreenPreview() {
-    MoltTheme {
+    XGTheme {
         PlaceholderScreen(
             title = "Home",
             icon = Icons.Outlined.Home,

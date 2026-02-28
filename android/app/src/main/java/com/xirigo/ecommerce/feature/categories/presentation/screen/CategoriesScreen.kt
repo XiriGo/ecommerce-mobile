@@ -41,20 +41,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.theme.MoltCornerRadius
-import com.xirigo.ecommerce.core.designsystem.theme.MoltElevation
-import com.xirigo.ecommerce.core.designsystem.theme.MoltSpacing
-import com.xirigo.ecommerce.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
+import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
+import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
 fun CategoriesScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = MoltSpacing.ScreenPaddingVertical),
+            .padding(top = XGSpacing.ScreenPaddingVertical),
     ) {
         CategoriesSearchBar()
-        Spacer(modifier = Modifier.height(MoltSpacing.Base))
+        Spacer(modifier = Modifier.height(XGSpacing.Base))
         CategoriesGrid()
     }
 }
@@ -64,10 +64,10 @@ private fun CategoriesSearchBar() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = MoltSpacing.ScreenPaddingHorizontal)
+            .padding(horizontal = XGSpacing.ScreenPaddingHorizontal)
             .clickable { /* Search click */ },
-        shape = RoundedCornerShape(MoltCornerRadius.Large),
-        elevation = CardDefaults.cardElevation(defaultElevation = MoltElevation.Level1),
+        shape = RoundedCornerShape(XGCornerRadius.Large),
+        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
@@ -75,7 +75,7 @@ private fun CategoriesSearchBar() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MoltSpacing.Base, vertical = MoltSpacing.MD),
+                .padding(horizontal = XGSpacing.Base, vertical = XGSpacing.MD),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -83,7 +83,7 @@ private fun CategoriesSearchBar() {
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Spacer(modifier = Modifier.width(MoltSpacing.SM))
+            Spacer(modifier = Modifier.width(XGSpacing.SM))
             Text(
                 text = stringResource(R.string.categories_search_hint),
                 style = MaterialTheme.typography.bodyLarge,
@@ -118,11 +118,11 @@ private fun CategoriesGrid() {
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            horizontal = MoltSpacing.ScreenPaddingHorizontal,
-            vertical = MoltSpacing.SM,
+            horizontal = XGSpacing.ScreenPaddingHorizontal,
+            vertical = XGSpacing.SM,
         ),
-        horizontalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
-        verticalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
+        horizontalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
+        verticalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
     ) {
         items(categories) { category ->
             CategoryCard(category = category)
@@ -136,8 +136,8 @@ private fun CategoryCard(category: CategoryData) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { /* Category click */ },
-        shape = RoundedCornerShape(MoltCornerRadius.Medium),
-        elevation = CardDefaults.cardElevation(defaultElevation = MoltElevation.Level2),
+        shape = RoundedCornerShape(XGCornerRadius.Medium),
+        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level2),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
@@ -145,17 +145,17 @@ private fun CategoryCard(category: CategoryData) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(MoltSpacing.Base),
+                .padding(XGSpacing.Base),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
             Icon(
                 imageVector = category.icon,
                 contentDescription = category.name,
-                modifier = Modifier.size(MoltSpacing.XXL),
+                modifier = Modifier.size(XGSpacing.XXL),
                 tint = MaterialTheme.colorScheme.primary,
             )
-            Spacer(modifier = Modifier.height(MoltSpacing.MD))
+            Spacer(modifier = Modifier.height(XGSpacing.MD))
             Text(
                 text = category.name,
                 style = MaterialTheme.typography.titleSmall,
@@ -163,7 +163,7 @@ private fun CategoryCard(category: CategoryData) {
                 overflow = TextOverflow.Ellipsis,
             )
             if (category.itemCount > 0) {
-                Spacer(modifier = Modifier.height(MoltSpacing.XS))
+                Spacer(modifier = Modifier.height(XGSpacing.XS))
                 Text(
                     text = stringResource(R.string.categories_item_count, category.itemCount),
                     style = MaterialTheme.typography.bodySmall,
@@ -177,7 +177,7 @@ private fun CategoryCard(category: CategoryData) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun CategoriesScreenPreview() {
-    MoltTheme {
+    XGTheme {
         CategoriesScreen()
     }
 }

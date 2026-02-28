@@ -50,11 +50,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.component.MoltProductCard
-import com.xirigo.ecommerce.core.designsystem.theme.MoltCornerRadius
-import com.xirigo.ecommerce.core.designsystem.theme.MoltElevation
-import com.xirigo.ecommerce.core.designsystem.theme.MoltSpacing
-import com.xirigo.ecommerce.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
+import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
+import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
+import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -64,17 +64,17 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState()),
     ) {
         WelcomeHeader()
-        Spacer(modifier = Modifier.height(MoltSpacing.Base))
+        Spacer(modifier = Modifier.height(XGSpacing.Base))
         SearchBarSection()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
         FeaturedBannersSection()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
         CategoriesRowSection()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
         PopularProductsSection()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
         NewArrivalsSection()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
     }
 }
 
@@ -85,8 +85,8 @@ private fun WelcomeHeader() {
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(
-                horizontal = MoltSpacing.ScreenPaddingHorizontal,
-                vertical = MoltSpacing.LG,
+                horizontal = XGSpacing.ScreenPaddingHorizontal,
+                vertical = XGSpacing.LG,
             ),
     ) {
         Text(
@@ -95,7 +95,7 @@ private fun WelcomeHeader() {
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
         )
-        Spacer(modifier = Modifier.height(MoltSpacing.XS))
+        Spacer(modifier = Modifier.height(XGSpacing.XS))
         Text(
             text = stringResource(R.string.home_welcome_subtitle),
             style = MaterialTheme.typography.bodyMedium,
@@ -109,10 +109,10 @@ private fun SearchBarSection() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = MoltSpacing.ScreenPaddingHorizontal)
+            .padding(horizontal = XGSpacing.ScreenPaddingHorizontal)
             .clickable { /* Visual only */ },
-        shape = RoundedCornerShape(MoltCornerRadius.Large),
-        elevation = CardDefaults.cardElevation(defaultElevation = MoltElevation.Level1),
+        shape = RoundedCornerShape(XGCornerRadius.Large),
+        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
@@ -120,7 +120,7 @@ private fun SearchBarSection() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MoltSpacing.Base, vertical = MoltSpacing.MD),
+                .padding(horizontal = XGSpacing.Base, vertical = XGSpacing.MD),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -128,7 +128,7 @@ private fun SearchBarSection() {
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Spacer(modifier = Modifier.width(MoltSpacing.SM))
+            Spacer(modifier = Modifier.width(XGSpacing.SM))
             Text(
                 text = stringResource(R.string.home_search_hint),
                 style = MaterialTheme.typography.bodyLarge,
@@ -170,8 +170,8 @@ private fun FeaturedBannersSection() {
     )
 
     LazyRow(
-        contentPadding = PaddingValues(horizontal = MoltSpacing.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(MoltSpacing.MD),
+        contentPadding = PaddingValues(horizontal = XGSpacing.ScreenPaddingHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(XGSpacing.MD),
     ) {
         items(banners) { banner ->
             BannerCard(banner = banner)
@@ -185,7 +185,7 @@ private fun BannerCard(banner: BannerData) {
         modifier = Modifier
             .width(300.dp)
             .height(150.dp)
-            .clip(RoundedCornerShape(MoltCornerRadius.Large))
+            .clip(RoundedCornerShape(XGCornerRadius.Large))
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(banner.gradientStart, banner.gradientEnd),
@@ -195,7 +195,7 @@ private fun BannerCard(banner: BannerData) {
         contentAlignment = Alignment.CenterStart,
     ) {
         Column(
-            modifier = Modifier.padding(MoltSpacing.LG),
+            modifier = Modifier.padding(XGSpacing.LG),
         ) {
             Text(
                 text = banner.title,
@@ -203,7 +203,7 @@ private fun BannerCard(banner: BannerData) {
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
             )
-            Spacer(modifier = Modifier.height(MoltSpacing.XS))
+            Spacer(modifier = Modifier.height(XGSpacing.XS))
             Text(
                 text = banner.subtitle,
                 style = MaterialTheme.typography.bodyMedium,
@@ -233,8 +233,8 @@ private fun CategoriesRowSection() {
     SectionHeader(title = stringResource(R.string.home_section_categories))
 
     LazyRow(
-        contentPadding = PaddingValues(horizontal = MoltSpacing.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(MoltSpacing.Base),
+        contentPadding = PaddingValues(horizontal = XGSpacing.ScreenPaddingHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(XGSpacing.Base),
     ) {
         items(categories) { category ->
             CategoryCircleItem(category = category)
@@ -258,11 +258,11 @@ private fun CategoryCircleItem(category: CategoryItem) {
             Icon(
                 imageVector = category.icon,
                 contentDescription = category.name,
-                modifier = Modifier.size(MoltSpacing.XL),
+                modifier = Modifier.size(XGSpacing.XL),
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
             )
         }
-        Spacer(modifier = Modifier.height(MoltSpacing.SM))
+        Spacer(modifier = Modifier.height(XGSpacing.SM))
         Text(
             text = category.name,
             style = MaterialTheme.typography.labelMedium,
@@ -329,13 +329,13 @@ private fun PopularProductsSection() {
         modifier = Modifier
             .fillMaxWidth()
             .height(600.dp)
-            .padding(horizontal = MoltSpacing.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
-        verticalArrangement = Arrangement.spacedBy(MoltSpacing.ProductGridSpacing),
+            .padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
+        verticalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
         userScrollEnabled = false,
     ) {
         items(products) { product ->
-            MoltProductCard(
+            XGProductCard(
                 imageUrl = null,
                 title = product.title,
                 price = product.price,
@@ -381,11 +381,11 @@ private fun NewArrivalsSection() {
     SectionHeader(title = stringResource(R.string.home_section_new_arrivals))
 
     LazyRow(
-        contentPadding = PaddingValues(horizontal = MoltSpacing.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(MoltSpacing.MD),
+        contentPadding = PaddingValues(horizontal = XGSpacing.ScreenPaddingHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(XGSpacing.MD),
     ) {
         items(newProducts) { product ->
-            MoltProductCard(
+            XGProductCard(
                 imageUrl = null,
                 title = product.title,
                 price = product.price,
@@ -406,8 +406,8 @@ private fun SectionHeader(title: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = MoltSpacing.ScreenPaddingHorizontal,
-                vertical = MoltSpacing.SM,
+                horizontal = XGSpacing.ScreenPaddingHorizontal,
+                vertical = XGSpacing.SM,
             ),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -428,7 +428,7 @@ private fun SectionHeader(title: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPreview() {
-    MoltTheme {
+    XGTheme {
         HomeScreen()
     }
 }

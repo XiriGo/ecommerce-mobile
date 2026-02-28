@@ -12,7 +12,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.xirigo.ecommerce.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 /**
  * Compose UI tests for PlaceholderScreen.
@@ -35,7 +35,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersRouteTitle_home() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Home",
                     icon = Icons.Outlined.Home,
@@ -49,7 +49,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersRouteTitle_categories() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Categories",
                     icon = Icons.Outlined.Category,
@@ -63,7 +63,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersRouteTitle_cart() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Cart",
                     icon = Icons.Outlined.ShoppingCart,
@@ -77,7 +77,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersRouteTitle_profile() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Profile",
                     icon = Icons.Outlined.Person,
@@ -91,7 +91,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersRouteTitle_productDetail() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Product Detail",
                     icon = Icons.Outlined.Home,
@@ -109,7 +109,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_showsComingSoonText_forHomeRoute() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Home",
                     icon = Icons.Outlined.Home,
@@ -123,7 +123,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_showsComingSoonText_forArbitraryTitle() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Order Detail",
                     icon = Icons.Outlined.Home,
@@ -141,7 +141,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersBothTitleAndSubtitle() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Wishlist",
                     icon = Icons.Outlined.Person,
@@ -156,7 +156,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_rendersBothTitleAndSubtitle_forSettings() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Settings",
                     icon = Icons.Outlined.Person,
@@ -175,7 +175,7 @@ class PlaceholderScreenTest {
     @Test
     fun placeholderScreen_differentTitles_showDistinctText() {
         composeTestRule.setContent {
-            MoltTheme {
+            XGTheme {
                 PlaceholderScreen(
                     title = "Checkout",
                     icon = Icons.Outlined.ShoppingCart,

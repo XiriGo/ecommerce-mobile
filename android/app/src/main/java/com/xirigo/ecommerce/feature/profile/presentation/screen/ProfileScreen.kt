@@ -40,12 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.component.MoltButton
-import com.xirigo.ecommerce.core.designsystem.component.MoltButtonStyle
-import com.xirigo.ecommerce.core.designsystem.theme.MoltCornerRadius
-import com.xirigo.ecommerce.core.designsystem.theme.MoltElevation
-import com.xirigo.ecommerce.core.designsystem.theme.MoltSpacing
-import com.xirigo.ecommerce.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.component.XGButton
+import com.xirigo.ecommerce.core.designsystem.component.XGButtonStyle
+import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
+import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
+import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier) {
@@ -55,9 +55,9 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState()),
     ) {
         GuestHeader()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
         ProfileMenuSection()
-        Spacer(modifier = Modifier.height(MoltSpacing.SectionSpacing))
+        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
     }
 }
 
@@ -67,7 +67,7 @@ private fun GuestHeader() {
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .padding(MoltSpacing.LG),
+            .padding(XGSpacing.LG),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -80,12 +80,12 @@ private fun GuestHeader() {
             Icon(
                 imageVector = Icons.Outlined.Person,
                 contentDescription = null,
-                modifier = Modifier.size(MoltSpacing.XXL),
+                modifier = Modifier.size(XGSpacing.XXL),
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
             )
         }
 
-        Spacer(modifier = Modifier.height(MoltSpacing.Base))
+        Spacer(modifier = Modifier.height(XGSpacing.Base))
 
         Text(
             text = stringResource(R.string.nav_profile_guest_title),
@@ -93,20 +93,20 @@ private fun GuestHeader() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        Spacer(modifier = Modifier.height(MoltSpacing.Base))
+        Spacer(modifier = Modifier.height(XGSpacing.Base))
 
-        MoltButton(
+        XGButton(
             text = stringResource(R.string.nav_profile_guest_login_button),
             onClick = { /* Navigate to login */ },
-            style = MoltButtonStyle.Primary,
+            style = XGButtonStyle.Primary,
         )
 
-        Spacer(modifier = Modifier.height(MoltSpacing.SM))
+        Spacer(modifier = Modifier.height(XGSpacing.SM))
 
-        MoltButton(
+        XGButton(
             text = stringResource(R.string.nav_profile_guest_register_button),
             onClick = { /* Navigate to register */ },
-            style = MoltButtonStyle.Secondary,
+            style = XGButtonStyle.Secondary,
         )
     }
 }
@@ -145,16 +145,16 @@ private fun ProfileMenuSection() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = MoltSpacing.ScreenPaddingHorizontal),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(MoltCornerRadius.Large),
-        elevation = CardDefaults.cardElevation(defaultElevation = MoltElevation.Level1),
+            .padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(XGCornerRadius.Large),
+        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
     ) {
         Column {
             menuItems.forEachIndexed { index, item ->
                 ProfileMenuRow(item = item)
                 if (index < menuItems.lastIndex) {
                     HorizontalDivider(
-                        modifier = Modifier.padding(horizontal = MoltSpacing.Base),
+                        modifier = Modifier.padding(horizontal = XGSpacing.Base),
                         color = MaterialTheme.colorScheme.outlineVariant,
                     )
                 }
@@ -169,18 +169,18 @@ private fun ProfileMenuRow(item: ProfileMenuItem) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = MoltSpacing.Base,
-                vertical = MoltSpacing.MD,
+                horizontal = XGSpacing.Base,
+                vertical = XGSpacing.MD,
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = item.icon,
             contentDescription = null,
-            modifier = Modifier.size(MoltSpacing.LG),
+            modifier = Modifier.size(XGSpacing.LG),
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Spacer(modifier = Modifier.width(MoltSpacing.Base))
+        Spacer(modifier = Modifier.width(XGSpacing.Base))
         Text(
             text = item.title,
             style = MaterialTheme.typography.bodyLarge,
@@ -198,7 +198,7 @@ private fun ProfileMenuRow(item: ProfileMenuItem) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfileScreenPreview() {
-    MoltTheme {
+    XGTheme {
         ProfileScreen()
     }
 }

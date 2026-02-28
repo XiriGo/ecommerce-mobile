@@ -15,7 +15,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
-import com.xirigo.ecommerce.core.data.local.MoltDatabase
+import com.xirigo.ecommerce.core.data.local.XGDatabase
 
 // Top-level extension properties for preferencesDataStore (must be at file level)
 private val Context.storageTestDataStore by preferencesDataStore("test_prefs_storage_module")
@@ -28,7 +28,7 @@ private val Context.storageWriteDataStore by preferencesDataStore("test_prefs_wr
 class StorageModuleTest {
 
     private lateinit var context: Context
-    private var database: MoltDatabase? = null
+    private var database: XGDatabase? = null
 
     @Before
     fun setUp() {
@@ -40,11 +40,11 @@ class StorageModuleTest {
         database?.close()
     }
 
-    // region MoltDatabase
+    // region XGDatabase
 
     @Test
-    fun `provideDatabase returns non-null MoltDatabase`() {
-        database = Room.inMemoryDatabaseBuilder(context, MoltDatabase::class.java)
+    fun `provideDatabase returns non-null XGDatabase`() {
+        database = Room.inMemoryDatabaseBuilder(context, XGDatabase::class.java)
             .allowMainThreadQueries()
             .build()
         assertThat(database).isNotNull()
@@ -52,7 +52,7 @@ class StorageModuleTest {
 
     @Test
     fun `provideDatabase creates open database after first access`() {
-        database = Room.inMemoryDatabaseBuilder(context, MoltDatabase::class.java)
+        database = Room.inMemoryDatabaseBuilder(context, XGDatabase::class.java)
             .allowMainThreadQueries()
             .build()
         // Room lazily opens the database — force it open via openHelper
@@ -61,16 +61,16 @@ class StorageModuleTest {
     }
 
     @Test
-    fun `provideDatabase is a MoltDatabase instance`() {
-        database = Room.inMemoryDatabaseBuilder(context, MoltDatabase::class.java)
+    fun `provideDatabase is a XGDatabase instance`() {
+        database = Room.inMemoryDatabaseBuilder(context, XGDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        assertThat(database).isInstanceOf(MoltDatabase::class.java)
+        assertThat(database).isInstanceOf(XGDatabase::class.java)
     }
 
     @Test
     fun `provideDatabase can be closed without error`() {
-        val db = Room.inMemoryDatabaseBuilder(context, MoltDatabase::class.java)
+        val db = Room.inMemoryDatabaseBuilder(context, XGDatabase::class.java)
             .allowMainThreadQueries()
             .build()
         db.close()
@@ -82,7 +82,7 @@ class StorageModuleTest {
     fun `provideDatabase with fallbackToDestructiveMigration does not throw`() {
         database = Room.databaseBuilder(
             context,
-            MoltDatabase::class.java,
+            XGDatabase::class.java,
             "molt_database_test_fallback",
         ).fallbackToDestructiveMigration(dropAllTables = true).build()
         assertThat(database).isNotNull()

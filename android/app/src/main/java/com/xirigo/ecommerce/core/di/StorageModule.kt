@@ -11,7 +11,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
-import com.xirigo.ecommerce.core.data.local.MoltDatabase
+import com.xirigo.ecommerce.core.data.local.XGDatabase
 
 private val Context.preferencesDataStore by preferencesDataStore(name = "molt_preferences")
 
@@ -26,9 +26,9 @@ object StorageModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): MoltDatabase = Room.databaseBuilder(
+    fun provideDatabase(@ApplicationContext context: Context): XGDatabase = Room.databaseBuilder(
         context,
-        MoltDatabase::class.java,
+        XGDatabase::class.java,
         "molt_database",
     ).fallbackToDestructiveMigration(dropAllTables = true).build()
 }

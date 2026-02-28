@@ -7,12 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.component.MoltEmptyView
-import com.xirigo.ecommerce.core.designsystem.theme.MoltTheme
+import com.xirigo.ecommerce.core.designsystem.component.XGEmptyView
+import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
 fun CartScreen(modifier: Modifier = Modifier) {
-    MoltEmptyView(
+    XGEmptyView(
         message = stringResource(R.string.cart_empty_message),
         icon = Icons.Outlined.ShoppingCart,
         actionLabel = stringResource(R.string.cart_start_shopping),
@@ -24,7 +24,7 @@ fun CartScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun CartScreenPreview() {
-    MoltTheme {
+    XGTheme {
         CartScreen()
     }
 }
