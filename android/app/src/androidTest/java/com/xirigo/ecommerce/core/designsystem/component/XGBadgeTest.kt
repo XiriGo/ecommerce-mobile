@@ -18,7 +18,7 @@ class XGBadgeTest {
     // --- XGCountBadge ---
 
     @Test
-    fun moltCountBadge_zeroCount_notRendered() {
+    fun xgCountBadge_zeroCount_notRendered() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = 0)
@@ -29,7 +29,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltCountBadge_negativeCount_notRendered() {
+    fun xgCountBadge_negativeCount_notRendered() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = -1)
@@ -40,7 +40,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltCountBadge_smallCount_displaysNumber() {
+    fun xgCountBadge_smallCount_displaysNumber() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = 5)
@@ -51,7 +51,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltCountBadge_count99_displays99() {
+    fun xgCountBadge_count99_displays99() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = 99)
@@ -62,7 +62,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltCountBadge_count100_displays99Plus() {
+    fun xgCountBadge_count100_displays99Plus() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = 100)
@@ -73,7 +73,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltCountBadge_largeCount_cappedAt99Plus() {
+    fun xgCountBadge_largeCount_cappedAt99Plus() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = 999)
@@ -85,7 +85,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltCountBadge_count1_displayed() {
+    fun xgCountBadge_count1_displayed() {
         composeTestRule.setContent {
             XGTheme {
                 XGCountBadge(count = 1)
@@ -98,7 +98,7 @@ class XGBadgeTest {
     // --- XGStatusBadge ---
 
     @Test
-    fun moltStatusBadge_success_displaysLabel() {
+    fun xgStatusBadge_success_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGStatusBadge(
@@ -112,7 +112,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltStatusBadge_error_displaysLabel() {
+    fun xgStatusBadge_error_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGStatusBadge(
@@ -126,7 +126,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltStatusBadge_warning_displaysLabel() {
+    fun xgStatusBadge_warning_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGStatusBadge(
@@ -140,7 +140,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltStatusBadge_info_displaysLabel() {
+    fun xgStatusBadge_info_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGStatusBadge(
@@ -154,7 +154,7 @@ class XGBadgeTest {
     }
 
     @Test
-    fun moltStatusBadge_neutral_displaysLabel() {
+    fun xgStatusBadge_neutral_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGStatusBadge(

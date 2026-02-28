@@ -33,7 +33,7 @@ Designed a comprehensive, platform-agnostic specification for the XiriGo Design 
 
 ### Theme Files (create first)
 
-1. `theme/XGColors.kt` -- All color tokens from `shared/design-tokens/colors.json`. Includes `XGColors` object with light/dark/semantic colors, plus `MoltLightColorScheme` and `MoltDarkColorScheme` using `lightColorScheme()` / `darkColorScheme()`.
+1. `theme/XGColors.kt` -- All color tokens from `shared/design-tokens/colors.json`. Includes `XGColors` object with light/dark/semantic colors, plus `XGLightColorScheme` and `XGDarkColorScheme` using `lightColorScheme()` / `darkColorScheme()`.
 2. `theme/XGTypography.kt` -- Typography from `shared/design-tokens/typography.json`. Maps to Material 3 `Typography` object.
 3. `theme/XGSpacing.kt` -- Spacing constants from `shared/design-tokens/spacing.json`. `object XGSpacing` with `Dp` values.
 4. `theme/XGCornerRadius.kt` -- Corner radius tokens. `object XGCornerRadius` with `Dp` values + `RoundedCornerShape` helpers.
@@ -44,15 +44,15 @@ Designed a comprehensive, platform-agnostic specification for the XiriGo Design 
 
 7. `component/XGButton.kt` -- `XGButton` composable + `XGButtonStyle` enum (primary, secondary, outlined, text). Loading state with spinner.
 8. `component/XGTextField.kt` -- `XGTextField` composable wrapping `OutlinedTextField`. Label, error, helper, icons, password mode.
-9. `component/XGCard.kt` -- `MoltProductCard` + `MoltInfoCard` composables. Product card with image, title, price, rating, wishlist.
-10. `component/XGChip.kt` -- `MoltFilterChip` + `MoltCategoryChip` composables.
+9. `component/XGCard.kt` -- `XGProductCard` + `XGInfoCard` composables. Product card with image, title, price, rating, wishlist.
+10. `component/XGChip.kt` -- `XGFilterChip` + `XGCategoryChip` composables.
 11. `component/XGTopBar.kt` -- `XGTopBar` wrapping `TopAppBar`. Back button + action slots.
 12. `component/XGBottomBar.kt` -- `XGBottomBar` wrapping `NavigationBar`. `XGTabItem` data class.
-13. `component/XGLoadingView.kt` -- `XGLoadingView` (full screen) + `MoltLoadingIndicator` (inline).
+13. `component/XGLoadingView.kt` -- `XGLoadingView` (full screen) + `XGLoadingIndicator` (inline).
 14. `component/XGErrorView.kt` -- Error icon + message + optional retry `XGButton`.
 15. `component/XGEmptyView.kt` -- Icon + message + optional action button.
 16. `component/XGImage.kt` -- Coil `AsyncImage` wrapper with placeholder/error/crossfade.
-17. `component/XGBadge.kt` -- `MoltCountBadge` + `MoltStatusBadge` + `XGBadgeStatus` enum.
+17. `component/XGBadge.kt` -- `XGCountBadge` + `XGStatusBadge` + `XGBadgeStatus` enum.
 18. `component/XGRatingBar.kt` -- Star rating display (filled, half, empty stars).
 19. `component/XGPriceText.kt` -- Price display with sale strikethrough + `XGPriceSize` enum.
 20. `component/XGQuantityStepper.kt` -- Minus/Plus buttons with count display.
@@ -83,15 +83,15 @@ Add localization keys from spec Section 5 to:
 
 7. `Component/XGButton.swift` -- `XGButton` view + `XGButtonStyle` enum. Loading state with `ProgressView`.
 8. `Component/XGTextField.swift` -- `XGTextField` view with label, error, helper, icons, password mode, `@FocusState`.
-9. `Component/XGCard.swift` -- `MoltProductCard` + `MoltInfoCard` views.
-10. `Component/XGChip.swift` -- `MoltFilterChip` + `MoltCategoryChip` views.
+9. `Component/XGCard.swift` -- `XGProductCard` + `XGInfoCard` views.
+10. `Component/XGChip.swift` -- `XGFilterChip` + `XGCategoryChip` views.
 11. `Component/XGTopBar.swift` -- `XGTopBar` view using toolbar modifiers.
 12. `Component/XGTabBar.swift` -- `XGTabBar` view wrapping `TabView` + `XGTabItem` struct.
-13. `Component/XGLoadingView.swift` -- `XGLoadingView` + `MoltLoadingIndicator` views.
+13. `Component/XGLoadingView.swift` -- `XGLoadingView` + `XGLoadingIndicator` views.
 14. `Component/XGErrorView.swift` -- Error icon + message + optional retry `XGButton`.
 15. `Component/XGEmptyView.swift` -- SF Symbol icon + message + optional action button.
 16. `Component/XGImage.swift` -- NukeUI `LazyImage` wrapper with shimmer placeholder.
-17. `Component/XGBadge.swift` -- `MoltCountBadge` + `MoltStatusBadge` + `XGBadgeStatus` enum.
+17. `Component/XGBadge.swift` -- `XGCountBadge` + `XGStatusBadge` + `XGBadgeStatus` enum.
 18. `Component/XGRatingBar.swift` -- Star rating with SF Symbols (`star.fill`, `star.leadinghalf.filled`, `star`).
 19. `Component/XGPriceText.swift` -- Price display with strikethrough + `XGPriceSize` enum.
 20. `Component/XGQuantityStepper.swift` -- Minus/Plus buttons with count display.
@@ -107,13 +107,13 @@ Add localization keys from spec Section 5 to:
 
 1. **Separate CornerRadius and Elevation files**: Rather than bundling corner radius and elevation into `XGSpacing`, they get their own files (`XGCornerRadius`, `XGElevation`) for clarity and to match the token JSON structure.
 
-2. **MoltProductCard and MoltInfoCard in same file**: Both are card variants that share styling logic. One file `XGCard.kt/swift` contains both.
+2. **XGProductCard and XGInfoCard in same file**: Both are card variants that share styling logic. One file `XGCard.kt/swift` contains both.
 
-3. **MoltFilterChip and MoltCategoryChip in same file**: Same rationale. `XGChip.kt/swift` exports both variants.
+3. **XGFilterChip and XGCategoryChip in same file**: Same rationale. `XGChip.kt/swift` exports both variants.
 
 4. **XGBottomBar (Android) vs XGTabBar (iOS)**: Different names to match platform conventions. Same `XGTabItem` data structure shared conceptually.
 
-5. **No interactive XGRatingBar**: Read-only for now. Interactive star input (for writing reviews, M3-07) can be added as `MoltRatingInput` later without changing the read-only API.
+5. **No interactive XGRatingBar**: Read-only for now. Interactive star input (for writing reviews, M3-07) can be added as `XGRatingInput` later without changing the read-only API.
 
 6. **Price formatting**: The component receives pre-formatted price strings. Formatting responsibility stays in the ViewModel/UseCase layer, not in the design system. The component only handles display (color, size, strikethrough).
 
@@ -139,7 +139,7 @@ Add localization keys from spec Section 5 to:
 
 5. **iOS Dynamic Type**: All text in components should use `.font(.system(size:))` through `XGTypography` constants. Ensure these scale with Dynamic Type by using `@ScaledMetric` or system text styles where possible.
 
-6. **Performance**: Card components (especially `MoltProductCard` in grid) must be lightweight. Avoid nesting too many layout layers. Test scrolling at 60fps with a grid of 50+ products.
+6. **Performance**: Card components (especially `XGProductCard` in grid) must be lightweight. Avoid nesting too many layout layers. Test scrolling at 60fps with a grid of 50+ products.
 
 7. **Dependency on NukeUI (iOS)**: Ensure SPM package `NukeUI` is added in `ios/Package.swift` before `XGImage.swift` implementation.
 

@@ -17,7 +17,7 @@ class XGPriceTextTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltPriceText_regularPrice_displaysFormattedPrice() {
+    fun xgPriceText_regularPrice_displaysFormattedPrice() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(price = "29.99")
@@ -28,7 +28,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_customCurrencySymbol_usedInDisplay() {
+    fun xgPriceText_customCurrencySymbol_usedInDisplay() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
@@ -42,7 +42,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_withOriginalPrice_showsBothPrices() {
+    fun xgPriceText_withOriginalPrice_showsBothPrices() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
@@ -57,7 +57,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_noOriginalPrice_onlyCurrentPriceShown() {
+    fun xgPriceText_noOriginalPrice_onlyCurrentPriceShown() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(price = "9.99")
@@ -68,7 +68,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_regularPrice_accessibilityDescriptionSet() {
+    fun xgPriceText_regularPrice_accessibilityDescriptionSet() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(price = "19.99")
@@ -81,7 +81,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_salePrice_accessibilityDescriptionIncludesBothPrices() {
+    fun xgPriceText_salePrice_accessibilityDescriptionIncludesBothPrices() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
@@ -97,7 +97,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_smallSize_rendersWithoutCrash() {
+    fun xgPriceText_smallSize_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
@@ -111,7 +111,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_mediumSize_rendersWithoutCrash() {
+    fun xgPriceText_mediumSize_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
@@ -125,7 +125,7 @@ class XGPriceTextTest {
     }
 
     @Test
-    fun moltPriceText_largeSize_rendersWithoutCrash() {
+    fun xgPriceText_largeSize_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(

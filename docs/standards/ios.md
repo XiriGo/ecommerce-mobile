@@ -22,13 +22,13 @@ in the XiriGo Ecommerce app. Agents and developers must follow these patterns ex
   - [Domain Error Pattern](#domain-error-pattern)
   - [Fake Repository for Tests](#fake-repository-for-tests)
 - [Design System](#design-system)
-  - [Theme: XGColors.swift](#theme-moltcolorsswift)
-  - [Theme: XGSpacing.swift](#theme-moltspacingswift)
-  - [Component: XGButton.swift](#component-moltbuttonswift)
-  - [Component: XGLoadingView.swift](#component-moltloadingviewswift)
-  - [Component: XGErrorView.swift](#component-molterrorviewswift)
-  - [Component: XGEmptyView.swift](#component-moltemptyviewswift)
-  - [Component: XGImage.swift](#component-moltimageswift)
+  - [Theme: XGColors.swift](#theme-xgcolorsswift)
+  - [Theme: XGSpacing.swift](#theme-xgspacingswift)
+  - [Component: XGButton.swift](#component-xgbuttonswift)
+  - [Component: XGLoadingView.swift](#component-xgloadingviewswift)
+  - [Component: XGErrorView.swift](#component-xgerrorviewswift)
+  - [Component: XGEmptyView.swift](#component-xgemptyviewswift)
+  - [Component: XGImage.swift](#component-xgimageswift)
 - [Localization](#localization)
 - [Environment Configuration](#environment-configuration)
 - [Security](#security)
@@ -250,7 +250,7 @@ struct ProductListView: View {
                     .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
 
                     if isLoadingMore {
-                        MoltLoadingIndicator()
+                        XGLoadingIndicator()
                     }
 
                     if hasMore {
@@ -519,11 +519,11 @@ struct XGButton: View {
             .frame(minHeight: XGSpacing.minTouchTarget)
         }
         .disabled(isLoading)
-        .buttonStyle(moltButtonStyle)
+        .buttonStyle(xgButtonStyle)
     }
 
     @ViewBuilder
-    private var moltButtonStyle: some ButtonStyle {
+    private var xgButtonStyle: some ButtonStyle {
         switch style {
         case .primary: .borderedProminent
         case .secondary: .bordered
@@ -548,7 +548,7 @@ struct XGLoadingView: View {
     }
 }
 
-struct MoltLoadingIndicator: View {
+struct XGLoadingIndicator: View {
     var body: some View {
         HStack {
             Spacer()

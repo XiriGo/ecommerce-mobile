@@ -20,7 +20,7 @@ class XGEmptyViewTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltEmptyView_displaysMessage() {
+    fun xgEmptyView_displaysMessage() {
         composeTestRule.setContent {
             XGTheme {
                 XGEmptyView(message = "No products found")
@@ -31,7 +31,7 @@ class XGEmptyViewTest {
     }
 
     @Test
-    fun moltEmptyView_actionButton_shown_whenBothProvided() {
+    fun xgEmptyView_actionButton_shown_whenBothProvided() {
         composeTestRule.setContent {
             XGTheme {
                 XGEmptyView(
@@ -46,7 +46,7 @@ class XGEmptyViewTest {
     }
 
     @Test
-    fun moltEmptyView_actionButton_notShown_whenLabelNull() {
+    fun xgEmptyView_actionButton_notShown_whenLabelNull() {
         composeTestRule.setContent {
             XGTheme {
                 XGEmptyView(
@@ -62,7 +62,7 @@ class XGEmptyViewTest {
     }
 
     @Test
-    fun moltEmptyView_actionButton_notShown_whenActionNull() {
+    fun xgEmptyView_actionButton_notShown_whenActionNull() {
         composeTestRule.setContent {
             XGTheme {
                 XGEmptyView(
@@ -78,7 +78,7 @@ class XGEmptyViewTest {
     }
 
     @Test
-    fun moltEmptyView_actionClick_firesCallback() {
+    fun xgEmptyView_actionClick_firesCallback() {
         var clicked = false
 
         composeTestRule.setContent {
@@ -96,7 +96,7 @@ class XGEmptyViewTest {
     }
 
     @Test
-    fun moltEmptyView_customIcon_rendersWithoutCrash() {
+    fun xgEmptyView_customIcon_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGEmptyView(
@@ -110,7 +110,7 @@ class XGEmptyViewTest {
     }
 
     @Test
-    fun moltEmptyView_rendersWithoutCrash() {
+    fun xgEmptyView_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGEmptyView(message = "Nothing here")

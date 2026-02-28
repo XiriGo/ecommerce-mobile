@@ -225,7 +225,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import androidx.room.Room
 
-private val Context.preferencesDataStore by preferencesDataStore(name = "molt_preferences")
+private val Context.preferencesDataStore by preferencesDataStore(name = "xg_preferences")
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -244,7 +244,7 @@ object StorageModule {
     ): XGDatabase = Room.databaseBuilder(
         context,
         XGDatabase::class.java,
-        "molt_database",
+        "xg_database",
     ).fallbackToDestructiveMigration().build()
 }
 ```

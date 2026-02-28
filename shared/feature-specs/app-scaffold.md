@@ -782,7 +782,7 @@ Font families:
 **iOS** (`XGTheme.swift`):
 - ViewModifier that applies color scheme overrides
 - Provides environment values for custom spacing, colors
-- Used via `.moltTheme()` modifier or wrapping in `XGThemeView { content }`
+- Used via `.xgTheme()` modifier or wrapping in `XGThemeView { content }`
 
 ---
 

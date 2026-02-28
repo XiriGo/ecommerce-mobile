@@ -32,7 +32,7 @@ class XGAppScaffoldTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun moltAppScaffold_allFourTabLabels_areDisplayed() {
+    fun xgAppScaffold_allFourTabLabels_areDisplayed() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -46,7 +46,7 @@ class XGAppScaffoldTest {
     }
 
     @Test
-    fun moltAppScaffold_homeTab_isSelectedByDefault() {
+    fun xgAppScaffold_homeTab_isSelectedByDefault() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -61,7 +61,7 @@ class XGAppScaffoldTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun moltAppScaffold_tapCategoriesTab_switchesToCategories() {
+    fun xgAppScaffold_tapCategoriesTab_switchesToCategories() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -74,7 +74,7 @@ class XGAppScaffoldTest {
     }
 
     @Test
-    fun moltAppScaffold_tapCartTab_switchesToCart() {
+    fun xgAppScaffold_tapCartTab_switchesToCart() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -87,7 +87,7 @@ class XGAppScaffoldTest {
     }
 
     @Test
-    fun moltAppScaffold_tapProfileTab_switchesToProfile() {
+    fun xgAppScaffold_tapProfileTab_switchesToProfile() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -100,7 +100,7 @@ class XGAppScaffoldTest {
     }
 
     @Test
-    fun moltAppScaffold_tapHomeTab_afterSwitchingAway_returnsTohome() {
+    fun xgAppScaffold_tapHomeTab_afterSwitchingAway_returnsTohome() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -121,7 +121,7 @@ class XGAppScaffoldTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun moltAppScaffold_cartBadge_isNotShown_whenCountIsZero() {
+    fun xgAppScaffold_cartBadge_isNotShown_whenCountIsZero() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -137,7 +137,7 @@ class XGAppScaffoldTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun moltAppScaffold_bottomBar_isVisible_onHomeRoute() {
+    fun xgAppScaffold_bottomBar_isVisible_onHomeRoute() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -150,7 +150,7 @@ class XGAppScaffoldTest {
     }
 
     @Test
-    fun moltAppScaffold_bottomBar_isVisible_onCategoriesRoute() {
+    fun xgAppScaffold_bottomBar_isVisible_onCategoriesRoute() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -171,7 +171,7 @@ class XGAppScaffoldTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun moltAppScaffold_homeTab_showsPlaceholderContent() {
+    fun xgAppScaffold_homeTab_showsPlaceholderContent() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()
@@ -185,7 +185,7 @@ class XGAppScaffoldTest {
     }
 
     @Test
-    fun moltAppScaffold_categoriesTab_showsPlaceholderContent() {
+    fun xgAppScaffold_categoriesTab_showsPlaceholderContent() {
         composeTestRule.setContent {
             XGTheme {
                 XGAppScaffold()

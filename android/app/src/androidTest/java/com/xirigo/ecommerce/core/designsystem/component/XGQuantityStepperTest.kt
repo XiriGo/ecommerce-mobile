@@ -20,7 +20,7 @@ class XGQuantityStepperTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltQuantityStepper_displaysCurrentQuantity() {
+    fun xgQuantityStepper_displaysCurrentQuantity() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(
@@ -34,7 +34,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_increaseButton_firesCallbackWithIncrementedValue() {
+    fun xgQuantityStepper_increaseButton_firesCallbackWithIncrementedValue() {
         var newQuantity = 3
 
         composeTestRule.setContent {
@@ -51,7 +51,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_decreaseButton_firesCallbackWithDecrementedValue() {
+    fun xgQuantityStepper_decreaseButton_firesCallbackWithDecrementedValue() {
         var newQuantity = 3
 
         composeTestRule.setContent {
@@ -68,7 +68,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_atMinQuantity_decreaseButtonDisabled() {
+    fun xgQuantityStepper_atMinQuantity_decreaseButtonDisabled() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(
@@ -83,7 +83,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_atMaxQuantity_increaseButtonDisabled() {
+    fun xgQuantityStepper_atMaxQuantity_increaseButtonDisabled() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(
@@ -98,7 +98,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_aboveMin_decreaseButtonEnabled() {
+    fun xgQuantityStepper_aboveMin_decreaseButtonEnabled() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(
@@ -113,7 +113,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_belowMax_increaseButtonEnabled() {
+    fun xgQuantityStepper_belowMax_increaseButtonEnabled() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(
@@ -128,7 +128,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_customMinMax_enforcedCorrectly() {
+    fun xgQuantityStepper_customMinMax_enforcedCorrectly() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(
@@ -147,7 +147,7 @@ class XGQuantityStepperTest {
     }
 
     @Test
-    fun moltQuantityStepper_rendersWithoutCrash() {
+    fun xgQuantityStepper_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGQuantityStepper(

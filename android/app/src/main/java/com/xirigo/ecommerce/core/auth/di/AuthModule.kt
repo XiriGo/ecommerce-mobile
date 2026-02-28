@@ -45,9 +45,9 @@ abstract class AuthBindsModule {
 @InstallIn(SingletonComponent::class)
 object AuthProvidesModule {
 
-    private const val KEYSET_NAME = "molt_auth_keyset"
-    private const val PREF_FILE_NAME = "molt_auth_keyset_prefs"
-    private const val MASTER_KEY_URI = "android-keystore://molt_auth_master_key"
+    private const val KEYSET_NAME = "xg_auth_keyset"
+    private const val PREF_FILE_NAME = "xg_auth_keyset_prefs"
+    private const val MASTER_KEY_URI = "android-keystore://xg_auth_master_key"
 
     @Provides
     @Singleton

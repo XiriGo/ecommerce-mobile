@@ -326,14 +326,14 @@ Package: com.xirigo.ecommerce.core.di
 Provides:
   @Provides @Singleton
   fun providePreferencesDataStore(application: Application): DataStore<Preferences>
-      -- application.preferencesDataStore(name = "molt_preferences")
+      -- application.preferencesDataStore(name = "xg_preferences")
       Note: Uses the property delegate pattern at module level:
-            private val Context.preferencesDataStore by preferencesDataStore(name = "molt_preferences")
+            private val Context.preferencesDataStore by preferencesDataStore(name = "xg_preferences")
             The @Provides method returns application.preferencesDataStore
 
   @Provides @Singleton
   fun provideDatabase(application: Application): XGDatabase
-      -- Room.databaseBuilder(application, XGDatabase::class.java, "molt_database")
+      -- Room.databaseBuilder(application, XGDatabase::class.java, "xg_database")
            .fallbackToDestructiveMigration()  // Development only; replace with migrations before release
            .build()
 

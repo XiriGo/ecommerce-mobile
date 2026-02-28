@@ -94,15 +94,15 @@ All 14 components are implemented on both platforms.
 |---|-----------|-------------|-------------|---------|
 | 1 | `XGButton` | Action button with 4 style variants and loading state | `XGButton.kt` | `XGButton.swift` |
 | 2 | `XGTextField` | Text input with label, error, helper text, icons, password mode | `XGTextField.kt` | `XGTextField.swift` |
-| 3 | `XGCard` | `MoltProductCard` + `MoltInfoCard` container variants | `XGCard.kt` | `XGCard.swift` |
-| 4 | `XGChip` | `MoltFilterChip` + `MoltCategoryChip` for filters and categories | `XGChip.kt` | `XGChip.swift` |
+| 3 | `XGCard` | `XGProductCard` + `XGInfoCard` container variants | `XGCard.kt` | `XGCard.swift` |
+| 4 | `XGChip` | `XGFilterChip` + `XGCategoryChip` for filters and categories | `XGChip.kt` | `XGChip.swift` |
 | 5 | `XGTopBar` | Top navigation bar with back button and action slots | `XGTopBar.kt` | `XGTopBar.swift` |
 | 6 | `XGBottomBar` / `XGTabBar` | Bottom tab navigation with badge counts | `XGBottomBar.kt` | `XGTabBar.swift` |
-| 7 | `XGLoadingView` | Full-screen spinner + inline `MoltLoadingIndicator` | `XGLoadingView.kt` | `XGLoadingView.swift` |
+| 7 | `XGLoadingView` | Full-screen spinner + inline `XGLoadingIndicator` | `XGLoadingView.kt` | `XGLoadingView.swift` |
 | 8 | `XGErrorView` | Error icon + message + optional retry button | `XGErrorView.kt` | `XGErrorView.swift` |
 | 9 | `XGEmptyView` | Empty state icon + message + optional action button | `XGEmptyView.kt` | `XGEmptyView.swift` |
 | 10 | `XGImage` | Async image with shimmer placeholder and crossfade | `XGImage.kt` | `XGImage.swift` |
-| 11 | `XGBadge` | `MoltCountBadge` (0/1–99/99+) + `MoltStatusBadge` (5 statuses) | `XGBadge.kt` | `XGBadge.swift` |
+| 11 | `XGBadge` | `XGCountBadge` (0/1–99/99+) + `XGStatusBadge` (5 statuses) | `XGBadge.kt` | `XGBadge.swift` |
 | 12 | `XGRatingBar` | Read-only star rating with half-star precision | `XGRatingBar.kt` | `XGRatingBar.swift` |
 | 13 | `XGPriceText` | Currency display with sale strikethrough, 3 size variants | `XGPriceText.kt` | `XGPriceText.swift` |
 | 14 | `XGQuantityStepper` | Increment/decrement control with min/max bounds | `XGQuantityStepper.kt` | `XGQuantityStepper.swift` |
@@ -142,7 +142,7 @@ App-wide tabs: **Home**, **Categories**, **Cart** (with cart item count badge), 
 ```kotlin
 import com.xirigo.ecommerce.core.designsystem.component.XGButton
 import com.xirigo.ecommerce.core.designsystem.component.XGButtonStyle
-import com.xirigo.ecommerce.core.designsystem.component.MoltProductCard
+import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @Composable
@@ -187,7 +187,7 @@ XGTheme(darkTheme = isSystemInDarkTheme()) {
 **iOS** — Apply as a `ViewModifier` at app entry:
 ```swift
 ContentView()
-    .moltTheme()
+    .xgTheme()
 ```
 
 ---
@@ -218,7 +218,7 @@ Key examples:
 | `common_retry_button` | Retry | XGErrorView retry |
 | `common_decrease_quantity` | Decrease quantity | XGQuantityStepper minus |
 | `common_increase_quantity` | Increase quantity | XGQuantityStepper plus |
-| `common_add_to_wishlist` | Add to wishlist | MoltProductCard heart |
+| `common_add_to_wishlist` | Add to wishlist | XGProductCard heart |
 | `common_tab_home` | Home | XGBottomBar/XGTabBar |
 | `common_tab_cart` | Cart | XGBottomBar/XGTabBar |
 
@@ -236,7 +236,7 @@ iOS string file: `Resources/Localizable.xcstrings` (String Catalog format)
 ```
 core/designsystem/
   theme/
-    XGColors.kt           # Color tokens (light/dark/semantic), MoltLightColorScheme, MoltDarkColorScheme
+    XGColors.kt           # Color tokens (light/dark/semantic), XGLightColorScheme, XGDarkColorScheme
     XGTypography.kt       # Typography object (15 text styles)
     XGSpacing.kt          # Spacing constants (dp values)
     XGCornerRadius.kt     # Corner radius constants + RoundedCornerShape helpers
@@ -245,15 +245,15 @@ core/designsystem/
   component/
     XGButton.kt           # XGButton + XGButtonStyle enum (4 variants)
     XGTextField.kt        # XGTextField (label, error, helper, password)
-    XGCard.kt             # MoltProductCard + MoltInfoCard
-    XGChip.kt             # MoltFilterChip + MoltCategoryChip
+    XGCard.kt             # XGProductCard + XGInfoCard
+    XGChip.kt             # XGFilterChip + XGCategoryChip
     XGTopBar.kt           # XGTopBar
     XGBottomBar.kt        # XGBottomBar + XGTabItem
-    XGLoadingView.kt      # XGLoadingView + MoltLoadingIndicator
+    XGLoadingView.kt      # XGLoadingView + XGLoadingIndicator
     XGErrorView.kt        # XGErrorView
     XGEmptyView.kt        # XGEmptyView
     XGImage.kt            # XGImage (Coil AsyncImage wrapper)
-    XGBadge.kt            # MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum
+    XGBadge.kt            # XGCountBadge + XGStatusBadge + XGBadgeStatus enum
     XGRatingBar.kt        # XGRatingBar (half-star support)
     XGPriceText.kt        # XGPriceText + XGPriceSize enum
     XGQuantityStepper.kt  # XGQuantityStepper
@@ -279,20 +279,20 @@ Core/DesignSystem/
     XGTypography.swift    # Font constants (15 text styles)
     XGSpacing.swift       # Spacing constants + IconSize + AvatarSize nested enums
     XGCornerRadius.swift  # Corner radius constants
-    XGElevation.swift     # Elevation levels + ShadowStyle struct + moltElevation() modifier
+    XGElevation.swift     # Elevation levels + ShadowStyle struct + xgElevation() modifier
     XGTheme.swift         # ViewModifier applying theme to environment
   Component/
     XGButton.swift        # XGButton view + XGButtonVariant enum (4 variants)
     XGTextField.swift     # XGTextField view (label, error, password toggle, maxLength)
-    XGCard.swift          # MoltProductCard + MoltInfoCard views
-    XGChip.swift          # MoltFilterChip + MoltCategoryChip views
+    XGCard.swift          # XGProductCard + XGInfoCard views
+    XGChip.swift          # XGFilterChip + XGCategoryChip views
     XGTopBar.swift        # XGTopBar view (toolbar modifiers)
     XGTabBar.swift        # XGTabBar view + XGTabItem struct
-    XGLoadingView.swift   # XGLoadingView + MoltLoadingIndicator views
+    XGLoadingView.swift   # XGLoadingView + XGLoadingIndicator views
     XGErrorView.swift     # XGErrorView
     XGEmptyView.swift     # XGEmptyView
     XGImage.swift         # XGImage (AsyncImage wrapper with shimmer placeholder)
-    XGBadge.swift         # MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum
+    XGBadge.swift         # XGCountBadge + XGStatusBadge + XGBadgeStatus enum
     XGRatingBar.swift     # XGRatingBar (SF Symbols: star.fill, star.leadinghalf.filled, star)
     XGPriceText.swift     # XGPriceText + XGPriceSize enum
     XGQuantityStepper.swift # XGQuantityStepper (accessibilityAdjustableAction)

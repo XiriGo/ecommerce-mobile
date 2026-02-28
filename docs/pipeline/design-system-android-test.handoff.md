@@ -33,15 +33,15 @@ Previously existing (kept):
 |------|-------------------|---------------|
 | `component/XGButtonTest.kt` | `XGButton` | All 4 variants (Primary, Secondary, Outlined, Text); loading state disables click + shows progress indicator; disabled state; click callback; leading icon |
 | `component/XGTextFieldTest.kt` | `XGTextField` | Label, placeholder, error state, helper text, error overrides helper, password toggle, value callback, maxLength counter, maxLength truncation |
-| `component/XGCardTest.kt` | `MoltProductCard`, `MoltInfoCard` | Product card title/price/vendor rendering; click callback; wishlist toggle (add/remove CD); info card title, subtitle, click |
-| `component/XGChipTest.kt` | `MoltFilterChip`, `MoltCategoryChip` | Unselected/selected label; click callback; selected state; multiple clicks; category chip label and click |
+| `component/XGCardTest.kt` | `XGProductCard`, `XGInfoCard` | Product card title/price/vendor rendering; click callback; wishlist toggle (add/remove CD); info card title, subtitle, click |
+| `component/XGChipTest.kt` | `XGFilterChip`, `XGCategoryChip` | Unselected/selected label; click callback; selected state; multiple clicks; category chip label and click |
 | `component/XGTopBarTest.kt` | `XGTopBar` | Title display; back button absent when null; back button present and clickable; action button click; title-only variant |
 | `component/XGBottomBarTest.kt` | `XGBottomBar`, `XGTabItem` | All tabs rendered; selected state; tab click with index callback; badge count display; zero badge hidden; 99+ cap; tab switching |
-| `component/XGLoadingViewTest.kt` | `XGLoadingView`, `MoltLoadingIndicator` | Progress indicator content description; render-without-crash for both variants |
+| `component/XGLoadingViewTest.kt` | `XGLoadingView`, `XGLoadingIndicator` | Progress indicator content description; render-without-crash for both variants |
 | `component/XGErrorViewTest.kt` | `XGErrorView` | Message displayed; retry button present/absent; retry click fires callback; render-without-crash |
 | `component/XGEmptyViewTest.kt` | `XGEmptyView` | Message displayed; action button shown/hidden (requires both label + callback); action click; custom icon; render-without-crash |
 | `component/XGImageTest.kt` | `XGImage` | Null URL renders shimmer (no crash); non-null URL renders AsyncImage with CD; null content description variants |
-| `component/XGBadgeTest.kt` | `MoltCountBadge`, `MoltStatusBadge` | Zero/negative count hidden; 1–99 displayed; 100+ capped at "99+"; all 5 status badge variants (Success/Warning/Error/Info/Neutral) |
+| `component/XGBadgeTest.kt` | `XGCountBadge`, `XGStatusBadge` | Zero/negative count hidden; 1–99 displayed; 100+ capped at "99+"; all 5 status badge variants (Success/Warning/Error/Info/Neutral) |
 | `component/XGRatingBarTest.kt` | `XGRatingBar` | showValue flag; review count display; full/zero/half ratings; accessibility content description; combined showValue + reviewCount |
 | `component/XGPriceTextTest.kt` | `XGPriceText` | Regular price format; custom currency symbol; sale price with both prices; accessibility descriptions; all 3 size variants |
 | `component/XGQuantityStepperTest.kt` | `XGQuantityStepper` | Current quantity display; increase/decrease callbacks; min/max button disable; custom min/max enforcement; render-without-crash |
@@ -69,8 +69,8 @@ Previously existing (kept):
 
 ### Error / Edge Paths
 - Null props handled without crash (XGImage, XGErrorView retry null, etc.)
-- Zero counts hidden (MoltCountBadge, XGBottomBar badge)
-- Overflow counts capped (99+ for MoltCountBadge and XGBottomBar)
+- Zero counts hidden (XGCountBadge, XGBottomBar badge)
+- Overflow counts capped (99+ for XGCountBadge and XGBottomBar)
 - Min/max bounds respected in XGQuantityStepper
 
 ### Accessibility

@@ -17,7 +17,7 @@ class XGRatingBarTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltRatingBar_showValue_displaysRatingText() {
+    fun xgRatingBar_showValue_displaysRatingText() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -31,7 +31,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_noShowValue_doesNotDisplayRatingText() {
+    fun xgRatingBar_noShowValue_doesNotDisplayRatingText() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -45,7 +45,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_withReviewCount_displaysReviewCount() {
+    fun xgRatingBar_withReviewCount_displaysReviewCount() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -59,7 +59,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_noReviewCount_doesNotDisplayParentheses() {
+    fun xgRatingBar_noReviewCount_doesNotDisplayParentheses() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -73,7 +73,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_fullRating_rendersWithoutCrash() {
+    fun xgRatingBar_fullRating_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -87,7 +87,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_zeroRating_rendersWithoutCrash() {
+    fun xgRatingBar_zeroRating_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -101,7 +101,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_halfRating_rendersWithoutCrash() {
+    fun xgRatingBar_halfRating_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(
@@ -115,7 +115,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_accessibilityDescription_isSet() {
+    fun xgRatingBar_accessibilityDescription_isSet() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(rating = 4.0f)
@@ -129,7 +129,7 @@ class XGRatingBarTest {
     }
 
     @Test
-    fun moltRatingBar_showValue_andReviewCount_bothDisplayed() {
+    fun xgRatingBar_showValue_andReviewCount_bothDisplayed() {
         composeTestRule.setContent {
             XGTheme {
                 XGRatingBar(

@@ -24,7 +24,7 @@ struct ShadowStyle: Sendable {
 // MARK: - View+XGElevation
 
 extension View {
-    func moltElevation(_ style: ShadowStyle) -> some View {
+    func xgElevation(_ style: ShadowStyle) -> some View {
         shadow(
             color: XGColors.shadow.opacity(style.opacity),
             radius: style.radius,

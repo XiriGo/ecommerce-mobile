@@ -22,14 +22,14 @@
    - [Domain Error Pattern](#domain-error-pattern)
    - [Fake Repository for Tests](#fake-repository-for-tests)
 8. [Design System](#design-system)
-   - [Theme: XGColors](#theme-moltcolors)
-   - [Theme: XGSpacing](#theme-moltspacing)
-   - [Theme: XGTheme](#theme-molttheme)
-   - [Component: XGButton](#component-moltbutton)
-   - [Component: XGLoadingView](#component-moltloadingview)
-   - [Component: XGErrorView](#component-molterrorview)
-   - [Component: XGEmptyView](#component-moltemptyview)
-   - [Component: XGImage](#component-moltimage)
+   - [Theme: XGColors](#theme-xgcolors)
+   - [Theme: XGSpacing](#theme-xgspacing)
+   - [Theme: XGTheme](#theme-xgtheme)
+   - [Component: XGButton](#component-xgbutton)
+   - [Component: XGLoadingView](#component-xgloadingview)
+   - [Component: XGErrorView](#component-xgerrorview)
+   - [Component: XGEmptyView](#component-xgemptyview)
+   - [Component: XGImage](#component-xgimage)
 9. [Environment Configuration](#environment-configuration)
 10. [Localization](#localization)
 11. [Common Pitfalls](#common-pitfalls)
@@ -207,7 +207,7 @@ class ProductListViewModel @Inject constructor(
 // NOTE: Import from core.designsystem — NEVER use Material 3 components directly
 import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGErrorView
-import com.xirigo.ecommerce.core.designsystem.component.MoltLoadingIndicator
+import com.xirigo.ecommerce.core.designsystem.component.XGLoadingIndicator
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
@@ -260,7 +260,7 @@ private fun ProductListContent(
                     ProductCard(product = product, onClick = { onProductClick(product.id) })
                 }
                 if (uiState.isLoadingMore) {
-                    item(span = { GridItemSpan(2) }) { MoltLoadingIndicator() }
+                    item(span = { GridItemSpan(2) }) { XGLoadingIndicator() }
                 }
             }
             LaunchedEffect(uiState.products.size) {
@@ -472,7 +472,7 @@ fun XGTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = if (darkTheme) MoltDarkColorScheme else MoltLightColorScheme
+    val colorScheme = if (darkTheme) XGDarkColorScheme else XGLightColorScheme
     MaterialTheme(
         colorScheme = colorScheme,
         typography = XGTypography,
@@ -481,7 +481,7 @@ fun XGTheme(
 }
 
 // Color schemes built from XGColors — single source of truth
-private val MoltLightColorScheme = lightColorScheme(
+private val XGLightColorScheme = lightColorScheme(
     primary = XGColors.Primary,
     onPrimary = XGColors.OnPrimary,
     primaryContainer = XGColors.PrimaryContainer,
@@ -539,7 +539,7 @@ fun XGLoadingView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MoltLoadingIndicator(modifier: Modifier = Modifier) {
+fun XGLoadingIndicator(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxWidth().padding(XGSpacing.Base), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
     }

@@ -33,15 +33,15 @@ All files under `android/app/src/main/java/com/xirigo/ecommerce/core/designsyste
 |---|------|-----------|----------|
 | 1 | `XGButton.kt` | XGButton + XGButtonStyle enum | 4 (primary, secondary, loading, disabled) |
 | 2 | `XGTextField.kt` | XGTextField | 3 (default, error, password) |
-| 3 | `XGCard.kt` | MoltProductCard + MoltInfoCard | 3 (product, wishlisted, info) |
-| 4 | `XGChip.kt` | MoltFilterChip + MoltCategoryChip | 3 (unselected, selected, category) |
+| 3 | `XGCard.kt` | XGProductCard + XGInfoCard | 3 (product, wishlisted, info) |
+| 4 | `XGChip.kt` | XGFilterChip + XGCategoryChip | 3 (unselected, selected, category) |
 | 5 | `XGTopBar.kt` | XGTopBar | 2 (default, with back) |
 | 6 | `XGBottomBar.kt` | XGBottomBar + XGTabItem | 2 (home selected, cart selected) |
-| 7 | `XGLoadingView.kt` | XGLoadingView + MoltLoadingIndicator | 2 (fullscreen, inline) |
+| 7 | `XGLoadingView.kt` | XGLoadingView + XGLoadingIndicator | 2 (fullscreen, inline) |
 | 8 | `XGErrorView.kt` | XGErrorView | 2 (with retry, without retry) |
 | 9 | `XGEmptyView.kt` | XGEmptyView | 2 (default, with action) |
 | 10 | `XGImage.kt` | XGImage | 2 (placeholder, with URL) |
-| 11 | `XGBadge.kt` | MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum | 5 (count, overflow, success, error, warning) |
+| 11 | `XGBadge.kt` | XGCountBadge + XGStatusBadge + XGBadgeStatus enum | 5 (count, overflow, success, error, warning) |
 | 12 | `XGRatingBar.kt` | XGRatingBar | 3 (half star, low, full) |
 | 13 | `XGPriceText.kt` | XGPriceText + XGPriceSize enum | 4 (regular, sale, large, small) |
 | 14 | `XGQuantityStepper.kt` | XGQuantityStepper | 3 (normal, min, max) |

@@ -18,7 +18,7 @@ class XGErrorViewTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltErrorView_displaysMessage() {
+    fun xgErrorView_displaysMessage() {
         composeTestRule.setContent {
             XGTheme {
                 XGErrorView(message = "Something went wrong")
@@ -29,7 +29,7 @@ class XGErrorViewTest {
     }
 
     @Test
-    fun moltErrorView_retryButton_shown_whenCallbackProvided() {
+    fun xgErrorView_retryButton_shown_whenCallbackProvided() {
         composeTestRule.setContent {
             XGTheme {
                 XGErrorView(
@@ -43,7 +43,7 @@ class XGErrorViewTest {
     }
 
     @Test
-    fun moltErrorView_retryButton_notShown_whenCallbackNull() {
+    fun xgErrorView_retryButton_notShown_whenCallbackNull() {
         composeTestRule.setContent {
             XGTheme {
                 XGErrorView(
@@ -57,7 +57,7 @@ class XGErrorViewTest {
     }
 
     @Test
-    fun moltErrorView_retryClick_firesCallback() {
+    fun xgErrorView_retryClick_firesCallback() {
         var retried = false
 
         composeTestRule.setContent {
@@ -74,7 +74,7 @@ class XGErrorViewTest {
     }
 
     @Test
-    fun moltErrorView_rendersWithoutCrash() {
+    fun xgErrorView_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGErrorView(message = "Test error")

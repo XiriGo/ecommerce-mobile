@@ -56,22 +56,22 @@ Design System and involve Maltese diacritic string comparison issues in test exp
 | XGButtonVariant Tests | PASS | 3 |
 | XGButton Logic Tests | PASS | 8 |
 | XGTextField Tests | PASS | 11 |
-| MoltProductCard Tests | PASS | 8 |
-| MoltInfoCard Tests | PASS | 5 |
-| MoltFilterChip Tests | PASS | 6 |
-| MoltCategoryChip Tests | PASS | 4 |
+| XGProductCard Tests | PASS | 8 |
+| XGInfoCard Tests | PASS | 5 |
+| XGFilterChip Tests | PASS | 6 |
+| XGCategoryChip Tests | PASS | 4 |
 | XGTopBarAction Tests | PASS | 5 |
 | XGTopBar Tests | PASS | 6 |
 | XGTabItem Tests | PASS | 7 |
 | XGTabBar Tests | PASS | 5 |
 | XGLoadingView Tests | PASS | 3 |
-| MoltLoadingIndicator Tests | PASS | 3 |
+| XGLoadingIndicator Tests | PASS | 3 |
 | XGErrorView Tests | PASS | 9 |
 | XGEmptyView Tests | PASS | 11 |
 | XGImage Tests | PASS | 8 |
-| MoltCountBadge Tests | PASS | 10 |
+| XGCountBadge Tests | PASS | 10 |
 | XGBadgeStatus Tests | PASS | 7 |
-| MoltStatusBadge Tests | PASS | 5 |
+| XGStatusBadge Tests | PASS | 5 |
 | XGRatingBar Tests | PASS | 12 |
 | XGPriceSize Tests | PASS | 7 |
 | XGPriceText Tests | PASS | 9 |
@@ -92,15 +92,15 @@ Design System and involve Maltese diacritic string comparison issues in test exp
 
 - **XGButton**: All 4 variants (primary/secondary/outlined/text), loading state, disabled state, fullWidth defaults, leading icon
 - **XGTextField**: Label, placeholder, error message, helper text, password mode, maxLength, disabled, read-only, leading/trailing icon
-- **XGCard**: MoltProductCard (all optional properties, wishlisted state, vendor, rating, action), MoltInfoCard (subtitle, icon, action, trailing content)
-- **XGChip**: MoltFilterChip (selected/deselected states, leading icon), MoltCategoryChip (icon URL)
+- **XGCard**: XGProductCard (all optional properties, wishlisted state, vendor, rating, action), XGInfoCard (subtitle, icon, action, trailing content)
+- **XGChip**: XGFilterChip (selected/deselected states, leading icon), XGCategoryChip (icon URL)
 - **XGTopBar**: XGTopBarAction (icon, label, badge count, unique id), XGTopBar (title only, back button, actions)
 - **XGTabBar**: XGTabItem (all stored properties, badge count), XGTabBar (binding, single item, badge)
-- **XGLoadingView**: XGLoadingView and MoltLoadingIndicator as distinct types
+- **XGLoadingView**: XGLoadingView and XGLoadingIndicator as distinct types
 - **XGErrorView**: Message only, with retry, without retry, message content variants
 - **XGEmptyView**: Message, default/custom system images, action button presence
 - **XGImage**: nil URL (placeholder), valid URL, fill/fit content modes
-- **XGBadge**: MoltCountBadge (0/1/99/100+, displayText logic), XGBadgeStatus (all 5 statuses, colors), MoltStatusBadge (all statuses)
+- **XGBadge**: XGCountBadge (0/1/99/100+, displayText logic), XGBadgeStatus (all 5 statuses, colors), XGStatusBadge (all statuses)
 - **XGRatingBar**: Full/half/empty star logic for all rating values, perfect rating, zero rating, mixed (3.5)
 - **XGPriceText**: XGPriceSize (all fonts), regular vs sale price detection, currency symbol, all size variants
 - **XGQuantityStepper**: canDecrease/canIncrease logic, decrease/increase at boundaries, callback firing, boundary enforcement

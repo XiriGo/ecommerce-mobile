@@ -16,7 +16,7 @@ class XGLoadingViewTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltLoadingView_fullScreen_showsProgressIndicator() {
+    fun xgLoadingView_fullScreen_showsProgressIndicator() {
         composeTestRule.setContent {
             XGTheme {
                 XGLoadingView()
@@ -27,7 +27,7 @@ class XGLoadingViewTest {
     }
 
     @Test
-    fun moltLoadingIndicator_inline_showsProgressIndicator() {
+    fun xgLoadingIndicator_inline_showsProgressIndicator() {
         composeTestRule.setContent {
             XGTheme {
                 XGLoadingIndicator()
@@ -38,7 +38,7 @@ class XGLoadingViewTest {
     }
 
     @Test
-    fun moltLoadingView_rendersWithoutCrash() {
+    fun xgLoadingView_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGLoadingView()
@@ -50,7 +50,7 @@ class XGLoadingViewTest {
     }
 
     @Test
-    fun moltLoadingIndicator_rendersWithoutCrash() {
+    fun xgLoadingIndicator_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGLoadingIndicator()

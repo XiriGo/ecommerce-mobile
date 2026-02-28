@@ -316,7 +316,7 @@ Font weight mapping:
 
 #### Variants
 
-##### MoltProductCard
+##### XGProductCard
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -332,7 +332,7 @@ Font weight mapping:
 | `onClick` | `() -> Unit` / `() -> Void` | required | Card tap callback |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-##### MoltInfoCard
+##### XGInfoCard
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -380,7 +380,7 @@ Font weight mapping:
 
 #### Variants
 
-##### MoltFilterChip
+##### XGFilterChip
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -390,7 +390,7 @@ Font weight mapping:
 | `leadingIcon` | `ImageVector?` / `String?` | `nil` | Leading icon |
 | `modifier` (Android) | `Modifier` | `Modifier` | Compose modifier chain |
 
-##### MoltCategoryChip
+##### XGCategoryChip
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -508,7 +508,7 @@ Font weight mapping:
 
 Fills the entire available space with a centered progress indicator.
 
-##### MoltLoadingIndicator (Inline)
+##### XGLoadingIndicator (Inline)
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -635,7 +635,7 @@ Horizontally centered, smaller indicator for list footers and inline loading.
 
 #### Variants
 
-##### MoltCountBadge
+##### XGCountBadge
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -647,7 +647,7 @@ Display logic:
 - `count 1-99`: Show number
 - `count >= 100`: Show "99+"
 
-##### MoltStatusBadge
+##### XGStatusBadge
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -826,15 +826,15 @@ core/designsystem/
   component/
     XGButton.kt          -- XGButton + XGButtonStyle enum
     XGTextField.kt       -- XGTextField
-    XGCard.kt            -- MoltProductCard + MoltInfoCard
-    XGChip.kt            -- MoltFilterChip + MoltCategoryChip
+    XGCard.kt            -- XGProductCard + XGInfoCard
+    XGChip.kt            -- XGFilterChip + XGCategoryChip
     XGTopBar.kt          -- XGTopBar
     XGBottomBar.kt       -- XGBottomBar + XGTabItem
-    XGLoadingView.kt     -- XGLoadingView + MoltLoadingIndicator
+    XGLoadingView.kt     -- XGLoadingView + XGLoadingIndicator
     XGErrorView.kt       -- XGErrorView
     XGEmptyView.kt       -- XGEmptyView
     XGImage.kt           -- XGImage
-    XGBadge.kt           -- MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum
+    XGBadge.kt           -- XGCountBadge + XGStatusBadge + XGBadgeStatus enum
     XGRatingBar.kt       -- XGRatingBar
     XGPriceText.kt       -- XGPriceText + XGPriceSize enum
     XGQuantityStepper.kt -- XGQuantityStepper
@@ -858,15 +858,15 @@ Core/DesignSystem/
   Component/
     XGButton.swift       -- XGButton view + XGButtonStyle enum
     XGTextField.swift    -- XGTextField view
-    XGCard.swift         -- MoltProductCard + MoltInfoCard views
-    XGChip.swift         -- MoltFilterChip + MoltCategoryChip views
+    XGCard.swift         -- XGProductCard + XGInfoCard views
+    XGChip.swift         -- XGFilterChip + XGCategoryChip views
     XGTopBar.swift       -- XGTopBar view
     XGTabBar.swift       -- XGTabBar view + XGTabItem struct
-    XGLoadingView.swift  -- XGLoadingView + MoltLoadingIndicator views
+    XGLoadingView.swift  -- XGLoadingView + XGLoadingIndicator views
     XGErrorView.swift    -- XGErrorView
     XGEmptyView.swift    -- XGEmptyView
     XGImage.swift        -- XGImage view (NukeUI)
-    XGBadge.swift        -- MoltCountBadge + MoltStatusBadge + XGBadgeStatus enum
+    XGBadge.swift        -- XGCountBadge + XGStatusBadge + XGBadgeStatus enum
     XGRatingBar.swift    -- XGRatingBar view
     XGPriceText.swift    -- XGPriceText view + XGPriceSize enum
     XGQuantityStepper.swift -- XGQuantityStepper view

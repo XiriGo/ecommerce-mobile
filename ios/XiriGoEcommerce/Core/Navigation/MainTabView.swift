@@ -60,28 +60,28 @@ struct MainTabView: View {
     private var homeTab: some View {
         NavigationStack(path: router.bindingForPath(.home)) {
             HomeScreen()
-                .moltNavigationDestinations()
+                .xgNavigationDestinations()
         }
     }
 
     private var categoriesTab: some View {
         NavigationStack(path: router.bindingForPath(.categories)) {
             CategoriesScreen()
-                .moltNavigationDestinations()
+                .xgNavigationDestinations()
         }
     }
 
     private var cartTab: some View {
         NavigationStack(path: router.bindingForPath(.cart)) {
             CartScreen()
-                .moltNavigationDestinations()
+                .xgNavigationDestinations()
         }
     }
 
     private var profileTab: some View {
         NavigationStack(path: router.bindingForPath(.profile)) {
             ProfileScreen()
-                .moltNavigationDestinations()
+                .xgNavigationDestinations()
         }
     }
 

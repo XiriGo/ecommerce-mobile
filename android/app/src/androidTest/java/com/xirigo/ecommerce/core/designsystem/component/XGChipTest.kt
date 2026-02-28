@@ -21,7 +21,7 @@ class XGChipTest {
     // --- XGFilterChip ---
 
     @Test
-    fun moltFilterChip_unselected_displaysLabel() {
+    fun xgFilterChip_unselected_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGFilterChip(
@@ -36,7 +36,7 @@ class XGChipTest {
     }
 
     @Test
-    fun moltFilterChip_selected_displaysLabel() {
+    fun xgFilterChip_selected_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGFilterChip(
@@ -51,7 +51,7 @@ class XGChipTest {
     }
 
     @Test
-    fun moltFilterChip_click_firesCallback() {
+    fun xgFilterChip_click_firesCallback() {
         var clicked = false
 
         composeTestRule.setContent {
@@ -69,7 +69,7 @@ class XGChipTest {
     }
 
     @Test
-    fun moltFilterChip_selected_hasSelectedState() {
+    fun xgFilterChip_selected_hasSelectedState() {
         composeTestRule.setContent {
             XGTheme {
                 XGFilterChip(
@@ -84,7 +84,7 @@ class XGChipTest {
     }
 
     @Test
-    fun moltFilterChip_toggling_callsCallbackEachTime() {
+    fun xgFilterChip_toggling_callsCallbackEachTime() {
         val clickList = mutableListOf<Int>()
 
         composeTestRule.setContent {
@@ -105,7 +105,7 @@ class XGChipTest {
     // --- XGCategoryChip ---
 
     @Test
-    fun moltCategoryChip_displaysLabel() {
+    fun xgCategoryChip_displaysLabel() {
         composeTestRule.setContent {
             XGTheme {
                 XGCategoryChip(
@@ -119,7 +119,7 @@ class XGChipTest {
     }
 
     @Test
-    fun moltCategoryChip_click_firesCallback() {
+    fun xgCategoryChip_click_firesCallback() {
         var clicked = false
 
         composeTestRule.setContent {

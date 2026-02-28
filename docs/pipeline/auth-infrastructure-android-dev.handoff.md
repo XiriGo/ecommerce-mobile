@@ -45,7 +45,7 @@ Created a private `SessionTokenProvider` class inside `AuthModule.kt` that imple
 `AuthApi` is created from a Retrofit instance using the `@UnauthenticatedClient` OkHttpClient. This avoids the circular dependency entirely for login/register (which are public endpoints). For `refreshToken` and `createSession`/`destroySession`, the token is passed explicitly via `@Header("Authorization")` parameter rather than relying on the `AuthInterceptor`.
 
 ### 4. Separate encrypted DataStore
-Created a dedicated DataStore instance (`molt_auth_encrypted`) for auth tokens, separate from the general preferences DataStore in `StorageModule`. The token value is encrypted using Tink AEAD (AES256_GCM) with a key stored in the Android Keystore.
+Created a dedicated DataStore instance (`xg_auth_encrypted`) for auth tokens, separate from the general preferences DataStore in `StorageModule`. The token value is encrypted using Tink AEAD (AES256_GCM) with a key stored in the Android Keystore.
 
 ### 5. Token passed explicitly in AuthApi methods
 `createSession`, `destroySession`, and `refreshToken` accept an explicit `@Header("Authorization") bearerToken: String` parameter. This means the caller must format the header value as `"Bearer $token"`. This approach avoids depending on the auth interceptor for auth-related API calls.

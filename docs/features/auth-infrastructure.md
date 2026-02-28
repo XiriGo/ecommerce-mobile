@@ -207,7 +207,7 @@ Handled by the existing `TokenRefreshAuthenticator` (Android) / `TokenRefreshAct
 
 | Concern | Android | iOS |
 |---------|---------|-----|
-| Token storage | Encrypted DataStore (`molt_auth_encrypted`) with Tink AEAD AES256_GCM; key in Android Keystore | Keychain via KeychainAccess; service `com.xirigo.ecommerce.auth`; accessibility `.whenUnlockedThisDeviceOnly` |
+| Token storage | Encrypted DataStore (`xg_auth_encrypted`) with Tink AEAD AES256_GCM; key in Android Keystore | Keychain via KeychainAccess; service `com.xirigo.ecommerce.auth`; accessibility `.whenUnlockedThisDeviceOnly` |
 | Token in logs | Never — `Authorization` header value redacted in all HTTP logging | Never — same policy |
 | Token transmission | `Authorization: Bearer {token}` header only; never in URL query params | Same policy |
 | Backup exclusion | DataStore file excluded from Android auto-backup via `android:fullBackupContent` | Keychain `.whenUnlockedThisDeviceOnly` excludes from iCloud backup |

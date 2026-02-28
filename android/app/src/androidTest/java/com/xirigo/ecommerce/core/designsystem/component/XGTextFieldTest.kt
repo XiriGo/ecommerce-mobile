@@ -20,7 +20,7 @@ class XGTextFieldTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltTextField_labelDisplayed() {
+    fun xgTextField_labelDisplayed() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -35,7 +35,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_placeholderShownWhenEmpty() {
+    fun xgTextField_placeholderShownWhenEmpty() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -51,7 +51,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_errorState_displaysErrorMessage() {
+    fun xgTextField_errorState_displaysErrorMessage() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -67,7 +67,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_helperText_displaysWhenNoError() {
+    fun xgTextField_helperText_displaysWhenNoError() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -83,7 +83,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_errorMessageOverridesHelperText() {
+    fun xgTextField_errorMessageOverridesHelperText() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -102,7 +102,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_passwordToggle_changesVisibility() {
+    fun xgTextField_passwordToggle_changesVisibility() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -125,7 +125,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_valueChange_callsCallback() {
+    fun xgTextField_valueChange_callsCallback() {
         var capturedValue = ""
 
         composeTestRule.setContent {
@@ -143,7 +143,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_maxLength_showsCounter() {
+    fun xgTextField_maxLength_showsCounter() {
         composeTestRule.setContent {
             XGTheme {
                 XGTextField(
@@ -159,7 +159,7 @@ class XGTextFieldTest {
     }
 
     @Test
-    fun moltTextField_maxLength_truncatesInput() {
+    fun xgTextField_maxLength_truncatesInput() {
         var capturedValue = ""
 
         composeTestRule.setContent {

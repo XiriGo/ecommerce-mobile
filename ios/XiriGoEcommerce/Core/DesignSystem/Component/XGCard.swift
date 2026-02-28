@@ -52,7 +52,7 @@ struct XGProductCard: View {
             }
             .background(XGColors.surface)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
-            .moltElevation(XGElevation.level1)
+            .xgElevation(XGElevation.level1)
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
@@ -189,7 +189,7 @@ struct XGInfoCard<TrailingContent: View>: View {
         .padding(XGSpacing.cardPadding)
         .background(XGColors.surface)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
-        .moltElevation(XGElevation.level1)
+        .xgElevation(XGElevation.level1)
 
         if let action {
             Button(action: action) {

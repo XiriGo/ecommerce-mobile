@@ -18,7 +18,7 @@ struct XGNavigationDestinationModifier: ViewModifier {
 extension View {
     /// Applies the XG navigation destination registration to the view.
     /// Each tab's NavigationStack root should apply this modifier.
-    func moltNavigationDestinations() -> some View {
+    func xgNavigationDestinations() -> some View {
         modifier(XGNavigationDestinationModifier())
     }
 }

@@ -107,7 +107,7 @@ struct CategoriesScreen: View {
                 RoundedRectangle(cornerRadius: XGCornerRadius.large)
                     .stroke(XGColors.outlineVariant.opacity(0.5), lineWidth: 1)
             )
-            .moltElevation(XGElevation.level1)
+            .xgElevation(XGElevation.level1)
         }
         .accessibilityLabel(category.name)
         .accessibilityHint(String(localized: "categories_item_count \(category.itemCount)"))

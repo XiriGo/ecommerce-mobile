@@ -18,7 +18,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with cart URL switches to cart tab")
-    func test_handleDeepLink_moltCart_switchesToCartTab() throws {
+    func test_handleDeepLink_xgCart_switchesToCartTab() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://cart"))
         router.handleDeepLink(url)
@@ -26,7 +26,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with profile URL switches to profile tab")
-    func test_handleDeepLink_moltProfile_switchesToProfileTab() throws {
+    func test_handleDeepLink_xgProfile_switchesToProfileTab() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://profile"))
         router.handleDeepLink(url)
@@ -34,7 +34,7 @@ struct AppRouterDeepLinkTests {
     }
 
     @Test("handleDeepLink with category URL switches to categories tab")
-    func test_handleDeepLink_moltCategory_switchesToCategoriesTab() throws {
+    func test_handleDeepLink_xgCategory_switchesToCategoriesTab() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://category/cat_electronics"))
         router.handleDeepLink(url)
@@ -53,7 +53,7 @@ struct AppRouterDeepLinkTests {
     // MARK: - handleDeepLink — auth-required routes
 
     @Test("handleDeepLink with order URL presents login since order requiresAuth")
-    func test_handleDeepLink_moltOrder_presentsLoginInsteadOfNavigating() throws {
+    func test_handleDeepLink_xgOrder_presentsLoginInsteadOfNavigating() throws {
         let router = AppRouter()
         let url = try #require(URL(string: "xirigo://order/ord_123"))
         router.handleDeepLink(url)

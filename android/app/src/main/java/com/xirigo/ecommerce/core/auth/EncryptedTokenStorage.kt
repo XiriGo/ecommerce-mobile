@@ -19,7 +19,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 
 private val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "molt_auth_encrypted",
+    name = "xg_auth_encrypted",
 )
 
 @Singleton
@@ -91,6 +91,6 @@ class EncryptedTokenStorage @Inject constructor(
 
     companion object {
         private val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
-        private val ASSOCIATED_DATA = "molt_auth_token".toByteArray(Charsets.UTF_8)
+        private val ASSOCIATED_DATA = "xg_auth_token".toByteArray(Charsets.UTF_8)
     }
 }

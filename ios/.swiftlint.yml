@@ -308,9 +308,9 @@ custom_rules:
   # NOTE: The following rules are designed for Feature screens only, but SwiftLint
   # custom_rules don't support per-rule included/excluded paths. These rules should
   # be enforced by the reviewer agent and architecture tests instead:
-  # - no_raw_progress_view_in_features: Use MoltLoadingView, not raw ProgressView
-  # - no_raw_button_in_features: Use MoltButton, not raw Button
-  # - no_hardcoded_colors_in_features: Use MoltColors, not Color(hex:)
+  # - no_raw_progress_view_in_features: Use XGLoadingView, not raw ProgressView
+  # - no_raw_button_in_features: Use XGButton, not raw Button
+  # - no_hardcoded_colors_in_features: Use XGColors, not Color(hex:)
 
 # =============================================================================
 # Reporter

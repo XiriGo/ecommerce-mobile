@@ -21,7 +21,7 @@ class XGCardTest {
     // --- XGProductCard ---
 
     @Test
-    fun moltProductCard_rendersTitle() {
+    fun xgProductCard_rendersTitle() {
         composeTestRule.setContent {
             XGTheme {
                 XGProductCard(
@@ -37,7 +37,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltProductCard_rendersPrice() {
+    fun xgProductCard_rendersPrice() {
         composeTestRule.setContent {
             XGTheme {
                 XGProductCard(
@@ -53,7 +53,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltProductCard_rendersVendorName() {
+    fun xgProductCard_rendersVendorName() {
         composeTestRule.setContent {
             XGTheme {
                 XGProductCard(
@@ -70,7 +70,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltProductCard_clickCallback_fires() {
+    fun xgProductCard_clickCallback_fires() {
         var clicked = false
 
         composeTestRule.setContent {
@@ -89,7 +89,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltProductCard_wishlistButton_shown_whenCallbackProvided() {
+    fun xgProductCard_wishlistButton_shown_whenCallbackProvided() {
         composeTestRule.setContent {
             XGTheme {
                 XGProductCard(
@@ -107,7 +107,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltProductCard_wishlistButton_showsFilled_whenWishlisted() {
+    fun xgProductCard_wishlistButton_showsFilled_whenWishlisted() {
         composeTestRule.setContent {
             XGTheme {
                 XGProductCard(
@@ -125,7 +125,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltProductCard_wishlistToggle_firesCallback() {
+    fun xgProductCard_wishlistToggle_firesCallback() {
         var toggled = false
 
         composeTestRule.setContent {
@@ -148,7 +148,7 @@ class XGCardTest {
     // --- XGInfoCard ---
 
     @Test
-    fun moltInfoCard_rendersTitle() {
+    fun xgInfoCard_rendersTitle() {
         composeTestRule.setContent {
             XGTheme {
                 XGInfoCard(
@@ -161,7 +161,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltInfoCard_rendersSubtitle_whenProvided() {
+    fun xgInfoCard_rendersSubtitle_whenProvided() {
         composeTestRule.setContent {
             XGTheme {
                 XGInfoCard(
@@ -176,7 +176,7 @@ class XGCardTest {
     }
 
     @Test
-    fun moltInfoCard_clickCallback_fires_whenProvided() {
+    fun xgInfoCard_clickCallback_fires_whenProvided() {
         var clicked = false
 
         composeTestRule.setContent {

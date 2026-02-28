@@ -19,7 +19,7 @@ class XGImageTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltImage_nullUrl_rendersWithoutCrash() {
+    fun xgImage_nullUrl_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGImage(
@@ -35,7 +35,7 @@ class XGImageTest {
     }
 
     @Test
-    fun moltImage_withUrl_rendersAsyncImage() {
+    fun xgImage_withUrl_rendersAsyncImage() {
         composeTestRule.setContent {
             XGTheme {
                 XGImage(
@@ -51,7 +51,7 @@ class XGImageTest {
     }
 
     @Test
-    fun moltImage_nullUrl_withNullContentDescription_rendersWithoutCrash() {
+    fun xgImage_nullUrl_withNullContentDescription_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGImage(
@@ -66,7 +66,7 @@ class XGImageTest {
     }
 
     @Test
-    fun moltImage_withUrl_withNullContentDescription_rendersWithoutCrash() {
+    fun xgImage_withUrl_withNullContentDescription_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGImage(

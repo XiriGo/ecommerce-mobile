@@ -83,7 +83,7 @@ class StorageModuleTest {
         database = Room.databaseBuilder(
             context,
             XGDatabase::class.java,
-            "molt_database_test_fallback",
+            "xg_database_test_fallback",
         ).fallbackToDestructiveMigration(dropAllTables = true).build()
         assertThat(database).isNotNull()
     }

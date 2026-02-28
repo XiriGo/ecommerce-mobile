@@ -22,7 +22,7 @@ class XGButtonTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltButton_primaryVariant_displaysText() {
+    fun xgButton_primaryVariant_displaysText() {
         composeTestRule.setContent {
             XGTheme {
                 XGButton(
@@ -37,7 +37,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_secondaryVariant_displaysText() {
+    fun xgButton_secondaryVariant_displaysText() {
         composeTestRule.setContent {
             XGTheme {
                 XGButton(
@@ -52,7 +52,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_outlinedVariant_displaysText() {
+    fun xgButton_outlinedVariant_displaysText() {
         composeTestRule.setContent {
             XGTheme {
                 XGButton(
@@ -67,7 +67,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_textVariant_displaysText() {
+    fun xgButton_textVariant_displaysText() {
         composeTestRule.setContent {
             XGTheme {
                 XGButton(
@@ -82,7 +82,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_loadingState_showsProgressIndicatorAndDisablesClick() {
+    fun xgButton_loadingState_showsProgressIndicatorAndDisablesClick() {
         var clicked = false
 
         composeTestRule.setContent {
@@ -105,7 +105,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_disabledState_doesNotFireClickCallback() {
+    fun xgButton_disabledState_doesNotFireClickCallback() {
         var clicked = false
 
         composeTestRule.setContent {
@@ -124,7 +124,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_enabledState_firesClickCallback() {
+    fun xgButton_enabledState_firesClickCallback() {
         var clicked = false
 
         composeTestRule.setContent {
@@ -143,7 +143,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_withLeadingIcon_displaysIconAndText() {
+    fun xgButton_withLeadingIcon_displaysIconAndText() {
         composeTestRule.setContent {
             XGTheme {
                 XGButton(
@@ -159,7 +159,7 @@ class XGButtonTest {
     }
 
     @Test
-    fun moltButton_loadingState_hidesLeadingIcon() {
+    fun xgButton_loadingState_hidesLeadingIcon() {
         composeTestRule.setContent {
             XGTheme {
                 XGButton(

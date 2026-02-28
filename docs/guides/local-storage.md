@@ -237,7 +237,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "molt_marketplace.db")
+        Room.databaseBuilder(context, AppDatabase::class.java, "xg_ecommerce.db")
             .fallbackToDestructiveMigration()   // development only — replace before release
             .build()
 
@@ -627,9 +627,9 @@ object SecurityModule {
     fun provideTinkEncryptor(@ApplicationContext context: Context): TinkEncryptor {
         // Tink AES256-GCM key stored in Android Keystore
         val keysetHandle = AndroidKeysetManager.Builder()
-            .withSharedPref(context, "molt_tink_keyset", "molt_tink_prefs")
+            .withSharedPref(context, "xg_tink_keyset", "xg_tink_prefs")
             .withKeyTemplate(AeadKeyTemplates.AES256_GCM)
-            .withMasterKeyUri("android-keystore://molt_master_key")
+            .withMasterKeyUri("android-keystore://xg_master_key")
             .build()
             .keysetHandle
         val aead = keysetHandle.getPrimitive(Aead::class.java)
@@ -924,7 +924,7 @@ Both platforms use destructive migration during development (schema version 1). 
 
 **Android**:
 ```kotlin
-Room.databaseBuilder(context, AppDatabase::class.java, "molt_marketplace.db")
+Room.databaseBuilder(context, AppDatabase::class.java, "xg_ecommerce.db")
     .fallbackToDestructiveMigration()   // drops all tables on version bump
     .build()
 ```
@@ -1036,7 +1036,7 @@ Android Auto-Backup (API 23+) automatically backs up app data to Google Drive. R
 
 For API 31+ (Android 12), also create `data_extraction_rules.xml` with equivalent `<exclude>` entries under `<cloud-backup>` and `<device-transfer>` blocks.
 
-**What is backed up**: `molt_marketplace.db` (cart, wishlist, recent searches, recently viewed), `app_preferences.pb` (non-sensitive settings).
+**What is backed up**: `xg_ecommerce.db` (cart, wishlist, recent searches, recently viewed), `app_preferences.pb` (non-sensitive settings).
 
 **What is excluded**: `auth_tokens.pb.enc` (device-specific encrypted tokens), `http_cache/` (transient network data).
 
@@ -1059,7 +1059,7 @@ Keychain(service: "com.xirigo.ecommerce")
 
 ### Database Encryption
 
-The Room database (`molt_marketplace.db`) and the SwiftData store do not use database-level encryption. This is an intentional design choice:
+The Room database (`xg_ecommerce.db`) and the SwiftData store do not use database-level encryption. This is an intentional design choice:
 
 - Cart and wishlist data are non-sensitive (product titles, prices, thumbnails)
 - The data directory is already protected by the OS sandbox (Android: AES-256 file-system encryption on API 23+; iOS: Data Protection class `NSFileProtectionComplete`)

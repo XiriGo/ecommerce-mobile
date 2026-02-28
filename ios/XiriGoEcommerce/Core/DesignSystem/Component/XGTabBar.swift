@@ -53,7 +53,7 @@ struct XGTabBar: View {
         .padding(.top, XGSpacing.sm)
         .padding(.bottom, XGSpacing.xs)
         .background(XGColors.surface)
-        .moltElevation(XGElevation.level4)
+        .xgElevation(XGElevation.level4)
     }
 
     // MARK: - Private

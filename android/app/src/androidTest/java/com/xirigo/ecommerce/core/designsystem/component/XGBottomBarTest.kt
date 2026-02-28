@@ -45,7 +45,7 @@ class XGBottomBarTest {
     )
 
     @Test
-    fun moltBottomBar_rendersAllTabs() {
+    fun xgBottomBar_rendersAllTabs() {
         composeTestRule.setContent {
             XGTheme {
                 XGBottomBar(
@@ -62,7 +62,7 @@ class XGBottomBarTest {
     }
 
     @Test
-    fun moltBottomBar_selectedTab_hasSelectedState() {
+    fun xgBottomBar_selectedTab_hasSelectedState() {
         composeTestRule.setContent {
             XGTheme {
                 XGBottomBar(
@@ -77,7 +77,7 @@ class XGBottomBarTest {
     }
 
     @Test
-    fun moltBottomBar_tabClick_firesCallbackWithIndex() {
+    fun xgBottomBar_tabClick_firesCallbackWithIndex() {
         var selectedIndex = 0
 
         composeTestRule.setContent {
@@ -95,7 +95,7 @@ class XGBottomBarTest {
     }
 
     @Test
-    fun moltBottomBar_badgeCount_displayedOnTab() {
+    fun xgBottomBar_badgeCount_displayedOnTab() {
         composeTestRule.setContent {
             XGTheme {
                 XGBottomBar(
@@ -111,7 +111,7 @@ class XGBottomBarTest {
     }
 
     @Test
-    fun moltBottomBar_badgeCount_zeroBadge_notShown() {
+    fun xgBottomBar_badgeCount_zeroBadge_notShown() {
         val tabsWithZeroBadge = listOf(
             XGTabItem(
                 label = "Home",
@@ -136,7 +136,7 @@ class XGBottomBarTest {
     }
 
     @Test
-    fun moltBottomBar_badgeCount_99Plus_displayedCorrectly() {
+    fun xgBottomBar_badgeCount_99Plus_displayedCorrectly() {
         val tabsWithHighBadge = listOf(
             XGTabItem(
                 label = "Cart",
@@ -160,7 +160,7 @@ class XGBottomBarTest {
     }
 
     @Test
-    fun moltBottomBar_selectingDifferentTab_updatesSelection() {
+    fun xgBottomBar_selectingDifferentTab_updatesSelection() {
         var selectedIndex = 0
 
         composeTestRule.setContent {

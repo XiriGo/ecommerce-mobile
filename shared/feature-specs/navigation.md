@@ -922,7 +922,7 @@ Base path: `ios/XiriGoEcommerceTests/Core/Navigation/`
    TabView(selection: $router.selectedTab) {
        NavigationStack(path: $router.homePath) {
            PlaceholderView(title: "Home", systemImage: "house")
-               .moltNavigationDestinations(router: router)
+               .xgNavigationDestinations(router: router)
        }
        .tag(Tab.home)
        .tabItem { ... }

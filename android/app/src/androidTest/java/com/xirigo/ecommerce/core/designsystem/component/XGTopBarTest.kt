@@ -23,7 +23,7 @@ class XGTopBarTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun moltTopBar_displaysTitle() {
+    fun xgTopBar_displaysTitle() {
         composeTestRule.setContent {
             XGTheme {
                 XGTopBar(title = "Products")
@@ -34,7 +34,7 @@ class XGTopBarTest {
     }
 
     @Test
-    fun moltTopBar_backButton_notShown_whenCallbackNull() {
+    fun xgTopBar_backButton_notShown_whenCallbackNull() {
         composeTestRule.setContent {
             XGTheme {
                 XGTopBar(title = "Home", onBackClick = null)
@@ -45,7 +45,7 @@ class XGTopBarTest {
     }
 
     @Test
-    fun moltTopBar_backButton_shown_whenCallbackProvided() {
+    fun xgTopBar_backButton_shown_whenCallbackProvided() {
         composeTestRule.setContent {
             XGTheme {
                 XGTopBar(title = "Details", onBackClick = {})
@@ -56,7 +56,7 @@ class XGTopBarTest {
     }
 
     @Test
-    fun moltTopBar_backButton_click_firesCallback() {
+    fun xgTopBar_backButton_click_firesCallback() {
         var backClicked = false
 
         composeTestRule.setContent {
@@ -73,7 +73,7 @@ class XGTopBarTest {
     }
 
     @Test
-    fun moltTopBar_actionButton_rendered_andClickable() {
+    fun xgTopBar_actionButton_rendered_andClickable() {
         var actionClicked = false
 
         composeTestRule.setContent {
@@ -98,7 +98,7 @@ class XGTopBarTest {
     }
 
     @Test
-    fun moltTopBar_noActions_noBackButton_displaysOnlyTitle() {
+    fun xgTopBar_noActions_noBackButton_displaysOnlyTitle() {
         composeTestRule.setContent {
             XGTheme {
                 XGTopBar(title = "Simple Title")

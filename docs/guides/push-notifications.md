@@ -65,9 +65,9 @@ implementation(libs.firebase.messaging)        // firebase-messaging-ktx
 
 ### Service Class
 
-Create `MoltFirebaseMessagingService` extending `FirebaseMessagingService`:
+Create `XGFirebaseMessagingService` extending `FirebaseMessagingService`:
 
-**File**: `android/app/src/main/java/com/xirigo/ecommerce/core/notification/MoltFirebaseMessagingService.kt`
+**File**: `android/app/src/main/java/com/xirigo/ecommerce/core/notification/XGFirebaseMessagingService.kt`
 
 ```kotlin
 package com.xirigo.ecommerce.core.notification
@@ -88,7 +88,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MoltFirebaseMessagingService : FirebaseMessagingService() {
+class XGFirebaseMessagingService : FirebaseMessagingService() {
 
     @Inject
     lateinit var pushTokenRepository: PushTokenRepository
@@ -231,7 +231,7 @@ Add the service inside `<application>`:
 ```xml
 <!-- android/app/src/main/AndroidManifest.xml -->
 <service
-    android:name=".core.notification.MoltFirebaseMessagingService"
+    android:name=".core.notification.XGFirebaseMessagingService"
     android:exported="false">
     <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -626,7 +626,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 
 private fun handleNotificationDeepLink(intent: Intent) {
-    val deepLink = intent.getStringExtra(MoltFirebaseMessagingService.EXTRA_DEEP_LINK)
+    val deepLink = intent.getStringExtra(XGFirebaseMessagingService.EXTRA_DEEP_LINK)
         ?: return
     val url = Uri.parse(deepLink)
     // Pass to DeepLinkParser — defined in core/navigation/ per M0-04 spec
@@ -635,7 +635,7 @@ private fun handleNotificationDeepLink(intent: Intent) {
 }
 ```
 
-**Cold start** (app killed): The `PendingIntent` in `MoltFirebaseMessagingService` launches `MainActivity` with the deep link extra. `onCreate` picks it up.
+**Cold start** (app killed): The `PendingIntent` in `XGFirebaseMessagingService` launches `MainActivity` with the deep link extra. `onCreate` picks it up.
 
 **Warm start** (app backgrounded): `onNewIntent` is called. The activity is reused due to `FLAG_ACTIVITY_SINGLE_TOP`.
 
@@ -848,7 +848,7 @@ The backend stores `(customer_id, token, platform, updated_at)`. On sending a no
 | `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/XiriGoEcommerceApp.swift` | `@UIApplicationDelegateAdaptor(AppDelegate.self)` attachment |
 | `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/ios/XiriGoEcommerce/Config.swift` | `bundleVersion` used in force-update checks |
 | `ios/XiriGoEcommerce/AppDelegate.swift` | APNs / FCM delegate setup (to be created) |
-| `android/app/src/main/java/com/xirigo/ecommerce/core/notification/MoltFirebaseMessagingService.kt` | FCM service (to be created) |
+| `android/app/src/main/java/com/xirigo/ecommerce/core/notification/XGFirebaseMessagingService.kt` | FCM service (to be created) |
 | `android/app/src/main/java/com/xirigo/ecommerce/core/notification/NotificationChannels.kt` | Channel creation (to be created) |
 | `ios/XiriGoEcommerce/Core/Notification/NotificationPermissionManager.swift` | Permission request logic (to be created) |
 | `ios/XiriGoEcommerce/Core/Notification/BadgeManager.swift` | Badge count management (to be created) |

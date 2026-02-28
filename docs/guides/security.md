@@ -25,7 +25,7 @@ Full implementation details are in `shared/feature-specs/auth-infrastructure.md`
 - Never store tokens in `SharedPreferences`, `UserDefaults`, plain files, or Room/SwiftData.
 - `EncryptedSharedPreferences` is deprecated — the project uses Tink instead.
 - Auto-clear all tokens on logout regardless of whether the logout API call succeeds.
-- On Android, the Tink AES256-GCM key lives in Android Keystore under the alias `molt_master_key` and is never exported.
+- On Android, the Tink AES256-GCM key lives in Android Keystore under the alias `xg_master_key` and is never exported.
 - On iOS, `.afterFirstUnlock` means the token is available after the first device unlock post-boot, unavailable before that, and excluded from iCloud backup automatically.
 
 ### Logout Guarantee
@@ -458,7 +458,7 @@ Reference both in `AndroidManifest.xml`:
 
 The manifest already has `android:allowBackup="true"` at `/Users/atakan/Documents/GitHub/XiriGo/ecommerce-mobile/android/app/src/main/AndroidManifest.xml`. The XML rule files need to be created and referenced.
 
-**What is backed up**: `molt_marketplace.db` (cart, wishlist, recent searches), `app_preferences.pb` (theme, onboarding flag — non-sensitive).
+**What is backed up**: `xg_ecommerce.db` (cart, wishlist, recent searches), `app_preferences.pb` (theme, onboarding flag — non-sensitive).
 
 **What is excluded**: `auth_tokens.pb.enc`, `http_cache/`.
 

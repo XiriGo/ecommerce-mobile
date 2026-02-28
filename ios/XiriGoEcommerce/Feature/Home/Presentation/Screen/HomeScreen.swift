@@ -111,7 +111,7 @@ struct HomeScreen: View {
         }
         .frame(width: 280, height: 160)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
-        .moltElevation(XGElevation.level2)
+        .xgElevation(XGElevation.level2)
     }
 
     // MARK: - Categories Section

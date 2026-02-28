@@ -9,21 +9,21 @@ struct DeepLinkParserTests {
     // MARK: - xirigo:// product routes
 
     @Test("xirigo://product/{id} parses to productDetail")
-    func test_parse_moltProductScheme_returnsProductDetail() throws {
+    func test_parse_xgProductScheme_returnsProductDetail() throws {
         let url = try #require(URL(string: "xirigo://product/prod_abc"))
         let route = DeepLinkParser.parse(url)
         #expect(route == .productDetail(productId: "prod_abc"))
     }
 
     @Test("xirigo://product/{id} with numeric id parses to productDetail")
-    func test_parse_moltProductNumericId_returnsProductDetail() throws {
+    func test_parse_xgProductNumericId_returnsProductDetail() throws {
         let url = try #require(URL(string: "xirigo://product/12345"))
         let route = DeepLinkParser.parse(url)
         #expect(route == .productDetail(productId: "12345"))
     }
 
     @Test("xirigo://product with missing id returns nil")
-    func test_parse_moltProductMissingId_returnsNil() throws {
+    func test_parse_xgProductMissingId_returnsNil() throws {
         let url = try #require(URL(string: "xirigo://product"))
         let route = DeepLinkParser.parse(url)
         #expect(route == nil)
@@ -32,14 +32,14 @@ struct DeepLinkParserTests {
     // MARK: - xirigo:// category routes
 
     @Test("xirigo://category/{id} parses to categoryProducts with empty name")
-    func test_parse_moltCategoryScheme_returnsCategoryProducts() throws {
+    func test_parse_xgCategoryScheme_returnsCategoryProducts() throws {
         let url = try #require(URL(string: "xirigo://category/cat_fashion"))
         let route = DeepLinkParser.parse(url)
         #expect(route == .categoryProducts(categoryId: "cat_fashion", categoryName: ""))
     }
 
     @Test("xirigo://category with missing id returns nil")
-    func test_parse_moltCategoryMissingId_returnsNil() throws {
+    func test_parse_xgCategoryMissingId_returnsNil() throws {
         let url = try #require(URL(string: "xirigo://category"))
         let route = DeepLinkParser.parse(url)
         #expect(route == nil)
@@ -48,7 +48,7 @@ struct DeepLinkParserTests {
     // MARK: - xirigo:// cart route
 
     @Test("xirigo://cart parses to cart route")
-    func test_parse_moltCart_returnsCart() throws {
+    func test_parse_xgCart_returnsCart() throws {
         let url = try #require(URL(string: "xirigo://cart"))
         let route = DeepLinkParser.parse(url)
         #expect(route == .cart)
@@ -57,14 +57,14 @@ struct DeepLinkParserTests {
     // MARK: - xirigo:// order routes
 
     @Test("xirigo://order/{id} parses to orderDetail")
-    func test_parse_moltOrderScheme_returnsOrderDetail() throws {
+    func test_parse_xgOrderScheme_returnsOrderDetail() throws {
         let url = try #require(URL(string: "xirigo://order/ord_xyz"))
         let route = DeepLinkParser.parse(url)
         #expect(route == .orderDetail(orderId: "ord_xyz"))
     }
 
     @Test("xirigo://order with missing id returns nil")
-    func test_parse_moltOrderMissingId_returnsNil() throws {
+    func test_parse_xgOrderMissingId_returnsNil() throws {
         let url = try #require(URL(string: "xirigo://order"))
         let route = DeepLinkParser.parse(url)
         #expect(route == nil)
@@ -73,7 +73,7 @@ struct DeepLinkParserTests {
     // MARK: - xirigo:// profile route
 
     @Test("xirigo://profile parses to profile route")
-    func test_parse_moltProfile_returnsProfile() throws {
+    func test_parse_xgProfile_returnsProfile() throws {
         let url = try #require(URL(string: "xirigo://profile"))
         let route = DeepLinkParser.parse(url)
         #expect(route == .profile)
@@ -114,7 +114,7 @@ struct DeepLinkParserTests {
     // MARK: - Invalid / unrecognized URLs
 
     @Test("unknown xirigo:// host returns nil")
-    func test_parse_moltUnknownHost_returnsNil() throws {
+    func test_parse_xgUnknownHost_returnsNil() throws {
         let url = try #require(URL(string: "xirigo://unknown/path"))
         let route = DeepLinkParser.parse(url)
         #expect(route == nil)
@@ -158,7 +158,7 @@ struct DeepLinkParserTests {
     // MARK: - Edge cases
 
     @Test("xirigo://product with empty string id returns nil")
-    func test_parse_moltProductEmptyId_returnsNil() {
+    func test_parse_xgProductEmptyId_returnsNil() {
         // URL with trailing slash creates empty path component — parser should handle
         guard let url = URL(string: "xirigo://product/") else { return }
         let route = DeepLinkParser.parse(url)
@@ -170,7 +170,7 @@ struct DeepLinkParserTests {
     }
 
     @Test("xirigo://order with empty string id returns nil")
-    func test_parse_moltOrderEmptyId_returnsNil() {
+    func test_parse_xgOrderEmptyId_returnsNil() {
         guard let url = URL(string: "xirigo://order/") else { return }
         let route = DeepLinkParser.parse(url)
         if let result = route, case .orderDetail(let id) = result {
@@ -179,7 +179,7 @@ struct DeepLinkParserTests {
     }
 
     @Test("xirigo://category with empty string id returns nil")
-    func test_parse_moltCategoryEmptyId_returnsNil() {
+    func test_parse_xgCategoryEmptyId_returnsNil() {
         guard let url = URL(string: "xirigo://category/") else { return }
         let route = DeepLinkParser.parse(url)
         if let result = route, case .categoryProducts(let id, _) = result {
@@ -190,28 +190,28 @@ struct DeepLinkParserTests {
     // MARK: - Auth-required deep links
 
     @Test("xirigo://order/{id} resolves to orderDetail which requiresAuth")
-    func test_parse_moltOrder_routeRequiresAuth() throws {
+    func test_parse_xgOrder_routeRequiresAuth() throws {
         let url = try #require(URL(string: "xirigo://order/ord_secure"))
         let route = DeepLinkParser.parse(url)
         #expect(route?.requiresAuth == true)
     }
 
     @Test("xirigo://product/{id} resolves to productDetail which does not requiresAuth")
-    func test_parse_moltProduct_routeDoesNotRequireAuth() throws {
+    func test_parse_xgProduct_routeDoesNotRequireAuth() throws {
         let url = try #require(URL(string: "xirigo://product/prod_public"))
         let route = DeepLinkParser.parse(url)
         #expect(route?.requiresAuth == false)
     }
 
     @Test("xirigo://cart resolves to cart which does not requiresAuth")
-    func test_parse_moltCart_routeDoesNotRequireAuth() throws {
+    func test_parse_xgCart_routeDoesNotRequireAuth() throws {
         let url = try #require(URL(string: "xirigo://cart"))
         let route = DeepLinkParser.parse(url)
         #expect(route?.requiresAuth == false)
     }
 
     @Test("xirigo://profile resolves to profile which does not requiresAuth")
-    func test_parse_moltProfile_routeDoesNotRequireAuth() throws {
+    func test_parse_xgProfile_routeDoesNotRequireAuth() throws {
         let url = try #require(URL(string: "xirigo://profile"))
         let route = DeepLinkParser.parse(url)
         #expect(route?.requiresAuth == false)
@@ -245,7 +245,7 @@ struct DeepLinkParserTests {
     }
 
     @Test("xirigo:// with extra path segments still extracts first segment as id")
-    func test_parse_moltProductExtraSegments_parsesFirstSegment() throws {
+    func test_parse_xgProductExtraSegments_parsesFirstSegment() throws {
         let url = try #require(URL(string: "xirigo://product/prod_main/extra"))
         let route = DeepLinkParser.parse(url)
         // Parser uses pathComponents.first — should still return productDetail with "prod_main"

@@ -24,10 +24,10 @@ Reviewed all 40 source files (20 Kotlin + 20 Swift), 32 test files (18 Android +
 |---|-----------|---------|-----|------------|
 | 1 | XGButton | PASS | PASS | All 4 variants, loading, disabled |
 | 2 | XGTextField | PASS | PASS | Label, error, helper, password, maxLength |
-| 3 | MoltProductCard | PASS | PASS | Image, title, price, rating, wishlist |
-| 4 | MoltInfoCard | PASS | PASS | Title, subtitle, leading icon, trailing content |
-| 5 | MoltFilterChip | PASS | PASS | Selected/unselected, checkmark, leading icon |
-| 6 | MoltCategoryChip | PASS | PASS | Label, icon URL |
+| 3 | XGProductCard | PASS | PASS | Image, title, price, rating, wishlist |
+| 4 | XGInfoCard | PASS | PASS | Title, subtitle, leading icon, trailing content |
+| 5 | XGFilterChip | PASS | PASS | Selected/unselected, checkmark, leading icon |
+| 6 | XGCategoryChip | PASS | PASS | Label, icon URL |
 | 7 | XGTopBar | PASS | PASS | Title, back button, actions |
 | 8 | XGBottomBar/XGTabBar | PASS | PASS | Tabs, badge, selected state |
 | 9 | XGLoadingView | PASS | PASS | Full-screen and inline variants |
@@ -101,8 +101,8 @@ All token values cross-checked against `shared/design-tokens/*.json`:
 | XGButton | `style: XGButtonStyle` | `variant: XGButtonVariant` | Enum name differs to avoid Swift `ButtonStyle` conflict -- acceptable |
 | XGButton | `loading: Boolean` | `isLoading: Bool` | iOS uses `is` prefix per Swift naming convention -- OK |
 | XGTextField | `onValueChange: (String) -> Unit` | `value: Binding<String>` | Platform-idiomatic -- OK |
-| MoltProductCard | `imageUrl: String?` | `imageUrl: URL?` | Platform-idiomatic types -- OK |
-| MoltProductCard | `rating: Float?` | `rating: Double?` | Platform-idiomatic -- OK |
+| XGProductCard | `imageUrl: String?` | `imageUrl: URL?` | Platform-idiomatic types -- OK |
+| XGProductCard | `rating: Float?` | `rating: Double?` | Platform-idiomatic -- OK |
 | XGBottomBar | `onTabSelected: (Int) -> Unit` | `selectedIndex: Binding<Int>` | Platform-idiomatic -- OK |
 | XGQuantityStepper | `onQuantityChange: (Int) -> Unit` | `quantity: Binding<Int>` + callback | Platform-idiomatic -- OK |
 
@@ -231,7 +231,7 @@ None.
 - **Files**: `XGErrorView.kt:61` (Primary), `XGErrorView.swift:38` (Outlined)
 - **Impact**: Cosmetic only. Both are valid button styles for a retry action.
 
-**N2. iOS `MoltInfoCard` subtitle spacing uses `XGSpacing.xxs`; Android uses `XGSpacing.XS`**
+**N2. iOS `XGInfoCard` subtitle spacing uses `XGSpacing.xxs`; Android uses `XGSpacing.XS`**
 - **Files**: `XGCard.kt:176` (`XGSpacing.XS` = 4.dp), `XGCard.swift:170` (`XGSpacing.xxs` = 2pt)
 - **Impact**: 2pt visual difference in info card subtitle spacing. Cosmetic only.
 

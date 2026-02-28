@@ -12,7 +12,7 @@ struct XGThemeModifier: ViewModifier {
 }
 
 extension View {
-    func moltTheme() -> some View {
+    func xgTheme() -> some View {
         modifier(XGThemeModifier())
     }
 }

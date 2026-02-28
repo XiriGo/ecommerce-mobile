@@ -20,7 +20,7 @@ Implemented the complete XiriGo Design System for iOS, consisting of 6 theme fil
 | `Theme/XGTypography.swift` | Existing | No changes needed |
 | `Theme/XGSpacing.swift` | Modified | Added `IconSize` and `AvatarSize` nested enums |
 | `Theme/XGCornerRadius.swift` | Modified | Moved from XGTheme.swift to dedicated file, removed duplicate |
-| `Theme/XGElevation.swift` | Created | Elevation levels with `ShadowStyle` struct, `moltElevation()` modifier |
+| `Theme/XGElevation.swift` | Created | Elevation levels with `ShadowStyle` struct, `xgElevation()` modifier |
 | `Theme/XGTheme.swift` | Modified | Cleaned up, removed duplicate XGCornerRadius, simplified |
 
 ### Components (14 files)
@@ -29,15 +29,15 @@ Implemented the complete XiriGo Design System for iOS, consisting of 6 theme fil
 |------|-------------|
 | `Component/XGButton.swift` | Primary/Secondary/Outlined/Text variants, loading state, leading icon |
 | `Component/XGTextField.swift` | Label, placeholder, error, helper, password toggle, max length counter |
-| `Component/XGCard.swift` | `MoltProductCard` (image, title, price, rating, wishlist) + `MoltInfoCard` (generic with trailing content) |
-| `Component/XGChip.swift` | `MoltFilterChip` (selected/unselected with checkmark) + `MoltCategoryChip` |
+| `Component/XGCard.swift` | `XGProductCard` (image, title, price, rating, wishlist) + `XGInfoCard` (generic with trailing content) |
+| `Component/XGChip.swift` | `XGFilterChip` (selected/unselected with checkmark) + `XGCategoryChip` |
 | `Component/XGTopBar.swift` | Back button, title, action buttons with badge support |
 | `Component/XGTabBar.swift` | `XGTabBar` with `XGTabItem`, selected/unselected icons, badge count |
-| `Component/XGLoadingView.swift` | Full-screen `XGLoadingView` + inline `MoltLoadingIndicator` |
+| `Component/XGLoadingView.swift` | Full-screen `XGLoadingView` + inline `XGLoadingIndicator` |
 | `Component/XGErrorView.swift` | Error icon, message, optional retry button |
 | `Component/XGEmptyView.swift` | Custom SF Symbol, message, optional action button |
 | `Component/XGImage.swift` | AsyncImage wrapper with shimmer placeholder and error fallback |
-| `Component/XGBadge.swift` | `MoltCountBadge` (0/1-99/99+), `MoltStatusBadge` with `XGBadgeStatus` enum |
+| `Component/XGBadge.swift` | `XGCountBadge` (0/1-99/99+), `XGStatusBadge` with `XGBadgeStatus` enum |
 | `Component/XGRatingBar.swift` | 1-5 stars, half-star support, optional value text and review count |
 | `Component/XGPriceText.swift` | Currency display, sale price with strikethrough, small/medium/large sizes |
 | `Component/XGQuantityStepper.swift` | +/- buttons, min/max bounds, adjustable action for VoiceOver |
@@ -52,7 +52,7 @@ Implemented the complete XiriGo Design System for iOS, consisting of 6 theme fil
 
 1. **No NukeUI dependency yet**: Used SwiftUI's built-in `AsyncImage` for `XGImage`. When NukeUI is added via SPM, this can be swapped to `LazyImage` with zero API changes.
 2. **`XGButtonVariant` naming**: Used `XGButtonVariant` enum to avoid conflict with SwiftUI's `ButtonStyle` protocol. Custom `ButtonStyle` conformance is internal via `XGButtonStyleModifier`.
-3. **`MoltInfoCard` generic trailing content**: Uses `@ViewBuilder` generic pattern for type-safe trailing content, with `EmptyView` convenience init.
+3. **`XGInfoCard` generic trailing content**: Uses `@ViewBuilder` generic pattern for type-safe trailing content, with `EmptyView` convenience init.
 4. **Accessibility**: All interactive elements have `accessibilityLabel`. `XGQuantityStepper` uses `accessibilityAdjustableAction` for native VoiceOver stepper behavior. Decorative icons use `accessibilityHidden(true)`.
 5. **No force unwraps**: All optionals handled with `if let`, `guard let`, or nil coalescing.
 
@@ -75,7 +75,7 @@ Implemented the complete XiriGo Design System for iOS, consisting of 6 theme fil
 - XGImage placeholder uses shimmer color with photo icon overlay.
 - XGRatingBar uses SF Symbols `star.fill`, `star.leadinghalf.filled`, `star`.
 - XGQuantityStepper bounds check: minus disabled at min, plus disabled at max.
-- MoltCountBadge: hidden at 0, shows "99+" at >= 100.
+- XGCountBadge: hidden at 0, shows "99+" at >= 100.
 - Password toggle in XGTextField swaps between `SecureField` and `TextField`.
 
 ## Next Steps

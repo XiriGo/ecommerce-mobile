@@ -23,7 +23,7 @@ Android projesini oluştur:
 5. android/gradle.properties — Kotlin, Compose, AndroidX flags
 6. android/gradle/wrapper/gradle-wrapper.properties — Gradle 8.x
 7. android/app/src/main/AndroidManifest.xml — Internet permission, Application class
-8. android/app/src/main/java/com/xirigo/ecommerce/MoltApp.kt — @HiltAndroidApp Application class
+8. android/app/src/main/java/com/xirigo/ecommerce/XGApp.kt — @HiltAndroidApp Application class
 9. android/app/src/main/java/com/xirigo/ecommerce/MainActivity.kt — @AndroidEntryPoint, setContent with XGTheme
 10. android/app/proguard-rules.pro — R8 rules
 

@@ -96,7 +96,7 @@ struct XGTopBar: View {
 // MARK: - View Modifier
 
 extension View {
-    func moltTopBar(
+    func xgTopBar(
         title: String,
         onBackTap: (() -> Void)? = nil,
         actions: [XGTopBarAction] = []

@@ -292,7 +292,7 @@ Both platforms support system dark mode. No feature-level configuration is requi
 
 ### Android
 
-`XGTheme` reads `isSystemInDarkTheme()` and applies either `MoltLightColorScheme` or `MoltDarkColorScheme`:
+`XGTheme` reads `isSystemInDarkTheme()` and applies either `XGLightColorScheme` or `XGDarkColorScheme`:
 
 ```kotlin
 // android/.../core/designsystem/theme/XGTheme.kt
@@ -301,7 +301,7 @@ fun XGTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) MoltDarkColorScheme else MoltLightColorScheme
+    val colorScheme = if (darkTheme) XGDarkColorScheme else XGLightColorScheme
     MaterialTheme(colorScheme = colorScheme, typography = XGTypography, content = content)
 }
 ```
