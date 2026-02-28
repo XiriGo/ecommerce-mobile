@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### M1-04: Home Screen
+
+- **Home Screen**: Vertical scrollable feed with 7 sections (welcome header, search bar, hero banner carousel, categories, popular products, daily deal, new arrivals, flash sale banner) (Android + iOS)
+- **6 new design system components**: `XGHeroBanner` (192dp gradient card), `XGCategoryIcon` (79dp colored tile), `XGSectionHeader` (title + subtitle + see-all action), `XGWishlistButton` (32dp heart toggle), `XGDailyDealCard` (163dp countdown card), `XGFlashSaleBanner` (133dp yellow banner with Canvas-drawn diagonal accent stripes) (Android + iOS)
+- **Clean Architecture**: `HomeViewModel` with 6 use cases (`GetHomeBannersUseCase`, `GetHomeCategoriesUseCase`, `GetPopularProductsUseCase`, `GetDailyDealUseCase`, `GetNewArrivalsUseCase`, `GetFlashSaleUseCase`), `HomeRepository` interface, `FakeHomeRepository` with hardcoded sample data (Android + iOS)
+- **Pull-to-refresh** with `wishedProductIds` preservation across reloads (Android + iOS)
+- **Loading / Error / Empty states** via `HomeUiState.Loading`, `HomeUiState.Error`, `XGLoadingView`, `XGErrorView` (Android + iOS)
+- **Hero banner auto-scroll** every 5 seconds with `XGPaginationDots`; resets timer on manual swipe (Android: `HorizontalPager` + `LaunchedEffect`; iOS: `TabView(.page)` + `Timer.publish`)
+- **Daily deal countdown timer** ticking to zero, shows "ENDED" when expired (Android: `LaunchedEffect` loop; iOS: `TimelineView(.periodic)`) (Android + iOS)
+- **Wishlist toggle** on product cards — local `Set<String>` state; will sync with shared wishlist repository in M2-02 (Android + iOS)
+- **XGProductCard updated**: added optional `deliveryLabel` badge and `onAddToCartClick`/`onAddToCartAction` callback; internal wishlist replaced with `XGWishlistButton` component (Android + iOS)
+- **12 new Android string keys** + **10 new iOS localization keys** (en / tr / mt) (Android + iOS)
+- **157 unit tests**: 65 Android (8 files) + 92 iOS (8 files) covering ViewModel state transitions, all 6 use cases, FakeHomeRepository, and data integrity assertions (Android + iOS)
+
 #### M4-05: App Onboarding
 
 - **App onboarding**: 4-page horizontal pager shown on first launch only; returns immediately to main app on subsequent launches via DataStore (Android) / UserDefaults (iOS) flag (#35) (Android + iOS)

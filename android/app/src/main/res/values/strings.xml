@@ -68,6 +68,18 @@
     <string name="home_product_keyboard">Mechanical Gaming Keyboard</string>
     <string name="home_product_jacket">Premium Winter Jacket</string>
     <string name="home_product_lamp">Modern Desk Lamp LED</string>
+    <string name="home_daily_deal_badge">DAILY DEAL</string>
+    <string name="home_daily_deal_title">Daily Deal</string>
+    <string name="home_daily_deal_ended">ENDED</string>
+    <string name="home_flash_sale_title">Flash Sale</string>
+    <string name="home_flash_sale_badge">FLASH SALE</string>
+    <string name="common_see_all">See All</string>
+    <string name="home_section_daily_deal">Daily Deal</string>
+    <string name="home_section_flash_sale">Flash Sale</string>
+    <string name="home_error_message">Something went wrong</string>
+    <string name="home_error_retry">Retry</string>
+    <string name="home_delivery_badge">Order before %1$s, delivered %2$s</string>
+    <string name="home_add_to_cart">Add to cart</string>
 
     <!-- Categories Screen -->
     <string name="categories_search_hint">Search categories...</string>

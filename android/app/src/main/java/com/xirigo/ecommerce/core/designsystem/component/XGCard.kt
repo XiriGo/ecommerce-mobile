@@ -11,28 +11,36 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.AddShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.xirigo.ecommerce.R
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
+
+private val AddToCartButtonSize = 32.dp
+private val AddToCartIconSize = 16.dp
+private val DeliveryLabelFontSize = 10.sp
 
 @Composable
 fun XGProductCard(
@@ -47,6 +55,8 @@ fun XGProductCard(
     reviewCount: Int? = null,
     isWishlisted: Boolean = false,
     onWishlistToggle: (() -> Unit)? = null,
+    deliveryLabel: String? = null,
+    onAddToCartClick: (() -> Unit)? = null,
 ) {
     Card(
         modifier = modifier
@@ -70,6 +80,8 @@ fun XGProductCard(
                 vendorName = vendorName,
                 rating = rating,
                 reviewCount = reviewCount,
+                deliveryLabel = deliveryLabel,
+                onAddToCartClick = onAddToCartClick,
             )
         }
     }
@@ -92,36 +104,14 @@ private fun ProductCardImageSection(
         )
 
         if (onWishlistToggle != null) {
-            WishlistButton(
+            XGWishlistButton(
                 isWishlisted = isWishlisted,
                 onToggle = onWishlistToggle,
-                modifier = Modifier.align(Alignment.TopEnd),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(XGSpacing.SM),
             )
         }
-    }
-}
-
-@Composable
-private fun WishlistButton(
-    isWishlisted: Boolean,
-    onToggle: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val wishlistDescription = if (isWishlisted) {
-        stringResource(R.string.common_remove_from_wishlist)
-    } else {
-        stringResource(R.string.common_add_to_wishlist)
-    }
-
-    val icon = if (isWishlisted) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
-    val tint = if (isWishlisted) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
-
-    IconButton(onClick = onToggle, modifier = modifier) {
-        Icon(
-            imageVector = icon,
-            contentDescription = wishlistDescription,
-            tint = tint,
-        )
     }
 }
 
@@ -133,6 +123,8 @@ private fun ProductCardDetailsSection(
     vendorName: String?,
     rating: Float?,
     reviewCount: Int?,
+    deliveryLabel: String? = null,
+    onAddToCartClick: (() -> Unit)? = null,
 ) {
     Column(modifier = Modifier.padding(XGSpacing.CardPadding)) {
         Text(
@@ -166,6 +158,40 @@ private fun ProductCardDetailsSection(
                 showValue = true,
                 reviewCount = reviewCount,
             )
+        }
+
+        if (deliveryLabel != null) {
+            Spacer(modifier = Modifier.height(XGSpacing.XS))
+            Text(
+                text = deliveryLabel,
+                style = MaterialTheme.typography.labelSmall.copy(fontSize = DeliveryLabelFontSize),
+                color = XGColors.BrandSecondary,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+
+        if (onAddToCartClick != null) {
+            Spacer(modifier = Modifier.height(XGSpacing.SM))
+            Box(modifier = Modifier.fillMaxWidth()) {
+                IconButton(
+                    onClick = onAddToCartClick,
+                    modifier = Modifier
+                        .size(AddToCartButtonSize)
+                        .clip(CircleShape)
+                        .align(Alignment.CenterEnd),
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = XGColors.BrandSecondary,
+                    ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.AddShoppingCart,
+                        contentDescription = null,
+                        modifier = Modifier.size(AddToCartIconSize),
+                        tint = Color.White,
+                    )
+                }
+            }
         }
     }
 }
