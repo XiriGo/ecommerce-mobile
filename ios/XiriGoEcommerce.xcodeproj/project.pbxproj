@@ -188,6 +188,7 @@
 		9151CDD0BFED60199DCFE963 /* XGFlashSaleBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */; };
 		F1E2D3C4B5A697881234567F /* XGProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4031200000001 /* XGProductCard.swift */; };
 		E4A1B2C3D5F60728B9C0D1E4 /* ShimmerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */; };
+		0A8378DA1E960CFB5DBC3276 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7654E0AECA894686911DB5F /* Skeleton.swift */; };
 		5B1705B7661045998B20C525 /* FakeHomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474951D73DDB4F41B9FE329D /* FakeHomeRepository.swift */; };
 		ACC9D80DD61A45D8A57B2577 /* FakeHomeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED058040F7444241A9B1C7AE /* FakeHomeRepositoryTests.swift */; };
 		829A4766E1C34E708864023D /* GetHomeBannersUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309AA00C4A424A9F96D3AF3E /* GetHomeBannersUseCaseTests.swift */; };
@@ -398,6 +399,7 @@
 		CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGFlashSaleBanner.swift; sourceTree = "<group>"; };
 		A9B8C7D6E5F4031200000001 /* XGProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGProductCard.swift; sourceTree = "<group>"; };
 		E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifier.swift; sourceTree = "<group>"; };
+		D7654E0AECA894686911DB5F /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		474951D73DDB4F41B9FE329D /* FakeHomeRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeHomeRepository.swift; sourceTree = "<group>"; };
 		ED058040F7444241A9B1C7AE /* FakeHomeRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeHomeRepositoryTests.swift; sourceTree = "<group>"; };
 		309AA00C4A424A9F96D3AF3E /* GetHomeBannersUseCaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetHomeBannersUseCaseTests.swift; sourceTree = "<group>"; };
@@ -1091,6 +1093,7 @@
 				CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */,
 				A9B8C7D6E5F4031200000001 /* XGProductCard.swift */,
 				E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */,
+				D7654E0AECA894686911DB5F /* Skeleton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1552,6 +1555,7 @@
 				9151CDD0BFED60199DCFE963 /* XGFlashSaleBanner.swift in Sources */,
 				F1E2D3C4B5A697881234567F /* XGProductCard.swift in Sources */,
 				E4A1B2C3D5F60728B9C0D1E4 /* ShimmerModifier.swift in Sources */,
+				0A8378DA1E960CFB5DBC3276 /* Skeleton.swift in Sources */,
 				E781E2C8F2DFC7F7240947FF /* OnboardingRepositoryImpl.swift in Sources */,
 				6650081BE742A282479335A9 /* OnboardingPage.swift in Sources */,
 				7D9D386AA01276CCBA10464F /* OnboardingRepository.swift in Sources */,
