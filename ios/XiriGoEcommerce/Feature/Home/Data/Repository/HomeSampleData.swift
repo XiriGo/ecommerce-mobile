@@ -258,6 +258,6 @@ enum HomeSampleData {
     }
 
     private enum Timing {
-        static let dealDurationSeconds: TimeInterval = 28_800
+        static let dealDurationSeconds: TimeInterval = 28800
     }
 }

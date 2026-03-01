@@ -41,7 +41,7 @@ struct GetDailyDealUseCaseTests {
     @Test("execute preserves deal end time")
     func execute_preservesDealEndTime() async throws {
         let repository = FakeHomeRepository()
-        let futureDate = Date().addingTimeInterval(28_800)
+        let futureDate = Date().addingTimeInterval(28800)
         let deal = DailyDeal(
             productId: "deal_1",
             title: "Deal",

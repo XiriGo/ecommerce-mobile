@@ -176,7 +176,7 @@ struct XGDailyDealCard: View {
         title: "Nike Air Zoom Pegasus",
         price: "89.99",
         originalPrice: "149.99",
-        endTime: Date().addingTimeInterval(28_800),
+        endTime: Date().addingTimeInterval(28800),
         imageUrl: nil,
         action: {},
     )

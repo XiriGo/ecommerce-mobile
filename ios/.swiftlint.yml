@@ -224,7 +224,7 @@ trailing_comma:
 
 # --- Number separator ---
 number_separator:
-  minimum_length: 5
+  minimum_length: 6
   minimum_fraction_length: 5
 
 # --- Multiline arguments ---
