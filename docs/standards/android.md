@@ -90,16 +90,20 @@
 - Use **`@Stable`** annotation on Compose state classes.
 - **No `AndroidViewModel`**: Use `ViewModel()`. Pass dependencies via Hilt, not Context.
 - **ViewModels at screen level only**: Never pass ViewModel to child composables. Hoist state.
-- **Single `uiState` property**: Expose one `StateFlow<XxxUiState>` per ViewModel, use `stateIn(WhileSubscribed(5_000))`.
+- **Single `uiState` property**: Expose one `StateFlow<XxxUiState>` per ViewModel. No secondary `isRefreshing`, `isLoading` or other transient StateFlows — merge them into the `UiState` variant (e.g., `Success(isRefreshing = true)`).
 
 ## Compose Rules
 
 - **Stateless composables**: Pass state down, events up.
-- **Previews**: Every screen composable has a `@Preview` function.
+- **Previews**: Every screen composable has a `@Preview` function wrapped in `XGTheme { }`.
 - **No side effects in composables**: Use `LaunchedEffect`, `SideEffect`, `DisposableEffect`.
 - **Modifier parameter**: First optional parameter on every composable, default `Modifier`.
-- **Material 3 theming**: Always use `MaterialTheme.colorScheme`, never hardcode colors.
-- **No hardcoded strings**: Use `stringResource(R.string.xxx)`.
+- **No hardcoded colors**: `Color.White`, `Color.Black`, `Color(0xFF...)` are ALL hardcoded. Use `XGColors.*` tokens.
+- **No hardcoded fonts**: Never inline `fontFamily = ...` or `fontSize = XX.sp`. Use `XGTypography.*` tokens or extract to named constants.
+- **No hardcoded corners**: Never use `RoundedCornerShape(10.dp)`. Use `XGCornerRadius.*` tokens.
+- **No hardcoded strings**: Use `stringResource(R.string.xxx)` for ALL user-facing text, including sample data.
+- **Extract repeated magic numbers**: Inline dimensions (`12.dp`, `20.sp`) must live in a `private enum Constants` or `private val`.
+- **Single StateFlow per ViewModel**: No secondary `isRefreshing` or `isLoading` StateFlows — merge into `UiState`.
 
 ## Hilt DI Pattern
 
@@ -137,15 +141,18 @@ copy these patterns for each new feature, replacing `Product` with the feature n
 
 ```kotlin
 // feature/product/presentation/state/ProductListUiState.kt
+import androidx.annotation.StringRes
+
 @Stable
 sealed interface ProductListUiState {
     data object Loading : ProductListUiState
     data class Success(
         val products: List<Product>,
+        val isRefreshing: Boolean = false,  // transient state IN Success, not a separate StateFlow
         val isLoadingMore: Boolean = false,
         val hasMore: Boolean = true,
     ) : ProductListUiState
-    data class Error(val message: String) : ProductListUiState
+    data class Error(@StringRes val messageResId: Int) : ProductListUiState  // @StringRes, not raw String
 }
 
 sealed interface ProductListEvent {
@@ -153,6 +160,11 @@ sealed interface ProductListEvent {
     data class ShowSnackbar(val message: String) : ProductListEvent
 }
 ```
+
+**Rules**:
+- `Error` uses `@StringRes Int` — never raw `String` messages (ensures localization)
+- `isRefreshing` lives inside `Success` — never a separate `MutableStateFlow<Boolean>`
+- On refresh error, stay in `Success` with `isRefreshing = false` to preserve user's data
 
 ### ViewModel Pattern
 
@@ -462,6 +474,49 @@ object XGSpacing {
     val MinTouchTarget = 48.dp
 }
 ```
+
+### Theme: XGTypography
+
+```kotlin
+// core/designsystem/theme/XGTypography.kt
+// Primary font: Poppins (all weights), Price font: Source Sans 3 Black
+// All components and feature screens use these tokens — never Font.custom() or inline TextStyle
+
+val PoppinsFontFamily = FontFamily(
+    Font(R.font.poppins_regular, FontWeight.Normal),
+    Font(R.font.poppins_medium, FontWeight.Medium),
+    Font(R.font.poppins_semibold, FontWeight.SemiBold),
+    Font(R.font.poppins_bold, FontWeight.Bold),
+)
+
+val SourceSans3FontFamily = FontFamily(
+    Font(R.font.sourcesans3_black, FontWeight.Black),
+)
+
+// Usage: Text(text, style = XGTypography.headline)
+// Price: XGPriceText uses SourceSans3FontFamily internally
+```
+
+**Rules**:
+- **Never** use `Font.Default`, `FontFamily.Default`, or inline `fontFamily = FontFamily(...)` in components
+- **Never** hardcode `fontSize = XX.sp` or `lineHeight = XX.sp` inline — extract to named constants
+- All font styles MUST reference `PoppinsFontFamily` or `SourceSans3FontFamily` via `XGTypography`
+
+### Theme: XGCornerRadius
+
+```kotlin
+// core/designsystem/theme/XGCornerRadius.kt
+object XGCornerRadius {
+    val Small = 4.dp    // icons, badges
+    val Medium = 10.dp  // cards, banners, images
+    val Large = 16.dp   // sheets, dialogs
+    val Full = 100.dp   // pills, FABs
+}
+```
+
+**Rules**:
+- **Never** hardcode `RoundedCornerShape(10.dp)` — use `RoundedCornerShape(XGCornerRadius.Medium)`
+- All clip shapes, borders, and background shapes MUST use `XGCornerRadius`
 
 ### Theme: XGTheme
 

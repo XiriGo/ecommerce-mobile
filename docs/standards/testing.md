@@ -51,6 +51,18 @@ class FakeProductRepository : ProductRepository {
 }
 ```
 
+## Test Maintenance Rules
+
+When refactoring production code (UiState, ViewModel, domain models), you MUST update corresponding tests in the same commit:
+
+- **UiState field changes** (rename, type change, moved property): Update all test assertions that reference the changed field
+- **ViewModel API changes** (removed/merged StateFlows, new event types): Update all tests that observe the changed API
+- **Error model changes** (`String` → `@StringRes Int`): Update all error state assertions
+- **State behavior changes** (e.g., refresh-error stays in Success instead of Error): Update test expectations to match new behavior
+- **Run tests locally before pushing**: `./gradlew testDebugUnitTest` (Android) / `xcodebuild test` (iOS)
+
+Detekt excludes test files from `LargeClass` rule (test classes are naturally large). Other complexity rules (`CognitiveComplexMethod`, `NestedBlockDepth`) also exclude tests.
+
 ## iOS: Fake Repository Pattern
 
 ```swift

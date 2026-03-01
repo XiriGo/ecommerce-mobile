@@ -54,10 +54,13 @@ Imports must follow this order, separated by blank lines:
 
 - Domain errors as sealed class (Kotlin) / enum (Swift)
 - Map API errors to domain errors in repository layer
-- UI-friendly error messages in presentation layer
+- UI-friendly error messages in presentation layer via **localized string resources**
 - Never swallow errors silently
-- Log errors for debugging
+- Log errors for debugging (Timber on Android, os.Logger on iOS)
 - **Never send one-off events from ViewModel to UI** (Google strongly recommended). Process the event immediately in ViewModel and update state with the result.
+- **Android**: `UiState.Error` must use `@StringRes Int` (resource ID), never raw `String` messages
+- **iOS**: Use `error.toUserMessage` (String Catalog lookup), never `error.localizedDescription`
+- **Catch specific exceptions**: `IOException` → network, `HttpException` → server, `SerializationException` → parse. Never catch generic `Exception`.
 
 ---
 
@@ -185,6 +188,9 @@ String(localized: "\(count) items in cart")
 - **Unidirectional Data Flow (UDF)**: UI -> Event -> ViewModel -> State -> UI
 - Screen state as a single sealed interface/enum with Loading, Success, Error variants
 - Side effects (navigation, snackbar) via Channel/SharedFlow (Android) or AsyncSequence (iOS)
+- **Single state property per ViewModel**: One `StateFlow<UiState>` (Android) / one `uiState` property (iOS). No secondary flows for transient states.
+- **Transient states in UiState**: `isRefreshing`, `isLoadingMore`, `isSubmitting` MUST be properties of the relevant `UiState` variant (e.g., `Success(isRefreshing: Boolean)`), not separate StateFlows.
+- **Immutable state models**: All properties in UiState data classes/structs must be immutable (`val`/`let`). Use `.copy()` to update.
 
 ---
 
@@ -324,8 +330,27 @@ Designs come from Adobe Illustrator SVG files in `XiriGo-Design/Svg/`. Design to
 2. **Single responsibility**: Each component does one thing. `XGProductCard` renders a product card. `XGPriceText` renders a price. Never combine unrelated UI into one component.
 3. **Data + callbacks only**: Components accept domain data and event callbacks as parameters. Zero business logic inside components. Zero ViewModel references.
 4. **Reusable across features**: If a component appears in more than one screen, it MUST be in `core/designsystem/`. Never duplicate UI code in feature screens.
-5. **Token-driven**: All colors from `XGColors`, all spacing from `XGSpacing`, all typography from `XGTypography`. Zero magic numbers.
-6. **Preview mandatory**: Every component must have `@Preview` (Android) / `#Preview` (iOS) showing all variants (default, loading, error, empty, active, inactive).
+5. **Token-driven**: All colors from `XGColors`, all spacing from `XGSpacing`, all typography from `XGTypography`, all corners from `XGCornerRadius`. Zero magic numbers.
+6. **Preview mandatory**: Every component must have `@Preview` (Android) / `#Preview` (iOS) wrapped in `XGTheme` / `.xgTheme()`, showing all variants.
+7. **Extract reusable UI**: If raw platform UI (e.g., a custom SearchBar) appears in a feature screen, extract it to `XG{Name}` in `core/designsystem/component/`.
+
+### Design Token Completeness Checklist
+
+Every visual property MUST come from a token. This table lists what tokens exist and where hardcoded values are forbidden:
+
+| Visual Property | Token Source | Hardcoded Examples (FORBIDDEN) |
+|----------------|-------------|-------------------------------|
+| Colors | `XGColors.*` | `Color.White`, `Color.white`, `.white`, `Color(0xFF...)`, `Color(hex: "#...")` |
+| Typography | `XGTypography.*` | `Font.system(...)`, `Font.custom("Poppins-...")`, inline `TextStyle(fontFamily=...)` |
+| Spacing | `XGSpacing.*` | Bare `16.dp`, `.padding(16)` without token reference |
+| Corner radius | `XGCornerRadius.*` | `RoundedCornerShape(10.dp)`, `.cornerRadius(10)` |
+| Elevation | `XGElevation.*` | Inline `shadow(...)` values |
+| Font sizes | Named constants or `XGTypography` | Inline `fontSize = 20.sp`, `size: 14` |
+
+**Where tokens are defined vs used**:
+- Tokens are **defined** in `core/designsystem/theme/XG*.kt` / `Core/DesignSystem/Theme/XG*.swift`
+- Tokens are **consumed** by both `core/designsystem/component/` and `feature/*/presentation/`
+- If a token doesn't exist for a needed value, **add it to the token file first**, then reference it
 
 ### Design Token Files
 
@@ -426,6 +451,7 @@ Screen → ViewModel → UseCase → Repository (interface) → [FakeImpl | Real
 - **Match SVG design**: Mock data should produce screens that look like the design SVG
 - **Edge cases**: Include items with long names (2-line truncation), zero reviews, no discount
 - **Minimum items**: Lists should have enough items to test scrolling (6+ for horizontal, 10+ for vertical)
+- **ALL user-facing strings in mock data MUST be localized**: Product names, banner titles, category names, badge labels — use `stringResource()` (Android) / `String(localized:)` (iOS). Only IDs, URLs, hex codes, and currency codes can be raw strings.
 
 ---
 
