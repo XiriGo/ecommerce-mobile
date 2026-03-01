@@ -11,6 +11,9 @@
 - Design system components (`XGBrand*.swift`, `XGLogoMark.swift`, `XGPaginationDots.swift`) were added by iOS dev but NOT in the Xcode project — always check with `grep "FileName" project.pbxproj`
 - Feature source files may be on disk but not in the Xcode project — always verify before running tests
 - Always add `import Foundation` to test files that use `Date`, `URL`, or other Foundation types
+- ALWAYS generate UUIDs with Python (`python3 -c "import uuid; ..."`) and verify they don't exist in pbxproj before using — avoid UUID patterns like `A1B2C3D4...` that look sequential and may already be used
+- UUID collision in pbxproj causes "Skipping duplicate build file" warning — use `grep -n "<UUID>"` to detect; fix by assigning a fresh unique UUID
+- `modifier.body(content:)` in tests must be called with `_ViewModifier_Content<T>`, not `Rectangle()` — these calls cause compile errors even in `@Test(.disabled(...))` tests
 
 #### Container+Onboarding Pattern (MainActor)
 - `@MainActor @Observable` ViewModels have `@MainActor`-isolated inits
@@ -52,6 +55,11 @@ final class FakeXyzRepository: XyzRepository, @unchecked Sendable {
     // Configure state before each test, check callCount after
 }
 ```
+
+#### Token Contract Test Pattern
+- For `private static let` constants (e.g., `errorIconOpacity`), mirror the value as a local `let` in the test and assert its expected value — no need for `@testable` reflection.
+- Token contract suites should NOT be `@MainActor` — they only reference static enum values, not SwiftUI Views.
+- Suites that instantiate SwiftUI `View` structs (e.g., `XGImage(url:)`) DO require `@MainActor`.
 
 ### Files Modified Per Feature Session (app-onboarding)
 - `ios/XiriGoEcommerce/Core/DI/Container+Onboarding.swift` — fixed MainActor.assumeIsolated
