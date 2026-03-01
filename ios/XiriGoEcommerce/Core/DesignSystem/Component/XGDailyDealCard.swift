@@ -66,7 +66,7 @@ struct XGDailyDealCard: View {
         static let titleMaxLines = 2
         static let badgeHorizontalPadding: CGFloat = 10
         static let badgeVerticalPadding: CGFloat = 4
-        static let strikethroughFontSize: CGFloat = 14
+        static let strikethroughFontSize: CGFloat = 15.18
     }
 
     private enum TimeConstants {

@@ -32,7 +32,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
@@ -45,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.xirigo.ecommerce.R
@@ -57,6 +57,8 @@ import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
 import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
 import com.xirigo.ecommerce.core.designsystem.component.XGSectionHeader
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
@@ -165,7 +167,7 @@ private fun SearchBarSection(onSearchClick: () -> Unit) {
         shape = RoundedCornerShape(XGCornerRadius.Medium),
         elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = XGColors.SurfaceVariant,
         ),
     ) {
         Row(
@@ -177,13 +179,14 @@ private fun SearchBarSection(onSearchClick: () -> Unit) {
             Icon(
                 imageVector = Icons.Outlined.Search,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = XGColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.width(XGSpacing.SM))
             Text(
                 text = stringResource(R.string.home_search_hint),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontFamily = PoppinsFontFamily,
+                fontSize = 16.sp,
+                color = XGColors.OnSurfaceVariant,
             )
         }
     }

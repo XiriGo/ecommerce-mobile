@@ -15,10 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
@@ -70,22 +72,20 @@ fun XGFlashSaleBanner(
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            if (imageUrl != null) {
-                XGImage(
-                    url = imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .height(50.dp)
-                        .fillMaxWidth(0.4f),
-                )
-            }
+            Text(
+                text = stringResource(R.string.home_flash_sale_badge),
+                fontFamily = PoppinsFontFamily,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = XGColors.FlashSaleText,
+            )
             Text(
                 text = title,
                 fontFamily = PoppinsFontFamily,
-                fontSize = 24.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = XGColors.FlashSaleText,
-                lineHeight = 32.sp,
+                lineHeight = 28.sp,
             )
         }
     }

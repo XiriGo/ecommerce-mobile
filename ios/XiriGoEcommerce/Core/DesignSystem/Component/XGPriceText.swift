@@ -119,7 +119,7 @@ struct XGPriceText: View {
     }
 
     private var priceColor: Color {
-        hasSale ? style.color : XGColors.priceRegular
+        style.color
     }
 
     private var priceParts: (integer: String, decimal: String) {
