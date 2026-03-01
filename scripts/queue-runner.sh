@@ -7,11 +7,12 @@
 # Boylece feature'lar arasi memory birikmez. Gece birakip sabaha calistirilabilir.
 #
 # Kullanim:
-#   ./scripts/queue-runner.sh [all|M0|M1|M2|M3|M4] [--from ISSUE_NUMBER]
+#   ./scripts/queue-runner.sh [all|M0|M1|M2|M3|M4|DQ] [--from ISSUE_NUMBER]
 #
 # Ornekler:
-#   ./scripts/queue-runner.sh all                 # Tum milestone'lar
+#   ./scripts/queue-runner.sh all                 # Tum milestone'lar (M0-M4)
 #   ./scripts/queue-runner.sh M1                  # Sadece M1
+#   ./scripts/queue-runner.sh DQ --from 53        # DQ issue #53'ten devam et
 #   ./scripts/queue-runner.sh --from 15           # Issue #15'ten devam et
 #   ./scripts/queue-runner.sh M2 --from 18        # M2, issue #18'den baslayarak
 #
@@ -80,7 +81,7 @@ FROM_ISSUE=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        all|M0|M1|M2|M3|M4)
+        all|M0|M1|M2|M3|M4|DQ)
             MILESTONE="$1"
             shift
             ;;
@@ -93,21 +94,23 @@ while [[ $# -gt 0 ]]; do
 queue-runner.sh — External Queue Orchestrator
 
 Kullanim:
-  ./scripts/queue-runner.sh [all|M0|M1|M2|M3|M4] [--from ISSUE_NUMBER]
+  ./scripts/queue-runner.sh [all|M0|M1|M2|M3|M4|DQ] [--from ISSUE_NUMBER]
 
 Parametreler:
-  all          Tum milestone'lari isle (varsayilan)
+  all          Tum milestone'lari isle (varsayilan, M0-M4)
   M0-M4        Belirli milestone'u isle
+  DQ           Design Quality refactoring issue'larini isle
   --from N     Issue #N'den devam et
 
 Ornekler:
   ./scripts/queue-runner.sh all
   ./scripts/queue-runner.sh M1
+  ./scripts/queue-runner.sh DQ --from 53
   ./scripts/queue-runner.sh --from 15
   ./scripts/queue-runner.sh M2 --from 18
 
 Gece modu:
-  nohup ./scripts/queue-runner.sh M1 > logs/queue-run/nohup.log 2>&1 &
+  nohup ./scripts/queue-runner.sh DQ --from 53 > logs/queue-run/nohup.log 2>&1 &
 
 Loglar: logs/queue-run/
 USAGE
@@ -115,7 +118,7 @@ USAGE
             ;;
         *)
             echo "Bilinmeyen arguman: $1"
-            echo "Kullanim: $0 [all|M0|M1|M2|M3|M4] [--from ISSUE_NUMBER]"
+            echo "Kullanim: $0 [all|M0|M1|M2|M3|M4|DQ] [--from ISSUE_NUMBER]"
             echo "Yardim: $0 --help"
             exit 1
             ;;
@@ -193,9 +196,18 @@ milestone_to_phase() {
     esac
 }
 
-# Sirali feature listesi uret
+# Router: milestone'a gore dogru builder'i sec
 # Cikti: her satir ID|ISSUE_NUM|PIPELINE_ID|DEP1,DEP2,...|NAME
 build_queue() {
+    if [[ "$MILESTONE" == "DQ" ]]; then
+        build_queue_github "DQ"
+    else
+        build_queue_jsonl
+    fi
+}
+
+# M0-M4 icin: feature-queue.jsonl'den oku
+build_queue_jsonl() {
     local phase_filter=""
     if [[ "$MILESTONE" != "all" ]]; then
         phase_filter=$(milestone_to_phase "$MILESTONE")
@@ -234,6 +246,82 @@ build_queue() {
 
         echo "$id|$issue_num|$pipeline_id|$deps|$name"
     done < "$QUEUE_FILE"
+}
+
+# DQ icin: issue-map.json + GitHub'dan oku
+# DQ issue'lari feature-queue.jsonl'de yok, issue-map.json'da var
+build_queue_github() {
+    local prefix="$1"
+
+    local past_from="false"
+    if [[ -z "$FROM_ISSUE" ]]; then
+        past_from="true"
+    fi
+
+    # issue-map.json'dan DQ entry'lerini sirali al (DQ-01, DQ-02, ...)
+    local entries
+    entries=$(jq -r "to_entries[] | select(.key | startswith(\"$prefix-\")) | [.key, (.value|tostring)] | @tsv" "$ISSUE_MAP" | sort)
+
+    while IFS=$'\t' read -r feature_id issue_num; do
+        [[ -z "$feature_id" ]] && continue
+
+        # --from: hedef issue'ya ulasana kadar atla
+        if [[ "$past_from" == "false" ]]; then
+            if [[ "$issue_num" == "$FROM_ISSUE" ]]; then
+                past_from="true"
+            else
+                continue
+            fi
+        fi
+
+        # GitHub'dan issue detaylarini cek
+        local issue_json
+        issue_json=$(gh issue view "$issue_num" --json title,body,state 2>/dev/null || echo '{}')
+
+        local state
+        state=$(echo "$issue_json" | jq -r '.state // "UNKNOWN"')
+        # Kapali issue'lari atla
+        [[ "$state" == "CLOSED" ]] && continue
+
+        local title body
+        title=$(echo "$issue_json" | jq -r '.title // ""')
+        body=$(echo "$issue_json" | jq -r '.body // ""')
+
+        # Issue title'dan isim cikar: "[DQ-09] Upgrade XGPaginationDots — motion tokens"
+        # → "upgrade-xgpaginationdots-motion-tokens"
+        local name
+        name=$(echo "$title" | sed 's/\[.*\] *//' | sed 's/ — /-/g' | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
+
+        # Pipeline ID: feature_id'den turet: DQ-09 → dq/09
+        local pipeline_id
+        pipeline_id=$(echo "$feature_id" | tr '[:upper:]' '[:lower:]' | sed 's/-/\//')
+
+        # Dependency'leri body'den cikar
+        # Format: "Depends on: **DQ-01** (...), **DQ-02** (...)"
+        # veya:   "Depends on #45, #46"
+        local deps=""
+        # Oncelik 1: **DQ-XX** formati
+        local dq_deps
+        dq_deps=$(echo "$body" | grep -oE '\*\*DQ-[0-9]+\*\*' | grep -oE 'DQ-[0-9]+' | paste -sd, - || true)
+        if [[ -n "$dq_deps" ]]; then
+            deps="$dq_deps"
+        else
+            # Oncelik 2: #N formati — issue numaralarindan feature ID'ye cevir
+            local num_deps
+            num_deps=$(echo "$body" | grep -oE 'Depends on #[0-9]+' | grep -oE '[0-9]+' || true)
+            if [[ -n "$num_deps" ]]; then
+                local dep_ids=()
+                for dep_num in $num_deps; do
+                    local dep_fid
+                    dep_fid=$(jq -r "to_entries[] | select(.value == $dep_num) | .key" "$ISSUE_MAP" 2>/dev/null || true)
+                    [[ -n "$dep_fid" ]] && dep_ids+=("$dep_fid")
+                done
+                deps=$(IFS=,; echo "${dep_ids[*]}")
+            fi
+        fi
+
+        echo "$feature_id|$issue_num|$pipeline_id|$deps|$name"
+    done <<< "$entries"
 }
 
 # ---------------------------------------------------------------------------
@@ -431,13 +519,20 @@ Devam: \`./scripts/queue-runner.sh $MILESTONE --from $issue_num\`" 2>/dev/null |
     git push -u origin "feature/$pipeline_id" 2>/dev/null
 
     local scope="${pipeline_id%%/*}"
+    # DQ issue'lari refactor tipinde, digerleri feat
+    local pr_type="feat"
+    local pr_summary="Implements **$name** on both Android and iOS platforms."
+    if [[ "$feature_id" == DQ-* ]]; then
+        pr_type="refactor"
+        pr_summary="Design quality upgrade: **$name**."
+    fi
     local pr_url
     pr_url=$(gh pr create \
         --base develop \
-        --title "feat($scope): $name" \
+        --title "$pr_type($scope): $name" \
         --body "$(cat <<EOF
 ## Summary
-Implements **$name** on both Android and iOS platforms.
+$pr_summary
 
 Closes #$issue_num
 
@@ -544,8 +639,25 @@ EOF
         b_body=$(echo "$blocked" | jq -r '.body')
 
         # Body'den dependency issue numaralarini cek
-        local dep_nums
-        dep_nums=$(echo "$b_body" | grep -oE 'Depends on #[0-9]+' | grep -oE '[0-9]+' || true)
+        # Format 1: "Depends on #45" (M0-M4)
+        # Format 2: "**DQ-01**" (DQ)
+        local dep_nums=""
+
+        # #N formatindaki dep'ler
+        local hash_deps
+        hash_deps=$(echo "$b_body" | grep -oE 'Depends on #[0-9]+' | grep -oE '[0-9]+' || true)
+        dep_nums="$hash_deps"
+
+        # **XX-NN** formatindaki dep'ler → issue numarasina cevir
+        local ref_deps
+        ref_deps=$(echo "$b_body" | grep -oE '\*\*[A-Z]+-[0-9]+\*\*' | grep -oE '[A-Z]+-[0-9]+' || true)
+        for ref in $ref_deps; do
+            local ref_num
+            ref_num=$(jq -r ".[\"$ref\"] // empty" "$ISSUE_MAP" 2>/dev/null || true)
+            [[ -n "$ref_num" ]] && dep_nums="$dep_nums $ref_num"
+        done
+
+        dep_nums=$(echo "$dep_nums" | tr -s ' ' | sed 's/^ //')
         [[ -z "$dep_nums" ]] && continue
 
         # Tum dependency'ler kapandi mi?

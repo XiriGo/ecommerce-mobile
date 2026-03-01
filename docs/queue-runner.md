@@ -35,7 +35,7 @@ Her feature sonrasi Claude process'i tamamen kapanir. Yeni feature = yeni proces
 ### Temel komutlar
 
 ```bash
-# Tum milestone'lari isle
+# Tum milestone'lari isle (M0-M4)
 ./scripts/queue-runner.sh all
 
 # Tek milestone
@@ -43,12 +43,35 @@ Her feature sonrasi Claude process'i tamamen kapanir. Yeni feature = yeni proces
 ./scripts/queue-runner.sh M1
 ./scripts/queue-runner.sh M2
 
+# DQ (Design Quality) issue'larini isle
+./scripts/queue-runner.sh DQ
+./scripts/queue-runner.sh DQ --from 53
+
 # Belirli issue'dan devam et
 ./scripts/queue-runner.sh --from 15
 
 # Milestone + from birlikte
 ./scripts/queue-runner.sh M2 --from 18
 ```
+
+### DQ modu
+
+DQ (Design Quality) issue'lari `feature-queue.jsonl`'de degil, `issue-map.json`'da tutulur.
+Script DQ modunda GitHub'dan issue detaylarini ceker, dependency'leri `**DQ-XX**` formatindan parse eder.
+
+```bash
+# Tum DQ issue'larini isle
+./scripts/queue-runner.sh DQ
+
+# DQ-09'dan (issue #53) basla
+./scripts/queue-runner.sh DQ --from 53
+```
+
+M0-M4 vs DQ farki:
+- M0-M4: `feature-queue.jsonl`'den kuyruk olusturulur (hizli, offline)
+- DQ: `issue-map.json` + GitHub API'den kuyruk olusturulur (her issue sorgulanir)
+- DQ pipeline_id formati: `dq/09`, `dq/10` (feature_id'den turetilir)
+- DQ PR tipi: `refactor(dq): ...` (feat degil)
 
 ### Gece modu (unattended)
 
