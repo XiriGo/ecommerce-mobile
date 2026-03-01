@@ -2,98 +2,118 @@ package com.xirigo.ecommerce.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+/**
+ * Font families from design tokens (typography.json).
+ * When actual font files are embedded in res/font/, replace these with:
+ *   FontFamily(Font(R.font.poppins_regular, FontWeight.Normal), ...)
+ */
+val PoppinsFontFamily: FontFamily = FontFamily.Default
+val SourceSans3FontFamily: FontFamily = FontFamily.SansSerif
+
 val XGTypography = Typography(
+    // display (28sp bold) — from typeScale.display
     displayLarge = TextStyle(
-        fontSize = 57.sp,
-        lineHeight = 64.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = (-0.25).sp,
-    ),
-    displayMedium = TextStyle(
-        fontSize = 45.sp,
-        lineHeight = 52.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = 0.sp,
-    ),
-    displaySmall = TextStyle(
-        fontSize = 36.sp,
-        lineHeight = 44.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = 0.sp,
-    ),
-    headlineLarge = TextStyle(
-        fontSize = 32.sp,
-        lineHeight = 40.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = 0.sp,
-    ),
-    headlineMedium = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 28.sp,
         lineHeight = 36.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = 0.sp,
+        fontWeight = FontWeight.Bold,
     ),
-    headlineSmall = TextStyle(
+    displayMedium = TextStyle(
+        fontFamily = PoppinsFontFamily,
+        fontSize = 28.sp,
+        lineHeight = 36.sp,
+        fontWeight = FontWeight.Bold,
+    ),
+    displaySmall = TextStyle(
+        fontFamily = PoppinsFontFamily,
+        fontSize = 28.sp,
+        lineHeight = 36.sp,
+        fontWeight = FontWeight.Bold,
+    ),
+    // headline (24sp semiBold) — from typeScale.headline
+    headlineLarge = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 24.sp,
         lineHeight = 32.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = 0.sp,
+        fontWeight = FontWeight.SemiBold,
     ),
+    headlineMedium = TextStyle(
+        fontFamily = PoppinsFontFamily,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        fontWeight = FontWeight.SemiBold,
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = PoppinsFontFamily,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        fontWeight = FontWeight.SemiBold,
+    ),
+    // title (20sp semiBold) — from typeScale.title
     titleLarge = TextStyle(
-        fontSize = 22.sp,
+        fontFamily = PoppinsFontFamily,
+        fontSize = 20.sp,
         lineHeight = 28.sp,
-        fontWeight = FontWeight.Normal,
-        letterSpacing = 0.sp,
+        fontWeight = FontWeight.SemiBold,
     ),
+    // subtitle (18sp semiBold) — from typeScale.subtitle
     titleMedium = TextStyle(
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        fontWeight = FontWeight.Medium,
-        letterSpacing = 0.15.sp,
+        fontFamily = PoppinsFontFamily,
+        fontSize = 18.sp,
+        lineHeight = 26.sp,
+        fontWeight = FontWeight.SemiBold,
     ),
+    // bodySemiBold (14sp semiBold) — from typeScale.bodySemiBold
     titleSmall = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
-        fontWeight = FontWeight.Medium,
-        letterSpacing = 0.1.sp,
+        fontWeight = FontWeight.SemiBold,
     ),
+    // bodyLarge (16sp regular) — from typeScale.bodyLarge
     bodyLarge = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
+        lineHeight = 22.sp,
         fontWeight = FontWeight.Normal,
-        letterSpacing = 0.5.sp,
     ),
+    // body (14sp regular) — from typeScale.body
     bodyMedium = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Normal,
-        letterSpacing = 0.25.sp,
     ),
+    // caption (12sp regular) — from typeScale.caption
     bodySmall = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.Normal,
-        letterSpacing = 0.4.sp,
     ),
+    // bodyMedium weight (14sp medium) — from typeScale.bodyMedium
     labelLarge = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Medium,
-        letterSpacing = 0.1.sp,
     ),
+    // captionMedium (12sp medium) — from typeScale.captionMedium
     labelMedium = TextStyle(
+        fontFamily = PoppinsFontFamily,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.Medium,
-        letterSpacing = 0.5.sp,
     ),
+    // micro (10sp regular) — from typeScale.micro
     labelSmall = TextStyle(
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        fontWeight = FontWeight.Medium,
-        letterSpacing = 0.5.sp,
+        fontFamily = PoppinsFontFamily,
+        fontSize = 10.sp,
+        lineHeight = 14.sp,
+        fontWeight = FontWeight.Normal,
     ),
 )

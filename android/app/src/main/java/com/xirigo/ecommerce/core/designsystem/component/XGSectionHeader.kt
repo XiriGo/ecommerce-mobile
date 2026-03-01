@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,11 +21,17 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// typeScale.subtitle: 18sp semiBold
+private val TitleFontSize = 18.sp
+private val SubtitleFontSize = 14.sp
+private val SeeAllFontSize = 14.sp
 private val SeeAllIconSize = 16.dp
 
 @Composable
@@ -46,15 +51,20 @@ fun XGSectionHeader(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleLarge,
+                fontFamily = PoppinsFontFamily,
+                fontSize = TitleFontSize,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = XGColors.OnSurface,
+                lineHeight = 26.sp,
             )
             if (subtitle != null) {
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = SubtitleFontSize,
+                    fontWeight = FontWeight.Normal,
+                    color = XGColors.OnSurfaceVariant,
+                    lineHeight = 20.sp,
                 )
             }
         }
@@ -68,8 +78,11 @@ fun XGSectionHeader(
             ) {
                 Text(
                     text = stringResource(R.string.common_see_all),
-                    style = MaterialTheme.typography.labelLarge,
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = SeeAllFontSize,
+                    fontWeight = FontWeight.Medium,
                     color = XGColors.BrandPrimary,
+                    lineHeight = 20.sp,
                 )
                 Spacer(modifier = Modifier.width(XGSpacing.XS))
                 Icon(

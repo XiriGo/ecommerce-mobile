@@ -10,7 +10,6 @@ import androidx.compose.material.icons.automirrored.filled.StarHalf
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,20 +17,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
-import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
+
+// components.json: XGStarRating
+private val StarSize = 12.dp
+private val StarGap = 2.dp
+private const val STAR_COUNT = 5
+private val ReviewCountFontSize = 12.sp
+private val ReviewCountSpacing = 4.dp
 
 @Composable
 fun XGRatingBar(
     rating: Float,
     modifier: Modifier = Modifier,
-    maxRating: Int = 5,
-    starSize: Dp = 12.dp,
+    maxRating: Int = STAR_COUNT,
+    starSize: Dp = StarSize,
     showValue: Boolean = false,
     reviewCount: Int? = null,
 ) {
@@ -45,19 +53,11 @@ fun XGRatingBar(
             contentDescription = "$ratingDescription $reviewsDescription".trim()
         },
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(XGSpacing.XXS),
+        horizontalArrangement = Arrangement.spacedBy(StarGap),
     ) {
         RatingStars(rating = rating, maxRating = maxRating, starSize = starSize)
-
         RatingValueText(rating = rating, showValue = showValue)
-
-        if (reviewCount != null) {
-            Text(
-                text = "($reviewCount)",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        ReviewCountText(reviewCount = reviewCount)
     }
 }
 
@@ -92,11 +92,29 @@ private fun RatingStars(
 @Composable
 private fun RatingValueText(rating: Float, showValue: Boolean) {
     if (showValue) {
-        Spacer(modifier = Modifier.width(XGSpacing.XS))
+        Spacer(modifier = Modifier.width(ReviewCountSpacing))
         Text(
             text = String.format(java.util.Locale.ROOT, "%.1f", rating),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontFamily = PoppinsFontFamily,
+            fontSize = ReviewCountFontSize,
+            fontWeight = FontWeight.Normal,
+            color = XGColors.OnSurfaceVariant,
+            lineHeight = 16.sp,
+        )
+    }
+}
+
+@Composable
+private fun ReviewCountText(reviewCount: Int?) {
+    if (reviewCount != null) {
+        Spacer(modifier = Modifier.width(ReviewCountSpacing))
+        Text(
+            text = "($reviewCount)",
+            fontFamily = PoppinsFontFamily,
+            fontSize = ReviewCountFontSize,
+            fontWeight = FontWeight.Normal,
+            color = XGColors.OnSurfaceVariant,
+            lineHeight = 16.sp,
         )
     }
 }

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,27 +33,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
-import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// components.json: XGCard.dailyDeal
 private val CardHeight = 163.dp
+private val CardCornerRadius = 10.dp
+private val CardPadding = 16.dp
 private val BadgeFontSize = 12.sp
+private val BadgePaddingHorizontal = 10.dp
+private val BadgePaddingVertical = 4.dp
+private val BadgeCornerRadius = 10.dp
 private val TitleFontSize = 20.sp
 private val CountdownFontSize = 12.sp
-private val PriceFontSize = 20.sp
-private val OriginalPriceFontSize = 14.sp
+private val StrikethroughFontSize = 15.18.sp
 private const val COUNTDOWN_DELAY_MS = 1000L
 private const val MILLIS_PER_SECOND = 1000L
 private const val SECONDS_PER_MINUTE = 60L
 private const val MINUTES_PER_HOUR = 60L
 
+// gradients.json: dailyDealCard (linear leftToRight #111827 -> #6000FE)
 private val DailyDealGradient = Brush.horizontalGradient(
     colorStops = arrayOf(
-        // gradients.dailyDealCard: #111827 → #6000FE
-        0.0f to XGColors.TextDark,
-        1.0f to XGColors.BrandPrimary,
+        0.0f to Color(0xFF111827),
+        1.0f to Color(0xFF6000FE),
     ),
 )
 
@@ -83,10 +87,10 @@ fun XGDailyDealCard(
         modifier = modifier
             .fillMaxWidth()
             .height(CardHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Medium))
+            .clip(RoundedCornerShape(CardCornerRadius))
             .background(DailyDealGradient)
             .then(clickModifier)
-            .padding(XGSpacing.Base),
+            .padding(CardPadding),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -96,59 +100,60 @@ fun XGDailyDealCard(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(XGSpacing.SM),
             ) {
+                // DAILY DEAL badge
                 Box(
                     modifier = Modifier
                         .background(
-                            color = XGColors.BrandSecondary,
-                            shape = RoundedCornerShape(XGCornerRadius.Medium),
+                            color = XGColors.BadgeSecondaryBackground,
+                            shape = RoundedCornerShape(BadgeCornerRadius),
                         )
-                        .padding(horizontal = XGSpacing.SM, vertical = XGSpacing.XS),
+                        .padding(horizontal = BadgePaddingHorizontal, vertical = BadgePaddingVertical),
                 ) {
                     Text(
                         text = stringResource(R.string.home_daily_deal_badge),
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            fontSize = BadgeFontSize,
-                            fontWeight = FontWeight.SemiBold,
-                        ),
-                        color = XGColors.BrandPrimary,
+                        fontFamily = PoppinsFontFamily,
+                        fontSize = BadgeFontSize,
+                        fontWeight = FontWeight.SemiBold,
+                        color = XGColors.BadgeSecondaryText,
+                        lineHeight = 16.sp,
                     )
                 }
 
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = TitleFontSize,
-                        fontWeight = FontWeight.SemiBold,
-                    ),
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = TitleFontSize,
+                    fontWeight = FontWeight.SemiBold,
                     color = Color.White,
                     maxLines = 2,
+                    lineHeight = 28.sp,
                 )
 
                 Text(
                     text = formatCountdown(remainingMillis),
-                    style = MaterialTheme.typography.bodySmall.copy(fontSize = CountdownFontSize),
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = CountdownFontSize,
+                    fontWeight = FontWeight.Normal,
                     color = Color.White,
+                    lineHeight = 16.sp,
                 )
 
+                // Price row
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM),
                 ) {
-                    Text(
-                        text = price,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontSize = PriceFontSize,
-                            fontWeight = FontWeight.Bold,
-                        ),
-                        color = XGColors.BrandSecondary,
+                    XGPriceText(
+                        price = price,
+                        size = XGPriceSize.Deal,
                     )
                     Text(
                         text = originalPrice,
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontSize = OriginalPriceFontSize,
-                            textDecoration = TextDecoration.LineThrough,
-                        ),
-                        color = XGColors.PriceOriginal,
+                        fontFamily = PoppinsFontFamily,
+                        fontSize = StrikethroughFontSize,
+                        fontWeight = FontWeight.Medium,
+                        color = XGColors.PriceStrikethrough,
+                        textDecoration = TextDecoration.LineThrough,
                     )
                 }
             }
@@ -161,7 +166,7 @@ fun XGDailyDealCard(
                 modifier = Modifier
                     .weight(0.6f)
                     .aspectRatio(1f)
-                    .clip(RoundedCornerShape(XGCornerRadius.Medium)),
+                    .clip(RoundedCornerShape(CardCornerRadius)),
             )
         }
     }
@@ -182,8 +187,8 @@ private fun XGDailyDealCardPreview() {
     XGTheme {
         XGDailyDealCard(
             title = "Nike Air Zoom Pegasus",
-            price = "$89.99",
-            originalPrice = "$149.99",
+            price = "89.99",
+            originalPrice = "\u20AC149,99",
             endTime = System.currentTimeMillis() + 28_800_000L,
             onClick = {},
         )

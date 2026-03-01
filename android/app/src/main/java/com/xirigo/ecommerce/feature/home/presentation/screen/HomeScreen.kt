@@ -354,7 +354,6 @@ private fun ProductGridRow(
                 title = product.title,
                 price = product.price,
                 originalPrice = product.originalPrice,
-                vendorName = product.vendor,
                 rating = product.rating,
                 reviewCount = product.reviewCount,
                 isWishlisted = product.id in wishedProductIds,

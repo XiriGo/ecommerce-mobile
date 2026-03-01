@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,11 +18,14 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
-import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// components.json: XGCard.flashSale
 private val BannerHeight = 133.dp
+private val BannerCornerRadius = 10.dp
 
 @Composable
 fun XGFlashSaleBanner(
@@ -38,7 +40,7 @@ fun XGFlashSaleBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(BannerHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Medium))
+            .clip(RoundedCornerShape(BannerCornerRadius))
             .background(XGColors.FlashSaleBackground)
             .then(clickModifier),
         contentAlignment = Alignment.Center,
@@ -79,9 +81,11 @@ fun XGFlashSaleBanner(
             }
             Text(
                 text = title,
-                style = MaterialTheme.typography.headlineSmall,
+                fontFamily = PoppinsFontFamily,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = XGColors.FlashSaleText,
+                lineHeight = 32.sp,
             )
         }
     }
