@@ -2661,6 +2661,29 @@
           }
         }
       }
+    },
+    "skeleton_loading_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading content"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qed jitgħabba l-kontenut"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İçerik yükleniyor"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
