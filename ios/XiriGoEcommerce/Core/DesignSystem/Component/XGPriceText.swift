@@ -5,8 +5,10 @@ import SwiftUI
 /// Visual style variants for price display.
 /// Token source: `components.json > XGPriceText`.
 enum XGPriceStyle {
-    /// Default discount price — brand primary color.
+    /// Default discount price — brand primary color (Featured/Popular cards).
     case `default`
+    /// Standard variant for New Arrivals / Standard cards (20/20/14).
+    case standard
     /// Small variant for compact layouts (product cards).
     case small
     /// Deal variant — brand secondary color for daily deal contexts.
@@ -19,6 +21,8 @@ enum XGPriceStyle {
             case .deal,
                  .default:
                 Constants.defaultCurrencyFontSize
+            case .standard:
+                Constants.standardCurrencyFontSize
             case .small:
                 Constants.smallCurrencyFontSize
         }
@@ -29,6 +33,8 @@ enum XGPriceStyle {
             case .deal,
                  .default:
                 Constants.defaultIntegerFontSize
+            case .standard:
+                Constants.standardIntegerFontSize
             case .small:
                 Constants.smallIntegerFontSize
         }
@@ -39,6 +45,8 @@ enum XGPriceStyle {
             case .deal,
                  .default:
                 Constants.defaultDecimalFontSize
+            case .standard:
+                Constants.standardDecimalFontSize
             case .small:
                 Constants.smallDecimalFontSize
         }
@@ -47,7 +55,8 @@ enum XGPriceStyle {
     var color: Color {
         switch self {
             case .default,
-                 .small:
+                 .small,
+                 .standard:
                 XGColors.priceSale
             case .deal:
                 XGColors.brandSecondary
@@ -60,6 +69,10 @@ enum XGPriceStyle {
         static let defaultCurrencyFontSize: CGFloat = 22.78
         static let defaultIntegerFontSize: CGFloat = 27.33
         static let defaultDecimalFontSize: CGFloat = 18.98
+
+        static let standardCurrencyFontSize: CGFloat = 20
+        static let standardIntegerFontSize: CGFloat = 20
+        static let standardDecimalFontSize: CGFloat = 14
 
         static let smallCurrencyFontSize: CGFloat = 14
         static let smallIntegerFontSize: CGFloat = 18
@@ -82,11 +95,13 @@ struct XGPriceText: View {
         originalPrice: String? = nil,
         currencySymbol: String = "\u{20AC}",
         style: XGPriceStyle = .default,
+        strikethroughFontSize: CGFloat = Constants.defaultStrikethroughFontSize,
     ) {
         self.price = price
         self.originalPrice = originalPrice
         self.currencySymbol = currencySymbol
         self.style = style
+        self.strikethroughFontSize = strikethroughFontSize
     }
 
     // MARK: - Internal
@@ -106,13 +121,14 @@ struct XGPriceText: View {
     // MARK: - Private
 
     private enum Constants {
-        static let strikethroughFontSize: CGFloat = 15.18
+        static let defaultStrikethroughFontSize: CGFloat = 15.18
     }
 
     private let price: String
     private let originalPrice: String?
     private let currencySymbol: String
     private let style: XGPriceStyle
+    private let strikethroughFontSize: CGFloat
 
     private var hasSale: Bool {
         originalPrice != nil
@@ -158,7 +174,7 @@ struct XGPriceText: View {
 
     private func strikethroughPrice(_ originalPrice: String) -> some View {
         Text(currencySymbol + originalPrice)
-            .font(.custom("Poppins-Medium", size: Constants.strikethroughFontSize))
+            .font(.custom("Poppins-Medium", size: strikethroughFontSize))
             .foregroundStyle(XGColors.priceStrikethrough)
             .strikethrough()
     }
@@ -174,6 +190,7 @@ struct XGPriceText: View {
     VStack(alignment: .leading, spacing: XGSpacing.sm) {
         XGPriceText(price: "29.99", style: .small)
         XGPriceText(price: "149.99")
+        XGPriceText(price: "99.99", style: .standard)
         XGPriceText(price: "89.99", style: .deal)
     }
     .padding()
@@ -183,6 +200,7 @@ struct XGPriceText: View {
     VStack(alignment: .leading, spacing: XGSpacing.sm) {
         XGPriceText(price: "19.99", originalPrice: "29.99", style: .small)
         XGPriceText(price: "89.99", originalPrice: "149.99")
+        XGPriceText(price: "49.99", originalPrice: "69.99", style: .standard, strikethroughFontSize: 14)
         XGPriceText(price: "49.99", originalPrice: "99.99", style: .deal)
     }
     .padding()

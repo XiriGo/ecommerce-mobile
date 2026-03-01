@@ -123,8 +123,15 @@ extension HomeScreen {
                     title: String(localized: "home_popular_title"),
                 )
 
-                productGrid(products: data.popularProducts, data: data)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: XGSpacing.productGridSpacing) {
+                        ForEach(data.popularProducts) { product in
+                            popularProductCard(product: product, data: data)
+                                .frame(width: PopularProductConstants.cardWidth)
+                        }
+                    }
                     .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
+                }
             }
         }
     }
@@ -211,21 +218,12 @@ extension HomeScreen {
 
     // MARK: - Private
 
-    private func productGrid(
-        products: [HomeProduct],
-        data: HomeScreenData,
-    ) -> some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
-                GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
-            ],
-            spacing: XGSpacing.productGridSpacing,
-        ) {
-            ForEach(products) { product in
-                popularProductCard(product: product, data: data)
-            }
-        }
+    private enum PopularProductConstants {
+        static let cardWidth: CGFloat = 160
+    }
+
+    private enum NewArrivalConstants {
+        static let strikethroughFontSize: CGFloat = 14
     }
 
     private func popularProductCard(
@@ -283,6 +281,11 @@ extension HomeScreen {
             deliveryLabel: product.isNew
                 ? String(localized: "home_delivery_badge_sample")
                 : nil,
+            deliveryBoldRange: product.isNew
+                ? String(localized: "home_delivery_badge_bold_part")
+                : nil,
+            priceStyle: .standard,
+            strikethroughFontSize: NewArrivalConstants.strikethroughFontSize,
             onAddToCartAction: {},
             action: {
                 router.navigate(to: .productDetail(productId: product.id))

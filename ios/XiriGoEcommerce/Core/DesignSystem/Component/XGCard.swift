@@ -21,6 +21,9 @@ struct XGProductCard: View {
         isWishlisted: Bool = false,
         onWishlistToggle: (() -> Void)? = nil,
         deliveryLabel: String? = nil,
+        deliveryBoldRange: String? = nil,
+        priceStyle: XGPriceStyle = .default,
+        strikethroughFontSize: CGFloat = Constants.defaultStrikethroughFontSize,
         onAddToCartAction: (() -> Void)? = nil,
         action: @escaping () -> Void,
     ) {
@@ -34,6 +37,9 @@ struct XGProductCard: View {
         self.isWishlisted = isWishlisted
         self.onWishlistToggle = onWishlistToggle
         self.deliveryLabel = deliveryLabel
+        self.deliveryBoldRange = deliveryBoldRange
+        self.priceStyle = priceStyle
+        self.strikethroughFontSize = strikethroughFontSize
         self.onAddToCartAction = onAddToCartAction
         self.action = action
     }
@@ -66,9 +72,10 @@ struct XGProductCard: View {
         static let titleFontSize: CGFloat = 12
         static let titleMaxLines = 2
         static let deliveryFontSize: CGFloat = 10
-        static let addToCartSize: CGFloat = 32
+        static let addToCartSize: CGFloat = 38
         static let addToCartIconSize: CGFloat = 16
         static let borderWidth: CGFloat = 1
+        static let defaultStrikethroughFontSize: CGFloat = 15.18
     }
 
     private let imageUrl: URL?
@@ -81,6 +88,9 @@ struct XGProductCard: View {
     private let isWishlisted: Bool
     private let onWishlistToggle: (() -> Void)?
     private let deliveryLabel: String?
+    private let deliveryBoldRange: String?
+    private let priceStyle: XGPriceStyle
+    private let strikethroughFontSize: CGFloat
     private let onAddToCartAction: (() -> Void)?
     private let action: () -> Void
 
@@ -127,53 +137,61 @@ struct XGProductCard: View {
                     .lineLimit(1)
             }
 
-            XGPriceText(price: price, originalPrice: originalPrice, style: .small)
+            XGPriceText(
+                price: price,
+                originalPrice: originalPrice,
+                style: priceStyle,
+                strikethroughFontSize: strikethroughFontSize,
+            )
 
-            if let rating {
-                XGRatingBar(
-                    rating: rating,
-                    showValue: true,
-                    reviewCount: reviewCount,
-                )
-            }
-
-            if let deliveryLabel {
-                deliveryBadge(deliveryLabel)
-            }
-
-            if onAddToCartAction != nil {
-                HStack {
-                    Spacer()
-                    addToCartButton
-                }
-            }
+            ratingSection
+            deliveryAndCartSection
         }
         .padding(Constants.cardPadding)
     }
 
-    private var addToCartButton: some View {
-        Button {
-            onAddToCartAction?()
-        } label: {
-            Image(systemName: "plus")
-                .font(.system(size: Constants.addToCartIconSize))
-                .foregroundStyle(.white)
-                .frame(
-                    width: Constants.addToCartSize,
-                    height: Constants.addToCartSize,
-                )
-                .background(XGColors.brandSecondary)
-                .clipShape(Circle())
-                .accessibilityHidden(true)
+    @ViewBuilder
+    private var ratingSection: some View {
+        if let rating {
+            XGRatingBar(rating: rating, showValue: false, reviewCount: reviewCount)
         }
-        .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
-        .accessibilityLabel(String(localized: "common_add_to_cart"))
     }
 
-    private func deliveryBadge(_ label: String) -> some View {
-        Text(label)
-            .font(.system(size: Constants.deliveryFontSize))
-            .foregroundStyle(XGColors.deliveryText)
+    @ViewBuilder
+    private var deliveryAndCartSection: some View {
+        if let deliveryLabel {
+            Text(deliveryAttributedString(deliveryLabel))
+                .font(.system(size: Constants.deliveryFontSize))
+                .foregroundStyle(XGColors.deliveryText)
+        }
+        if onAddToCartAction != nil {
+            HStack {
+                Spacer()
+                Button {
+                    onAddToCartAction?()
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: Constants.addToCartIconSize))
+                        .foregroundStyle(XGColors.onSurface)
+                        .frame(width: Constants.addToCartSize, height: Constants.addToCartSize)
+                        .background(XGColors.brandSecondary)
+                        .clipShape(Circle())
+                        .accessibilityHidden(true)
+                }
+                .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
+                .accessibilityLabel(String(localized: "common_add_to_cart"))
+            }
+        }
+    }
+
+    private func deliveryAttributedString(_ label: String) -> AttributedString {
+        var attributed = AttributedString(label)
+        attributed.font = .system(size: Constants.deliveryFontSize)
+        attributed.foregroundColor = XGColors.deliveryText
+        if let boldPart = deliveryBoldRange, let range = attributed.range(of: boldPart) {
+            attributed[range].font = .system(size: Constants.deliveryFontSize, weight: .bold)
+        }
+        return attributed
     }
 }
 
@@ -291,6 +309,9 @@ extension XGInfoCard where TrailingContent == EmptyView {
         isWishlisted: true,
         onWishlistToggle: {},
         deliveryLabel: "Order before 23:59, delivered Monday",
+        deliveryBoldRange: "Monday",
+        priceStyle: .standard,
+        strikethroughFontSize: 14,
         onAddToCartAction: {},
         action: {},
     )
