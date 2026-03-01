@@ -1,6 +1,7 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +26,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGPriceText
+// Token source: components/atoms/xg-price-text.json
 private val DefaultCurrencyFontSize = 22.78.sp
 private val DefaultIntegerFontSize = 27.33.sp
 private val DefaultDecimalFontSize = 18.98.sp
@@ -46,6 +47,7 @@ fun XGPriceText(
     currencySymbol: String = "\u20AC",
     size: XGPriceSize = XGPriceSize.Default,
     strikethroughFontSize: Float = DefaultStrikethroughFontSize.value,
+    layout: XGPriceLayout = XGPriceLayout.Inline,
 ) {
     val priceColor: Color
     val currencyFontSize: Float
@@ -93,12 +95,7 @@ fun XGPriceText(
         stringResource(R.string.common_price_label, formattedPrice)
     }
 
-    Row(
-        modifier = modifier.semantics { contentDescription = accessibilityDescription },
-        horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM),
-        verticalAlignment = Alignment.Bottom,
-    ) {
-        // 3-part price: currency + integer + decimal
+    val compositePriceText = @Composable {
         Text(
             text = buildAnnotatedString {
                 withStyle(
@@ -133,8 +130,9 @@ fun XGPriceText(
                 }
             },
         )
+    }
 
-        // Strikethrough original price
+    val strikethroughText = @Composable {
         if (originalPrice != null) {
             val origParts = splitPrice(originalPrice)
             Text(
@@ -147,6 +145,27 @@ fun XGPriceText(
                     color = XGColors.PriceStrikethrough,
                 ),
             )
+        }
+    }
+
+    when (layout) {
+        XGPriceLayout.Inline -> {
+            Row(
+                modifier = modifier.semantics { contentDescription = accessibilityDescription },
+                horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM),
+                verticalAlignment = Alignment.Bottom,
+            ) {
+                compositePriceText()
+                strikethroughText()
+            }
+        }
+        XGPriceLayout.Stacked -> {
+            Column(
+                modifier = modifier.semantics { contentDescription = accessibilityDescription },
+            ) {
+                strikethroughText()
+                compositePriceText()
+            }
         }
     }
 }
@@ -218,6 +237,18 @@ private fun XGPriceTextDealPreview() {
             price = PreviewPrices.DEAL,
             originalPrice = PreviewPrices.DEAL_ORIGINAL,
             size = XGPriceSize.Deal,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun XGPriceTextStackedPreview() {
+    XGTheme {
+        XGPriceText(
+            price = PreviewPrices.DEAL,
+            originalPrice = PreviewPrices.DEAL_ORIGINAL,
+            layout = XGPriceLayout.Stacked,
         )
     }
 }

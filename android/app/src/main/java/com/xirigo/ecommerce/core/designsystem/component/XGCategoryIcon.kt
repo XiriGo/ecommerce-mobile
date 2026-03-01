@@ -28,7 +28,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGCategoryIcon
+// Token source: components/atoms/xg-category-icon.json
 private val TileSize = 79.dp
 private val IconSize = 40.dp
 private val LabelSpacing = 6.dp

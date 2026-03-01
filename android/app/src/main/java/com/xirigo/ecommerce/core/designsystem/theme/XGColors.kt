@@ -3,7 +3,7 @@ package com.xirigo.ecommerce.core.designsystem.theme
 import androidx.compose.ui.graphics.Color
 
 object XGColors {
-    // Light Theme Colors (from shared/design-tokens/colors.json)
+    // Light Theme Colors (from shared/design-tokens/foundations/colors.json)
     val Primary = Color(0xFF6000FE) // brand.primary
     val OnPrimary = Color(0xFFFFFFFF) // brand.onPrimary
     val PrimaryContainer = Color(0xFFF0EBFF) // light tint of brand primary
@@ -41,7 +41,7 @@ object XGColors {
 
     val Scrim = Color(0xFF000000) // light.shadow
 
-    // Dark Theme Colors (from shared/design-tokens/colors.json — dark section)
+    // Dark Theme Colors (from shared/design-tokens/foundations/colors.json — dark section)
     val DarkPrimary = Color(0xFFA070FF) // dark.textLink
     val DarkOnPrimary = Color(0xFF1A1A24) // dark.surface
     val DarkPrimaryContainer = Color(0xFF3C00D2) // brand.primaryDark
@@ -79,7 +79,7 @@ object XGColors {
 
     val DarkScrim = Color(0xFF000000)
 
-    // Semantic Colors (from shared/design-tokens/colors.json — semantic section)
+    // Semantic Colors (from shared/design-tokens/foundations/colors.json — semantic section)
     val Success = Color(0xFF22C55E) // semantic.success
     val OnSuccess = Color(0xFFFFFFFF) // semantic.onSuccess
     val Warning = Color(0xFFFACC15) // semantic.warning

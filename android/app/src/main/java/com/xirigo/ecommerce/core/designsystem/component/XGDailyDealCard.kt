@@ -38,7 +38,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGCard.dailyDeal
+// Token source: components/molecules/xg-daily-deal-card.json
 private val CardHeight = 163.dp
 private val CardPadding = 16.dp
 private val BadgeFontSize = 12.sp

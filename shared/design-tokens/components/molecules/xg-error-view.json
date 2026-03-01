@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGErrorView",
+  "category": "molecule",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGErrorView.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGErrorView.kt"
+  },
+
+  "composedAtoms": ["$atoms/xg-button (outlined variant)"],
+
+  "tokens": {
+    "iconSize": "$foundations/spacing.layout.iconSize.extraLarge",
+    "iconColor": "$foundations/colors.semantic.error",
+    "icon": { "ios": "exclamationmark.circle", "android": "Icons.Outlined.ErrorOutline" },
+    "messageFont": "$foundations/typography.typeScale.bodyLarge",
+    "messageColor": "$foundations/colors.light.textPrimary",
+    "spacing": "$foundations/spacing.spacing.base"
+  }
+}

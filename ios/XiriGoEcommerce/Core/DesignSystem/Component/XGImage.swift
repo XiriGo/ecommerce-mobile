@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Async image component with shimmer placeholder and error fallback.
-/// Token source: `components.json > XGImage`.
+/// Token source: `components/atoms/xg-image.json`.
 struct XGImage: View {
     // MARK: - Lifecycle
 

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGBadge",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGBadge.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGBadge.kt"
+  },
+
+  "variants": {
+    "primary": {
+      "background": "$foundations/colors.brand.primary",
+      "textColor": "#FFFFFF",
+      "fontSize": 12,
+      "fontWeight": "semiBold",
+      "font": "$foundations/typography.typeScale.captionSemiBold",
+      "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+      "horizontalPadding": 10,
+      "verticalPadding": 4,
+      "usage": "SALE badge"
+    },
+    "secondary": {
+      "background": "$foundations/colors.brand.secondary",
+      "textColor": "$foundations/colors.brand.primary",
+      "fontSize": 12,
+      "fontWeight": "semiBold",
+      "font": "$foundations/typography.typeScale.captionSemiBold",
+      "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+      "horizontalPadding": 10,
+      "verticalPadding": 4,
+      "usage": "NEW SEASON, DAILY DEAL badges"
+    },
+    "delivery": {
+      "background": "transparent",
+      "textColor": "$foundations/colors.semantic.deliveryText",
+      "fontSize": 10,
+      "font": "$foundations/typography.typeScale.micro",
+      "fontWeight": "regular",
+      "boldPartFontWeight": "bold",
+      "usage": "Order before 23:59, delivered on Monday"
+    }
+  },
+
+  "derivedComponents": {
+    "XGCountBadge": {
+      "font": "labelSmall (11pt Medium)",
+      "textColor": "$foundations/colors.semantic.badgeText",
+      "background": "$foundations/colors.semantic.badgeBackground",
+      "shape": "capsule",
+      "horizontalPadding": "$foundations/spacing.spacing.xs",
+      "verticalPadding": "$foundations/spacing.spacing.xxs",
+      "maxDisplay": "99+"
+    },
+    "XGStatusBadge": {
+      "variants": ["success", "warning", "error", "info", "neutral"],
+      "font": "labelSmall (11pt Medium)",
+      "shape": "capsule",
+      "colorsFrom": "$foundations/colors.semantic"
+    }
+  }
+}

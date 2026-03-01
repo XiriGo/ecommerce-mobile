@@ -360,6 +360,7 @@ Every visual property MUST come from a token. This table lists what tokens exist
 | `shared/design-tokens/typography.json` | Poppins + Source Sans 3, type scale, price typography |
 | `shared/design-tokens/spacing.json` | Spacing scale, corner radius, elevation, layout specs |
 | `shared/design-tokens/gradients.json` | Brand gradient, hero overlay, daily deal, card fade |
+| `shared/design-tokens/foundations/motion.json` | Animation durations, easing, shimmer, scroll, image cache budgets |
 | `shared/design-tokens/components.json` | All XG* component specs with exact pixel values |
 
 ### What Changes vs What Doesn't
@@ -377,6 +378,19 @@ Every visual property MUST come from a token. This table lists what tokens exist
 2. **No raw platform components**: Use `XGButton` not `Button`, `XGLoadingView` not `CircularProgressIndicator`
 3. **Component props, not visual props**: Feature screens pass data + events to components. Components decide how to render.
 4. **Preview with theme**: All `@Preview` / `#Preview` wrapped in `XGTheme`
+
+### Component Quality & Performance
+
+All components MUST follow the FAANG-level quality standards in `docs/standards/component-quality.md`. Key rules:
+
+- **Lazy rendering mandatory**: LazyColumn/LazyVGrid (Android), LazyVStack/LazyVGrid (iOS) for all lists >4 items
+- **Animated shimmer**: All loading placeholders use animated gradient sweep, never static color
+- **Skeleton screens**: Loading states match final layout shape, never generic centered spinner
+- **Image pipeline**: Shimmer → crossfade → image (or branded fallback). Downsample + cache.
+- **Animation tokens**: All durations/easing from `shared/design-tokens/foundations/motion.json`
+- **60fps scroll**: Zero jank frames. Profile with platform tools before merge.
+
+Full rules with platform-specific code examples: `docs/standards/component-quality.md`
 
 ---
 

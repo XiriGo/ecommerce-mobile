@@ -19,7 +19,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGWishlistButton
+// Token source: components/atoms/xg-wishlist-button.json
 private val ButtonSize = 32.dp
 private val ButtonIconSize = 16.dp
 private val ButtonCornerRadius = 16.dp

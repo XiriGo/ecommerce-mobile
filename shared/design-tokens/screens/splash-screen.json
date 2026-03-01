@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "screen": "SplashScreen",
+  "svgSource": "XiriGo_App_01.svg",
+  "background": "$brand/xg-brand-gradient",
+
+  "layers": [
+    "$brand/xg-brand-gradient",
+    "$brand/xg-brand-pattern",
+    "$brand/xg-logo-mark (centered, size: 120)"
+  ]
+}

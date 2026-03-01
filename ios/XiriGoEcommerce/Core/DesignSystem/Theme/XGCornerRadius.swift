@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - XGCornerRadius
 
-/// Corner radius constants derived from `shared/design-tokens/spacing.json > cornerRadius`.
+/// Corner radius constants derived from `shared/design-tokens/foundations/spacing.json > cornerRadius`.
 /// All values must match the JSON source.
 enum XGCornerRadius {
     static let none: CGFloat = 0

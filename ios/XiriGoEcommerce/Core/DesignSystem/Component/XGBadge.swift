@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - XGBadgeVariant
 
-/// Badge style variants matching `components.json > XGBadge`.
+/// Badge style variants matching `components/atoms/xg-badge.json`.
 enum XGBadgeVariant {
     /// Primary: brand primary bg, white text.
     case primary
@@ -33,7 +33,7 @@ enum XGBadgeVariant {
 // MARK: - XGBadge
 
 /// Inline badge label component.
-/// Token source: `components.json > XGBadge`.
+/// Token source: `components/atoms/xg-badge.json`.
 ///
 /// - Font: 12pt semiBold
 /// - Corner radius: 10pt

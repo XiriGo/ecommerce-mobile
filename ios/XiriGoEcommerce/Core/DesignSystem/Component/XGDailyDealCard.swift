@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGDailyDealCard
 
 /// A gradient card displaying the daily deal with countdown timer and product info.
-/// Token source: `components.json > XGCard.dailyDeal`, `gradients.json > dailyDealCard`.
+/// Token source: `components/molecules/xg-daily-deal-card.json`.
 ///
 /// - Height: 163pt
 /// - Background: linear gradient left-to-right from #111827 to #6000FE

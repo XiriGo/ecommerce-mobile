@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGPaginationDots
 
 /// Animated pagination indicator with pill (active) and circle (inactive) dots.
-/// Token source: `components.json > XGPaginationDots`.
+/// Token source: `components/atoms/xg-pagination-dots.json`.
 ///
 /// - Active dot: 18pt wide pill with corner radius 3
 /// - Inactive dot: 6pt circle

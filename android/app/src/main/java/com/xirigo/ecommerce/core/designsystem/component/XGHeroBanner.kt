@@ -26,7 +26,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGCard.heroBanner
+// Token source: components/molecules/xg-hero-banner.json
 private val BannerHeight = 192.dp
 private val TagFontSize = 12.sp
 private val TagLineHeight = 16.sp

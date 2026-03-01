@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGWishlistButton
 
 /// A heart icon toggle button overlaid on product cards.
-/// Token source: `components.json > XGWishlistButton`.
+/// Token source: `components/atoms/xg-wishlist-button.json`.
 ///
 /// - Size: 32x32pt, circular
 /// - Active: filled heart in brand primary

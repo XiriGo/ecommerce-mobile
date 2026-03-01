@@ -48,6 +48,7 @@ import com.xirigo.ecommerce.core.designsystem.component.XGFlashSaleBanner
 import com.xirigo.ecommerce.core.designsystem.component.XGHeroBanner
 import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
+import com.xirigo.ecommerce.core.designsystem.component.XGPriceLayout
 import com.xirigo.ecommerce.core.designsystem.component.XGPriceSize
 import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
 import com.xirigo.ecommerce.core.designsystem.component.XGSearchBar
@@ -242,6 +243,8 @@ private fun PopularProductsSection(
                 onWishlistToggle = { onEvent(HomeEvent.WishlistToggled(product.id)) },
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
                 priceSize = XGPriceSize.Default,
+                priceLayout = XGPriceLayout.Stacked,
+                showRatingAbovePrice = true,
                 modifier = Modifier.width(FeaturedCardWidth),
             )
         }
@@ -333,6 +336,9 @@ private fun ProductGridRow(
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
                 priceSize = XGPriceSize.Standard,
                 strikethroughFontSize = STANDARD_STRIKETHROUGH_FONT_SIZE,
+                priceLayout = XGPriceLayout.Stacked,
+                showRatingAbovePrice = true,
+                showDeliveryAbovePrice = true,
                 modifier = Modifier
                     .weight(1f),
             )

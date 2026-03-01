@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGCategoryIcon
 
 /// A colored rounded-rectangle tile with an icon and label below.
-/// Token source: `components.json > XGCategoryIcon`.
+/// Token source: `components/atoms/xg-category-icon.json`.
 ///
 /// - Tile size: 79x79pt
 /// - Corner radius: 10pt (medium)

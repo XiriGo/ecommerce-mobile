@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGHeroBanner
 
 /// Hero banner card with async image background, gradient overlay, tag badge, and text content.
-/// Token source: `components.json > XGCard.heroBanner`, `gradients.json > heroBannerOverlay`.
+/// Token source: `components/molecules/xg-hero-banner.json`.
 ///
 /// - Width: full width (350dp design reference)
 /// - Height: 192pt

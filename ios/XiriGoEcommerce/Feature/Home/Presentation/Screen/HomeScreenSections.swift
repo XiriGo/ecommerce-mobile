@@ -212,13 +212,14 @@ extension HomeScreen {
             title: product.title,
             price: product.price,
             originalPrice: product.originalPrice,
-            vendorName: product.vendor,
             rating: product.rating,
             reviewCount: product.reviewCount,
             isWishlisted: data.wishedProductIds.contains(product.id),
             onWishlistToggle: {
                 viewModel.onEvent(.wishlistToggled(productId: product.id))
             },
+            priceLayout: .stacked,
+            showRatingAbovePrice: true,
             action: {
                 router.navigate(to: .productDetail(productId: product.id))
             },
@@ -248,7 +249,6 @@ extension HomeScreen {
             title: product.title,
             price: product.price,
             originalPrice: product.originalPrice,
-            vendorName: product.vendor,
             rating: product.rating,
             reviewCount: product.reviewCount,
             isWishlisted: data.wishedProductIds.contains(product.id),
@@ -263,6 +263,9 @@ extension HomeScreen {
                 : nil,
             priceStyle: .standard,
             strikethroughFontSize: NewArrivalConstants.strikethroughFontSize,
+            priceLayout: .stacked,
+            showRatingAbovePrice: true,
+            showDeliveryAbovePrice: true,
             onAddToCartAction: {},
             action: {
                 router.navigate(to: .productDetail(productId: product.id))

@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGPriceStyle
 
 /// Visual style variants for price display.
-/// Token source: `components.json > XGPriceText`.
+/// Token source: `components/atoms/xg-price-text.json`.
 enum XGPriceStyle {
     /// Default discount price — brand primary color (Featured/Popular cards).
     case `default`
@@ -80,13 +80,23 @@ enum XGPriceStyle {
     }
 }
 
+// MARK: - XGPriceLayout
+
+/// Controls the arrangement of sale price and strikethrough in ``XGPriceText``.
+enum XGPriceLayout {
+    /// Sale price + strikethrough side-by-side (HStack). Default for standard/grid cards.
+    case inline
+    /// Strikethrough above, sale price below (VStack). Used for featured/horizontal-scroll cards.
+    case stacked
+}
+
 // MARK: - XGPriceText
 
 /// Three-part composite price display component.
 /// Renders currency symbol, integer part, and decimal part with separate font sizes.
 /// Uses Source Sans 3 Black font per design tokens.
 ///
-/// Token source: `components.json > XGPriceText`, `typography.json > priceTypography`.
+/// Token source: `components/atoms/xg-price-text.json`.
 struct XGPriceText: View {
     // MARK: - Lifecycle
 
@@ -96,22 +106,38 @@ struct XGPriceText: View {
         currencySymbol: String = "\u{20AC}",
         style: XGPriceStyle = .default,
         strikethroughFontSize: CGFloat = Constants.defaultStrikethroughFontSize,
+        layout: XGPriceLayout = .inline,
     ) {
         self.price = price
         self.originalPrice = originalPrice
         self.currencySymbol = currencySymbol
         self.style = style
         self.strikethroughFontSize = strikethroughFontSize
+        self.layout = layout
     }
 
     // MARK: - Internal
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: XGSpacing.sm) {
-            compositePrice
+        Group {
+            switch layout {
+                case .inline:
+                    HStack(alignment: .firstTextBaseline, spacing: XGSpacing.sm) {
+                        compositePrice
 
-            if let originalPrice {
-                strikethroughPrice(originalPrice)
+                        if let originalPrice {
+                            strikethroughPrice(originalPrice)
+                        }
+                    }
+
+                case .stacked:
+                    VStack(alignment: .leading, spacing: XGSpacing.xxs) {
+                        if let originalPrice {
+                            strikethroughPrice(originalPrice)
+                        }
+
+                        compositePrice
+                    }
             }
         }
         .accessibilityElement(children: .ignore)
@@ -129,6 +155,7 @@ struct XGPriceText: View {
     private let currencySymbol: String
     private let style: XGPriceStyle
     private let strikethroughFontSize: CGFloat
+    private let layout: XGPriceLayout
 
     private var hasSale: Bool {
         originalPrice != nil
@@ -203,6 +230,15 @@ struct XGPriceText: View {
         XGPriceText(price: "89.99", originalPrice: "149.99")
         XGPriceText(price: "49.99", originalPrice: "69.99", style: .standard, strikethroughFontSize: 14)
         XGPriceText(price: "49.99", originalPrice: "99.99", style: .deal)
+    }
+    .padding()
+    .xgTheme()
+}
+
+#Preview("XGPriceText Stacked") {
+    VStack(alignment: .leading, spacing: XGSpacing.sm) {
+        XGPriceText(price: "89.99", originalPrice: "149.99", layout: .stacked)
+        XGPriceText(price: "49.99", originalPrice: "69.99", style: .standard, layout: .stacked)
     }
     .padding()
     .xgTheme()

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGLogoMark",
+  "category": "brand",
+  "svgSource": "XiriGo_Logo_Design.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGLogoMark.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGLogoMark.kt"
+  },
+
+  "tokens": {
+    "asset": "SplashLogo",
+    "defaultSize": 120,
+    "aspectRatio": "1:1",
+    "contentMode": "fit"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGEmptyView",
+  "category": "molecule",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGEmptyView.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGEmptyView.kt"
+  },
+
+  "composedAtoms": ["$atoms/xg-button (outlined variant)"],
+
+  "tokens": {
+    "iconSize": "$foundations/spacing.spacing.xxxl",
+    "iconColor": "$foundations/colors.light.textSecondary",
+    "defaultIcon": { "ios": "tray", "android": "Icons.Outlined.Inbox" },
+    "messageFont": "$foundations/typography.typeScale.bodyLarge",
+    "messageColor": "$foundations/colors.light.textSecondary",
+    "spacing": "$foundations/spacing.spacing.base"
+  }
+}

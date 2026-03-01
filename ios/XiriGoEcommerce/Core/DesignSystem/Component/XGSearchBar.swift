@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Tappable search bar placeholder that navigates to the search screen.
-/// Token source: `components.json > XGSearchBar`.
+/// Token source: `components/atoms/xg-search-bar.json`.
 ///
 /// - Background: inputBackground
 /// - Border: outlineVariant

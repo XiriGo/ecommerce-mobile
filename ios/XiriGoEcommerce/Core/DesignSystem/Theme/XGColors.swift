@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - XGColors
 
-/// Design system color tokens derived from `shared/design-tokens/colors.json`.
+/// Design system color tokens derived from `shared/design-tokens/foundations/colors.json`.
 /// All values must match the JSON source — never use Material 3 defaults.
 enum XGColors {
     // MARK: - Brand Colors

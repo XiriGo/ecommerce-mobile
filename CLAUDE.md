@@ -87,6 +87,7 @@ Platform-specific rules, code templates, and design system reference:
 | Common Standards | `docs/standards/common.md` | All agents |
 | Testing Standards | `docs/standards/testing.md` | Testers, Reviewer |
 | FAANG Rules | `docs/standards/faang-rules.md` | Reviewer, All devs |
+| Component Quality | `docs/standards/component-quality.md` | All agents |
 | Pipeline Guide | `docs/PIPELINE-GUIDE.md` | Team Lead, Queue Runner |
 
 ## Git Workflow

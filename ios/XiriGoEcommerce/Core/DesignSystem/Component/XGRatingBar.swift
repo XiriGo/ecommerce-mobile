@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGRatingBar
 
 /// Star rating display with optional numeric value and review count.
-/// Token source: `components.json > XGStarRating`.
+/// Token source: `components/atoms/xg-rating-bar.json`.
 ///
 /// - Star size: 12pt
 /// - Star gap: 2pt

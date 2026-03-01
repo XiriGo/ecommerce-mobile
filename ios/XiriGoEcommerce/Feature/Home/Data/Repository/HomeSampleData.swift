@@ -148,10 +148,10 @@ enum HomeSampleData {
             imageUrl: "https://picsum.photos/seed/keyboard/400/400",
             price: "149.99",
             currencyCode: "eur",
-            originalPrice: nil,
+            originalPrice: "199.99",
             vendor: "TechZone",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.keyboard,
+            reviewCount: ReviewCount.keyboard,
             isNew: true,
         ),
         HomeProduct(
@@ -160,10 +160,10 @@ enum HomeSampleData {
             imageUrl: "https://picsum.photos/seed/jacket/400/400",
             price: "89.99",
             currencyCode: "eur",
-            originalPrice: nil,
+            originalPrice: "119.99",
             vendor: "UrbanWear",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.jacket,
+            reviewCount: ReviewCount.jacket,
             isNew: true,
         ),
         HomeProduct(
@@ -174,8 +174,8 @@ enum HomeSampleData {
             currencyCode: "eur",
             originalPrice: nil,
             vendor: "HomeDesign",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.lamp,
+            reviewCount: ReviewCount.lamp,
             isNew: true,
         ),
         HomeProduct(
@@ -186,8 +186,8 @@ enum HomeSampleData {
             currencyCode: "eur",
             originalPrice: "49.99",
             vendor: "SoundWave",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.speaker,
+            reviewCount: ReviewCount.speaker,
             isNew: true,
         ),
         HomeProduct(
@@ -196,10 +196,10 @@ enum HomeSampleData {
             imageUrl: "https://picsum.photos/seed/yogamat/400/400",
             price: "29.99",
             currencyCode: "eur",
-            originalPrice: nil,
+            originalPrice: "39.99",
             vendor: "FitLife",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.yogaMat,
+            reviewCount: ReviewCount.yogaMat,
             isNew: true,
         ),
         HomeProduct(
@@ -210,8 +210,8 @@ enum HomeSampleData {
             currencyCode: "eur",
             originalPrice: nil,
             vendor: "HomeDesign",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.vase,
+            reviewCount: ReviewCount.vase,
             isNew: true,
         ),
     ]
@@ -246,6 +246,12 @@ enum HomeSampleData {
         static let sneakers: Double = 4.2
         static let watch: Double = 4.8
         static let backpack: Double = 4.0
+        static let keyboard: Double = 4.6
+        static let jacket: Double = 4.3
+        static let lamp: Double = 4.4
+        static let speaker: Double = 4.1
+        static let yogaMat: Double = 4.5
+        static let vase: Double = 4.0
     }
 
     private enum ReviewCount {
@@ -253,6 +259,12 @@ enum HomeSampleData {
         static let sneakers = 89
         static let watch = 456
         static let backpack = 67
+        static let keyboard = 67
+        static let jacket = 42
+        static let lamp = 98
+        static let speaker = 31
+        static let yogaMat = 53
+        static let vase = 76
     }
 
     private enum Timing {

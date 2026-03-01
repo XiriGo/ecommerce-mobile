@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Typography tokens derived from `shared/design-tokens/typography.json`.
+/// Typography tokens derived from `shared/design-tokens/foundations/typography.json`.
 /// All font styles use Poppins (primary) or Source Sans 3 (price).
 /// Values must match the JSON source — never use Font.system().
 enum XGTypography {

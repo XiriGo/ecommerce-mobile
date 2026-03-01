@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Spacing, icon, and layout constants derived from `shared/design-tokens/spacing.json`.
+/// Spacing, icon, and layout constants derived from `shared/design-tokens/foundations/spacing.json`.
 /// All values must match the JSON source.
 enum XGSpacing {
     // MARK: - Icon Sizes

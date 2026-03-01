@@ -26,7 +26,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGCard.flashSale
+// Token source: components/molecules/xg-flash-sale-banner.json
 private val BannerHeight = 133.dp
 private val BadgeFontSize = 14.sp
 private val TitleFontSize = 20.sp

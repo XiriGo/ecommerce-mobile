@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGQuantityStepper",
+  "category": "atom",
+  "svgSource": "none (cart screen — future)",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGQuantityStepper.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGQuantityStepper.kt"
+  },
+
+  "tokens": {
+    "buttonSize": "$foundations/spacing.layout.minTouchTarget",
+    "buttonBackground": "$foundations/colors.light.surfaceTertiary",
+    "buttonCornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "iconSize": "$foundations/spacing.layout.iconSize.medium",
+    "iconColor": "$foundations/colors.light.textPrimary",
+    "disabledIconColor": "$foundations/colors.light.textSecondary",
+    "disabledOpacity": 0.38,
+    "quantityFont": "titleMedium (16pt Medium)",
+    "quantityMinWidth": "$foundations/spacing.spacing.xl",
+    "spacing": "$foundations/spacing.spacing.md",
+    "decreaseIcon": { "ios": "minus", "android": "Icons.Filled.Remove" },
+    "increaseIcon": { "ios": "plus", "android": "Icons.Filled.Add" }
+  }
+}

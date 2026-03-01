@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGSectionHeader
 
 /// Section title with optional subtitle and optional "See All" action link.
-/// Token source: `typography.json > typeScale.subtitle` (18pt semiBold).
+/// Token source: `components/atoms/xg-section-header.json` (18pt semiBold).
 struct XGSectionHeader: View {
     // MARK: - Lifecycle
 

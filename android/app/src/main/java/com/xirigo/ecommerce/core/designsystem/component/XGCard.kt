@@ -41,7 +41,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGCard.productFeatured / productStandard
+// Token source: components/molecules/xg-product-card.json
 private val FeaturedCardWidth = 160.dp
 private val StandardCardWidth = 170.dp
 private val CardPadding = 8.dp
@@ -74,6 +74,9 @@ fun XGProductCard(
     onAddToCartClick: (() -> Unit)? = null,
     priceSize: XGPriceSize = XGPriceSize.Default,
     strikethroughFontSize: Float = 15.18f,
+    priceLayout: XGPriceLayout = XGPriceLayout.Inline,
+    showRatingAbovePrice: Boolean = false,
+    showDeliveryAbovePrice: Boolean = false,
 ) {
     Card(
         modifier = modifier
@@ -102,6 +105,9 @@ fun XGProductCard(
                 onAddToCartClick = onAddToCartClick,
                 priceSize = priceSize,
                 strikethroughFontSize = strikethroughFontSize,
+                priceLayout = priceLayout,
+                showRatingAbovePrice = showRatingAbovePrice,
+                showDeliveryAbovePrice = showDeliveryAbovePrice,
             )
         }
     }
@@ -147,6 +153,9 @@ private fun ProductCardDetailsSection(
     onAddToCartClick: (() -> Unit)?,
     priceSize: XGPriceSize,
     strikethroughFontSize: Float,
+    priceLayout: XGPriceLayout,
+    showRatingAbovePrice: Boolean,
+    showDeliveryAbovePrice: Boolean,
 ) {
     Column(modifier = Modifier.padding(horizontal = CardPadding)) {
         Text(
@@ -160,52 +169,114 @@ private fun ProductCardDetailsSection(
             lineHeight = TitleLineHeight,
         )
 
+        if (showRatingAbovePrice) {
+            RatingSection(rating = rating, reviewCount = reviewCount)
+        }
+
+        if (showDeliveryAbovePrice) {
+            DeliverySection(deliveryLabel = deliveryLabel)
+            PriceWithCartRow(
+                price = price,
+                originalPrice = originalPrice,
+                priceSize = priceSize,
+                strikethroughFontSize = strikethroughFontSize,
+                priceLayout = priceLayout,
+                onAddToCartClick = onAddToCartClick,
+            )
+        } else {
+            Spacer(modifier = Modifier.height(XGSpacing.XS))
+            XGPriceText(
+                price = price,
+                originalPrice = originalPrice,
+                size = priceSize,
+                strikethroughFontSize = strikethroughFontSize,
+                layout = priceLayout,
+            )
+            if (!showRatingAbovePrice) {
+                RatingSection(rating = rating, reviewCount = reviewCount)
+            }
+            DeliverySection(deliveryLabel = deliveryLabel)
+            StandaloneCartSection(onAddToCartClick = onAddToCartClick)
+        }
+
+        Spacer(modifier = Modifier.height(CardPadding))
+    }
+}
+
+@Composable
+private fun RatingSection(rating: Float?, reviewCount: Int?) {
+    if (rating != null) {
         Spacer(modifier = Modifier.height(XGSpacing.XS))
+        XGRatingBar(rating = rating, showValue = false, reviewCount = reviewCount)
+    }
+}
+
+@Composable
+private fun DeliverySection(deliveryLabel: String?) {
+    if (deliveryLabel != null) {
+        Spacer(modifier = Modifier.height(XGSpacing.XS))
+        DeliveryLabelText(deliveryLabel = deliveryLabel)
+    }
+}
+
+@Composable
+private fun PriceWithCartRow(
+    price: String,
+    originalPrice: String?,
+    priceSize: XGPriceSize,
+    strikethroughFontSize: Float,
+    priceLayout: XGPriceLayout,
+    onAddToCartClick: (() -> Unit)?,
+) {
+    Spacer(modifier = Modifier.height(XGSpacing.XS))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Bottom,
+    ) {
         XGPriceText(
             price = price,
             originalPrice = originalPrice,
             size = priceSize,
             strikethroughFontSize = strikethroughFontSize,
+            layout = priceLayout,
         )
+        Spacer(modifier = Modifier.weight(1f))
+        if (onAddToCartClick != null) {
+            AddToCartButton(onClick = onAddToCartClick)
+        }
+    }
+}
 
-        if (rating != null) {
-            Spacer(modifier = Modifier.height(XGSpacing.XS))
-            XGRatingBar(
-                rating = rating,
-                showValue = false,
-                reviewCount = reviewCount,
+@Composable
+private fun StandaloneCartSection(onAddToCartClick: (() -> Unit)?) {
+    if (onAddToCartClick != null) {
+        Spacer(modifier = Modifier.height(CardPadding))
+        Box(modifier = Modifier.fillMaxWidth()) {
+            AddToCartButton(
+                onClick = onAddToCartClick,
+                modifier = Modifier.align(Alignment.CenterEnd),
             )
         }
+    }
+}
 
-        if (deliveryLabel != null) {
-            Spacer(modifier = Modifier.height(XGSpacing.XS))
-            DeliveryLabelText(deliveryLabel = deliveryLabel)
-        }
-
-        if (onAddToCartClick != null) {
-            Spacer(modifier = Modifier.height(CardPadding))
-            Box(modifier = Modifier.fillMaxWidth()) {
-                IconButton(
-                    onClick = onAddToCartClick,
-                    modifier = Modifier
-                        .size(AddToCartButtonSize)
-                        .clip(RoundedCornerShape(AddToCartCornerRadius))
-                        .align(Alignment.CenterEnd),
-                    colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = XGColors.AddToCart,
-                    ),
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.AddShoppingCart,
-                        contentDescription = null,
-                        modifier = Modifier.size(AddToCartIconSize),
-                        tint = XGColors.OnSurface,
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(CardPadding))
+@Composable
+private fun AddToCartButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+            .size(AddToCartButtonSize)
+            .clip(RoundedCornerShape(AddToCartCornerRadius)),
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = XGColors.AddToCart,
+        ),
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.AddShoppingCart,
+            contentDescription = null,
+            modifier = Modifier.size(AddToCartIconSize),
+            tint = XGColors.OnSurface,
+        )
     }
 }
 
@@ -344,6 +415,8 @@ private fun XGProductCardFeaturedPreview() {
             isWishlisted = false,
             onWishlistToggle = {},
             onClick = {},
+            priceLayout = XGPriceLayout.Stacked,
+            showRatingAbovePrice = true,
             modifier = Modifier.width(FeaturedCardWidth),
         )
     }
@@ -358,6 +431,8 @@ private fun XGProductCardStandardPreview() {
             title = "Simple Product",
             price = "9.99",
             originalPrice = "14.99",
+            rating = 3.5f,
+            reviewCount = 42,
             isWishlisted = true,
             onWishlistToggle = {},
             deliveryLabel = "Order before **23:59**, delivered **Monday**",
@@ -365,6 +440,9 @@ private fun XGProductCardStandardPreview() {
             onClick = {},
             priceSize = XGPriceSize.Standard,
             strikethroughFontSize = 14f,
+            priceLayout = XGPriceLayout.Stacked,
+            showRatingAbovePrice = true,
+            showDeliveryAbovePrice = true,
             modifier = Modifier.width(StandardCardWidth),
         )
     }

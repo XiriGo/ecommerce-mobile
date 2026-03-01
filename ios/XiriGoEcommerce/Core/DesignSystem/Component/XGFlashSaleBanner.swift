@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGFlashSaleBanner
 
 /// A promotional banner card with accent stripes for flash sale events.
-/// Token source: `components.json > XGCard.flashSale`, `colors.json > flashSale`.
+/// Token source: `components/molecules/xg-flash-sale-banner.json`.
 ///
 /// - Height: 133pt
 /// - Background: #FFD814 (bright yellow)

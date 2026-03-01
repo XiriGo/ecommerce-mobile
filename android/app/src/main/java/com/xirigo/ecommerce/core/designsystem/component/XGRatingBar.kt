@@ -27,7 +27,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// components.json: XGStarRating
+// Token source: components/atoms/xg-rating-bar.json
 private val StarSize = 12.dp
 private val StarGap = 2.dp
 private const val STAR_COUNT = 5

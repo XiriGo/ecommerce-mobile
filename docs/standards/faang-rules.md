@@ -175,3 +175,17 @@ grep -rn '@Suppress' --include='*.kt' android/app/src/main/
 grep -rn 'swiftlint:disable' --include='*.swift' ios/XiriGoEcommerce/ ios/XiriGoEcommerceTests/
 # Both must return zero results
 ```
+
+## Component Performance Rules
+
+See `docs/standards/component-quality.md` for full details. Summary of enforced rules:
+
+| Rule | Android | iOS | Enforced By |
+|------|---------|-----|-------------|
+| Lazy rendering for lists >4 | LazyColumn/LazyVerticalGrid | LazyVStack/LazyVGrid | Code review |
+| Animated shimmer (not static) | Modifier.shimmerEffect() | .shimmerEffect() | Code review |
+| Skeleton loading screens | Shape-matching composables | Shape-matching views | Code review |
+| Image downsampling | Coil size() | Nuke resize() | Code review |
+| key() on lazy items | LazyColumn items(key=) | ForEach(id:) | detekt custom rule |
+| Animation tokens only | motion.json durations | motion.json durations | Code review |
+| Zero hardcoded animation ms | No `300L`, `500` inline | No `0.3`, `0.5` inline | Code review |

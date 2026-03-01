@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGColorSwatch",
+  "category": "atom",
+  "svgSource": "XiriGo_App_04.svg",
+  "status": "token-only (no dedicated component file yet)",
+
+  "tokens": {
+    "size": 40,
+    "cornerRadius": 20,
+    "selectedRingColor": "$foundations/colors.brand.primary",
+    "selectedRingWidth": 2,
+    "selectedRingGap": 3,
+    "whiteBorderColor": "$foundations/colors.light.borderDefault",
+    "whiteBorderWidth": 1,
+    "availableColors": "$foundations/colors.colorSwatches"
+  }
+}
