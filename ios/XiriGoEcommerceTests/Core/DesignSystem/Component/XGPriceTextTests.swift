@@ -7,10 +7,10 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 
 @Suite("XGPriceStyle Tests")
 struct XGPriceStyleTests {
-    @Test("All three price styles exist")
+    @Test("All four price styles exist")
     func styles_allCasesExist() {
-        let styles: [XGPriceStyle] = [.default, .small, .deal]
-        #expect(styles.count == 3)
+        let styles: [XGPriceStyle] = [.default, .standard, .small, .deal]
+        #expect(styles.count == 4)
     }
 
     @Test("Default style has correct currency font size")
@@ -41,6 +41,26 @@ struct XGPriceStyleTests {
     @Test("Small style has correct decimal font size")
     func small_decimalFontSize_isCorrect() {
         #expect(XGPriceStyle.small.decimalFontSize == 14)
+    }
+
+    @Test("Standard style has correct currency font size")
+    func standard_currencyFontSize_isCorrect() {
+        #expect(XGPriceStyle.standard.currencyFontSize == 20)
+    }
+
+    @Test("Standard style has correct integer font size")
+    func standard_integerFontSize_isCorrect() {
+        #expect(XGPriceStyle.standard.integerFontSize == 20)
+    }
+
+    @Test("Standard style has correct decimal font size")
+    func standard_decimalFontSize_isCorrect() {
+        #expect(XGPriceStyle.standard.decimalFontSize == 14)
+    }
+
+    @Test("Standard style color is priceSale")
+    func standard_color_isPriceSale() {
+        #expect(XGPriceStyle.standard.color == XGColors.priceSale)
     }
 
     @Test("Deal style has same font sizes as default")
@@ -108,6 +128,13 @@ struct XGPriceTextTests {
     @Test("PriceText initialises with small style")
     func init_smallStyle_initialises() {
         let view = XGPriceText(price: "9.99", style: .small)
+        _ = view
+        #expect(true)
+    }
+
+    @Test("PriceText initialises with standard style")
+    func init_standardStyle_initialises() {
+        let view = XGPriceText(price: "9.99", style: .standard)
         _ = view
         #expect(true)
     }
