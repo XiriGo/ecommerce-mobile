@@ -30,6 +30,7 @@ private val BannerHeight = 133.dp
 private val BannerCornerRadius = 10.dp
 
 @Composable
+@Suppress("UnusedParameter")
 fun XGFlashSaleBanner(
     title: String,
     modifier: Modifier = Modifier,

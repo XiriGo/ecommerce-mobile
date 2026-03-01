@@ -163,6 +163,7 @@ private fun splitPrice(price: String): Pair<String, String> {
     return Pair(integer, decimal)
 }
 
+@Suppress("StringLiteralDuplication")
 @Preview(showBackground = true)
 @Composable
 private fun XGPriceTextDefaultPreview() {
@@ -171,6 +172,7 @@ private fun XGPriceTextDefaultPreview() {
     }
 }
 
+@Suppress("StringLiteralDuplication")
 @Preview(showBackground = true)
 @Composable
 private fun XGPriceTextSalePreview() {
@@ -179,6 +181,7 @@ private fun XGPriceTextSalePreview() {
     }
 }
 
+@Suppress("StringLiteralDuplication")
 @Preview(showBackground = true)
 @Composable
 private fun XGPriceTextStandardPreview() {

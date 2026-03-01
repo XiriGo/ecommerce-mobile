@@ -98,6 +98,7 @@
 
   "XGCard": {
     "productFeatured": {
+      "_note": "Popular Products section — horizontal scroll (LazyRow). Price uses 'default' XGPriceText size.",
       "width": 160,
       "height": 293,
       "cornerRadius": 10,
@@ -108,13 +109,21 @@
       "imageAspectRatio": "1:1",
       "titleFontSize": 12,
       "titleFontWeight": "semiBold",
+      "titleLineHeight": 16.7,
       "titleMaxLines": 2,
       "wishlistButton": true,
       "starRating": true,
+      "starSize": 12,
+      "reviewCountFontSize": 12,
       "priceDisplay": "composite",
-      "example": "Popular Products section (2-col grid)"
+      "priceSize": "default",
+      "strikethroughFontSize": 15.18,
+      "showRatingValue": false,
+      "layout": "horizontalScroll",
+      "example": "Popular Products section (horizontal scroll row)"
     },
     "productStandard": {
+      "_note": "New Arrivals section — 2-col vertical grid. Price uses 'standard' XGPriceText size (20/20/14). Has delivery label + add-to-cart button.",
       "width": 170,
       "height": 344,
       "cornerRadius": 10,
@@ -125,13 +134,23 @@
       "imageAspectRatio": "1:1",
       "titleFontSize": 12,
       "titleFontWeight": "semiBold",
+      "titleLineHeight": 17.58,
       "titleMaxLines": 2,
       "wishlistButton": true,
       "starRating": true,
+      "starSize": 12.63,
+      "reviewCountFontSize": 12.63,
       "priceDisplay": "composite",
+      "priceSize": "standard",
+      "strikethroughFontSize": 14,
+      "showRatingValue": false,
       "deliveryLabel": true,
+      "deliveryLabelBoldTime": true,
       "addToCartButton": true,
-      "example": "New Arrivals section (2-col grid, taller)"
+      "addToCartDiameter": 38,
+      "addToCartIconColor": "#333333",
+      "layout": "verticalGrid2Col",
+      "example": "New Arrivals section (2-col grid, taller, with delivery + cart)"
     },
     "dailyDeal": {
       "width": 350,
@@ -290,6 +309,15 @@
       "currencyFontSize": 22.78,
       "integerFontSize": 27.33,
       "decimalFontSize": 18.98,
+      "fontFamily": "price",
+      "fontWeight": "black",
+      "color": "$semantic.priceDiscount"
+    },
+    "standard": {
+      "_note": "For productStandard cards (New Arrivals). From SVG: currency=20, integer=20, decimal=14.",
+      "currencyFontSize": 20,
+      "integerFontSize": 20,
+      "decimalFontSize": 14,
       "fontFamily": "price",
       "fontWeight": "black",
       "color": "$semantic.priceDiscount"
