@@ -18,6 +18,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 private const val PATTERN_OPACITY = 0.06f
 
+/** Tiled brand pattern overlay drawn at low opacity. */
 @Composable
 fun XGBrandPattern(modifier: Modifier = Modifier) {
     val context = LocalContext.current

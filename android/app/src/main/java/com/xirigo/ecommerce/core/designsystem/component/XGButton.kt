@@ -25,6 +25,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Themed button with primary, secondary, outlined, and text style variants. */
 @Composable
 fun XGButton(
     text: String,

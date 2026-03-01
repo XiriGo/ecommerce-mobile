@@ -20,6 +20,8 @@
     <string name="common_quantity_value">Quantity: %d</string>
     <string name="common_rating_description">Rating: %1$.1f out of %2$d</string>
     <string name="common_reviews_count">(%d reviews)</string>
+    <string name="common_page_indicator_a11y">Page %1$d of %2$d</string>
+    <string name="common_review_count_format">(%d)</string>
     <string name="common_price_label">Price: %s</string>
     <string name="common_sale_price_label">Sale price: %1$s, was %2$s</string>
     <string name="common_add_to_wishlist">Add to wishlist</string>

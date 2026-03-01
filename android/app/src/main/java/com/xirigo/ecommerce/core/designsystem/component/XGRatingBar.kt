@@ -32,8 +32,10 @@ private val StarSize = 12.dp
 private val StarGap = 2.dp
 private const val STAR_COUNT = 5
 private val ReviewCountFontSize = 12.sp
+private val ReviewCountLineHeight = 16.sp
 private val ReviewCountSpacing = 4.dp
 
+/** Star rating bar with optional numeric value and review count display. */
 @Composable
 fun XGRatingBar(
     rating: Float,
@@ -99,7 +101,7 @@ private fun RatingValueText(rating: Float, showValue: Boolean) {
             fontSize = ReviewCountFontSize,
             fontWeight = FontWeight.Normal,
             color = XGColors.OnSurfaceVariant,
-            lineHeight = 16.sp,
+            lineHeight = ReviewCountLineHeight,
         )
     }
 }
@@ -109,12 +111,12 @@ private fun ReviewCountText(reviewCount: Int?) {
     if (reviewCount != null) {
         Spacer(modifier = Modifier.width(ReviewCountSpacing))
         Text(
-            text = "($reviewCount)",
+            text = stringResource(R.string.common_review_count_format, reviewCount),
             fontFamily = PoppinsFontFamily,
             fontSize = ReviewCountFontSize,
             fontWeight = FontWeight.Normal,
             color = XGColors.OnSurfaceVariant,
-            lineHeight = 16.sp,
+            lineHeight = ReviewCountLineHeight,
         )
     }
 }

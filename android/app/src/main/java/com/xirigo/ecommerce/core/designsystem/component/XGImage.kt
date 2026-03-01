@@ -20,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+private const val CROSSFADE_DURATION_MS = 250
+
+/** Async image loader with shimmer placeholder and branded error fallback. */
 @Composable
 fun XGImage(
     url: String?,
@@ -32,7 +35,7 @@ fun XGImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url)
                 .crossfade(true)
-                .crossfade(250)
+                .crossfade(CROSSFADE_DURATION_MS)
                 .build(),
             contentDescription = contentDescription,
             modifier = modifier,

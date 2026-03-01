@@ -27,6 +27,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Outlined text field with label, validation error, helper text, and password mode. */
 @Composable
 fun XGTextField(
     value: String,

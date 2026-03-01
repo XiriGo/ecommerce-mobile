@@ -2,7 +2,6 @@ package com.xirigo.ecommerce.feature.home.presentation.screen
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
@@ -26,13 +24,8 @@ import androidx.compose.material.icons.outlined.Checkroom
 import androidx.compose.material.icons.outlined.Devices
 import androidx.compose.material.icons.outlined.FitnessCenter
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.SportsEsports
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,7 +38,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.xirigo.ecommerce.R
@@ -58,11 +50,8 @@ import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
 import com.xirigo.ecommerce.core.designsystem.component.XGPriceSize
 import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
+import com.xirigo.ecommerce.core.designsystem.component.XGSearchBar
 import com.xirigo.ecommerce.core.designsystem.component.XGSectionHeader
-import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
-import com.xirigo.ecommerce.core.designsystem.theme.XGColors
-import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
-import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 import com.xirigo.ecommerce.feature.home.domain.model.DailyDeal
@@ -76,15 +65,16 @@ import com.xirigo.ecommerce.feature.home.presentation.state.HomeUiState
 import com.xirigo.ecommerce.feature.home.presentation.viewmodel.HomeViewModel
 
 private const val AUTO_SCROLL_DELAY_MS = 5000L
+private val FeaturedCardWidth = 160.dp
+private const val STANDARD_STRIKETHROUGH_FONT_SIZE = 14f
 
+/** Home screen entry point that connects ViewModel to content. */
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
     HomeScreenContent(
         uiState = uiState,
-        isRefreshing = isRefreshing,
         onEvent = viewModel::onEvent,
         modifier = modifier,
     )
@@ -94,7 +84,6 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltVie
 @Composable
 private fun HomeScreenContent(
     uiState: HomeUiState,
-    isRefreshing: Boolean,
     onEvent: (HomeEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -104,14 +93,14 @@ private fun HomeScreenContent(
         }
         is HomeUiState.Error -> {
             XGErrorView(
-                message = uiState.message,
+                message = stringResource(uiState.messageResId),
                 onRetry = { onEvent(HomeEvent.RetryTapped) },
                 modifier = modifier,
             )
         }
         is HomeUiState.Success -> {
             PullToRefreshBox(
-                isRefreshing = isRefreshing,
+                isRefreshing = uiState.isRefreshing,
                 onRefresh = { onEvent(HomeEvent.Refresh) },
                 modifier = modifier.fillMaxSize(),
             ) {
@@ -121,7 +110,11 @@ private fun HomeScreenContent(
                         .verticalScroll(rememberScrollState()),
                 ) {
                     Spacer(modifier = Modifier.height(XGSpacing.Base))
-                    SearchBarSection(onSearchClick = { onEvent(HomeEvent.SearchBarTapped) })
+                    XGSearchBar(
+                        hint = stringResource(R.string.home_search_hint),
+                        onClick = { onEvent(HomeEvent.SearchBarTapped) },
+                        modifier = Modifier.padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
+                    )
                     Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
                     HeroBannerSection(banners = uiState.data.banners, onEvent = onEvent)
                     Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
@@ -155,41 +148,6 @@ private fun HomeScreenContent(
                     Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun SearchBarSection(onSearchClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = XGSpacing.ScreenPaddingHorizontal)
-            .clickable(onClick = onSearchClick),
-        shape = RoundedCornerShape(XGCornerRadius.Medium),
-        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
-        colors = CardDefaults.cardColors(
-            containerColor = XGColors.SurfaceVariant,
-        ),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = XGSpacing.Base, vertical = XGSpacing.MD),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Search,
-                contentDescription = null,
-                tint = XGColors.OnSurfaceVariant,
-            )
-            Spacer(modifier = Modifier.width(XGSpacing.SM))
-            Text(
-                text = stringResource(R.string.home_search_hint),
-                fontFamily = PoppinsFontFamily,
-                fontSize = 16.sp,
-                color = XGColors.OnSurfaceVariant,
-            )
         }
     }
 }
@@ -284,7 +242,7 @@ private fun PopularProductsSection(
                 onWishlistToggle = { onEvent(HomeEvent.WishlistToggled(product.id)) },
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
                 priceSize = XGPriceSize.Default,
-                modifier = Modifier.width(160.dp),
+                modifier = Modifier.width(FeaturedCardWidth),
             )
         }
     }
@@ -370,10 +328,11 @@ private fun ProductGridRow(
                 isWishlisted = product.id in wishedProductIds,
                 onWishlistToggle = { onEvent(HomeEvent.WishlistToggled(product.id)) },
                 deliveryLabel = deliveryLabel,
-                onAddToCartClick = { /* TODO: add to cart */ },
+                // TODO(https://github.com/xirigo/ecommerce-mobile/issues/100): implement add to cart
+                onAddToCartClick = {},
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
                 priceSize = XGPriceSize.Standard,
-                strikethroughFontSize = 14f,
+                strikethroughFontSize = STANDARD_STRIKETHROUGH_FONT_SIZE,
                 modifier = Modifier
                     .weight(1f),
             )
@@ -417,7 +376,6 @@ private fun HomeScreenLoadingPreview() {
     XGTheme {
         HomeScreenContent(
             uiState = HomeUiState.Loading,
-            isRefreshing = false,
             onEvent = {},
         )
     }
@@ -428,8 +386,7 @@ private fun HomeScreenLoadingPreview() {
 private fun HomeScreenErrorPreview() {
     XGTheme {
         HomeScreenContent(
-            uiState = HomeUiState.Error(message = "Something went wrong"),
-            isRefreshing = false,
+            uiState = HomeUiState.Error(messageResId = R.string.common_error_network),
             onEvent = {},
         )
     }
@@ -527,7 +484,6 @@ private fun HomeScreenSuccessPreview() {
                     wishedProductIds = setOf("1"),
                 ),
             ),
-            isRefreshing = false,
             onEvent = {},
         )
     }

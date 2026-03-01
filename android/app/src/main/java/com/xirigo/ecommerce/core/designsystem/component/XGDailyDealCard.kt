@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -35,33 +34,36 @@ import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
+import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 // components.json: XGCard.dailyDeal
 private val CardHeight = 163.dp
-private val CardCornerRadius = 10.dp
 private val CardPadding = 16.dp
 private val BadgeFontSize = 12.sp
 private val BadgePaddingHorizontal = 10.dp
 private val BadgePaddingVertical = 4.dp
-private val BadgeCornerRadius = 10.dp
 private val TitleFontSize = 20.sp
+private val TitleLineHeight = 28.sp
 private val CountdownFontSize = 12.sp
+private val BadgeLineHeight = 16.sp
+private val CountdownLineHeight = 16.sp
 private val StrikethroughFontSize = 15.18.sp
 private const val COUNTDOWN_DELAY_MS = 1000L
 private const val MILLIS_PER_SECOND = 1000L
 private const val SECONDS_PER_MINUTE = 60L
 private const val MINUTES_PER_HOUR = 60L
 
-// gradients.json: dailyDealCard (linear leftToRight #111827 -> #6000FE)
+// gradients.json: dailyDealCard (linear leftToRight TextDark -> BrandPrimary)
 private val DailyDealGradient = Brush.horizontalGradient(
     colorStops = arrayOf(
-        0.0f to Color(0xFF111827),
-        1.0f to Color(0xFF6000FE),
+        0.0f to XGColors.TextDark,
+        1.0f to XGColors.BrandPrimary,
     ),
 )
 
+/** Daily deal promotional card with countdown timer, gradient background, and pricing. */
 @Composable
 fun XGDailyDealCard(
     title: String,
@@ -72,6 +74,7 @@ fun XGDailyDealCard(
     imageUrl: String? = null,
     onClick: (() -> Unit)? = null,
 ) {
+    val endedText = stringResource(R.string.home_daily_deal_ended)
     var remainingMillis by remember { mutableLongStateOf(endTime - System.currentTimeMillis()) }
 
     LaunchedEffect(endTime) {
@@ -87,7 +90,7 @@ fun XGDailyDealCard(
         modifier = modifier
             .fillMaxWidth()
             .height(CardHeight)
-            .clip(RoundedCornerShape(CardCornerRadius))
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
             .background(DailyDealGradient)
             .then(clickModifier)
             .padding(CardPadding),
@@ -105,7 +108,7 @@ fun XGDailyDealCard(
                     modifier = Modifier
                         .background(
                             color = XGColors.BadgeSecondaryBackground,
-                            shape = RoundedCornerShape(BadgeCornerRadius),
+                            shape = RoundedCornerShape(XGCornerRadius.Medium),
                         )
                         .padding(horizontal = BadgePaddingHorizontal, vertical = BadgePaddingVertical),
                 ) {
@@ -115,7 +118,7 @@ fun XGDailyDealCard(
                         fontSize = BadgeFontSize,
                         fontWeight = FontWeight.SemiBold,
                         color = XGColors.BadgeSecondaryText,
-                        lineHeight = 16.sp,
+                        lineHeight = BadgeLineHeight,
                     )
                 }
 
@@ -124,18 +127,18 @@ fun XGDailyDealCard(
                     fontFamily = PoppinsFontFamily,
                     fontSize = TitleFontSize,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
+                    color = XGColors.TextOnDark,
                     maxLines = 2,
-                    lineHeight = 28.sp,
+                    lineHeight = TitleLineHeight,
                 )
 
                 Text(
-                    text = formatCountdown(remainingMillis),
+                    text = formatCountdown(remainingMillis, endedText),
                     fontFamily = PoppinsFontFamily,
                     fontSize = CountdownFontSize,
                     fontWeight = FontWeight.Normal,
-                    color = Color.White,
-                    lineHeight = 16.sp,
+                    color = XGColors.TextOnDark,
+                    lineHeight = CountdownLineHeight,
                 )
 
                 // Price row
@@ -166,14 +169,14 @@ fun XGDailyDealCard(
                 modifier = Modifier
                     .weight(0.6f)
                     .aspectRatio(1f)
-                    .clip(RoundedCornerShape(CardCornerRadius)),
+                    .clip(RoundedCornerShape(XGCornerRadius.Medium)),
             )
         }
     }
 }
 
-private fun formatCountdown(remainingMillis: Long): String {
-    if (remainingMillis <= 0) return "ENDED"
+private fun formatCountdown(remainingMillis: Long, endedText: String): String {
+    if (remainingMillis <= 0) return endedText
     val totalSeconds = remainingMillis / MILLIS_PER_SECOND
     val hours = totalSeconds / (MINUTES_PER_HOUR * SECONDS_PER_MINUTE)
     val minutes = totalSeconds % (MINUTES_PER_HOUR * SECONDS_PER_MINUTE) / SECONDS_PER_MINUTE

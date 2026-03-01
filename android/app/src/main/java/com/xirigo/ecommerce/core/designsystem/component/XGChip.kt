@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Selectable filter chip with optional leading icon and check mark. */
 @Composable
 fun XGFilterChip(
     label: String,
@@ -55,6 +56,7 @@ fun XGFilterChip(
     )
 }
 
+/** Category chip with optional leading icon loaded from URL. */
 @Composable
 fun XGCategoryChip(
     label: String,

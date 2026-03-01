@@ -23,14 +23,20 @@ import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
+import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 // components.json: XGCard.flashSale
 private val BannerHeight = 133.dp
-private val BannerCornerRadius = 10.dp
+private val BadgeFontSize = 14.sp
+private val TitleFontSize = 20.sp
+private val TitleLineHeight = 28.sp
+private const val STRIPE_WIDTH_FRACTION = 0.12f
+private const val STRIPE_SHEAR_MULTIPLIER = 1.5f
+private const val STRIPE_OFFSET_MULTIPLIER = 0.5f
 
+/** Flash sale promotional banner with decorative diagonal stripes and title text. */
 @Composable
-@Suppress("UnusedParameter")
 fun XGFlashSaleBanner(
     title: String,
     modifier: Modifier = Modifier,
@@ -43,28 +49,36 @@ fun XGFlashSaleBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(BannerHeight)
-            .clip(RoundedCornerShape(BannerCornerRadius))
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
             .background(XGColors.FlashSaleBackground)
             .then(clickModifier),
         contentAlignment = Alignment.Center,
     ) {
+        if (imageUrl != null) {
+            XGImage(
+                url = imageUrl,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+
         Canvas(modifier = Modifier.fillMaxSize()) {
             val canvasWidth = size.width
             val canvasHeight = size.height
-            val stripeWidth = canvasWidth * 0.12f
+            val stripeWidth = canvasWidth * STRIPE_WIDTH_FRACTION
 
             val leftPath = Path().apply {
                 moveTo(0f, 0f)
                 lineTo(stripeWidth, 0f)
-                lineTo(stripeWidth * 1.5f, canvasHeight)
-                lineTo(stripeWidth * 0.5f, canvasHeight)
+                lineTo(stripeWidth * STRIPE_SHEAR_MULTIPLIER, canvasHeight)
+                lineTo(stripeWidth * STRIPE_OFFSET_MULTIPLIER, canvasHeight)
                 close()
             }
             drawPath(leftPath, XGColors.FlashSaleAccentBlue)
 
             val rightPath = Path().apply {
-                moveTo(canvasWidth - stripeWidth * 1.5f, 0f)
-                lineTo(canvasWidth - stripeWidth * 0.5f, 0f)
+                moveTo(canvasWidth - stripeWidth * STRIPE_SHEAR_MULTIPLIER, 0f)
+                lineTo(canvasWidth - stripeWidth * STRIPE_OFFSET_MULTIPLIER, 0f)
                 lineTo(canvasWidth, canvasHeight)
                 lineTo(canvasWidth - stripeWidth, canvasHeight)
                 close()
@@ -76,17 +90,17 @@ fun XGFlashSaleBanner(
             Text(
                 text = stringResource(R.string.home_flash_sale_badge),
                 fontFamily = PoppinsFontFamily,
-                fontSize = 14.sp,
+                fontSize = BadgeFontSize,
                 fontWeight = FontWeight.Bold,
                 color = XGColors.FlashSaleText,
             )
             Text(
                 text = title,
                 fontFamily = PoppinsFontFamily,
-                fontSize = 20.sp,
+                fontSize = TitleFontSize,
                 fontWeight = FontWeight.Bold,
                 color = XGColors.FlashSaleText,
-                lineHeight = 28.sp,
+                lineHeight = TitleLineHeight,
             )
         }
     }

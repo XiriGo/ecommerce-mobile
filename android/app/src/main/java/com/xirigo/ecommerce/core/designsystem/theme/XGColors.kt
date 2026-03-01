@@ -113,8 +113,12 @@ object XGColors {
 
     // Text Colors (from light theme)
     val TextDark = Color(0xFF111827) // light.textDark
+    val TextOnDark = Color(0xFFFFFFFF) // text on dark backgrounds
     val TextTertiary = Color(0xFF9CA3AF) // light.textTertiary
     val TextPlaceholder = Color(0xFF9CA3AF) // light.textPlaceholder
+
+    // Icon Colors
+    val IconOnDark = Color(0xFFFFFFFF) // icon on dark/colored backgrounds
 
     // Flash Sale Colors
     val FlashSaleBackground = Color(0xFFFFD814) // flashSale.background

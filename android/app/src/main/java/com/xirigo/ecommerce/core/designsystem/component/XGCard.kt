@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -45,17 +44,20 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 // components.json: XGCard.productFeatured / productStandard
 private val FeaturedCardWidth = 160.dp
 private val StandardCardWidth = 170.dp
-private val CardCornerRadius = 10.dp
 private val CardPadding = 8.dp
 private val TitleFontSize = 12.sp
+private val TitleLineHeight = 16.sp
+private val InfoCardTitleFontSize = 16.sp
+private val InfoCardSubtitleFontSize = 12.sp
+private val DeliveryLabelLineHeight = 14.sp
 private const val TITLE_MAX_LINES = 2
 private val DeliveryLabelFontSize = 10.sp
 private val AddToCartButtonSize = 38.dp
 private val AddToCartIconSize = 16.dp
 private val AddToCartCornerRadius = 19.dp
-private val AddToCartIconColor = Color(0xFF333333)
 private val BorderWidth = 1.dp
 
+/** Product card with image, title, price, rating, delivery label, and optional add-to-cart. */
 @Composable
 fun XGProductCard(
     imageUrl: String?,
@@ -77,7 +79,7 @@ fun XGProductCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(CardCornerRadius),
+        shape = RoundedCornerShape(XGCornerRadius.Medium),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(containerColor = XGColors.Surface),
         border = BorderStroke(BorderWidth, XGColors.OutlineVariant),
@@ -119,7 +121,7 @@ private fun ProductCardImageSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
-                .clip(RoundedCornerShape(CardCornerRadius)),
+                .clip(RoundedCornerShape(XGCornerRadius.Medium)),
         )
 
         if (onWishlistToggle != null) {
@@ -155,7 +157,7 @@ private fun ProductCardDetailsSection(
             color = XGColors.OnSurface,
             maxLines = TITLE_MAX_LINES,
             overflow = TextOverflow.Ellipsis,
-            lineHeight = 16.sp,
+            lineHeight = TitleLineHeight,
         )
 
         Spacer(modifier = Modifier.height(XGSpacing.XS))
@@ -197,7 +199,7 @@ private fun ProductCardDetailsSection(
                         imageVector = Icons.Outlined.AddShoppingCart,
                         contentDescription = null,
                         modifier = Modifier.size(AddToCartIconSize),
-                        tint = AddToCartIconColor,
+                        tint = XGColors.OnSurface,
                     )
                 }
             }
@@ -221,7 +223,7 @@ private fun DeliveryLabelText(deliveryLabel: String) {
             color = XGColors.DeliveryText,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            lineHeight = 14.sp,
+            lineHeight = DeliveryLabelLineHeight,
         )
     } else {
         Text(
@@ -244,11 +246,12 @@ private fun DeliveryLabelText(deliveryLabel: String) {
             color = XGColors.DeliveryText,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            lineHeight = 14.sp,
+            lineHeight = DeliveryLabelLineHeight,
         )
     }
 }
 
+/** Informational card with optional leading icon, title, subtitle, and trailing content. */
 @Composable
 fun XGInfoCard(
     title: String,
@@ -305,7 +308,7 @@ private fun InfoCardContent(
             Text(
                 text = title,
                 fontFamily = PoppinsFontFamily,
-                fontSize = 16.sp,
+                fontSize = InfoCardTitleFontSize,
                 fontWeight = FontWeight.Medium,
                 color = XGColors.OnSurface,
             )
@@ -314,7 +317,7 @@ private fun InfoCardContent(
                 Text(
                     text = subtitle,
                     fontFamily = PoppinsFontFamily,
-                    fontSize = 12.sp,
+                    fontSize = InfoCardSubtitleFontSize,
                     fontWeight = FontWeight.Normal,
                     color = XGColors.OnSurfaceVariant,
                 )

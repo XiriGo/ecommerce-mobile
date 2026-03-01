@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -21,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 import com.xirigo.ecommerce.core.designsystem.theme.XGTypography
@@ -50,7 +50,7 @@ fun OnboardingPageContent(page: OnboardingPage, modifier: Modifier = Modifier) {
             text = stringResource(page.titleResId),
             style = XGTypography.headlineSmall,
             fontWeight = FontWeight.SemiBold,
-            color = Color.White,
+            color = XGColors.TextOnDark,
             textAlign = TextAlign.Center,
             maxLines = 2,
             modifier = Modifier.semantics { heading() },
@@ -61,7 +61,7 @@ fun OnboardingPageContent(page: OnboardingPage, modifier: Modifier = Modifier) {
         Text(
             text = stringResource(page.descriptionResId),
             style = XGTypography.bodyLarge,
-            color = Color.White.copy(alpha = DESCRIPTION_ALPHA),
+            color = XGColors.TextOnDark.copy(alpha = DESCRIPTION_ALPHA),
             textAlign = TextAlign.Center,
             maxLines = 3,
         )

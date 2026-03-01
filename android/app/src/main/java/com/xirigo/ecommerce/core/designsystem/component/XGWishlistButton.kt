@@ -25,6 +25,7 @@ private val ButtonIconSize = 16.dp
 private val ButtonCornerRadius = 16.dp
 private val ButtonElevation = 2.dp
 
+/** Toggle button for wishlist state with heart icon. */
 @Composable
 fun XGWishlistButton(
     isWishlisted: Boolean,

@@ -37,6 +37,7 @@ private val SmallIntegerFontSize = 18.sp
 private val SmallDecimalFontSize = 14.sp
 private val DefaultStrikethroughFontSize = 15.18.sp
 
+/** Formatted price display with currency symbol, integer, and decimal parts. */
 @Composable
 fun XGPriceText(
     price: String,
@@ -163,34 +164,40 @@ private fun splitPrice(price: String): Pair<String, String> {
     return Pair(integer, decimal)
 }
 
-@Suppress("StringLiteralDuplication")
+private object PreviewPrices {
+    const val REGULAR = "29.99"
+    const val ORIGINAL = "39.99"
+    const val SMALL = "9.99"
+    const val DEAL = "89.99"
+    const val DEAL_ORIGINAL = "149.99"
+    const val STANDARD_STRIKETHROUGH = 14f
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun XGPriceTextDefaultPreview() {
     XGTheme {
-        XGPriceText(price = "29.99")
+        XGPriceText(price = PreviewPrices.REGULAR)
     }
 }
 
-@Suppress("StringLiteralDuplication")
 @Preview(showBackground = true)
 @Composable
 private fun XGPriceTextSalePreview() {
     XGTheme {
-        XGPriceText(price = "29.99", originalPrice = "39.99")
+        XGPriceText(price = PreviewPrices.REGULAR, originalPrice = PreviewPrices.ORIGINAL)
     }
 }
 
-@Suppress("StringLiteralDuplication")
 @Preview(showBackground = true)
 @Composable
 private fun XGPriceTextStandardPreview() {
     XGTheme {
         XGPriceText(
-            price = "29.99",
-            originalPrice = "39.99",
+            price = PreviewPrices.REGULAR,
+            originalPrice = PreviewPrices.ORIGINAL,
             size = XGPriceSize.Standard,
-            strikethroughFontSize = 14f,
+            strikethroughFontSize = PreviewPrices.STANDARD_STRIKETHROUGH,
         )
     }
 }
@@ -199,7 +206,7 @@ private fun XGPriceTextStandardPreview() {
 @Composable
 private fun XGPriceTextSmallPreview() {
     XGTheme {
-        XGPriceText(price = "9.99", size = XGPriceSize.Small)
+        XGPriceText(price = PreviewPrices.SMALL, size = XGPriceSize.Small)
     }
 }
 
@@ -207,6 +214,10 @@ private fun XGPriceTextSmallPreview() {
 @Composable
 private fun XGPriceTextDealPreview() {
     XGTheme {
-        XGPriceText(price = "89.99", originalPrice = "149.99", size = XGPriceSize.Deal)
+        XGPriceText(
+            price = PreviewPrices.DEAL,
+            originalPrice = PreviewPrices.DEAL_ORIGINAL,
+            size = XGPriceSize.Deal,
+        )
     }
 }

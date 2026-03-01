@@ -16,34 +16,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
+import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 // components.json: XGCard.heroBanner
 private val BannerHeight = 192.dp
-private val BannerCornerRadius = 10.dp
 private val TagFontSize = 12.sp
+private val TagLineHeight = 16.sp
 private val HeadlineFontSize = 24.sp
+private val HeadlineLineHeight = 32.sp
 private val SubtitleFontSize = 14.sp
+private val SubtitleLineHeight = 20.sp
 private val BadgePaddingHorizontal = 10.dp
 private val BadgePaddingVertical = 4.dp
-private val BadgeCornerRadius = 10.dp
 
-// gradients.json: heroBannerOverlay (linear leftToRight)
+// gradients.json: heroBannerOverlay (linear leftToRight, derived from BrandPrimary)
+private const val OVERLAY_START_ALPHA = 0xE6
+private const val OVERLAY_END_ALPHA = 0x00
 private val HeroBannerOverlay = Brush.horizontalGradient(
     colorStops = arrayOf(
-        0.0f to Color(0xE66000FE),
-        1.0f to Color(0x006000FE),
+        0.0f to XGColors.BrandPrimary.copy(alpha = OVERLAY_START_ALPHA / 255f),
+        1.0f to XGColors.BrandPrimary.copy(alpha = OVERLAY_END_ALPHA / 255f),
     ),
 )
 
+/** Hero banner with optional background image, gradient overlay, tag badge, and text. */
 @Composable
 fun XGHeroBanner(
     title: String,
@@ -59,7 +63,7 @@ fun XGHeroBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(BannerHeight)
-            .clip(RoundedCornerShape(BannerCornerRadius))
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
             .then(clickModifier),
     ) {
         if (imageUrl != null) {
@@ -85,7 +89,7 @@ fun XGHeroBanner(
                     .padding(XGSpacing.MD)
                     .background(
                         color = XGColors.BadgeSecondaryBackground,
-                        shape = RoundedCornerShape(BadgeCornerRadius),
+                        shape = RoundedCornerShape(XGCornerRadius.Medium),
                     )
                     .padding(horizontal = BadgePaddingHorizontal, vertical = BadgePaddingVertical),
             ) {
@@ -95,7 +99,7 @@ fun XGHeroBanner(
                     fontSize = TagFontSize,
                     fontWeight = FontWeight.SemiBold,
                     color = XGColors.BadgeSecondaryText,
-                    lineHeight = 16.sp,
+                    lineHeight = TagLineHeight,
                 )
             }
         }
@@ -110,8 +114,8 @@ fun XGHeroBanner(
                 fontFamily = PoppinsFontFamily,
                 fontSize = HeadlineFontSize,
                 fontWeight = FontWeight.SemiBold,
-                color = Color.White,
-                lineHeight = 32.sp,
+                color = XGColors.TextOnDark,
+                lineHeight = HeadlineLineHeight,
             )
             Spacer(modifier = Modifier.height(XGSpacing.XS))
             Text(
@@ -119,8 +123,8 @@ fun XGHeroBanner(
                 fontFamily = PoppinsFontFamily,
                 fontSize = SubtitleFontSize,
                 fontWeight = FontWeight.Normal,
-                color = Color.White,
-                lineHeight = 20.sp,
+                color = XGColors.TextOnDark,
+                lineHeight = SubtitleLineHeight,
             )
         }
     }

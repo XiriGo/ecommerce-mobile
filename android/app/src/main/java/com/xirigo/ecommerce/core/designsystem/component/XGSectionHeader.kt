@@ -30,10 +30,14 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 // typeScale.subtitle: 18sp semiBold
 private val TitleFontSize = 18.sp
+private val TitleLineHeight = 26.sp
 private val SubtitleFontSize = 14.sp
+private val SubtitleLineHeight = 20.sp
 private val SeeAllFontSize = 14.sp
+private val SeeAllLineHeight = 20.sp
 private val SeeAllIconSize = 16.dp
 
+/** Section header with title, optional subtitle, and optional "See All" action. */
 @Composable
 fun XGSectionHeader(
     title: String,
@@ -55,7 +59,7 @@ fun XGSectionHeader(
                 fontSize = TitleFontSize,
                 fontWeight = FontWeight.SemiBold,
                 color = XGColors.OnSurface,
-                lineHeight = 26.sp,
+                lineHeight = TitleLineHeight,
             )
             if (subtitle != null) {
                 Text(
@@ -64,7 +68,7 @@ fun XGSectionHeader(
                     fontSize = SubtitleFontSize,
                     fontWeight = FontWeight.Normal,
                     color = XGColors.OnSurfaceVariant,
-                    lineHeight = 20.sp,
+                    lineHeight = SubtitleLineHeight,
                 )
             }
         }
@@ -82,7 +86,7 @@ fun XGSectionHeader(
                     fontSize = SeeAllFontSize,
                     fontWeight = FontWeight.Medium,
                     color = XGColors.BrandPrimary,
-                    lineHeight = 20.sp,
+                    lineHeight = SeeAllLineHeight,
                 )
                 Spacer(modifier = Modifier.width(XGSpacing.XS))
                 Icon(

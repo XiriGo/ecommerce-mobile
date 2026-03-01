@@ -21,6 +21,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Increment/decrement stepper for item quantity selection. */
 @Composable
 fun XGQuantityStepper(
     quantity: Int,
