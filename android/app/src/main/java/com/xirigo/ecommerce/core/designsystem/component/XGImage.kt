@@ -6,7 +6,11 @@ import coil3.request.crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -39,7 +43,15 @@ fun XGImage(
     } else {
         Box(
             modifier = modifier.background(XGColors.Shimmer),
-        )
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Image,
+                contentDescription = null,
+                tint = XGColors.OnSurfaceVariant,
+                modifier = Modifier.size(32.dp),
+            )
+        }
     }
 }
 

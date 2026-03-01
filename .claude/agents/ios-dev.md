@@ -22,6 +22,19 @@ Before implementing, read these files:
 - Android implementation (if available) — ensure behavioral consistency
 - Existing iOS code in `ios/` for pattern matching
 
+## CRITICAL: Design Token Verification
+
+**Before writing ANY color, spacing, corner radius, or font value**, you MUST:
+1. Read `shared/design-tokens/colors.json` — every hex value in `XGColors.swift` must match exactly
+2. Read `shared/design-tokens/spacing.json` — every CGFloat in `XGSpacing.swift` and `XGCornerRadius.swift` must match exactly
+3. Read `shared/design-tokens/typography.json` — font sizes/weights must match the type scale
+4. Read `shared/design-tokens/components.json` — component-level specs (sizes, colors, corner radius)
+5. Read `shared/design-tokens/gradients.json` — gradient stops and colors
+
+**NEVER use Material 3 defaults, Apple HIG defaults, or guessed values.**
+**NEVER hardcode `Color(hex: "...")` in components — always use `XGColors.*` tokens.**
+**If a token doesn't exist in `XGColors.swift`, ADD it from the JSON source — don't hardcode.**
+
 ## Architecture Rules
 
 - Clean Architecture: `Data/` → `Domain/` → `Presentation/`

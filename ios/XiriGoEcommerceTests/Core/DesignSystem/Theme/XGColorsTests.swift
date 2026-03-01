@@ -6,11 +6,16 @@ import Testing
 
 @Suite("XGColors Tests")
 struct XGColorsTests {
-    // MARK: - Primary Colors
+    // MARK: - Brand Colors
 
-    @Test("Primary color is defined and not transparent")
-    func primaryColorExists() {
-        #expect(XGColors.primary != Color.clear)
+    @Test("Brand primary matches design token #6000FE")
+    func brandPrimaryMatchesToken() {
+        #expect(XGColors.brandPrimary == Color(hex: "#6000FE"))
+    }
+
+    @Test("Primary is same as brand primary")
+    func primaryIsBrandPrimary() {
+        #expect(XGColors.primary == XGColors.brandPrimary)
     }
 
     @Test("OnPrimary color is white")
@@ -18,52 +23,55 @@ struct XGColorsTests {
         #expect(XGColors.onPrimary == Color.white)
     }
 
-    // MARK: - Semantic E-commerce Colors
-
-    @Test("Success color is green")
-    func successColorIsGreen() {
-        // Success color should be green (#4CAF50)
-        let expectedGreen = Color(hex: "#4CAF50")
-        #expect(XGColors.success == expectedGreen)
+    @Test("Brand secondary matches design token #94D63A")
+    func brandSecondaryMatchesToken() {
+        #expect(XGColors.brandSecondary == Color(hex: "#94D63A"))
     }
 
-    @Test("Warning color is orange")
-    func warningColorIsOrange() {
-        // Warning color should be orange (#FF9800)
-        let expectedOrange = Color(hex: "#FF9800")
-        #expect(XGColors.warning == expectedOrange)
+    // MARK: - Semantic Status Colors
+
+    @Test("Success color matches design token #22C55E")
+    func successColorMatchesToken() {
+        #expect(XGColors.success == Color(hex: "#22C55E"))
     }
 
-    @Test("Error color is red")
-    func errorColorIsRed() {
-        // Error color should be red (#B3261E)
-        let expectedRed = Color(hex: "#B3261E")
-        #expect(XGColors.error == expectedRed)
+    @Test("Warning color matches design token #FACC15")
+    func warningColorMatchesToken() {
+        #expect(XGColors.warning == Color(hex: "#FACC15"))
     }
 
-    @Test("PriceSale color is red")
-    func priceSaleColorIsRed() {
-        #expect(XGColors.priceSale == XGColors.error)
+    @Test("Error color matches design token #EF4444")
+    func errorColorMatchesToken() {
+        #expect(XGColors.error == Color(hex: "#EF4444"))
     }
 
-    @Test("Rating star filled color is yellow")
-    func ratingStarFilledIsYellow() {
-        let expectedYellow = Color(hex: "#FFC107")
-        #expect(XGColors.ratingStarFilled == expectedYellow)
+    @Test("Info color matches design token #3B82F6")
+    func infoColorMatchesToken() {
+        #expect(XGColors.info == Color(hex: "#3B82F6"))
+    }
+
+    // MARK: - Price Colors
+
+    @Test("Price sale color is brand primary")
+    func priceSaleIsBrandPrimary() {
+        #expect(XGColors.priceSale == XGColors.brandPrimary)
+    }
+
+    @Test("Rating star filled color is brand primary")
+    func ratingStarFilledIsBrandPrimary() {
+        #expect(XGColors.ratingStarFilled == XGColors.brandPrimary)
     }
 
     // MARK: - Color Contrast (Accessibility)
 
     @Test("OnPrimary has sufficient contrast with Primary")
     func primaryContrastRatio() {
-        // White on purple should have good contrast
         #expect(XGColors.onPrimary == Color.white)
         #expect(XGColors.primary != Color.white)
     }
 
     @Test("OnSuccess has sufficient contrast with Success")
     func successContrastRatio() {
-        // White on green should have good contrast
         #expect(XGColors.onSuccess == Color.white)
     }
 
@@ -77,16 +85,26 @@ struct XGColorsTests {
 
     // MARK: - Surface Colors
 
-    @Test("Surface color is near white")
-    func surfaceColorIsLight() {
-        let expectedSurface = Color(hex: "#FFFBFE")
-        #expect(XGColors.surface == expectedSurface)
+    @Test("Surface color matches design token #FFFFFF")
+    func surfaceColorMatchesToken() {
+        #expect(XGColors.surface == Color(hex: "#FFFFFF"))
     }
 
-    @Test("Background color is near white")
-    func backgroundColorIsLight() {
-        let expectedBackground = Color(hex: "#FFFBFE")
-        #expect(XGColors.background == expectedBackground)
+    @Test("Background color matches design token #F8F9FC")
+    func backgroundColorMatchesToken() {
+        #expect(XGColors.background == Color(hex: "#F8F9FC"))
+    }
+
+    // MARK: - Flash Sale Colors
+
+    @Test("Flash sale background matches design token #FFD814")
+    func flashSaleBackgroundMatchesToken() {
+        #expect(XGColors.flashSaleBackground == Color(hex: "#FFD814"))
+    }
+
+    @Test("Flash sale text matches design token #1D1D1B")
+    func flashSaleTextMatchesToken() {
+        #expect(XGColors.flashSaleText == Color(hex: "#1D1D1B"))
     }
 }
 
@@ -131,8 +149,8 @@ struct ColorHexExtensionTests {
 
     @Test("Hex string with mixed case works")
     func mixedCaseHex() {
-        let color1 = Color(hex: "#6750A4")
-        let color2 = Color(hex: "#6750a4")
+        let color1 = Color(hex: "#6000FE")
+        let color2 = Color(hex: "#6000fe")
         #expect(color1 == color2)
     }
 }

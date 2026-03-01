@@ -55,5 +55,11 @@ package that mirrors the implementation — allows composition tests without Hil
 - Shared fakes: `src/test/java/com/xirigo/ecommerce/feature/<name>/repository/Fake<Name>Repository.kt`
 - `MainDispatcherRule.kt` can live in feature viewmodel package (move to testutil if reused)
 
+### FakeRepository pattern for multi-method interfaces
+When an interface has many suspend methods that all can fail, use a single `var shouldThrow: IOException?`
+that all methods check. Individual data fields are `var` for per-test customization.
+Also supports `null` return for optional fields (dailyDeal, flashSale).
+
 ### Completed Features
 - **app-onboarding (M4-05)**: FakeOnboardingRepository, CheckOnboarding/CompleteOnboardingUseCase tests, OnboardingViewModelTest (18 tests), SplashScreenTest, OnboardingScreenTest, XGPaginationDotsTest
+- **home-screen (M1-04)**: FakeHomeRepository (test), FakeHomeRepositoryTest (19), 6x UseCase tests (6 each = 36), HomeViewModelTest (30 tests). Total: 65 tests. No UI tests (deferred — needs emulator for PullToRefreshBox + HorizontalPager).

@@ -39,7 +39,7 @@ struct XGHeroBanner: View {
                 textContent
             }
             .frame(height: Constants.bannerHeight)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         }
         .buttonStyle(.plain)
         .disabled(action == nil)
@@ -148,7 +148,7 @@ struct XGHeroBanner: View {
     XGHeroBanner(
         title: "Urban Fashion Collection",
         subtitle: "Explore the latest trends",
-        imageUrl: URL(string: "https://picsum.photos/seed/hero1/700/384"),
+        imageUrl: nil,
         tag: "NEW SEASON",
         action: {},
     )

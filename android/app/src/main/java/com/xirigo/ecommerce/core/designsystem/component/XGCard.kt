@@ -100,7 +100,7 @@ private fun ProductCardImageSection(
             contentDescription = title,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(16f / 9f),
+                .aspectRatio(1f),
         )
 
         if (onWishlistToggle != null) {
@@ -126,10 +126,10 @@ private fun ProductCardDetailsSection(
     deliveryLabel: String? = null,
     onAddToCartClick: (() -> Unit)? = null,
 ) {
-    Column(modifier = Modifier.padding(XGSpacing.CardPadding)) {
+    Column(modifier = Modifier.padding(XGSpacing.SM)) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.labelMedium,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )

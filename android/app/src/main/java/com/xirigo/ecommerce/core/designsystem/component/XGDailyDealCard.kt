@@ -52,8 +52,9 @@ private const val MINUTES_PER_HOUR = 60L
 
 private val DailyDealGradient = Brush.horizontalGradient(
     colorStops = arrayOf(
-        0.0f to Color(0xFF111827),
-        1.0f to Color(0xFF6000FE),
+        // gradients.dailyDealCard: #111827 → #6000FE
+        0.0f to XGColors.TextDark,
+        1.0f to XGColors.BrandPrimary,
     ),
 )
 
@@ -82,7 +83,7 @@ fun XGDailyDealCard(
         modifier = modifier
             .fillMaxWidth()
             .height(CardHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Large))
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
             .background(DailyDealGradient)
             .then(clickModifier)
             .padding(XGSpacing.Base),

@@ -57,3 +57,15 @@ Commit: `docs(specs): add {feature-name} specification [agent:architect]`
 - Components must be reusable: data + callbacks only, zero ViewModel references
 - Mock data must be realistic and match the SVG design (real-looking names, EUR prices, picsum.photos URLs)
 - Read `docs/standards/common.md` sections: "XG* Component Rules", "Image Loading Pattern", "Mock Data → API Transition Pattern"
+
+## CRITICAL: Explicit Design Token Values in Spec
+
+The spec MUST include a **Design Token Reference** section that lists the EXACT values from `shared/design-tokens/*.json` for this feature. This prevents dev agents from guessing values. Include:
+
+1. **Colors used**: List every `XGColors.*` token with its exact hex value (e.g., `XGColors.brandPrimary = #6000FE`)
+2. **Spacing used**: List every `XGSpacing.*` token with its exact pt/dp value
+3. **Corner Radius used**: List every `XGCornerRadius.*` with its exact value
+4. **Component specs**: For each XG* component, copy the EXACT spec from `components.json` (width, height, cornerRadius, colors, font sizes)
+5. **Gradients**: If the feature uses gradients, copy the exact stops from `gradients.json`
+
+The dev agents will use this section as their primary reference — if a value is wrong in the spec, it will be wrong in the code.

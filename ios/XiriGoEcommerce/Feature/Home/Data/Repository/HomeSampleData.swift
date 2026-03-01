@@ -14,7 +14,7 @@ enum HomeSampleData {
             id: "banner_1",
             title: String(localized: "home_banner_season_title"),
             subtitle: String(localized: "home_banner_season_subtitle"),
-            imageUrl: "https://picsum.photos/seed/banner1/700/384",
+            imageUrl: nil,
             tag: "NEW SEASON",
             actionProductId: nil,
             actionCategoryId: "cat_2",
@@ -23,7 +23,7 @@ enum HomeSampleData {
             id: "banner_2",
             title: String(localized: "home_banner_new_title"),
             subtitle: String(localized: "home_banner_new_subtitle"),
-            imageUrl: "https://picsum.photos/seed/banner2/700/384",
+            imageUrl: nil,
             tag: nil,
             actionProductId: nil,
             actionCategoryId: "cat_1",
@@ -32,7 +32,7 @@ enum HomeSampleData {
             id: "banner_3",
             title: String(localized: "home_banner_deals_title"),
             subtitle: String(localized: "home_banner_deals_subtitle"),
-            imageUrl: "https://picsum.photos/seed/banner3/700/384",
+            imageUrl: nil,
             tag: "HOT DEALS",
             actionProductId: nil,
             actionCategoryId: nil,
@@ -92,7 +92,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "prod_1",
             title: String(localized: "home_product_headphones"),
-            imageUrl: "https://picsum.photos/seed/headphones/400/400",
+            imageUrl: nil,
             price: "79.99",
             currencyCode: "eur",
             originalPrice: "129.99",
@@ -104,7 +104,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "prod_2",
             title: String(localized: "home_product_sneakers"),
-            imageUrl: "https://picsum.photos/seed/sneakers/400/400",
+            imageUrl: nil,
             price: "59.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -116,7 +116,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "prod_3",
             title: String(localized: "home_product_watch"),
-            imageUrl: "https://picsum.photos/seed/watch/400/400",
+            imageUrl: nil,
             price: "199.99",
             currencyCode: "eur",
             originalPrice: "249.99",
@@ -128,7 +128,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "prod_4",
             title: String(localized: "home_product_backpack"),
-            imageUrl: "https://picsum.photos/seed/backpack/400/400",
+            imageUrl: nil,
             price: "39.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -145,7 +145,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "new_1",
             title: String(localized: "home_product_keyboard"),
-            imageUrl: "https://picsum.photos/seed/keyboard/400/400",
+            imageUrl: nil,
             price: "149.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -157,7 +157,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "new_2",
             title: String(localized: "home_product_jacket"),
-            imageUrl: "https://picsum.photos/seed/jacket/400/400",
+            imageUrl: nil,
             price: "89.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -169,7 +169,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "new_3",
             title: String(localized: "home_product_lamp"),
-            imageUrl: "https://picsum.photos/seed/lamp/400/400",
+            imageUrl: nil,
             price: "44.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -181,7 +181,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "new_4",
             title: "Bluetooth Speaker",
-            imageUrl: "https://picsum.photos/seed/speaker/400/400",
+            imageUrl: nil,
             price: "34.99",
             currencyCode: "eur",
             originalPrice: "49.99",
@@ -193,7 +193,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "new_5",
             title: "Yoga Mat Premium",
-            imageUrl: "https://picsum.photos/seed/yogamat/400/400",
+            imageUrl: nil,
             price: "29.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -205,7 +205,7 @@ enum HomeSampleData {
         HomeProduct(
             id: "new_6",
             title: "Ceramic Vase Set",
-            imageUrl: "https://picsum.photos/seed/vase/400/400",
+            imageUrl: nil,
             price: "54.99",
             currencyCode: "eur",
             originalPrice: nil,
@@ -231,7 +231,7 @@ enum HomeSampleData {
         DailyDeal(
             productId: "deal_1",
             title: "Nike Air Zoom Pegasus",
-            imageUrl: "https://picsum.photos/seed/dailydeal/400/400",
+            imageUrl: nil,
             price: "89.99",
             originalPrice: "149.99",
             currencyCode: "eur",

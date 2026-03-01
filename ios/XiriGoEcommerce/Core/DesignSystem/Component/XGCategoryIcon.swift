@@ -30,7 +30,7 @@ struct XGCategoryIcon: View {
         Button(action: action) {
             VStack(spacing: Constants.labelSpacing) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: XGCornerRadius.large)
+                    RoundedRectangle(cornerRadius: XGCornerRadius.medium)
                         .fill(backgroundColor)
                         .frame(
                             width: Constants.tileSize,

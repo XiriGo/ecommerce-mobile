@@ -95,7 +95,7 @@ struct XGProductCard: View {
     private var imageSection: some View {
         ZStack(alignment: .topTrailing) {
             XGImage(url: imageUrl)
-                .aspectRatio(16.0 / 9.0, contentMode: .fill)
+                .aspectRatio(1.0, contentMode: .fill)
                 .clipped()
 
             if let onWishlistToggle {
@@ -111,7 +111,7 @@ struct XGProductCard: View {
     private var contentSection: some View {
         VStack(alignment: .leading, spacing: XGSpacing.xs) {
             Text(title)
-                .font(XGTypography.titleMedium)
+                .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(XGColors.onSurface)
                 .lineLimit(2)
 
@@ -142,7 +142,7 @@ struct XGProductCard: View {
                 }
             }
         }
-        .padding(XGSpacing.cardPadding)
+        .padding(XGSpacing.sm)
     }
 
     private var addToCartButton: some View {

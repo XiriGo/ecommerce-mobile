@@ -10,7 +10,7 @@ struct XGRatingBar: View {
     init(
         rating: Double,
         maxRating: Int = 5,
-        starSize: CGFloat = 16,
+        starSize: CGFloat = 12,
         showValue: Bool = false,
         reviewCount: Int? = nil,
     ) {
@@ -33,12 +33,16 @@ struct XGRatingBar: View {
                 Text(String(format: "%.1f", rating))
                     .font(XGTypography.bodySmall)
                     .foregroundStyle(XGColors.onSurfaceVariant)
+                    .lineLimit(1)
+                    .fixedSize()
             }
 
             if let reviewCount {
                 Text("(\(reviewCount))")
                     .font(XGTypography.bodySmall)
                     .foregroundStyle(XGColors.onSurfaceVariant)
+                    .lineLimit(1)
+                    .fixedSize()
             }
         }
         .accessibilityElement(children: .ignore)

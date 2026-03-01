@@ -66,7 +66,7 @@ private fun CategoriesSearchBar() {
             .fillMaxWidth()
             .padding(horizontal = XGSpacing.ScreenPaddingHorizontal)
             .clickable { /* Search click */ },
-        shape = RoundedCornerShape(XGCornerRadius.Large),
+        shape = RoundedCornerShape(XGCornerRadius.Medium),
         elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,

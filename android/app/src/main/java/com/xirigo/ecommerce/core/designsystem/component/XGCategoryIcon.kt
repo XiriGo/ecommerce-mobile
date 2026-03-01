@@ -50,7 +50,7 @@ fun XGCategoryIcon(
         Box(
             modifier = Modifier
                 .size(TileSize)
-                .clip(RoundedCornerShape(XGCornerRadius.Large))
+                .clip(RoundedCornerShape(XGCornerRadius.Medium))
                 .background(backgroundColor),
             contentAlignment = Alignment.Center,
         ) {

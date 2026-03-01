@@ -20,23 +20,6 @@ extension HomeScreen {
         Timer.publish(every: BannerConstants.autoScrollInterval, on: .main, in: .common).autoconnect()
     }
 
-    // MARK: - Welcome Header
-
-    var welcomeHeader: some View {
-        VStack(alignment: .leading, spacing: XGSpacing.xs) {
-            Text(String(localized: "home_welcome_title"))
-                .font(XGTypography.headlineMedium)
-                .foregroundStyle(XGColors.onSurface)
-
-            Text(String(localized: "home_welcome_subtitle"))
-                .font(XGTypography.bodyLarge)
-                .foregroundStyle(XGColors.onSurfaceVariant)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
-        .padding(.top, XGSpacing.sm)
-    }
-
     // MARK: - Search Bar
 
     var searchBar: some View {
@@ -72,8 +55,6 @@ extension HomeScreen {
 
     func heroBannerCarousel(_ banners: [HomeBanner]) -> some View {
         VStack(spacing: XGSpacing.md) {
-            XGSectionHeader(title: String(localized: "home_featured_title"))
-
             if !banners.isEmpty {
                 TabView(selection: $viewModel.currentBannerPage) {
                     ForEach(Array(banners.enumerated()), id: \.element.id) { index, banner in
@@ -140,11 +121,6 @@ extension HomeScreen {
             if !data.popularProducts.isEmpty {
                 XGSectionHeader(
                     title: String(localized: "home_popular_title"),
-                    onSeeAllAction: {
-                        router.navigate(
-                            to: .productList(categoryId: nil, query: "popular"),
-                        )
-                    },
                 )
 
                 productGrid(products: data.popularProducts, data: data)

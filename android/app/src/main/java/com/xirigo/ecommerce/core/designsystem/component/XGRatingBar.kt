@@ -31,7 +31,7 @@ fun XGRatingBar(
     rating: Float,
     modifier: Modifier = Modifier,
     maxRating: Int = 5,
-    starSize: Dp = 16.dp,
+    starSize: Dp = 12.dp,
     showValue: Boolean = false,
     reviewCount: Int? = null,
 ) {

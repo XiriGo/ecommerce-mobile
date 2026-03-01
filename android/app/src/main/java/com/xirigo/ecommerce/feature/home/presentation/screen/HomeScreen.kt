@@ -2,7 +2,6 @@ package com.xirigo.ecommerce.feature.home.presentation.screen
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -46,9 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.xirigo.ecommerce.R
@@ -76,7 +72,6 @@ import com.xirigo.ecommerce.feature.home.presentation.state.HomeUiState
 import com.xirigo.ecommerce.feature.home.presentation.viewmodel.HomeViewModel
 
 private const val AUTO_SCROLL_DELAY_MS = 5000L
-private val ProductGridRowHeight = 280.dp
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
@@ -121,7 +116,6 @@ private fun HomeScreenContent(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState()),
                 ) {
-                    WelcomeHeader()
                     Spacer(modifier = Modifier.height(XGSpacing.Base))
                     SearchBarSection(onSearchClick = { onEvent(HomeEvent.SearchBarTapped) })
                     Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
@@ -162,39 +156,13 @@ private fun HomeScreenContent(
 }
 
 @Composable
-private fun WelcomeHeader() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .padding(
-                horizontal = XGSpacing.ScreenPaddingHorizontal,
-                vertical = XGSpacing.LG,
-            ),
-    ) {
-        Text(
-            text = stringResource(R.string.home_welcome_title),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-        )
-        Spacer(modifier = Modifier.height(XGSpacing.XS))
-        Text(
-            text = stringResource(R.string.home_welcome_subtitle),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
-        )
-    }
-}
-
-@Composable
 private fun SearchBarSection(onSearchClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = XGSpacing.ScreenPaddingHorizontal)
             .clickable(onClick = onSearchClick),
-        shape = RoundedCornerShape(XGCornerRadius.Large),
+        shape = RoundedCornerShape(XGCornerRadius.Medium),
         elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -293,7 +261,6 @@ private fun PopularProductsSection(
 
     XGSectionHeader(
         title = stringResource(R.string.home_section_popular),
-        onSeeAllClick = { onEvent(HomeEvent.SeeAllPopularTapped) },
     )
     Spacer(modifier = Modifier.height(XGSpacing.SM))
     ProductGrid(
@@ -400,8 +367,7 @@ private fun ProductGridRow(
                 },
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
                 modifier = Modifier
-                    .weight(1f)
-                    .heightIn(min = ProductGridRowHeight),
+                    .weight(1f),
             )
         }
         if (rowProducts.size == 1) {

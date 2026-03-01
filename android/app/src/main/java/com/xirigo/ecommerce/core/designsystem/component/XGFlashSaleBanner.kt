@@ -15,20 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 private val BannerHeight = 133.dp
-
-private val FlashSaleBackground = Color(0xFFFFD814)
-private val AccentBlue = Color(0xFF9EBDF4)
-private val AccentPink = Color(0xFFF60186)
-private val FlashSaleText = Color(0xFF1D1D1B)
 
 @Composable
 fun XGFlashSaleBanner(
@@ -43,8 +38,8 @@ fun XGFlashSaleBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(BannerHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Large))
-            .background(FlashSaleBackground)
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
+            .background(XGColors.FlashSaleBackground)
             .then(clickModifier),
         contentAlignment = Alignment.Center,
     ) {
@@ -60,7 +55,7 @@ fun XGFlashSaleBanner(
                 lineTo(stripeWidth * 0.5f, canvasHeight)
                 close()
             }
-            drawPath(leftPath, AccentBlue)
+            drawPath(leftPath, XGColors.FlashSaleAccentBlue)
 
             val rightPath = Path().apply {
                 moveTo(canvasWidth - stripeWidth * 1.5f, 0f)
@@ -69,7 +64,7 @@ fun XGFlashSaleBanner(
                 lineTo(canvasWidth - stripeWidth, canvasHeight)
                 close()
             }
-            drawPath(rightPath, AccentPink)
+            drawPath(rightPath, XGColors.FlashSaleAccentPink)
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -86,7 +81,7 @@ fun XGFlashSaleBanner(
                 text = title,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
-                color = FlashSaleText,
+                color = XGColors.FlashSaleText,
             )
         }
     }

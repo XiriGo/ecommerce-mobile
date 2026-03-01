@@ -54,7 +54,7 @@ fun XGHeroBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(BannerHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Large))
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
             .then(clickModifier),
     ) {
         if (imageUrl != null) {
@@ -138,7 +138,7 @@ private fun XGHeroBannerWithImagePreview() {
         XGHeroBanner(
             title = "New Collection",
             subtitle = "Explore the latest arrivals",
-            imageUrl = "https://picsum.photos/700/384",
+            imageUrl = null,
             onClick = {},
         )
     }

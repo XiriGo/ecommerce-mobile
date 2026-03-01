@@ -2,90 +2,140 @@ import SwiftUI
 
 // MARK: - XGColors
 
+/// Design system color tokens derived from `shared/design-tokens/colors.json`.
+/// All values must match the JSON source — never use Material 3 defaults.
 enum XGColors {
-    // MARK: - Primary Colors
-
-    static let primary = Color(hex: "#6750A4")
-    static let onPrimary = Color.white
-    static let primaryContainer = Color(hex: "#EADDFF")
-    static let onPrimaryContainer = Color(hex: "#21005D")
-
-    // MARK: - Secondary Colors
-
-    static let secondary = Color(hex: "#625B71")
-    static let onSecondary = Color.white
-    static let secondaryContainer = Color(hex: "#E8DEF8")
-    static let onSecondaryContainer = Color(hex: "#1D192B")
-
-    // MARK: - Tertiary Colors
-
-    static let tertiary = Color(hex: "#7D5260")
-    static let onTertiary = Color.white
-    static let tertiaryContainer = Color(hex: "#FFD8E4")
-    static let onTertiaryContainer = Color(hex: "#31111D")
-
-    // MARK: - Error Colors
-
-    static let error = Color(hex: "#B3261E")
-    static let onError = Color.white
-    static let errorContainer = Color(hex: "#F9DEDC")
-    static let onErrorContainer = Color(hex: "#410E0B")
-
-    // MARK: - Surface Colors
-
-    static let surface = Color(hex: "#FFFBFE")
-    static let onSurface = Color(hex: "#1C1B1F")
-    static let surfaceVariant = Color(hex: "#E7E0EC")
-    static let onSurfaceVariant = Color(hex: "#49454F")
-
-    // MARK: - Outline Colors
-
-    static let outline = Color(hex: "#79747E")
-    static let outlineVariant = Color(hex: "#CAC4D0")
-
-    // MARK: - Background Colors
-
-    static let background = Color(hex: "#FFFBFE")
-    static let onBackground = Color(hex: "#1C1B1F")
-
-    // MARK: - Inverse Colors
-
-    static let inverseSurface = Color(hex: "#313033")
-    static let inverseOnSurface = Color(hex: "#F4EFF4")
-    static let inversePrimary = Color(hex: "#D0BCFF")
-
-    static let scrim = Color.black
-    static let shadow = Color.black
-
-    // MARK: - Semantic Colors (E-commerce)
-
-    static let success = Color(hex: "#4CAF50")
-    static let onSuccess = Color.white
-    static let warning = Color(hex: "#FF9800")
-    static let onWarning = Color.white
-    static let info = Color(hex: "#2196F3")
-    static let onInfo = Color.white
-    static let priceRegular = Color(hex: "#1C1B1F")
-    static let priceSale = Color(hex: "#B3261E")
-    static let priceOriginal = Color(hex: "#79747E")
-    static let ratingStarFilled = Color(hex: "#FFC107")
-    static let ratingStarEmpty = Color(hex: "#E0E0E0")
-    static let badgeBackground = Color(hex: "#B3261E")
-    static let badgeText = Color.white
-    static let divider = Color(hex: "#CAC4D0")
-    static let shimmer = Color(hex: "#E7E0EC")
-
     // MARK: - Brand Colors
 
     static let brandPrimary = Color(hex: "#6000FE")
-    static let brandOnPrimary = Color.white
+    static let brandPrimaryLight = Color(hex: "#9000FE")
+    static let brandPrimaryDark = Color(hex: "#3C00D2")
     static let brandSecondary = Color(hex: "#94D63A")
+    static let brandOnPrimary = Color.white
     static let brandOnSecondary = Color(hex: "#6000FE")
+
+    // MARK: - Primary / Secondary (Alias for brand usage in generic components)
+
+    static let primary = Color(hex: "#6000FE")
+    static let onPrimary = Color.white
+    static let secondary = Color(hex: "#94D63A")
+    static let onSecondary = Color(hex: "#6000FE")
+    static let secondaryContainer = Color(hex: "#6200FF")
+    static let onSecondaryContainer = Color.white
+
+    // MARK: - Surface Colors
+
+    static let background = Color(hex: "#F8F9FC")
+    static let onBackground = Color(hex: "#333333")
+    static let surface = Color(hex: "#FFFFFF")
+    static let onSurface = Color(hex: "#333333")
+    static let surfaceSecondary = Color(hex: "#F9FAFB")
+    static let surfaceVariant = Color(hex: "#F1F5F9")
+    static let onSurfaceVariant = Color(hex: "#8E8E93")
+    static let surfaceElevated = Color(hex: "#FFFFFF")
+
+    // MARK: - Border / Outline Colors
+
+    static let outline = Color(hex: "#E5E7EB")
+    static let outlineVariant = Color(hex: "#F0F0F0")
+    static let borderStrong = Color(hex: "#D1D5DB")
+
+    // MARK: - Text Colors
+
+    static let textDark = Color(hex: "#111827")
+    static let textDarkSecondary = Color(hex: "#374151")
+    static let textOnDark = Color.white
+    static let textLink = Color(hex: "#6000FE")
+    static let textPlaceholder = Color(hex: "#9CA3AF")
+    static let textTertiary = Color(hex: "#9CA3AF")
+
+    // MARK: - Icon Colors
+
+    static let iconActive = Color(hex: "#6000FE")
+    static let iconInactive = Color(hex: "#8E8E93")
+    static let iconOnDark = Color.white
+    static let iconButtonBackground = Color(hex: "#F3F4F6")
+
+    // MARK: - Input Colors
+
+    static let inputBackground = Color(hex: "#F9FAFB")
+    static let inputBorder = Color(hex: "#E5E7EB")
+    static let inputPlaceholder = Color(hex: "#9CA3AF")
+    static let inputLabel = Color(hex: "#9CA3AF")
+
+    // MARK: - Divider
+
+    static let divider = Color(hex: "#E5E7EB")
+
+    // MARK: - Error Colors
+
+    static let error = Color(hex: "#EF4444")
+    static let onError = Color.white
+
+    // MARK: - Semantic Status Colors
+
+    static let success = Color(hex: "#22C55E")
+    static let onSuccess = Color.white
+    static let warning = Color(hex: "#FACC15")
+    static let onWarning = Color(hex: "#1D1D1B")
+    static let info = Color(hex: "#3B82F6")
+    static let onInfo = Color.white
+
+    // MARK: - Price Colors
+
+    static let priceRegular = Color(hex: "#333333")
+    static let priceSale = Color(hex: "#6000FE")
+    static let priceOriginal = Color(hex: "#8E8E93")
+    static let priceStrikethrough = Color(hex: "#8E8E93")
+
+    // MARK: - Rating Colors
+
+    static let ratingStarFilled = Color(hex: "#6000FE")
+    static let ratingStarEmpty = Color(hex: "#8E8E93")
+    static let ratingStarDeal = Color(hex: "#FACC15")
+
+    // MARK: - Badge Colors
+
+    static let badgeBackground = Color(hex: "#6000FE")
+    static let badgeText = Color.white
+    static let badgeSecondaryBackground = Color(hex: "#94D63A")
+    static let badgeSecondaryText = Color(hex: "#6000FE")
+
+    // MARK: - Delivery & Cart
+
+    static let deliveryText = Color(hex: "#94D63A")
+    static let addToCart = Color(hex: "#94D63A")
+
+    // MARK: - Shimmer
+
+    static let shimmer = Color(hex: "#F1F5F9")
+
+    // MARK: - Flash Sale Colors
+
+    static let flashSaleBackground = Color(hex: "#FFD814")
+    static let flashSaleAccentBlue = Color(hex: "#9EBDF4")
+    static let flashSaleAccentPink = Color(hex: "#F60186")
+    static let flashSaleText = Color(hex: "#1D1D1B")
 
     // MARK: - Pagination Dots
 
     static let paginationDotsActive = Color(hex: "#6000FE")
     static let paginationDotsInactive = Color(hex: "#D1D5DB")
+
+    // MARK: - Bottom Navigation
+
+    static let bottomNavBackground = Color.white
+    static let bottomNavIconActive = Color(hex: "#6000FE")
+    static let bottomNavIconInactive = Color(hex: "#8E8E93")
+
+    // MARK: - Scrim & Shadow
+
+    static let scrim = Color.black
+    static let shadow = Color.black
+
+    // MARK: - Tertiary (fallback gradients)
+
+    static let tertiary = Color(hex: "#3C00D2")
 }
 
 // MARK: - Color Extension for Hex Support

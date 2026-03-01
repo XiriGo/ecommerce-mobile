@@ -66,7 +66,7 @@ struct XGImage: View {
 }
 
 #Preview("XGImage with URL") {
-    XGImage(url: URL(string: "https://picsum.photos/400/300"))
+    XGImage(url: nil)
         .frame(width: 200, height: 150)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
 }

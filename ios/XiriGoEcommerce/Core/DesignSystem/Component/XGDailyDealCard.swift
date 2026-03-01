@@ -44,7 +44,7 @@ struct XGDailyDealCard: View {
             .padding(XGSpacing.base)
             .frame(height: Constants.cardHeight)
             .background(backgroundGradient)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         }
         .buttonStyle(.plain)
         .disabled(action == nil)
@@ -87,7 +87,7 @@ struct XGDailyDealCard: View {
     private var backgroundGradient: some View {
         LinearGradient(
             colors: [
-                Color(hex: "#111827"),
+                XGColors.textDark,
                 XGColors.brandPrimary,
             ],
             startPoint: .leading,
@@ -113,7 +113,7 @@ struct XGDailyDealCard: View {
 
                 Text(originalPrice)
                     .font(XGTypography.bodySmall)
-                    .foregroundStyle(Color(hex: "#8E8E93"))
+                    .foregroundStyle(XGColors.priceStrikethrough)
                     .strikethrough()
             }
         }
@@ -171,7 +171,7 @@ struct XGDailyDealCard: View {
         price: "89.99",
         originalPrice: "149.99",
         endTime: Date().addingTimeInterval(28_800),
-        imageUrl: URL(string: "https://picsum.photos/seed/deal/400/400"),
+        imageUrl: nil,
         action: {},
     )
     .padding()
