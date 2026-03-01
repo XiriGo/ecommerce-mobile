@@ -9,6 +9,7 @@
 | `/queue-run all` | Tum feature'lari sirayla kodla |
 | `/queue-run M1` | Tek milestone calistir |
 | `/queue-run --from 15` | Belirli issue'dan devam et |
+| `./scripts/queue-runner.sh M1` | Gece modu — her feature ayri process (memory leak yok) |
 | `/verify all` | Build + lint + test kontrol |
 | `/create-pr develop --closes 12 --auto-merge` | PR olustur + auto-merge |
 | `make all` | Build + lint + test (her iki platform) |
@@ -158,7 +159,7 @@ Birden fazla feature'i sirayla otomatik kodlar. GitHub Issues API'den `status:re
 3. Her issue icin:
    a. Issue'yu claim et (status:in-progress)
    b. Branch olustur: feature/{pipeline_id}
-   c. /pipeline-run calistir (7 agent team)
+   c. Pipeline'i IZOLE SUBAGENT icerisinde calistir
    d. Quality gate: build + lint + test
    e. PR olustur (Closes #N) + auto-merge
    f. Issue'yu kapat (status:done)
@@ -166,6 +167,18 @@ Birden fazla feature'i sirayla otomatik kodlar. GitHub Issues API'den `status:re
    h. develop'a don, sonraki issue'ya gec
 4. Ozet tablosu yazdir
 ```
+
+### Memory Izolasyonu
+
+`/queue-run` her pipeline-run'i **izole bir Agent subagent** icerisinde calistirir:
+
+- Her feature'in tum context'i (dosya okumalari, build ciktilari, git islemleri, agent team) **izole** kalir
+- Subagent bittiginde context **garbage-collected** olur
+- Ana queue-run conversation'ina sadece kisa ozet doner
+- 10+ feature calistirsan bile ana context **minimal** kalir
+- Gece birak, sabaha kadar sorunsuz calissin
+
+Alternatif olarak daha guclu izolasyon icin `scripts/queue-runner.sh` kullanilabilir (her feature tamamen ayri OS process'inde calisir).
 
 ### Hata Durumu
 
@@ -234,6 +247,24 @@ M0-06 Auth Infrastructure ── M0-03 + M0-05'e bagimli
 # M0'i otomatik isle (dependency sirasini kendisi cozer)
 /queue-run M0
 ```
+
+### Gece Modu (External Orchestrator)
+
+Uzun sureli unattended calisma icin `queue-runner.sh` kullan.
+Her feature ayri Claude Code process'inde calisir — memory birikmez.
+
+```bash
+# Tum feature'lari gece birak
+nohup ./scripts/queue-runner.sh all > logs/queue-run/nohup.log 2>&1 &
+
+# Tek milestone
+nohup ./scripts/queue-runner.sh M1 > logs/queue-run/nohup.log 2>&1 &
+
+# Kaldigi yerden devam
+./scripts/queue-runner.sh --from 15
+```
+
+Detayli kullanim kilavuzu: `docs/queue-runner.md`
 
 ---
 
@@ -498,6 +529,16 @@ gh auth status
 
 # PR olustur
 /create-pr develop --closes 36 --auto-merge
+```
+
+### Gece Birakma
+
+```bash
+# Milestone'u gece birak
+nohup ./scripts/queue-runner.sh M1 > logs/queue-run/nohup.log 2>&1 &
+
+# Sabah kontrol
+tail -50 logs/queue-run/run-*.log
 ```
 
 ### Hata Durumunda

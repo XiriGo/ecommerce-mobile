@@ -1,6 +1,7 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
-import coil3.compose.AsyncImage
+import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import androidx.compose.foundation.background
@@ -12,17 +13,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
+import com.xirigo.ecommerce.core.designsystem.theme.XGMotion
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-private const val CROSSFADE_DURATION_MS = 250
+/** Icon size for the placeholder and error fallback states. */
+private val PlaceholderIconSize = 27.dp
 
-/** Async image loader with shimmer placeholder and branded error fallback. */
+/** Preview-only square size for demonstration. */
+private val PreviewImageSize = 200.dp
+
+/**
+ * Async image loader with animated shimmer placeholder and branded error fallback.
+ *
+ * Uses [SubcomposeAsyncImage] to support composable loading/error slots with
+ * [shimmerEffect] animation. Crossfade duration is driven by
+ * [XGMotion.Crossfade.IMAGE_FADE_IN].
+ *
+ * @param url Image URL to load. When `null`, renders the branded error fallback.
+ * @param contentDescription Accessibility label for the image.
+ * @param modifier Modifier applied to the root composable.
+ * @param contentScale How the image content is scaled within the bounds.
+ */
 @Composable
 fun XGImage(
     url: String?,
@@ -31,32 +47,57 @@ fun XGImage(
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     if (url != null) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url)
-                .crossfade(true)
-                .crossfade(CROSSFADE_DURATION_MS)
+                .crossfade(XGMotion.Crossfade.IMAGE_FADE_IN)
                 .build(),
             contentDescription = contentDescription,
             modifier = modifier,
             contentScale = contentScale,
-            placeholder = ColorPainter(XGColors.Shimmer),
-            error = ColorPainter(XGColors.Shimmer),
+            loading = {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(XGColors.Shimmer)
+                        .shimmerEffect(),
+                )
+            },
+            error = {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(XGColors.SurfaceVariant),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Image,
+                        contentDescription = null,
+                        tint = XGColors.OnSurfaceVariant,
+                        modifier = Modifier.size(PlaceholderIconSize),
+                    )
+                }
+            },
+            content = {
+                SubcomposeAsyncImageContent(contentScale = contentScale)
+            },
         )
     } else {
         Box(
-            modifier = modifier.background(XGColors.Shimmer),
+            modifier = modifier.background(XGColors.SurfaceVariant),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = Icons.Outlined.Image,
-                contentDescription = null,
+                contentDescription = contentDescription,
                 tint = XGColors.OnSurfaceVariant,
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(PlaceholderIconSize),
             )
         }
     }
 }
+
+// region Preview
 
 @Preview(showBackground = true)
 @Composable
@@ -65,7 +106,7 @@ private fun XGImagePlaceholderPreview() {
         XGImage(
             url = null,
             contentDescription = "Product image",
-            modifier = Modifier.size(200.dp),
+            modifier = Modifier.size(PreviewImageSize),
         )
     }
 }
@@ -77,7 +118,23 @@ private fun XGImageWithUrlPreview() {
         XGImage(
             url = "https://example.com/image.jpg",
             contentDescription = "Product image",
-            modifier = Modifier.size(200.dp),
+            modifier = Modifier.size(PreviewImageSize),
         )
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun XGImageErrorPreview() {
+    XGTheme {
+        // Simulates an error state by using a broken URL.
+        // SubcomposeAsyncImage will render the error slot.
+        XGImage(
+            url = "https://invalid.test/broken-image",
+            contentDescription = "Product image error",
+            modifier = Modifier.size(PreviewImageSize),
+        )
+    }
+}
+
+// endregion

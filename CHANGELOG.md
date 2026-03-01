@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-08)
+
+- **XGBadge token audit**: Audited and aligned the full badge component family (`XGBadge`, `XGCountBadge`, `XGStatusBadge`) against `shared/design-tokens/components/atoms/xg-badge.json`. Android: added `XGBadgeVariant` enum (Primary/Secondary), added `XGBadge` composable, fixed `XGStatusBadge` to use `XGColors` tokens instead of `MaterialTheme.colorScheme` references, corrected `XGCountBadge` shape from `CircleShape` to `RoundedCornerShape(XGCornerRadius.Full)` (capsule), added `XGCustomTextStyles.CaptionSemiBold` (12sp SemiBold Poppins). iOS: removed unused `Constants.fontSize` dead code; all token references were already spec-aligned. 56 Android tests (37 JVM unit + 19 Compose UI) + 89 iOS tests (88 passing, 1 skipped) across 11 suites. (Android + iOS)
+
+#### Design Quality Backfill (DQ-01 – DQ-06)
+
+- **Skeleton base components** (`SkeletonBox`, `SkeletonLine`, `SkeletonCircle`) for iOS — rectangular, text-line, and circular shimmer loading placeholders built on `XGColors.shimmer`, `XGCornerRadius`, and the existing `shimmerEffect()` modifier. `SkeletonLine` corner radius is fixed at `XGCornerRadius.small` (6pt); `SkeletonBox` defaults to `XGCornerRadius.medium` (10pt) and is configurable. (#50)
+- **Content-wrapping `.skeleton(visible:placeholder:)` modifier for iOS** — `SkeletonModifier` (`ViewModifier`) crossfades between a skeleton placeholder layout and real content using `.transition(.opacity)` with `XGMotion.Crossfade.contentSwitch` (0.2s) easeInOut animation. Individual shapes are accessibility-hidden; the modifier announces "Loading content" (`skeleton_loading_placeholder`) to VoiceOver when visible. 37 Swift Testing unit tests across 7 suites. (iOS)
+
 #### Design Quality Backfill (DQ-01 – DQ-04)
 
 - **Motion Tokens (XGMotion)**: Centralized animation, transition, shimmer, scroll, and performance token namespace added to the design system theme layer (`XGMotion.kt` / `XGMotion.swift`). Covers 7 token categories — Duration (5), Easing (4), Shimmer (4), Crossfade (2), Scroll (2), EntranceAnimation (5), Performance (5) — all sourced from `shared/design-tokens/foundations/motion.json`. Replaces all previously hardcoded animation values in `XGImage` and `XGPaginationDots`. Includes `XGMotionTokenPreview` `@Preview` composable on Android. (Android + iOS)
