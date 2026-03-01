@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-08)
+
+- **XGBadge token audit**: Audited and aligned the full badge component family (`XGBadge`, `XGCountBadge`, `XGStatusBadge`) against `shared/design-tokens/components/atoms/xg-badge.json`. Android: added `XGBadgeVariant` enum (Primary/Secondary), added `XGBadge` composable, fixed `XGStatusBadge` to use `XGColors` tokens instead of `MaterialTheme.colorScheme` references, corrected `XGCountBadge` shape from `CircleShape` to `RoundedCornerShape(XGCornerRadius.Full)` (capsule), added `XGCustomTextStyles.CaptionSemiBold` (12sp SemiBold Poppins). iOS: removed unused `Constants.fontSize` dead code; all token references were already spec-aligned. 56 Android tests (37 JVM unit + 19 Compose UI) + 89 iOS tests (88 passing, 1 skipped) across 11 suites. (Android + iOS)
+
 #### Design Quality Backfill (DQ-01 – DQ-06)
 
 - **Skeleton base components** (`SkeletonBox`, `SkeletonLine`, `SkeletonCircle`) for iOS — rectangular, text-line, and circular shimmer loading placeholders built on `XGColors.shimmer`, `XGCornerRadius`, and the existing `shimmerEffect()` modifier. `SkeletonLine` corner radius is fixed at `XGCornerRadius.small` (6pt); `SkeletonBox` defaults to `XGCornerRadius.medium` (10pt) and is configurable. (#50)
