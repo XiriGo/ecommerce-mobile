@@ -66,7 +66,6 @@ struct XGBadge: View {
     // MARK: - Private
 
     private enum Constants {
-        static let fontSize: CGFloat = 12
         static let horizontalPadding: CGFloat = 10
         static let verticalPadding: CGFloat = 4
     }
