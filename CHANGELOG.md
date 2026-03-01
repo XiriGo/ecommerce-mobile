@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-01 – DQ-04)
+
+- **Motion Tokens (XGMotion)**: Centralized animation, transition, shimmer, scroll, and performance token namespace added to the design system theme layer (`XGMotion.kt` / `XGMotion.swift`). Covers 7 token categories — Duration (5), Easing (4), Shimmer (4), Crossfade (2), Scroll (2), EntranceAnimation (5), Performance (5) — all sourced from `shared/design-tokens/foundations/motion.json`. Replaces all previously hardcoded animation values in `XGImage` and `XGPaginationDots`. Includes `XGMotionTokenPreview` `@Preview` composable on Android. (Android + iOS)
+- **Shimmer Effect Modifier**: `Modifier.shimmerEffect(enabled: Boolean)` extension (Android) and `View.shimmerEffect(active: Bool)` extension via `ShimmerModifier` ViewModifier (iOS). Applies an animated three-color linear gradient sweep (left-to-right, 20°, 1200ms, `#E0E0E0/#F5F5F5/#E0E0E0`) to any view shape for loading placeholder animations. GPU-accelerated via `graphicsLayer` (Android) / implicit SwiftUI layer (iOS). No-op when disabled. All parameters from `XGMotion.Shimmer` tokens. (Android + iOS)
+
 #### M1-04: Home Screen
 
 - **Home Screen**: Vertical scrollable feed with 7 sections (welcome header, search bar, hero banner carousel, categories, popular products, daily deal, new arrivals, flash sale banner) (Android + iOS)

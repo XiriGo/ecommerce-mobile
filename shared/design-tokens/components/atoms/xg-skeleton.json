@@ -1,0 +1,52 @@
+{
+  "component": "XGSkeleton",
+  "category": "atoms",
+  "description": "Skeleton loading placeholder primitives",
+  "variants": {
+    "SkeletonBox": {
+      "params": {
+        "width": { "type": "dimension", "required": true },
+        "height": { "type": "dimension", "required": true },
+        "cornerRadius": { "type": "dimension", "default": "$foundations/spacing.cornerRadius.medium" }
+      },
+      "fill": "$foundations/colors.semantic.shimmer",
+      "animation": "$foundations/motion.shimmer"
+    },
+    "SkeletonLine": {
+      "params": {
+        "width": { "type": "dimension", "required": true },
+        "height": { "type": "dimension", "default": 14 }
+      },
+      "cornerRadius": "$foundations/spacing.cornerRadius.small",
+      "fill": "$foundations/colors.semantic.shimmer",
+      "animation": "$foundations/motion.shimmer"
+    },
+    "SkeletonCircle": {
+      "params": {
+        "size": { "type": "dimension", "required": true }
+      },
+      "shape": "circle",
+      "fill": "$foundations/colors.semantic.shimmer",
+      "animation": "$foundations/motion.shimmer"
+    }
+  },
+  "wrapper": {
+    "XGSkeleton": {
+      "description": "Crossfade wrapper between skeleton placeholder and real content",
+      "params": {
+        "visible": { "type": "boolean", "required": true },
+        "placeholder": { "type": "slot", "required": true }
+      },
+      "transition": {
+        "type": "crossfade",
+        "duration": "$foundations/motion.crossfade.contentSwitch"
+      }
+    }
+  },
+  "accessibility": {
+    "shapes": "decorative, hidden from accessibility tree",
+    "wrapper": {
+      "loadingLabel": "skeleton_loading_placeholder"
+    }
+  }
+}
