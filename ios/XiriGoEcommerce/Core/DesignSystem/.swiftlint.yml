@@ -1,0 +1,10 @@
+# =============================================================================
+# SwiftLint Child Config — DesignSystem
+# =============================================================================
+# Design token files define named constants with literal numeric values.
+# These ARE the constant definitions, so no_magic_numbers does not apply here.
+# This is a config-level exclusion, not an inline suppression.
+# =============================================================================
+
+disabled_rules:
+  - no_magic_numbers

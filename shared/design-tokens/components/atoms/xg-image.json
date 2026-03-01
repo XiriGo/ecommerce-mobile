@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGImage",
+  "category": "atom",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGImage.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGImage.kt"
+  },
+
+  "tokens": {
+    "placeholderBackground": "$foundations/colors.semantic.shimmer",
+    "placeholderIconSize": "$foundations/spacing.layout.iconSize.large",
+    "placeholderIconColor": "$foundations/colors.light.textSecondary (50% opacity)",
+    "placeholderIcon": { "ios": "photo", "android": "Icons.Outlined.Image" },
+    "fadeAnimation": "easeInOut(duration: 0.25)"
+  },
+
+  "parameters": {
+    "url": { "type": "URL?/String?", "required": true },
+    "contentMode": { "type": "ContentMode", "default": "fill" },
+    "accessibilityLabel": { "type": "String?", "default": null }
+  }
+}

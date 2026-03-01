@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGHeroBanner",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGHeroBanner.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGHeroBanner.kt"
+  },
+
+  "composedAtoms": [
+    "$atoms/xg-image",
+    "$atoms/xg-badge (secondary variant, used as tag)"
+  ],
+
+  "tokens": {
+    "svgReferenceWidth": 350,
+    "_widthNote": "350 = 390px artboard − 2×20px padding. In code: use fillMaxWidth/maxWidth:.infinity. Never hardcode 350.",
+    "height": 192,
+    "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "overlayGradient": "$foundations/gradients.heroBannerOverlay",
+    "fallbackGradient": "brandPrimary → tertiary (topLeading → bottomTrailing)",
+    "contentPadding": "$foundations/spacing.spacing.base"
+  },
+
+  "subComponents": {
+    "tagBadge": {
+      "font": "$foundations/typography.typeScale.captionSemiBold",
+      "textColor": "$foundations/colors.brand.primary",
+      "background": "$foundations/colors.brand.secondary",
+      "horizontalPadding": 10,
+      "verticalPadding": 4,
+      "cornerRadius": "$foundations/spacing.cornerRadius.medium"
+    },
+    "headline": {
+      "font": "$foundations/typography.typeScale.headline",
+      "color": "$foundations/colors.light.textOnDark",
+      "maxLines": 2
+    },
+    "subtitle": {
+      "font": "$foundations/typography.typeScale.body",
+      "color": "$foundations/colors.light.textOnDark",
+      "maxLines": 1
+    }
+  },
+
+  "layout": "ZStack: [backgroundImage, gradientOverlay, VStack(tag → Spacer → headline → subtitle)]"
+}

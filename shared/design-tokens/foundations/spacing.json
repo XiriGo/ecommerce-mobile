@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "XiriGo Ecommerce design tokens — Spacing, Corner Radius, Elevation & Layout. Extracted from XiriGo-Design SVG files.",
+  "source": "XiriGo-Design/Svg/XiriGo_App_01–04.svg",
+
+  "spacing": {
+    "_note": "Tasarimdaki spacing degerleri 4dp grid'e yuvarlanmistir. Tum degerler dp/pt cinsindendir.",
+    "xxs": 2,
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "base": 16,
+    "lg": 20,
+    "xl": 24,
+    "xxl": 32,
+    "xxxl": 48
+  },
+
+  "cornerRadius": {
+    "none": 0,
+    "small": 6,
+    "medium": 10,
+    "large": 16,
+    "pill": 28,
+    "toggle": 22,
+    "circle": 999,
+    "_note": "10dp tum interactive elementler icin standart radius. Pill (28dp) search bar ve toggle icin. App icon radius = 115dp (App Store guideline'a gore ayarlanir)."
+  },
+
+  "elevation": {
+    "_note": "Tasarimda explicit shadow kullanilmiyor — kartlar border ile ayrilmis. Elevation degerler platform uyumlulugu icin saklanmistir.",
+    "level0": 0,
+    "level1": 1,
+    "level2": 2,
+    "level3": 4,
+    "level4": 8,
+    "level5": 12
+  },
+
+  "layout": {
+    "screenWidth": 390,
+    "screenPaddingHorizontal": 20,
+    "screenPaddingVertical": 16,
+
+    "contentWidth": 350,
+
+    "sectionSpacing": 24,
+    "sectionHeaderBottomSpacing": 16,
+
+    "productGrid": {
+      "columns": 2,
+      "gutter": 10,
+      "outerMargin": 20,
+      "featuredCard": {
+        "width": 160,
+        "height": 293
+      },
+      "standardCard": {
+        "width": 170,
+        "height": 344
+      }
+    },
+
+    "categoryGrid": {
+      "columns": 4,
+      "iconSize": 79,
+      "gap": 11,
+      "outerMargin": 20
+    },
+
+    "cardPadding": 12,
+    "listItemSpacing": 10,
+
+    "minTouchTarget": 48,
+
+    "iconSize": {
+      "small": 16,
+      "medium": 24,
+      "large": 27,
+      "extraLarge": 32
+    },
+
+    "avatarSize": {
+      "small": 32,
+      "medium": 48,
+      "large": 64,
+      "extraLarge": 96
+    },
+
+    "bannerAspectRatio": "350:192",
+    "dealCardAspectRatio": "350:163",
+    "flashSaleAspectRatio": "350:133",
+    "productImageAspectRatio": "1:1"
+  },
+
+  "buttonSize": {
+    "primary": {
+      "width": 342,
+      "height": 56,
+      "cornerRadius": 10,
+      "horizontalInset": 24
+    },
+    "social": {
+      "width": 153,
+      "height": 44,
+      "cornerRadius": 10
+    },
+    "filterApply": {
+      "width": 342,
+      "height": 56,
+      "cornerRadius": 10
+    },
+    "iconButton": {
+      "size": 27,
+      "cornerRadius": 6
+    },
+    "addToCartFab": {
+      "size": 32,
+      "cornerRadius": 16
+    }
+  },
+
+  "inputSize": {
+    "default": {
+      "height": 52,
+      "cornerRadius": 10,
+      "horizontalPadding": 16
+    },
+    "search": {
+      "height": 43,
+      "cornerRadius": 10,
+      "horizontalPadding": 12
+    },
+    "priceRange": {
+      "width": 166,
+      "height": 37,
+      "cornerRadius": 10
+    }
+  },
+
+  "bottomNavigation": {
+    "height": 75,
+    "iconSpacing": 68,
+    "_note": "5 ikon esit aralikla dagitilir. Safe area inset platform tarafindan eklenir."
+  },
+
+  "paginationDots": {
+    "activeWidth": 18,
+    "inactiveWidth": 6,
+    "height": 6,
+    "cornerRadius": 3,
+    "gap": 4
+  },
+
+  "colorSwatch": {
+    "size": 40,
+    "cornerRadius": 20,
+    "selectedRingWidth": 2,
+    "selectedRingGap": 3
+  },
+
+  "starRating": {
+    "starSize": 12,
+    "gap": 2,
+    "count": 5
+  },
+
+  "wishlistButton": {
+    "size": 32,
+    "iconSize": 16,
+    "cornerRadius": 16
+  }
+}

@@ -1,0 +1,63 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Delivery truck body -->
+    <path
+        android:pathData="M25,85 L120,85 L120,145 L25,145 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.2"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3" />
+
+    <!-- Truck cabin -->
+    <path
+        android:pathData="M120,105 L160,105 L170,125 L170,145 L120,145 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.15"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3" />
+
+    <!-- Cabin window -->
+    <path
+        android:pathData="M130,110 L155,110 L162,125 L130,125 Z"
+        android:fillColor="#94D63A"
+        android:fillAlpha="0.3" />
+
+    <!-- Left wheel -->
+    <path
+        android:pathData="M60,145 m-15,0 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.3"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3" />
+
+    <!-- Right wheel -->
+    <path
+        android:pathData="M150,145 m-15,0 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.3"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3" />
+
+    <!-- Location pin -->
+    <path
+        android:pathData="M160,35 Q160,20 145,20 Q130,20 130,35 Q130,50 145,65 Q160,50 160,35"
+        android:fillColor="#94D63A"
+        android:fillAlpha="0.8" />
+
+    <!-- Pin dot -->
+    <path
+        android:pathData="M145,35 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Dotted route line -->
+    <path
+        android:pathData="M70,70 Q100,50 130,55 Q140,57 145,65"
+        android:strokeColor="#94D63A"
+        android:strokeWidth="2"
+        android:fillColor="@android:color/transparent"
+        android:strokeLineCap="round" />
+</vector>

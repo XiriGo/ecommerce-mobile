@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGProductCard",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGCard.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGCard.kt"
+  },
+
+  "composedAtoms": [
+    "$atoms/xg-image",
+    "$atoms/xg-wishlist-button",
+    "$atoms/xg-rating-bar",
+    "$atoms/xg-price-text",
+    "$atoms/xg-badge (delivery variant)"
+  ],
+
+  "heightBehavior": {
+    "_rule": "ALL cards in the same list/grid MUST have identical height regardless of data presence.",
+    "_reason": "Cards with originalPrice show strikethrough → taller. Cards without → shorter. Mixed heights in a row = bad UX.",
+    "strategy": "reserveSpace",
+    "description": "Always reserve vertical space for ALL optional content rows (strikethrough, rating, deliveryLabel) even when the data is nil/null. Use invisible placeholders (opacity 0 or transparent spacer with same height) so every card in a list occupies the same total height.",
+    "platformGuidance": {
+      "ios": "Use .hidden() modifier on placeholder views to reserve space without rendering content. Or use .opacity(0) on a dummy element with matching font/size.",
+      "android": "Use Modifier.alpha(0f) on a placeholder Composable, or Spacer(Modifier.height(X.dp)) matching the line height of the missing row.",
+      "alternative": "Set a fixed minHeight on the card content section (not the whole card) calculated as: titleHeight(2 lines) + ratingHeight + strikethroughHeight + priceHeight + deliveryHeight + spacing. This ensures uniform cards without invisible elements."
+    },
+    "affectedRows": [
+      "strikethroughPrice — absent when originalPrice is null",
+      "ratingBar — absent when rating is null",
+      "deliveryLabel — absent when not a new arrival or no delivery info"
+    ]
+  },
+
+  "sharedTokens": {
+    "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "background": "$foundations/colors.light.surface",
+    "borderColor": "$foundations/colors.light.borderSubtle",
+    "borderWidth": 1,
+    "padding": 8,
+    "imageAspectRatio": "1:1",
+    "titleFontSize": 12,
+    "titleFont": "$foundations/typography.typeScale.captionSemiBold",
+    "titleMaxLines": 2,
+    "titleColor": "$foundations/colors.light.textPrimary"
+  },
+
+  "variants": {
+    "productFeatured": {
+      "_layout": "horizontalScroll (LazyRow / ScrollView(.horizontal))",
+      "svgReferenceWidth": 160,
+      "_widthNote": "160 is the SVG design reference at 390px screen. In code, use this as a fixed width for scroll items — scroll allows overflow.",
+      "svgContentOrder": [
+        "image (1:1, with wishlist button overlay top-right)",
+        "title (12pt semiBold, max 2 lines)",
+        "ratingBar (stars + review count, NO rating value)",
+        "strikethroughPrice (above sale price, if originalPrice exists)",
+        "compositePrice (XGPriceText default style)"
+      ],
+      "priceStyle": "default",
+      "priceLayout": "stacked",
+      "showRatingAbovePrice": true,
+      "showRatingValue": false,
+      "showVendorName": false,
+      "showDeliveryLabel": false,
+      "showAddToCart": false,
+      "wishlistButton": true
+    },
+    "productStandard": {
+      "_layout": "verticalGrid2Col (LazyVGrid / LazyVerticalGrid)",
+      "svgReferenceWidth": 170,
+      "_widthNote": "170 is the SVG reference. In code, use flexible width: Modifier.weight(1f) / GridItem(.flexible()). The grid calculates actual width from (screenWidth - padding - gutter) / 2.",
+      "svgContentOrder": [
+        "image (1:1, with wishlist button overlay top-right)",
+        "title (12pt semiBold, max 2 lines)",
+        "ratingBar (stars + review count, NO rating value)",
+        "deliveryLabel (10pt, bold time parts)",
+        "Row: [compositePrice (XGPriceText standard) + Spacer + addToCartButton]"
+      ],
+      "priceStyle": "standard",
+      "priceLayout": "stacked",
+      "strikethroughFontSize": 14,
+      "showRatingAbovePrice": true,
+      "showRatingValue": false,
+      "showVendorName": false,
+      "showDeliveryAbovePrice": true,
+      "deliveryLabel": true,
+      "deliveryLabelBoldTime": true,
+      "addToCartButton": true,
+      "addToCartInlineWithPrice": true,
+      "addToCartDiameter": 38,
+      "addToCartIconColor": "#333333",
+      "addToCartBackground": "$foundations/colors.semantic.addToCart",
+      "addToCartIcon": { "ios": "cart.badge.plus", "android": "Icons.Outlined.AddShoppingCart" }
+    }
+  },
+
+  "addToCartSubComponent": {
+    "size": 38,
+    "cornerRadius": 19,
+    "iconSize": 16,
+    "background": "$foundations/colors.semantic.addToCart",
+    "iconColor": "$foundations/colors.light.textPrimary"
+  },
+
+  "deliveryLabelSubComponent": {
+    "fontSize": 10,
+    "font": "$foundations/typography.typeScale.micro",
+    "color": "$foundations/colors.semantic.deliveryText",
+    "lineHeight": 14,
+    "maxLines": 1,
+    "boldPattern": "**text** (markdown-style bold parsing)"
+  }
+}

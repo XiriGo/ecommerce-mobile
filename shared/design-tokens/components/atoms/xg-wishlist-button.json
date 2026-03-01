@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGWishlistButton",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGWishlistButton.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGWishlistButton.kt"
+  },
+
+  "tokens": {
+    "buttonSize": 32,
+    "iconSize": 16,
+    "cornerRadius": "$foundations/spacing.cornerRadius.circle",
+    "background": "$foundations/colors.light.surface",
+    "activeIconColor": "$foundations/colors.brand.primary",
+    "inactiveIconColor": "$foundations/colors.light.textSecondary",
+    "elevation": "$foundations/spacing.elevation.level2"
+  },
+
+  "subComponents": {
+    "icon": {
+      "active": { "ios": "heart.fill", "android": "Icons.Filled.Favorite" },
+      "inactive": { "ios": "heart", "android": "Icons.Outlined.FavoriteBorder" }
+    }
+  },
+
+  "parameters": {
+    "isWishlisted": { "type": "Bool", "required": true },
+    "onToggle": { "type": "() -> Void", "required": true }
+  }
+}

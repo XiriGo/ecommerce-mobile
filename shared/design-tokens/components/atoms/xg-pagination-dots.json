@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGPaginationDots",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGPaginationDots.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGPaginationDots.kt"
+  },
+
+  "tokens": {
+    "activeWidth": 18,
+    "inactiveWidth": 6,
+    "height": 6,
+    "cornerRadius": 3,
+    "gap": 4,
+    "activeColor": "$foundations/colors.paginationDots.active",
+    "inactiveColor": "$foundations/colors.paginationDots.inactive",
+    "animation": "spring(response: 0.3, dampingFraction: 0.7)"
+  },
+
+  "parameters": {
+    "totalPages": { "type": "Int", "required": true },
+    "currentPage": { "type": "Int", "required": true },
+    "activeColor": { "type": "Color", "default": "$paginationDots.active" },
+    "inactiveColor": { "type": "Color", "default": "$paginationDots.inactive" }
+  }
+}

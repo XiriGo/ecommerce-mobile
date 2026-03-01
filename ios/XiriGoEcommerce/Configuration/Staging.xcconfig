@@ -1,0 +1,8 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Staging Environment Configuration
+API_BASE_URL = https:/$()/api-staging.xirigo.com
+BUNDLE_ID_SUFFIX = .staging
+PRODUCT_BUNDLE_IDENTIFIER = com.xirigo.ecommerce$(BUNDLE_ID_SUFFIX)
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = STAGING

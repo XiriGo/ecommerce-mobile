@@ -1,0 +1,60 @@
+Spec'ler hazir. Artik her biri icin pipeline baslatilabilir:
+
+
+/pipeline-run M0-02 design-system
+/pipeline-run M0-03 network-layer
+/pipeline-run M0-04 navigation
+/pipeline-run M0-05 di-setup
+M0-02, M0-03, M0-04 ve M0-05 paralel calistirilabilir. M0-06 ise M0-03 + M0-05 tamamlandiktan sonra:
+
+
+/pipeline-run M0-06 auth-infrastructure
+
+
+
+-------------
+
+
+Usage
+
+# Full automatic — code all 34 features in sequence
+/queue-run all
+
+# Single milestone
+/queue-run M1
+
+# Resume from specific issue
+/queue-run --from 15
+
+# Single feature pipeline
+/pipeline-run m1/product-list --issue 12
+
+
+----------------------
+
+
+
+/create-feature skill'i hazir. Artik yeni bir feature olusturmak istediginde:
+
+
+# Basit feature
+/create-feature M1-09 "Product Comparison"
+
+# Dependency'li, yuksek oncelikli
+/create-feature M2-08 "Order Tracking" --deps M2-05,M3-01 --priority p1
+
+# Altyapi isi
+/create-feature M0-07 "Push Notification Setup" --type infra --priority p0
+
+# Aciklama ile
+/create-feature M4-06 "Dark Mode" --description "Toggle dark/light theme from settings"
+Bu komut su adimlari otomatik yapar:
+
+PROMPTS/BUYER_APP.md ve shared/api-contracts/'den gereksinimleri toplar
+Full template ile GitHub Issue olusturur (ayni migration standardinda)
+Dogru label'lari atar (type + platform + phase + priority + status)
+Milestone'a atar
+GitHub Project board'a ekler
+Dependency'leri kontrol edip status belirler (ready/blocked)
+scripts/issue-map.json'i gunceller ve commit eder
+Sonuc: migration ile olusan issue'lardan ayirt edilemez, ayni traceability.

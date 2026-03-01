@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "XiriGo Ecommerce design tokens — Gradients. Extracted from XiriGo-Design SVG files.",
+  "source": "XiriGo-Design/Svg/XiriGo_App_01.svg (splash), XiriGo_App_02.svg (login), XiriGo_App_03.svg (home)",
+
+  "brandHeader": {
+    "_note": "Splash, Login ve Home hero arkaplaninda kullanilan imza mor gradient. Iki radial gradient katmanlaniyor. iOS: RadialGradient, Android: Brush.radialGradient.",
+    "type": "radial",
+    "layers": [
+      {
+        "name": "base",
+        "stops": [
+          { "offset": 0.00, "color": "#9000FE", "opacity": 1.0 },
+          { "offset": 0.27, "color": "#6900FE", "opacity": 1.0 },
+          { "offset": 0.66, "color": "#6900FE", "opacity": 1.0 },
+          { "offset": 1.00, "color": "#9000FE", "opacity": 1.0 }
+        ]
+      },
+      {
+        "name": "darkOverlay",
+        "stops": [
+          { "offset": 0.32, "color": "#6000FE", "opacity": 0.00 },
+          { "offset": 0.38, "color": "#5D00FB", "opacity": 0.06 },
+          { "offset": 0.49, "color": "#5800F4", "opacity": 0.21 },
+          { "offset": 0.64, "color": "#4F00E9", "opacity": 0.46 },
+          { "offset": 0.81, "color": "#4200DA", "opacity": 0.81 },
+          { "offset": 0.90, "color": "#3C00D2", "opacity": 1.00 }
+        ]
+      }
+    ]
+  },
+
+  "heroBannerOverlay": {
+    "_note": "Home ekranindaki hero banner uzerindeki sol taraf fade overlay. Urun fotografi uzerine uygulanir.",
+    "type": "linear",
+    "direction": "leftToRight",
+    "stops": [
+      { "offset": 0.00, "color": "#6000FE", "opacity": 0.90 },
+      { "offset": 1.00, "color": "#6000FE", "opacity": 0.00 }
+    ]
+  },
+
+  "dailyDealCard": {
+    "_note": "Daily Deal kart arkaplan gradient'i. Koyu-mor gecis.",
+    "type": "linear",
+    "direction": "leftToRight",
+    "stops": [
+      { "offset": 0.00, "color": "#111827", "opacity": 1.0 },
+      { "offset": 1.00, "color": "#6000FE", "opacity": 1.0 }
+    ]
+  },
+
+  "productCardFade": {
+    "_note": "Urun kartlarinda yatay scroll edge fade. Sag kenara beyaz fade.",
+    "type": "linear",
+    "direction": "leftToRight",
+    "stops": [
+      { "offset": 0.49, "color": "#FFFFFF", "opacity": 0.00 },
+      { "offset": 1.00, "color": "#E9EBEC", "opacity": 1.00 }
+    ]
+  },
+
+  "logoShimmer": {
+    "_note": "Logo lockup uzerindeki beyaz parlama efekti. Branding amaçli.",
+    "type": "linear",
+    "direction": "topToBottom",
+    "stops": [
+      { "offset": 0.04, "color": "#FFFFFF", "opacity": 0.00 },
+      { "offset": 0.79, "color": "#FFFFFF", "opacity": 1.00 }
+    ]
+  },
+
+  "splashPatternOverlay": {
+    "_note": "Splash ekraninda logo pattern'inin beyaz overlay'i. %6 opacity ile tekrar eden X motifi.",
+    "patternColor": "#FFFFFF",
+    "patternOpacity": 0.06,
+    "repeat": "tile"
+  }
+}

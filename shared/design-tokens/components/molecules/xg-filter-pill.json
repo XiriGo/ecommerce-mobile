@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGFilterPill",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_04.svg",
+  "status": "token-only (mapped to XGChip.filter variant)",
+
+  "tokens": {
+    "height": 36,
+    "cornerRadius": 18,
+    "horizontalPadding": 16,
+    "font": "$foundations/typography.typeScale.bodyMedium",
+    "activeBackground": "$foundations/colors.light.filterPillBackgroundActive",
+    "activeTextColor": "$foundations/colors.light.filterPillTextActive",
+    "inactiveBackground": "$foundations/colors.light.filterPillBackground",
+    "inactiveTextColor": "$foundations/colors.light.filterPillText",
+    "gap": 8
+  }
+}

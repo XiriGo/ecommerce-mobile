@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGRatingBar",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGRatingBar.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGRatingBar.kt"
+  },
+
+  "tokens": {
+    "starSize": 12,
+    "starGap": 2,
+    "starCount": 5,
+    "activeColor": "$foundations/colors.semantic.ratingStarActive",
+    "inactiveColor": "$foundations/colors.semantic.ratingStarInactive",
+    "reviewCountFontSize": 12,
+    "reviewCountFont": "$foundations/typography.typeScale.caption",
+    "reviewCountColor": "$foundations/colors.light.textSecondary",
+    "reviewCountSpacing": 4
+  },
+
+  "subComponents": {
+    "starImage": {
+      "full": { "ios": "star.fill", "android": "Icons.Filled.Star" },
+      "half": { "ios": "star.leadinghalf.filled", "android": "Icons.AutoMirrored.Filled.StarHalf" },
+      "empty": { "ios": "star", "android": "Icons.Outlined.StarOutline" }
+    }
+  },
+
+  "parameters": {
+    "rating": { "type": "Double/Float", "required": true },
+    "maxRating": { "type": "Int", "default": 5 },
+    "starSize": { "type": "CGFloat/Dp", "default": 12 },
+    "showValue": { "type": "Bool", "default": false },
+    "reviewCount": { "type": "Int?", "default": null }
+  }
+}

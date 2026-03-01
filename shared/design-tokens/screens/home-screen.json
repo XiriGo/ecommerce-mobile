@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "screen": "HomeScreen",
+  "svgSource": "XiriGo_App_03.svg",
+  "background": "$foundations/colors.light.background",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Feature/Home/Presentation/Screen/HomeScreen.swift + HomeScreenSections.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/feature/home/presentation/screen/HomeScreen.kt"
+  },
+
+  "sections": [
+    {
+      "id": "searchBar",
+      "molecule": "$molecules/xg-search-bar",
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    },
+    {
+      "id": "heroBannerCarousel",
+      "molecule": "$molecules/xg-hero-banner",
+      "layout": "TabView/HorizontalPager",
+      "height": 210,
+      "autoScrollInterval": 5,
+      "paginationDots": "$atoms/xg-pagination-dots",
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    },
+    {
+      "id": "categories",
+      "header": "$atoms/xg-section-header (title: localized)",
+      "layout": "horizontalScroll",
+      "itemSpacing": "$foundations/spacing.spacing.base",
+      "atom": "$atoms/xg-category-icon",
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    },
+    {
+      "id": "flashSale",
+      "molecule": "$molecules/xg-flash-sale-banner",
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    },
+    {
+      "id": "popularProducts",
+      "header": "$atoms/xg-section-header (title: localized)",
+      "layout": "horizontalScroll",
+      "itemSpacing": "$foundations/spacing.layout.productGrid.gutter",
+      "card": "$molecules/xg-product-card.productFeatured",
+      "cardWidth": 160,
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    },
+    {
+      "id": "dailyDeal",
+      "header": "$atoms/xg-section-header (title: localized)",
+      "molecule": "$molecules/xg-daily-deal-card",
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    },
+    {
+      "id": "newArrivals",
+      "header": "$atoms/xg-section-header (title: localized, seeAll: true)",
+      "layout": "verticalGrid2Col",
+      "columns": 2,
+      "columnSpacing": "$foundations/spacing.layout.productGrid.gutter",
+      "rowSpacing": "$foundations/spacing.layout.productGrid.gutter",
+      "card": "$molecules/xg-product-card.productStandard",
+      "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal"
+    }
+  ],
+
+  "sectionSpacing": "$foundations/spacing.layout.sectionSpacing"
+}

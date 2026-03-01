@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGDivider",
+  "category": "atom",
+  "svgSource": "XiriGo_App_02.svg",
+  "status": "token-only (no dedicated component file yet)",
+
+  "variants": {
+    "default": {
+      "color": "$foundations/colors.light.divider",
+      "thickness": 1
+    },
+    "withLabel": {
+      "color": "$foundations/colors.light.divider",
+      "thickness": 1,
+      "labelFontSize": 12,
+      "labelFont": "$foundations/typography.typeScale.captionMedium",
+      "labelColor": "$foundations/colors.light.textTertiary",
+      "labelHorizontalPadding": 16,
+      "usage": "OR CONTINUE WITH divider on Login"
+    }
+  }
+}

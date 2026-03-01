@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XiriGo Ecommerce</string>
+    <string name="common_loading_message">Yukleniyor...</string>
+    <string name="common_retry_button">Tekrar Dene</string>
+    <string name="common_error_network">Baglanti hatasi. Lutfen internetinizi kontrol edin.</string>
+    <string name="common_error_server">Bir seyler ters gitti. Lutfen daha sonra tekrar deneyin.</string>
+    <string name="common_error_unauthorized">Devam etmek icin lutfen giris yapin.</string>
+    <string name="common_error_not_found">Aranan oge bulunamadi.</string>
+    <string name="common_error_unknown">Beklenmedik bir hata olustu.</string>
+    <string name="common_ok_button">Tamam</string>
+    <string name="common_cancel_button">Iptal</string>
+    <string name="common_close_button">Kapat</string>
+    <string name="common_search_placeholder">Ara</string>
+    <string name="common_error_generic">Bir seyler ters gitti</string>
+    <string name="common_empty_message">Gosterilecek bir sey yok</string>
+    <string name="common_navigate_back">Geri git</string>
+    <string name="common_decrease_quantity">Miktari azalt</string>
+    <string name="common_increase_quantity">Miktari artir</string>
+    <string name="common_quantity_value">Miktar: %d</string>
+    <string name="common_rating_description">Puan: %2$d uzerinden %1$.1f</string>
+    <string name="common_reviews_count">(%d degerlendirme)</string>
+    <string name="common_price_label">Fiyat: %s</string>
+    <string name="common_sale_price_label">Indirimli fiyat: %1$s, eskisi %2$s</string>
+    <string name="common_add_to_wishlist">Favorilere ekle</string>
+    <string name="common_remove_from_wishlist">Favorilerden kaldir</string>
+    <string name="common_notifications_count">%d bildirim</string>
+    <string name="common_tab_home">Ana sayfa</string>
+    <string name="common_tab_categories">Kategoriler</string>
+    <string name="common_tab_cart">Sepet</string>
+    <string name="common_tab_profile">Profil</string>
+
+    <!-- Navigation -->
+    <string name="nav_tab_home">Ana Sayfa</string>
+    <string name="nav_tab_categories">Kategoriler</string>
+    <string name="nav_tab_cart">Sepet</string>
+    <string name="nav_tab_profile">Profil</string>
+    <string name="nav_placeholder_coming_soon">Yakinda</string>
+    <string name="nav_profile_guest_title">Hesabinizi yonetmek icin giris yapin</string>
+    <string name="nav_profile_guest_login_button">Giris Yap</string>
+    <string name="nav_profile_guest_register_button">Hesap Olustur</string>
+    <string name="nav_cart_badge_description">Sepette %d urun</string>
+    <string name="common_back_button">Geri</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_title">XiriGo\'ya Hosgeldiniz</string>
+    <string name="home_welcome_subtitle">Harika urunleri uygun fiyatlarla kesfedin</string>
+    <string name="home_search_hint">Urun, marka, kategori ara...</string>
+    <string name="home_banner_summer_title">Yaz Indirimi</string>
+    <string name="home_banner_summer_subtitle">Secili urunlerde %50\'ye varan indirim</string>
+    <string name="home_banner_new_title">Yeni Koleksiyon</string>
+    <string name="home_banner_new_subtitle">En yeni urunleri kesfedin</string>
+    <string name="home_banner_free_shipping_title">Ucretsiz Kargo</string>
+    <string name="home_banner_free_shipping_subtitle">50$ uzeri siparislerde</string>
+    <string name="home_section_categories">Kategoriler</string>
+    <string name="home_section_popular">Populer Urunler</string>
+    <string name="home_section_new_arrivals">Yeni Gelenler</string>
+    <string name="home_category_electronics">Elektronik</string>
+    <string name="home_category_fashion">Moda</string>
+    <string name="home_category_home">Ev</string>
+    <string name="home_category_sports">Spor</string>
+    <string name="home_category_books">Kitaplar</string>
+    <string name="home_category_gaming">Oyun</string>
+    <string name="home_product_headphones">Kablosuz Gurultu Onleyici Kulaklik</string>
+    <string name="home_product_sneakers">Profesyonel Kosu Ayakkabisi</string>
+    <string name="home_product_backpack">Su Gecirmez Seyahat Sirt Cantasi</string>
+    <string name="home_product_watch">Akilli Saat Serisi X</string>
+    <string name="home_product_keyboard">Mekanik Oyuncu Klavyesi</string>
+    <string name="home_product_jacket">Premium Kis Montu</string>
+    <string name="home_product_lamp">Modern LED Masa Lambasi</string>
+
+    <!-- Categories Screen -->
+    <string name="categories_search_hint">Kategorilerde ara...</string>
+    <string name="categories_item_count">%d urun</string>
+    <string name="categories_toys">Oyuncak</string>
+    <string name="categories_pets">Evcil Hayvan</string>
+    <string name="categories_more">Daha Fazla</string>
+
+    <!-- Cart Screen -->
+    <string name="cart_empty_message">Sepetiniz bos</string>
+    <string name="cart_start_shopping">Alisverise Basla</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_menu_orders">Siparisler</string>
+    <string name="profile_menu_wishlist">Favoriler</string>
+    <string name="profile_menu_addresses">Adresler</string>
+    <string name="profile_menu_payment_methods">Odeme Yontemleri</string>
+    <string name="profile_menu_settings">Ayarlar</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip_button">Atla</string>
+    <string name="onboarding_get_started_button">Basla</string>
+    <string name="onboarding_page_browse_title">Binlerce Urunu Kesfet</string>
+    <string name="onboarding_page_browse_description">Bir cok saticidan genis urun yelpazesini tek bir yerde kesfet</string>
+    <string name="onboarding_page_compare_title">Saticilari ve Fiyatlari Karsilastir</string>
+    <string name="onboarding_page_compare_description">Farkli saticilar arasinda fiyatlari karsilastirarak en iyi firsatlari bul</string>
+    <string name="onboarding_page_checkout_title">Hizli ve Guvenli Odeme</string>
+    <string name="onboarding_page_checkout_description">Birden fazla odeme secenegiyle guvenli ve hizli odeme yap</string>
+    <string name="onboarding_page_track_title">Siparislerini Takip Et</string>
+    <string name="onboarding_page_track_description">Satin almadan teslimata kadar gercek zamanli siparis takibi ile guncel kal</string>
+    <string name="onboarding_skip_button_a11y">Tanitimi atla</string>
+    <string name="onboarding_page_indicator_a11y">Sayfa %1$d / %2$d</string>
+    <string name="onboarding_illustration_a11y_browse">Pazar yeri gezintisi illustrasyonu</string>
+    <string name="onboarding_illustration_a11y_compare">Fiyat karsilastirma illustrasyonu</string>
+    <string name="onboarding_illustration_a11y_checkout">Guvenli odeme illustrasyonu</string>
+    <string name="onboarding_illustration_a11y_track">Siparis takibi illustrasyonu</string>
+    <string name="onboarding_logo_a11y">XiriGo logosu</string>
+
+    <!-- Skeleton -->
+    <string name="skeleton_loading_placeholder">Icerik yukleniyor</string>
+</resources>

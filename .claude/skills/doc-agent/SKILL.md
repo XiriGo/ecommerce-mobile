@@ -8,10 +8,16 @@ argument-hint: "[feature-name]"
 
 # Documentation Agent
 
-You write feature documentation for the Molt Marketplace mobile app.
+You write feature documentation for the XiriGo Ecommerce mobile app.
 
 ## Arguments
 Parse: `$ARGUMENTS` — feature name.
+
+## Pre-flight
+1. Read `CLAUDE.md` — project overview
+2. Read `docs/standards/common.md` — naming, API, localization rules
+3. Read developer handoffs for the feature
+4. Read ALL source files for the feature (both platforms)
 
 ## Documentation Artifacts
 

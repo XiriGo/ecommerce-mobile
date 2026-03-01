@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "XiriGo Ecommerce design tokens — Colors. Extracted from XiriGo-Design SVG files (Adobe Illustrator).",
+  "source": "XiriGo-Design/Svg/XiriGo_Logo_Design.svg, XiriGo_App_01–04.svg",
+
+  "brand": {
+    "primary": "#6000FE",
+    "primaryLight": "#9000FE",
+    "primaryDark": "#3C00D2",
+    "secondary": "#94D63A",
+    "onPrimary": "#FFFFFF",
+    "onSecondary": "#6000FE"
+  },
+
+  "light": {
+    "background": "#F8F9FC",
+    "surface": "#FFFFFF",
+    "surfaceSecondary": "#F9FAFB",
+    "surfaceTertiary": "#F1F5F9",
+    "surfaceElevated": "#FFFFFF",
+
+    "textPrimary": "#333333",
+    "textSecondary": "#8E8E93",
+    "textTertiary": "#9CA3AF",
+    "textDark": "#111827",
+    "textDarkSecondary": "#374151",
+    "textOnDark": "#FFFFFF",
+    "textLink": "#6000FE",
+    "textPlaceholder": "#9CA3AF",
+
+    "iconActive": "#6000FE",
+    "iconInactive": "#8E8E93",
+    "iconOnDark": "#FFFFFF",
+
+    "borderDefault": "#E5E7EB",
+    "borderSubtle": "#F0F0F0",
+    "borderStrong": "#D1D5DB",
+
+    "divider": "#E5E7EB",
+
+    "inputBackground": "#F9FAFB",
+    "inputBorder": "#E5E7EB",
+    "inputPlaceholder": "#9CA3AF",
+    "inputLabel": "#9CA3AF",
+
+    "filterPillBackground": "#F1F5F9",
+    "filterPillBackgroundActive": "#6200FF",
+    "filterPillText": "#333333",
+    "filterPillTextActive": "#FFFFFF",
+
+    "iconButtonBackground": "#F3F4F6",
+
+    "toggleTrack": "#D1D5DB",
+    "toggleTrackActive": "#6000FE",
+    "toggleThumb": "#FFFFFF",
+
+    "scrim": "rgba(0, 0, 0, 0.32)",
+    "shadow": "#000000"
+  },
+
+  "dark": {
+    "_note": "Dark mode tasarimi henuz mevcut degil. Asagidaki degerler brand renklere dayali turetilmis placeholder'lardir. Tasarim geldiginde guncellenecek.",
+    "background": "#0F0F14",
+    "surface": "#1A1A24",
+    "surfaceSecondary": "#24242E",
+    "surfaceTertiary": "#2E2E3A",
+    "surfaceElevated": "#24242E",
+
+    "textPrimary": "#F0F0F5",
+    "textSecondary": "#A0A0B0",
+    "textTertiary": "#6E6E80",
+    "textDark": "#F0F0F5",
+    "textDarkSecondary": "#D0D0DD",
+    "textOnDark": "#FFFFFF",
+    "textLink": "#A070FF",
+    "textPlaceholder": "#6E6E80",
+
+    "iconActive": "#A070FF",
+    "iconInactive": "#6E6E80",
+    "iconOnDark": "#FFFFFF",
+
+    "borderDefault": "#2E2E3A",
+    "borderSubtle": "#24242E",
+    "borderStrong": "#44445A",
+
+    "divider": "#2E2E3A",
+
+    "inputBackground": "#24242E",
+    "inputBorder": "#2E2E3A",
+    "inputPlaceholder": "#6E6E80",
+    "inputLabel": "#6E6E80",
+
+    "filterPillBackground": "#2E2E3A",
+    "filterPillBackgroundActive": "#6000FE",
+    "filterPillText": "#F0F0F5",
+    "filterPillTextActive": "#FFFFFF",
+
+    "iconButtonBackground": "#2E2E3A",
+
+    "toggleTrack": "#44445A",
+    "toggleTrackActive": "#6000FE",
+    "toggleThumb": "#FFFFFF",
+
+    "scrim": "rgba(0, 0, 0, 0.64)",
+    "shadow": "#000000"
+  },
+
+  "semantic": {
+    "success": "#22C55E",
+    "onSuccess": "#FFFFFF",
+    "error": "#EF4444",
+    "onError": "#FFFFFF",
+    "warning": "#FACC15",
+    "onWarning": "#1D1D1B",
+    "info": "#3B82F6",
+    "onInfo": "#FFFFFF",
+
+    "priceDefault": "#333333",
+    "priceDiscount": "#6000FE",
+    "priceDeal": "#94D63A",
+    "priceOriginal": "#8E8E93",
+    "priceStrikethrough": "#8E8E93",
+
+    "ratingStarActive": "#6000FE",
+    "ratingStarInactive": "#8E8E93",
+    "ratingStarDeal": "#FACC15",
+
+    "badgeBackground": "#6000FE",
+    "badgeText": "#FFFFFF",
+    "badgeSecondaryBackground": "#94D63A",
+    "badgeSecondaryText": "#6000FE",
+
+    "deliveryText": "#94D63A",
+    "addToCart": "#94D63A",
+
+    "divider": "#E5E7EB",
+    "shimmer": "#F1F5F9"
+  },
+
+  "category": {
+    "blue": "#37B4F2",
+    "pink": "#FE75D4",
+    "yellow": "#FDF29C",
+    "mint": "#90D3B1",
+    "lightYellow": "#FEF170"
+  },
+
+  "flashSale": {
+    "background": "#FFD814",
+    "accentPink": "#F60186",
+    "accentBlue": "#9EBDF4",
+    "text": "#1D1D1B"
+  },
+
+  "socialAuth": {
+    "googleBlue": "#4285F4",
+    "googleGreen": "#34A853",
+    "googleYellow": "#FBBC05",
+    "googleRed": "#EA4335",
+    "appleBlack": "#000000",
+    "appleWhite": "#FFFFFF"
+  },
+
+  "colorSwatches": {
+    "_note": "Filtre ekraninda urun renk secici icin kullanilan swatch renkleri.",
+    "black": "#1D1D1B",
+    "white": "#FFFFFF",
+    "whiteBorder": "#E5E7EB",
+    "red": "#EF4444",
+    "blue": "#3B82F6",
+    "green": "#22C55E"
+  },
+
+  "paginationDots": {
+    "active": "#6000FE",
+    "inactive": "#D1D5DB"
+  },
+
+  "bottomNav": {
+    "background": "#FFFFFF",
+    "iconActive": "#6000FE",
+    "iconInactive": "#8E8E93"
+  }
+}

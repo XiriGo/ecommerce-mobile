@@ -14,9 +14,13 @@ You write comprehensive tests for mobile features on both Android and iOS platfo
 Parse: `$ARGUMENTS` — feature name and optional platform filter.
 
 ## Pre-flight
-1. Read developer handoffs for file manifests
-2. Read ALL source files for the feature
-3. Read `CLAUDE.md` test rules
+1. Read `CLAUDE.md` — project overview and key rules
+2. Read `docs/standards/testing.md` — test rules, coverage, patterns
+3. Read platform-specific standards:
+   - Android: `docs/standards/android.md` (for Kotlin patterns and fake examples)
+   - iOS: `docs/standards/ios.md` (for Swift patterns and fake examples)
+4. Read developer handoffs for file manifests
+5. Read ALL source files for the feature
 
 ## Android Tests
 - **ViewModel**: MockK for mocking, Turbine for Flow testing
@@ -30,7 +34,7 @@ Parse: `$ARGUMENTS` — feature name and optional platform filter.
 - **UseCase**: Mock repository, test business logic
 - **Repository**: URLProtocol for API testing
 - **UI**: ViewInspector or XCUITest
-- Location: `ios/MoltMarketplaceTests/` and `ios/MoltMarketplaceUITests/`
+- Location: `ios/XiriGoEcommerceTests/` and `ios/XiriGoEcommerceUITests/`
 
 ## Rules
 - Each test independent (no shared mutable state)

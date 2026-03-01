@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XiriGo Ecommerce</string>
+    <string name="common_loading_message">Loading...</string>
+    <string name="common_retry_button">Retry</string>
+    <string name="common_error_network">Connection error. Please check your internet.</string>
+    <string name="common_error_server">Something went wrong. Please try again later.</string>
+    <string name="common_error_unauthorized">Please log in to continue.</string>
+    <string name="common_error_not_found">The requested item was not found.</string>
+    <string name="common_error_unknown">An unexpected error occurred.</string>
+    <string name="common_ok_button">OK</string>
+    <string name="common_cancel_button">Cancel</string>
+    <string name="common_close_button">Close</string>
+    <string name="common_search_placeholder">Search</string>
+    <string name="common_error_generic">Something went wrong</string>
+    <string name="common_empty_message">Nothing to show</string>
+    <string name="common_navigate_back">Navigate back</string>
+    <string name="common_decrease_quantity">Decrease quantity</string>
+    <string name="common_increase_quantity">Increase quantity</string>
+    <string name="common_quantity_value">Quantity: %d</string>
+    <string name="common_rating_description">Rating: %1$.1f out of %2$d</string>
+    <string name="common_reviews_count">(%d reviews)</string>
+    <string name="common_page_indicator_a11y">Page %1$d of %2$d</string>
+    <string name="common_review_count_format">(%d)</string>
+    <string name="common_price_label">Price: %s</string>
+    <string name="common_sale_price_label">Sale price: %1$s, was %2$s</string>
+    <string name="common_add_to_wishlist">Add to wishlist</string>
+    <string name="common_remove_from_wishlist">Remove from wishlist</string>
+    <string name="common_notifications_count">%d notifications</string>
+    <string name="common_tab_home">Home</string>
+    <string name="common_tab_categories">Categories</string>
+    <string name="common_tab_cart">Cart</string>
+    <string name="common_tab_profile">Profile</string>
+
+    <!-- Navigation -->
+    <string name="nav_tab_home">Home</string>
+    <string name="nav_tab_categories">Categories</string>
+    <string name="nav_tab_cart">Cart</string>
+    <string name="nav_tab_profile">Profile</string>
+    <string name="nav_placeholder_coming_soon">Coming soon</string>
+    <string name="nav_profile_guest_title">Log in to manage your account</string>
+    <string name="nav_profile_guest_login_button">Log In</string>
+    <string name="nav_profile_guest_register_button">Create Account</string>
+    <string name="nav_cart_badge_description">%d items in cart</string>
+    <string name="common_back_button">Back</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_title">Welcome to XiriGo</string>
+    <string name="home_welcome_subtitle">Discover amazing products at great prices</string>
+    <string name="home_search_hint">Search products, brands, categories...</string>
+    <string name="home_banner_summer_title">Summer Sale</string>
+    <string name="home_banner_summer_subtitle">Up to 50% off selected items</string>
+    <string name="home_banner_new_title">New Collection</string>
+    <string name="home_banner_new_subtitle">Explore the latest arrivals</string>
+    <string name="home_banner_free_shipping_title">Free Shipping</string>
+    <string name="home_banner_free_shipping_subtitle">On orders over $50</string>
+    <string name="home_section_categories">Categories</string>
+    <string name="home_section_popular">Popular Products</string>
+    <string name="home_section_new_arrivals">New Arrivals</string>
+    <string name="home_category_electronics">Electronics</string>
+    <string name="home_category_fashion">Fashion</string>
+    <string name="home_category_home">Home</string>
+    <string name="home_category_sports">Sports</string>
+    <string name="home_category_books">Books</string>
+    <string name="home_category_gaming">Gaming</string>
+    <string name="home_product_headphones">Wireless Noise-Cancelling Headphones</string>
+    <string name="home_product_sneakers">Running Sneakers Pro</string>
+    <string name="home_product_backpack">Travel Backpack Waterproof</string>
+    <string name="home_product_watch">Smart Watch Series X</string>
+    <string name="home_product_keyboard">Mechanical Gaming Keyboard</string>
+    <string name="home_product_jacket">Premium Winter Jacket</string>
+    <string name="home_product_lamp">Modern Desk Lamp LED</string>
+    <string name="home_daily_deal_badge">DAILY DEAL</string>
+    <string name="home_daily_deal_title">Daily Deal</string>
+    <string name="home_daily_deal_ended">ENDED</string>
+    <string name="home_flash_sale_title">Flash Sale</string>
+    <string name="home_flash_sale_badge">FLASH SALE</string>
+    <string name="common_see_all">See All</string>
+    <string name="home_section_daily_deal">Daily Deal</string>
+    <string name="home_section_flash_sale">Flash Sale</string>
+    <string name="home_error_message">Something went wrong</string>
+    <string name="home_error_retry">Retry</string>
+    <string name="home_delivery_badge">Order before **%1$s**, delivered **%2$s**</string>
+    <string name="home_add_to_cart">Add to cart</string>
+
+    <!-- Categories Screen -->
+    <string name="categories_search_hint">Search categories...</string>
+    <string name="categories_item_count">%d items</string>
+    <string name="categories_toys">Toys</string>
+    <string name="categories_pets">Pets</string>
+    <string name="categories_more">More</string>
+
+    <!-- Cart Screen -->
+    <string name="cart_empty_message">Your cart is empty</string>
+    <string name="cart_start_shopping">Start Shopping</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_menu_orders">Orders</string>
+    <string name="profile_menu_wishlist">Wishlist</string>
+    <string name="profile_menu_addresses">Addresses</string>
+    <string name="profile_menu_payment_methods">Payment Methods</string>
+    <string name="profile_menu_settings">Settings</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip_button">Skip</string>
+    <string name="onboarding_get_started_button">Get Started</string>
+    <string name="onboarding_page_browse_title">Browse Thousands of Products</string>
+    <string name="onboarding_page_browse_description">Explore a wide range of products from multiple vendors in one place</string>
+    <string name="onboarding_page_compare_title">Compare Vendors &amp; Prices</string>
+    <string name="onboarding_page_compare_description">Find the best deals by comparing prices across different vendors</string>
+    <string name="onboarding_page_checkout_title">Fast &amp; Secure Checkout</string>
+    <string name="onboarding_page_checkout_description">Pay securely with multiple payment options and fast processing</string>
+    <string name="onboarding_page_track_title">Track Your Orders</string>
+    <string name="onboarding_page_track_description">Stay updated with real-time order tracking from purchase to delivery</string>
+    <string name="onboarding_skip_button_a11y">Skip onboarding</string>
+    <string name="onboarding_page_indicator_a11y">Page %1$d of %2$d</string>
+    <string name="onboarding_illustration_a11y_browse">Illustration of marketplace browsing</string>
+    <string name="onboarding_illustration_a11y_compare">Illustration of price comparison</string>
+    <string name="onboarding_illustration_a11y_checkout">Illustration of secure checkout</string>
+    <string name="onboarding_illustration_a11y_track">Illustration of order tracking</string>
+    <string name="onboarding_logo_a11y">XiriGo logo</string>
+
+    <!-- Skeleton -->
+    <string name="skeleton_loading_placeholder">Loading content</string>
+</resources>

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGSearchBar",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGSearchBar.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGSearchBar.kt"
+  },
+
+  "tokens": {
+    "background": "$foundations/colors.light.inputBackground",
+    "borderColor": "$foundations/colors.light.borderSubtle",
+    "borderWidth": 1,
+    "cornerRadius": "$foundations/spacing.cornerRadius.pill",
+    "iconSize": "$foundations/spacing.layout.iconSize.medium",
+    "iconColor": "$foundations/colors.light.textSecondary",
+    "placeholderFont": "$foundations/typography.typeScale.bodyLarge",
+    "placeholderColor": "$foundations/colors.light.textSecondary",
+    "horizontalPadding": "$foundations/spacing.spacing.md",
+    "verticalPadding": "$foundations/spacing.spacing.md",
+    "leadingIcon": { "ios": "magnifyingglass", "android": "Icons.Outlined.Search" }
+  },
+
+  "parameters": {
+    "placeholder": { "type": "String", "required": true },
+    "action": { "type": "() -> Void", "required": true }
+  }
+}

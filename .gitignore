@@ -22,6 +22,7 @@ android/local.properties
 android/captures/
 android/.externalNativeBuild/
 android/.cxx/
+android/.kotlin
 *.apk
 *.aab
 *.jks
@@ -51,6 +52,20 @@ scripts/logs/
 coverage/
 *.lcov
 
+# ─── Claude Code (secrets) ────────────────────────
+.claude/settings.local.json
+
 # ─── Misc ──────────────────────────────────────────
 *.tmp
 *.bak
+
+# Xcode user data
+*.xcuserstate
+xcuserdata/
+ios/build/
+ios/.swiftpm/
+
+# Android build artifacts
+android/gradle/gradle-daemon-jvm.properties
+
+

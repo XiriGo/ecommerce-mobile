@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGSectionHeader",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGSectionHeader.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGSectionHeader.kt"
+  },
+
+  "tokens": {
+    "titleFont": "$foundations/typography.typeScale.subtitle",
+    "titleColor": "$foundations/colors.light.textPrimary",
+    "subtitleFont": "$foundations/typography.typeScale.bodyMedium",
+    "subtitleColor": "$foundations/colors.light.textSecondary",
+    "seeAllFont": "$foundations/typography.typeScale.bodyMedium",
+    "seeAllColor": "$foundations/colors.brand.primary",
+    "arrowIconSize": 12,
+    "arrowIcon": { "ios": "chevron.right", "android": "Icons.AutoMirrored.Outlined.ArrowForward" },
+    "horizontalPadding": "$foundations/spacing.layout.screenPaddingHorizontal",
+    "subtitleSpacing": "$foundations/spacing.spacing.xxs"
+  },
+
+  "parameters": {
+    "title": { "type": "String", "required": true },
+    "subtitle": { "type": "String?", "default": null },
+    "onSeeAllAction": { "type": "(() -> Void)?", "default": null }
+  }
+}
