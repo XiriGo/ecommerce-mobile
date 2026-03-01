@@ -1426,19 +1426,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Monday"
+            "value" : "23:59"
           }
         },
         "mt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "it-Tnejn"
+            "value" : "23:59"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pazartesi"
+            "value" : "23:59"
           }
         }
       }
