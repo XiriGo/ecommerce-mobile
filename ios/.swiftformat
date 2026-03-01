@@ -1,0 +1,221 @@
+# =============================================================================
+# SwiftFormat Configuration — XiriGo Ecommerce iOS
+# =============================================================================
+# FAANG-level formatting (Google Swift Style + Airbnb standards)
+# Reference: https://github.com/nicklockwood/SwiftFormat/blob/main/Rules.md
+# =============================================================================
+
+# --- Swift version ---
+--swiftversion 6.2
+
+# --- Indentation ---
+--indent 4
+--indentcase true
+--indentstrings true
+--tabwidth 4
+--smarttabs disabled
+--xcodeindentation disabled
+--ifdef no-indent
+
+# --- Whitespace ---
+--trimwhitespace always
+--linebreaks lf
+
+# --- Line length ---
+--maxwidth 120
+
+# --- Wrapping ---
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--wrapreturntype preserve
+--wrapeffects preserve
+--wraptypealiases before-first
+--wrapconditions before-first
+--wrapternary default
+--closingparen balanced
+--callsiteparen balanced
+--wrapternary default
+
+# --- Braces ---
+--allman false
+--elseposition same-line
+--guardelse next-line
+
+# --- Imports ---
+--importgrouping testable-bottom
+
+# --- Self ---
+--self remove
+--selfrequired
+
+# --- Trailing commas ---
+--commas always
+--trailingclosures
+
+# --- Semicolons ---
+--semicolons never
+
+# --- Void ---
+--voidtype void
+
+# --- Arguments ---
+--stripunusedargs closure-only
+
+# --- Redundancy ---
+--redundanttype infer-locals-only
+
+# --- Header ---
+--header strip
+
+# --- Type formatting ---
+--enumnamespaces always
+--markextensions always
+--markcategories true
+--organizetypes actor,class,enum,struct,extension,protocol
+--categorymark "MARK: - %c"
+--extensionmark "MARK: - %t + %c"
+--groupedextension "MARK: %c"
+--lifecycle
+
+# --- Decimal grouping ---
+--decimalgrouping 3,6
+--binarygrouping 4,8
+--octalgrouping 4,8
+--hexgrouping 4,8
+--fractiongrouping disabled
+--exponentgrouping disabled
+
+# --- Spacing ---
+--operatorfunc spaced
+--nospaceoperators
+--ranges spaced
+--typeattributes prev-line
+--funcattributes prev-line
+--varattributes preserve
+--storedvarattrs preserve
+--computedvarattrs preserve
+--complexattrs prev-line
+--typeblanklines remove
+--emptybraces no-space
+
+# --- Acronyms ---
+--acronyms ID,URL,UUID,HTTP,HTTPS,API,JSON,XML,HTML,CSS,SQL,FTP,SSH,TCP,UDP,IP,UI,DTO
+
+# =============================================================================
+# Enabled rules (explicit — all production-quality rules)
+# =============================================================================
+--enable andOperator
+--enable anyObjectProtocol
+--enable applicationMain
+--enable assertionFailures
+--enable blankLineAfterImports
+--enable blankLineAfterSwitchCase
+--enable blankLinesAroundMark
+--enable blankLinesAtEndOfScope
+--enable blankLinesAtStartOfScope
+--enable blankLinesBetweenChainedFunctions
+--enable blankLinesBetweenImports
+--enable blankLinesBetweenScopes
+--enable blockComments
+--enable braces
+--enable conditionalAssignment
+--enable consecutiveBlankLines
+--enable consecutiveSpaces
+--enable duplicateImports
+--enable elseOnSameLine
+--enable emptyBraces
+--enable enumNamespaces
+--enable extensionAccessControl
+--enable fileHeader
+--enable genericExtensions
+--enable hoistAwait
+--enable hoistPatternLet
+--enable hoistTry
+--enable indent
+--enable initCoderUnavailable
+--enable isEmpty
+--enable leadingDelimiters
+--enable linebreakAtEndOfFile
+--enable linebreaks
+--enable markTypes
+--enable modifierOrder
+--enable noExplicitOwnership
+--enable numberFormatting
+--enable opaqueGenericParameters
+--enable organizeDeclarations
+--enable preferForLoop
+--enable preferKeyPath
+--enable redundantBackticks
+--enable redundantBreak
+--enable redundantClosure
+--enable redundantEquatable
+--enable redundantExtensionACL
+--enable redundantFileprivate
+--enable redundantGet
+--enable redundantInit
+--enable redundantInternal
+--enable redundantLet
+--enable redundantLetError
+--enable redundantNilInit
+--enable redundantObjc
+--enable redundantOptionalBinding
+--enable redundantParens
+--enable redundantPattern
+--enable redundantProperty
+--enable redundantRawValues
+--enable redundantReturn
+--enable redundantSelf
+--enable redundantStaticSelf
+--enable redundantType
+--enable redundantTypedThrows
+--enable redundantVoidReturnType
+--enable semicolons
+--enable sortDeclarations
+--enable sortImports
+--enable sortSwitchCases
+--enable spaceAroundBraces
+--enable spaceAroundBrackets
+--enable spaceAroundComments
+--enable spaceAroundGenerics
+--enable spaceAroundOperators
+--enable spaceAroundParens
+--enable spaceInsideBraces
+--enable spaceInsideBrackets
+--enable spaceInsideComments
+--enable spaceInsideGenerics
+--enable spaceInsideParens
+--enable strongOutlets
+--enable strongifiedSelf
+--enable todos
+--enable trailingClosures
+--enable trailingCommas
+--enable trailingSpace
+--enable typeSugar
+--enable unusedArguments
+--enable void
+--enable wrap
+--enable wrapArguments
+--enable wrapAttributes
+--enable wrapConditionalBodies
+--enable wrapEnumCases
+--enable wrapLoopBodies
+--enable wrapMultilineStatementBraces
+--enable wrapSingleLineComments
+--enable wrapSwitchCases
+--enable yodaConditions
+
+# =============================================================================
+# Disabled rules (intentional — conflicts or not applicable)
+# =============================================================================
+# docComments: Not enforced by formatter, handled by SwiftLint missing_docs
+--disable docComments
+# wrapMultilineConditionalAssignment: Can conflict with SwiftLint indentation rules
+--disable wrapMultilineConditionalAssignment
+# redundantStaticSelf: Can conflict with SwiftLint prefer_self_in_static_references
+--disable redundantStaticSelf
+
+# =============================================================================
+# Exclusions
+# =============================================================================
+--exclude .build,DerivedData,Pods,ios/.build,ios/DerivedData,ios/Pods,**/*.generated.swift
