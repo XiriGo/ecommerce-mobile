@@ -119,4 +119,7 @@
     <string name="onboarding_illustration_a11y_checkout">Illustration of secure checkout</string>
     <string name="onboarding_illustration_a11y_track">Illustration of order tracking</string>
     <string name="onboarding_logo_a11y">XiriGo logo</string>
+
+    <!-- Skeleton -->
+    <string name="skeleton_loading_placeholder">Loading content</string>
 </resources>

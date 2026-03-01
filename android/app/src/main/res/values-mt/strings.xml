@@ -60,4 +60,7 @@
     <string name="onboarding_illustration_a11y_checkout">Illustrazzjoni ta\' checkout sigur</string>
     <string name="onboarding_illustration_a11y_track">Illustrazzjoni ta\' tracking tal-ordni</string>
     <string name="onboarding_logo_a11y">Logo ta\' XiriGo</string>
+
+    <!-- Skeleton -->
+    <string name="skeleton_loading_placeholder">Qed jitghabba l-kontenut</string>
 </resources>
