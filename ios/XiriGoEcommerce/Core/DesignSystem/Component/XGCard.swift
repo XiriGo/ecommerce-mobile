@@ -110,7 +110,7 @@ struct XGProductCard: View {
     private var imageSection: some View {
         ZStack(alignment: .topTrailing) {
             XGImage(url: imageUrl)
-                .aspectRatio(1.0, contentMode: .fill)
+                .aspectRatio(1.0, contentMode: .fit)
                 .clipped()
 
             if let onWishlistToggle {
