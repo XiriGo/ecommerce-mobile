@@ -177,6 +177,17 @@ preflight() {
     git pull origin develop --ff-only 2>/dev/null || true
     log "  + Branch guncel: $(git branch --show-current)"
 
+    # Stale worktree temizligi
+    git worktree prune 2>/dev/null || true
+    rm -rf "$PROJECT_DIR/.claude/worktrees/" 2>/dev/null || true
+    local stale_branches
+    stale_branches=$(git branch | grep 'worktree-' || true)
+    if [[ -n "$stale_branches" ]]; then
+        echo "$stale_branches" | xargs -r git branch -D 2>/dev/null || true
+        log "  + Stale worktree branch'ler temizlendi"
+    fi
+    log "  + Worktree durumu temiz"
+
     log ""
     log "Konfigürasyon:"
     log "  Milestone: $MILESTONE"
@@ -626,6 +637,11 @@ EOF
     # Branch temizligi
     git branch -d "feature/$pipeline_id" 2>/dev/null || true
     git push origin --delete "feature/$pipeline_id" 2>/dev/null || true
+
+    # Stale worktree temizligi
+    git worktree prune 2>/dev/null || true
+    rm -rf "$PROJECT_DIR/.claude/worktrees/" 2>/dev/null || true
+    git branch | grep 'worktree-' | xargs -r git branch -D 2>/dev/null || true
 
     # --- Adim 8: Bagimli issue'lari ac ---
     log "  [8/8] Bagimli issue'lar kontrol ediliyor..."

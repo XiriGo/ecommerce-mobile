@@ -26,6 +26,13 @@ Parse: `$ARGUMENTS`
    git checkout develop && git pull origin develop
    ```
 4. Verify `gh` CLI is authenticated: `gh auth status`
+5. **Clean stale worktrees** — previous pipeline runs may leave orphaned worktrees:
+   ```bash
+   git worktree prune
+   rm -rf .claude/worktrees/ 2>/dev/null
+   # Delete stale worktree branches
+   git branch | grep 'worktree-' | xargs -r git branch -D 2>/dev/null
+   ```
 
 ## Queue Discovery (from GitHub)
 
@@ -215,6 +222,11 @@ git pull origin develop
 # Delete feature branch (local + remote)
 git branch -d feature/{pipeline_id}
 git push origin --delete feature/{pipeline_id} 2>/dev/null
+
+# Clean stale worktrees left by pipeline agents
+git worktree prune
+rm -rf .claude/worktrees/ 2>/dev/null
+git branch | grep 'worktree-' | xargs -r git branch -D 2>/dev/null
 ```
 
 ### Step 9: Unblock Dependents

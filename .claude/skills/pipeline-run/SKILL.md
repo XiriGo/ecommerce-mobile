@@ -313,6 +313,12 @@ git commit -m "chore({scope}): review approved for {feature} [agent:review]"
    gh pr merge --auto --squash
    ```
 9. **Clean up the team** after PR is created.
+10. **Clean stale worktrees** after team shutdown — agents leave orphaned worktrees:
+    ```bash
+    git worktree prune
+    rm -rf .claude/worktrees/ 2>/dev/null
+    git branch | grep 'worktree-' | xargs -r git branch -D 2>/dev/null
+    ```
 
 ## Rules
 
