@@ -45,6 +45,7 @@ ios/**/*.xcuserdata
 *.dSYM
 
 # ─── Logs ──────────────────────────────────────────
+logs/
 scripts/logs/
 *.log
 

@@ -9,6 +9,7 @@
 | `/queue-run all` | Tum feature'lari sirayla kodla |
 | `/queue-run M1` | Tek milestone calistir |
 | `/queue-run --from 15` | Belirli issue'dan devam et |
+| `./scripts/queue-runner.sh M1` | Gece modu — her feature ayri process (memory leak yok) |
 | `/verify all` | Build + lint + test kontrol |
 | `/create-pr develop --closes 12 --auto-merge` | PR olustur + auto-merge |
 | `make all` | Build + lint + test (her iki platform) |
@@ -234,6 +235,24 @@ M0-06 Auth Infrastructure ── M0-03 + M0-05'e bagimli
 # M0'i otomatik isle (dependency sirasini kendisi cozer)
 /queue-run M0
 ```
+
+### Gece Modu (External Orchestrator)
+
+Uzun sureli unattended calisma icin `queue-runner.sh` kullan.
+Her feature ayri Claude Code process'inde calisir — memory birikmez.
+
+```bash
+# Tum feature'lari gece birak
+nohup ./scripts/queue-runner.sh all > logs/queue-run/nohup.log 2>&1 &
+
+# Tek milestone
+nohup ./scripts/queue-runner.sh M1 > logs/queue-run/nohup.log 2>&1 &
+
+# Kaldigi yerden devam
+./scripts/queue-runner.sh --from 15
+```
+
+Detayli kullanim kilavuzu: `docs/queue-runner.md`
 
 ---
 
@@ -498,6 +517,16 @@ gh auth status
 
 # PR olustur
 /create-pr develop --closes 36 --auto-merge
+```
+
+### Gece Birakma
+
+```bash
+# Milestone'u gece birak
+nohup ./scripts/queue-runner.sh M1 > logs/queue-run/nohup.log 2>&1 &
+
+# Sabah kontrol
+tail -50 logs/queue-run/run-*.log
 ```
 
 ### Hata Durumunda
