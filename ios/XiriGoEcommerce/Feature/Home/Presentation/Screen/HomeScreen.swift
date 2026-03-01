@@ -45,7 +45,6 @@ struct HomeScreen: View {
     private func successContent(_ data: HomeScreenData) -> some View {
         ScrollView {
             VStack(spacing: XGSpacing.sectionSpacing) {
-                welcomeHeader
                 searchBar
                 heroBannerCarousel(data.banners)
                 categoriesSection(data.categories)

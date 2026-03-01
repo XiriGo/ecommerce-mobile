@@ -49,24 +49,8 @@ class XGCardTest {
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 49.99").assertIsDisplayed()
-    }
-
-    @Test
-    fun xgProductCard_rendersVendorName() {
-        composeTestRule.setContent {
-            XGTheme {
-                XGProductCard(
-                    imageUrl = null,
-                    title = "Product",
-                    price = "9.99",
-                    vendorName = "TechStore",
-                    onClick = {},
-                )
-            }
-        }
-
-        composeTestRule.onNodeWithText("TechStore").assertIsDisplayed()
+        // 3-part composite price: currency + integer + decimal in annotated string
+        composeTestRule.onNodeWithText("\u20AC49,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -143,6 +127,23 @@ class XGCardTest {
 
         composeTestRule.onNodeWithContentDescription("Add to wishlist").performClick()
         assertThat(toggled).isTrue()
+    }
+
+    @Test
+    fun xgProductCard_deliveryLabel_shown_whenProvided() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGProductCard(
+                    imageUrl = null,
+                    title = "Delivery Product",
+                    price = "29.99",
+                    deliveryLabel = "Order before 23:59",
+                    onClick = {},
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("Order before 23:59").assertIsDisplayed()
     }
 
     // --- XGInfoCard ---

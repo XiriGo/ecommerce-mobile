@@ -43,32 +43,32 @@ struct XGSpacingTests {
         #expect(XGSpacing.md == 12)
     }
 
-    @Test("LG spacing is 24 points")
+    @Test("LG spacing is 20 points")
     func lGSpacing() {
-        #expect(XGSpacing.lg == 24)
+        #expect(XGSpacing.lg == 20)
     }
 
-    @Test("XL spacing is 32 points")
+    @Test("XL spacing is 24 points")
     func xLSpacing() {
-        #expect(XGSpacing.xl == 32)
+        #expect(XGSpacing.xl == 24)
     }
 
-    @Test("XXL spacing is 48 points")
+    @Test("XXL spacing is 32 points")
     func xXLSpacing() {
-        #expect(XGSpacing.xxl == 48)
+        #expect(XGSpacing.xxl == 32)
     }
 
-    @Test("XXXL spacing is 64 points")
+    @Test("XXXL spacing is 48 points")
     func xXXLSpacing() {
-        #expect(XGSpacing.xxxl == 64)
+        #expect(XGSpacing.xxxl == 48)
     }
 
     // MARK: - Layout Constants
 
-    @Test("Screen padding horizontal is 16 points")
+    @Test("Screen padding horizontal is 20 points")
     func testScreenPaddingHorizontal() {
-        #expect(XGSpacing.screenPaddingHorizontal == 16)
-        #expect(XGSpacing.screenPaddingHorizontal == XGSpacing.base)
+        #expect(XGSpacing.screenPaddingHorizontal == 20)
+        #expect(XGSpacing.screenPaddingHorizontal == XGSpacing.lg)
     }
 
     @Test("Screen padding vertical is 16 points")
@@ -83,22 +83,20 @@ struct XGSpacingTests {
         #expect(XGSpacing.cardPadding == XGSpacing.md)
     }
 
-    @Test("List item spacing is 8 points")
+    @Test("List item spacing is 10 points")
     func testListItemSpacing() {
-        #expect(XGSpacing.listItemSpacing == 8)
-        #expect(XGSpacing.listItemSpacing == XGSpacing.sm)
+        #expect(XGSpacing.listItemSpacing == 10)
     }
 
     @Test("Section spacing is 24 points")
     func testSectionSpacing() {
         #expect(XGSpacing.sectionSpacing == 24)
-        #expect(XGSpacing.sectionSpacing == XGSpacing.lg)
+        #expect(XGSpacing.sectionSpacing == XGSpacing.xl)
     }
 
-    @Test("Product grid spacing is 8 points")
+    @Test("Product grid spacing is 10 points")
     func testProductGridSpacing() {
-        #expect(XGSpacing.productGridSpacing == 8)
-        #expect(XGSpacing.productGridSpacing == XGSpacing.sm)
+        #expect(XGSpacing.productGridSpacing == 10)
     }
 
     @Test("Product grid has 2 columns")
@@ -108,9 +106,9 @@ struct XGSpacingTests {
 
     // MARK: - Accessibility
 
-    @Test("Minimum touch target meets Apple HIG requirement (44pt)")
-    func minTouchTargetAppleHIG() {
-        #expect(XGSpacing.minTouchTarget == 44)
+    @Test("Minimum touch target meets design token requirement (48pt)")
+    func minTouchTargetDesignToken() {
+        #expect(XGSpacing.minTouchTarget == 48)
     }
 
     @Test("Minimum touch target is larger than base spacing")

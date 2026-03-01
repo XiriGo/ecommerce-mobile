@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGBottomBar",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "tokens": {
+    "items": ["home", "search", "cart", "wishlist", "profile"],
+    "iconSize": "$foundations/spacing.layout.iconSize.medium",
+    "activeColor": "$foundations/colors.bottomNav.iconActive",
+    "inactiveColor": "$foundations/colors.bottomNav.iconInactive",
+    "background": "$foundations/colors.bottomNav.background",
+    "labelVisible": false
+  },
+
+  "platformSpecific": {
+    "ios": {
+      "implementation": "Native SwiftUI TabView (UITabBarAppearance)",
+      "file": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGTabBar.swift"
+    },
+    "android": {
+      "implementation": "Custom Composable (NOT Material 3 NavigationBar)",
+      "height": 75,
+      "topBorderColor": "$foundations/colors.light.borderSubtle",
+      "topBorderWidth": 0.5,
+      "elevation": 0,
+      "file": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGBottomBar.kt"
+    }
+  }
+}

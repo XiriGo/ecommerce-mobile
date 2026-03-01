@@ -1,14 +1,13 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,12 +17,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
-import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// Token source: components/atoms/xg-wishlist-button.json
 private val ButtonSize = 32.dp
-private val IconSize = 16.dp
+private val ButtonIconSize = 16.dp
+private val ButtonCornerRadius = 16.dp
+private val ButtonElevation = 2.dp
 
+/** Toggle button for wishlist state with heart icon. */
 @Composable
 fun XGWishlistButton(
     isWishlisted: Boolean,
@@ -39,20 +41,22 @@ fun XGWishlistButton(
     val icon = if (isWishlisted) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
     val tint = if (isWishlisted) XGColors.BrandPrimary else XGColors.OnSurfaceVariant
 
+    val shape = RoundedCornerShape(ButtonCornerRadius)
+
     IconButton(
         onClick = onToggle,
         modifier = modifier
             .size(ButtonSize)
-            .shadow(elevation = XGElevation.Level2, shape = CircleShape)
-            .clip(CircleShape),
+            .shadow(elevation = ButtonElevation, shape = shape)
+            .clip(shape),
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = XGColors.Surface,
         ),
     ) {
         Icon(
             imageVector = icon,
             contentDescription = contentDescription,
-            modifier = Modifier.size(IconSize),
+            modifier = Modifier.size(ButtonIconSize),
             tint = tint,
         )
     }

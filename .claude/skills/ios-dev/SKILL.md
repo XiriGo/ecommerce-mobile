@@ -20,6 +20,7 @@ Parse: `$ARGUMENTS` — feature name to implement.
 4. Read architect handoff: `docs/pipeline/{feature}-architect.handoff.md`
 5. Read the Android implementation (if available) for consistency
 6. Read existing implementations to match patterns
+7. **MANDATORY**: Read ALL files in `shared/design-tokens/` (colors.json, spacing.json, typography.json, components.json, gradients.json) — these are the source of truth for every visual value
 
 ## Implementation Order
 1. DTOs (`Feature/{Name}/Data/`) — Codable structs
@@ -41,7 +42,9 @@ Parse: `$ARGUMENTS` — feature name to implement.
 - Prefer value types (struct/enum)
 - All views have #Preview
 - No hardcoded strings — use localization
-- Theme tokens for colors/fonts
+- **NEVER hardcode `Color(hex:)` in components — always use `XGColors.*` tokens**
+- **Every hex, spacing, cornerRadius, font size MUST match `shared/design-tokens/*.json` exactly**
+- **If a token doesn't exist in XGColors/XGSpacing/XGCornerRadius, ADD it from JSON — don't hardcode**
 - No AnyView — use @ViewBuilder
 
 ## Handoff

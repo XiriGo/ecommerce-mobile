@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** XiriGo logo mark image at a configurable size. */
 @Composable
 fun XGLogoMark(modifier: Modifier = Modifier, size: Dp = 120.dp) {
     Image(

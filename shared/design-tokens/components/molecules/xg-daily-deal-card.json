@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGDailyDealCard",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "composedAtoms": [
+    "$atoms/xg-badge (secondary variant)",
+    "$atoms/xg-price-text (deal style)",
+    "$atoms/xg-image"
+  ],
+
+  "tokens": {
+    "svgReferenceWidth": 350,
+    "_widthNote": "350 = 390px artboard − 2×20px padding. In code: use fillMaxWidth/maxWidth:.infinity. Never hardcode 350.",
+    "height": 163,
+    "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "background": "$foundations/gradients.dailyDealCard",
+    "padding": 16
+  },
+
+  "subComponents": {
+    "badge": {
+      "text": "DAILY DEAL (localized)",
+      "style": "$atoms/xg-badge.secondary"
+    },
+    "title": {
+      "font": "$foundations/typography.typeScale.title",
+      "color": "$foundations/colors.light.textOnDark",
+      "maxLines": 2
+    },
+    "countdown": {
+      "format": "HH:MM:SS",
+      "font": "system monospaced 12pt",
+      "color": "$foundations/colors.light.textOnDark",
+      "tickInterval": "1 second",
+      "expiredText": "localized(home_daily_deal_ended)"
+    },
+    "price": {
+      "style": "deal",
+      "color": "$foundations/colors.semantic.priceDeal"
+    },
+    "strikethrough": {
+      "fontSize": 15.18,
+      "font": "$foundations/typography.priceTypography.strikethrough"
+    },
+    "productImage": {
+      "size": 100,
+      "cornerRadius": "$foundations/spacing.cornerRadius.medium"
+    }
+  },
+
+  "layout": "HStack: [VStack(badge, title, countdown, HStack(price, strikethrough)), Spacer, productImage]"
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Motion, animation, and performance tokens for XiriGo design system",
+
+  "duration": {
+    "instant": 100,
+    "fast": 200,
+    "normal": 300,
+    "slow": 450,
+    "pageTransition": 350,
+    "_unit": "milliseconds"
+  },
+
+  "easing": {
+    "standard": { "ios": ".easeInOut", "android": "FastOutSlowInInterpolator / EaseInOut" },
+    "decelerate": { "ios": ".easeOut", "android": "LinearOutSlowInInterpolator / EaseOut" },
+    "accelerate": { "ios": ".easeIn", "android": "FastOutLinearInInterpolator / EaseIn" },
+    "spring": {
+      "ios": ".spring(response: 0.35, dampingFraction: 0.7)",
+      "android": "spring(dampingRatio = 0.7f, stiffness = Spring.StiffnessMedium)"
+    }
+  },
+
+  "shimmer": {
+    "gradientColors": ["#E0E0E0", "#F5F5F5", "#E0E0E0"],
+    "angleDegrees": 20,
+    "durationMs": 1200,
+    "repeatMode": "restart",
+    "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "_rule": "All loading placeholders MUST use animated shimmer gradient sweep, never static color."
+  },
+
+  "crossfade": {
+    "imageFadeIn": 300,
+    "contentSwitch": 200,
+    "_unit": "milliseconds"
+  },
+
+  "scroll": {
+    "prefetchDistance": 5,
+    "scrollRestorationEnabled": true,
+    "flingDecayFriction": { "ios": "default UIScrollView", "android": "default fling" },
+    "_rule": "All scrollable lists MUST use lazy rendering (LazyColumn/LazyRow/LazyVGrid on Android, LazyVStack/LazyHStack/LazyVGrid on iOS). Never use Column+verticalScroll or ScrollView+VStack for lists with >4 items."
+  },
+
+  "imageLoading": {
+    "memoryCacheBudgetMB": 100,
+    "diskCacheBudgetMB": 250,
+    "thumbnailSizeMultiplier": 0.1,
+    "progressiveLoadingEnabled": true,
+    "webPEnabled": true,
+    "downsampling": true,
+    "_rule": "Use Coil (Android) / Nuke (iOS). Enable memory+disk cache. Downsample to ImageView size. Show shimmer during load, branded fallback on error."
+  },
+
+  "performanceBudgets": {
+    "frameTimeMs": 16,
+    "startupColdMs": 2000,
+    "screenTransitionMs": 300,
+    "listScrollFps": 60,
+    "firstContentfulPaintMs": 1000,
+    "_rule": "Profile with Android Studio Profiler / Xcode Instruments. Zero jank frames in scroll."
+  },
+
+  "entranceAnimation": {
+    "staggerDelayMs": 50,
+    "maxStaggerItems": 8,
+    "fadeFromOpacity": 0,
+    "fadeToOpacity": 1,
+    "slideOffsetY": 20,
+    "_rule": "Optional entrance animations for list items. Keep subtle. Disable for items loaded via pagination (only first screen load)."
+  }
+}

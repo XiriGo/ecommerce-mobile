@@ -21,6 +21,19 @@ Before implementing, read these files:
 - `shared/feature-specs/{feature}.md` — Architect's platform-agnostic spec
 - Existing Android code in `android/` for pattern matching
 
+## CRITICAL: Design Token Verification
+
+**Before writing ANY color, spacing, corner radius, or font value**, you MUST:
+1. Read `shared/design-tokens/colors.json` — every hex value in theme files must match exactly
+2. Read `shared/design-tokens/spacing.json` — every dp value must match exactly
+3. Read `shared/design-tokens/typography.json` — font sizes/weights must match the type scale
+4. Read `shared/design-tokens/components.json` — component-level specs (sizes, colors, corner radius)
+5. Read `shared/design-tokens/gradients.json` — gradient stops and colors
+
+**NEVER use Material 3 defaults or guessed values.**
+**NEVER hardcode `Color(0xFF...)` in components — always use theme tokens.**
+**If a token doesn't exist in the theme, ADD it from the JSON source — don't hardcode.**
+
 ## Architecture Rules
 
 - Clean Architecture: `data/` → `domain/` → `presentation/`

@@ -9,27 +9,33 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// Token source: components/molecules/xg-flash-sale-banner.json
 private val BannerHeight = 133.dp
+private val BadgeFontSize = 14.sp
+private val TitleFontSize = 20.sp
+private val TitleLineHeight = 28.sp
+private const val STRIPE_WIDTH_FRACTION = 0.12f
+private const val STRIPE_SHEAR_MULTIPLIER = 1.5f
+private const val STRIPE_OFFSET_MULTIPLIER = 0.5f
 
-private val FlashSaleBackground = Color(0xFFFFD814)
-private val AccentBlue = Color(0xFF9EBDF4)
-private val AccentPink = Color(0xFFF60186)
-private val FlashSaleText = Color(0xFF1D1D1B)
-
+/** Flash sale promotional banner with decorative diagonal stripes and title text. */
 @Composable
 fun XGFlashSaleBanner(
     title: String,
@@ -43,50 +49,58 @@ fun XGFlashSaleBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(BannerHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Large))
-            .background(FlashSaleBackground)
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
+            .background(XGColors.FlashSaleBackground)
             .then(clickModifier),
         contentAlignment = Alignment.Center,
     ) {
+        if (imageUrl != null) {
+            XGImage(
+                url = imageUrl,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+
         Canvas(modifier = Modifier.fillMaxSize()) {
             val canvasWidth = size.width
             val canvasHeight = size.height
-            val stripeWidth = canvasWidth * 0.12f
+            val stripeWidth = canvasWidth * STRIPE_WIDTH_FRACTION
 
             val leftPath = Path().apply {
                 moveTo(0f, 0f)
                 lineTo(stripeWidth, 0f)
-                lineTo(stripeWidth * 1.5f, canvasHeight)
-                lineTo(stripeWidth * 0.5f, canvasHeight)
+                lineTo(stripeWidth * STRIPE_SHEAR_MULTIPLIER, canvasHeight)
+                lineTo(stripeWidth * STRIPE_OFFSET_MULTIPLIER, canvasHeight)
                 close()
             }
-            drawPath(leftPath, AccentBlue)
+            drawPath(leftPath, XGColors.FlashSaleAccentBlue)
 
             val rightPath = Path().apply {
-                moveTo(canvasWidth - stripeWidth * 1.5f, 0f)
-                lineTo(canvasWidth - stripeWidth * 0.5f, 0f)
+                moveTo(canvasWidth - stripeWidth * STRIPE_SHEAR_MULTIPLIER, 0f)
+                lineTo(canvasWidth - stripeWidth * STRIPE_OFFSET_MULTIPLIER, 0f)
                 lineTo(canvasWidth, canvasHeight)
                 lineTo(canvasWidth - stripeWidth, canvasHeight)
                 close()
             }
-            drawPath(rightPath, AccentPink)
+            drawPath(rightPath, XGColors.FlashSaleAccentPink)
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            if (imageUrl != null) {
-                XGImage(
-                    url = imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .height(50.dp)
-                        .fillMaxWidth(0.4f),
-                )
-            }
+            Text(
+                text = stringResource(R.string.home_flash_sale_badge),
+                fontFamily = PoppinsFontFamily,
+                fontSize = BadgeFontSize,
+                fontWeight = FontWeight.Bold,
+                color = XGColors.FlashSaleText,
+            )
             Text(
                 text = title,
-                style = MaterialTheme.typography.headlineSmall,
+                fontFamily = PoppinsFontFamily,
+                fontSize = TitleFontSize,
                 fontWeight = FontWeight.Bold,
-                color = FlashSaleText,
+                color = XGColors.FlashSaleText,
+                lineHeight = TitleLineHeight,
             )
         }
     }

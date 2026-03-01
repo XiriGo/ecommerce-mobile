@@ -7,8 +7,6 @@ import SwiftUI
 extension HomeScreen {
     // MARK: - Internal
 
-    // MARK: - Constants
-
     enum BannerConstants {
         static let carouselHeight: CGFloat = 210
         static let autoScrollInterval: TimeInterval = 5
@@ -20,60 +18,20 @@ extension HomeScreen {
         Timer.publish(every: BannerConstants.autoScrollInterval, on: .main, in: .common).autoconnect()
     }
 
-    // MARK: - Welcome Header
-
-    var welcomeHeader: some View {
-        VStack(alignment: .leading, spacing: XGSpacing.xs) {
-            Text(String(localized: "home_welcome_title"))
-                .font(XGTypography.headlineMedium)
-                .foregroundStyle(XGColors.onSurface)
-
-            Text(String(localized: "home_welcome_subtitle"))
-                .font(XGTypography.bodyLarge)
-                .foregroundStyle(XGColors.onSurfaceVariant)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
-        .padding(.top, XGSpacing.sm)
-    }
-
     // MARK: - Search Bar
 
     var searchBar: some View {
-        Button {
-            router.navigate(to: .productSearch)
-        } label: {
-            HStack(spacing: XGSpacing.sm) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(XGColors.onSurfaceVariant)
-                    .font(.system(size: XGSpacing.IconSize.medium))
-                    .accessibilityHidden(true)
-
-                Text(String(localized: "home_search_placeholder"))
-                    .font(XGTypography.bodyLarge)
-                    .foregroundStyle(XGColors.onSurfaceVariant)
-
-                Spacer()
-            }
-            .padding(.horizontal, XGSpacing.md)
-            .padding(.vertical, XGSpacing.md)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
-            .overlay(
-                RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                    .stroke(XGColors.outlineVariant, lineWidth: 1),
-            )
-        }
+        XGSearchBar(
+            placeholder: String(localized: "home_search_placeholder"),
+            action: { router.navigate(to: .productSearch) },
+        )
         .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
-        .accessibilityLabel(String(localized: "home_search_placeholder"))
     }
 
     // MARK: - Hero Banner Carousel
 
     func heroBannerCarousel(_ banners: [HomeBanner]) -> some View {
         VStack(spacing: XGSpacing.md) {
-            XGSectionHeader(title: String(localized: "home_featured_title"))
-
             if !banners.isEmpty {
                 TabView(selection: $viewModel.currentBannerPage) {
                     ForEach(Array(banners.enumerated()), id: \.element.id) { index, banner in
@@ -140,15 +98,17 @@ extension HomeScreen {
             if !data.popularProducts.isEmpty {
                 XGSectionHeader(
                     title: String(localized: "home_popular_title"),
-                    onSeeAllAction: {
-                        router.navigate(
-                            to: .productList(categoryId: nil, query: "popular"),
-                        )
-                    },
                 )
 
-                productGrid(products: data.popularProducts, data: data)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: XGSpacing.productGridSpacing) {
+                        ForEach(data.popularProducts) { product in
+                            popularProductCard(product: product, data: data)
+                                .frame(width: PopularProductConstants.cardWidth)
+                        }
+                    }
                     .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
+                }
             }
         }
     }
@@ -235,21 +195,12 @@ extension HomeScreen {
 
     // MARK: - Private
 
-    private func productGrid(
-        products: [HomeProduct],
-        data: HomeScreenData,
-    ) -> some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
-                GridItem(.flexible(), spacing: XGSpacing.productGridSpacing),
-            ],
-            spacing: XGSpacing.productGridSpacing,
-        ) {
-            ForEach(products) { product in
-                popularProductCard(product: product, data: data)
-            }
-        }
+    private enum PopularProductConstants {
+        static let cardWidth: CGFloat = 160
+    }
+
+    private enum NewArrivalConstants {
+        static let strikethroughFontSize: CGFloat = 14
     }
 
     private func popularProductCard(
@@ -261,13 +212,14 @@ extension HomeScreen {
             title: product.title,
             price: product.price,
             originalPrice: product.originalPrice,
-            vendorName: product.vendor,
             rating: product.rating,
             reviewCount: product.reviewCount,
             isWishlisted: data.wishedProductIds.contains(product.id),
             onWishlistToggle: {
                 viewModel.onEvent(.wishlistToggled(productId: product.id))
             },
+            priceLayout: .stacked,
+            showRatingAbovePrice: true,
             action: {
                 router.navigate(to: .productDetail(productId: product.id))
             },
@@ -297,7 +249,6 @@ extension HomeScreen {
             title: product.title,
             price: product.price,
             originalPrice: product.originalPrice,
-            vendorName: product.vendor,
             rating: product.rating,
             reviewCount: product.reviewCount,
             isWishlisted: data.wishedProductIds.contains(product.id),
@@ -307,6 +258,14 @@ extension HomeScreen {
             deliveryLabel: product.isNew
                 ? String(localized: "home_delivery_badge_sample")
                 : nil,
+            deliveryBoldRange: product.isNew
+                ? String(localized: "home_delivery_badge_bold_part")
+                : nil,
+            priceStyle: .standard,
+            strikethroughFontSize: NewArrivalConstants.strikethroughFontSize,
+            priceLayout: .stacked,
+            showRatingAbovePrice: true,
+            showDeliveryAbovePrice: true,
             onAddToCartAction: {},
             action: {
                 router.navigate(to: .productDetail(productId: product.id))

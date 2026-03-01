@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGButton",
+  "category": "atom",
+  "svgSource": "XiriGo_App_02.svg, XiriGo_App_04.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGButton.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGButton.kt"
+  },
+
+  "variants": {
+    "primary": {
+      "background": "$foundations/colors.brand.primary",
+      "textColor": "$foundations/colors.brand.onPrimary",
+      "font": "$foundations/typography.typeScale.subtitleBold",
+      "height": 56,
+      "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+      "horizontalPadding": 24,
+      "usage": "Login CTA, primary actions"
+    },
+    "secondary": {
+      "background": "$foundations/colors.brand.secondary",
+      "textColor": "$foundations/colors.brand.onSecondary",
+      "font": "$foundations/typography.typeScale.subtitleBold",
+      "height": 56,
+      "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+      "horizontalPadding": 24,
+      "usage": "Filter Apply button"
+    },
+    "outlined": {
+      "background": "transparent",
+      "textColor": "$foundations/colors.brand.primary",
+      "borderColor": "$foundations/colors.light.borderDefault",
+      "borderWidth": 1,
+      "cornerRadius": "$foundations/spacing.cornerRadius.circle",
+      "usage": "Retry button, secondary actions"
+    },
+    "text": {
+      "background": "transparent",
+      "textColor": "$foundations/colors.brand.primary",
+      "usage": "Inline text actions"
+    }
+  },
+
+  "states": {
+    "disabled": { "opacity": 0.38 },
+    "loading": { "showProgressIndicator": true },
+    "pressed": { "opacity": 0.88 }
+  },
+
+  "parameters": {
+    "title": { "type": "String", "required": true },
+    "variant": { "type": "XGButtonVariant", "default": "primary" },
+    "isEnabled": { "type": "Bool", "default": true },
+    "isLoading": { "type": "Bool", "default": false },
+    "leadingIcon": { "type": "String?", "default": null },
+    "fullWidth": { "type": "Bool", "default": true },
+    "action": { "type": "() -> Void", "required": true }
+  }
+}

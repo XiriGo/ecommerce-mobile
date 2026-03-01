@@ -14,8 +14,8 @@ enum HomeSampleData {
             id: "banner_1",
             title: String(localized: "home_banner_season_title"),
             subtitle: String(localized: "home_banner_season_subtitle"),
-            imageUrl: "https://picsum.photos/seed/banner1/700/384",
-            tag: "NEW SEASON",
+            imageUrl: nil,
+            tag: String(localized: "home_banner_tag_new_season"),
             actionProductId: nil,
             actionCategoryId: "cat_2",
         ),
@@ -23,7 +23,7 @@ enum HomeSampleData {
             id: "banner_2",
             title: String(localized: "home_banner_new_title"),
             subtitle: String(localized: "home_banner_new_subtitle"),
-            imageUrl: "https://picsum.photos/seed/banner2/700/384",
+            imageUrl: nil,
             tag: nil,
             actionProductId: nil,
             actionCategoryId: "cat_1",
@@ -32,8 +32,8 @@ enum HomeSampleData {
             id: "banner_3",
             title: String(localized: "home_banner_deals_title"),
             subtitle: String(localized: "home_banner_deals_subtitle"),
-            imageUrl: "https://picsum.photos/seed/banner3/700/384",
-            tag: "HOT DEALS",
+            imageUrl: nil,
+            tag: String(localized: "home_banner_tag_hot_deals"),
             actionProductId: nil,
             actionCategoryId: nil,
         ),
@@ -148,10 +148,10 @@ enum HomeSampleData {
             imageUrl: "https://picsum.photos/seed/keyboard/400/400",
             price: "149.99",
             currencyCode: "eur",
-            originalPrice: nil,
+            originalPrice: "199.99",
             vendor: "TechZone",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.keyboard,
+            reviewCount: ReviewCount.keyboard,
             isNew: true,
         ),
         HomeProduct(
@@ -160,10 +160,10 @@ enum HomeSampleData {
             imageUrl: "https://picsum.photos/seed/jacket/400/400",
             price: "89.99",
             currencyCode: "eur",
-            originalPrice: nil,
+            originalPrice: "119.99",
             vendor: "UrbanWear",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.jacket,
+            reviewCount: ReviewCount.jacket,
             isNew: true,
         ),
         HomeProduct(
@@ -174,44 +174,44 @@ enum HomeSampleData {
             currencyCode: "eur",
             originalPrice: nil,
             vendor: "HomeDesign",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.lamp,
+            reviewCount: ReviewCount.lamp,
             isNew: true,
         ),
         HomeProduct(
             id: "new_4",
-            title: "Bluetooth Speaker",
+            title: String(localized: "home_product_speaker"),
             imageUrl: "https://picsum.photos/seed/speaker/400/400",
             price: "34.99",
             currencyCode: "eur",
             originalPrice: "49.99",
             vendor: "SoundWave",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.speaker,
+            reviewCount: ReviewCount.speaker,
             isNew: true,
         ),
         HomeProduct(
             id: "new_5",
-            title: "Yoga Mat Premium",
+            title: String(localized: "home_product_yoga_mat"),
             imageUrl: "https://picsum.photos/seed/yogamat/400/400",
             price: "29.99",
             currencyCode: "eur",
-            originalPrice: nil,
+            originalPrice: "39.99",
             vendor: "FitLife",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.yogaMat,
+            reviewCount: ReviewCount.yogaMat,
             isNew: true,
         ),
         HomeProduct(
             id: "new_6",
-            title: "Ceramic Vase Set",
+            title: String(localized: "home_product_vase"),
             imageUrl: "https://picsum.photos/seed/vase/400/400",
             price: "54.99",
             currencyCode: "eur",
             originalPrice: nil,
             vendor: "HomeDesign",
-            rating: nil,
-            reviewCount: nil,
+            rating: Rating.vase,
+            reviewCount: ReviewCount.vase,
             isNew: true,
         ),
     ]
@@ -230,8 +230,8 @@ enum HomeSampleData {
     static var dailyDeal: DailyDeal {
         DailyDeal(
             productId: "deal_1",
-            title: "Nike Air Zoom Pegasus",
-            imageUrl: "https://picsum.photos/seed/dailydeal/400/400",
+            title: String(localized: "home_daily_deal_product_name"),
+            imageUrl: "https://picsum.photos/seed/sneakerdeal/400/400",
             price: "89.99",
             originalPrice: "149.99",
             currencyCode: "eur",
@@ -241,13 +241,17 @@ enum HomeSampleData {
 
     // MARK: - Private
 
-    // MARK: - Private Constants
-
     private enum Rating {
         static let headphones: Double = 4.5
         static let sneakers: Double = 4.2
         static let watch: Double = 4.8
         static let backpack: Double = 4.0
+        static let keyboard: Double = 4.6
+        static let jacket: Double = 4.3
+        static let lamp: Double = 4.4
+        static let speaker: Double = 4.1
+        static let yogaMat: Double = 4.5
+        static let vase: Double = 4.0
     }
 
     private enum ReviewCount {
@@ -255,9 +259,15 @@ enum HomeSampleData {
         static let sneakers = 89
         static let watch = 456
         static let backpack = 67
+        static let keyboard = 67
+        static let jacket = 42
+        static let lamp = 98
+        static let speaker = 31
+        static let yogaMat = 53
+        static let vase = 76
     }
 
     private enum Timing {
-        static let dealDurationSeconds: TimeInterval = 28_800
+        static let dealDurationSeconds: TimeInterval = 28800
     }
 }

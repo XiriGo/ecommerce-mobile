@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGFlashSaleBanner
 
 /// A promotional banner card with accent stripes for flash sale events.
-/// Token source: `components.json > XGCard.flashSale`, `colors.json > flashSale`.
+/// Token source: `components/molecules/xg-flash-sale-banner.json`.
 ///
 /// - Height: 133pt
 /// - Background: #FFD814 (bright yellow)
@@ -30,25 +30,25 @@ struct XGFlashSaleBanner: View {
             action?()
         } label: {
             ZStack {
-                Constants.backgroundColor
+                XGColors.flashSaleBackground
 
                 accentStripes
 
                 VStack(spacing: XGSpacing.sm) {
                     Text(String(localized: "home_flash_sale_badge"))
-                        .font(.system(size: Constants.badgeFontSize, weight: .bold))
-                        .foregroundStyle(Constants.textColor)
+                        .font(XGTypography.bodySemiBold)
+                        .foregroundStyle(XGColors.flashSaleText)
 
                     Text(title)
-                        .font(.system(size: Constants.titleFontSize, weight: .bold))
-                        .foregroundStyle(Constants.textColor)
+                        .font(XGTypography.title)
+                        .foregroundStyle(XGColors.flashSaleText)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                 }
                 .padding(XGSpacing.base)
             }
             .frame(height: Constants.bannerHeight)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         }
         .buttonStyle(.plain)
         .disabled(action == nil)
@@ -65,10 +65,6 @@ struct XGFlashSaleBanner: View {
         static let bannerHeight: CGFloat = 133
         static let badgeFontSize: CGFloat = 14
         static let titleFontSize: CGFloat = 20
-        static let backgroundColor = Color(hex: "#FFD814")
-        static let accentBlue = Color(hex: "#9EBDF4")
-        static let accentPink = Color(hex: "#F60186")
-        static let textColor = Color(hex: "#1D1D1B")
     }
 
     private enum StripeLayout {
@@ -90,11 +86,11 @@ struct XGFlashSaleBanner: View {
             Canvas { context, _ in
                 context.fill(
                     leftStripePath(width: width, height: height),
-                    with: .color(Constants.accentBlue),
+                    with: .color(XGColors.flashSaleAccentBlue),
                 )
                 context.fill(
                     rightStripePath(width: width, height: height),
-                    with: .color(Constants.accentPink),
+                    with: .color(XGColors.flashSaleAccentPink),
                 )
             }
         }
@@ -129,6 +125,7 @@ struct XGFlashSaleBanner: View {
         action: {},
     )
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGFlashSaleBanner no action") {
@@ -136,4 +133,5 @@ struct XGFlashSaleBanner: View {
         title: "Limited Time Offer",
     )
     .padding()
+    .xgTheme()
 }

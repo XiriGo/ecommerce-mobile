@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGFlashSaleBanner",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "tokens": {
+    "svgReferenceWidth": 350,
+    "_widthNote": "350 = 390px artboard − 2×20px padding. In code: use fillMaxWidth/maxWidth:.infinity. Never hardcode 350.",
+    "height": 133,
+    "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "background": "$foundations/colors.flashSale.background",
+    "textColor": "$foundations/colors.flashSale.text"
+  },
+
+  "subComponents": {
+    "accentStripeLeft": {
+      "color": "$foundations/colors.flashSale.accentBlue",
+      "shape": "trapezoid (topEnd: 15%, bottomEnd: 8%)"
+    },
+    "accentStripeRight": {
+      "color": "$foundations/colors.flashSale.accentPink",
+      "shape": "trapezoid (topStart: 85%, bottomStart: 92%)"
+    },
+    "badgeLabel": {
+      "font": "$foundations/typography.typeScale.bodySemiBold",
+      "text": "FLASH SALE (localized)"
+    },
+    "title": {
+      "font": "$foundations/typography.typeScale.title",
+      "maxLines": 2,
+      "textAlignment": "center"
+    }
+  },
+
+  "layout": "ZStack: [background, leftStripe, rightStripe, VStack(badge, title)]"
+}

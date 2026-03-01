@@ -3,11 +3,12 @@ import SwiftUI
 // MARK: - XGDailyDealCard
 
 /// A gradient card displaying the daily deal with countdown timer and product info.
-/// Token source: `components.json > XGCard.dailyDeal`, `gradients.json > dailyDealCard`.
+/// Token source: `components/molecules/xg-daily-deal-card.json`.
 ///
 /// - Height: 163pt
 /// - Background: linear gradient left-to-right from #111827 to #6000FE
 /// - Badge: "DAILY DEAL", brand secondary bg, brand primary text
+/// - Price: Source Sans 3 Black, brand secondary color (deal style)
 /// - Countdown: HH:MM:SS format, ticks every second
 struct XGDailyDealCard: View {
     // MARK: - Lifecycle
@@ -41,10 +42,10 @@ struct XGDailyDealCard: View {
                     rightImage
                 }
             }
-            .padding(XGSpacing.base)
+            .padding(Constants.cardPadding)
             .frame(height: Constants.cardHeight)
             .background(backgroundGradient)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         }
         .buttonStyle(.plain)
         .disabled(action == nil)
@@ -57,11 +58,15 @@ struct XGDailyDealCard: View {
 
     private enum Constants {
         static let cardHeight: CGFloat = 163
+        static let cardPadding: CGFloat = 16
         static let badgeFontSize: CGFloat = 12
         static let titleFontSize: CGFloat = 20
         static let countdownFontSize: CGFloat = 12
         static let imageSize: CGFloat = 100
         static let titleMaxLines = 2
+        static let badgeHorizontalPadding: CGFloat = 10
+        static let badgeVerticalPadding: CGFloat = 4
+        static let strikethroughFontSize: CGFloat = 15.18
     }
 
     private enum TimeConstants {
@@ -87,7 +92,7 @@ struct XGDailyDealCard: View {
     private var backgroundGradient: some View {
         LinearGradient(
             colors: [
-                Color(hex: "#111827"),
+                XGColors.textDark,
                 XGColors.brandPrimary,
             ],
             startPoint: .leading,
@@ -100,20 +105,21 @@ struct XGDailyDealCard: View {
             badgeView
 
             Text(title)
-                .font(.system(size: Constants.titleFontSize, weight: .semibold))
-                .foregroundStyle(.white)
+                .font(XGTypography.title)
+                .foregroundStyle(XGColors.textOnDark)
                 .lineLimit(Constants.titleMaxLines)
 
             countdownView
 
-            HStack(spacing: XGSpacing.sm) {
-                Text(price)
-                    .font(.system(size: Constants.titleFontSize, weight: .bold))
-                    .foregroundStyle(XGColors.brandSecondary)
+            HStack(alignment: .firstTextBaseline, spacing: XGSpacing.sm) {
+                XGPriceText(
+                    price: price,
+                    style: .deal,
+                )
 
                 Text(originalPrice)
-                    .font(XGTypography.bodySmall)
-                    .foregroundStyle(Color(hex: "#8E8E93"))
+                    .font(XGTypography.strikethroughFont(size: Constants.strikethroughFontSize))
+                    .foregroundStyle(XGColors.priceStrikethrough)
                     .strikethrough()
             }
         }
@@ -121,10 +127,10 @@ struct XGDailyDealCard: View {
 
     private var badgeView: some View {
         Text(String(localized: "home_daily_deal_badge"))
-            .font(.system(size: Constants.badgeFontSize, weight: .semibold))
+            .font(XGTypography.captionSemiBold)
             .foregroundStyle(XGColors.brandPrimary)
-            .padding(.horizontal, XGSpacing.sm)
-            .padding(.vertical, XGSpacing.xs)
+            .padding(.horizontal, Constants.badgeHorizontalPadding)
+            .padding(.vertical, Constants.badgeVerticalPadding)
             .background(XGColors.brandSecondary)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
     }
@@ -135,11 +141,11 @@ struct XGDailyDealCard: View {
             if remaining > 0 {
                 Text(formattedCountdown(remaining))
                     .font(.system(size: Constants.countdownFontSize, design: .monospaced))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(XGColors.textOnDark)
             } else {
                 Text(String(localized: "home_daily_deal_ended"))
-                    .font(.system(size: Constants.countdownFontSize, weight: .bold))
-                    .foregroundStyle(.white)
+                    .font(XGTypography.caption)
+                    .foregroundStyle(XGColors.textOnDark)
             }
         }
     }
@@ -170,11 +176,12 @@ struct XGDailyDealCard: View {
         title: "Nike Air Zoom Pegasus",
         price: "89.99",
         originalPrice: "149.99",
-        endTime: Date().addingTimeInterval(28_800),
-        imageUrl: URL(string: "https://picsum.photos/seed/deal/400/400"),
+        endTime: Date().addingTimeInterval(28800),
+        imageUrl: nil,
         action: {},
     )
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGDailyDealCard Ended") {
@@ -185,4 +192,5 @@ struct XGDailyDealCard: View {
         endTime: Date().addingTimeInterval(-60),
     )
     .padding()
+    .xgTheme()
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Top app bar with title, optional back navigation, and action slots. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun XGTopBar(

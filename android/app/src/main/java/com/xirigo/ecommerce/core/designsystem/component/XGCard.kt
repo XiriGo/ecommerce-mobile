@@ -1,5 +1,6 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddShoppingCart
@@ -20,28 +21,43 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
-import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-private val AddToCartButtonSize = 32.dp
-private val AddToCartIconSize = 16.dp
+// Token source: components/molecules/xg-product-card.json
+private val FeaturedCardWidth = 160.dp
+private val StandardCardWidth = 170.dp
+private val CardPadding = 8.dp
+private val TitleFontSize = 12.sp
+private val TitleLineHeight = 16.sp
+private val InfoCardTitleFontSize = 16.sp
+private val InfoCardSubtitleFontSize = 12.sp
+private val DeliveryLabelLineHeight = 14.sp
+private const val TITLE_MAX_LINES = 2
 private val DeliveryLabelFontSize = 10.sp
+private val AddToCartButtonSize = 38.dp
+private val AddToCartIconSize = 16.dp
+private val AddToCartCornerRadius = 19.dp
+private val BorderWidth = 1.dp
 
+/** Product card with image, title, price, rating, delivery label, and optional add-to-cart. */
 @Composable
 fun XGProductCard(
     imageUrl: String?,
@@ -50,20 +66,26 @@ fun XGProductCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     originalPrice: String? = null,
-    vendorName: String? = null,
     rating: Float? = null,
     reviewCount: Int? = null,
     isWishlisted: Boolean = false,
     onWishlistToggle: (() -> Unit)? = null,
     deliveryLabel: String? = null,
     onAddToCartClick: (() -> Unit)? = null,
+    priceSize: XGPriceSize = XGPriceSize.Default,
+    strikethroughFontSize: Float = 15.18f,
+    priceLayout: XGPriceLayout = XGPriceLayout.Inline,
+    showRatingAbovePrice: Boolean = false,
+    showDeliveryAbovePrice: Boolean = false,
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(XGCornerRadius.Medium),
-        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.cardColors(containerColor = XGColors.Surface),
+        border = BorderStroke(BorderWidth, XGColors.OutlineVariant),
     ) {
         Column {
             ProductCardImageSection(
@@ -77,11 +99,15 @@ fun XGProductCard(
                 title = title,
                 price = price,
                 originalPrice = originalPrice,
-                vendorName = vendorName,
                 rating = rating,
                 reviewCount = reviewCount,
                 deliveryLabel = deliveryLabel,
                 onAddToCartClick = onAddToCartClick,
+                priceSize = priceSize,
+                strikethroughFontSize = strikethroughFontSize,
+                priceLayout = priceLayout,
+                showRatingAbovePrice = showRatingAbovePrice,
+                showDeliveryAbovePrice = showDeliveryAbovePrice,
             )
         }
     }
@@ -94,13 +120,14 @@ private fun ProductCardImageSection(
     isWishlisted: Boolean,
     onWishlistToggle: (() -> Unit)?,
 ) {
-    Box {
+    Box(modifier = Modifier.padding(CardPadding)) {
         XGImage(
             url = imageUrl,
             contentDescription = title,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(16f / 9f),
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(XGCornerRadius.Medium)),
         )
 
         if (onWishlistToggle != null) {
@@ -109,7 +136,7 @@ private fun ProductCardImageSection(
                 onToggle = onWishlistToggle,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(XGSpacing.SM),
+                    .padding(XGSpacing.XS),
             )
         }
     }
@@ -120,82 +147,182 @@ private fun ProductCardDetailsSection(
     title: String,
     price: String,
     originalPrice: String?,
-    vendorName: String?,
     rating: Float?,
     reviewCount: Int?,
-    deliveryLabel: String? = null,
-    onAddToCartClick: (() -> Unit)? = null,
+    deliveryLabel: String?,
+    onAddToCartClick: (() -> Unit)?,
+    priceSize: XGPriceSize,
+    strikethroughFontSize: Float,
+    priceLayout: XGPriceLayout,
+    showRatingAbovePrice: Boolean,
+    showDeliveryAbovePrice: Boolean,
 ) {
-    Column(modifier = Modifier.padding(XGSpacing.CardPadding)) {
+    Column(modifier = Modifier.padding(horizontal = CardPadding)) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium,
-            maxLines = 2,
+            fontFamily = PoppinsFontFamily,
+            fontSize = TitleFontSize,
+            fontWeight = FontWeight.SemiBold,
+            color = XGColors.OnSurface,
+            maxLines = TITLE_MAX_LINES,
             overflow = TextOverflow.Ellipsis,
+            lineHeight = TitleLineHeight,
         )
 
-        if (vendorName != null) {
-            Spacer(modifier = Modifier.height(XGSpacing.XS))
-            Text(
-                text = vendorName,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+        if (showRatingAbovePrice) {
+            RatingSection(rating = rating, reviewCount = reviewCount)
         }
 
+        if (showDeliveryAbovePrice) {
+            DeliverySection(deliveryLabel = deliveryLabel)
+            PriceWithCartRow(
+                price = price,
+                originalPrice = originalPrice,
+                priceSize = priceSize,
+                strikethroughFontSize = strikethroughFontSize,
+                priceLayout = priceLayout,
+                onAddToCartClick = onAddToCartClick,
+            )
+        } else {
+            Spacer(modifier = Modifier.height(XGSpacing.XS))
+            XGPriceText(
+                price = price,
+                originalPrice = originalPrice,
+                size = priceSize,
+                strikethroughFontSize = strikethroughFontSize,
+                layout = priceLayout,
+            )
+            if (!showRatingAbovePrice) {
+                RatingSection(rating = rating, reviewCount = reviewCount)
+            }
+            DeliverySection(deliveryLabel = deliveryLabel)
+            StandaloneCartSection(onAddToCartClick = onAddToCartClick)
+        }
+
+        Spacer(modifier = Modifier.height(CardPadding))
+    }
+}
+
+@Composable
+private fun RatingSection(rating: Float?, reviewCount: Int?) {
+    if (rating != null) {
         Spacer(modifier = Modifier.height(XGSpacing.XS))
+        XGRatingBar(rating = rating, showValue = false, reviewCount = reviewCount)
+    }
+}
+
+@Composable
+private fun DeliverySection(deliveryLabel: String?) {
+    if (deliveryLabel != null) {
+        Spacer(modifier = Modifier.height(XGSpacing.XS))
+        DeliveryLabelText(deliveryLabel = deliveryLabel)
+    }
+}
+
+@Composable
+private fun PriceWithCartRow(
+    price: String,
+    originalPrice: String?,
+    priceSize: XGPriceSize,
+    strikethroughFontSize: Float,
+    priceLayout: XGPriceLayout,
+    onAddToCartClick: (() -> Unit)?,
+) {
+    Spacer(modifier = Modifier.height(XGSpacing.XS))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Bottom,
+    ) {
         XGPriceText(
             price = price,
             originalPrice = originalPrice,
+            size = priceSize,
+            strikethroughFontSize = strikethroughFontSize,
+            layout = priceLayout,
         )
-
-        if (rating != null) {
-            Spacer(modifier = Modifier.height(XGSpacing.XS))
-            XGRatingBar(
-                rating = rating,
-                showValue = true,
-                reviewCount = reviewCount,
-            )
-        }
-
-        if (deliveryLabel != null) {
-            Spacer(modifier = Modifier.height(XGSpacing.XS))
-            Text(
-                text = deliveryLabel,
-                style = MaterialTheme.typography.labelSmall.copy(fontSize = DeliveryLabelFontSize),
-                color = XGColors.BrandSecondary,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
-
+        Spacer(modifier = Modifier.weight(1f))
         if (onAddToCartClick != null) {
-            Spacer(modifier = Modifier.height(XGSpacing.SM))
-            Box(modifier = Modifier.fillMaxWidth()) {
-                IconButton(
-                    onClick = onAddToCartClick,
-                    modifier = Modifier
-                        .size(AddToCartButtonSize)
-                        .clip(CircleShape)
-                        .align(Alignment.CenterEnd),
-                    colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = XGColors.BrandSecondary,
-                    ),
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.AddShoppingCart,
-                        contentDescription = null,
-                        modifier = Modifier.size(AddToCartIconSize),
-                        tint = Color.White,
-                    )
-                }
-            }
+            AddToCartButton(onClick = onAddToCartClick)
         }
     }
 }
 
+@Composable
+private fun StandaloneCartSection(onAddToCartClick: (() -> Unit)?) {
+    if (onAddToCartClick != null) {
+        Spacer(modifier = Modifier.height(CardPadding))
+        Box(modifier = Modifier.fillMaxWidth()) {
+            AddToCartButton(
+                onClick = onAddToCartClick,
+                modifier = Modifier.align(Alignment.CenterEnd),
+            )
+        }
+    }
+}
+
+@Composable
+private fun AddToCartButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+            .size(AddToCartButtonSize)
+            .clip(RoundedCornerShape(AddToCartCornerRadius)),
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = XGColors.AddToCart,
+        ),
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.AddShoppingCart,
+            contentDescription = null,
+            modifier = Modifier.size(AddToCartIconSize),
+            tint = XGColors.OnSurface,
+        )
+    }
+}
+
+@Composable
+private fun DeliveryLabelText(deliveryLabel: String) {
+    val boldPattern = "\\*\\*(.+?)\\*\\*".toRegex()
+    val matches = boldPattern.findAll(deliveryLabel).toList()
+
+    if (matches.isEmpty()) {
+        Text(
+            text = deliveryLabel,
+            fontFamily = PoppinsFontFamily,
+            fontSize = DeliveryLabelFontSize,
+            fontWeight = FontWeight.Normal,
+            color = XGColors.DeliveryText,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            lineHeight = DeliveryLabelLineHeight,
+        )
+    } else {
+        Text(
+            text = buildAnnotatedString {
+                var lastIndex = 0
+                matches.forEach { match ->
+                    append(deliveryLabel.substring(lastIndex, match.range.first))
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append(match.groupValues[1])
+                    }
+                    lastIndex = match.range.last + 1
+                }
+                if (lastIndex < deliveryLabel.length) {
+                    append(deliveryLabel.substring(lastIndex))
+                }
+            },
+            fontFamily = PoppinsFontFamily,
+            fontSize = DeliveryLabelFontSize,
+            fontWeight = FontWeight.Normal,
+            color = XGColors.DeliveryText,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            lineHeight = DeliveryLabelLineHeight,
+        )
+    }
+}
+
+/** Informational card with optional leading icon, title, subtitle, and trailing content. */
 @Composable
 fun XGInfoCard(
     title: String,
@@ -212,7 +339,9 @@ fun XGInfoCard(
             .fillMaxWidth()
             .then(clickModifier),
         shape = RoundedCornerShape(XGCornerRadius.Medium),
-        elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.cardColors(containerColor = XGColors.Surface),
+        border = BorderStroke(BorderWidth, XGColors.OutlineVariant),
     ) {
         InfoCardContent(
             title = title,
@@ -242,21 +371,26 @@ private fun InfoCardContent(
                 imageVector = leadingIcon,
                 contentDescription = null,
                 modifier = Modifier.size(XGSpacing.LG),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = XGColors.OnSurfaceVariant,
             )
         }
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                fontFamily = PoppinsFontFamily,
+                fontSize = InfoCardTitleFontSize,
+                fontWeight = FontWeight.Medium,
+                color = XGColors.OnSurface,
             )
             if (subtitle != null) {
                 Spacer(modifier = Modifier.height(XGSpacing.XS))
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = InfoCardSubtitleFontSize,
+                    fontWeight = FontWeight.Normal,
+                    color = XGColors.OnSurfaceVariant,
                 )
             }
         }
@@ -269,34 +403,47 @@ private fun InfoCardContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun XGProductCardPreview() {
+private fun XGProductCardFeaturedPreview() {
     XGTheme {
         XGProductCard(
             imageUrl = null,
             title = "Premium Wireless Headphones with Noise Cancellation",
             price = "29.99",
             originalPrice = "39.99",
-            vendorName = "TechStore",
             rating = 4.5f,
             reviewCount = 123,
             isWishlisted = false,
             onWishlistToggle = {},
             onClick = {},
+            priceLayout = XGPriceLayout.Stacked,
+            showRatingAbovePrice = true,
+            modifier = Modifier.width(FeaturedCardWidth),
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun XGProductCardWishlistedPreview() {
+private fun XGProductCardStandardPreview() {
     XGTheme {
         XGProductCard(
             imageUrl = null,
             title = "Simple Product",
             price = "9.99",
+            originalPrice = "14.99",
+            rating = 3.5f,
+            reviewCount = 42,
             isWishlisted = true,
             onWishlistToggle = {},
+            deliveryLabel = "Order before **23:59**, delivered **Monday**",
+            onAddToCartClick = {},
             onClick = {},
+            priceSize = XGPriceSize.Standard,
+            strikethroughFontSize = 14f,
+            priceLayout = XGPriceLayout.Stacked,
+            showRatingAbovePrice = true,
+            showDeliveryAbovePrice = true,
+            modifier = Modifier.width(StandardCardWidth),
         )
     }
 }

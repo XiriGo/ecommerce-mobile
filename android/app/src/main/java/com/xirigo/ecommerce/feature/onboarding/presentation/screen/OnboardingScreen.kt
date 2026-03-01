@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -29,6 +28,7 @@ import com.xirigo.ecommerce.core.designsystem.component.XGBrandGradient
 import com.xirigo.ecommerce.core.designsystem.component.XGButton
 import com.xirigo.ecommerce.core.designsystem.component.XGButtonStyle
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 import com.xirigo.ecommerce.feature.onboarding.presentation.state.OnboardingUiState
 import com.xirigo.ecommerce.feature.onboarding.presentation.viewmodel.OnboardingViewModel
@@ -139,8 +139,8 @@ private fun OnboardingContent(
             XGPaginationDots(
                 totalPages = pages.size,
                 currentPage = currentPage,
-                activeColor = Color.White,
-                inactiveColor = Color.White.copy(alpha = 0.4f),
+                activeColor = XGColors.TextOnDark,
+                inactiveColor = XGColors.TextOnDark.copy(alpha = 0.4f),
             )
         }
     }

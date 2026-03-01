@@ -95,9 +95,14 @@ in the XiriGo Ecommerce app. Agents and developers must follow these patterns ex
 - **Body should be simple**: Extract complex views into separate structs.
 - **Use `@Environment`** for dependency injection in views.
 - **No `AnyView`**: Use `@ViewBuilder` or `some View` generics.
-- **Previews**: Every view has a `#Preview` block.
-- **No hardcoded strings**: Use `String(localized:)` or `.localizable` pattern.
-- **Theme tokens**: Always use theme constants, never hardcode colors/fonts.
+- **Previews**: Every view has a `#Preview` block wrapped in `.xgTheme()`.
+- **No hardcoded strings**: Use `String(localized:)` for ALL user-facing text, including sample/mock data.
+- **No hardcoded colors**: `.white`, `Color.white`, `Color(hex: "#...")` are ALL hardcoded. Use `XGColors.*` tokens.
+- **No hardcoded fonts**: Never use `Font.system(...)` or `Font.custom("Poppins-...")` in components. Use `XGTypography.*` tokens.
+- **No hardcoded corners**: Never use `.cornerRadius(10)`. Use `XGCornerRadius.*` tokens.
+- **Extract magic numbers**: Inline dimensions must live in a `private enum Constants`.
+- **Immutable state models**: All properties in UI state structs MUST be `let`, never `var`.
+- **Error messages**: Use `error.toUserMessage` (String Catalog), never `error.localizedDescription`.
 
 ## DI Pattern (Factory)
 
@@ -484,6 +489,58 @@ enum XGSpacing {
     static let minTouchTarget: CGFloat = 44  // Apple HIG: 44pt
 }
 ```
+
+### Theme: XGTypography.swift
+
+```swift
+// Core/DesignSystem/Theme/XGTypography.swift
+// Primary font: Poppins (all weights), Price font: Source Sans 3 Black
+// All components and feature screens use these tokens — never Font.system() or Font.custom()
+
+enum XGTypography {
+    static let headline = Font.custom("Poppins-Bold", size: 20)
+    static let title = Font.custom("Poppins-SemiBold", size: 18)
+    static let titleMedium = Font.custom("Poppins-Medium", size: 16)
+    static let body = Font.custom("Poppins-Regular", size: 14)
+    static let bodyMedium = Font.custom("Poppins-Medium", size: 14)
+    static let bodySemiBold = Font.custom("Poppins-SemiBold", size: 14)
+    static let subtitle = Font.custom("Poppins-Regular", size: 12)
+    static let caption = Font.custom("Poppins-Regular", size: 12)
+    static let captionSemiBold = Font.custom("Poppins-SemiBold", size: 12)
+    static let bodySmall = Font.custom("Poppins-Regular", size: 11)
+    static let micro = Font.custom("Poppins-Regular", size: 10)
+
+    static func priceFont(size: CGFloat) -> Font {
+        Font.custom("SourceSans3-Black", size: size)
+    }
+
+    static func strikethroughFont(size: CGFloat) -> Font {
+        Font.custom("Poppins-Medium", size: size)
+    }
+}
+```
+
+**Rules**:
+- **Never** use `Font.system(size:weight:)` in components or feature screens
+- **Never** use `Font.custom("Poppins-...", size:)` directly — use `XGTypography.*` tokens
+- `priceFont(size:)` is the only place Source Sans 3 should appear (via `XGPriceText`)
+- If a new style is needed, add it to `XGTypography` first, then use the token
+
+### Theme: XGCornerRadius
+
+```swift
+// Core/DesignSystem/Theme/XGCornerRadius.swift
+enum XGCornerRadius {
+    static let small: CGFloat = 4      // icons, badges
+    static let medium: CGFloat = 10    // cards, banners, images
+    static let large: CGFloat = 16     // sheets, dialogs
+    static let full: CGFloat = 100     // pills, FABs
+}
+```
+
+**Rules**:
+- **Never** hardcode `cornerRadius(10)` — use `RoundedRectangle(cornerRadius: XGCornerRadius.medium)`
+- All clip shapes, borders, and overlay shapes MUST use `XGCornerRadius`
 
 ### Component: XGButton.swift
 

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGRangeSlider",
+  "category": "atom",
+  "svgSource": "XiriGo_App_04.svg",
+  "status": "token-only (no dedicated component file yet)",
+
+  "tokens": {
+    "trackHeight": 4,
+    "trackActiveColor": "$foundations/colors.brand.primary",
+    "trackInactiveColor": "$foundations/colors.light.borderStrong",
+    "thumbSize": 24,
+    "thumbColor": "$foundations/colors.brand.primary",
+    "thumbBorderColor": "$foundations/colors.light.surface",
+    "thumbBorderWidth": 3
+  }
+}

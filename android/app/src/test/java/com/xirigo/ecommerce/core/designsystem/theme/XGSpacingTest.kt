@@ -13,20 +13,20 @@ class XGSpacingTest {
         assertThat(XGSpacing.SM).isEqualTo(8.dp)
         assertThat(XGSpacing.MD).isEqualTo(12.dp)
         assertThat(XGSpacing.Base).isEqualTo(16.dp)
-        assertThat(XGSpacing.LG).isEqualTo(24.dp)
-        assertThat(XGSpacing.XL).isEqualTo(32.dp)
-        assertThat(XGSpacing.XXL).isEqualTo(48.dp)
-        assertThat(XGSpacing.XXXL).isEqualTo(64.dp)
+        assertThat(XGSpacing.LG).isEqualTo(20.dp)
+        assertThat(XGSpacing.XL).isEqualTo(24.dp)
+        assertThat(XGSpacing.XXL).isEqualTo(32.dp)
+        assertThat(XGSpacing.XXXL).isEqualTo(48.dp)
     }
 
     @Test
     fun `layout spacing values should match design tokens`() {
-        assertThat(XGSpacing.ScreenPaddingHorizontal).isEqualTo(16.dp)
+        assertThat(XGSpacing.ScreenPaddingHorizontal).isEqualTo(20.dp)
         assertThat(XGSpacing.ScreenPaddingVertical).isEqualTo(16.dp)
         assertThat(XGSpacing.CardPadding).isEqualTo(12.dp)
-        assertThat(XGSpacing.ListItemSpacing).isEqualTo(8.dp)
+        assertThat(XGSpacing.ListItemSpacing).isEqualTo(10.dp)
         assertThat(XGSpacing.SectionSpacing).isEqualTo(24.dp)
-        assertThat(XGSpacing.ProductGridSpacing).isEqualTo(8.dp)
+        assertThat(XGSpacing.ProductGridSpacing).isEqualTo(10.dp)
     }
 
     @Test

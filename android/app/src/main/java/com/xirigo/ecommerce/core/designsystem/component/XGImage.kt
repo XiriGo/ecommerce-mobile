@@ -6,7 +6,11 @@ import coil3.request.crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -16,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+private const val CROSSFADE_DURATION_MS = 250
+
+/** Async image loader with shimmer placeholder and branded error fallback. */
 @Composable
 fun XGImage(
     url: String?,
@@ -28,7 +35,7 @@ fun XGImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url)
                 .crossfade(true)
-                .crossfade(250)
+                .crossfade(CROSSFADE_DURATION_MS)
                 .build(),
             contentDescription = contentDescription,
             modifier = modifier,
@@ -39,7 +46,15 @@ fun XGImage(
     } else {
         Box(
             modifier = modifier.background(XGColors.Shimmer),
-        )
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Image,
+                contentDescription = null,
+                tint = XGColors.OnSurfaceVariant,
+                modifier = Modifier.size(32.dp),
+            )
+        }
     }
 }
 

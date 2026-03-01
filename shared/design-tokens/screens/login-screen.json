@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "screen": "LoginScreen",
+  "svgSource": "XiriGo_App_02.svg",
+  "background": "$brand/xg-brand-gradient",
+
+  "sections": [
+    { "id": "logo", "molecule": "$brand/xg-logo-mark" },
+    { "id": "brandPattern", "molecule": "$brand/xg-brand-pattern" },
+    { "id": "emailField", "atom": "$atoms/xg-text-field.default" },
+    { "id": "passwordField", "atom": "$atoms/xg-text-field.default (isPassword: true)" },
+    { "id": "forgotPassword", "font": "$foundations/typography.typeScale.bodyMedium", "color": "$foundations/colors.brand.primary" },
+    { "id": "loginButton", "atom": "$atoms/xg-button.primary" },
+    { "id": "divider", "atom": "$atoms/xg-divider.withLabel" },
+    { "id": "socialButtons", "molecules": ["$molecules/xg-social-login-button.google", "$molecules/xg-social-login-button.apple"] },
+    { "id": "signupLink", "font": "$foundations/typography.typeScale.body" }
+  ]
+}

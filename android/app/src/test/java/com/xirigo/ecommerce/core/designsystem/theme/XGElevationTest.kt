@@ -10,8 +10,8 @@ class XGElevationTest {
     fun `elevation values should match design tokens`() {
         assertThat(XGElevation.Level0).isEqualTo(0.dp)
         assertThat(XGElevation.Level1).isEqualTo(1.dp)
-        assertThat(XGElevation.Level2).isEqualTo(3.dp)
-        assertThat(XGElevation.Level3).isEqualTo(6.dp)
+        assertThat(XGElevation.Level2).isEqualTo(2.dp)
+        assertThat(XGElevation.Level3).isEqualTo(4.dp)
         assertThat(XGElevation.Level4).isEqualTo(8.dp)
         assertThat(XGElevation.Level5).isEqualTo(12.dp)
     }

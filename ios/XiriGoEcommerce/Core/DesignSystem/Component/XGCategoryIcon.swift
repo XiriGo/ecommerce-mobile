@@ -3,12 +3,13 @@ import SwiftUI
 // MARK: - XGCategoryIcon
 
 /// A colored rounded-rectangle tile with an icon and label below.
-/// Token source: `components.json > XGCategoryIcon`.
+/// Token source: `components/atoms/xg-category-icon.json`.
 ///
 /// - Tile size: 79x79pt
 /// - Corner radius: 10pt (medium)
 /// - Icon: 40pt, centered, white
-/// - Label: below tile, 12sp medium, max 1 line
+/// - Label: below tile, 12pt medium, max 1 line
+/// - Label spacing: 6pt
 struct XGCategoryIcon: View {
     // MARK: - Lifecycle
 
@@ -30,7 +31,7 @@ struct XGCategoryIcon: View {
         Button(action: action) {
             VStack(spacing: Constants.labelSpacing) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: XGCornerRadius.large)
+                    RoundedRectangle(cornerRadius: XGCornerRadius.medium)
                         .fill(backgroundColor)
                         .frame(
                             width: Constants.tileSize,
@@ -39,12 +40,12 @@ struct XGCategoryIcon: View {
 
                     Image(systemName: systemIconName)
                         .font(.system(size: Constants.iconSize))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(XGColors.iconOnDark)
                         .accessibilityHidden(true)
                 }
 
                 Text(name)
-                    .font(XGTypography.labelMedium)
+                    .font(XGTypography.captionMedium)
                     .foregroundStyle(XGColors.onSurface)
                     .lineLimit(1)
             }
@@ -58,6 +59,7 @@ struct XGCategoryIcon: View {
     private enum Constants {
         static let tileSize: CGFloat = 79
         static let iconSize: CGFloat = 40
+        static let labelFontSize: CGFloat = 12
         static let labelSpacing: CGFloat = 6
     }
 
@@ -91,4 +93,5 @@ struct XGCategoryIcon: View {
         )
     }
     .padding()
+    .xgTheme()
 }

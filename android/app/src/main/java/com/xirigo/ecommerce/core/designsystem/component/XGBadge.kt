@@ -21,6 +21,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Circular count badge that displays a number, capping at "99+". */
 @Composable
 fun XGCountBadge(count: Int, modifier: Modifier = Modifier) {
     if (count <= 0) return
@@ -44,6 +45,7 @@ fun XGCountBadge(count: Int, modifier: Modifier = Modifier) {
     }
 }
 
+/** Pill-shaped status badge with semantic color coding. */
 @Composable
 fun XGStatusBadge(
     status: XGBadgeStatus,

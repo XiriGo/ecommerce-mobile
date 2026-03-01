@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGPriceText",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+  "description": "3-part composite price display: currency symbol + integer + decimal. Uses Source Sans 3 Black.",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGPriceText.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGPriceText.kt"
+  },
+
+  "enums": {
+    "XGPriceStyle": {
+      "values": ["default", "standard", "small", "deal"],
+      "description": "Controls font sizes and color of the composite price"
+    },
+    "XGPriceLayout": {
+      "values": ["inline", "stacked"],
+      "description": "inline = HStack/Row (strikethrough beside price), stacked = VStack/Column (strikethrough above price)"
+    }
+  },
+
+  "variants": {
+    "default": {
+      "currencyFontSize": 22.78,
+      "integerFontSize": 27.33,
+      "decimalFontSize": 18.98,
+      "fontFamily": "$foundations/typography.fontFamily.price",
+      "fontWeight": "black",
+      "color": "$foundations/colors.semantic.priceDiscount",
+      "usage": "Popular Products (productFeatured) cards"
+    },
+    "standard": {
+      "currencyFontSize": 20,
+      "integerFontSize": 20,
+      "decimalFontSize": 14,
+      "fontFamily": "$foundations/typography.fontFamily.price",
+      "fontWeight": "black",
+      "color": "$foundations/colors.semantic.priceDiscount",
+      "usage": "New Arrivals (productStandard) cards"
+    },
+    "small": {
+      "currencyFontSize": 14,
+      "integerFontSize": 18,
+      "decimalFontSize": 14,
+      "fontFamily": "$foundations/typography.fontFamily.price",
+      "fontWeight": "black",
+      "color": "$foundations/colors.semantic.priceDiscount",
+      "usage": "Compact price displays"
+    },
+    "deal": {
+      "currencyFontSize": 22.78,
+      "integerFontSize": 27.33,
+      "decimalFontSize": 18.98,
+      "fontFamily": "$foundations/typography.fontFamily.price",
+      "fontWeight": "black",
+      "color": "$foundations/colors.semantic.priceDeal",
+      "usage": "Daily Deal card"
+    }
+  },
+
+  "strikethrough": {
+    "fontFamily": "$foundations/typography.fontFamily.primary",
+    "fontWeight": "medium",
+    "color": "$foundations/colors.semantic.priceStrikethrough",
+    "textDecoration": "line-through",
+    "defaultFontSize": 15.18,
+    "standardFontSize": 14
+  },
+
+  "parameters": {
+    "price": { "type": "String", "required": true },
+    "originalPrice": { "type": "String?", "required": false },
+    "style": { "type": "XGPriceStyle", "default": "default" },
+    "layout": { "type": "XGPriceLayout", "default": "inline" },
+    "strikethroughFontSize": { "type": "CGFloat/Float", "default": 15.18 }
+  }
+}

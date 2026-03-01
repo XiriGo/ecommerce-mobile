@@ -30,6 +30,7 @@ private val DarkOverlayStops = arrayOf(
     0.90f to Color(0xFF3C00D2),
 )
 
+/** XiriGo brand radial gradient background with dark overlay. */
 @Composable
 fun XGBrandGradient(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit = {}) {
     Box(

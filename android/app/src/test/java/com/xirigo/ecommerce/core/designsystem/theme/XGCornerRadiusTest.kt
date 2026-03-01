@@ -9,10 +9,11 @@ class XGCornerRadiusTest {
     @Test
     fun `corner radius values should match design tokens`() {
         assertThat(XGCornerRadius.None).isEqualTo(0.dp)
-        assertThat(XGCornerRadius.Small).isEqualTo(4.dp)
-        assertThat(XGCornerRadius.Medium).isEqualTo(8.dp)
-        assertThat(XGCornerRadius.Large).isEqualTo(12.dp)
-        assertThat(XGCornerRadius.ExtraLarge).isEqualTo(16.dp)
+        assertThat(XGCornerRadius.Small).isEqualTo(6.dp)
+        assertThat(XGCornerRadius.Medium).isEqualTo(10.dp)
+        assertThat(XGCornerRadius.Large).isEqualTo(16.dp)
+        assertThat(XGCornerRadius.Pill).isEqualTo(28.dp)
+        assertThat(XGCornerRadius.Toggle).isEqualTo(22.dp)
         assertThat(XGCornerRadius.Full).isEqualTo(999.dp)
     }
 
@@ -21,8 +22,8 @@ class XGCornerRadiusTest {
         assertThat(XGCornerRadius.None.value).isLessThan(XGCornerRadius.Small.value)
         assertThat(XGCornerRadius.Small.value).isLessThan(XGCornerRadius.Medium.value)
         assertThat(XGCornerRadius.Medium.value).isLessThan(XGCornerRadius.Large.value)
-        assertThat(XGCornerRadius.Large.value).isLessThan(XGCornerRadius.ExtraLarge.value)
-        assertThat(XGCornerRadius.ExtraLarge.value).isLessThan(XGCornerRadius.Full.value)
+        assertThat(XGCornerRadius.Large.value).isLessThan(XGCornerRadius.Pill.value)
+        assertThat(XGCornerRadius.Pill.value).isLessThan(XGCornerRadius.Full.value)
     }
 
     @Test
@@ -31,7 +32,7 @@ class XGCornerRadiusTest {
     }
 
     @Test
-    fun `Full corner radius should be large enough for pill shape`() {
+    fun `Full corner radius should be large enough for circle shape`() {
         assertThat(XGCornerRadius.Full.value).isAtLeast(100f)
     }
 }

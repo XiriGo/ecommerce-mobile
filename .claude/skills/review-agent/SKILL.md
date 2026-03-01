@@ -56,7 +56,30 @@ Parse: `$ARGUMENTS` — feature name to review.
 - DTOs separate from domain models (always mapped)
 - No business logic in UI layer
 
-### 4. Design System Compliance
+### 4. Design Token & Design System Compliance (CRITICAL — DO THIS FIRST)
+
+**Step 1: Read all design token JSON files:**
+- `shared/design-tokens/colors.json`
+- `shared/design-tokens/spacing.json`
+- `shared/design-tokens/typography.json`
+- `shared/design-tokens/components.json`
+- `shared/design-tokens/gradients.json`
+
+**Step 2: Diff EVERY visual value in source against token JSON:**
+- iOS: Read `XGColors.swift`, `XGSpacing.swift`, `XGCornerRadius.swift`, `XGTypography.swift` — verify every hex/CGFloat matches JSON
+- Android: Read theme Color/Spacing/CornerRadius/Typography files — verify every value matches JSON
+- **Flag ANY mismatch as CRITICAL** — wrong colors/spacing = screen doesn't match design
+
+**Step 3: Search for hardcoded visual values:**
+- Search `Color(hex:` / `Color(0xFF` in component files — every instance MUST use a named token
+- Search `.system(size:` / `TextStyle(fontSize =` — verify sizes match typography.json
+- Search for magic numbers (CGFloat/dp literals) in frame/padding/spacing — must use token constants
+
+**Step 4: Component-level spec verification:**
+- For each XG* component, compare its dimensions, colors, cornerRadius against `components.json`
+- Verify gradient stops match `gradients.json`
+
+**General Design System Rules:**
 - Feature screens use `XG*` design system components exclusively
 - No raw `MaterialTheme`, `Button`, `TextField`, `CircularProgressIndicator` in feature screens
 - All colors from `XGColors`, all spacing from `XGSpacing`

@@ -3,44 +3,81 @@ import Testing
 
 private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
 
-// MARK: - XGPriceSizeTests
+// MARK: - XGPriceStyleTests
 
-@Suite("XGPriceSize Tests")
-struct XGPriceSizeTests {
-    @Test("All three price sizes exist")
-    func sizes_allCasesExist() {
-        let sizes: [XGPriceSize] = [.small, .medium, .large]
-        #expect(sizes.count == 3)
+@Suite("XGPriceStyle Tests")
+struct XGPriceStyleTests {
+    @Test("All four price styles exist")
+    func styles_allCasesExist() {
+        let styles: [XGPriceStyle] = [.default, .standard, .small, .deal]
+        #expect(styles.count == 4)
     }
 
-    @Test("Small size has bodySmall price font")
-    func small_priceFont_isBodySmall() {
-        #expect(XGPriceSize.small.priceFont == XGTypography.bodySmall)
+    @Test("Default style has correct currency font size")
+    func default_currencyFontSize_isCorrect() {
+        #expect(XGPriceStyle.default.currencyFontSize == 22.78)
     }
 
-    @Test("Medium size has titleMedium price font")
-    func medium_priceFont_isTitleMedium() {
-        #expect(XGPriceSize.medium.priceFont == XGTypography.titleMedium)
+    @Test("Default style has correct integer font size")
+    func default_integerFontSize_isCorrect() {
+        #expect(XGPriceStyle.default.integerFontSize == 27.33)
     }
 
-    @Test("Large size has headlineSmall price font")
-    func large_priceFont_isHeadlineSmall() {
-        #expect(XGPriceSize.large.priceFont == XGTypography.headlineSmall)
+    @Test("Default style has correct decimal font size")
+    func default_decimalFontSize_isCorrect() {
+        #expect(XGPriceStyle.default.decimalFontSize == 18.98)
     }
 
-    @Test("Small size has labelSmall original price font")
-    func small_originalPriceFont_isLabelSmall() {
-        #expect(XGPriceSize.small.originalPriceFont == XGTypography.labelSmall)
+    @Test("Small style has correct currency font size")
+    func small_currencyFontSize_isCorrect() {
+        #expect(XGPriceStyle.small.currencyFontSize == 14)
     }
 
-    @Test("Medium size has bodySmall original price font")
-    func medium_originalPriceFont_isBodySmall() {
-        #expect(XGPriceSize.medium.originalPriceFont == XGTypography.bodySmall)
+    @Test("Small style has correct integer font size")
+    func small_integerFontSize_isCorrect() {
+        #expect(XGPriceStyle.small.integerFontSize == 18)
     }
 
-    @Test("Large size has bodyMedium original price font")
-    func large_originalPriceFont_isBodyMedium() {
-        #expect(XGPriceSize.large.originalPriceFont == XGTypography.bodyMedium)
+    @Test("Small style has correct decimal font size")
+    func small_decimalFontSize_isCorrect() {
+        #expect(XGPriceStyle.small.decimalFontSize == 14)
+    }
+
+    @Test("Standard style has correct currency font size")
+    func standard_currencyFontSize_isCorrect() {
+        #expect(XGPriceStyle.standard.currencyFontSize == 20)
+    }
+
+    @Test("Standard style has correct integer font size")
+    func standard_integerFontSize_isCorrect() {
+        #expect(XGPriceStyle.standard.integerFontSize == 20)
+    }
+
+    @Test("Standard style has correct decimal font size")
+    func standard_decimalFontSize_isCorrect() {
+        #expect(XGPriceStyle.standard.decimalFontSize == 14)
+    }
+
+    @Test("Standard style color is priceSale")
+    func standard_color_isPriceSale() {
+        #expect(XGPriceStyle.standard.color == XGColors.priceSale)
+    }
+
+    @Test("Deal style has same font sizes as default")
+    func deal_fontSizes_matchDefault() {
+        #expect(XGPriceStyle.deal.currencyFontSize == XGPriceStyle.default.currencyFontSize)
+        #expect(XGPriceStyle.deal.integerFontSize == XGPriceStyle.default.integerFontSize)
+        #expect(XGPriceStyle.deal.decimalFontSize == XGPriceStyle.default.decimalFontSize)
+    }
+
+    @Test("Default style color is priceSale")
+    func default_color_isPriceSale() {
+        #expect(XGPriceStyle.default.color == XGColors.priceSale)
+    }
+
+    @Test("Deal style color is brandSecondary")
+    func deal_color_isBrandSecondary() {
+        #expect(XGPriceStyle.deal.color == XGColors.brandSecondary)
     }
 }
 
@@ -76,28 +113,35 @@ struct XGPriceTextTests {
 
     @Test("PriceText initialises with custom currency symbol")
     func init_customCurrencySymbol_initialises() {
-        let view = XGPriceText(price: "9.99", currencySymbol: "USD")
+        let view = XGPriceText(price: "9.99", currencySymbol: "$")
         _ = view
         #expect(true)
     }
 
-    @Test("PriceText initialises with default medium size")
-    func init_defaultSize_isMedium() {
+    @Test("PriceText initialises with default style")
+    func init_defaultStyle_isDefault() {
         let view = XGPriceText(price: "9.99")
         _ = view
         #expect(true)
     }
 
-    @Test("PriceText initialises with small size")
-    func init_smallSize_initialises() {
-        let view = XGPriceText(price: "9.99", size: .small)
+    @Test("PriceText initialises with small style")
+    func init_smallStyle_initialises() {
+        let view = XGPriceText(price: "9.99", style: .small)
         _ = view
         #expect(true)
     }
 
-    @Test("PriceText initialises with large size")
-    func init_largeSize_initialises() {
-        let view = XGPriceText(price: "9.99", size: .large)
+    @Test("PriceText initialises with standard style")
+    func init_standardStyle_initialises() {
+        let view = XGPriceText(price: "9.99", style: .standard)
+        _ = view
+        #expect(true)
+    }
+
+    @Test("PriceText initialises with deal style")
+    func init_dealStyle_initialises() {
+        let view = XGPriceText(price: "9.99", style: .deal)
         _ = view
         #expect(true)
     }
@@ -106,7 +150,6 @@ struct XGPriceTextTests {
 
     @Test("hasSale is false when originalPrice is nil")
     func hasSale_nilOriginalPrice_isFalse() {
-        // When originalPrice is nil, there is no sale → regular price color used
         let hasSale = hasSalePrice(originalPrice: nil)
         #expect(hasSale == false)
     }
@@ -128,8 +171,6 @@ struct XGPriceTextTests {
     }
 
     // MARK: - Private
-
-    // MARK: - Helper
 
     /// Mirrors the private `hasSale` logic from XGPriceText.
     private func hasSalePrice(originalPrice: String?) -> Bool {

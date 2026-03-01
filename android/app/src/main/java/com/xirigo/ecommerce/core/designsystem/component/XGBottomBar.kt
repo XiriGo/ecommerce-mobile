@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Bottom navigation bar with tab items and optional badge counts. */
 @Composable
 fun XGBottomBar(
     items: List<XGTabItem>,

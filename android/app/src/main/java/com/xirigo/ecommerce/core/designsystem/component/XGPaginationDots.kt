@@ -15,10 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
@@ -29,6 +31,7 @@ private val DotCornerRadius = 3.dp
 private val DotGap = 4.dp
 private const val ANIMATION_DURATION_MS = 300
 
+/** Animated pagination dot indicators for paged content. */
 @Composable
 fun XGPaginationDots(
     totalPages: Int,
@@ -37,9 +40,10 @@ fun XGPaginationDots(
     activeColor: Color = XGColors.PaginationDotsActive,
     inactiveColor: Color = XGColors.PaginationDotsInactive,
 ) {
+    val pageDescription = stringResource(R.string.common_page_indicator_a11y, currentPage + 1, totalPages)
     Row(
         modifier = modifier.semantics {
-            contentDescription = "Page ${currentPage + 1} of $totalPages"
+            contentDescription = pageDescription
         },
         horizontalArrangement = Arrangement.spacedBy(DotGap),
         verticalAlignment = Alignment.CenterVertically,

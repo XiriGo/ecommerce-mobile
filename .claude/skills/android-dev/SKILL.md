@@ -19,6 +19,7 @@ Parse: `$ARGUMENTS` — feature name to implement.
 3. Read the architect spec: `shared/feature-specs/{feature}.md`
 4. Read architect handoff: `docs/pipeline/{feature}-architect.handoff.md`
 5. Read existing implementations to match patterns
+6. **MANDATORY**: Read ALL files in `shared/design-tokens/` (colors.json, spacing.json, typography.json, components.json, gradients.json) — these are the source of truth for every visual value
 
 ## Implementation Order
 1. DTOs (`feature/{name}/data/dto/`) — `@Serializable` data classes
@@ -41,7 +42,9 @@ Parse: `$ARGUMENTS` — feature name to implement.
 - Stateless composables (state hoisted)
 - Every screen has @Preview
 - No hardcoded strings — stringResource()
-- Material 3 theming
+- **NEVER hardcode `Color(0xFF...)` in components — always use theme tokens**
+- **Every hex, spacing, cornerRadius, font size MUST match `shared/design-tokens/*.json` exactly**
+- **If a token doesn't exist in the theme, ADD it from JSON — don't hardcode**
 
 ## Handoff
 Create `docs/pipeline/{feature}-android-dev.handoff.md`

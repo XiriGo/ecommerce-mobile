@@ -14,8 +14,6 @@ enum XGButtonVariant {
 struct XGButton: View {
     // MARK: - Lifecycle
 
-    // MARK: - Init
-
     init(
         _ title: String,
         variant: XGButtonVariant = .primary,
@@ -35,8 +33,6 @@ struct XGButton: View {
     }
 
     // MARK: - Internal
-
-    // MARK: - Body
 
     var body: some View {
         Button(action: buttonAction) {
@@ -164,6 +160,7 @@ private struct XGButtonStyleModifier: ButtonStyle {
 #Preview("XGButton Primary") {
     XGButton("Add to Cart") {}
         .padding()
+        .xgTheme()
 }
 
 #Preview("XGButton Variants") {
@@ -174,19 +171,23 @@ private struct XGButtonStyleModifier: ButtonStyle {
         XGButton("Text", variant: .text, fullWidth: false) {}
     }
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGButton Loading") {
     XGButton("Loading", isLoading: true) {}
         .padding()
+        .xgTheme()
 }
 
 #Preview("XGButton Disabled") {
     XGButton("Disabled", isEnabled: false) {}
         .padding()
+        .xgTheme()
 }
 
 #Preview("XGButton with Icon") {
     XGButton("Add to Cart", leadingIcon: "cart") {}
         .padding()
+        .xgTheme()
 }

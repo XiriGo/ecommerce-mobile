@@ -74,7 +74,9 @@ struct GetNewArrivalsUseCaseTests {
 
         let result = try await useCase.execute()
 
-        #expect(result.allSatisfy(\.isNew))
+        for product in result {
+            #expect(product.isNew)
+        }
     }
 
     // MARK: - Error Propagation

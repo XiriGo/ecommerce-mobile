@@ -51,7 +51,7 @@ final class HomeViewModel {
             )
             uiState = .success(data: data)
         } catch {
-            uiState = .error(message: error.localizedDescription)
+            uiState = .error(message: error.toUserMessage)
         }
     }
 
@@ -86,9 +86,17 @@ final class HomeViewModel {
         isRefreshing = true
         await loadHomeData()
         isRefreshing = false
-        if case var .success(data) = uiState, !existingWishedIds.isEmpty {
-            data.wishedProductIds = existingWishedIds
-            uiState = .success(data: data)
+        if case let .success(data) = uiState, !existingWishedIds.isEmpty {
+            let updatedData = HomeScreenData(
+                banners: data.banners,
+                categories: data.categories,
+                popularProducts: data.popularProducts,
+                dailyDeal: data.dailyDeal,
+                newArrivals: data.newArrivals,
+                flashSale: data.flashSale,
+                wishedProductIds: existingWishedIds,
+            )
+            uiState = .success(data: updatedData)
         }
     }
 
@@ -102,14 +110,24 @@ final class HomeViewModel {
     private let getFlashSale: GetFlashSaleUseCase
 
     private func toggleWishlist(_ productId: String) {
-        guard case var .success(data) = uiState else {
+        guard case let .success(data) = uiState else {
             return
         }
-        if data.wishedProductIds.contains(productId) {
-            data.wishedProductIds.remove(productId)
+        var updatedIds = data.wishedProductIds
+        if updatedIds.contains(productId) {
+            updatedIds.remove(productId)
         } else {
-            data.wishedProductIds.insert(productId)
+            updatedIds.insert(productId)
         }
-        uiState = .success(data: data)
+        let updatedData = HomeScreenData(
+            banners: data.banners,
+            categories: data.categories,
+            popularProducts: data.popularProducts,
+            dailyDeal: data.dailyDeal,
+            newArrivals: data.newArrivals,
+            flashSale: data.flashSale,
+            wishedProductIds: updatedIds,
+        )
+        uiState = .success(data: updatedData)
     }
 }

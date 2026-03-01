@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Registry of all XiriGo design token files",
+
+  "foundations": {
+    "colors": "foundations/colors.json",
+    "typography": "foundations/typography.json",
+    "spacing": "foundations/spacing.json",
+    "gradients": "foundations/gradients.json",
+    "motion": "foundations/motion.json"
+  },
+
+  "atoms": {
+    "xg-badge": "components/atoms/xg-badge.json",
+    "xg-button": "components/atoms/xg-button.json",
+    "xg-category-icon": "components/atoms/xg-category-icon.json",
+    "xg-chip": "components/atoms/xg-chip.json",
+    "xg-color-swatch": "components/atoms/xg-color-swatch.json",
+    "xg-divider": "components/atoms/xg-divider.json",
+    "xg-image": "components/atoms/xg-image.json",
+    "xg-pagination-dots": "components/atoms/xg-pagination-dots.json",
+    "xg-price-text": "components/atoms/xg-price-text.json",
+    "xg-quantity-stepper": "components/atoms/xg-quantity-stepper.json",
+    "xg-range-slider": "components/atoms/xg-range-slider.json",
+    "xg-rating-bar": "components/atoms/xg-rating-bar.json",
+    "xg-search-bar": "components/atoms/xg-search-bar.json",
+    "xg-section-header": "components/atoms/xg-section-header.json",
+    "xg-text-field": "components/atoms/xg-text-field.json",
+    "xg-wishlist-button": "components/atoms/xg-wishlist-button.json"
+  },
+
+  "molecules": {
+    "xg-bottom-bar": "components/molecules/xg-bottom-bar.json",
+    "xg-daily-deal-card": "components/molecules/xg-daily-deal-card.json",
+    "xg-empty-view": "components/molecules/xg-empty-view.json",
+    "xg-error-view": "components/molecules/xg-error-view.json",
+    "xg-filter-pill": "components/molecules/xg-filter-pill.json",
+    "xg-flash-sale-banner": "components/molecules/xg-flash-sale-banner.json",
+    "xg-hero-banner": "components/molecules/xg-hero-banner.json",
+    "xg-loading-view": "components/molecules/xg-loading-view.json",
+    "xg-product-card": "components/molecules/xg-product-card.json",
+    "xg-social-login-button": "components/molecules/xg-social-login-button.json",
+    "xg-top-bar": "components/molecules/xg-top-bar.json"
+  },
+
+  "brand": {
+    "xg-brand-gradient": "components/brand/xg-brand-gradient.json",
+    "xg-brand-pattern": "components/brand/xg-brand-pattern.json",
+    "xg-logo-mark": "components/brand/xg-logo-mark.json"
+  },
+
+  "screens": {
+    "splash": "screens/splash-screen.json",
+    "login": "screens/login-screen.json",
+    "home": "screens/home-screen.json",
+    "filter": "screens/filter-screen.json"
+  }
+}

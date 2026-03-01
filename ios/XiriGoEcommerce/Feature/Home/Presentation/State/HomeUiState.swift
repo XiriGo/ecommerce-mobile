@@ -19,5 +19,5 @@ struct HomeScreenData: Equatable, Sendable {
     let dailyDeal: DailyDeal?
     let newArrivals: [HomeProduct]
     let flashSale: FlashSale?
-    var wishedProductIds: Set<String>
+    let wishedProductIds: Set<String>
 }

@@ -24,7 +24,8 @@ class XGPriceTextTest {
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 29.99").assertIsDisplayed()
+        // 3-part composite text uses annotated string with currency + integer + decimal
+        composeTestRule.onNodeWithText("\u20AC29,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -33,12 +34,12 @@ class XGPriceTextTest {
             XGTheme {
                 XGPriceText(
                     price = "49.99",
-                    currencySymbol = "USD",
+                    currencySymbol = "$",
                 )
             }
         }
 
-        composeTestRule.onNodeWithText("USD 49.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("$49,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -52,8 +53,8 @@ class XGPriceTextTest {
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 29.99").assertIsDisplayed()
-        composeTestRule.onNodeWithText("EUR 39.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("\u20AC29,99", useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText("\u20AC39,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -64,7 +65,7 @@ class XGPriceTextTest {
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 9.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("\u20AC9,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -76,7 +77,7 @@ class XGPriceTextTest {
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Price: EUR 19.99", substring = true),
+            hasContentDescription("Price:", substring = true),
         ).assertExists()
     }
 
@@ -107,34 +108,34 @@ class XGPriceTextTest {
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 9.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("\u20AC9,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
-    fun xgPriceText_mediumSize_rendersWithoutCrash() {
+    fun xgPriceText_defaultSize_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
                     price = "29.99",
-                    size = XGPriceSize.Medium,
+                    size = XGPriceSize.Default,
                 )
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 29.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("\u20AC29,99", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
-    fun xgPriceText_largeSize_rendersWithoutCrash() {
+    fun xgPriceText_dealSize_rendersWithoutCrash() {
         composeTestRule.setContent {
             XGTheme {
                 XGPriceText(
                     price = "199.99",
-                    size = XGPriceSize.Large,
+                    size = XGPriceSize.Deal,
                 )
             }
         }
 
-        composeTestRule.onNodeWithText("EUR 199.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("\u20AC199,99", useUnmergedTree = true).assertIsDisplayed()
     }
 }

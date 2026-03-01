@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -34,29 +32,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// Token source: components/molecules/xg-daily-deal-card.json
 private val CardHeight = 163.dp
+private val CardPadding = 16.dp
 private val BadgeFontSize = 12.sp
+private val BadgePaddingHorizontal = 10.dp
+private val BadgePaddingVertical = 4.dp
 private val TitleFontSize = 20.sp
+private val TitleLineHeight = 28.sp
 private val CountdownFontSize = 12.sp
-private val PriceFontSize = 20.sp
-private val OriginalPriceFontSize = 14.sp
+private val BadgeLineHeight = 16.sp
+private val CountdownLineHeight = 16.sp
+private val StrikethroughFontSize = 15.18.sp
 private const val COUNTDOWN_DELAY_MS = 1000L
 private const val MILLIS_PER_SECOND = 1000L
 private const val SECONDS_PER_MINUTE = 60L
 private const val MINUTES_PER_HOUR = 60L
 
+// gradients.json: dailyDealCard (linear leftToRight TextDark -> BrandPrimary)
 private val DailyDealGradient = Brush.horizontalGradient(
     colorStops = arrayOf(
-        0.0f to Color(0xFF111827),
-        1.0f to Color(0xFF6000FE),
+        0.0f to XGColors.TextDark,
+        1.0f to XGColors.BrandPrimary,
     ),
 )
 
+/** Daily deal promotional card with countdown timer, gradient background, and pricing. */
 @Composable
 fun XGDailyDealCard(
     title: String,
@@ -67,6 +74,7 @@ fun XGDailyDealCard(
     imageUrl: String? = null,
     onClick: (() -> Unit)? = null,
 ) {
+    val endedText = stringResource(R.string.home_daily_deal_ended)
     var remainingMillis by remember { mutableLongStateOf(endTime - System.currentTimeMillis()) }
 
     LaunchedEffect(endTime) {
@@ -82,10 +90,10 @@ fun XGDailyDealCard(
         modifier = modifier
             .fillMaxWidth()
             .height(CardHeight)
-            .clip(RoundedCornerShape(XGCornerRadius.Large))
+            .clip(RoundedCornerShape(XGCornerRadius.Medium))
             .background(DailyDealGradient)
             .then(clickModifier)
-            .padding(XGSpacing.Base),
+            .padding(CardPadding),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -95,59 +103,60 @@ fun XGDailyDealCard(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(XGSpacing.SM),
             ) {
+                // DAILY DEAL badge
                 Box(
                     modifier = Modifier
                         .background(
-                            color = XGColors.BrandSecondary,
+                            color = XGColors.BadgeSecondaryBackground,
                             shape = RoundedCornerShape(XGCornerRadius.Medium),
                         )
-                        .padding(horizontal = XGSpacing.SM, vertical = XGSpacing.XS),
+                        .padding(horizontal = BadgePaddingHorizontal, vertical = BadgePaddingVertical),
                 ) {
                     Text(
                         text = stringResource(R.string.home_daily_deal_badge),
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            fontSize = BadgeFontSize,
-                            fontWeight = FontWeight.SemiBold,
-                        ),
-                        color = XGColors.BrandPrimary,
+                        fontFamily = PoppinsFontFamily,
+                        fontSize = BadgeFontSize,
+                        fontWeight = FontWeight.SemiBold,
+                        color = XGColors.BadgeSecondaryText,
+                        lineHeight = BadgeLineHeight,
                     )
                 }
 
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = TitleFontSize,
-                        fontWeight = FontWeight.SemiBold,
-                    ),
-                    color = Color.White,
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = TitleFontSize,
+                    fontWeight = FontWeight.SemiBold,
+                    color = XGColors.TextOnDark,
                     maxLines = 2,
+                    lineHeight = TitleLineHeight,
                 )
 
                 Text(
-                    text = formatCountdown(remainingMillis),
-                    style = MaterialTheme.typography.bodySmall.copy(fontSize = CountdownFontSize),
-                    color = Color.White,
+                    text = formatCountdown(remainingMillis, endedText),
+                    fontFamily = PoppinsFontFamily,
+                    fontSize = CountdownFontSize,
+                    fontWeight = FontWeight.Normal,
+                    color = XGColors.TextOnDark,
+                    lineHeight = CountdownLineHeight,
                 )
 
+                // Price row
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM),
                 ) {
-                    Text(
-                        text = price,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontSize = PriceFontSize,
-                            fontWeight = FontWeight.Bold,
-                        ),
-                        color = XGColors.BrandSecondary,
+                    XGPriceText(
+                        price = price,
+                        size = XGPriceSize.Deal,
                     )
                     Text(
                         text = originalPrice,
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontSize = OriginalPriceFontSize,
-                            textDecoration = TextDecoration.LineThrough,
-                        ),
-                        color = XGColors.PriceOriginal,
+                        fontFamily = PoppinsFontFamily,
+                        fontSize = StrikethroughFontSize,
+                        fontWeight = FontWeight.Medium,
+                        color = XGColors.PriceStrikethrough,
+                        textDecoration = TextDecoration.LineThrough,
                     )
                 }
             }
@@ -166,8 +175,8 @@ fun XGDailyDealCard(
     }
 }
 
-private fun formatCountdown(remainingMillis: Long): String {
-    if (remainingMillis <= 0) return "ENDED"
+private fun formatCountdown(remainingMillis: Long, endedText: String): String {
+    if (remainingMillis <= 0) return endedText
     val totalSeconds = remainingMillis / MILLIS_PER_SECOND
     val hours = totalSeconds / (MINUTES_PER_HOUR * SECONDS_PER_MINUTE)
     val minutes = totalSeconds % (MINUTES_PER_HOUR * SECONDS_PER_MINUTE) / SECONDS_PER_MINUTE
@@ -181,8 +190,8 @@ private fun XGDailyDealCardPreview() {
     XGTheme {
         XGDailyDealCard(
             title = "Nike Air Zoom Pegasus",
-            price = "$89.99",
-            originalPrice = "$149.99",
+            price = "89.99",
+            originalPrice = "\u20AC149,99",
             endTime = System.currentTimeMillis() + 28_800_000L,
             onClick = {},
         )

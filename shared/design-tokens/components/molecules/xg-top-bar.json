@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGTopBar",
+  "category": "molecule",
+  "svgSource": "XiriGo_App_04.svg",
+
+  "variants": {
+    "transparent": {
+      "background": "transparent",
+      "textColor": "$foundations/colors.light.textOnDark",
+      "iconColor": "$foundations/colors.light.textOnDark",
+      "usage": "Splash, Login (over gradient)"
+    },
+    "surface": {
+      "background": "$foundations/colors.light.surface",
+      "textColor": "$foundations/colors.light.textPrimary",
+      "iconColor": "$foundations/colors.light.textPrimary",
+      "usage": "Filter screen, product list"
+    }
+  },
+
+  "tokens": {
+    "height": 56,
+    "titleFont": "$foundations/typography.typeScale.titleLarge",
+    "backIcon": { "ios": "chevron.left", "android": "Icons.AutoMirrored.Filled.ArrowBack" },
+    "iconSize": "$foundations/spacing.layout.iconSize.medium",
+    "horizontalPadding": "$foundations/spacing.spacing.base",
+    "minTouchTarget": "$foundations/spacing.layout.minTouchTarget"
+  },
+
+  "subComponents": {
+    "backButton": { "icon": { "ios": "chevron.left", "android": "Icons.AutoMirrored.Filled.ArrowBack" }, "minSize": 48 },
+    "actionButton": { "iconSize": 24, "minSize": 48, "badgeOverlay": "$atoms/xg-badge.XGCountBadge" }
+  }
+}

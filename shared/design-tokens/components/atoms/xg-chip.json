@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGChip",
+  "category": "atom",
+  "svgSource": "XiriGo_App_04.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGChip.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGChip.kt"
+  },
+
+  "variants": {
+    "filter": {
+      "height": 36,
+      "cornerRadius": 18,
+      "horizontalPadding": 16,
+      "font": "$foundations/typography.typeScale.bodyMedium",
+      "activeBackground": "$foundations/colors.light.filterPillBackgroundActive",
+      "activeTextColor": "$foundations/colors.light.filterPillTextActive",
+      "inactiveBackground": "$foundations/colors.light.filterPillBackground",
+      "inactiveTextColor": "$foundations/colors.light.filterPillText",
+      "gap": 8,
+      "selectedIcon": { "ios": "checkmark", "android": "Icons.Filled.Check" },
+      "selectedIconSize": "$foundations/spacing.layout.iconSize.small"
+    },
+    "category": {
+      "shape": "capsule",
+      "background": "$foundations/colors.light.surfaceTertiary",
+      "textColor": "$foundations/colors.light.textPrimary",
+      "font": "labelLarge (14pt Medium)",
+      "iconSize": "$foundations/spacing.layout.iconSize.medium"
+    }
+  }
+}

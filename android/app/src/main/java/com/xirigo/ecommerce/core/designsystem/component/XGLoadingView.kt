@@ -19,6 +19,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Full-screen centered loading spinner. */
 @Composable
 fun XGLoadingView(modifier: Modifier = Modifier) {
     val loadingDescription = stringResource(R.string.common_loading_message)
@@ -36,6 +37,7 @@ fun XGLoadingView(modifier: Modifier = Modifier) {
     }
 }
 
+/** Inline loading indicator for list footers and sections. */
 @Composable
 fun XGLoadingIndicator(modifier: Modifier = Modifier) {
     val loadingDescription = stringResource(R.string.common_loading_message)

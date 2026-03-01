@@ -22,6 +22,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Full-screen error state with message and optional retry button. */
 @Composable
 fun XGErrorView(
     message: String,

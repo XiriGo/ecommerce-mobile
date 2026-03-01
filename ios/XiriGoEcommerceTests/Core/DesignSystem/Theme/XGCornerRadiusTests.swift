@@ -10,27 +10,32 @@ struct XGCornerRadiusTests {
         #expect(XGCornerRadius.none == 0)
     }
 
-    @Test("Small corner radius is 4 points")
-    func small_value_is4() {
-        #expect(XGCornerRadius.small == 4)
+    @Test("Small corner radius is 6 points")
+    func small_value_is6() {
+        #expect(XGCornerRadius.small == 6)
     }
 
-    @Test("Medium corner radius is 8 points")
-    func medium_value_is8() {
-        #expect(XGCornerRadius.medium == 8)
+    @Test("Medium corner radius is 10 points")
+    func medium_value_is10() {
+        #expect(XGCornerRadius.medium == 10)
     }
 
-    @Test("Large corner radius is 12 points")
-    func large_value_is12() {
-        #expect(XGCornerRadius.large == 12)
+    @Test("Large corner radius is 16 points")
+    func large_value_is16() {
+        #expect(XGCornerRadius.large == 16)
     }
 
-    @Test("ExtraLarge corner radius is 16 points")
-    func extraLarge_value_is16() {
-        #expect(XGCornerRadius.extraLarge == 16)
+    @Test("Pill corner radius is 28 points")
+    func pill_value_is28() {
+        #expect(XGCornerRadius.pill == 28)
     }
 
-    @Test("Full corner radius is 999 for pill/capsule shapes")
+    @Test("Toggle corner radius is 22 points")
+    func toggle_value_is22() {
+        #expect(XGCornerRadius.toggle == 22)
+    }
+
+    @Test("Full corner radius is 999 for circle shapes")
     func full_value_is999() {
         #expect(XGCornerRadius.full == 999)
     }
@@ -40,7 +45,8 @@ struct XGCornerRadiusTests {
         #expect(XGCornerRadius.none < XGCornerRadius.small)
         #expect(XGCornerRadius.small < XGCornerRadius.medium)
         #expect(XGCornerRadius.medium < XGCornerRadius.large)
-        #expect(XGCornerRadius.large < XGCornerRadius.extraLarge)
-        #expect(XGCornerRadius.extraLarge < XGCornerRadius.full)
+        #expect(XGCornerRadius.large < XGCornerRadius.toggle)
+        #expect(XGCornerRadius.toggle < XGCornerRadius.pill)
+        #expect(XGCornerRadius.pill < XGCornerRadius.full)
     }
 }

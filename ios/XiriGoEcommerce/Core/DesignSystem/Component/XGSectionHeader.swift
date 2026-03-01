@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGSectionHeader
 
 /// Section title with optional subtitle and optional "See All" action link.
-/// Token source: `typography.json > typeScale.subtitle` (18sp semiBold).
+/// Token source: `components/atoms/xg-section-header.json` (18pt semiBold).
 struct XGSectionHeader: View {
     // MARK: - Lifecycle
 
@@ -23,7 +23,7 @@ struct XGSectionHeader: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: XGSpacing.xxs) {
                 Text(title)
-                    .font(.system(size: Constants.titleFontSize, weight: .semibold))
+                    .font(XGTypography.subtitle)
                     .foregroundStyle(XGColors.onSurface)
 
                 if let subtitle {
@@ -39,7 +39,7 @@ struct XGSectionHeader: View {
                 Button(action: onSeeAllAction) {
                     HStack(spacing: XGSpacing.xs) {
                         Text(String(localized: "common_see_all"))
-                            .font(.system(size: Constants.seeAllFontSize, weight: .medium))
+                            .font(XGTypography.bodyMedium)
                             .foregroundStyle(XGColors.brandPrimary)
 
                         Image(systemName: "chevron.right")
@@ -88,4 +88,5 @@ struct XGSectionHeader: View {
         )
     }
     .padding(.vertical)
+    .xgTheme()
 }

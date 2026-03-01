@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "component": "XGCategoryIcon",
+  "category": "atom",
+  "svgSource": "XiriGo_App_03.svg",
+
+  "platform": {
+    "ios": "ios/XiriGoEcommerce/Core/DesignSystem/Component/XGCategoryIcon.swift",
+    "android": "android/app/src/main/java/com/xirigo/ecommerce/core/designsystem/component/XGCategoryIcon.kt"
+  },
+
+  "tokens": {
+    "tileSize": 79,
+    "cornerRadius": "$foundations/spacing.cornerRadius.medium",
+    "iconSize": 40,
+    "iconColor": "$foundations/colors.light.iconOnDark",
+    "labelFontSize": 12,
+    "labelFont": "$foundations/typography.typeScale.captionMedium",
+    "labelColor": "$foundations/colors.light.textPrimary",
+    "labelSpacing": 6,
+    "backgroundColors": [
+      "$foundations/colors.category.blue",
+      "$foundations/colors.category.pink",
+      "$foundations/colors.category.yellow",
+      "$foundations/colors.category.mint",
+      "$foundations/colors.category.lightYellow"
+    ]
+  },
+
+  "parameters": {
+    "name": { "type": "String", "required": true },
+    "systemIconName": { "type": "String", "required": true },
+    "backgroundColor": { "type": "Color", "required": true },
+    "action": { "type": "() -> Void", "required": true }
+  }
+}

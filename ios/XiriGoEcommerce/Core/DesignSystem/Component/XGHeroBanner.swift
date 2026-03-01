@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - XGHeroBanner
 
 /// Hero banner card with async image background, gradient overlay, tag badge, and text content.
-/// Token source: `components.json > XGCard.heroBanner`, `gradients.json > heroBannerOverlay`.
+/// Token source: `components/molecules/xg-hero-banner.json`.
 ///
 /// - Width: full width (350dp design reference)
 /// - Height: 192pt
@@ -39,7 +39,7 @@ struct XGHeroBanner: View {
                 textContent
             }
             .frame(height: Constants.bannerHeight)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         }
         .buttonStyle(.plain)
         .disabled(action == nil)
@@ -58,6 +58,8 @@ struct XGHeroBanner: View {
         static let subtitleFontSize: CGFloat = 14
         static let overlayStartOpacity: Double = 0.90
         static let titleMaxLines = 2
+        static let badgeHorizontalPadding: CGFloat = 10
+        static let badgeVerticalPadding: CGFloat = 4
     }
 
     private let title: String
@@ -119,13 +121,13 @@ struct XGHeroBanner: View {
             Spacer()
 
             Text(title)
-                .font(.system(size: Constants.headlineFontSize, weight: .semibold))
-                .foregroundStyle(.white)
+                .font(XGTypography.headline)
+                .foregroundStyle(XGColors.textOnDark)
                 .lineLimit(Constants.titleMaxLines)
 
             Text(subtitle)
-                .font(.system(size: Constants.subtitleFontSize))
-                .foregroundStyle(.white)
+                .font(XGTypography.body)
+                .foregroundStyle(XGColors.textOnDark)
                 .lineLimit(1)
         }
         .padding(XGSpacing.base)
@@ -133,10 +135,10 @@ struct XGHeroBanner: View {
 
     private func tagBadge(_ text: String) -> some View {
         Text(text)
-            .font(.system(size: Constants.tagFontSize, weight: .semibold))
+            .font(XGTypography.captionSemiBold)
             .foregroundStyle(XGColors.brandPrimary)
-            .padding(.horizontal, XGSpacing.sm)
-            .padding(.vertical, XGSpacing.xs)
+            .padding(.horizontal, Constants.badgeHorizontalPadding)
+            .padding(.vertical, Constants.badgeVerticalPadding)
             .background(XGColors.brandSecondary)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
     }
@@ -148,11 +150,12 @@ struct XGHeroBanner: View {
     XGHeroBanner(
         title: "Urban Fashion Collection",
         subtitle: "Explore the latest trends",
-        imageUrl: URL(string: "https://picsum.photos/seed/hero1/700/384"),
+        imageUrl: nil,
         tag: "NEW SEASON",
         action: {},
     )
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGHeroBanner fallback gradient") {
@@ -162,4 +165,5 @@ struct XGHeroBanner: View {
         action: {},
     )
     .padding()
+    .xgTheme()
 }

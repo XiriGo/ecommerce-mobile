@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "screen": "FilterScreen",
+  "svgSource": "XiriGo_App_04.svg",
+  "background": "$foundations/colors.light.background",
+  "topBar": "$molecules/xg-top-bar.surface (title: localized(filter_title))",
+
+  "sections": [
+    { "id": "categoryPills", "atom": "$atoms/xg-chip.filter", "layout": "horizontalScroll" },
+    { "id": "colorSwatches", "atom": "$atoms/xg-color-swatch", "layout": "horizontalRow" },
+    { "id": "priceRange", "atoms": ["$atoms/xg-range-slider", "$atoms/xg-text-field.priceRange x2"] },
+    { "id": "applyButton", "atom": "$atoms/xg-button.secondary" }
+  ]
+}

@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Full-screen empty state with icon, message, and optional action button. */
 @Composable
 fun XGEmptyView(
     message: String,

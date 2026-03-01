@@ -7,10 +7,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.SerializationException
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.feature.home.domain.usecase.GetDailyDealUseCase
 import com.xirigo.ecommerce.feature.home.domain.usecase.GetFlashSaleUseCase
 import com.xirigo.ecommerce.feature.home.domain.usecase.GetHomeBannersUseCase
@@ -33,9 +36,6 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
     init {
         loadHomeData()
@@ -61,80 +61,71 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = HomeUiState.Loading
             try {
-                val data = coroutineScope {
-                    val bannersDeferred = async { getBanners() }
-                    val categoriesDeferred = async { getCategories() }
-                    val popularDeferred = async { getPopularProducts() }
-                    val dealDeferred = async { getDailyDeal() }
-                    val arrivalsDeferred = async { getNewArrivals() }
-                    val flashDeferred = async { getFlashSale() }
-
-                    HomeScreenData(
-                        banners = bannersDeferred.await(),
-                        categories = categoriesDeferred.await(),
-                        popularProducts = popularDeferred.await(),
-                        dailyDeal = dealDeferred.await(),
-                        newArrivals = arrivalsDeferred.await(),
-                        flashSale = flashDeferred.await(),
-                        wishedProductIds = emptySet(),
-                    )
-                }
+                val data = fetchHomeData(wishedProductIds = emptySet())
                 _uiState.value = HomeUiState.Success(data = data)
             } catch (e: IOException) {
-                _uiState.value = HomeUiState.Error(
-                    message = e.message ?: "A network error occurred",
-                )
+                Timber.e(e, "Network error loading home data")
+                _uiState.value = HomeUiState.Error(messageResId = R.string.common_error_network)
+            } catch (e: retrofit2.HttpException) {
+                Timber.e(e, "Server error loading home data")
+                _uiState.value = HomeUiState.Error(messageResId = R.string.common_error_server)
+            } catch (e: SerializationException) {
+                Timber.e(e, "Serialization error loading home data")
+                _uiState.value = HomeUiState.Error(messageResId = R.string.common_error_server)
             }
         }
     }
 
     private fun refresh() {
+        val currentState = _uiState.value as? HomeUiState.Success ?: return
         viewModelScope.launch {
-            _isRefreshing.value = true
+            _uiState.value = currentState.copy(isRefreshing = true)
             try {
-                val currentWished = (_uiState.value as? HomeUiState.Success)
-                    ?.data
-                    ?.wishedProductIds
-                    ?: emptySet()
-
-                val data = coroutineScope {
-                    val bannersDeferred = async { getBanners() }
-                    val categoriesDeferred = async { getCategories() }
-                    val popularDeferred = async { getPopularProducts() }
-                    val dealDeferred = async { getDailyDeal() }
-                    val arrivalsDeferred = async { getNewArrivals() }
-                    val flashDeferred = async { getFlashSale() }
-
-                    HomeScreenData(
-                        banners = bannersDeferred.await(),
-                        categories = categoriesDeferred.await(),
-                        popularProducts = popularDeferred.await(),
-                        dailyDeal = dealDeferred.await(),
-                        newArrivals = arrivalsDeferred.await(),
-                        flashSale = flashDeferred.await(),
-                        wishedProductIds = currentWished,
-                    )
-                }
+                val data = fetchHomeData(
+                    wishedProductIds = currentState.data.wishedProductIds,
+                )
                 _uiState.value = HomeUiState.Success(data = data)
             } catch (e: IOException) {
-                _uiState.value = HomeUiState.Error(
-                    message = e.message ?: "A network error occurred",
-                )
-            } finally {
-                _isRefreshing.value = false
+                Timber.e(e, "Network error refreshing home data")
+                _uiState.value = currentState.copy(isRefreshing = false)
+            } catch (e: retrofit2.HttpException) {
+                Timber.e(e, "Server error refreshing home data")
+                _uiState.value = currentState.copy(isRefreshing = false)
+            } catch (e: SerializationException) {
+                Timber.e(e, "Serialization error refreshing home data")
+                _uiState.value = currentState.copy(isRefreshing = false)
             }
         }
     }
 
+    private suspend fun fetchHomeData(wishedProductIds: Set<String>): HomeScreenData = coroutineScope {
+        val bannersDeferred = async { getBanners() }
+        val categoriesDeferred = async { getCategories() }
+        val popularDeferred = async { getPopularProducts() }
+        val dealDeferred = async { getDailyDeal() }
+        val arrivalsDeferred = async { getNewArrivals() }
+        val flashDeferred = async { getFlashSale() }
+
+        HomeScreenData(
+            banners = bannersDeferred.await(),
+            categories = categoriesDeferred.await(),
+            popularProducts = popularDeferred.await(),
+            dailyDeal = dealDeferred.await(),
+            newArrivals = arrivalsDeferred.await(),
+            flashSale = flashDeferred.await(),
+            wishedProductIds = wishedProductIds,
+        )
+    }
+
     private fun toggleWishlist(productId: String) {
-        val current = (_uiState.value as? HomeUiState.Success)?.data ?: return
-        val updatedIds = if (productId in current.wishedProductIds) {
-            current.wishedProductIds - productId
+        val current = _uiState.value as? HomeUiState.Success ?: return
+        val updatedIds = if (productId in current.data.wishedProductIds) {
+            current.data.wishedProductIds - productId
         } else {
-            current.wishedProductIds + productId
+            current.data.wishedProductIds + productId
         }
-        _uiState.value = HomeUiState.Success(
-            data = current.copy(wishedProductIds = updatedIds),
+        _uiState.value = current.copy(
+            data = current.data.copy(wishedProductIds = updatedIds),
         )
     }
 }
