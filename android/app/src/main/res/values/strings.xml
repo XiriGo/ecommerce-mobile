@@ -78,7 +78,7 @@
     <string name="home_section_flash_sale">Flash Sale</string>
     <string name="home_error_message">Something went wrong</string>
     <string name="home_error_retry">Retry</string>
-    <string name="home_delivery_badge">Order before %1$s, delivered %2$s</string>
+    <string name="home_delivery_badge">Order before **%1$s**, delivered **%2$s**</string>
     <string name="home_add_to_cart">Add to cart</string>
 
     <!-- Categories Screen -->

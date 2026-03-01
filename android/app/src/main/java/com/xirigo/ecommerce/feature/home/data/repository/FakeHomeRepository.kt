@@ -19,7 +19,7 @@ class FakeHomeRepository @Inject constructor() : HomeRepository {
     override suspend fun getDailyDeal(): DailyDeal = DailyDeal(
         productId = "prod-deal-1",
         title = "Nike Air Zoom Pegasus",
-        imageUrl = null,
+        imageUrl = "https://picsum.photos/seed/sneakers/400/400",
         price = "89.99",
         originalPrice = "149.99",
         currencyCode = CURRENCY_USD,
@@ -90,7 +90,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-1",
             title = "Wireless Noise-Cancelling Headphones",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/headphones/400/400",
             price = "79.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "129.99",
@@ -102,7 +102,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-2",
             title = "Running Sneakers Pro",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/sneakers/400/400",
             price = "59.99",
             currencyCode = CURRENCY_USD,
             originalPrice = null,
@@ -114,7 +114,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-3",
             title = "Travel Backpack Waterproof",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/backpack/400/400",
             price = "34.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "49.99",
@@ -126,7 +126,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-4",
             title = "Smart Watch Series X",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/watch/400/400",
             price = "199.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "249.99",
@@ -138,7 +138,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-5",
             title = "Premium Bluetooth Speaker",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/speaker/400/400",
             price = "49.99",
             currencyCode = CURRENCY_USD,
             originalPrice = null,
@@ -150,7 +150,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-6",
             title = "Ergonomic Office Chair",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/chair/400/400",
             price = "299.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "399.99",
@@ -165,7 +165,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-new-1",
             title = "Mechanical Gaming Keyboard",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/keyboard/400/400",
             price = "89.99",
             currencyCode = CURRENCY_USD,
             originalPrice = null,
@@ -177,7 +177,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-new-2",
             title = "Premium Winter Jacket",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/jacket/400/400",
             price = "119.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "159.99",
@@ -189,7 +189,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-new-3",
             title = "Modern Desk Lamp LED",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/lamp/400/400",
             price = "44.99",
             currencyCode = CURRENCY_USD,
             originalPrice = null,
@@ -201,7 +201,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-new-4",
             title = "Yoga Mat Premium",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/yogamat/400/400",
             price = "29.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "39.99",
@@ -213,7 +213,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-new-5",
             title = "Ceramic Coffee Mug Set",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/vase/400/400",
             price = "24.99",
             currencyCode = CURRENCY_USD,
             originalPrice = null,
@@ -225,7 +225,7 @@ private object SampleData {
         HomeProduct(
             id = "prod-new-6",
             title = "Wireless Charging Pad",
-            imageUrl = null,
+            imageUrl = "https://picsum.photos/seed/charger/400/400",
             price = "19.99",
             currencyCode = CURRENCY_USD,
             originalPrice = "29.99",

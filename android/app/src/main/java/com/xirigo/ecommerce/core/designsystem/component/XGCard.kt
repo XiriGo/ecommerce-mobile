@@ -28,8 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,9 +50,10 @@ private val CardPadding = 8.dp
 private val TitleFontSize = 12.sp
 private const val TITLE_MAX_LINES = 2
 private val DeliveryLabelFontSize = 10.sp
-private val AddToCartButtonSize = 32.dp
+private val AddToCartButtonSize = 38.dp
 private val AddToCartIconSize = 16.dp
-private val AddToCartCornerRadius = 16.dp
+private val AddToCartCornerRadius = 19.dp
+private val AddToCartIconColor = Color(0xFF333333)
 private val BorderWidth = 1.dp
 
 @Composable
@@ -66,6 +70,8 @@ fun XGProductCard(
     onWishlistToggle: (() -> Unit)? = null,
     deliveryLabel: String? = null,
     onAddToCartClick: (() -> Unit)? = null,
+    priceSize: XGPriceSize = XGPriceSize.Default,
+    strikethroughFontSize: Float = 15.18f,
 ) {
     Card(
         modifier = modifier
@@ -92,6 +98,8 @@ fun XGProductCard(
                 reviewCount = reviewCount,
                 deliveryLabel = deliveryLabel,
                 onAddToCartClick = onAddToCartClick,
+                priceSize = priceSize,
+                strikethroughFontSize = strikethroughFontSize,
             )
         }
     }
@@ -135,6 +143,8 @@ private fun ProductCardDetailsSection(
     reviewCount: Int?,
     deliveryLabel: String?,
     onAddToCartClick: (() -> Unit)?,
+    priceSize: XGPriceSize,
+    strikethroughFontSize: Float,
 ) {
     Column(modifier = Modifier.padding(horizontal = CardPadding)) {
         Text(
@@ -152,7 +162,8 @@ private fun ProductCardDetailsSection(
         XGPriceText(
             price = price,
             originalPrice = originalPrice,
-            size = XGPriceSize.Small,
+            size = priceSize,
+            strikethroughFontSize = strikethroughFontSize,
         )
 
         if (rating != null) {
@@ -166,16 +177,7 @@ private fun ProductCardDetailsSection(
 
         if (deliveryLabel != null) {
             Spacer(modifier = Modifier.height(XGSpacing.XS))
-            Text(
-                text = deliveryLabel,
-                fontFamily = PoppinsFontFamily,
-                fontSize = DeliveryLabelFontSize,
-                fontWeight = FontWeight.Normal,
-                color = XGColors.DeliveryText,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                lineHeight = 14.sp,
-            )
+            DeliveryLabelText(deliveryLabel = deliveryLabel)
         }
 
         if (onAddToCartClick != null) {
@@ -195,13 +197,55 @@ private fun ProductCardDetailsSection(
                         imageVector = Icons.Outlined.AddShoppingCart,
                         contentDescription = null,
                         modifier = Modifier.size(AddToCartIconSize),
-                        tint = Color.White,
+                        tint = AddToCartIconColor,
                     )
                 }
             }
         }
 
         Spacer(modifier = Modifier.height(CardPadding))
+    }
+}
+
+@Composable
+private fun DeliveryLabelText(deliveryLabel: String) {
+    val boldPattern = "\\*\\*(.+?)\\*\\*".toRegex()
+    val matches = boldPattern.findAll(deliveryLabel).toList()
+
+    if (matches.isEmpty()) {
+        Text(
+            text = deliveryLabel,
+            fontFamily = PoppinsFontFamily,
+            fontSize = DeliveryLabelFontSize,
+            fontWeight = FontWeight.Normal,
+            color = XGColors.DeliveryText,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            lineHeight = 14.sp,
+        )
+    } else {
+        Text(
+            text = buildAnnotatedString {
+                var lastIndex = 0
+                matches.forEach { match ->
+                    append(deliveryLabel.substring(lastIndex, match.range.first))
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append(match.groupValues[1])
+                    }
+                    lastIndex = match.range.last + 1
+                }
+                if (lastIndex < deliveryLabel.length) {
+                    append(deliveryLabel.substring(lastIndex))
+                }
+            },
+            fontFamily = PoppinsFontFamily,
+            fontSize = DeliveryLabelFontSize,
+            fontWeight = FontWeight.Normal,
+            color = XGColors.DeliveryText,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            lineHeight = 14.sp,
+        )
     }
 }
 
@@ -310,11 +354,14 @@ private fun XGProductCardStandardPreview() {
             imageUrl = null,
             title = "Simple Product",
             price = "9.99",
+            originalPrice = "14.99",
             isWishlisted = true,
             onWishlistToggle = {},
-            deliveryLabel = "Order before 23:59, delivered Monday",
+            deliveryLabel = "Order before **23:59**, delivered **Monday**",
             onAddToCartClick = {},
             onClick = {},
+            priceSize = XGPriceSize.Standard,
+            strikethroughFontSize = 14f,
             modifier = Modifier.width(StandardCardWidth),
         )
     }

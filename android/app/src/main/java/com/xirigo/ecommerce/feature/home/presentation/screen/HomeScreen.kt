@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,6 +56,7 @@ import com.xirigo.ecommerce.core.designsystem.component.XGFlashSaleBanner
 import com.xirigo.ecommerce.core.designsystem.component.XGHeroBanner
 import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
+import com.xirigo.ecommerce.core.designsystem.component.XGPriceSize
 import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
 import com.xirigo.ecommerce.core.designsystem.component.XGSectionHeader
 import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
@@ -266,12 +268,26 @@ private fun PopularProductsSection(
         title = stringResource(R.string.home_section_popular),
     )
     Spacer(modifier = Modifier.height(XGSpacing.SM))
-    ProductGrid(
-        products = products,
-        wishedProductIds = wishedProductIds,
-        onEvent = onEvent,
-        showDelivery = false,
-    )
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = XGSpacing.ScreenPaddingHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(XGSpacing.ProductGridSpacing),
+    ) {
+        items(products, key = { it.id }) { product ->
+            XGProductCard(
+                imageUrl = product.imageUrl,
+                title = product.title,
+                price = product.price,
+                originalPrice = product.originalPrice,
+                rating = product.rating,
+                reviewCount = product.reviewCount,
+                isWishlisted = product.id in wishedProductIds,
+                onWishlistToggle = { onEvent(HomeEvent.WishlistToggled(product.id)) },
+                onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
+                priceSize = XGPriceSize.Default,
+                modifier = Modifier.width(160.dp),
+            )
+        }
+    }
 }
 
 @Composable
@@ -306,7 +322,6 @@ private fun NewArrivalsSection(
         products = products,
         wishedProductIds = wishedProductIds,
         onEvent = onEvent,
-        showDelivery = true,
     )
 }
 
@@ -315,13 +330,8 @@ private fun ProductGrid(
     products: List<HomeProduct>,
     wishedProductIds: Set<String>,
     onEvent: (HomeEvent) -> Unit,
-    showDelivery: Boolean,
 ) {
-    val deliveryText: String? = if (showDelivery) {
-        stringResource(R.string.home_delivery_badge, "23:59", "Monday")
-    } else {
-        null
-    }
+    val deliveryText = stringResource(R.string.home_delivery_badge, "23:59", "Monday")
     val rows = products.chunked(2)
     Column(
         modifier = Modifier.padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
@@ -333,7 +343,6 @@ private fun ProductGrid(
                 wishedProductIds = wishedProductIds,
                 onEvent = onEvent,
                 deliveryLabel = deliveryText,
-                showAddToCart = showDelivery,
             )
         }
     }
@@ -344,8 +353,7 @@ private fun ProductGridRow(
     rowProducts: List<HomeProduct>,
     wishedProductIds: Set<String>,
     onEvent: (HomeEvent) -> Unit,
-    deliveryLabel: String?,
-    showAddToCart: Boolean,
+    deliveryLabel: String,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -362,12 +370,10 @@ private fun ProductGridRow(
                 isWishlisted = product.id in wishedProductIds,
                 onWishlistToggle = { onEvent(HomeEvent.WishlistToggled(product.id)) },
                 deliveryLabel = deliveryLabel,
-                onAddToCartClick = if (showAddToCart) {
-                    {}
-                } else {
-                    null
-                },
+                onAddToCartClick = { /* TODO: add to cart */ },
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
+                priceSize = XGPriceSize.Standard,
+                strikethroughFontSize = 14f,
                 modifier = Modifier
                     .weight(1f),
             )

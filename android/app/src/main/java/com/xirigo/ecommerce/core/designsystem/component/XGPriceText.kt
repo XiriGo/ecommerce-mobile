@@ -29,10 +29,13 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 private val DefaultCurrencyFontSize = 22.78.sp
 private val DefaultIntegerFontSize = 27.33.sp
 private val DefaultDecimalFontSize = 18.98.sp
+private val StandardCurrencyFontSize = 20.sp
+private val StandardIntegerFontSize = 20.sp
+private val StandardDecimalFontSize = 14.sp
 private val SmallCurrencyFontSize = 14.sp
 private val SmallIntegerFontSize = 18.sp
 private val SmallDecimalFontSize = 14.sp
-private val StrikethroughFontSize = 15.18.sp
+private val DefaultStrikethroughFontSize = 15.18.sp
 
 @Composable
 fun XGPriceText(
@@ -41,6 +44,7 @@ fun XGPriceText(
     originalPrice: String? = null,
     currencySymbol: String = "\u20AC",
     size: XGPriceSize = XGPriceSize.Default,
+    strikethroughFontSize: Float = DefaultStrikethroughFontSize.value,
 ) {
     val priceColor: Color
     val currencyFontSize: Float
@@ -53,6 +57,12 @@ fun XGPriceText(
             currencyFontSize = DefaultCurrencyFontSize.value
             integerFontSize = DefaultIntegerFontSize.value
             decimalFontSize = DefaultDecimalFontSize.value
+        }
+        XGPriceSize.Standard -> {
+            priceColor = XGColors.PriceSale
+            currencyFontSize = StandardCurrencyFontSize.value
+            integerFontSize = StandardIntegerFontSize.value
+            decimalFontSize = StandardDecimalFontSize.value
         }
         XGPriceSize.Small -> {
             priceColor = XGColors.PriceSale
@@ -131,7 +141,7 @@ fun XGPriceText(
                 style = TextStyle(
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.Medium,
-                    fontSize = StrikethroughFontSize,
+                    fontSize = strikethroughFontSize.sp,
                     textDecoration = TextDecoration.LineThrough,
                     color = XGColors.PriceStrikethrough,
                 ),
@@ -166,6 +176,19 @@ private fun XGPriceTextDefaultPreview() {
 private fun XGPriceTextSalePreview() {
     XGTheme {
         XGPriceText(price = "29.99", originalPrice = "39.99")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun XGPriceTextStandardPreview() {
+    XGTheme {
+        XGPriceText(
+            price = "29.99",
+            originalPrice = "39.99",
+            size = XGPriceSize.Standard,
+            strikethroughFontSize = 14f,
+        )
     }
 }
 
