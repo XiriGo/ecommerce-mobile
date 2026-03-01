@@ -159,7 +159,7 @@ Birden fazla feature'i sirayla otomatik kodlar. GitHub Issues API'den `status:re
 3. Her issue icin:
    a. Issue'yu claim et (status:in-progress)
    b. Branch olustur: feature/{pipeline_id}
-   c. /pipeline-run calistir (7 agent team)
+   c. Pipeline'i IZOLE SUBAGENT icerisinde calistir
    d. Quality gate: build + lint + test
    e. PR olustur (Closes #N) + auto-merge
    f. Issue'yu kapat (status:done)
@@ -167,6 +167,18 @@ Birden fazla feature'i sirayla otomatik kodlar. GitHub Issues API'den `status:re
    h. develop'a don, sonraki issue'ya gec
 4. Ozet tablosu yazdir
 ```
+
+### Memory Izolasyonu
+
+`/queue-run` her pipeline-run'i **izole bir Agent subagent** icerisinde calistirir:
+
+- Her feature'in tum context'i (dosya okumalari, build ciktilari, git islemleri, agent team) **izole** kalir
+- Subagent bittiginde context **garbage-collected** olur
+- Ana queue-run conversation'ina sadece kisa ozet doner
+- 10+ feature calistirsan bile ana context **minimal** kalir
+- Gece birak, sabaha kadar sorunsuz calissin
+
+Alternatif olarak daha guclu izolasyon icin `scripts/queue-runner.sh` kullanilabilir (her feature tamamen ayri OS process'inde calisir).
 
 ### Hata Durumu
 

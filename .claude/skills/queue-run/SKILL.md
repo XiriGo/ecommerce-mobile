@@ -78,22 +78,39 @@ git pull origin develop
 git checkout -b feature/{pipeline_id}
 ```
 
-### Step 4: Run Pipeline
+### Step 4: Run Pipeline (Context-Isolated)
 
-Invoke the pipeline-run skill with the feature context:
+**CRITICAL — Memory isolation:** Do NOT invoke `/pipeline-run` as a skill in the main context.
+Instead, spawn it as an **Agent subagent** so its entire context (file reads, build outputs,
+git operations, subagent orchestration) is isolated and garbage-collected when done.
+Only a short summary returns to this conversation.
 
 ```
-/pipeline-run {pipeline_id} --issue {number}
+Agent(subagent_type="general-purpose", model="opus", mode="bypassPermissions")
+
+Prompt:
+"Load and follow the /pipeline-run skill instructions by reading .claude/skills/pipeline-run/SKILL.md
+
+Run pipeline for: {pipeline_id} --issue {number}
+
+Execute ALL steps from the skill file including team creation, agent coordination, and cleanup.
+At the end, respond with ONLY this summary:
+
+RESULT: SUCCESS or FAILED
+PR: <url or none>
+FEATURE: {pipeline_id}
+ERROR: <short error description if failed, or none>"
 ```
 
-This spawns the agent team:
+The subagent will:
 1. Architect → spec
 2. Android Dev ‖ iOS Dev → implementation
 3. Android Tester ‖ iOS Tester → tests
 4. Doc Writer → documentation
 5. Reviewer → cross-platform review
 
-**Wait for pipeline completion.**
+Parse the subagent's RESULT line to determine success/failure.
+If FAILED, extract ERROR for the issue comment.
 
 ### Step 5: Quality Gate
 
