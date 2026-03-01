@@ -14,6 +14,20 @@ import androidx.compose.ui.unit.sp
 val PoppinsFontFamily: FontFamily = FontFamily.Default
 val SourceSans3FontFamily: FontFamily = FontFamily.SansSerif
 
+/**
+ * Custom text styles that don't map to a standard Material 3 Typography slot.
+ * These are accessed directly (e.g. `XGCustomTextStyles.CaptionSemiBold`).
+ */
+object XGCustomTextStyles {
+    /** 12sp SemiBold — from typeScale.captionSemiBold (badge labels, product card name) */
+    val CaptionSemiBold = TextStyle(
+        fontFamily = PoppinsFontFamily,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
+}
+
 val XGTypography = Typography(
     // display (28sp bold) — from typeScale.display
     displayLarge = TextStyle(
