@@ -86,6 +86,7 @@
 		87A00C7CA85466B9574ACDAC /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E10CA937F432A7FDEA1B793 /* RegisterRequest.swift */; };
 		8A1472B37BA7FFA01F89A683 /* RouteAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B318842C7D6B4911BBFC65C1 /* RouteAuthTests.swift */; };
 		8A79B552D14B649EF97A103E /* XGElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC758C677DF6D6828A75EB9 /* XGElevation.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* XGMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E7F8091A2B3C4D5E6F7081 /* XGMotion.swift */; };
 		8B2E1D8C25A859D50178302C /* XGLoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7399E0DB1CDF9E6C62A5A5D /* XGLoadingViewTests.swift */; };
 		8E7AC555DF78CC5D5AAE9943 /* XGCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2905E53F5CA6D7325B01E2 /* XGCard.swift */; };
 		8F6A6BCBB628B9453240FA93 /* TabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78D7BA5FC229ADD9D4DAFCE /* TabTests.swift */; };
@@ -347,6 +348,7 @@
 		E2B848AA0222E1996DCD712E /* XGTabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGTabBarTests.swift; sourceTree = "<group>"; };
 		E606D7BE8CD9A89FDA906555 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		E7B77C9F7F5E9F4241EFC99D /* XiriGoEcommerceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XiriGoEcommerceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6E7F8091A2B3C4D5E6F7081 /* XGMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGMotion.swift; sourceTree = "<group>"; };
 		EBC758C677DF6D6828A75EB9 /* XGElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGElevation.swift; sourceTree = "<group>"; };
 		ECD7A7D1FC2E05D3CECAB961 /* JSONCoders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoders.swift; sourceTree = "<group>"; };
 		F09AE91841876054AC592D08 /* AuthStateManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateManagerImpl.swift; sourceTree = "<group>"; };
@@ -929,6 +931,7 @@
 				BCFC540834ECCFA11929DBB5 /* XGColors.swift */,
 				57F3745F38A45D147DD98A43 /* XGCornerRadius.swift */,
 				EBC758C677DF6D6828A75EB9 /* XGElevation.swift */,
+				D6E7F8091A2B3C4D5E6F7081 /* XGMotion.swift */,
 				F22F76F1D13B79661C946A9C /* XGSpacing.swift */,
 				22D4FD4D350505777EDC5738 /* XGTheme.swift */,
 				2B7D15DD6540237794481286 /* XGTypography.swift */,
@@ -1491,6 +1494,7 @@
 				736FCF9067F82CD1D1BB48A2 /* XGErrorView.swift in Sources */,
 				95F34BEBDC6BC93A44E79D21 /* XGImage.swift in Sources */,
 				AAD0BFC97EA3B5A9CC08B304 /* XGLoadingView.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* XGMotion.swift in Sources */,
 				3F5E5B4A4CF40C41764F217C /* XGPriceText.swift in Sources */,
 				4CFC2AD3DF5419D6C44FA344 /* XGQuantityStepper.swift in Sources */,
 				ED8B9010C55C51E03CC7C346 /* XGRatingBar.swift in Sources */,
