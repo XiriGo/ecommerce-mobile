@@ -121,13 +121,13 @@ struct XGHeroBanner: View {
             Spacer()
 
             Text(title)
-                .font(.custom("Poppins-SemiBold", size: Constants.headlineFontSize))
-                .foregroundStyle(.white)
+                .font(XGTypography.headline)
+                .foregroundStyle(XGColors.textOnDark)
                 .lineLimit(Constants.titleMaxLines)
 
             Text(subtitle)
-                .font(.custom("Poppins-Regular", size: Constants.subtitleFontSize))
-                .foregroundStyle(.white)
+                .font(XGTypography.body)
+                .foregroundStyle(XGColors.textOnDark)
                 .lineLimit(1)
         }
         .padding(XGSpacing.base)
@@ -135,7 +135,7 @@ struct XGHeroBanner: View {
 
     private func tagBadge(_ text: String) -> some View {
         Text(text)
-            .font(.custom("Poppins-SemiBold", size: Constants.tagFontSize))
+            .font(XGTypography.captionSemiBold)
             .foregroundStyle(XGColors.brandPrimary)
             .padding(.horizontal, Constants.badgeHorizontalPadding)
             .padding(.vertical, Constants.badgeVerticalPadding)
@@ -155,6 +155,7 @@ struct XGHeroBanner: View {
         action: {},
     )
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGHeroBanner fallback gradient") {
@@ -164,4 +165,5 @@ struct XGHeroBanner: View {
         action: {},
     )
     .padding()
+    .xgTheme()
 }

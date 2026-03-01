@@ -126,7 +126,7 @@ struct XGProductCard: View {
     private var contentSection: some View {
         VStack(alignment: .leading, spacing: XGSpacing.xs) {
             Text(title)
-                .font(.custom("Poppins-SemiBold", size: Constants.titleFontSize))
+                .font(XGTypography.captionSemiBold)
                 .foregroundStyle(XGColors.onSurface)
                 .lineLimit(Constants.titleMaxLines)
 
@@ -161,7 +161,7 @@ struct XGProductCard: View {
     private var deliveryAndCartSection: some View {
         if let deliveryLabel {
             Text(deliveryAttributedString(deliveryLabel))
-                .font(.system(size: Constants.deliveryFontSize))
+                .font(XGTypography.micro)
                 .foregroundStyle(XGColors.deliveryText)
         }
         if onAddToCartAction != nil {
@@ -186,10 +186,10 @@ struct XGProductCard: View {
 
     private func deliveryAttributedString(_ label: String) -> AttributedString {
         var attributed = AttributedString(label)
-        attributed.font = .system(size: Constants.deliveryFontSize)
+        attributed.font = .custom("Poppins-Regular", size: Constants.deliveryFontSize)
         attributed.foregroundColor = XGColors.deliveryText
         if let boldPart = deliveryBoldRange, let range = attributed.range(of: boldPart) {
-            attributed[range].font = .system(size: Constants.deliveryFontSize, weight: .bold)
+            attributed[range].font = .custom("Poppins-Bold", size: Constants.deliveryFontSize)
         }
         return attributed
     }
@@ -299,6 +299,7 @@ extension XGInfoCard where TrailingContent == EmptyView {
     )
     .frame(width: 160)
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGProductCard Standard") {
@@ -317,6 +318,7 @@ extension XGInfoCard where TrailingContent == EmptyView {
     )
     .frame(width: 170)
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGInfoCard") {
@@ -339,4 +341,5 @@ extension XGInfoCard where TrailingContent == EmptyView {
         }
     }
     .padding()
+    .xgTheme()
 }

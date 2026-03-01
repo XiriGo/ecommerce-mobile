@@ -57,10 +57,12 @@ struct XGErrorView: View {
         message: String(localized: "common_error_generic"),
         onRetry: {},
     )
+    .xgTheme()
 }
 
 #Preview("XGErrorView without Retry") {
     XGErrorView(
         message: "Network connection lost",
     )
+    .xgTheme()
 }

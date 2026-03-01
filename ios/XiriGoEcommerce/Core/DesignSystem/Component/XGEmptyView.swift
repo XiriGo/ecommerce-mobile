@@ -62,6 +62,7 @@ struct XGEmptyView: View {
     XGEmptyView(
         message: String(localized: "common_empty_message"),
     )
+    .xgTheme()
 }
 
 #Preview("XGEmptyView with Action") {
@@ -71,4 +72,5 @@ struct XGEmptyView: View {
         actionLabel: "Browse Products",
         onAction: {},
     )
+    .xgTheme()
 }

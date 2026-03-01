@@ -67,4 +67,5 @@ struct XGWishlistButton: View {
         XGWishlistButton(isWishlisted: true, onToggle: {})
     }
     .padding()
+    .xgTheme()
 }

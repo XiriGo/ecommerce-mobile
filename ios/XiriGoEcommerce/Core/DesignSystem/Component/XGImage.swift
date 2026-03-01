@@ -1,23 +1,21 @@
 import SwiftUI
 
-// MARK: - XGImage
-
+/// Async image component with shimmer placeholder and error fallback.
+/// Token source: `components.json > XGImage`.
 struct XGImage: View {
     // MARK: - Lifecycle
-
-    // MARK: - Init
 
     init(
         url: URL?,
         contentMode: ContentMode = .fill,
+        accessibilityLabel: String? = nil,
     ) {
         self.url = url
         self.contentMode = contentMode
+        self.accessibilityLabel = accessibilityLabel
     }
 
     // MARK: - Internal
-
-    // MARK: - Body
 
     var body: some View {
         AsyncImage(url: url) { phase in
@@ -38,12 +36,16 @@ struct XGImage: View {
                     placeholderView
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityLabel ?? "")
+        .accessibilityHidden(accessibilityLabel == nil)
     }
 
     // MARK: - Private
 
     private let url: URL?
     private let contentMode: ContentMode
+    private let accessibilityLabel: String?
 
     private var placeholderView: some View {
         Rectangle()
@@ -63,10 +65,12 @@ struct XGImage: View {
     XGImage(url: nil)
         .frame(width: 200, height: 150)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
+        .xgTheme()
 }
 
 #Preview("XGImage with URL") {
-    XGImage(url: nil)
+    XGImage(url: nil, accessibilityLabel: "Product photo")
         .frame(width: 200, height: 150)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
+        .xgTheme()
 }

@@ -40,12 +40,12 @@ struct XGCategoryIcon: View {
 
                     Image(systemName: systemIconName)
                         .font(.system(size: Constants.iconSize))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(XGColors.iconOnDark)
                         .accessibilityHidden(true)
                 }
 
                 Text(name)
-                    .font(.custom("Poppins-Medium", size: Constants.labelFontSize))
+                    .font(XGTypography.captionMedium)
                     .foregroundStyle(XGColors.onSurface)
                     .lineLimit(1)
             }
@@ -93,4 +93,5 @@ struct XGCategoryIcon: View {
         )
     }
     .padding()
+    .xgTheme()
 }

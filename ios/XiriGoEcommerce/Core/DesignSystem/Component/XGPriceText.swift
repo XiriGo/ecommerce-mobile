@@ -174,13 +174,13 @@ struct XGPriceText: View {
 
     private func strikethroughPrice(_ originalPrice: String) -> some View {
         Text(currencySymbol + originalPrice)
-            .font(.custom("Poppins-Medium", size: strikethroughFontSize))
+            .font(XGTypography.strikethroughFont(size: strikethroughFontSize))
             .foregroundStyle(XGColors.priceStrikethrough)
             .strikethrough()
     }
 
     private func priceFont(size: CGFloat) -> Font {
-        .custom("SourceSans3-Black", size: size)
+        XGTypography.priceFont(size: size)
     }
 }
 
@@ -194,6 +194,7 @@ struct XGPriceText: View {
         XGPriceText(price: "89.99", style: .deal)
     }
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGPriceText Sale") {
@@ -204,4 +205,5 @@ struct XGPriceText: View {
         XGPriceText(price: "49.99", originalPrice: "99.99", style: .deal)
     }
     .padding()
+    .xgTheme()
 }

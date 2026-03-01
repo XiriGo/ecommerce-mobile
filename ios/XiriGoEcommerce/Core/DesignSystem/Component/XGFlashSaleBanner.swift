@@ -36,11 +36,11 @@ struct XGFlashSaleBanner: View {
 
                 VStack(spacing: XGSpacing.sm) {
                     Text(String(localized: "home_flash_sale_badge"))
-                        .font(.custom("Poppins-Bold", size: Constants.badgeFontSize))
+                        .font(XGTypography.bodySemiBold)
                         .foregroundStyle(XGColors.flashSaleText)
 
                     Text(title)
-                        .font(.custom("Poppins-Bold", size: Constants.titleFontSize))
+                        .font(XGTypography.title)
                         .foregroundStyle(XGColors.flashSaleText)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
@@ -125,6 +125,7 @@ struct XGFlashSaleBanner: View {
         action: {},
     )
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGFlashSaleBanner no action") {
@@ -132,4 +133,5 @@ struct XGFlashSaleBanner: View {
         title: "Limited Time Offer",
     )
     .padding()
+    .xgTheme()
 }

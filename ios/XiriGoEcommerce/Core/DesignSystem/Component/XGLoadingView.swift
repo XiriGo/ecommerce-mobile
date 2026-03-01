@@ -25,6 +25,7 @@ struct XGLoadingIndicator: View {
             .controlSize(.regular)
             .frame(maxWidth: .infinity)
             .padding(.vertical, XGSpacing.md)
+            .accessibilityLabel(String(localized: "common_loading"))
     }
 }
 
@@ -32,6 +33,7 @@ struct XGLoadingIndicator: View {
 
 #Preview("XGLoadingView Full Screen") {
     XGLoadingView()
+        .xgTheme()
 }
 
 #Preview("XGLoadingIndicator Inline") {
@@ -39,4 +41,5 @@ struct XGLoadingIndicator: View {
         Text("List content above")
         XGLoadingIndicator()
     }
+    .xgTheme()
 }

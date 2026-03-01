@@ -7,8 +7,6 @@ import SwiftUI
 extension HomeScreen {
     // MARK: - Internal
 
-    // MARK: - Constants
-
     enum BannerConstants {
         static let carouselHeight: CGFloat = 210
         static let autoScrollInterval: TimeInterval = 5
@@ -23,32 +21,11 @@ extension HomeScreen {
     // MARK: - Search Bar
 
     var searchBar: some View {
-        Button {
-            router.navigate(to: .productSearch)
-        } label: {
-            HStack(spacing: XGSpacing.sm) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(XGColors.onSurfaceVariant)
-                    .font(.system(size: XGSpacing.IconSize.medium))
-                    .accessibilityHidden(true)
-
-                Text(String(localized: "home_search_placeholder"))
-                    .font(XGTypography.bodyLarge)
-                    .foregroundStyle(XGColors.onSurfaceVariant)
-
-                Spacer()
-            }
-            .padding(.horizontal, XGSpacing.md)
-            .padding(.vertical, XGSpacing.md)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
-            .overlay(
-                RoundedRectangle(cornerRadius: XGCornerRadius.full)
-                    .stroke(XGColors.outlineVariant, lineWidth: 1),
-            )
-        }
+        XGSearchBar(
+            placeholder: String(localized: "home_search_placeholder"),
+            action: { router.navigate(to: .productSearch) },
+        )
         .padding(.horizontal, XGSpacing.screenPaddingHorizontal)
-        .accessibilityLabel(String(localized: "home_search_placeholder"))
     }
 
     // MARK: - Hero Banner Carousel

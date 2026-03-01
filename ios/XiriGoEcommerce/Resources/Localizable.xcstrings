@@ -1144,6 +1144,52 @@
         }
       }
     },
+    "home_banner_tag_hot_deals" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOT DEALS"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OFFERTI SĦAN"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FIRSAT ÜRÜNLERİ"
+          }
+        }
+      }
+    },
+    "home_banner_tag_new_season" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEW SEASON"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STAĠUN ĠDID"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YENİ SEZON"
+          }
+        }
+      }
+    },
     "home_banner_season_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1393,6 +1439,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Günün Fırsatı"
+          }
+        }
+      }
+    },
+    "home_daily_deal_product_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nike Air Zoom Pegasus"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nike Air Zoom Pegasus"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nike Air Zoom Pegasus"
           }
         }
       }
@@ -1673,6 +1742,29 @@
         }
       }
     },
+    "home_product_speaker" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth Speaker"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speaker Bluetooth"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth Hoparlör"
+          }
+        }
+      }
+    },
     "home_product_sneakers" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1715,6 +1807,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Akıllı Saat Elite"
+          }
+        }
+      }
+    },
+    "home_product_vase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ceramic Vase Set"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sett ta' Vażi taċ-Ċeramika"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seramik Vazo Seti"
+          }
+        }
+      }
+    },
+    "home_product_yoga_mat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yoga Mat Premium"
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yoga Mat Premium"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Yoga Matı"
           }
         }
       }

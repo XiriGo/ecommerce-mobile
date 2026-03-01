@@ -105,8 +105,8 @@ struct XGDailyDealCard: View {
             badgeView
 
             Text(title)
-                .font(.custom("Poppins-SemiBold", size: Constants.titleFontSize))
-                .foregroundStyle(.white)
+                .font(XGTypography.title)
+                .foregroundStyle(XGColors.textOnDark)
                 .lineLimit(Constants.titleMaxLines)
 
             countdownView
@@ -118,7 +118,7 @@ struct XGDailyDealCard: View {
                 )
 
                 Text(originalPrice)
-                    .font(.custom("Poppins-Medium", size: Constants.strikethroughFontSize))
+                    .font(XGTypography.strikethroughFont(size: Constants.strikethroughFontSize))
                     .foregroundStyle(XGColors.priceStrikethrough)
                     .strikethrough()
             }
@@ -127,7 +127,7 @@ struct XGDailyDealCard: View {
 
     private var badgeView: some View {
         Text(String(localized: "home_daily_deal_badge"))
-            .font(.custom("Poppins-SemiBold", size: Constants.badgeFontSize))
+            .font(XGTypography.captionSemiBold)
             .foregroundStyle(XGColors.brandPrimary)
             .padding(.horizontal, Constants.badgeHorizontalPadding)
             .padding(.vertical, Constants.badgeVerticalPadding)
@@ -141,11 +141,11 @@ struct XGDailyDealCard: View {
             if remaining > 0 {
                 Text(formattedCountdown(remaining))
                     .font(.system(size: Constants.countdownFontSize, design: .monospaced))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(XGColors.textOnDark)
             } else {
                 Text(String(localized: "home_daily_deal_ended"))
-                    .font(.custom("Poppins-Bold", size: Constants.countdownFontSize))
-                    .foregroundStyle(.white)
+                    .font(XGTypography.caption)
+                    .foregroundStyle(XGColors.textOnDark)
             }
         }
     }
@@ -181,6 +181,7 @@ struct XGDailyDealCard: View {
         action: {},
     )
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGDailyDealCard Ended") {
@@ -191,4 +192,5 @@ struct XGDailyDealCard: View {
         endTime: Date().addingTimeInterval(-60),
     )
     .padding()
+    .xgTheme()
 }

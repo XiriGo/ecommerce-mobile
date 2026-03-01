@@ -35,7 +35,7 @@ struct XGRatingBar: View {
 
             if showValue {
                 Text(String(format: "%.1f", rating))
-                    .font(.system(size: Constants.reviewCountFontSize))
+                    .font(XGTypography.caption)
                     .foregroundStyle(XGColors.onSurfaceVariant)
                     .lineLimit(1)
                     .fixedSize()
@@ -43,7 +43,7 @@ struct XGRatingBar: View {
 
             if let reviewCount {
                 Text("(\(reviewCount))")
-                    .font(.system(size: Constants.reviewCountFontSize))
+                    .font(XGTypography.caption)
                     .foregroundStyle(XGColors.onSurfaceVariant)
                     .lineLimit(1)
                     .fixedSize()
@@ -115,4 +115,5 @@ struct XGRatingBar: View {
         XGRatingBar(rating: 5.0, starSize: 24, showValue: true)
     }
     .padding()
+    .xgTheme()
 }

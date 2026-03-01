@@ -54,7 +54,7 @@ struct XGBadge: View {
 
     var body: some View {
         Text(label)
-            .font(.custom("Poppins-SemiBold", size: Constants.fontSize))
+            .font(XGTypography.captionSemiBold)
             .foregroundStyle(variant.textColor)
             .padding(.horizontal, Constants.horizontalPadding)
             .padding(.vertical, Constants.verticalPadding)
@@ -184,6 +184,7 @@ struct XGStatusBadge: View {
         XGBadge(label: "SALE", variant: .primary)
     }
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGCountBadge") {
@@ -194,6 +195,7 @@ struct XGStatusBadge: View {
         XGCountBadge(count: 0)
     }
     .padding()
+    .xgTheme()
 }
 
 #Preview("XGStatusBadge") {
@@ -205,4 +207,5 @@ struct XGStatusBadge: View {
         XGStatusBadge(status: .neutral, label: "Draft")
     }
     .padding()
+    .xgTheme()
 }

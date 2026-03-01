@@ -179,6 +179,7 @@
 		CF82EAFCFB3E12FED0E2C2F1 /* XGHeroBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F565EF656A3AD591A0890FF /* XGHeroBanner.swift */; };
 		5ADB195BF2B6CAA785D0B19C /* XGCategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00C230730DA22253C5888A6 /* XGCategoryIcon.swift */; };
 		1125C77D9E1BC7E4C9CA90B4 /* XGSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE49737CA4FE19EBD016E3 /* XGSectionHeader.swift */; };
+		A1B2C3D4E5F60718A9B0C1D2 /* XGSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718A9B0C1D3 /* XGSearchBar.swift */; };
 		D36DC4BCBED98194582059CE /* XGWishlistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88409DAF00C9B0FBBAB9990E /* XGWishlistButton.swift */; };
 		B0B77B6CF37DED3450CD7B90 /* XGDailyDealCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070BD53EC6B974CA247153C /* XGDailyDealCard.swift */; };
 		9151CDD0BFED60199DCFE963 /* XGFlashSaleBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */; };
@@ -383,6 +384,7 @@
 		3F565EF656A3AD591A0890FF /* XGHeroBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGHeroBanner.swift; sourceTree = "<group>"; };
 		B00C230730DA22253C5888A6 /* XGCategoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGCategoryIcon.swift; sourceTree = "<group>"; };
 		FADE49737CA4FE19EBD016E3 /* XGSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGSectionHeader.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718A9B0C1D3 /* XGSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGSearchBar.swift; sourceTree = "<group>"; };
 		88409DAF00C9B0FBBAB9990E /* XGWishlistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGWishlistButton.swift; sourceTree = "<group>"; };
 		D070BD53EC6B974CA247153C /* XGDailyDealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGDailyDealCard.swift; sourceTree = "<group>"; };
 		CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGFlashSaleBanner.swift; sourceTree = "<group>"; };
@@ -1069,6 +1071,7 @@
 				A127522170E0361905067E7F /* XGPaginationDots.swift */,
 				3F565EF656A3AD591A0890FF /* XGHeroBanner.swift */,
 				B00C230730DA22253C5888A6 /* XGCategoryIcon.swift */,
+				A1B2C3D4E5F60718A9B0C1D3 /* XGSearchBar.swift */,
 				FADE49737CA4FE19EBD016E3 /* XGSectionHeader.swift */,
 				88409DAF00C9B0FBBAB9990E /* XGWishlistButton.swift */,
 				D070BD53EC6B974CA247153C /* XGDailyDealCard.swift */,
@@ -1524,6 +1527,7 @@
 				DB66D85B004C89DC262D670E /* Container+Home.swift in Sources */,
 				CF82EAFCFB3E12FED0E2C2F1 /* XGHeroBanner.swift in Sources */,
 				5ADB195BF2B6CAA785D0B19C /* XGCategoryIcon.swift in Sources */,
+				A1B2C3D4E5F60718A9B0C1D2 /* XGSearchBar.swift in Sources */,
 				1125C77D9E1BC7E4C9CA90B4 /* XGSectionHeader.swift in Sources */,
 				D36DC4BCBED98194582059CE /* XGWishlistButton.swift in Sources */,
 				B0B77B6CF37DED3450CD7B90 /* XGDailyDealCard.swift in Sources */,

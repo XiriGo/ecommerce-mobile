@@ -23,12 +23,12 @@ struct XGSectionHeader: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: XGSpacing.xxs) {
                 Text(title)
-                    .font(.custom("Poppins-SemiBold", size: Constants.titleFontSize))
+                    .font(XGTypography.subtitle)
                     .foregroundStyle(XGColors.onSurface)
 
                 if let subtitle {
                     Text(subtitle)
-                        .font(.custom("Poppins-Medium", size: Constants.seeAllFontSize))
+                        .font(XGTypography.bodyMedium)
                         .foregroundStyle(XGColors.onSurfaceVariant)
                 }
             }
@@ -39,7 +39,7 @@ struct XGSectionHeader: View {
                 Button(action: onSeeAllAction) {
                     HStack(spacing: XGSpacing.xs) {
                         Text(String(localized: "common_see_all"))
-                            .font(.custom("Poppins-Medium", size: Constants.seeAllFontSize))
+                            .font(XGTypography.bodyMedium)
                             .foregroundStyle(XGColors.brandPrimary)
 
                         Image(systemName: "chevron.right")
@@ -88,4 +88,5 @@ struct XGSectionHeader: View {
         )
     }
     .padding(.vertical)
+    .xgTheme()
 }
