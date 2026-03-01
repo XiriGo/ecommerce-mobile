@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
+import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.feature.home.domain.model.FlashSale
 import com.xirigo.ecommerce.feature.home.domain.usecase.GetDailyDealUseCase
 import com.xirigo.ecommerce.feature.home.domain.usecase.GetFlashSaleUseCase
@@ -65,10 +66,12 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `isRefreshing initial value is false`() {
+    fun `Success state has isRefreshing false by default`() = runTest {
         val viewModel = createViewModel()
+        advanceUntilIdle()
 
-        assertThat(viewModel.isRefreshing.value).isFalse()
+        val state = viewModel.uiState.value as HomeUiState.Success
+        assertThat(state.isRefreshing).isFalse()
     }
 
     // endregion
@@ -203,26 +206,25 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `Error state contains the IOException message`() = runTest {
-        val errorMessage = "Connection refused"
-        fakeRepository.shouldThrow = IOException(errorMessage)
+    fun `Error state contains network error resource when IOException thrown`() = runTest {
+        fakeRepository.shouldThrow = IOException("Connection refused")
         val viewModel = createViewModel()
 
         advanceUntilIdle()
 
         val state = viewModel.uiState.value as HomeUiState.Error
-        assertThat(state.message).isEqualTo(errorMessage)
+        assertThat(state.messageResId).isEqualTo(R.string.common_error_network)
     }
 
     @Test
-    fun `Error state contains fallback message when IOException has null message`() = runTest {
+    fun `Error state contains network error resource when IOException has null message`() = runTest {
         fakeRepository.shouldThrow = IOException()
         val viewModel = createViewModel()
 
         advanceUntilIdle()
 
         val state = viewModel.uiState.value as HomeUiState.Error
-        assertThat(state.message).isNotEmpty()
+        assertThat(state.messageResId).isEqualTo(R.string.common_error_network)
     }
 
     @Test
@@ -293,12 +295,15 @@ class HomeViewModelTest {
         val viewModel = createViewModel()
         advanceUntilIdle()
 
-        viewModel.isRefreshing.test {
-            assertThat(awaitItem()).isFalse()
+        viewModel.uiState.test {
+            val initial = awaitItem() as HomeUiState.Success
+            assertThat(initial.isRefreshing).isFalse()
             viewModel.onEvent(HomeEvent.Refresh)
-            assertThat(awaitItem()).isTrue()
+            val refreshing = awaitItem() as HomeUiState.Success
+            assertThat(refreshing.isRefreshing).isTrue()
             advanceUntilIdle()
-            assertThat(awaitItem()).isFalse()
+            val done = awaitItem() as HomeUiState.Success
+            assertThat(done.isRefreshing).isFalse()
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -326,11 +331,12 @@ class HomeViewModelTest {
         viewModel.onEvent(HomeEvent.Refresh)
         advanceUntilIdle()
 
-        assertThat(viewModel.isRefreshing.value).isFalse()
+        val state = viewModel.uiState.value as HomeUiState.Success
+        assertThat(state.isRefreshing).isFalse()
     }
 
     @Test
-    fun `onEvent Refresh transitions to Error when reload fails`() = runTest {
+    fun `onEvent Refresh stays in Success when reload fails`() = runTest {
         val viewModel = createViewModel()
         advanceUntilIdle()
 
@@ -338,7 +344,7 @@ class HomeViewModelTest {
         viewModel.onEvent(HomeEvent.Refresh)
         advanceUntilIdle()
 
-        assertThat(viewModel.uiState.value).isInstanceOf(HomeUiState.Error::class.java)
+        assertThat(viewModel.uiState.value).isInstanceOf(HomeUiState.Success::class.java)
     }
 
     // endregion
