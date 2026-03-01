@@ -24,27 +24,34 @@ struct XGImage: View {
     // MARK: - Internal
 
     var body: some View {
-        AsyncImage(url: url) { phase in
-            switch phase {
-                case let .success(image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: contentMode)
-                        .transition(.opacity.animation(.easeInOut(duration: XGMotion.Crossfade.imageFadeIn)))
+        if let url {
+            AsyncImage(url: url) { phase in
+                switch phase {
+                    case let .success(image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: contentMode)
+                            .transition(.opacity.animation(.easeInOut(duration: XGMotion.Crossfade.imageFadeIn)))
 
-                case .failure:
-                    errorFallbackView
+                    case .failure:
+                        errorFallbackView
 
-                case .empty:
-                    loadingView
+                    case .empty:
+                        loadingView
 
-                @unknown default:
-                    loadingView
+                    @unknown default:
+                        loadingView
+                }
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(accessibilityLabel ?? "")
+            .accessibilityHidden(accessibilityLabel == nil)
+        } else {
+            errorFallbackView
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(accessibilityLabel ?? "")
+                .accessibilityHidden(accessibilityLabel == nil)
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(accessibilityLabel ?? "")
-        .accessibilityHidden(accessibilityLabel == nil)
     }
 
     // MARK: - Private

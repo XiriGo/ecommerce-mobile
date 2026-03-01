@@ -34,7 +34,7 @@ private val PreviewImageSize = 200.dp
  * [shimmerEffect] animation. Crossfade duration is driven by
  * [XGMotion.Crossfade.IMAGE_FADE_IN].
  *
- * @param url Image URL to load. When `null`, renders the null-URL placeholder with shimmer.
+ * @param url Image URL to load. When `null`, renders the branded error fallback.
  * @param contentDescription Accessibility label for the image.
  * @param modifier Modifier applied to the root composable.
  * @param contentScale How the image content is scaled within the bounds.
@@ -84,14 +84,12 @@ fun XGImage(
         )
     } else {
         Box(
-            modifier = modifier
-                .background(XGColors.Shimmer)
-                .shimmerEffect(),
+            modifier = modifier.background(XGColors.SurfaceVariant),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = Icons.Outlined.Image,
-                contentDescription = null,
+                contentDescription = contentDescription,
                 tint = XGColors.OnSurfaceVariant,
                 modifier = Modifier.size(PlaceholderIconSize),
             )

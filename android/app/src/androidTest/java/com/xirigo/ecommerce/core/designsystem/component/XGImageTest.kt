@@ -24,7 +24,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
  * - Animated shimmer loading placeholder via [shimmerEffect]
  * - Branded error fallback (SurfaceVariant background + outlined Image icon)
  * - Crossfade duration driven by [XGMotion.Crossfade.IMAGE_FADE_IN] (300ms)
- * - Null URL renders shimmer placeholder (no async image)
+ * - Null URL renders branded error fallback (SurfaceVariant + icon, no async image)
  *
  * Because [shimmerEffect] uses draw-layer operations and [SubcomposeAsyncImage]
  * manages its own async loading slots, tests verify:
@@ -44,7 +44,7 @@ class XGImageTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    // region null URL — shimmer placeholder branch
+    // region null URL — error fallback branch
 
     @Test
     fun xgImage_nullUrl_rendersWithoutCrash() {
@@ -58,8 +58,8 @@ class XGImageTest {
             }
         }
 
-        // Null URL renders a shimmer Box — no semantic node with the label exists
-        composeTestRule.onNodeWithContentDescription("Product image").assertDoesNotExist()
+        // Null URL renders error fallback with Icon — contentDescription passed to Icon
+        composeTestRule.onNodeWithContentDescription("Product image").assertIsDisplayed()
     }
 
     @Test
@@ -74,7 +74,7 @@ class XGImageTest {
             }
         }
 
-        // No contentDescription node expected — shimmer box has no semantic label
+        // No contentDescription node expected — error fallback Icon has null contentDescription
     }
 
     @Test
@@ -222,7 +222,7 @@ class XGImageTest {
 
     @Test
     fun xgColors_shimmer_matchesDesignToken() {
-        // Loading placeholder and null-URL branch use XGColors.Shimmer (#F1F5F9)
+        // Loading placeholder uses XGColors.Shimmer (#F1F5F9)
         assertThat(XGColors.Shimmer).isEqualTo(androidx.compose.ui.graphics.Color(0xFFF1F5F9))
     }
 
@@ -235,7 +235,7 @@ class XGImageTest {
 
     @Test
     fun xgColors_onSurfaceVariant_matchesDesignToken() {
-        // Error and null-URL icon tint uses XGColors.OnSurfaceVariant (#8E8E93)
+        // Error fallback and null-URL icon tint uses XGColors.OnSurfaceVariant (#8E8E93)
         assertThat(XGColors.OnSurfaceVariant)
             .isEqualTo(androidx.compose.ui.graphics.Color(0xFF8E8E93))
     }

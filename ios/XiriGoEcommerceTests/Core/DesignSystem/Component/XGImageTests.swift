@@ -170,7 +170,7 @@ struct XGImageTokenContractTests {
 @Suite("XGImage URL Handling Tests")
 @MainActor
 struct XGImageURLHandlingTests {
-    @Test("Nil URL produces valid XGImage (triggers loading/empty state)")
+    @Test("Nil URL produces valid XGImage (triggers error fallback state)")
     func nilUrl_producesValidImage() {
         let image = XGImage(url: nil)
         _ = image
