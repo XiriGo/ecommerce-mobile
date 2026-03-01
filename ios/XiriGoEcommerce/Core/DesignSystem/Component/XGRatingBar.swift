@@ -2,15 +2,21 @@ import SwiftUI
 
 // MARK: - XGRatingBar
 
+/// Star rating display with optional numeric value and review count.
+/// Token source: `components.json > XGStarRating`.
+///
+/// - Star size: 12pt
+/// - Star gap: 2pt
+/// - Count: 5 stars
+/// - Review count spacing: 4pt from stars
+/// - Review count font: 12pt, textSecondary color
 struct XGRatingBar: View {
     // MARK: - Lifecycle
 
-    // MARK: - Init
-
     init(
         rating: Double,
-        maxRating: Int = 5,
-        starSize: CGFloat = 12,
+        maxRating: Int = Constants.starCount,
+        starSize: CGFloat = Constants.starSize,
         showValue: Bool = false,
         reviewCount: Int? = nil,
     ) {
@@ -23,15 +29,13 @@ struct XGRatingBar: View {
 
     // MARK: - Internal
 
-    // MARK: - Body
-
     var body: some View {
-        HStack(spacing: XGSpacing.xxs) {
+        HStack(spacing: Constants.reviewCountSpacing) {
             starsView
 
             if showValue {
                 Text(String(format: "%.1f", rating))
-                    .font(XGTypography.bodySmall)
+                    .font(.system(size: Constants.reviewCountFontSize))
                     .foregroundStyle(XGColors.onSurfaceVariant)
                     .lineLimit(1)
                     .fixedSize()
@@ -39,7 +43,7 @@ struct XGRatingBar: View {
 
             if let reviewCount {
                 Text("(\(reviewCount))")
-                    .font(XGTypography.bodySmall)
+                    .font(.system(size: Constants.reviewCountFontSize))
                     .foregroundStyle(XGColors.onSurfaceVariant)
                     .lineLimit(1)
                     .fixedSize()
@@ -50,6 +54,14 @@ struct XGRatingBar: View {
     }
 
     // MARK: - Private
+
+    private enum Constants {
+        static let starSize: CGFloat = 12
+        static let starGap: CGFloat = 2
+        static let starCount = 5
+        static let reviewCountFontSize: CGFloat = 12
+        static let reviewCountSpacing: CGFloat = 4
+    }
 
     private let rating: Double
     private let maxRating: Int
@@ -66,7 +78,7 @@ struct XGRatingBar: View {
     }
 
     private var starsView: some View {
-        HStack(spacing: XGSpacing.xxs) {
+        HStack(spacing: Constants.starGap) {
             ForEach(1 ... maxRating, id: \.self) { position in
                 starImage(for: position)
                     .font(.system(size: starSize))

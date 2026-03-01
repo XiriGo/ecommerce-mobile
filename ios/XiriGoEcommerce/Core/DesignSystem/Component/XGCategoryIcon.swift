@@ -8,7 +8,8 @@ import SwiftUI
 /// - Tile size: 79x79pt
 /// - Corner radius: 10pt (medium)
 /// - Icon: 40pt, centered, white
-/// - Label: below tile, 12sp medium, max 1 line
+/// - Label: below tile, 12pt medium, max 1 line
+/// - Label spacing: 6pt
 struct XGCategoryIcon: View {
     // MARK: - Lifecycle
 
@@ -44,7 +45,7 @@ struct XGCategoryIcon: View {
                 }
 
                 Text(name)
-                    .font(XGTypography.labelMedium)
+                    .font(.custom("Poppins-Medium", size: Constants.labelFontSize))
                     .foregroundStyle(XGColors.onSurface)
                     .lineLimit(1)
             }
@@ -58,6 +59,7 @@ struct XGCategoryIcon: View {
     private enum Constants {
         static let tileSize: CGFloat = 79
         static let iconSize: CGFloat = 40
+        static let labelFontSize: CGFloat = 12
         static let labelSpacing: CGFloat = 6
     }
 

@@ -58,6 +58,8 @@ struct XGHeroBanner: View {
         static let subtitleFontSize: CGFloat = 14
         static let overlayStartOpacity: Double = 0.90
         static let titleMaxLines = 2
+        static let badgeHorizontalPadding: CGFloat = 10
+        static let badgeVerticalPadding: CGFloat = 4
     }
 
     private let title: String
@@ -119,12 +121,12 @@ struct XGHeroBanner: View {
             Spacer()
 
             Text(title)
-                .font(.system(size: Constants.headlineFontSize, weight: .semibold))
+                .font(.custom("Poppins-SemiBold", size: Constants.headlineFontSize))
                 .foregroundStyle(.white)
                 .lineLimit(Constants.titleMaxLines)
 
             Text(subtitle)
-                .font(.system(size: Constants.subtitleFontSize))
+                .font(.custom("Poppins-Regular", size: Constants.subtitleFontSize))
                 .foregroundStyle(.white)
                 .lineLimit(1)
         }
@@ -133,10 +135,10 @@ struct XGHeroBanner: View {
 
     private func tagBadge(_ text: String) -> some View {
         Text(text)
-            .font(.system(size: Constants.tagFontSize, weight: .semibold))
+            .font(.custom("Poppins-SemiBold", size: Constants.tagFontSize))
             .foregroundStyle(XGColors.brandPrimary)
-            .padding(.horizontal, XGSpacing.sm)
-            .padding(.vertical, XGSpacing.xs)
+            .padding(.horizontal, Constants.badgeHorizontalPadding)
+            .padding(.vertical, Constants.badgeVerticalPadding)
             .background(XGColors.brandSecondary)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
     }

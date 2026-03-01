@@ -1,5 +1,80 @@
 import SwiftUI
 
+// MARK: - XGBadgeVariant
+
+/// Badge style variants matching `components.json > XGBadge`.
+enum XGBadgeVariant {
+    /// Primary: brand primary bg, white text.
+    case primary
+    /// Secondary: brand secondary bg, brand primary text (DAILY DEAL, NEW SEASON).
+    case secondary
+
+    // MARK: - Internal
+
+    var backgroundColor: Color {
+        switch self {
+            case .primary:
+                XGColors.badgeBackground
+            case .secondary:
+                XGColors.badgeSecondaryBackground
+        }
+    }
+
+    var textColor: Color {
+        switch self {
+            case .primary:
+                XGColors.badgeText
+            case .secondary:
+                XGColors.badgeSecondaryText
+        }
+    }
+}
+
+// MARK: - XGBadge
+
+/// Inline badge label component.
+/// Token source: `components.json > XGBadge`.
+///
+/// - Font: 12pt semiBold
+/// - Corner radius: 10pt
+/// - Horizontal padding: 10pt
+/// - Vertical padding: 4pt
+struct XGBadge: View {
+    // MARK: - Lifecycle
+
+    init(
+        label: String,
+        variant: XGBadgeVariant = .primary,
+    ) {
+        self.label = label
+        self.variant = variant
+    }
+
+    // MARK: - Internal
+
+    var body: some View {
+        Text(label)
+            .font(.custom("Poppins-SemiBold", size: Constants.fontSize))
+            .foregroundStyle(variant.textColor)
+            .padding(.horizontal, Constants.horizontalPadding)
+            .padding(.vertical, Constants.verticalPadding)
+            .background(variant.backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
+            .accessibilityLabel(label)
+    }
+
+    // MARK: - Private
+
+    private enum Constants {
+        static let fontSize: CGFloat = 12
+        static let horizontalPadding: CGFloat = 10
+        static let verticalPadding: CGFloat = 4
+    }
+
+    private let label: String
+    private let variant: XGBadgeVariant
+}
+
 // MARK: - XGBadgeStatus
 
 enum XGBadgeStatus {
@@ -37,15 +112,11 @@ enum XGBadgeStatus {
 struct XGCountBadge: View {
     // MARK: - Lifecycle
 
-    // MARK: - Init
-
     init(count: Int) {
         self.count = count
     }
 
     // MARK: - Internal
-
-    // MARK: - Body
 
     var body: some View {
         if hasItems {
@@ -80,16 +151,12 @@ struct XGCountBadge: View {
 struct XGStatusBadge: View {
     // MARK: - Lifecycle
 
-    // MARK: - Init
-
     init(status: XGBadgeStatus, label: String) {
         self.status = status
         self.label = label
     }
 
     // MARK: - Internal
-
-    // MARK: - Body
 
     var body: some View {
         Text(label)
@@ -109,6 +176,15 @@ struct XGStatusBadge: View {
 }
 
 // MARK: - Previews
+
+#Preview("XGBadge") {
+    VStack(spacing: XGSpacing.sm) {
+        XGBadge(label: "NEW SEASON", variant: .secondary)
+        XGBadge(label: "DAILY DEAL", variant: .secondary)
+        XGBadge(label: "SALE", variant: .primary)
+    }
+    .padding()
+}
 
 #Preview("XGCountBadge") {
     HStack(spacing: XGSpacing.base) {

@@ -8,6 +8,7 @@ import SwiftUI
 /// - Height: 163pt
 /// - Background: linear gradient left-to-right from #111827 to #6000FE
 /// - Badge: "DAILY DEAL", brand secondary bg, brand primary text
+/// - Price: Source Sans 3 Black, brand secondary color (deal style)
 /// - Countdown: HH:MM:SS format, ticks every second
 struct XGDailyDealCard: View {
     // MARK: - Lifecycle
@@ -41,7 +42,7 @@ struct XGDailyDealCard: View {
                     rightImage
                 }
             }
-            .padding(XGSpacing.base)
+            .padding(Constants.cardPadding)
             .frame(height: Constants.cardHeight)
             .background(backgroundGradient)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
@@ -57,11 +58,15 @@ struct XGDailyDealCard: View {
 
     private enum Constants {
         static let cardHeight: CGFloat = 163
+        static let cardPadding: CGFloat = 16
         static let badgeFontSize: CGFloat = 12
         static let titleFontSize: CGFloat = 20
         static let countdownFontSize: CGFloat = 12
         static let imageSize: CGFloat = 100
         static let titleMaxLines = 2
+        static let badgeHorizontalPadding: CGFloat = 10
+        static let badgeVerticalPadding: CGFloat = 4
+        static let strikethroughFontSize: CGFloat = 14
     }
 
     private enum TimeConstants {
@@ -100,19 +105,20 @@ struct XGDailyDealCard: View {
             badgeView
 
             Text(title)
-                .font(.system(size: Constants.titleFontSize, weight: .semibold))
+                .font(.custom("Poppins-SemiBold", size: Constants.titleFontSize))
                 .foregroundStyle(.white)
                 .lineLimit(Constants.titleMaxLines)
 
             countdownView
 
-            HStack(spacing: XGSpacing.sm) {
-                Text(price)
-                    .font(.system(size: Constants.titleFontSize, weight: .bold))
-                    .foregroundStyle(XGColors.brandSecondary)
+            HStack(alignment: .firstTextBaseline, spacing: XGSpacing.sm) {
+                XGPriceText(
+                    price: price,
+                    style: .deal,
+                )
 
                 Text(originalPrice)
-                    .font(XGTypography.bodySmall)
+                    .font(.custom("Poppins-Medium", size: Constants.strikethroughFontSize))
                     .foregroundStyle(XGColors.priceStrikethrough)
                     .strikethrough()
             }
@@ -121,10 +127,10 @@ struct XGDailyDealCard: View {
 
     private var badgeView: some View {
         Text(String(localized: "home_daily_deal_badge"))
-            .font(.system(size: Constants.badgeFontSize, weight: .semibold))
+            .font(.custom("Poppins-SemiBold", size: Constants.badgeFontSize))
             .foregroundStyle(XGColors.brandPrimary)
-            .padding(.horizontal, XGSpacing.sm)
-            .padding(.vertical, XGSpacing.xs)
+            .padding(.horizontal, Constants.badgeHorizontalPadding)
+            .padding(.vertical, Constants.badgeVerticalPadding)
             .background(XGColors.brandSecondary)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
     }
@@ -138,7 +144,7 @@ struct XGDailyDealCard: View {
                     .foregroundStyle(.white)
             } else {
                 Text(String(localized: "home_daily_deal_ended"))
-                    .font(.system(size: Constants.countdownFontSize, weight: .bold))
+                    .font(.custom("Poppins-Bold", size: Constants.countdownFontSize))
                     .foregroundStyle(.white)
             }
         }

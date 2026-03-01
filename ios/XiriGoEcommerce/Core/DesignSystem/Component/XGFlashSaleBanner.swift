@@ -36,11 +36,11 @@ struct XGFlashSaleBanner: View {
 
                 VStack(spacing: XGSpacing.sm) {
                     Text(String(localized: "home_flash_sale_badge"))
-                        .font(.system(size: Constants.badgeFontSize, weight: .bold))
+                        .font(.custom("Poppins-Bold", size: Constants.badgeFontSize))
                         .foregroundStyle(XGColors.flashSaleText)
 
                     Text(title)
-                        .font(.system(size: Constants.titleFontSize, weight: .bold))
+                        .font(.custom("Poppins-Bold", size: Constants.titleFontSize))
                         .foregroundStyle(XGColors.flashSaleText)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)

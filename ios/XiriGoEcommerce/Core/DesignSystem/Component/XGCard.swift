@@ -2,10 +2,13 @@ import SwiftUI
 
 // MARK: - XGProductCard
 
+/// Product card component for grid displays.
+/// Token source: `components.json > XGCard.productFeatured / productStandard`.
+///
+/// - productFeatured: 160x293, cornerRadius 10, padding 8, 1:1 image, title 12 semiBold, 2 lines
+/// - productStandard: 170x344, same + deliveryLabel + addToCartButton
 struct XGProductCard: View {
     // MARK: - Lifecycle
-
-    // MARK: - Init
 
     init(
         imageUrl: URL?,
@@ -37,17 +40,18 @@ struct XGProductCard: View {
 
     // MARK: - Internal
 
-    // MARK: - Body
-
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: XGSpacing.xs) {
+            VStack(alignment: .leading, spacing: 0) {
                 imageSection
                 contentSection
             }
             .background(XGColors.surface)
             .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
-            .xgElevation(XGElevation.level1)
+            .overlay(
+                RoundedRectangle(cornerRadius: XGCornerRadius.medium)
+                    .stroke(XGColors.outlineVariant, lineWidth: Constants.borderWidth),
+            )
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
@@ -57,9 +61,14 @@ struct XGProductCard: View {
 
     // MARK: - Private
 
-    private enum ProductCardConstants {
+    private enum Constants {
+        static let cardPadding: CGFloat = 8
+        static let titleFontSize: CGFloat = 12
+        static let titleMaxLines = 2
         static let deliveryFontSize: CGFloat = 10
         static let addToCartSize: CGFloat = 32
+        static let addToCartIconSize: CGFloat = 16
+        static let borderWidth: CGFloat = 1
     }
 
     private let imageUrl: URL?
@@ -75,8 +84,6 @@ struct XGProductCard: View {
     private let onAddToCartAction: (() -> Void)?
     private let action: () -> Void
 
-    // MARK: - Accessibility
-
     private var accessibilityDescription: String {
         var parts = [title, price]
         if let vendorName {
@@ -89,8 +96,6 @@ struct XGProductCard: View {
         }
         return parts.joined(separator: ", ")
     }
-
-    // MARK: - Subviews
 
     private var imageSection: some View {
         ZStack(alignment: .topTrailing) {
@@ -111,17 +116,18 @@ struct XGProductCard: View {
     private var contentSection: some View {
         VStack(alignment: .leading, spacing: XGSpacing.xs) {
             Text(title)
-                .font(.system(size: 12, weight: .semibold))
+                .font(.custom("Poppins-SemiBold", size: Constants.titleFontSize))
                 .foregroundStyle(XGColors.onSurface)
-                .lineLimit(2)
+                .lineLimit(Constants.titleMaxLines)
 
             if let vendorName {
                 Text(vendorName)
                     .font(XGTypography.bodySmall)
                     .foregroundStyle(XGColors.onSurfaceVariant)
+                    .lineLimit(1)
             }
 
-            XGPriceText(price: price, originalPrice: originalPrice)
+            XGPriceText(price: price, originalPrice: originalPrice, style: .small)
 
             if let rating {
                 XGRatingBar(
@@ -142,7 +148,7 @@ struct XGProductCard: View {
                 }
             }
         }
-        .padding(XGSpacing.sm)
+        .padding(Constants.cardPadding)
     }
 
     private var addToCartButton: some View {
@@ -150,11 +156,11 @@ struct XGProductCard: View {
             onAddToCartAction?()
         } label: {
             Image(systemName: "plus")
-                .font(.system(size: XGSpacing.IconSize.small))
+                .font(.system(size: Constants.addToCartIconSize))
                 .foregroundStyle(.white)
                 .frame(
-                    width: ProductCardConstants.addToCartSize,
-                    height: ProductCardConstants.addToCartSize,
+                    width: Constants.addToCartSize,
+                    height: Constants.addToCartSize,
                 )
                 .background(XGColors.brandSecondary)
                 .clipShape(Circle())
@@ -166,8 +172,8 @@ struct XGProductCard: View {
 
     private func deliveryBadge(_ label: String) -> some View {
         Text(label)
-            .font(.system(size: ProductCardConstants.deliveryFontSize))
-            .foregroundStyle(XGColors.brandSecondary)
+            .font(.system(size: Constants.deliveryFontSize))
+            .foregroundStyle(XGColors.deliveryText)
     }
 }
 
@@ -175,8 +181,6 @@ struct XGProductCard: View {
 
 struct XGInfoCard<TrailingContent: View>: View {
     // MARK: - Lifecycle
-
-    // MARK: - Init
 
     init(
         title: String,
@@ -193,8 +197,6 @@ struct XGInfoCard<TrailingContent: View>: View {
     }
 
     // MARK: - Internal
-
-    // MARK: - Body
 
     var body: some View {
         let content = HStack(spacing: XGSpacing.md) {
@@ -265,33 +267,34 @@ extension XGInfoCard where TrailingContent == EmptyView {
 
 // MARK: - Previews
 
-#Preview("XGProductCard") {
+#Preview("XGProductCard Featured") {
     XGProductCard(
         imageUrl: nil,
         title: "Premium Wireless Headphones with Noise Cancellation",
         price: "29.99",
         originalPrice: "39.99",
-        vendorName: "TechStore",
         rating: 4.5,
         reviewCount: 123,
         isWishlisted: false,
         onWishlistToggle: {},
         action: {},
     )
-    .frame(width: 200)
+    .frame(width: 160)
     .padding()
 }
 
-#Preview("XGProductCard Wishlisted") {
+#Preview("XGProductCard Standard") {
     XGProductCard(
         imageUrl: nil,
         title: "Simple Product",
         price: "9.99",
         isWishlisted: true,
         onWishlistToggle: {},
+        deliveryLabel: "Order before 23:59, delivered Monday",
+        onAddToCartAction: {},
         action: {},
     )
-    .frame(width: 200)
+    .frame(width: 170)
     .padding()
 }
 
@@ -311,6 +314,7 @@ extension XGInfoCard where TrailingContent == EmptyView {
         ) {
             Image(systemName: "chevron.right")
                 .foregroundStyle(XGColors.onSurfaceVariant)
+                .accessibilityHidden(true)
         }
     }
     .padding()
