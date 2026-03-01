@@ -35,7 +35,7 @@ struct XGPaginationDots: View {
                         width: index == currentPage ? Constants.activeWidth : Constants.inactiveWidth,
                         height: Constants.dotHeight,
                     )
-                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentPage)
+                    .animation(XGMotion.Easing.spring, value: currentPage)
             }
         }
         .accessibilityElement(children: .ignore)

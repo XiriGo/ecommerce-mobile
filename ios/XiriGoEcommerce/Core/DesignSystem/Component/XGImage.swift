@@ -24,7 +24,7 @@ struct XGImage: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: contentMode)
-                        .transition(.opacity.animation(.easeInOut(duration: 0.25)))
+                        .transition(.opacity.animation(.easeInOut(duration: XGMotion.Crossfade.imageFadeIn)))
 
                 case .failure:
                     placeholderView
