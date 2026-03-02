@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-25)
+
+- **XGFlashSaleBanner token audit + shimmer inheritance**: Audited `XGFlashSaleBanner` on both platforms against `xg-flash-sale-banner.json` token spec. Android: replaced inline font properties (`fontFamily`, `fontSize`, `fontWeight`) with `MaterialTheme.typography.titleSmall` (badge) and `MaterialTheme.typography.titleLarge` (title); added `textAlign = TextAlign.Center` and `maxLines = 2` to title per token spec; removed unused font constants and imports. iOS: added `XGImage` rendering when `imageUrl` is provided, inheriting shimmer from DQ-07; removed unused font-size constants; added `titleMaxLines` constant. Both: updated doc comments to reference token names; added preview variant with `imageUrl`. 11 Android JVM tests + 24 iOS Swift Testing tests verified. (#69) (Android + iOS)
+
 #### Design Quality Backfill (DQ-24)
 
 - **XGDailyDealCard token audit + motion tokens**: Audited `XGDailyDealCard` on both platforms against `xg-daily-deal-card.json` token spec. Android: fixed product image sizing from weight-based (`weight(0.6f).aspectRatio(1f)`) to token-driven fixed `100.dp` (`ProductImageSize`); changed countdown font from `PoppinsFontFamily` to `FontFamily.Monospace` per token spec ("system monospaced 12pt"); added `TextOverflow.Ellipsis` to title; extracted `TITLE_MAX_LINES` constant; added `semantics { contentDescription }` for TalkBack; added expired-state preview. iOS: changed `rightImage` to always render (XGImage handles nil URL with branded fallback); added `accessibilityLabel` to XGImage call; documented shimmer inheritance from DQ-07. Both: image shimmer + crossfade inherited from `XGImage` (DQ-07) with no manual shimmer code needed. Countdown timer patterns (LaunchedEffect+delay on Android, TimelineView on iOS) validated per component-quality.md. 25 Android JVM tests + 31 iOS Swift Testing tests added. (#68) (Android + iOS)
