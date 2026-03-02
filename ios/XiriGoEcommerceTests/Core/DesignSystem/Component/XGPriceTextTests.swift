@@ -13,6 +13,8 @@ struct XGPriceStyleTests {
         #expect(styles.count == 4)
     }
 
+    // MARK: - Default style
+
     @Test("Default style has correct currency font size")
     func default_currencyFontSize_isCorrect() {
         #expect(XGPriceStyle.default.currencyFontSize == 22.78)
@@ -28,6 +30,13 @@ struct XGPriceStyleTests {
         #expect(XGPriceStyle.default.decimalFontSize == 18.98)
     }
 
+    @Test("Default style color is priceSale")
+    func default_color_isPriceSale() {
+        #expect(XGPriceStyle.default.color == XGColors.priceSale)
+    }
+
+    // MARK: - Small style
+
     @Test("Small style has correct currency font size")
     func small_currencyFontSize_isCorrect() {
         #expect(XGPriceStyle.small.currencyFontSize == 14)
@@ -42,6 +51,13 @@ struct XGPriceStyleTests {
     func small_decimalFontSize_isCorrect() {
         #expect(XGPriceStyle.small.decimalFontSize == 14)
     }
+
+    @Test("Small style color is priceSale")
+    func small_color_isPriceSale() {
+        #expect(XGPriceStyle.small.color == XGColors.priceSale)
+    }
+
+    // MARK: - Standard style
 
     @Test("Standard style has correct currency font size")
     func standard_currencyFontSize_isCorrect() {
@@ -63,16 +79,13 @@ struct XGPriceStyleTests {
         #expect(XGPriceStyle.standard.color == XGColors.priceSale)
     }
 
+    // MARK: - Deal style
+
     @Test("Deal style has same font sizes as default")
     func deal_fontSizes_matchDefault() {
         #expect(XGPriceStyle.deal.currencyFontSize == XGPriceStyle.default.currencyFontSize)
         #expect(XGPriceStyle.deal.integerFontSize == XGPriceStyle.default.integerFontSize)
         #expect(XGPriceStyle.deal.decimalFontSize == XGPriceStyle.default.decimalFontSize)
-    }
-
-    @Test("Default style color is priceSale")
-    func default_color_isPriceSale() {
-        #expect(XGPriceStyle.default.color == XGColors.priceSale)
     }
 
     @Test("Deal style color is brandSecondary")
@@ -87,6 +100,22 @@ struct XGPriceStyleTests {
 @MainActor
 struct XGPriceTextTests {
     // MARK: - Internal
+
+    // MARK: - Null price fallback
+
+    @Test("PriceText with nil price initialises")
+    func init_nilPrice_initialises() {
+        let view = XGPriceText(price: nil)
+        _ = view
+        #expect(true)
+    }
+
+    @Test("PriceText with nil price and originalPrice initialises")
+    func init_nilPriceWithOriginal_initialises() {
+        let view = XGPriceText(price: nil, originalPrice: "39.99")
+        _ = view
+        #expect(true)
+    }
 
     // MARK: - Initialisation
 
@@ -118,6 +147,8 @@ struct XGPriceTextTests {
         #expect(true)
     }
 
+    // MARK: - Style variants
+
     @Test("PriceText initialises with default style")
     func init_defaultStyle_isDefault() {
         let view = XGPriceText(price: "9.99")
@@ -142,6 +173,31 @@ struct XGPriceTextTests {
     @Test("PriceText initialises with deal style")
     func init_dealStyle_initialises() {
         let view = XGPriceText(price: "9.99", style: .deal)
+        _ = view
+        #expect(true)
+    }
+
+    // MARK: - Layout variants
+
+    @Test("PriceText initialises with inline layout")
+    func init_inlineLayout_initialises() {
+        let view = XGPriceText(price: "29.99", originalPrice: "49.99", layout: .inline)
+        _ = view
+        #expect(true)
+    }
+
+    @Test("PriceText initialises with stacked layout")
+    func init_stackedLayout_initialises() {
+        let view = XGPriceText(price: "29.99", originalPrice: "49.99", layout: .stacked)
+        _ = view
+        #expect(true)
+    }
+
+    // MARK: - Strikethrough font size
+
+    @Test("PriceText initialises with custom strikethrough font size")
+    func init_customStrikethroughFontSize_initialises() {
+        let view = XGPriceText(price: "29.99", originalPrice: "49.99", style: .standard, strikethroughFontSize: 14)
         _ = view
         #expect(true)
     }
