@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+#### Design Quality Backfill (DQ-20)
+
+- **XGColorSwatch component**: New atom component for product detail and filter screens. Circular color swatch with 40dp/pt diameter, 1px always-visible border (`XGColors.Outline`), and branded selection ring (`XGColors.Primary`, 2px stroke, 3px gap). Selected state shows checkmark overlay with adaptive contrast -- white checkmark on dark swatches (luminance <= 0.6), dark checkmark on light swatches. Animated selection ring using `XGMotion.Easing.standardTween` (Android) / `XGMotion.Easing.standard` (iOS). Accessibility: `contentDescription`/`accessibilityLabel` with color name, `Role.RadioButton` + `.isSelected` traits. Token-driven from `shared/design-tokens/components/atoms/xg-color-swatch.json`. 17 Android JUnit token tests + 20 iOS Swift Testing tests verified. (#64) (Android + iOS)
+
 ### Changed
 
 #### Design Quality Backfill (DQ-18)
