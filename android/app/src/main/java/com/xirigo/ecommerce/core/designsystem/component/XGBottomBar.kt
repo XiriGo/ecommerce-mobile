@@ -61,7 +61,7 @@ fun XGBottomBar(
     Column(modifier = modifier.fillMaxWidth()) {
         // Top border — 0.5dp borderSubtle divider
         HorizontalDivider(
-            thickness = TOP_BORDER_WIDTH,
+            thickness = TopBorderWidth,
             color = XGColors.OutlineVariant,
         )
 
@@ -69,7 +69,7 @@ fun XGBottomBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(BAR_HEIGHT)
+                .height(BarHeight)
                 .background(XGColors.BottomNavBackground),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
@@ -106,7 +106,7 @@ private fun BottomBarTab(
 
     Column(
         modifier = modifier
-            .height(BAR_HEIGHT)
+            .height(BarHeight)
             .clickable(
                 onClick = onClick,
                 role = Role.Tab,
@@ -140,7 +140,7 @@ private fun BottomBarItemIcon(
                 imageVector = icon,
                 contentDescription = item.label,
                 tint = tintColor,
-                modifier = Modifier.size(ICON_SIZE),
+                modifier = Modifier.size(IconSize),
             )
             BottomBarBadge(
                 count = badgeCount,
@@ -152,7 +152,7 @@ private fun BottomBarItemIcon(
             imageVector = icon,
             contentDescription = item.label,
             tint = tintColor,
-            modifier = Modifier.size(ICON_SIZE),
+            modifier = Modifier.size(IconSize),
         )
     }
 }
@@ -172,7 +172,7 @@ private fun BottomBarBadge(count: Int, modifier: Modifier = Modifier) {
             )
             .then(
                 Modifier
-                    .size(BADGE_SIZE),
+                    .size(BadgeSize),
             ),
         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
     )
@@ -181,16 +181,16 @@ private fun BottomBarBadge(count: Int, modifier: Modifier = Modifier) {
 // region Constants — all from design tokens
 
 /** Bar height — from spacing.json: bottomNavigation.height = 75 */
-private val BAR_HEIGHT = 75.dp
+private val BarHeight = 75.dp
 
 /** Icon size — from spacing.json: layout.iconSize.medium = 24 */
-private val ICON_SIZE = 24.dp
+private val IconSize = 24.dp
 
 /** Top border width — from xg-bottom-bar.json: topBorderWidth = 0.5 */
-private val TOP_BORDER_WIDTH = 0.5.dp
+private val TopBorderWidth = 0.5.dp
 
 /** Badge size — compact circle badge */
-private val BADGE_SIZE = 16.dp
+private val BadgeSize = 16.dp
 
 /** Badge text overflow threshold */
 private const val BADGE_MAX_DISPLAY = 100
