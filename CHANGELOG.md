@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+#### Design Quality Backfill (DQ-32)
+
+- **XGSocialLoginButton component**: New molecule component for social authentication on the Login screen (M1-01). Supports Google and Apple providers with brand-accurate icon + text layout. Google icon rendered as multi-color "G" via Canvas (Android) / Shape overlays (iOS) using `XGColors.socialGoogle*` tokens. Apple icon uses Canvas path (Android) / SF Symbol `apple.logo` (iOS) with `XGColors.SocialAppleBlack`/`socialAppleBlack`. Button uses outlined surface style (height: 44dp/pt, corner radius: `XGCornerRadius.Medium` 10dp/pt, border: 1px `XGColors.Outline`, typography: `labelLarge` 14sp/pt Medium). Loading state replaces icon with `CircularProgressIndicator`/`ProgressView` and disables interaction. Disabled state reduces opacity to 0.38. Flexible width via `weight(1f)`/`frame(maxWidth: .infinity)` for side-by-side layout. Added 5 social auth color tokens to XGColors on both platforms. 14 Android JUnit token tests + 17 iOS Swift Testing tests verified. (#76) (Android + iOS)
+
 ### Changed
 
 #### Design Quality Backfill (DQ-26)
