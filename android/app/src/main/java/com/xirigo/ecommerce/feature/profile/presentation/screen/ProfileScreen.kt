@@ -24,7 +24,6 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -41,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.component.XGButton
 import com.xirigo.ecommerce.core.designsystem.component.XGButtonStyle
+import com.xirigo.ecommerce.core.designsystem.component.XGDivider
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
@@ -152,9 +152,8 @@ private fun ProfileMenuSection() {
             menuItems.forEachIndexed { index, item ->
                 ProfileMenuRow(item = item)
                 if (index < menuItems.lastIndex) {
-                    HorizontalDivider(
+                    XGDivider(
                         modifier = Modifier.padding(horizontal = XGSpacing.Base),
-                        color = MaterialTheme.colorScheme.outlineVariant,
                     )
                 }
             }
