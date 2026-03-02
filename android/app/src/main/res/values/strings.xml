@@ -122,4 +122,8 @@
 
     <!-- Skeleton -->
     <string name="skeleton_loading_placeholder">Loading content</string>
+
+    <!-- Social Login -->
+    <string name="auth_social_continue_google">Google</string>
+    <string name="auth_social_continue_apple">Apple</string>
 </resources>
