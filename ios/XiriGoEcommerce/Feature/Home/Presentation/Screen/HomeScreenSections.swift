@@ -68,7 +68,7 @@ extension HomeScreen {
 
             if !categories.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: XGSpacing.base) {
+                    LazyHStack(spacing: XGSpacing.base) {
                         ForEach(categories) { category in
                             XGCategoryIcon(
                                 name: category.name,
@@ -101,7 +101,7 @@ extension HomeScreen {
                 )
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: XGSpacing.productGridSpacing) {
+                    LazyHStack(spacing: XGSpacing.productGridSpacing) {
                         ForEach(data.popularProducts) { product in
                             popularProductCard(product: product, data: data)
                                 .frame(width: PopularProductConstants.cardWidth)
