@@ -8,6 +8,10 @@ import SwiftUI
 /// - Size: 32x32pt, circular
 /// - Active: filled heart in brand primary
 /// - Inactive: outlined heart in text secondary
+///
+/// **Motion tokens** (from `XGMotion`):
+/// - Color transition: `.easeInOut(duration: XGMotion.Duration.instant)` (0.1s)
+/// - Scale bounce: `XGMotion.Easing.spring` (response=0.35, dampingFraction=0.7)
 struct XGWishlistButton: View {
     // MARK: - Lifecycle
 
@@ -22,23 +26,35 @@ struct XGWishlistButton: View {
     // MARK: - Internal
 
     var body: some View {
-        Button(action: onToggle) {
-            Image(systemName: isWishlisted ? "heart.fill" : "heart")
-                .font(.system(size: Constants.iconSize))
-                .foregroundStyle(
-                    isWishlisted
-                        ? XGColors.brandPrimary
-                        : XGColors.onSurfaceVariant,
-                )
-                .frame(
-                    width: Constants.buttonSize,
-                    height: Constants.buttonSize,
-                )
-                .background(XGColors.surface)
-                .clipShape(Circle())
-                .xgElevation(XGElevation.level2)
-                .accessibilityHidden(true)
-        }
+        Button(
+            action: {
+                bounceScale = Constants.bounceScale
+                withAnimation(.easeInOut(duration: XGMotion.Duration.instant)) {
+                    onToggle()
+                }
+                withAnimation(XGMotion.Easing.spring) {
+                    bounceScale = 1.0
+                }
+            },
+            label: {
+                Image(systemName: isWishlisted ? "heart.fill" : "heart")
+                    .font(.system(size: Constants.iconSize))
+                    .foregroundStyle(
+                        isWishlisted
+                            ? XGColors.brandPrimary
+                            : XGColors.onSurfaceVariant,
+                    )
+                    .frame(
+                        width: Constants.buttonSize,
+                        height: Constants.buttonSize,
+                    )
+                    .background(XGColors.surface)
+                    .clipShape(Circle())
+                    .xgElevation(XGElevation.level2)
+                    .scaleEffect(bounceScale)
+                    .accessibilityHidden(true)
+            },
+        )
         .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
         .accessibilityLabel(
             isWishlisted
@@ -46,6 +62,7 @@ struct XGWishlistButton: View {
                 : String(localized: "common_add_to_wishlist"),
         )
         .accessibilityAddTraits(.isToggle)
+        .animation(.easeInOut(duration: XGMotion.Duration.instant), value: isWishlisted)
     }
 
     // MARK: - Private
@@ -53,7 +70,10 @@ struct XGWishlistButton: View {
     private enum Constants {
         static let buttonSize: CGFloat = 32
         static let iconSize: CGFloat = 16
+        static let bounceScale: CGFloat = 1.2
     }
+
+    @State private var bounceScale: CGFloat = 1.0
 
     private let isWishlisted: Bool
     private let onToggle: () -> Void
