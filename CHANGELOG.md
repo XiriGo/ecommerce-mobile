@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-11)
+
+- **XGRatingBar token audit**: Audited `XGRatingBar` against `shared/design-tokens/components/atoms/xg-rating-bar.json`. All token values (star size 12dp/pt, star gap 2dp/pt, review count spacing 4dp/pt, colors, fonts) were already correct on both platforms. Android: fixed layout structure by nesting stars in inner `Row` with `starGap` and using outer `Row` with `reviewCountSpacing`, added `mergeDescendants = true` to semantics for proper TalkBack behavior, removed redundant `Spacer` composables. iOS: formatted rating to one decimal place in accessibility description to prevent floating-point display issues. Also fixed pre-existing XGImage Coil 3.x API issue (`matchParentSize` -> `fillMaxSize`). 11 Android instrumentation tests + 17 iOS unit tests verified. (#55) (Android + iOS)
+
 #### Design Quality Backfill (DQ-09)
 
 - **XGPaginationDots motion token upgrade**: Replaced hardcoded `tween(300ms)` animation on Android with `XGMotion.Easing.springSpec()` (spring with dampingRatio=0.7, stiffness=StiffnessMedium). iOS was already compliant (`XGMotion.Easing.spring`). Updated component token JSON to reference `$foundations/motion.easing.spring` instead of hardcoded spring parameters. Both platforms now use matching spring-based dot width animations. 6 Android instrumentation tests + 8 iOS unit tests verified. (#53) (Android + iOS)
