@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-10)
+
+- **XGPriceText token + fallback audit**: Audited and upgraded `XGPriceText` on both platforms against `shared/design-tokens/components/atoms/xg-price-text.json`. Android: renamed `XGPriceSize` enum to `XGPriceStyle` for cross-platform consistency, updated all call sites (`XGCard`, `XGDailyDealCard`, `HomeScreen`). Both platforms: added null price fallback (`price: String?`) — when `null`/`nil`, the component renders nothing instead of showing "$0.00"; added `StandardStrikethroughFontSize` (14sp/pt) from token spec. All 4 style variants (default/standard/small/deal), 2 layout modes (inline/stacked), strikethrough styling, and color tokens verified against spec. 14 Android instrumentation tests + 30 iOS Swift Testing tests. (#54) (Android + iOS)
+
+#### Design Quality Backfill (DQ-09)
+
+- **XGPaginationDots motion token upgrade**: Replaced hardcoded `tween(300ms)` animation on Android with `XGMotion.Easing.springSpec()` (spring with dampingRatio=0.7, stiffness=StiffnessMedium). iOS was already compliant (`XGMotion.Easing.spring`). Updated component token JSON to reference `$foundations/motion.easing.spring` instead of hardcoded spring parameters. Both platforms now use matching spring-based dot width animations. 6 Android instrumentation tests + 8 iOS unit tests verified. (#53) (Android + iOS)
+
 #### Design Quality Backfill (DQ-08)
 
 - **XGBadge token audit**: Audited and aligned the full badge component family (`XGBadge`, `XGCountBadge`, `XGStatusBadge`) against `shared/design-tokens/components/atoms/xg-badge.json`. Android: added `XGBadgeVariant` enum (Primary/Secondary), added `XGBadge` composable, fixed `XGStatusBadge` to use `XGColors` tokens instead of `MaterialTheme.colorScheme` references, corrected `XGCountBadge` shape from `CircleShape` to `RoundedCornerShape(XGCornerRadius.Full)` (capsule), added `XGCustomTextStyles.CaptionSemiBold` (12sp SemiBold Poppins). iOS: removed unused `Constants.fontSize` dead code; all token references were already spec-aligned. 56 Android tests (37 JVM unit + 19 Compose UI) + 89 iOS tests (88 passing, 1 skipped) across 11 suites. (Android + iOS)

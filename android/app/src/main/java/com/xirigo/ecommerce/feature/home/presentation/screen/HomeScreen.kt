@@ -49,7 +49,7 @@ import com.xirigo.ecommerce.core.designsystem.component.XGHeroBanner
 import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
 import com.xirigo.ecommerce.core.designsystem.component.XGPriceLayout
-import com.xirigo.ecommerce.core.designsystem.component.XGPriceSize
+import com.xirigo.ecommerce.core.designsystem.component.XGPriceStyle
 import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
 import com.xirigo.ecommerce.core.designsystem.component.XGSearchBar
 import com.xirigo.ecommerce.core.designsystem.component.XGSectionHeader
@@ -242,7 +242,7 @@ private fun PopularProductsSection(
                 isWishlisted = product.id in wishedProductIds,
                 onWishlistToggle = { onEvent(HomeEvent.WishlistToggled(product.id)) },
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
-                priceSize = XGPriceSize.Default,
+                priceStyle = XGPriceStyle.Default,
                 priceLayout = XGPriceLayout.Stacked,
                 showRatingAbovePrice = true,
                 modifier = Modifier.width(FeaturedCardWidth),
@@ -334,7 +334,7 @@ private fun ProductGridRow(
                 // TODO(https://github.com/xirigo/ecommerce-mobile/issues/100): implement add to cart
                 onAddToCartClick = {},
                 onClick = { onEvent(HomeEvent.ProductTapped(product.id)) },
-                priceSize = XGPriceSize.Standard,
+                priceStyle = XGPriceStyle.Standard,
                 strikethroughFontSize = STANDARD_STRIKETHROUGH_FONT_SIZE,
                 priceLayout = XGPriceLayout.Stacked,
                 showRatingAbovePrice = true,
