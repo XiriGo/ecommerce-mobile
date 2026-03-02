@@ -80,16 +80,6 @@ enum XGPriceStyle {
     }
 }
 
-// MARK: - XGPriceLayout
-
-/// Controls the arrangement of sale price and strikethrough in ``XGPriceText``.
-enum XGPriceLayout {
-    /// Sale price + strikethrough side-by-side (HStack). Default for standard/grid cards.
-    case inline
-    /// Strikethrough above, sale price below (VStack). Used for featured/horizontal-scroll cards.
-    case stacked
-}
-
 // MARK: - XGPriceText
 
 /// Three-part composite price display component.
