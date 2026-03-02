@@ -113,11 +113,13 @@
 		A408B68EE21B718DFB161829 /* XGTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF83A6796BA6C75451ED925 /* XGTextFieldTests.swift */; };
 		A96E2AF478EEBBD85EED4F86 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4278B49BC2680177ACA7425F /* NetworkMonitor.swift */; };
 		A9861FCF30B5E9A803414091 /* XGChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA561F63F4D664E347DAA9AE /* XGChip.swift */; };
+		DQ31FP01A0B1C2D3E4F50001 /* XGFilterPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = DQ31FP01A0B1C2D3E4F50002 /* XGFilterPill.swift */; };
 		AAD0BFC97EA3B5A9CC08B304 /* XGLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90006C0F45B06937385EAF4 /* XGLoadingView.swift */; };
 		AC1D29922CDDCC351716CE5A /* Container+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BBD74FD7BB8528E7B96D34 /* Container+Extensions.swift */; };
 		AC37C2C48861A3006BEBB552 /* AuthStateManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09AE91841876054AC592D08 /* AuthStateManagerImpl.swift */; };
 		AEE0873CFE131A782CD1FCB7 /* NetworkMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2247EB420BA45DA8B08F2C /* NetworkMonitorTests.swift */; };
 		B03755727DC218A604E6AA41 /* XGChipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C217147B91F6CAA7B8972F3 /* XGChipTests.swift */; };
+		DQ31FP01A0B1C2D3E4F50003 /* XGFilterPillTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DQ31FP01A0B1C2D3E4F50004 /* XGFilterPillTests.swift */; };
 		B1A206E02C44C7A00AF40F70 /* ContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D6DD1456D24B42148DC83C /* ContainerTests.swift */; };
 		B29BDAB2F60C61A215B266E2 /* SessionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13CA737012787537C7C7597 /* SessionManagerTests.swift */; };
 		B393DF6EDBAA705193888BB2 /* RoutePropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CCAAAB27E9DE7B70C555AC /* RoutePropertyTests.swift */; };
@@ -315,6 +317,7 @@
 		DQ25A002F5B813CF59FC9D0C /* XGFlashSaleBannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGFlashSaleBannerTests.swift; sourceTree = "<group>"; };
 		7A9393EAA32874CDD93E4540 /* RequestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
 		7C217147B91F6CAA7B8972F3 /* XGChipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGChipTests.swift; sourceTree = "<group>"; };
+		DQ31FP01A0B1C2D3E4F50004 /* XGFilterPillTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGFilterPillTests.swift; sourceTree = "<group>"; };
 		7DB9DD2C2E493C60689F6561 /* APIClientAuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientAuthTests.swift; sourceTree = "<group>"; };
 		82C50F87677389FDF99747D3 /* XGBrandGradient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = XGBrandGradient.swift; sourceTree = "<group>"; };
 		8375F4185CE22A11A7CE175D /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -361,6 +364,7 @@
 		C7399E0DB1CDF9E6C62A5A5D /* XGLoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGLoadingViewTests.swift; sourceTree = "<group>"; };
 		C8BC02BAD863C2D36B24C62E /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
 		CA561F63F4D664E347DAA9AE /* XGChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGChip.swift; sourceTree = "<group>"; };
+		DQ31FP01A0B1C2D3E4F50002 /* XGFilterPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGFilterPill.swift; sourceTree = "<group>"; };
 		CA8095BBCB5CB08F5F2FD625 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CCA8A956E94A626030F00F61 /* AppRouterStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterStateTests.swift; sourceTree = "<group>"; };
 		CF060162B703123EF161E69A /* TokenStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorageTests.swift; sourceTree = "<group>"; };
@@ -516,6 +520,7 @@
 				75F745022E4A018757BA6ECB /* XGCardTests.swift */,
 				D4E5F6A7B8C909213A4B5C6E /* XGProductCardTests.swift */,
 				7C217147B91F6CAA7B8972F3 /* XGChipTests.swift */,
+				DQ31FP01A0B1C2D3E4F50004 /* XGFilterPillTests.swift */,
 				159628B709FF5E7444561704 /* XGEmptyViewTests.swift */,
 				D66E2A1E727488DB7D86F888 /* XGErrorViewTests.swift */,
 				DQ24A002B8C413CF59FC9D0C /* XGDailyDealCardTests.swift */,
@@ -1110,6 +1115,7 @@
 				FD3D21C88ADFEE454FF042F9 /* XGButton.swift */,
 				2E2905E53F5CA6D7325B01E2 /* XGCard.swift */,
 				CA561F63F4D664E347DAA9AE /* XGChip.swift */,
+				DQ31FP01A0B1C2D3E4F50002 /* XGFilterPill.swift */,
 				FF3950964CA5396EC1767917 /* XGEmptyView.swift */,
 				554986508E1FAAE519489E49 /* XGErrorView.swift */,
 				A967395803F8B91CDEBBD4BA /* XGImage.swift */,
@@ -1463,6 +1469,7 @@
 				183FB0D1B0CABB68ECC8A2C2 /* XGCardTests.swift in Sources */,
 				D4E5F6A7B8C909213A4B5C6D /* XGProductCardTests.swift in Sources */,
 				B03755727DC218A604E6AA41 /* XGChipTests.swift in Sources */,
+				DQ31FP01A0B1C2D3E4F50003 /* XGFilterPillTests.swift in Sources */,
 				5F7CF11B7C7BB69E99EC44AE /* XGColorsTests.swift in Sources */,
 				1B1B154A9F9F85EB9D31405A /* XGCornerRadiusTests.swift in Sources */,
 				CBBEE57E04C13C63CDBB8BDB /* XGElevationTests.swift in Sources */,
@@ -1559,6 +1566,7 @@
 				071C49769D307FB6A31FB840 /* XGButton.swift in Sources */,
 				8E7AC555DF78CC5D5AAE9943 /* XGCard.swift in Sources */,
 				A9861FCF30B5E9A803414091 /* XGChip.swift in Sources */,
+				DQ31FP01A0B1C2D3E4F50001 /* XGFilterPill.swift in Sources */,
 				6706279B5AA2043968FF4CF4 /* XGColors.swift in Sources */,
 				FD1D4CD140B4C0534519593D /* XGCornerRadius.swift in Sources */,
 				8A79B552D14B649EF97A103E /* XGElevation.swift in Sources */,

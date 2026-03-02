@@ -133,4 +133,7 @@
 
     <!-- Range Slider -->
     <string name="common_range_slider_description">Range: %1$s to %2$s</string>
+
+    <!-- Filter Pill -->
+    <string name="common_filter_pill_dismiss_a11y">Remove %1$s filter</string>
 </resources>
