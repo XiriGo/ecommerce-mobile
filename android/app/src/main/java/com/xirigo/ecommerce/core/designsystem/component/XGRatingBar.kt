@@ -2,9 +2,7 @@ package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.StarHalf
 import androidx.compose.material.icons.filled.Star
@@ -27,7 +25,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// Token source: components/atoms/xg-rating-bar.json
+// Token source: shared/design-tokens/components/atoms/xg-rating-bar.json
 private val StarSize = 12.dp
 private val StarGap = 2.dp
 private const val STAR_COUNT = 5
@@ -51,11 +49,11 @@ fun XGRatingBar(
     }.orEmpty()
 
     Row(
-        modifier = modifier.semantics {
+        modifier = modifier.semantics(mergeDescendants = true) {
             contentDescription = "$ratingDescription $reviewsDescription".trim()
         },
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(StarGap),
+        horizontalArrangement = Arrangement.spacedBy(ReviewCountSpacing),
     ) {
         RatingStars(rating = rating, maxRating = maxRating, starSize = starSize)
         RatingValueText(rating = rating, showValue = showValue)
@@ -69,32 +67,33 @@ private fun RatingStars(
     maxRating: Int,
     starSize: Dp,
 ) {
-    for (i in 1..maxRating) {
-        val icon = when {
-            rating >= i.toFloat() -> Icons.Filled.Star
-            rating >= i.toFloat() - 0.5f -> Icons.AutoMirrored.Filled.StarHalf
-            else -> Icons.Outlined.StarOutline
-        }
+    Row(horizontalArrangement = Arrangement.spacedBy(StarGap)) {
+        for (i in 1..maxRating) {
+            val icon = when {
+                rating >= i.toFloat() -> Icons.Filled.Star
+                rating >= i.toFloat() - 0.5f -> Icons.AutoMirrored.Filled.StarHalf
+                else -> Icons.Outlined.StarOutline
+            }
 
-        val tint = if (rating >= i.toFloat() - 0.5f) {
-            XGColors.RatingStarFilled
-        } else {
-            XGColors.RatingStarEmpty
-        }
+            val tint = if (rating >= i.toFloat() - 0.5f) {
+                XGColors.RatingStarFilled
+            } else {
+                XGColors.RatingStarEmpty
+            }
 
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(starSize),
-            tint = tint,
-        )
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.size(starSize),
+                tint = tint,
+            )
+        }
     }
 }
 
 @Composable
 private fun RatingValueText(rating: Float, showValue: Boolean) {
     if (showValue) {
-        Spacer(modifier = Modifier.width(ReviewCountSpacing))
         Text(
             text = String.format(java.util.Locale.ROOT, "%.1f", rating),
             fontFamily = PoppinsFontFamily,
@@ -109,7 +108,6 @@ private fun RatingValueText(rating: Float, showValue: Boolean) {
 @Composable
 private fun ReviewCountText(reviewCount: Int?) {
     if (reviewCount != null) {
-        Spacer(modifier = Modifier.width(ReviewCountSpacing))
         Text(
             text = stringResource(R.string.common_review_count_format, reviewCount),
             fontFamily = PoppinsFontFamily,
