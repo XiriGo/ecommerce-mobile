@@ -108,4 +108,58 @@ class XGTopBarTest {
         composeTestRule.onNodeWithText("Simple Title").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Navigate back").assertDoesNotExist()
     }
+
+    @Test
+    fun xgTopBar_surfaceVariant_displaysTitle() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGTopBar(
+                    title = "Surface",
+                    variant = XGTopBarVariant.Surface,
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("Surface").assertIsDisplayed()
+    }
+
+    @Test
+    fun xgTopBar_transparentVariant_displaysTitle() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGTopBar(
+                    title = "Transparent",
+                    variant = XGTopBarVariant.Transparent,
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("Transparent").assertIsDisplayed()
+    }
+
+    @Test
+    fun xgTopBar_transparentVariant_withBackButton_showsBackButton() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGTopBar(
+                    title = "Login",
+                    variant = XGTopBarVariant.Transparent,
+                    onBackClick = {},
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithContentDescription("Navigate back").assertIsDisplayed()
+    }
+
+    @Test
+    fun xgTopBar_defaultVariant_isSurface() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGTopBar(title = "Default Variant")
+            }
+        }
+
+        composeTestRule.onNodeWithText("Default Variant").assertIsDisplayed()
+    }
 }
