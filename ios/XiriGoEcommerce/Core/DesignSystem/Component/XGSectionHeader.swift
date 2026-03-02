@@ -3,7 +3,15 @@ import SwiftUI
 // MARK: - XGSectionHeader
 
 /// Section title with optional subtitle and optional "See All" action link.
-/// Token source: `components/atoms/xg-section-header.json` (18pt semiBold).
+///
+/// Token source: `shared/design-tokens/components/atoms/xg-section-header.json`
+///
+/// - `title`: `XGTypography.subtitle` (18pt SemiBold) + `XGColors.onSurface`
+/// - `subtitle`: `XGTypography.bodyMedium` (14pt Medium) + `XGColors.onSurfaceVariant`
+/// - `seeAll`: `XGTypography.bodyMedium` + `XGColors.brandPrimary`
+/// - `arrowIconSize`: 12pt
+/// - `horizontalPadding`: `XGSpacing.screenPaddingHorizontal`
+/// - `subtitleSpacing`: `XGSpacing.xxs`
 struct XGSectionHeader: View {
     // MARK: - Lifecycle
 
@@ -60,8 +68,7 @@ struct XGSectionHeader: View {
     // MARK: - Private
 
     private enum Constants {
-        static let titleFontSize: CGFloat = 18
-        static let seeAllFontSize: CGFloat = 14
+        /// Token: `arrowIconSize = 12` from xg-section-header.json.
         static let arrowIconSize: CGFloat = 12
     }
 

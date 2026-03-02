@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-13)
+
+- **XGSectionHeader token audit**: Audited and aligned `XGSectionHeader` on both platforms against `shared/design-tokens/components/atoms/xg-section-header.json`. Android: replaced 6 inline font constants (`fontFamily/fontSize/fontWeight`) with `MaterialTheme.typography.titleMedium` and `MaterialTheme.typography.labelLarge`, fixed subtitle font weight from `Normal` to `Medium`, corrected arrow icon size from 16dp to 12dp, added explicit subtitle spacing via `Arrangement.spacedBy(XGSpacing.XXS)`, removed `PoppinsFontFamily` direct import. iOS: removed unused `Constants.titleFontSize` and `Constants.seeAllFontSize` dead code, enhanced doc comment with full token mapping. 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#57) (Android + iOS)
+
 #### Design Quality Backfill (DQ-12)
 
 - **XGSearchBar token audit**: Audited and aligned `XGSearchBar` on both platforms against `shared/design-tokens/components/atoms/xg-search-bar.json`. Android: replaced `Card` wrapper with `Row` + `background` + `border` + `clip`, changed background from `SurfaceVariant` to `InputBackground`, corner radius from `Medium` (10dp) to `Pill` (28dp), removed elevation, added `OutlineVariant` border at 1dp, fixed padding from `Base` (16dp) to `MD` (12dp), added explicit 24dp icon size, removed redundant `PoppinsFontFamily` override. iOS: changed corner radius from `full` (999pt) to `pill` (28pt). 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#56) (Android + iOS)
