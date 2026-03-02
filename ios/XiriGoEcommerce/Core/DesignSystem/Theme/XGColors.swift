@@ -129,6 +129,14 @@ enum XGColors {
     static let bottomNavIconActive = Color(hex: "#6000FE")
     static let bottomNavIconInactive = Color(hex: "#8E8E93")
 
+    // MARK: - Category Colors
+
+    static let categoryBlue = Color(hex: "#37B4F2")
+    static let categoryPink = Color(hex: "#FE75D4")
+    static let categoryYellow = Color(hex: "#FDF29C")
+    static let categoryMint = Color(hex: "#90D3B1")
+    static let categoryLightYellow = Color(hex: "#FEF170")
+
     // MARK: - Scrim & Shadow
 
     static let scrim = Color.black

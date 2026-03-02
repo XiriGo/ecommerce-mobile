@@ -250,7 +250,7 @@ class XGBadgeTokenTest {
 
     @Test
     fun `labelSmall fontSize should be smaller than labelMedium`() {
-        // Badge uses the smallest label scale — micro (10sp) vs captionMedium (12sp)
+        // Badge uses the smallest label scale -- micro (10sp) vs captionMedium (12sp)
         assertThat(XGTypography.labelSmall.fontSize.value)
             .isLessThan(XGTypography.labelMedium.fontSize.value)
     }

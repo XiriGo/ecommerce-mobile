@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **XGWishlistButton motion token upgrade**: Replaced static heart icon toggle with animated transitions on both platforms. Android: added `animateColorAsState` with `XGMotion.Easing.standardTween(XGMotion.Duration.INSTANT)` (100ms) for color transition, added `Animatable` + `XGMotion.Easing.springSpec()` (dampingRatio=0.7, stiffness=Medium) for scale bounce effect (1.2x snap then spring back to 1.0x). iOS: added `.easeInOut(duration: XGMotion.Duration.instant)` for color transition, added `XGMotion.Easing.spring` for scale bounce via `@State bounceScale`. Updated component token JSON to reference `$foundations/motion.duration.instant` and `$foundations/motion.easing.spring`. 15 Android JUnit token tests + 8 Android Compose UI tests + 24 iOS Swift Testing tests verified. (#59) (Android + iOS)
 
+#### Design Quality Backfill (DQ-14)
+
+- **XGCategoryIcon token audit**: Audited and aligned `XGCategoryIcon` on both platforms against `shared/design-tokens/components/atoms/xg-category-icon.json`. Android: replaced 4 inline font properties (`fontFamily/fontSize/fontWeight/lineHeight`) with `MaterialTheme.typography.labelMedium`, removed dead `LabelFontSize` and `LabelLineHeight` constants, removed unused `PoppinsFontFamily` import, added `semantics(mergeDescendants = true)` for TalkBack accessibility. iOS: added 5 missing category color tokens to `XGColors.swift` (`categoryBlue`, `categoryPink`, `categoryYellow`, `categoryMint`, `categoryLightYellow`), removed unused `Constants.labelFontSize` dead code, added `.buttonStyle(.plain)` to prevent system button styling, replaced hardcoded hex colors in preview with `XGColors.category*` tokens. 22 Android JUnit tests + 24 iOS Swift Testing tests verified. (#58) (Android + iOS)
+
 #### Design Quality Backfill (DQ-13)
 
 - **XGSectionHeader token audit**: Audited and aligned `XGSectionHeader` on both platforms against `shared/design-tokens/components/atoms/xg-section-header.json`. Android: replaced 6 inline font constants (`fontFamily/fontSize/fontWeight`) with `MaterialTheme.typography.titleMedium` and `MaterialTheme.typography.labelLarge`, fixed subtitle font weight from `Normal` to `Medium`, corrected arrow icon size from 16dp to 12dp, added explicit subtitle spacing via `Arrangement.spacedBy(XGSpacing.XXS)`, removed `PoppinsFontFamily` direct import. iOS: removed unused `Constants.titleFontSize` and `Constants.seeAllFontSize` dead code, enhanced doc comment with full token mapping. 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#57) (Android + iOS)
@@ -25,6 +29,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **XGSearchBar token audit**: Audited and aligned `XGSearchBar` on both platforms against `shared/design-tokens/components/atoms/xg-search-bar.json`. Android: replaced `Card` wrapper with `Row` + `background` + `border` + `clip`, changed background from `SurfaceVariant` to `InputBackground`, corner radius from `Medium` (10dp) to `Pill` (28dp), removed elevation, added `OutlineVariant` border at 1dp, fixed padding from `Base` (16dp) to `MD` (12dp), added explicit 24dp icon size, removed redundant `PoppinsFontFamily` override. iOS: changed corner radius from `full` (999pt) to `pill` (28pt). 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#56) (Android + iOS)
 
 ### Added
+
+#### Design Quality Backfill (DQ-11)
+
+- **XGRatingBar token audit**: Audited `XGRatingBar` against `shared/design-tokens/components/atoms/xg-rating-bar.json`. All token values (star size 12dp/pt, star gap 2dp/pt, review count spacing 4dp/pt, colors, fonts) were already correct on both platforms. Android: fixed layout structure by nesting stars in inner `Row` with `starGap` and using outer `Row` with `reviewCountSpacing`, added `mergeDescendants = true` to semantics for proper TalkBack behavior, removed redundant `Spacer` composables. iOS: formatted rating to one decimal place in accessibility description to prevent floating-point display issues. Also fixed pre-existing XGImage Coil 3.x API issue (`matchParentSize` -> `fillMaxSize`). 11 Android instrumentation tests + 17 iOS unit tests verified. (#55) (Android + iOS)
+
+#### Design Quality Backfill (DQ-10)
+
+- **XGPriceText token + fallback audit**: Audited and upgraded `XGPriceText` on both platforms against `shared/design-tokens/components/atoms/xg-price-text.json`. Android: renamed `XGPriceSize` enum to `XGPriceStyle` for cross-platform consistency, updated all call sites (`XGCard`, `XGDailyDealCard`, `HomeScreen`). Both platforms: added null price fallback (`price: String?`) — when `null`/`nil`, the component renders nothing instead of showing "$0.00"; added `StandardStrikethroughFontSize` (14sp/pt) from token spec. All 4 style variants (default/standard/small/deal), 2 layout modes (inline/stacked), strikethrough styling, and color tokens verified against spec. 14 Android instrumentation tests + 30 iOS Swift Testing tests. (#54) (Android + iOS)
 
 #### Design Quality Backfill (DQ-09)
 

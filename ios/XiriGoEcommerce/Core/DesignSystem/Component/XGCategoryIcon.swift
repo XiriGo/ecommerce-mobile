@@ -3,13 +3,17 @@ import SwiftUI
 // MARK: - XGCategoryIcon
 
 /// A colored rounded-rectangle tile with an icon and label below.
-/// Token source: `components/atoms/xg-category-icon.json`.
 ///
-/// - Tile size: 79x79pt
-/// - Corner radius: 10pt (medium)
-/// - Icon: 40pt, centered, white
-/// - Label: below tile, 12pt medium, max 1 line
-/// - Label spacing: 6pt
+/// Token source: `shared/design-tokens/components/atoms/xg-category-icon.json`.
+///
+/// Token mapping:
+/// - tileSize      = 79pt
+/// - cornerRadius  = `$foundations/spacing.cornerRadius.medium` -> `XGCornerRadius.medium` (10pt)
+/// - iconSize      = 40pt
+/// - iconColor     = `$foundations/colors.light.iconOnDark`     -> `XGColors.iconOnDark`
+/// - labelFont     = `$foundations/typography.typeScale.captionMedium` -> `XGTypography.captionMedium` (12pt Medium)
+/// - labelColor    = `$foundations/colors.light.textPrimary`    -> `XGColors.onSurface`
+/// - labelSpacing  = 6pt
 struct XGCategoryIcon: View {
     // MARK: - Lifecycle
 
@@ -51,6 +55,7 @@ struct XGCategoryIcon: View {
             }
             .frame(width: Constants.tileSize)
         }
+        .buttonStyle(.plain)
         .accessibilityLabel(name)
     }
 
@@ -59,7 +64,6 @@ struct XGCategoryIcon: View {
     private enum Constants {
         static let tileSize: CGFloat = 79
         static let iconSize: CGFloat = 40
-        static let labelFontSize: CGFloat = 12
         static let labelSpacing: CGFloat = 6
     }
 
@@ -76,19 +80,19 @@ struct XGCategoryIcon: View {
         XGCategoryIcon(
             name: "Electronics",
             systemIconName: "desktopcomputer",
-            backgroundColor: Color(hex: "#37B4F2"),
+            backgroundColor: XGColors.categoryBlue,
             action: {},
         )
         XGCategoryIcon(
             name: "Fashion",
             systemIconName: "tshirt",
-            backgroundColor: Color(hex: "#FE75D4"),
+            backgroundColor: XGColors.categoryPink,
             action: {},
         )
         XGCategoryIcon(
             name: "Home",
             systemIconName: "house",
-            backgroundColor: Color(hex: "#FDF29C"),
+            backgroundColor: XGColors.categoryYellow,
             action: {},
         )
     }
