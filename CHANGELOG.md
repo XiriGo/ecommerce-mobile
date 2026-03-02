@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-15)
+
+- **XGWishlistButton motion token upgrade**: Replaced static heart icon toggle with animated transitions on both platforms. Android: added `animateColorAsState` with `XGMotion.Easing.standardTween(XGMotion.Duration.INSTANT)` (100ms) for color transition, added `Animatable` + `XGMotion.Easing.springSpec()` (dampingRatio=0.7, stiffness=Medium) for scale bounce effect (1.2x snap then spring back to 1.0x). iOS: added `.easeInOut(duration: XGMotion.Duration.instant)` for color transition, added `XGMotion.Easing.spring` for scale bounce via `@State bounceScale`. Updated component token JSON to reference `$foundations/motion.duration.instant` and `$foundations/motion.easing.spring`. 15 Android JUnit token tests + 8 Android Compose UI tests + 24 iOS Swift Testing tests verified. (#59) (Android + iOS)
+
 #### Design Quality Backfill (DQ-13)
 
 - **XGSectionHeader token audit**: Audited and aligned `XGSectionHeader` on both platforms against `shared/design-tokens/components/atoms/xg-section-header.json`. Android: replaced 6 inline font constants (`fontFamily/fontSize/fontWeight`) with `MaterialTheme.typography.titleMedium` and `MaterialTheme.typography.labelLarge`, fixed subtitle font weight from `Normal` to `Medium`, corrected arrow icon size from 16dp to 12dp, added explicit subtitle spacing via `Arrangement.spacedBy(XGSpacing.XXS)`, removed `PoppinsFontFamily` direct import. iOS: removed unused `Constants.titleFontSize` and `Constants.seeAllFontSize` dead code, enhanced doc comment with full token mapping. 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#57) (Android + iOS)
