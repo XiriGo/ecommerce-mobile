@@ -29,6 +29,7 @@
 		164D86953C6B6183F6CE6765 /* AuthMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B9B008DF0173EB6E61A991 /* AuthMiddleware.swift */; };
 		1663AAFCA910B0E148B021D8 /* MedusaErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D019AB417595B549CA824EB6 /* MedusaErrorDTO.swift */; };
 		183FB0D1B0CABB68ECC8A2C2 /* XGCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F745022E4A018757BA6ECB /* XGCardTests.swift */; };
+		D4E5F6A7B8C909213A4B5C6D /* XGProductCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C909213A4B5C6E /* XGProductCardTests.swift */; };
 		186B4E908F47938D24780D9A /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E1ADE87356E76CDB0C9955 /* DeepLinkParser.swift */; };
 		1875AE15D802A768985D7784 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 642AFB8139BAF4A1B8AE7E80 /* FirebaseRemoteConfig */; };
 		1B1B154A9F9F85EB9D31405A /* XGCornerRadiusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E948D7C8EAA15065F60F29 /* XGCornerRadiusTests.swift */; };
@@ -192,6 +193,7 @@
 		B0B77B6CF37DED3450CD7B90 /* XGDailyDealCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070BD53EC6B974CA247153C /* XGDailyDealCard.swift */; };
 		9151CDD0BFED60199DCFE963 /* XGFlashSaleBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */; };
 		F1E2D3C4B5A697881234567F /* XGProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4031200000001 /* XGProductCard.swift */; };
+		C2D3E4F5A6B708192A3B4C5D /* ProductCardSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3E4F5A6B708192A3B4C5E /* ProductCardSkeleton.swift */; };
 		E4A1B2C3D5F60728B9C0D1E4 /* ShimmerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */; };
 		0A8378DA1E960CFB5DBC3276 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7654E0AECA894686911DB5F /* Skeleton.swift */; };
 		FE097E56A52CEB877F1F15E5 /* XGSocialLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17FE1B7A736ADAC7ECFC2FC /* XGSocialLoginButton.swift */; };
@@ -304,6 +306,7 @@
 		7578DB1D993A0E7364EA166F /* BiometricTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricTokenStorage.swift; sourceTree = "<group>"; };
 		7587F76E3402E62B79C074D0 /* XGRatingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGRatingBar.swift; sourceTree = "<group>"; };
 		75F745022E4A018757BA6ECB /* XGCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGCardTests.swift; sourceTree = "<group>"; };
+		D4E5F6A7B8C909213A4B5C6E /* XGProductCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGProductCardTests.swift; sourceTree = "<group>"; };
 		78E3A2EFDB32869CF90AD14E /* OnboardingScreenTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingScreenTests.swift; sourceTree = "<group>"; };
 		7A4880586786F5CB2F364639 /* XGImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGImageTests.swift; sourceTree = "<group>"; };
 		7A9393EAA32874CDD93E4540 /* RequestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
@@ -414,6 +417,7 @@
 		D070BD53EC6B974CA247153C /* XGDailyDealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGDailyDealCard.swift; sourceTree = "<group>"; };
 		CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGFlashSaleBanner.swift; sourceTree = "<group>"; };
 		A9B8C7D6E5F4031200000001 /* XGProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGProductCard.swift; sourceTree = "<group>"; };
+		C2D3E4F5A6B708192A3B4C5E /* ProductCardSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardSkeleton.swift; sourceTree = "<group>"; };
 		E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifier.swift; sourceTree = "<group>"; };
 		D7654E0AECA894686911DB5F /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		D17FE1B7A736ADAC7ECFC2FC /* XGSocialLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGSocialLoginButton.swift; sourceTree = "<group>"; };
@@ -506,6 +510,7 @@
 				D17F006FDA824C9D914C3D52 /* XGBadgeCountTests.swift */,
 				2C53B8F847465284B8E10D02 /* XGButtonTests.swift */,
 				75F745022E4A018757BA6ECB /* XGCardTests.swift */,
+				D4E5F6A7B8C909213A4B5C6E /* XGProductCardTests.swift */,
 				7C217147B91F6CAA7B8972F3 /* XGChipTests.swift */,
 				159628B709FF5E7444561704 /* XGEmptyViewTests.swift */,
 				D66E2A1E727488DB7D86F888 /* XGErrorViewTests.swift */,
@@ -1122,6 +1127,7 @@
 				D070BD53EC6B974CA247153C /* XGDailyDealCard.swift */,
 				CC092B564BE34326E7B96B34 /* XGFlashSaleBanner.swift */,
 				A9B8C7D6E5F4031200000001 /* XGProductCard.swift */,
+				C2D3E4F5A6B708192A3B4C5E /* ProductCardSkeleton.swift */,
 				E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */,
 				D7654E0AECA894686911DB5F /* Skeleton.swift */,
 				D17FE1B7A736ADAC7ECFC2FC /* XGSocialLoginButton.swift */,
@@ -1449,6 +1455,7 @@
 				D8CFAA1AB00C488F828A8701 /* XGBadgeCountTests.swift in Sources */,
 				CE06564FEF9643A37862ADB7 /* XGButtonTests.swift in Sources */,
 				183FB0D1B0CABB68ECC8A2C2 /* XGCardTests.swift in Sources */,
+				D4E5F6A7B8C909213A4B5C6D /* XGProductCardTests.swift in Sources */,
 				B03755727DC218A604E6AA41 /* XGChipTests.swift in Sources */,
 				5F7CF11B7C7BB69E99EC44AE /* XGColorsTests.swift in Sources */,
 				1B1B154A9F9F85EB9D31405A /* XGCornerRadiusTests.swift in Sources */,
@@ -1595,6 +1602,7 @@
 				B0B77B6CF37DED3450CD7B90 /* XGDailyDealCard.swift in Sources */,
 				9151CDD0BFED60199DCFE963 /* XGFlashSaleBanner.swift in Sources */,
 				F1E2D3C4B5A697881234567F /* XGProductCard.swift in Sources */,
+				C2D3E4F5A6B708192A3B4C5D /* ProductCardSkeleton.swift in Sources */,
 				E4A1B2C3D5F60728B9C0D1E4 /* ShimmerModifier.swift in Sources */,
 				0A8378DA1E960CFB5DBC3276 /* Skeleton.swift in Sources */,
 				FE097E56A52CEB877F1F15E5 /* XGSocialLoginButton.swift in Sources */,
