@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+#### Design Quality Backfill (DQ-26)
+
+- **XGLoadingView skeleton-aware rewrite**: Replaced centered spinner pattern (`CircularProgressIndicator` on Android, `ProgressView` on iOS) with skeleton-aware loading on both platforms. `XGLoadingView` and `XGLoadingIndicator` now accept an optional skeleton content slot (`@Composable` / `@ViewBuilder`) for custom skeleton placeholders. When no slot is provided, a default shimmer layout (box + lines for full-screen, line for inline) is shown. Added crossfade overloads (`isLoading: Boolean` + `content` slot) using `XGMotion.Crossfade.CONTENT_SWITCH` (200ms). Backward compatible: `XGLoadingView()` call sites continue to work without changes. All shimmer uses existing `shimmerEffect()` modifier and `XGColors.Shimmer` token. 14 Android Compose UI tests + 20 iOS Swift Testing tests verified. (#70) (Android + iOS)
+
 ### Added
 
 #### Design Quality Backfill (DQ-19)
