@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-33)
+
+- **XGBrandGradient/XGBrandPattern/XGLogoMark token audit**: Audited brand components on both platforms against `xg-brand-gradient.json`, `xg-brand-pattern.json`, and `xg-logo-mark.json` token specs. Replaced all hardcoded hex color literals (`Color(0xFF...)` on Android, `Color(hex: "#...")` on iOS) with centralized `XGColors` token references. Added 5 new gradient-specific tokens to `XGColors` (`BrandGradientMid`, `BrandOverlayMid1-4`) and 1 opacity constant (`BRAND_PATTERN_OPACITY`/`brandPatternOpacity`). Reused existing `BrandPrimaryLight`, `BrandPrimary`, `BrandPrimaryDark` where values matched. Extracted logo default size to named constant with token-source documentation. Preview backgrounds now use `XGColors.brandPrimary` on iOS. 17 Android JVM tests + 23 iOS Swift Testing tests verified. No visual changes. (#77) (Android + iOS)
+
 #### Design Quality Backfill (DQ-38)
 
 - **XGPriceLayout iOS port**: Extracted `XGPriceLayout` enum (`.inline`, `.stacked`) from `XGPriceText.swift` into its own file `XGPriceLayout.swift` for platform parity with Android. No API changes; the enum already existed inline and `XGPriceText` already supported the `layout` parameter. Added `XGPriceLayoutTests` suite (6 tests) to verify both cases and integration with `XGPriceText`. (#82) (iOS)

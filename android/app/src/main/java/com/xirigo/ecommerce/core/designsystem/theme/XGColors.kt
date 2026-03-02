@@ -120,6 +120,16 @@ object XGColors {
     val BrandSecondary = Color(0xFF94D63A) // brand.secondary
     val BrandOnSecondary = Color(0xFF6000FE) // brand.onSecondary
 
+    // Brand Gradient Tokens (from gradients.json > brandHeader)
+    val BrandGradientMid = Color(0xFF6900FE) // brandHeader.layers[0].stops[1,2]
+    val BrandOverlayMid1 = Color(0xFF5D00FB) // brandHeader.layers[1].stops[1]
+    val BrandOverlayMid2 = Color(0xFF5800F4) // brandHeader.layers[1].stops[2]
+    val BrandOverlayMid3 = Color(0xFF4F00E9) // brandHeader.layers[1].stops[3]
+    val BrandOverlayMid4 = Color(0xFF4200DA) // brandHeader.layers[1].stops[4]
+
+    // Brand Pattern Token (from gradients.json > splashPatternOverlay)
+    const val BRAND_PATTERN_OPACITY = 0.06f // splashPatternOverlay.patternOpacity
+
     // Text Colors (from light theme)
     val TextDark = Color(0xFF111827) // light.textDark
     val TextOnDark = Color(0xFFFFFFFF) // text on dark backgrounds

@@ -3,13 +3,11 @@ import UIKit
 
 // MARK: - XGBrandPattern
 
-/// Tiled X-motif pattern overlay at 6% opacity.
+/// Tiled X-motif pattern overlay at token-defined opacity (splashPatternOverlay).
 /// Uses the exported PNG pattern asset (`xg_brand_pattern`) from the design files,
 /// drawn as a repeating tile across the entire surface.
 /// Used on Splash and Login screens over `XGBrandGradient`.
 struct XGBrandPattern: View {
-    // MARK: - Internal
-
     // MARK: - Body
 
     var body: some View {
@@ -20,24 +18,18 @@ struct XGBrandPattern: View {
                     .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
-        .opacity(patternOpacity)
+        .opacity(XGColors.brandPatternOpacity)
         .allowsHitTesting(false)
         .ignoresSafeArea()
         .accessibilityHidden(true)
     }
-
-    // MARK: - Private
-
-    // MARK: - Constants
-
-    private let patternOpacity: Double = 0.06
 }
 
 // MARK: - Previews
 
 #Preview("XGBrandPattern") {
     ZStack {
-        Color(hex: "#6000FE")
+        XGColors.brandPrimary
             .ignoresSafeArea()
         XGBrandPattern()
     }

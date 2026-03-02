@@ -148,6 +148,18 @@ enum XGColors {
 
     static let tertiary = Color(hex: "#3C00D2")
 
+    // MARK: - Brand Gradient Tokens (from gradients.json > brandHeader)
+
+    static let brandGradientMid = Color(hex: "#6900FE") // brandHeader.layers[0].stops[1,2]
+    static let brandOverlayMid1 = Color(hex: "#5D00FB") // brandHeader.layers[1].stops[1]
+    static let brandOverlayMid2 = Color(hex: "#5800F4") // brandHeader.layers[1].stops[2]
+    static let brandOverlayMid3 = Color(hex: "#4F00E9") // brandHeader.layers[1].stops[3]
+    static let brandOverlayMid4 = Color(hex: "#4200DA") // brandHeader.layers[1].stops[4]
+
+    // MARK: - Brand Pattern Token (from gradients.json > splashPatternOverlay)
+
+    static let brandPatternOpacity: Double = 0.06 // splashPatternOverlay.patternOpacity
+
     // MARK: - Social Auth Colors
 
     static let socialGoogleBlue = Color(hex: "#4285F4")
