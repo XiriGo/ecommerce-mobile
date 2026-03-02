@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-24)
+
+- **XGDailyDealCard token audit + motion tokens**: Audited `XGDailyDealCard` on both platforms against `xg-daily-deal-card.json` token spec. Android: fixed product image sizing from weight-based (`weight(0.6f).aspectRatio(1f)`) to token-driven fixed `100.dp` (`ProductImageSize`); changed countdown font from `PoppinsFontFamily` to `FontFamily.Monospace` per token spec ("system monospaced 12pt"); added `TextOverflow.Ellipsis` to title; extracted `TITLE_MAX_LINES` constant; added `semantics { contentDescription }` for TalkBack; added expired-state preview. iOS: changed `rightImage` to always render (XGImage handles nil URL with branded fallback); added `accessibilityLabel` to XGImage call; documented shimmer inheritance from DQ-07. Both: image shimmer + crossfade inherited from `XGImage` (DQ-07) with no manual shimmer code needed. Countdown timer patterns (LaunchedEffect+delay on Android, TimelineView on iOS) validated per component-quality.md. 25 Android JVM tests + 31 iOS Swift Testing tests added. (#68) (Android + iOS)
+
 #### Design Quality Backfill (DQ-22)
 
 - **XGProductCard skeleton + uniform height**: Added `ProductCardSkeleton` composable/view using skeleton primitives (SkeletonBox, SkeletonLine) that mirrors the card layout for loading states. Added `reserveSpace` parameter to `XGProductCard` that reserves vertical space for optional content rows (rating, delivery label, add-to-cart button) using invisible spacers, ensuring uniform card height in grid layouts. All dimensions from `xg-product-card.json` design tokens. iOS skeleton extracted to separate `ProductCardSkeleton.swift` file for SwiftLint file-length compliance. 21 Android JVM tests + 14 iOS Swift Testing tests verified. (#66) (Android + iOS)
