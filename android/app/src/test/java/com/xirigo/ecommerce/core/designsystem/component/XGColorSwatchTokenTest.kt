@@ -3,6 +3,7 @@ package com.xirigo.ecommerce.core.designsystem.component
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 
@@ -138,14 +139,14 @@ class XGColorSwatchTokenTest {
     fun `dark colors should have luminance below threshold`() {
         // Black #1D1D1B — luminance ~ 0.012
         val black = Color(0xFF1D1D1B)
-        assertThat(black.luminance()).isLessThan(0.6f)
+        assertThat(black.luminance() < 0.6f).isTrue()
     }
 
     @Test
     fun `light colors should have luminance above threshold`() {
         // White #FFFFFF — luminance = 1.0
         val white = Color(0xFFFFFFFF)
-        assertThat(white.luminance()).isGreaterThan(0.6f)
+        assertThat(white.luminance() > 0.6f).isTrue()
     }
 
     @Test

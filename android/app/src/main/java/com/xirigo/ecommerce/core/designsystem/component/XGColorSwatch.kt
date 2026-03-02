@@ -57,6 +57,13 @@ private val CheckmarkSize = 16.dp
 /** Luminance threshold for choosing dark vs light checkmark. */
 private const val LUMINANCE_THRESHOLD = 0.6f
 
+/** Total outer diameter including the ring and gap on both sides. */
+private val TotalSize = SwatchSize + (SelectedRingGap + SelectedRingWidth) * 2
+
+/** Returns the appropriate checkmark tint for the given swatch [color]. */
+private fun checkmarkTint(color: Color): Color =
+    if (color.luminance() > LUMINANCE_THRESHOLD) XGColors.OnSurface else XGColors.OnPrimary
+
 /**
  * Circular color swatch with optional selection state.
  *
@@ -79,11 +86,7 @@ fun XGColorSwatch(
     colorName: String,
     modifier: Modifier = Modifier,
 ) {
-    val description = if (isSelected) {
-        stringResource(R.string.common_color_swatch_selected_a11y, colorName)
-    } else {
-        stringResource(R.string.common_color_swatch_a11y, colorName)
-    }
+    val description = swatchDescription(isSelected, colorName)
 
     val ringAlpha by animateFloatAsState(
         targetValue = if (isSelected) 1f else 0f,
@@ -97,11 +100,9 @@ fun XGColorSwatch(
         label = "ringColor",
     )
 
-    val totalSize = SwatchSize + (SelectedRingGap + SelectedRingWidth) * 2
-
     Box(
         modifier = modifier
-            .size(totalSize)
+            .size(TotalSize)
             .semantics(mergeDescendants = true) {
                 contentDescription = description
                 role = Role.RadioButton
@@ -111,45 +112,55 @@ fun XGColorSwatch(
             .clip(CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        // Selection ring (outer circle)
-        Box(
-            modifier = Modifier
-                .size(totalSize)
-                .border(
-                    width = SelectedRingWidth,
-                    color = animatedRingColor.copy(alpha = ringAlpha),
-                    shape = CircleShape,
-                ),
-        )
+        SelectionRing(ringColor = animatedRingColor, ringAlpha = ringAlpha)
+        SwatchCircle(color = color, isSelected = isSelected)
+    }
+}
 
-        // Swatch circle with border
-        Box(
-            modifier = Modifier
-                .size(SwatchSize)
-                .clip(CircleShape)
-                .background(color)
-                .border(
-                    width = WhiteBorderWidth,
-                    color = XGColors.Outline,
-                    shape = CircleShape,
-                ),
-            contentAlignment = Alignment.Center,
-        ) {
-            // Checkmark overlay
-            if (isSelected) {
-                val checkmarkColor = if (color.luminance() > LUMINANCE_THRESHOLD) {
-                    XGColors.OnSurface
-                } else {
-                    XGColors.OnPrimary
-                }
+/** Accessibility description for the swatch. */
+@Composable
+private fun swatchDescription(isSelected: Boolean, colorName: String): String = if (isSelected) {
+    stringResource(R.string.common_color_swatch_selected_a11y, colorName)
+} else {
+    stringResource(R.string.common_color_swatch_a11y, colorName)
+}
 
-                Icon(
-                    imageVector = Icons.Filled.Check,
-                    contentDescription = null,
-                    modifier = Modifier.size(CheckmarkSize),
-                    tint = checkmarkColor,
-                )
-            }
+/** Outer selection ring that animates in/out. */
+@Composable
+private fun SelectionRing(ringColor: Color, ringAlpha: Float) {
+    Box(
+        modifier = Modifier
+            .size(TotalSize)
+            .border(
+                width = SelectedRingWidth,
+                color = ringColor.copy(alpha = ringAlpha),
+                shape = CircleShape,
+            ),
+    )
+}
+
+/** Inner filled circle with border and optional checkmark overlay. */
+@Composable
+private fun SwatchCircle(color: Color, isSelected: Boolean) {
+    Box(
+        modifier = Modifier
+            .size(SwatchSize)
+            .clip(CircleShape)
+            .background(color)
+            .border(
+                width = WhiteBorderWidth,
+                color = XGColors.Outline,
+                shape = CircleShape,
+            ),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (isSelected) {
+            Icon(
+                imageVector = Icons.Filled.Check,
+                contentDescription = null,
+                modifier = Modifier.size(CheckmarkSize),
+                tint = checkmarkTint(color),
+            )
         }
     }
 }
