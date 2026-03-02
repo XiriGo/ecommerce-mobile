@@ -136,6 +136,14 @@ enum XGColors {
     // MARK: - Tertiary (fallback gradients)
 
     static let tertiary = Color(hex: "#3C00D2")
+
+    // MARK: - Social Auth Colors
+
+    static let socialGoogleBlue = Color(hex: "#4285F4")
+    static let socialGoogleGreen = Color(hex: "#34A853")
+    static let socialGoogleYellow = Color(hex: "#FBBC05")
+    static let socialGoogleRed = Color(hex: "#EA4335")
+    static let socialAppleBlack = Color(hex: "#000000")
 }
 
 // MARK: - Color Extension for Hex Support
