@@ -120,7 +120,7 @@ struct XGPriceText: View {
 
     var body: some View {
         // Null price fallback: hide component entirely (DQ-10)
-        if let price {
+        if price != nil {
             Group {
                 switch layout {
                     case .inline:
