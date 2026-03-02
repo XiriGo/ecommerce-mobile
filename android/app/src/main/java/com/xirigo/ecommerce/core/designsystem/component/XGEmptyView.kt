@@ -59,7 +59,7 @@ fun XGEmptyView(
                 XGButton(
                     text = actionLabel,
                     onClick = onAction,
-                    style = XGButtonStyle.Primary,
+                    style = XGButtonStyle.Outlined,
                     fullWidth = false,
                 )
             }
