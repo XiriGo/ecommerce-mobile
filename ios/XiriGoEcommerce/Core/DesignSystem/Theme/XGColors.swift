@@ -31,6 +31,7 @@ enum XGColors {
     static let onSurface = Color(hex: "#333333")
     static let surfaceSecondary = Color(hex: "#F9FAFB")
     static let surfaceVariant = Color(hex: "#F9FAFB")
+    static let surfaceTertiary = Color(hex: "#F1F5F9")
     static let onSurfaceVariant = Color(hex: "#8E8E93")
     static let surfaceElevated = Color(hex: "#FFFFFF")
 
@@ -127,6 +128,14 @@ enum XGColors {
     static let bottomNavBackground = Color.white
     static let bottomNavIconActive = Color(hex: "#6000FE")
     static let bottomNavIconInactive = Color(hex: "#8E8E93")
+
+    // MARK: - Category Colors
+
+    static let categoryBlue = Color(hex: "#37B4F2")
+    static let categoryPink = Color(hex: "#FE75D4")
+    static let categoryYellow = Color(hex: "#FDF29C")
+    static let categoryMint = Color(hex: "#90D3B1")
+    static let categoryLightYellow = Color(hex: "#FEF170")
 
     // MARK: - Scrim & Shadow
 
