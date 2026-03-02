@@ -12,12 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Checkroom
@@ -106,48 +105,57 @@ private fun HomeScreenContent(
                 onRefresh = { onEvent(HomeEvent.Refresh) },
                 modifier = modifier.fillMaxSize(),
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(XGSpacing.SectionSpacing),
+                    contentPadding = PaddingValues(
+                        top = XGSpacing.Base,
+                        bottom = XGSpacing.SectionSpacing,
+                    ),
                 ) {
-                    Spacer(modifier = Modifier.height(XGSpacing.Base))
-                    XGSearchBar(
-                        hint = stringResource(R.string.home_search_hint),
-                        onClick = { onEvent(HomeEvent.SearchBarTapped) },
-                        modifier = Modifier.padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
-                    )
-                    Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-                    HeroBannerSection(banners = uiState.data.banners, onEvent = onEvent)
-                    Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-                    CategoriesSection(
-                        categories = uiState.data.categories,
-                        onEvent = onEvent,
-                    )
-                    Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-                    PopularProductsSection(
-                        products = uiState.data.popularProducts,
-                        wishedProductIds = uiState.data.wishedProductIds,
-                        onEvent = onEvent,
-                    )
-                    if (uiState.data.dailyDeal != null) {
-                        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-                        DailyDealSection(
-                            deal = uiState.data.dailyDeal,
+                    item(key = "search_bar") {
+                        XGSearchBar(
+                            hint = stringResource(R.string.home_search_hint),
+                            onClick = { onEvent(HomeEvent.SearchBarTapped) },
+                            modifier = Modifier.padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
+                        )
+                    }
+                    item(key = "hero_banners") {
+                        HeroBannerSection(banners = uiState.data.banners, onEvent = onEvent)
+                    }
+                    item(key = "categories") {
+                        CategoriesSection(
+                            categories = uiState.data.categories,
                             onEvent = onEvent,
                         )
                     }
-                    Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-                    NewArrivalsSection(
-                        products = uiState.data.newArrivals,
-                        wishedProductIds = uiState.data.wishedProductIds,
-                        onEvent = onEvent,
-                    )
-                    if (uiState.data.flashSale != null) {
-                        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-                        FlashSaleSection(flashSale = uiState.data.flashSale)
+                    item(key = "popular_products") {
+                        PopularProductsSection(
+                            products = uiState.data.popularProducts,
+                            wishedProductIds = uiState.data.wishedProductIds,
+                            onEvent = onEvent,
+                        )
                     }
-                    Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
+                    if (uiState.data.dailyDeal != null) {
+                        item(key = "daily_deal") {
+                            DailyDealSection(
+                                deal = uiState.data.dailyDeal,
+                                onEvent = onEvent,
+                            )
+                        }
+                    }
+                    item(key = "new_arrivals") {
+                        NewArrivalsSection(
+                            products = uiState.data.newArrivals,
+                            wishedProductIds = uiState.data.wishedProductIds,
+                            onEvent = onEvent,
+                        )
+                    }
+                    if (uiState.data.flashSale != null) {
+                        item(key = "flash_sale") {
+                            FlashSaleSection(flashSale = uiState.data.flashSale)
+                        }
+                    }
                 }
             }
         }
