@@ -1,7 +1,6 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
 import coil3.compose.SubcomposeAsyncImage
-import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import androidx.compose.foundation.background
@@ -77,9 +76,6 @@ fun XGImage(
                         modifier = Modifier.size(PlaceholderIconSize),
                     )
                 }
-            },
-            content = {
-                SubcomposeAsyncImageContent(contentScale = contentScale)
             },
         )
     } else {
