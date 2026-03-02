@@ -13,7 +13,7 @@ import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 /** Default logo size from xg-logo-mark.json > tokens.defaultSize. */
-private val DEFAULT_LOGO_SIZE = 120.dp
+internal val DEFAULT_LOGO_SIZE = 120.dp
 
 /** XiriGo logo mark image at a configurable size. */
 @Composable
