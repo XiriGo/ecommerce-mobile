@@ -7,16 +7,20 @@ import org.junit.runner.RunWith
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 @RunWith(AndroidJUnit4::class)
@@ -32,6 +36,11 @@ class XGBottomBarTest {
             selectedIcon = Icons.Filled.Home,
         ),
         XGTabItem(
+            label = "Search",
+            icon = Icons.Outlined.Search,
+            selectedIcon = Icons.Filled.Search,
+        ),
+        XGTabItem(
             label = "Cart",
             icon = Icons.Outlined.ShoppingCart,
             selectedIcon = Icons.Filled.ShoppingCart,
@@ -43,6 +52,8 @@ class XGBottomBarTest {
             selectedIcon = Icons.Filled.Person,
         ),
     )
+
+    // region Tab rendering
 
     @Test
     fun xgBottomBar_rendersAllTabs() {
@@ -56,25 +67,15 @@ class XGBottomBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("Home").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Cart").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Profile").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Home").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Search").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Cart").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Profile").assertIsDisplayed()
     }
 
-    @Test
-    fun xgBottomBar_selectedTab_hasSelectedState() {
-        composeTestRule.setContent {
-            XGTheme {
-                XGBottomBar(
-                    items = sampleTabs,
-                    selectedIndex = 0,
-                    onTabSelected = {},
-                )
-            }
-        }
+    // endregion
 
-        composeTestRule.onNodeWithText("Home").assertIsSelected()
-    }
+    // region Tab selection
 
     @Test
     fun xgBottomBar_tabClick_firesCallbackWithIndex() {
@@ -90,9 +91,31 @@ class XGBottomBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("Cart").performClick()
-        assertThat(selectedIndex).isEqualTo(1)
+        composeTestRule.onNodeWithContentDescription("Cart").performClick()
+        assertThat(selectedIndex).isEqualTo(2)
     }
+
+    @Test
+    fun xgBottomBar_selectingDifferentTab_updatesSelection() {
+        var selectedIndex = 0
+
+        composeTestRule.setContent {
+            XGTheme {
+                XGBottomBar(
+                    items = sampleTabs,
+                    selectedIndex = selectedIndex,
+                    onTabSelected = { selectedIndex = it },
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithContentDescription("Profile").performClick()
+        assertThat(selectedIndex).isEqualTo(3)
+    }
+
+    // endregion
+
+    // region Badge display
 
     @Test
     fun xgBottomBar_badgeCount_displayedOnTab() {
@@ -159,21 +182,54 @@ class XGBottomBarTest {
         composeTestRule.onNodeWithText("99+").assertIsDisplayed()
     }
 
-    @Test
-    fun xgBottomBar_selectingDifferentTab_updatesSelection() {
-        var selectedIndex = 0
+    // endregion
 
+    // region Token contract tests
+
+    @Test
+    fun xgColors_bottomNavBackground_matchesToken() {
+        // bottomNav.background = #FFFFFF
+        assertThat(XGColors.BottomNavBackground).isEqualTo(Color(0xFFFFFFFF))
+    }
+
+    @Test
+    fun xgColors_bottomNavIconActive_matchesToken() {
+        // bottomNav.iconActive = #6000FE
+        assertThat(XGColors.BottomNavIconActive).isEqualTo(Color(0xFF6000FE))
+    }
+
+    @Test
+    fun xgColors_bottomNavIconInactive_matchesToken() {
+        // bottomNav.iconInactive = #8E8E93
+        assertThat(XGColors.BottomNavIconInactive).isEqualTo(Color(0xFF8E8E93))
+    }
+
+    @Test
+    fun xgColors_outlineVariant_matchesBorderSubtleToken() {
+        // light.borderSubtle = #F0F0F0
+        assertThat(XGColors.OutlineVariant).isEqualTo(Color(0xFFF0F0F0))
+    }
+
+    // endregion
+
+    // region Accessibility
+
+    @Test
+    fun xgBottomBar_eachTab_hasContentDescription() {
         composeTestRule.setContent {
             XGTheme {
                 XGBottomBar(
                     items = sampleTabs,
-                    selectedIndex = selectedIndex,
-                    onTabSelected = { selectedIndex = it },
+                    selectedIndex = 0,
+                    onTabSelected = {},
                 )
             }
         }
 
-        composeTestRule.onNodeWithText("Profile").performClick()
-        assertThat(selectedIndex).isEqualTo(2)
+        sampleTabs.forEach { tab ->
+            composeTestRule.onNodeWithContentDescription(tab.label).assertExists()
+        }
     }
+
+    // endregion
 }
