@@ -172,12 +172,14 @@ fun XGFilterPillRow(
 
 // region Previews
 
+private const val PREVIEW_LABEL = "Electronics"
+
 @Preview(showBackground = true)
 @Composable
 private fun XGFilterPillUnselectedPreview() {
     XGTheme {
         XGFilterPill(
-            label = "Electronics",
+            label = PREVIEW_LABEL,
             selected = false,
             onClick = {},
         )
@@ -189,7 +191,7 @@ private fun XGFilterPillUnselectedPreview() {
 private fun XGFilterPillSelectedPreview() {
     XGTheme {
         XGFilterPill(
-            label = "Electronics",
+            label = PREVIEW_LABEL,
             selected = true,
             onClick = {},
         )
@@ -201,7 +203,7 @@ private fun XGFilterPillSelectedPreview() {
 private fun XGFilterPillSelectedWithDismissPreview() {
     XGTheme {
         XGFilterPill(
-            label = "Electronics",
+            label = PREVIEW_LABEL,
             selected = true,
             onClick = {},
             onDismiss = {},
@@ -216,7 +218,7 @@ private fun XGFilterPillRowPreview() {
         XGFilterPillRow(
             items = listOf(
                 XGFilterPillItem(label = "All", isSelected = true),
-                XGFilterPillItem(label = "Electronics", isSelected = false),
+                XGFilterPillItem(label = PREVIEW_LABEL, isSelected = false),
                 XGFilterPillItem(label = "Fashion", isSelected = true),
                 XGFilterPillItem(label = "Home", isSelected = false),
                 XGFilterPillItem(label = "Sports", isSelected = false),
