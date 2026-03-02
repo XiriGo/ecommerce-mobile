@@ -152,4 +152,28 @@ struct XGTextFieldTests {
         _ = field
         #expect(true)
     }
+
+    // MARK: - All-Variants Combination
+
+    @Test("TextField initialises with all parameters set")
+    func init_allParameters_initialises() {
+        var text = "test"
+        let binding = Binding(get: { text }, set: { text = $0 })
+        let field = XGTextField(
+            value: binding,
+            label: "Full",
+            placeholder: "Placeholder",
+            errorMessage: "Error",
+            helperText: "Helper",
+            leadingIcon: "magnifyingglass",
+            trailingIcon: "xmark.circle",
+            onTrailingIconTap: {},
+            isEnabled: true,
+            isReadOnly: false,
+            isPassword: false,
+            maxLength: 100,
+        )
+        _ = field
+        #expect(true)
+    }
 }
