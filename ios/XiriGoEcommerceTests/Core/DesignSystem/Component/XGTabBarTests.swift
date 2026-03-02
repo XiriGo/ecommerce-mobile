@@ -119,3 +119,44 @@ struct XGTabBarTests {
         #expect(items[1].badgeCount == 5)
     }
 }
+
+// MARK: - XGTabBarTokenContractTests
+
+@Suite("XGTabBar Token Contract Tests")
+@MainActor
+struct XGTabBarTokenContractTests {
+    @Test("bottomNavBackground is white (#FFFFFF)")
+    func bottomNavBackground_isWhite() {
+        #expect(XGColors.bottomNavBackground == Color.white)
+    }
+
+    @Test("bottomNavIconActive matches brand primary (#6000FE)")
+    func bottomNavIconActive_matchesBrandPrimary() {
+        #expect(XGColors.bottomNavIconActive == Color(hex: "#6000FE"))
+    }
+
+    @Test("bottomNavIconInactive matches textSecondary (#8E8E93)")
+    func bottomNavIconInactive_matchesTextSecondary() {
+        #expect(XGColors.bottomNavIconInactive == Color(hex: "#8E8E93"))
+    }
+
+    @Test("Icon size medium is 24pt")
+    func iconSizeMedium_is24() {
+        #expect(XGSpacing.IconSize.medium == 24)
+    }
+
+    @Test("Min touch target is 48pt")
+    func minTouchTarget_is48() {
+        #expect(XGSpacing.minTouchTarget == 48)
+    }
+
+    @Test("Motion duration fast is 0.2 seconds")
+    func motionDurationFast_is02() {
+        #expect(XGMotion.Duration.fast == 0.2)
+    }
+
+    @Test("XGTypography.micro is 10pt Poppins Regular")
+    func typographyMicro_is10ptRegular() {
+        #expect(XGTypography.micro == Font.custom("Poppins-Regular", size: 10))
+    }
+}
