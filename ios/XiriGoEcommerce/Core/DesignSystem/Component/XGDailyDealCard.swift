@@ -3,13 +3,18 @@ import SwiftUI
 // MARK: - XGDailyDealCard
 
 /// A gradient card displaying the daily deal with countdown timer and product info.
-/// Token source: `components/molecules/xg-daily-deal-card.json`.
 ///
-/// - Height: 163pt
-/// - Background: linear gradient left-to-right from #111827 to #6000FE
-/// - Badge: "DAILY DEAL", brand secondary bg, brand primary text
-/// - Price: Source Sans 3 Black, brand secondary color (deal style)
-/// - Countdown: HH:MM:SS format, ticks every second
+/// Image loading delegates to ``XGImage`` which provides animated shimmer while loading
+/// and a branded fallback on error (inherited from DQ-07). Countdown ticks every second
+/// via `TimelineView` and displays `HH:MM:SS` or the localized expired text.
+///
+/// Token source: `components/molecules/xg-daily-deal-card.json`
+///
+/// - Height: 163pt (token: `height`)
+/// - Background: linear gradient left-to-right `textDark` to `brandPrimary`
+/// - Badge: "DAILY DEAL", brand secondary style
+/// - Price: deal style via ``XGPriceText``
+/// - Countdown: HH:MM:SS format, system monospaced 12pt, ticks every second
 struct XGDailyDealCard: View {
     // MARK: - Lifecycle
 
@@ -38,9 +43,7 @@ struct XGDailyDealCard: View {
             HStack(spacing: XGSpacing.base) {
                 leftContent
                 Spacer()
-                if imageUrl != nil {
-                    rightImage
-                }
+                rightImage
             }
             .padding(Constants.cardPadding)
             .frame(height: Constants.cardHeight)
@@ -150,8 +153,9 @@ struct XGDailyDealCard: View {
         }
     }
 
+    /// Product image — shimmer + crossfade inherited from XGImage (DQ-07).
     private var rightImage: some View {
-        XGImage(url: imageUrl)
+        XGImage(url: imageUrl, accessibilityLabel: title)
             .aspectRatio(contentMode: .fill)
             .frame(
                 width: Constants.imageSize,
