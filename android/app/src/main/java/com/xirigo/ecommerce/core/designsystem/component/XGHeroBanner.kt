@@ -2,6 +2,7 @@ package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -127,6 +128,67 @@ fun XGHeroBanner(
                 lineHeight = SubtitleLineHeight,
             )
         }
+    }
+}
+
+// Skeleton placeholder dimensions — approximate the text content area
+private val SkeletonTagWidth = 80.dp
+private val SkeletonHeadlineWidth = 160.dp
+private val SkeletonSubtitleWidth = 120.dp
+
+/**
+ * Shimmer skeleton placeholder that mirrors the [XGHeroBanner] layout.
+ *
+ * Displays a full-size shimmer box with overlaid skeleton lines matching
+ * the tag badge, headline, and subtitle positions. Use this as the
+ * placeholder in a [XGSkeleton] wrapper or loading state.
+ *
+ * Token source: `components/molecules/xg-hero-banner.json` (skeleton section).
+ */
+@Composable
+fun HeroBannerSkeleton(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(BannerHeight)
+            .clip(RoundedCornerShape(XGCornerRadius.Medium)),
+    ) {
+        // Full background shimmer — width ignored because fillMaxSize overrides
+        SkeletonBox(
+            width = 0.dp,
+            height = BannerHeight,
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        // Overlaid text skeleton lines matching content layout
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(XGSpacing.Base),
+            verticalArrangement = Arrangement.spacedBy(XGSpacing.SM),
+        ) {
+            SkeletonLine(width = SkeletonHeadlineWidth, height = HeadlineFontSize.value.dp)
+            SkeletonLine(width = SkeletonSubtitleWidth, height = SubtitleFontSize.value.dp)
+        }
+
+        // Tag badge skeleton at top-start
+        SkeletonLine(
+            width = SkeletonTagWidth,
+            height = TagFontSize.value.dp,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(XGSpacing.MD),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HeroBannerSkeletonPreview() {
+    XGTheme {
+        HeroBannerSkeleton(
+            modifier = Modifier.padding(XGSpacing.Base),
+        )
     }
 }
 

@@ -53,6 +53,7 @@ import com.xirigo.ecommerce.core.designsystem.component.XGPriceSize
 import com.xirigo.ecommerce.core.designsystem.component.XGProductCard
 import com.xirigo.ecommerce.core.designsystem.component.XGSearchBar
 import com.xirigo.ecommerce.core.designsystem.component.XGSectionHeader
+import com.xirigo.ecommerce.core.designsystem.theme.XGMotion
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 import com.xirigo.ecommerce.feature.home.domain.model.DailyDeal
@@ -65,7 +66,7 @@ import com.xirigo.ecommerce.feature.home.presentation.state.HomeScreenData
 import com.xirigo.ecommerce.feature.home.presentation.state.HomeUiState
 import com.xirigo.ecommerce.feature.home.presentation.viewmodel.HomeViewModel
 
-private const val AUTO_SCROLL_DELAY_MS = 5000L
+// Auto-scroll delay from motion tokens: foundations/motion.json → scroll.autoScrollIntervalMs
 private val FeaturedCardWidth = 160.dp
 private const val STANDARD_STRIKETHROUGH_FONT_SIZE = 14f
 
@@ -163,7 +164,7 @@ private fun HeroBannerSection(banners: List<HomeBanner>, onEvent: (HomeEvent) ->
         snapshotFlow { pagerState.isScrollInProgress }.collectLatest { isScrolling ->
             if (!isScrolling) {
                 while (true) {
-                    delay(AUTO_SCROLL_DELAY_MS)
+                    delay(XGMotion.Scroll.AUTO_SCROLL_INTERVAL_MS)
                     val nextPage = (pagerState.currentPage + 1) % banners.size
                     pagerState.animateScrollToPage(nextPage)
                 }
