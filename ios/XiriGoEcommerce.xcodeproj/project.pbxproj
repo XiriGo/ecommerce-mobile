@@ -192,6 +192,8 @@
 		F1E2D3C4B5A697881234567F /* XGProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4031200000001 /* XGProductCard.swift */; };
 		E4A1B2C3D5F60728B9C0D1E4 /* ShimmerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */; };
 		0A8378DA1E960CFB5DBC3276 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7654E0AECA894686911DB5F /* Skeleton.swift */; };
+		FE097E56A52CEB877F1F15E5 /* XGSocialLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17FE1B7A736ADAC7ECFC2FC /* XGSocialLoginButton.swift */; };
+		44D00B0924054EEDB1584A08 /* XGSocialLoginButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B03E239C4ECEFB93AA0F5F /* XGSocialLoginButtonTests.swift */; };
 		5B1705B7661045998B20C525 /* FakeHomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474951D73DDB4F41B9FE329D /* FakeHomeRepository.swift */; };
 		ACC9D80DD61A45D8A57B2577 /* FakeHomeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED058040F7444241A9B1C7AE /* FakeHomeRepositoryTests.swift */; };
 		829A4766E1C34E708864023D /* GetHomeBannersUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309AA00C4A424A9F96D3AF3E /* GetHomeBannersUseCaseTests.swift */; };
@@ -406,6 +408,8 @@
 		A9B8C7D6E5F4031200000001 /* XGProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGProductCard.swift; sourceTree = "<group>"; };
 		E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifier.swift; sourceTree = "<group>"; };
 		D7654E0AECA894686911DB5F /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
+		D17FE1B7A736ADAC7ECFC2FC /* XGSocialLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGSocialLoginButton.swift; sourceTree = "<group>"; };
+		06B03E239C4ECEFB93AA0F5F /* XGSocialLoginButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGSocialLoginButtonTests.swift; sourceTree = "<group>"; };
 		474951D73DDB4F41B9FE329D /* FakeHomeRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeHomeRepository.swift; sourceTree = "<group>"; };
 		ED058040F7444241A9B1C7AE /* FakeHomeRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeHomeRepositoryTests.swift; sourceTree = "<group>"; };
 		309AA00C4A424A9F96D3AF3E /* GetHomeBannersUseCaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetHomeBannersUseCaseTests.swift; sourceTree = "<group>"; };
@@ -503,6 +507,7 @@
 				E2B848AA0222E1996DCD712E /* XGTabBarTests.swift */,
 				ACF83A6796BA6C75451ED925 /* XGTextFieldTests.swift */,
 				743A3229DA093150B73B66B5 /* XGTopBarTests.swift */,
+				06B03E239C4ECEFB93AA0F5F /* XGSocialLoginButtonTests.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1103,6 +1108,7 @@
 				A9B8C7D6E5F4031200000001 /* XGProductCard.swift */,
 				E4A1B2C3D5F60728B9C0D1E5 /* ShimmerModifier.swift */,
 				D7654E0AECA894686911DB5F /* Skeleton.swift */,
+				D17FE1B7A736ADAC7ECFC2FC /* XGSocialLoginButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1443,6 +1449,7 @@
 				9E7CFA8E8F949A13D6FB9A9E /* XGTabBarTests.swift in Sources */,
 				A408B68EE21B718DFB161829 /* XGTextFieldTests.swift in Sources */,
 				C4D45E4F0BEA6031B52FE6F7 /* XGTopBarTests.swift in Sources */,
+				44D00B0924054EEDB1584A08 /* XGSocialLoginButtonTests.swift in Sources */,
 				F5122406E8538518D54B8F05 /* FakeOnboardingRepository.swift in Sources */,
 				725E8C51A478F0C46426FDE7 /* CheckOnboardingUseCaseTests.swift in Sources */,
 				0506C2BAE6E57BADDF04BED7 /* CompleteOnboardingUseCaseTests.swift in Sources */,
@@ -1568,6 +1575,7 @@
 				F1E2D3C4B5A697881234567F /* XGProductCard.swift in Sources */,
 				E4A1B2C3D5F60728B9C0D1E4 /* ShimmerModifier.swift in Sources */,
 				0A8378DA1E960CFB5DBC3276 /* Skeleton.swift in Sources */,
+				FE097E56A52CEB877F1F15E5 /* XGSocialLoginButton.swift in Sources */,
 				E781E2C8F2DFC7F7240947FF /* OnboardingRepositoryImpl.swift in Sources */,
 				6650081BE742A282479335A9 /* OnboardingPage.swift in Sources */,
 				7D9D386AA01276CCBA10464F /* OnboardingRepository.swift in Sources */,
