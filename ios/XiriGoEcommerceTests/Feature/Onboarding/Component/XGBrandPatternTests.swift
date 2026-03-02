@@ -5,7 +5,7 @@ import Testing
 // MARK: - XGBrandPatternTests
 
 /// Logic-level tests for XGBrandPattern.
-/// Verifies initialisation and View protocol conformance.
+/// Verifies initialisation, View protocol conformance, and token values.
 @Suite("XGBrandPattern Tests")
 @MainActor
 struct XGBrandPatternTests {
@@ -21,5 +21,27 @@ struct XGBrandPatternTests {
         let pattern: any View = XGBrandPattern()
         _ = pattern
         #expect(true)
+    }
+
+    // MARK: - Token Contract (DQ-33)
+
+    @Test("brandPatternOpacity should be 0.06 per design token")
+    func brandPatternOpacity_matchesToken() {
+        #expect(XGColors.brandPatternOpacity == 0.06)
+    }
+
+    @Test("brandPatternOpacity should be positive")
+    func brandPatternOpacity_isPositive() {
+        #expect(XGColors.brandPatternOpacity > 0)
+    }
+
+    @Test("brandPatternOpacity should be at most 1")
+    func brandPatternOpacity_isAtMostOne() {
+        #expect(XGColors.brandPatternOpacity <= 1.0)
+    }
+
+    @Test("brandPatternOpacity should be subtle below 10 percent")
+    func brandPatternOpacity_isSubtle() {
+        #expect(XGColors.brandPatternOpacity < 0.10)
     }
 }

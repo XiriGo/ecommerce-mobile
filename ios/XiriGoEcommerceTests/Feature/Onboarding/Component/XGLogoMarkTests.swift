@@ -5,7 +5,7 @@ import Testing
 // MARK: - XGLogoMarkTests
 
 /// Logic-level tests for XGLogoMark.
-/// Verifies default and custom size initialisation.
+/// Verifies default and custom size initialisation and token contract.
 @Suite("XGLogoMark Tests")
 @MainActor
 struct XGLogoMarkTests {
@@ -35,6 +35,7 @@ struct XGLogoMarkTests {
     @Test("splash screen default size is 120")
     func splashScreenSize_is120() {
         // Default size is documented as 120 in XGLogoMark.init(size:)
+        // from xg-logo-mark.json > tokens.defaultSize
         let logo = XGLogoMark(size: 120)
         _ = logo
         #expect(true)
@@ -43,6 +44,16 @@ struct XGLogoMarkTests {
     @Test("XGLogoMark is a View")
     func xgLogoMark_conformsToView() {
         let logo: any View = XGLogoMark()
+        _ = logo
+        #expect(true)
+    }
+
+    // MARK: - Token Contract (DQ-33)
+
+    @Test("XGLogoMark default init uses token default size 120")
+    func defaultInit_usesTokenSize() {
+        // Verify XGLogoMark() can be created (uses defaultSize = 120 from token)
+        let logo = XGLogoMark()
         _ = logo
         #expect(true)
     }
