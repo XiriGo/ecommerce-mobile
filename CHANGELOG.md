@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-16)
+
+- **XGQuantityStepper token audit**: Audited and aligned `XGQuantityStepper` on both platforms against `shared/design-tokens/components/atoms/xg-quantity-stepper.json`. Android: added `SurfaceTertiary` button background with `RoundedCornerShape(XGCornerRadius.Medium)` corner radius, added explicit `StepperConstants.ICON_SIZE` (24dp) for icon sizing, added `StepperConstants.DISABLED_OPACITY` (0.38f) named constant for disabled state, fixed spacing from `XGSpacing.SM` (8dp) to `XGSpacing.MD` (12dp) per token spec, added `XGColors.OnSurface`/`OnSurfaceVariant` icon colors via `IconButtonDefaults.iconButtonColors`, added `widthIn(min = XGSpacing.XL)` for quantity label minimum width, added `XGColors.OnSurface` text color. iOS: replaced `XGColors.surfaceVariant` button background with `XGColors.surfaceTertiary`, extracted magic `0.38` opacity into `StepperConstants.disabledOpacity` named constant. Added `XGColors.SurfaceTertiary` (#F1F5F9) to both platform theme files. Existing tests on both platforms remain valid. (#60) (Android + iOS)
+
+#### Design Quality Backfill (DQ-15)
+
+- **XGWishlistButton motion token upgrade**: Replaced static heart icon toggle with animated transitions on both platforms. Android: added `animateColorAsState` with `XGMotion.Easing.standardTween(XGMotion.Duration.INSTANT)` (100ms) for color transition, added `Animatable` + `XGMotion.Easing.springSpec()` (dampingRatio=0.7, stiffness=Medium) for scale bounce effect (1.2x snap then spring back to 1.0x). iOS: added `.easeInOut(duration: XGMotion.Duration.instant)` for color transition, added `XGMotion.Easing.spring` for scale bounce via `@State bounceScale`. Updated component token JSON to reference `$foundations/motion.duration.instant` and `$foundations/motion.easing.spring`. 15 Android JUnit token tests + 8 Android Compose UI tests + 24 iOS Swift Testing tests verified. (#59) (Android + iOS)
+
 #### Design Quality Backfill (DQ-14)
 
 - **XGCategoryIcon token audit**: Audited and aligned `XGCategoryIcon` on both platforms against `shared/design-tokens/components/atoms/xg-category-icon.json`. Android: replaced 4 inline font properties (`fontFamily/fontSize/fontWeight/lineHeight`) with `MaterialTheme.typography.labelMedium`, removed dead `LabelFontSize` and `LabelLineHeight` constants, removed unused `PoppinsFontFamily` import, added `semantics(mergeDescendants = true)` for TalkBack accessibility. iOS: added 5 missing category color tokens to `XGColors.swift` (`categoryBlue`, `categoryPink`, `categoryYellow`, `categoryMint`, `categoryLightYellow`), removed unused `Constants.labelFontSize` dead code, added `.buttonStyle(.plain)` to prevent system button styling, replaced hardcoded hex colors in preview with `XGColors.category*` tokens. 22 Android JUnit tests + 24 iOS Swift Testing tests verified. (#58) (Android + iOS)

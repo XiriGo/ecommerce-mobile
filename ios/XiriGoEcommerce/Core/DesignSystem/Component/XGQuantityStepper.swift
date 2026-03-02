@@ -1,7 +1,26 @@
 import SwiftUI
 
+// MARK: - StepperConstants
+
+/// Component-level constants from `xg-quantity-stepper.json` token spec.
+private enum StepperConstants {
+    /// Opacity applied to buttons when disabled (spec: 0.38).
+    static let disabledOpacity: Double = 0.38
+}
+
 // MARK: - XGQuantityStepper
 
+/// Increment/decrement stepper for item quantity selection.
+///
+/// Token source: `components/atoms/xg-quantity-stepper.json`.
+/// - Button size: `XGSpacing.minTouchTarget` (48pt)
+/// - Button background: `XGColors.surfaceTertiary`
+/// - Button corner radius: `XGCornerRadius.medium` (10pt)
+/// - Icon size: `XGSpacing.IconSize.medium` (24pt)
+/// - Disabled opacity: `StepperConstants.disabledOpacity` (0.38)
+/// - Quantity font: `XGTypography.titleMedium` (16pt Medium)
+/// - Quantity min width: `XGSpacing.xl` (24pt)
+/// - Spacing: `XGSpacing.md` (12pt)
 struct XGQuantityStepper: View {
     // MARK: - Lifecycle
 
@@ -69,10 +88,10 @@ struct XGQuantityStepper: View {
                 .foregroundStyle(canDecrease ? XGColors.onSurface : XGColors.onSurfaceVariant)
         }
         .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
-        .background(XGColors.surfaceVariant)
+        .background(XGColors.surfaceTertiary)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         .disabled(!canDecrease)
-        .opacity(canDecrease ? 1.0 : 0.38)
+        .opacity(canDecrease ? 1.0 : StepperConstants.disabledOpacity)
         .accessibilityLabel(String(localized: "common_decrease_quantity"))
     }
 
@@ -93,10 +112,10 @@ struct XGQuantityStepper: View {
                 .foregroundStyle(canIncrease ? XGColors.onSurface : XGColors.onSurfaceVariant)
         }
         .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
-        .background(XGColors.surfaceVariant)
+        .background(XGColors.surfaceTertiary)
         .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
         .disabled(!canIncrease)
-        .opacity(canIncrease ? 1.0 : 0.38)
+        .opacity(canIncrease ? 1.0 : StepperConstants.disabledOpacity)
         .accessibilityLabel(String(localized: "common_increase_quantity"))
     }
 

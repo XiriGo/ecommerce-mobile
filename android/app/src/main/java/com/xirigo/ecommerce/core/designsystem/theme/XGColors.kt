@@ -27,6 +27,7 @@ object XGColors {
     val Surface = Color(0xFFFFFFFF) // light.surface
     val OnSurface = Color(0xFF333333) // light.textPrimary
     val SurfaceVariant = Color(0xFFF9FAFB) // light.surfaceSecondary
+    val SurfaceTertiary = Color(0xFFF1F5F9) // light.surfaceTertiary
     val OnSurfaceVariant = Color(0xFF8E8E93) // light.textSecondary
 
     val Outline = Color(0xFFE5E7EB) // light.borderDefault

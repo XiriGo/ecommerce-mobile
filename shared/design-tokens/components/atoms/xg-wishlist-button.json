@@ -19,6 +19,14 @@
     "elevation": "$foundations/spacing.elevation.level2"
   },
 
+  "motion": {
+    "toggleColorDuration": "$foundations/motion.duration.instant",
+    "toggleColorEasing": "$foundations/motion.easing.standard",
+    "toggleScaleBounce": "$foundations/motion.easing.spring",
+    "bounceScale": 1.2,
+    "_rule": "Color transitions use standard tween at instant duration (100ms). Scale bounce uses spring (dampingRatio=0.7, stiffness=Medium) snapping to bounceScale then springing back to 1.0."
+  },
+
   "subComponents": {
     "icon": {
       "active": { "ios": "heart.fill", "android": "Icons.Filled.Favorite" },
