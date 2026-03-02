@@ -1,5 +1,35 @@
 import SwiftUI
 
+// MARK: - XGTopBarVariant
+
+/// Style variants for ``XGTopBar``, matching `components/molecules/xg-top-bar.json`.
+enum XGTopBarVariant {
+    /// Surface: white background, dark text/icons (filter screen, product list).
+    case surface
+    /// Transparent: clear background, white text/icons (splash, login over gradient).
+    case transparent
+
+    // MARK: - Internal
+
+    var backgroundColor: Color {
+        switch self {
+            case .surface:
+                XGColors.surface
+            case .transparent:
+                Color.clear
+        }
+    }
+
+    var contentColor: Color {
+        switch self {
+            case .surface:
+                XGColors.onSurface
+            case .transparent:
+                XGColors.textOnDark
+        }
+    }
+}
+
 // MARK: - XGTopBarAction
 
 struct XGTopBarAction: Identifiable {
@@ -28,6 +58,14 @@ struct XGTopBarAction: Identifiable {
 
 // MARK: - XGTopBar
 
+/// Top bar with title, optional back navigation, and action slots.
+///
+/// Token source: `components/molecules/xg-top-bar.json`.
+/// - Height: 56pt
+/// - Title font: titleLarge (20pt SemiBold Poppins)
+/// - Icon size: 24pt (layout.iconSize.medium)
+/// - Horizontal padding: 16pt (spacing.base)
+/// - Min touch target: 48pt
 struct XGTopBar: View {
     // MARK: - Lifecycle
 
@@ -35,10 +73,12 @@ struct XGTopBar: View {
 
     init(
         title: String,
+        variant: XGTopBarVariant = .surface,
         onBackTap: (() -> Void)? = nil,
         actions: [XGTopBarAction] = [],
     ) {
         self.title = title
+        self.variant = variant
         self.onBackTap = onBackTap
         self.actions = actions
     }
@@ -53,7 +93,7 @@ struct XGTopBar: View {
                 Button(action: onBackTap) {
                     Image(systemName: "chevron.left")
                         .font(.system(size: XGSpacing.IconSize.medium))
-                        .foregroundStyle(XGColors.onSurface)
+                        .foregroundStyle(variant.contentColor)
                 }
                 .frame(minWidth: XGSpacing.minTouchTarget, minHeight: XGSpacing.minTouchTarget)
                 .accessibilityLabel(String(localized: "common_navigate_back"))
@@ -61,7 +101,7 @@ struct XGTopBar: View {
 
             Text(title)
                 .font(XGTypography.titleLarge)
-                .foregroundStyle(XGColors.onSurface)
+                .foregroundStyle(variant.contentColor)
 
             Spacer()
 
@@ -70,13 +110,22 @@ struct XGTopBar: View {
             }
         }
         .padding(.horizontal, XGSpacing.base)
-        .frame(minHeight: XGSpacing.minTouchTarget)
-        .background(XGColors.surface)
+        .frame(height: Constants.topBarHeight)
+        .frame(maxWidth: .infinity)
+        .background(variant.backgroundColor)
     }
 
     // MARK: - Private
 
+    // MARK: - Constants
+
+    private enum Constants {
+        /// Top bar height from token spec: `tokens.height = 56`.
+        static let topBarHeight: CGFloat = 56
+    }
+
     private let title: String
+    private let variant: XGTopBarVariant
     private let onBackTap: (() -> Void)?
     private let actions: [XGTopBarAction]
 
@@ -85,7 +134,7 @@ struct XGTopBar: View {
             ZStack(alignment: .topTrailing) {
                 Image(systemName: item.icon)
                     .font(.system(size: XGSpacing.IconSize.medium))
-                    .foregroundStyle(XGColors.onSurface)
+                    .foregroundStyle(variant.contentColor)
 
                 if let count = item.badgeCount, count > 0 {
                     XGCountBadge(count: count)
@@ -103,11 +152,12 @@ struct XGTopBar: View {
 extension View {
     func xgTopBar(
         title: String,
+        variant: XGTopBarVariant = .surface,
         onBackTap: (() -> Void)? = nil,
         actions: [XGTopBarAction] = [],
     ) -> some View {
         VStack(spacing: 0) {
-            XGTopBar(title: title, onBackTap: onBackTap, actions: actions)
+            XGTopBar(title: title, variant: variant, onBackTap: onBackTap, actions: actions)
             self
         }
     }
@@ -131,4 +181,15 @@ extension View {
             XGTopBarAction(icon: "cart", accessibilityLabel: "Cart", badgeCount: 3) {},
         ],
     )
+}
+
+#Preview("XGTopBar Transparent") {
+    ZStack {
+        Color(hex: "#6000FE")
+        XGTopBar(
+            title: "Login",
+            variant: .transparent,
+            onBackTap: {},
+        )
+    }
 }
