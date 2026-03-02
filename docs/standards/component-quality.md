@@ -751,3 +751,80 @@ Use this checklist during code review to catch violations:
 | Broken image fallback | No error state in image loading | Add branded fallback |
 | Centered spinner for loading | `CircularProgressIndicator` in `Box(center)` | Replace with skeleton screen |
 | Price showing €0.00 | No null check before price display | Hide section if price is null |
+| Hardcoded hex color | `Color(0xFF...)` or `Color(hex: "#...")` in component | Use `XGColors.*` token |
+| Missing `XGMotion` reference | `tween(100)`, `.easeInOut(duration: 0.1)` | Use `XGMotion.Duration.*` + `XGMotion.Easing.*` |
+| Non-skeleton loading in feature | `XGLoadingView()` without skeleton slot | Provide custom skeleton layout matching the screen |
+
+---
+
+## 11. DQ Backfill Lessons Learned
+
+The Design Quality (DQ) backfill (40 issues, DQ-01 through DQ-40) upgraded every design system component to production-quality standards. These are the key learnings that inform all future component development.
+
+### Token-First Development
+
+**Lesson**: Every new component MUST start with its design token JSON file before any platform code is written.
+
+**Why**: The DQ backfill revealed that components built without token files (M0 phase) accumulated hardcoded values that required costly audits later. Components built token-first (DQ-19 onward) shipped with full compliance on the first iteration.
+
+**Workflow**:
+1. Create `shared/design-tokens/components/{atoms|molecules|brand}/<component>.json`
+2. Define all visual properties: colors, sizes, spacing, corner radius, typography, motion references
+3. Reference foundation tokens (`$foundations/colors.*`, `$foundations/motion.*`) rather than raw values
+4. Implement platform code referencing token constants only
+
+### Skeleton-First Loading
+
+**Lesson**: Design the skeleton layout at the same time as the component, not as an afterthought.
+
+**Why**: Retrofitting skeletons after the component is done requires re-analyzing the layout. Designing them together ensures the skeleton precisely mirrors the content shape.
+
+**Pattern**:
+- Every `XGProductCard` has a `ProductCardSkeleton`
+- Every `XGHeroBanner` has a `HeroBannerSkeleton`
+- Every screen-level loading state uses a composite skeleton, not a centered spinner
+
+### Motion Token Adoption
+
+**Lesson**: Replace ALL hardcoded animation values with `XGMotion` references during initial implementation.
+
+**DQ findings**:
+- `XGPaginationDots` had `tween(300ms)` replaced with `XGMotion.Easing.springSpec()` (DQ-09)
+- `XGWishlistButton` had no animation, received `XGMotion.Duration.INSTANT` + spring bounce (DQ-15)
+- `XGHeroBanner` auto-scroll interval was hardcoded, replaced with `XGMotion.Scroll.AUTO_SCROLL_INTERVAL_MS` (DQ-23)
+
+**Rule**: Grep the codebase for raw duration values (`tween(`, `withAnimation(.linear(duration:`) before any PR merge.
+
+### Brand Color Centralization
+
+**Lesson**: Brand-specific colors (gradient stops, pattern opacity, social auth icons) belong in `XGColors`, not as local constants.
+
+**DQ findings** (DQ-33): `XGBrandGradient`, `XGBrandPattern`, and `XGLogoMark` had hardcoded hex literals that duplicated values. The fix added 5 new gradient tokens and 1 opacity constant to `XGColors`, making all brand components consistent.
+
+### Component Variant Extraction
+
+**Lesson**: When a component needs multiple visual modes, extract a typed enum (e.g., `XGTopBarVariant`, `XGBadgeVariant`) rather than using boolean flags.
+
+**Examples**:
+- `XGTopBarVariant.surface` / `.transparent` (DQ-29)
+- `XGBadgeVariant.primary` / `.secondary` (DQ-08)
+- `XGPriceLayout.inline` / `.stacked` (DQ-38)
+
+### Uniform Card Height in Grids
+
+**Lesson**: Product cards in grid layouts MUST reserve space for optional elements using invisible spacers.
+
+**DQ finding** (DQ-22): Cards with rating bars were taller than cards without, causing uneven grid rows. The fix added a `reserveSpace` parameter that renders invisible spacers for optional rows, ensuring uniform height regardless of data presence.
+
+### Cross-Platform Consistency Checklist
+
+Apply to every new component:
+
+- [ ] Same token JSON file referenced on both platforms
+- [ ] Same visual behavior (colors, spacing, corner radius)
+- [ ] Same interaction model (tap, toggle, swipe)
+- [ ] Same accessibility labels (localized in EN/MT/TR)
+- [ ] Same animation timing via `XGMotion` tokens
+- [ ] Same skeleton layout (if applicable)
+- [ ] Platform-idiomatic naming (`XGButtonStyle` on Android, `XGButtonVariant` on iOS)
+- [ ] `#Preview` / `@Preview` for all visual states
