@@ -10,7 +10,8 @@ struct XGLogoMark: View {
 
     // MARK: - Init
 
-    init(size: CGFloat = 120) {
+    /// - Parameter size: Logo dimensions. Default from `xg-logo-mark.json > tokens.defaultSize`.
+    init(size: CGFloat = Self.defaultSize) {
         self.size = size
     }
 
@@ -28,6 +29,9 @@ struct XGLogoMark: View {
 
     // MARK: - Private
 
+    /// Default logo size sourced from `xg-logo-mark.json > tokens.defaultSize`.
+    private static let defaultSize: CGFloat = 120
+
     private let size: CGFloat
 }
 
@@ -35,7 +39,7 @@ struct XGLogoMark: View {
 
 #Preview("XGLogoMark") {
     ZStack {
-        Color(hex: "#6000FE")
+        XGColors.brandPrimary
             .ignoresSafeArea()
         XGLogoMark()
     }
@@ -43,7 +47,7 @@ struct XGLogoMark: View {
 
 #Preview("XGLogoMark Large") {
     ZStack {
-        Color(hex: "#6000FE")
+        XGColors.brandPrimary
             .ignoresSafeArea()
         XGLogoMark(size: 200)
     }
