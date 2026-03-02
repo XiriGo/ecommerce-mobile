@@ -134,12 +134,15 @@ private fun ErrorContent(message: String, onRetry: (() -> Unit)?) {
 
 // region Preview
 
+private const val PREVIEW_ERROR_MESSAGE = "Something went wrong"
+private const val PREVIEW_CONTENT_TEXT = "Content loaded!"
+
 @Preview(showBackground = true)
 @Composable
 private fun XGErrorViewPreview() {
     XGTheme {
         XGErrorView(
-            message = "Something went wrong",
+            message = PREVIEW_ERROR_MESSAGE,
             onRetry = {},
         )
     }
@@ -158,12 +161,12 @@ private fun XGErrorViewNoRetryPreview() {
 private fun XGErrorViewCrossfadeErrorPreview() {
     XGTheme {
         XGErrorView(
-            message = "Something went wrong",
+            message = PREVIEW_ERROR_MESSAGE,
             isError = true,
             onRetry = {},
         ) {
             Text(
-                text = "Content loaded!",
+                text = PREVIEW_CONTENT_TEXT,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(XGSpacing.Base),
             )
@@ -176,12 +179,12 @@ private fun XGErrorViewCrossfadeErrorPreview() {
 private fun XGErrorViewCrossfadeContentPreview() {
     XGTheme {
         XGErrorView(
-            message = "Something went wrong",
+            message = PREVIEW_ERROR_MESSAGE,
             isError = false,
             onRetry = {},
         ) {
             Text(
-                text = "Content loaded!",
+                text = PREVIEW_CONTENT_TEXT,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(XGSpacing.Base),
             )
@@ -197,7 +200,7 @@ private fun XGErrorViewInteractivePreview() {
 
         Column {
             XGErrorView(
-                message = "Something went wrong",
+                message = PREVIEW_ERROR_MESSAGE,
                 isError = isError,
                 modifier = Modifier.weight(1f),
                 onRetry = { isError = false },
