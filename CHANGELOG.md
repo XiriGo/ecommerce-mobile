@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **XGFilterPill component**: Implemented `XGFilterPill` molecule component on both platforms, wrapping `XGFilterChip` (DQ-18) with filter-specific behavior. Features: selected state with filled background + checkmark icon, unselected state with outline border, optional dismiss (X) button when selected, and `XGFilterPillRow` horizontal scrollable list variant. All visual tokens from `xg-filter-pill.json`. Android: `FilterChip`-based composable with `LazyRow` for the row variant. iOS: custom `Button`+`HStack` SwiftUI view with `ScrollView`+`HStack` for the row variant. Localized dismiss accessibility label in EN/MT/TR. 18 Android instrumented tests + 24 iOS Swift Testing tests verified. (#75) (Android + iOS)
 
+#### Design Quality Backfill (DQ-34)
+
+- **HomeScreen LazyColumn refactor**: Replaced eager `Column + verticalScroll` with `LazyColumn` in Android `HomeScreen.kt` for proper lazy rendering. Each section (search bar, hero banners, categories, popular products, daily deal, new arrivals, flash sale) is now a separate `item {}` block with stable string keys. Section spacing uses `Arrangement.spacedBy(XGSpacing.SectionSpacing)`. Pull-to-refresh behavior and scroll state preservation unchanged. No domain, data, or ViewModel changes. Existing 30 ViewModel tests verified. (#78) (Android)
+
 ### Changed
 
 #### Design Quality Backfill (DQ-25)
