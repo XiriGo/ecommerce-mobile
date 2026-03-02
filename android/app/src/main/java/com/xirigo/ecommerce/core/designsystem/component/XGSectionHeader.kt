@@ -12,32 +12,33 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// typeScale.subtitle: 18sp semiBold
-private val TitleFontSize = 18.sp
-private val TitleLineHeight = 26.sp
-private val SubtitleFontSize = 14.sp
-private val SubtitleLineHeight = 20.sp
-private val SeeAllFontSize = 14.sp
-private val SeeAllLineHeight = 20.sp
-private val SeeAllIconSize = 16.dp
+/** Arrow icon size from token spec: `arrowIconSize = 12`. */
+private val ArrowIconSize = 12.dp
 
-/** Section header with title, optional subtitle, and optional "See All" action. */
+/**
+ * Section header with title, optional subtitle, and optional "See All" action.
+ *
+ * Token source: `shared/design-tokens/components/atoms/xg-section-header.json`
+ *
+ * @param title Section title text — rendered in `XGTypography.titleMedium` (18sp SemiBold).
+ * @param modifier Optional [Modifier] for the root row.
+ * @param subtitle Optional subtitle — rendered in `XGTypography.labelLarge` (14sp Medium).
+ * @param onSeeAllClick If non-null, displays a "See All" action link with arrow icon.
+ */
 @Composable
 fun XGSectionHeader(
     title: String,
@@ -52,23 +53,20 @@ fun XGSectionHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(XGSpacing.XXS),
+        ) {
             Text(
                 text = title,
-                fontFamily = PoppinsFontFamily,
-                fontSize = TitleFontSize,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.titleMedium,
                 color = XGColors.OnSurface,
-                lineHeight = TitleLineHeight,
             )
             if (subtitle != null) {
                 Text(
                     text = subtitle,
-                    fontFamily = PoppinsFontFamily,
-                    fontSize = SubtitleFontSize,
-                    fontWeight = FontWeight.Normal,
+                    style = MaterialTheme.typography.labelLarge,
                     color = XGColors.OnSurfaceVariant,
-                    lineHeight = SubtitleLineHeight,
                 )
             }
         }
@@ -82,17 +80,14 @@ fun XGSectionHeader(
             ) {
                 Text(
                     text = stringResource(R.string.common_see_all),
-                    fontFamily = PoppinsFontFamily,
-                    fontSize = SeeAllFontSize,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.labelLarge,
                     color = XGColors.BrandPrimary,
-                    lineHeight = SeeAllLineHeight,
                 )
                 Spacer(modifier = Modifier.width(XGSpacing.XS))
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
                     contentDescription = null,
-                    modifier = Modifier.size(SeeAllIconSize),
+                    modifier = Modifier.size(ArrowIconSize),
                     tint = XGColors.BrandPrimary,
                 )
             }
