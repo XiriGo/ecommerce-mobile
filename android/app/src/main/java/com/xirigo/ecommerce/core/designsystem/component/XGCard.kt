@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.SpanStyle
@@ -57,6 +58,21 @@ private val AddToCartIconSize = 16.dp
 private val AddToCartCornerRadius = 19.dp
 private val BorderWidth = 1.dp
 
+// Reserved heights for uniform card sizing (reserveSpace strategy)
+// Token source: spacing.json > starRating.starSize (12) + gap
+private val ReservedRatingHeight = 16.dp
+
+// Token source: xg-product-card.json > deliveryLabelSubComponent.lineHeight
+private val ReservedDeliveryHeight = 14.dp
+
+// Token source: xg-product-card.json > addToCartSubComponent.size
+private val ReservedAddToCartHeight = 38.dp
+
+// Skeleton line height for title placeholder
+private val SkeletonTitleLineSmallHeight = 12.dp
+private const val SKELETON_PRICE_LINE_WIDTH = 0.6f
+private const val SKELETON_RATING_LINE_WIDTH = 0.4f
+
 /** Product card with image, title, price, rating, delivery label, and optional add-to-cart. */
 @Composable
 fun XGProductCard(
@@ -77,6 +93,7 @@ fun XGProductCard(
     priceLayout: XGPriceLayout = XGPriceLayout.Inline,
     showRatingAbovePrice: Boolean = false,
     showDeliveryAbovePrice: Boolean = false,
+    reserveSpace: Boolean = false,
 ) {
     Card(
         modifier = modifier
@@ -108,6 +125,7 @@ fun XGProductCard(
                 priceLayout = priceLayout,
                 showRatingAbovePrice = showRatingAbovePrice,
                 showDeliveryAbovePrice = showDeliveryAbovePrice,
+                reserveSpace = reserveSpace,
             )
         }
     }
@@ -156,6 +174,7 @@ private fun ProductCardDetailsSection(
     priceLayout: XGPriceLayout,
     showRatingAbovePrice: Boolean,
     showDeliveryAbovePrice: Boolean,
+    reserveSpace: Boolean,
 ) {
     Column(modifier = Modifier.padding(horizontal = CardPadding)) {
         Text(
@@ -170,11 +189,18 @@ private fun ProductCardDetailsSection(
         )
 
         if (showRatingAbovePrice) {
-            RatingSection(rating = rating, reviewCount = reviewCount)
+            RatingSection(
+                rating = rating,
+                reviewCount = reviewCount,
+                reserveSpace = reserveSpace,
+            )
         }
 
         if (showDeliveryAbovePrice) {
-            DeliverySection(deliveryLabel = deliveryLabel)
+            DeliverySection(
+                deliveryLabel = deliveryLabel,
+                reserveSpace = reserveSpace,
+            )
             PriceWithCartRow(
                 price = price,
                 originalPrice = originalPrice,
@@ -182,6 +208,7 @@ private fun ProductCardDetailsSection(
                 strikethroughFontSize = strikethroughFontSize,
                 priceLayout = priceLayout,
                 onAddToCartClick = onAddToCartClick,
+                reserveSpace = reserveSpace,
             )
         } else {
             Spacer(modifier = Modifier.height(XGSpacing.XS))
@@ -193,10 +220,20 @@ private fun ProductCardDetailsSection(
                 layout = priceLayout,
             )
             if (!showRatingAbovePrice) {
-                RatingSection(rating = rating, reviewCount = reviewCount)
+                RatingSection(
+                    rating = rating,
+                    reviewCount = reviewCount,
+                    reserveSpace = reserveSpace,
+                )
             }
-            DeliverySection(deliveryLabel = deliveryLabel)
-            StandaloneCartSection(onAddToCartClick = onAddToCartClick)
+            DeliverySection(
+                deliveryLabel = deliveryLabel,
+                reserveSpace = reserveSpace,
+            )
+            StandaloneCartSection(
+                onAddToCartClick = onAddToCartClick,
+                reserveSpace = reserveSpace,
+            )
         }
 
         Spacer(modifier = Modifier.height(CardPadding))
@@ -204,18 +241,28 @@ private fun ProductCardDetailsSection(
 }
 
 @Composable
-private fun RatingSection(rating: Float?, reviewCount: Int?) {
+private fun RatingSection(
+    rating: Float?,
+    reviewCount: Int?,
+    reserveSpace: Boolean = false,
+) {
     if (rating != null) {
         Spacer(modifier = Modifier.height(XGSpacing.XS))
         XGRatingBar(rating = rating, showValue = false, reviewCount = reviewCount)
+    } else if (reserveSpace) {
+        Spacer(modifier = Modifier.height(XGSpacing.XS))
+        Spacer(modifier = Modifier.height(ReservedRatingHeight))
     }
 }
 
 @Composable
-private fun DeliverySection(deliveryLabel: String?) {
+private fun DeliverySection(deliveryLabel: String?, reserveSpace: Boolean = false) {
     if (deliveryLabel != null) {
         Spacer(modifier = Modifier.height(XGSpacing.XS))
         DeliveryLabelText(deliveryLabel = deliveryLabel)
+    } else if (reserveSpace) {
+        Spacer(modifier = Modifier.height(XGSpacing.XS))
+        Spacer(modifier = Modifier.height(ReservedDeliveryHeight))
     }
 }
 
@@ -227,6 +274,7 @@ private fun PriceWithCartRow(
     strikethroughFontSize: Float,
     priceLayout: XGPriceLayout,
     onAddToCartClick: (() -> Unit)?,
+    reserveSpace: Boolean = false,
 ) {
     Spacer(modifier = Modifier.height(XGSpacing.XS))
     Row(
@@ -243,12 +291,14 @@ private fun PriceWithCartRow(
         Spacer(modifier = Modifier.weight(1f))
         if (onAddToCartClick != null) {
             AddToCartButton(onClick = onAddToCartClick)
+        } else if (reserveSpace) {
+            Spacer(modifier = Modifier.size(AddToCartButtonSize).alpha(0f))
         }
     }
 }
 
 @Composable
-private fun StandaloneCartSection(onAddToCartClick: (() -> Unit)?) {
+private fun StandaloneCartSection(onAddToCartClick: (() -> Unit)?, reserveSpace: Boolean = false) {
     if (onAddToCartClick != null) {
         Spacer(modifier = Modifier.height(CardPadding))
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -257,6 +307,9 @@ private fun StandaloneCartSection(onAddToCartClick: (() -> Unit)?) {
                 modifier = Modifier.align(Alignment.CenterEnd),
             )
         }
+    } else if (reserveSpace) {
+        Spacer(modifier = Modifier.height(CardPadding))
+        Spacer(modifier = Modifier.height(ReservedAddToCartHeight))
     }
 }
 
@@ -319,6 +372,59 @@ private fun DeliveryLabelText(deliveryLabel: String) {
             overflow = TextOverflow.Ellipsis,
             lineHeight = DeliveryLabelLineHeight,
         )
+    }
+}
+
+/** Skeleton loading placeholder that mirrors the [XGProductCard] layout. */
+@Composable
+fun ProductCardSkeleton(modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(XGCornerRadius.Medium),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.cardColors(containerColor = XGColors.Surface),
+        border = BorderStroke(BorderWidth, XGColors.OutlineVariant),
+    ) {
+        Column {
+            // Image area: 1:1 aspect ratio
+            SkeletonBox(
+                width = 0.dp,
+                height = 0.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .padding(CardPadding),
+            )
+
+            // Content area
+            Column(
+                modifier = Modifier.padding(horizontal = CardPadding),
+                verticalArrangement = Arrangement.spacedBy(XGSpacing.XS),
+            ) {
+                // Title line 1 (full width)
+                SkeletonLine(
+                    width = 0.dp,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                // Title line 2 (80% width)
+                SkeletonLine(
+                    width = 0.dp,
+                    modifier = Modifier.fillMaxWidth(fraction = 0.8f),
+                )
+                // Price line (60% width)
+                SkeletonLine(
+                    width = 0.dp,
+                    modifier = Modifier.fillMaxWidth(fraction = SKELETON_PRICE_LINE_WIDTH),
+                )
+                // Rating line (40% width)
+                SkeletonLine(
+                    width = 0.dp,
+                    height = SkeletonTitleLineSmallHeight,
+                    modifier = Modifier.fillMaxWidth(fraction = SKELETON_RATING_LINE_WIDTH),
+                )
+                Spacer(modifier = Modifier.height(CardPadding))
+            }
+        }
     }
 }
 
@@ -445,6 +551,83 @@ private fun XGProductCardStandardPreview() {
             showDeliveryAbovePrice = true,
             modifier = Modifier.width(StandardCardWidth),
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductCardSkeletonPreview() {
+    XGTheme {
+        ProductCardSkeleton(modifier = Modifier.width(StandardCardWidth))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductCardSkeletonAndRealPreview() {
+    XGTheme {
+        Row(
+            modifier = Modifier.padding(XGSpacing.SM),
+            horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM),
+        ) {
+            ProductCardSkeleton(modifier = Modifier.width(FeaturedCardWidth))
+            XGProductCard(
+                imageUrl = null,
+                title = "Premium Wireless Headphones",
+                price = "29.99",
+                originalPrice = "39.99",
+                rating = 4.5f,
+                reviewCount = 123,
+                isWishlisted = false,
+                onWishlistToggle = {},
+                onClick = {},
+                priceLayout = XGPriceLayout.Stacked,
+                showRatingAbovePrice = true,
+                modifier = Modifier.width(FeaturedCardWidth),
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductCardUniformHeightPreview() {
+    XGTheme {
+        Row(
+            modifier = Modifier.padding(XGSpacing.SM),
+            horizontalArrangement = Arrangement.spacedBy(XGSpacing.SM),
+        ) {
+            // Card with all optional content
+            XGProductCard(
+                imageUrl = null,
+                title = "Product With Rating & Delivery",
+                price = "9.99",
+                rating = 3.5f,
+                reviewCount = 42,
+                deliveryLabel = "Order before **23:59**, delivered **Monday**",
+                onAddToCartClick = {},
+                onClick = {},
+                priceSize = XGPriceSize.Standard,
+                priceLayout = XGPriceLayout.Stacked,
+                showRatingAbovePrice = true,
+                showDeliveryAbovePrice = true,
+                reserveSpace = true,
+                modifier = Modifier.weight(1f),
+            )
+            // Card with NO optional content (but reserveSpace = true)
+            XGProductCard(
+                imageUrl = null,
+                title = "Minimal Product",
+                price = "4.99",
+                onClick = {},
+                priceSize = XGPriceSize.Standard,
+                priceLayout = XGPriceLayout.Stacked,
+                showRatingAbovePrice = true,
+                showDeliveryAbovePrice = true,
+                reserveSpace = true,
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
 }
 
