@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+#### Design Quality Backfill (DQ-40)
+
+- **Documentation and component inventory update**: Updated `docs/features/design-system.md` with complete component inventory (35 components, up from 14), full XGMotion token reference (Duration, Easing, Shimmer, Crossfade, Scroll, EntranceAnimation, PerformanceBudgets), shimmer/skeleton usage guide, file structure reflecting all DQ additions, and DQ backfill summary table. Updated `docs/standards/component-quality.md` with DQ lessons learned (token-first workflow, skeleton-first loading, motion token adoption pattern). Updated CHANGELOG with DQ milestone summary. (#84) (Docs)
+
 ### Added
 
 #### Design Quality Backfill (DQ-31)
