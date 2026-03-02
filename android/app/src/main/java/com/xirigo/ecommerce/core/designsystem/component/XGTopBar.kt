@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.foundation.background
