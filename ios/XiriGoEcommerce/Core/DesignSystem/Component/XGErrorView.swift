@@ -47,6 +47,9 @@ struct XGErrorView<Content: View>: View {
 
     // MARK: - Internal
 
+    let message: String
+    let isError: Bool
+
     var body: some View {
         Group {
             if isError {
@@ -65,8 +68,6 @@ struct XGErrorView<Content: View>: View {
 
     // MARK: - Private
 
-    private let message: String
-    private let isError: Bool
     private let onRetry: (() -> Void)?
     private let content: Content
 }
