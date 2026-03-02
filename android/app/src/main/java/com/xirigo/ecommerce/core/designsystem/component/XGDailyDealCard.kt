@@ -148,7 +148,7 @@ fun XGDailyDealCard(
                 ) {
                     XGPriceText(
                         price = price,
-                        size = XGPriceSize.Deal,
+                        style = XGPriceStyle.Deal,
                     )
                     Text(
                         text = originalPrice,
