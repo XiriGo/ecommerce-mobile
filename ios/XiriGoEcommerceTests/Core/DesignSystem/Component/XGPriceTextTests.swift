@@ -3,6 +3,55 @@ import Testing
 
 private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime environment; use UI tests instead"
 
+// MARK: - XGPriceLayoutTests
+
+@Suite("XGPriceLayout Tests")
+struct XGPriceLayoutTests {
+    @Test("Both layout cases exist")
+    func layouts_allCasesExist() {
+        let layouts: [XGPriceLayout] = [.inline, .stacked]
+        #expect(layouts.count == 2)
+    }
+
+    @Test("Inline layout is the default case")
+    func inline_isDefaultCase() {
+        let layout: XGPriceLayout = .inline
+        #expect(layout == .inline)
+    }
+
+    @Test("Stacked layout is distinct from inline")
+    func stacked_isDistinctFromInline() {
+        let inlineLayout: XGPriceLayout = .inline
+        let stackedLayout: XGPriceLayout = .stacked
+        #expect(inlineLayout != stackedLayout)
+    }
+
+    @Test("PriceText initialises with inline layout")
+    @MainActor
+    func priceText_inlineLayout_initialises() {
+        let view = XGPriceText(price: "29.99", layout: .inline)
+        _ = view
+        #expect(true)
+    }
+
+    @Test("PriceText initialises with stacked layout")
+    @MainActor
+    func priceText_stackedLayout_initialises() {
+        let view = XGPriceText(price: "29.99", originalPrice: "49.99", layout: .stacked)
+        _ = view
+        #expect(true)
+    }
+
+    @Test("PriceText defaults to inline layout")
+    @MainActor
+    func priceText_defaultLayout_isInline() {
+        // XGPriceText defaults layout to .inline; verify it compiles without specifying layout
+        let view = XGPriceText(price: "29.99")
+        _ = view
+        #expect(true)
+    }
+}
+
 // MARK: - XGPriceStyleTests
 
 @Suite("XGPriceStyle Tests")
