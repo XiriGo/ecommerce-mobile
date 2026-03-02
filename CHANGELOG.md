@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+#### Design Quality Backfill (DQ-19)
+
+- **XGDivider component**: New `XGDivider` and `XGLabeledDivider` atom components added to the design system on both platforms. `XGDivider` wraps the platform-native divider with token defaults (color: `XGColors.Divider` `#E5E7EB`, thickness: 1dp/pt). `XGLabeledDivider` renders a line-label-line pattern using `captionMedium` typography (12sp/pt Poppins Medium) with `XGColors.TextTertiary` label color and 16dp/pt horizontal padding -- used for "OR CONTINUE WITH" dividers on the Login screen. Replaced raw `HorizontalDivider` in `ProfileScreen.kt` with `XGDivider`. 8 Android JVM token tests + 12 Android Compose UI tests + 19 iOS Swift Testing tests verified. (#63) (Android + iOS)
+
 ### Changed
 
 #### Design Quality Backfill (DQ-15)
