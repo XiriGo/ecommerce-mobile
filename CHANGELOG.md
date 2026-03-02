@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-22)
+
+- **XGProductCard skeleton + uniform height**: Added `ProductCardSkeleton` composable/view using skeleton primitives (SkeletonBox, SkeletonLine) that mirrors the card layout for loading states. Added `reserveSpace` parameter to `XGProductCard` that reserves vertical space for optional content rows (rating, delivery label, add-to-cart button) using invisible spacers, ensuring uniform card height in grid layouts. All dimensions from `xg-product-card.json` design tokens. iOS skeleton extracted to separate `ProductCardSkeleton.swift` file for SwiftLint file-length compliance. 21 Android JVM tests + 14 iOS Swift Testing tests verified. (#66) (Android + iOS)
+
 #### Design Quality Backfill (DQ-33)
 
 - **XGBrandGradient/XGBrandPattern/XGLogoMark token audit**: Audited brand components on both platforms against `xg-brand-gradient.json`, `xg-brand-pattern.json`, and `xg-logo-mark.json` token specs. Replaced all hardcoded hex color literals (`Color(0xFF...)` on Android, `Color(hex: "#...")` on iOS) with centralized `XGColors` token references. Added 5 new gradient-specific tokens to `XGColors` (`BrandGradientMid`, `BrandOverlayMid1-4`) and 1 opacity constant (`BRAND_PATTERN_OPACITY`/`brandPatternOpacity`). Reused existing `BrandPrimaryLight`, `BrandPrimary`, `BrandPrimaryDark` where values matched. Extracted logo default size to named constant with token-source documentation. Preview backgrounds now use `XGColors.brandPrimary` on iOS. 17 Android JVM tests + 23 iOS Swift Testing tests verified. No visual changes. (#77) (Android + iOS)
