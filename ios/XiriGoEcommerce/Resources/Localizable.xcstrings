@@ -2727,6 +2727,29 @@
         }
       }
     },
+    "common_filter_pill_dismiss_a11y \\(label)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove \\(label) filter"
+          }
+        },
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neħħi l-filtru \\(label)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(label) filtresini kaldır"
+          }
+        }
+      }
+    },
     "common_color_swatch_selected_a11y \\(colorName)": {
       "extractionState": "manual",
       "localizations": {
