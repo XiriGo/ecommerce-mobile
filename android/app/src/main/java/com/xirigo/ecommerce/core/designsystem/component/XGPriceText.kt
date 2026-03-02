@@ -39,7 +39,9 @@ private val SmallDecimalFontSize = 14.sp
 
 // Token source: components/atoms/xg-price-text.json — strikethrough font sizes
 private val DefaultStrikethroughFontSize = 15.18.sp
-private val StandardStrikethroughFontSize = 14.sp
+
+/** Standard strikethrough font size (14sp) from token spec. Use for `XGPriceStyle.Standard`. */
+val StandardStrikethroughFontSize = 14.sp
 
 /** Visual style variants for price display. Maps to XGPriceStyle in the token spec. */
 enum class XGPriceStyle {
@@ -54,6 +56,41 @@ enum class XGPriceStyle {
 
     /** Deal variant — brand secondary color for daily deal contexts. */
     Deal,
+}
+
+/** Token-resolved properties for a given [XGPriceStyle]. */
+private data class PriceStyleProps(
+    val color: Color,
+    val currencyFontSize: Float,
+    val integerFontSize: Float,
+    val decimalFontSize: Float,
+)
+
+private fun resolveStyleProps(style: XGPriceStyle): PriceStyleProps = when (style) {
+    XGPriceStyle.Default -> PriceStyleProps(
+        color = XGColors.PriceSale,
+        currencyFontSize = DefaultCurrencyFontSize.value,
+        integerFontSize = DefaultIntegerFontSize.value,
+        decimalFontSize = DefaultDecimalFontSize.value,
+    )
+    XGPriceStyle.Standard -> PriceStyleProps(
+        color = XGColors.PriceSale,
+        currencyFontSize = StandardCurrencyFontSize.value,
+        integerFontSize = StandardIntegerFontSize.value,
+        decimalFontSize = StandardDecimalFontSize.value,
+    )
+    XGPriceStyle.Small -> PriceStyleProps(
+        color = XGColors.PriceSale,
+        currencyFontSize = SmallCurrencyFontSize.value,
+        integerFontSize = SmallIntegerFontSize.value,
+        decimalFontSize = SmallDecimalFontSize.value,
+    )
+    XGPriceStyle.Deal -> PriceStyleProps(
+        color = XGColors.BrandSecondary,
+        currencyFontSize = DefaultCurrencyFontSize.value,
+        integerFontSize = DefaultIntegerFontSize.value,
+        decimalFontSize = DefaultDecimalFontSize.value,
+    )
 }
 
 /** Formatted price display with currency symbol, integer, and decimal parts.
@@ -71,37 +108,7 @@ fun XGPriceText(
     // Null price fallback: hide component entirely (DQ-10)
     if (price == null) return
 
-    val priceColor: Color
-    val currencyFontSize: Float
-    val integerFontSize: Float
-    val decimalFontSize: Float
-
-    when (style) {
-        XGPriceStyle.Default -> {
-            priceColor = XGColors.PriceSale
-            currencyFontSize = DefaultCurrencyFontSize.value
-            integerFontSize = DefaultIntegerFontSize.value
-            decimalFontSize = DefaultDecimalFontSize.value
-        }
-        XGPriceStyle.Standard -> {
-            priceColor = XGColors.PriceSale
-            currencyFontSize = StandardCurrencyFontSize.value
-            integerFontSize = StandardIntegerFontSize.value
-            decimalFontSize = StandardDecimalFontSize.value
-        }
-        XGPriceStyle.Small -> {
-            priceColor = XGColors.PriceSale
-            currencyFontSize = SmallCurrencyFontSize.value
-            integerFontSize = SmallIntegerFontSize.value
-            decimalFontSize = SmallDecimalFontSize.value
-        }
-        XGPriceStyle.Deal -> {
-            priceColor = XGColors.BrandSecondary
-            currencyFontSize = DefaultCurrencyFontSize.value
-            integerFontSize = DefaultIntegerFontSize.value
-            decimalFontSize = DefaultDecimalFontSize.value
-        }
-    }
+    val props = resolveStyleProps(style)
 
     val parts = splitPrice(price)
 
@@ -124,8 +131,8 @@ fun XGPriceText(
                     SpanStyle(
                         fontFamily = SourceSans3FontFamily,
                         fontWeight = FontWeight.Black,
-                        fontSize = currencyFontSize.sp,
-                        color = priceColor,
+                        fontSize = props.currencyFontSize.sp,
+                        color = props.color,
                     ),
                 ) {
                     append(currencySymbol)
@@ -134,8 +141,8 @@ fun XGPriceText(
                     SpanStyle(
                         fontFamily = SourceSans3FontFamily,
                         fontWeight = FontWeight.Black,
-                        fontSize = integerFontSize.sp,
-                        color = priceColor,
+                        fontSize = props.integerFontSize.sp,
+                        color = props.color,
                     ),
                 ) {
                     append(parts.first)
@@ -144,8 +151,8 @@ fun XGPriceText(
                     SpanStyle(
                         fontFamily = SourceSans3FontFamily,
                         fontWeight = FontWeight.Black,
-                        fontSize = decimalFontSize.sp,
-                        color = priceColor,
+                        fontSize = props.decimalFontSize.sp,
+                        color = props.color,
                     ),
                 ) {
                     append(",${parts.second}")
