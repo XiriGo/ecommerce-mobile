@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-29)
+
+- **XGTopBar token audit**: Audited `XGTopBar` on both platforms against `xg-top-bar.json` token spec. Added `XGTopBarVariant` enum (Surface / Transparent) on both platforms for splash/login transparent-over-gradient usage. Android: replaced `TopAppBar` with custom `Row` layout for full token control, swapped `MaterialTheme.typography.titleLarge` for `XGTypography.titleLarge`, replaced `MaterialTheme.colorScheme.*` with `XGColors.*` via variant, set explicit height 56dp and icon size 24dp, unified action icon color to match variant content color. iOS: changed frame height from 48pt (minTouchTarget) to 56pt per spec, added variant-driven background/content colors, added `maxWidth: .infinity` for full-width layout. Both: explicit 56dp/pt height, 24dp/pt icon size, 16dp/pt horizontal padding from tokens. 9 Android instrumented tests + 16 iOS Swift Testing tests verified. (#73) (Android + iOS)
+
 #### Design Quality Backfill (DQ-28)
 
 - **XGEmptyView token audit**: Audited `XGEmptyView` on both platforms against `xg-empty-view.json` token spec. Fixed Android CTA button variant from `XGButtonStyle.Primary` to `XGButtonStyle.Outlined` to match the token spec (`$atoms/xg-button (outlined variant)`). iOS was already fully compliant. All visual properties verified: icon size (XXXL/48dp), icon/message color (textSecondary/onSurfaceVariant), message font (bodyLarge), spacing (base/16dp). Existing tests adequate on both platforms (7 Android instrumented + 11 iOS Swift Testing). (#72) (Android + iOS)

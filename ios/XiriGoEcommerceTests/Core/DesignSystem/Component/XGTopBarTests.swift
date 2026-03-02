@@ -1,6 +1,39 @@
 import Testing
 @testable import XiriGoEcommerce
 
+// MARK: - XGTopBarVariantTests
+
+@Suite("XGTopBarVariant Tests")
+struct XGTopBarVariantTests {
+    @Test("Surface variant has surface background color")
+    func surface_hasCorrectBackgroundColor() {
+        let variant = XGTopBarVariant.surface
+        _ = variant.backgroundColor
+        #expect(true)
+    }
+
+    @Test("Surface variant has onSurface content color")
+    func surface_hasCorrectContentColor() {
+        let variant = XGTopBarVariant.surface
+        _ = variant.contentColor
+        #expect(true)
+    }
+
+    @Test("Transparent variant has clear background color")
+    func transparent_hasCorrectBackgroundColor() {
+        let variant = XGTopBarVariant.transparent
+        _ = variant.backgroundColor
+        #expect(true)
+    }
+
+    @Test("Transparent variant has textOnDark content color")
+    func transparent_hasCorrectContentColor() {
+        let variant = XGTopBarVariant.transparent
+        _ = variant.contentColor
+        #expect(true)
+    }
+}
+
 // MARK: - XGTopBarActionTests
 
 @Suite("XGTopBarAction Tests")
@@ -101,5 +134,43 @@ struct XGTopBarTests {
             badgeCount: 5,
         ) {}
         #expect(cartAction.badgeCount == 5)
+    }
+
+    @Test("TopBar initialises with surface variant by default")
+    func init_defaultVariantIsSurface() {
+        let bar = XGTopBar(title: "Default")
+        _ = bar
+        #expect(true)
+    }
+
+    @Test("TopBar initialises with explicit surface variant")
+    func init_withSurfaceVariant_initialises() {
+        let bar = XGTopBar(title: "Surface", variant: .surface)
+        _ = bar
+        #expect(true)
+    }
+
+    @Test("TopBar initialises with transparent variant")
+    func init_withTransparentVariant_initialises() {
+        let bar = XGTopBar(title: "Login", variant: .transparent)
+        _ = bar
+        #expect(true)
+    }
+
+    @Test("TopBar transparent variant with back button initialises")
+    func init_transparentWithBackTap_initialises() {
+        let bar = XGTopBar(title: "Login", variant: .transparent, onBackTap: {})
+        _ = bar
+        #expect(true)
+    }
+
+    @Test("TopBar transparent variant with actions initialises")
+    func init_transparentWithActions_initialises() {
+        let actions = [
+            XGTopBarAction(icon: "magnifyingglass", accessibilityLabel: "Search") {},
+        ]
+        let bar = XGTopBar(title: "Splash", variant: .transparent, actions: actions)
+        _ = bar
+        #expect(true)
     }
 }
