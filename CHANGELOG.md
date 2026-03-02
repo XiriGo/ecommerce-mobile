@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-27)
+
+- **XGErrorView crossfade transition upgrade**: Added crossfade transition to `XGErrorView` on both Android and iOS using `XGMotion.Crossfade.CONTENT_SWITCH` (Android, 200ms) / `XGMotion.Crossfade.contentSwitch` (iOS, 0.2s). New overload accepts `isError: Boolean/Bool` and a content slot, enabling smooth opacity crossfade between content and error state. Android uses `AnimatedContent` with `fadeIn`/`fadeOut` tween; iOS uses `Group` with `.animation(.easeInOut)` and `.transition(.opacity)`. Extracted shared `ErrorContent` layout (icon + message + retry button) into a private composable/struct. Backward compatible: existing `XGErrorView(message:, onRetry:)` call sites unchanged. All visual properties from design tokens (`xg-error-view.json`). 13 Android instrumented tests + 15 iOS Swift Testing tests verified. (#71) (Android + iOS)
+
 #### Design Quality Backfill (DQ-23)
 
 - **XGHeroBanner shimmer + motion upgrade**: Added `HeroBannerSkeleton` shimmer loading placeholder on both Android and iOS using `SkeletonBox` + `SkeletonLine` skeleton primitives. Skeleton mirrors the banner layout with full-width shimmer background, overlaid tag/headline/subtitle skeleton lines. Added `XGMotion.Scroll.AUTO_SCROLL_INTERVAL_MS` (Android, 5000L) / `XGMotion.Scroll.autoScrollInterval` (iOS, 5.0s) centralized motion token for carousel auto-scroll interval. Replaced hardcoded auto-scroll constants in HomeScreen on both platforms. Updated `xg-hero-banner.json` with skeleton section and autoScroll reference, `motion.json` with `autoScrollIntervalMs`. Verified gradient overlay and image shimmer already use design tokens (no changes needed). 4 Android instrumented tests + 2 Android unit tests + 8 iOS Swift Testing tests verified. (#67) (Android + iOS)

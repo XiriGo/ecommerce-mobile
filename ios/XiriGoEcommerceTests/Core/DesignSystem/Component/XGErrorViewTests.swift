@@ -1,3 +1,4 @@
+import SwiftUI
 import Testing
 @testable import XiriGoEcommerce
 
@@ -8,28 +9,27 @@ private let swiftUIDisabledReason: Comment = "SwiftUI body requires runtime envi
 @Suite("XGErrorView Tests")
 @MainActor
 struct XGErrorViewTests {
-    // MARK: - Initialisation
+    // MARK: - Static init (backward compatible)
 
     @Test("ErrorView initialises with message only")
     func init_withMessageOnly_initialises() {
         let view = XGErrorView(message: "Something went wrong")
         _ = view
-        #expect(true)
+        #expect(view.isError)
     }
 
-    @Test("ErrorView initialises with message and no-op retry handler")
+    @Test("ErrorView initialises with message and retry handler")
     func init_withRetryHandler_initialises() {
-        // Pass a no-op closure that does not capture mutable state (Swift 6 Sendable safe)
         let view = XGErrorView(message: "Network error", onRetry: {})
         _ = view
-        #expect(true)
+        #expect(view.isError)
     }
 
-    @Test("ErrorView initialises without retry handler by default")
+    @Test("ErrorView static init defaults onRetry to nil")
     func init_defaultOnRetryIsNil() {
         let view = XGErrorView(message: "Error")
         _ = view
-        #expect(true)
+        #expect(view.message == "Error")
     }
 
     // MARK: - Message Content
@@ -38,15 +38,65 @@ struct XGErrorViewTests {
     func init_nonEmptyMessage_accepted() {
         let message = "Connection lost. Please check your internet."
         let view = XGErrorView(message: message)
-        _ = view
-        #expect(true)
+        #expect(view.message == message)
     }
 
     @Test("ErrorView accepts generic error message")
     func init_genericErrorMessage_accepted() {
         let view = XGErrorView(message: "An unexpected error occurred")
-        _ = view
-        #expect(true)
+        #expect(view.message == "An unexpected error occurred")
+    }
+
+    // MARK: - Crossfade init
+
+    @Test("ErrorView crossfade init with isError=true")
+    func init_crossfade_isErrorTrue_initialises() {
+        let view = XGErrorView(
+            message: "Error",
+            isError: true,
+            onRetry: {},
+            content: { Text(verbatim: "Content") },
+        )
+        #expect(view.isError)
+        #expect(view.message == "Error")
+    }
+
+    @Test("ErrorView crossfade init with isError=false")
+    func init_crossfade_isErrorFalse_initialises() {
+        let view = XGErrorView(
+            message: "Error",
+            isError: false,
+            content: { Text(verbatim: "Content") },
+        )
+        #expect(!view.isError)
+    }
+
+    @Test("ErrorView crossfade init without onRetry defaults to nil")
+    func init_crossfade_defaultOnRetryIsNil() {
+        let view = XGErrorView(
+            message: "Error",
+            isError: true,
+            content: { Text(verbatim: "Content") },
+        )
+        #expect(view.isError)
+    }
+
+    // MARK: - isError property
+
+    @Test("isError property reflects state correctly")
+    func isError_reflectsCorrectState() {
+        let errorView = XGErrorView(
+            message: "Error",
+            isError: true,
+            content: { Text(verbatim: "Content") },
+        )
+        let contentView = XGErrorView(
+            message: "Error",
+            isError: false,
+            content: { Text(verbatim: "Content") },
+        )
+        #expect(errorView.isError)
+        #expect(!contentView.isError)
     }
 
     // MARK: - Retry Action
@@ -71,7 +121,6 @@ struct XGErrorViewTests {
 
     @Test("ErrorView with onRetry shows retry button (onRetry non-nil)")
     func init_withOnRetry_nonNilHandler() {
-        // The view renders a XGButton only when onRetry is non-nil
         let view = XGErrorView(message: "Err", onRetry: {})
         _ = view
         #expect(true)
@@ -82,6 +131,14 @@ struct XGErrorViewTests {
         let view = XGErrorView(message: "Err")
         _ = view
         #expect(true)
+    }
+
+    // MARK: - Static convenience sets isError to true
+
+    @Test("Static convenience init sets isError to true")
+    func staticConvenience_setsIsErrorTrue() {
+        let view = XGErrorView(message: "Error message")
+        #expect(view.isError)
     }
 
     // MARK: - Body
