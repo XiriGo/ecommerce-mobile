@@ -23,7 +23,7 @@ struct HomeScreen: View {
         Group {
             switch viewModel.uiState {
                 case .loading:
-                    XGLoadingView()
+                    HomeScreenSkeleton()
 
                 case let .error(message):
                     XGErrorView(

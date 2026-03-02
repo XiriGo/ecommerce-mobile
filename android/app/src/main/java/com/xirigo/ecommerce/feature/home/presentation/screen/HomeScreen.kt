@@ -45,7 +45,6 @@ import com.xirigo.ecommerce.core.designsystem.component.XGDailyDealCard
 import com.xirigo.ecommerce.core.designsystem.component.XGErrorView
 import com.xirigo.ecommerce.core.designsystem.component.XGFlashSaleBanner
 import com.xirigo.ecommerce.core.designsystem.component.XGHeroBanner
-import com.xirigo.ecommerce.core.designsystem.component.XGLoadingView
 import com.xirigo.ecommerce.core.designsystem.component.XGPaginationDots
 import com.xirigo.ecommerce.core.designsystem.component.XGPriceLayout
 import com.xirigo.ecommerce.core.designsystem.component.XGPriceSize
@@ -60,6 +59,7 @@ import com.xirigo.ecommerce.feature.home.domain.model.FlashSale
 import com.xirigo.ecommerce.feature.home.domain.model.HomeBanner
 import com.xirigo.ecommerce.feature.home.domain.model.HomeCategory
 import com.xirigo.ecommerce.feature.home.domain.model.HomeProduct
+import com.xirigo.ecommerce.feature.home.presentation.component.HomeScreenSkeleton
 import com.xirigo.ecommerce.feature.home.presentation.state.HomeEvent
 import com.xirigo.ecommerce.feature.home.presentation.state.HomeScreenData
 import com.xirigo.ecommerce.feature.home.presentation.state.HomeUiState
@@ -90,7 +90,7 @@ private fun HomeScreenContent(
 ) {
     when (uiState) {
         is HomeUiState.Loading -> {
-            XGLoadingView(modifier = modifier)
+            HomeScreenSkeleton(modifier = modifier)
         }
         is HomeUiState.Error -> {
             XGErrorView(
