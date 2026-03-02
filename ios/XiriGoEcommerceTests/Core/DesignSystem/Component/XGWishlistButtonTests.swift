@@ -128,9 +128,9 @@ struct XGWishlistButtonLayoutTokenTests {
         #expect(iconSize == buttonSize / 2)
     }
 
-    @Test("Minimum touch target is 44pt (XGSpacing.minTouchTarget)")
-    func minTouchTarget_is44() {
-        #expect(XGSpacing.minTouchTarget == 44)
+    @Test("Minimum touch target is 48pt (XGSpacing.minTouchTarget)")
+    func minTouchTarget_is48() {
+        #expect(XGSpacing.minTouchTarget == 48)
     }
 
     @Test("Bounce scale is 1.2 per component token spec")

@@ -1,5 +1,23 @@
 import SwiftUI
 
+// MARK: - FilterChipTokens
+
+// Token source: shared/design-tokens/components/atoms/xg-chip.json
+
+private enum FilterChipTokens {
+    /// Height from token `variants.filter.height` = 36.
+    static let height: CGFloat = 36
+
+    /// Corner radius from token `variants.filter.cornerRadius` = 18.
+    static let cornerRadius: CGFloat = 18
+
+    /// Horizontal padding from token `variants.filter.horizontalPadding` = 16.
+    static let horizontalPadding: CGFloat = XGSpacing.base
+
+    /// Gap between icon and text from token `variants.filter.gap` = 8.
+    static let gap: CGFloat = XGSpacing.sm
+}
+
 // MARK: - XGFilterChip
 
 struct XGFilterChip: View {
@@ -25,7 +43,7 @@ struct XGFilterChip: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: XGSpacing.xs) {
+            HStack(spacing: FilterChipTokens.gap) {
                 if isSelected {
                     Image(systemName: "checkmark")
                         .font(.system(size: XGSpacing.IconSize.small))
@@ -35,13 +53,13 @@ struct XGFilterChip: View {
                 }
 
                 Text(label)
-                    .font(XGTypography.labelLarge)
+                    .font(XGTypography.bodyMedium)
             }
-            .padding(.horizontal, XGSpacing.md)
-            .padding(.vertical, XGSpacing.sm)
+            .padding(.horizontal, FilterChipTokens.horizontalPadding)
+            .frame(height: FilterChipTokens.height)
             .foregroundStyle(chipForeground)
             .background(chipBackground)
-            .clipShape(Capsule())
+            .clipShape(RoundedRectangle(cornerRadius: FilterChipTokens.cornerRadius))
             .overlay(chipBorder)
         }
         .accessibilityLabel(label)
@@ -56,17 +74,17 @@ struct XGFilterChip: View {
     private let action: () -> Void
 
     private var chipForeground: Color {
-        isSelected ? XGColors.onSecondaryContainer : XGColors.onSurfaceVariant
+        isSelected ? XGColors.filterPillTextActive : XGColors.filterPillText
     }
 
     private var chipBackground: Color {
-        isSelected ? XGColors.secondaryContainer : XGColors.surfaceVariant
+        isSelected ? XGColors.filterPillBackgroundActive : XGColors.filterPillBackground
     }
 
     @ViewBuilder
     private var chipBorder: some View {
         if !isSelected {
-            Capsule()
+            RoundedRectangle(cornerRadius: FilterChipTokens.cornerRadius)
                 .stroke(XGColors.outline, lineWidth: 1)
         }
     }
@@ -111,7 +129,7 @@ struct XGCategoryChip: View {
             }
             .padding(.horizontal, XGSpacing.md)
             .padding(.vertical, XGSpacing.sm)
-            .background(XGColors.surfaceVariant)
+            .background(XGColors.surfaceTertiary)
             .clipShape(Capsule())
         }
         .accessibilityLabel(label)

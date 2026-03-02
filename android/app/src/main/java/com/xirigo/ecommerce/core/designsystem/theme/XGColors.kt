@@ -79,6 +79,15 @@ object XGColors {
 
     val DarkScrim = Color(0xFF000000)
 
+    // Filter Pill Colors (from shared/design-tokens/foundations/colors.json — light.filterPill*)
+    val FilterPillBackground = Color(0xFFF1F5F9) // light.filterPillBackground
+    val FilterPillBackgroundActive = Color(0xFF6200FF) // light.filterPillBackgroundActive
+    val FilterPillText = Color(0xFF333333) // light.filterPillText
+    val FilterPillTextActive = Color(0xFFFFFFFF) // light.filterPillTextActive
+
+    // Surface Tertiary
+    val SurfaceTertiary = Color(0xFFF1F5F9) // light.surfaceTertiary
+
     // Semantic Colors (from shared/design-tokens/foundations/colors.json — semantic section)
     val Success = Color(0xFF22C55E) // semantic.success
     val OnSuccess = Color(0xFFFFFFFF) // semantic.onSuccess

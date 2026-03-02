@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+#### Design Quality Backfill (DQ-18)
+
+- **XGChip token audit**: Audited and aligned `XGFilterChip` and `XGCategoryChip` on both platforms against `shared/design-tokens/components/atoms/xg-chip.json`. Android: replaced Material 3 `FilterChip` defaults with explicit token values -- height 36dp, cornerRadius 18dp (`RoundedCornerShape`), bodyMedium font, active colors `FilterPillBackgroundActive`/`FilterPillTextActive`, inactive colors `FilterPillBackground`/`FilterPillText`, inactive border `XGColors.Outline` 1dp, selected icon size 16dp (`iconSize.small`), category icon size fixed from 18dp to 24dp (`iconSize.medium`), category background changed to `SurfaceTertiary`. iOS: replaced `Capsule()` with `RoundedRectangle(cornerRadius: 18)`, added explicit `frame(height: 36)`, changed font to `bodyMedium`, replaced semantic color aliases with dedicated `filterPillBackgroundActive`/`filterPillTextActive`/`filterPillBackground`/`filterPillText` tokens, category background changed from `surfaceVariant` to `surfaceTertiary`. Added 5 new color tokens (`FilterPillBackground`, `FilterPillBackgroundActive`, `FilterPillText`, `FilterPillTextActive`, `SurfaceTertiary`) to `XGColors` on both platforms. 15 Android instrumented tests + 24 iOS Swift Testing tests verified. (#62) (Android + iOS)
+
 ### Added
 
 #### Design Quality Backfill (DQ-32)

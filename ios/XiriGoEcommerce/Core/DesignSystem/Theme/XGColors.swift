@@ -56,6 +56,17 @@ enum XGColors {
     static let iconOnDark = Color.white
     static let iconButtonBackground = Color(hex: "#F3F4F6")
 
+    // MARK: - Filter Pill Colors
+
+    static let filterPillBackground = Color(hex: "#F1F5F9")
+    static let filterPillBackgroundActive = Color(hex: "#6200FF")
+    static let filterPillText = Color(hex: "#333333")
+    static let filterPillTextActive = Color.white
+
+    // MARK: - Surface Tertiary
+
+    static let surfaceTertiary = Color(hex: "#F1F5F9")
+
     // MARK: - Input Colors
 
     static let inputBackground = Color(hex: "#F9FAFB")
