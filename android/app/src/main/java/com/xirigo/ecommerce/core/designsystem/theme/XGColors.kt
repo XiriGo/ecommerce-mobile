@@ -150,4 +150,11 @@ object XGColors {
     // Delivery
     val DeliveryText = Color(0xFF94D63A) // semantic.deliveryText
     val AddToCart = Color(0xFF94D63A) // semantic.addToCart
+
+    // Social Auth Colors (from socialAuth section)
+    val SocialGoogleBlue = Color(0xFF4285F4) // socialAuth.googleBlue
+    val SocialGoogleGreen = Color(0xFF34A853) // socialAuth.googleGreen
+    val SocialGoogleYellow = Color(0xFFFBBC05) // socialAuth.googleYellow
+    val SocialGoogleRed = Color(0xFFEA4335) // socialAuth.googleRed
+    val SocialAppleBlack = Color(0xFF000000) // socialAuth.appleBlack
 }
