@@ -69,10 +69,9 @@ private val ReservedDeliveryHeight = 14.dp
 private val ReservedAddToCartHeight = 38.dp
 
 // Skeleton line height for title placeholder
-private val SkeletonTitleLineHeight = 14.dp
 private val SkeletonTitleLineSmallHeight = 12.dp
-private val SkeletonPriceLineWidth = 0.6f
-private val SkeletonRatingLineWidth = 0.4f
+private const val SKELETON_PRICE_LINE_WIDTH = 0.6f
+private const val SKELETON_RATING_LINE_WIDTH = 0.4f
 
 /** Product card with image, title, price, rating, delivery label, and optional add-to-cart. */
 @Composable
@@ -415,13 +414,13 @@ fun ProductCardSkeleton(modifier: Modifier = Modifier) {
                 // Price line (60% width)
                 SkeletonLine(
                     width = 0.dp,
-                    modifier = Modifier.fillMaxWidth(fraction = SkeletonPriceLineWidth),
+                    modifier = Modifier.fillMaxWidth(fraction = SKELETON_PRICE_LINE_WIDTH),
                 )
                 // Rating line (40% width)
                 SkeletonLine(
                     width = 0.dp,
                     height = SkeletonTitleLineSmallHeight,
-                    modifier = Modifier.fillMaxWidth(fraction = SkeletonRatingLineWidth),
+                    modifier = Modifier.fillMaxWidth(fraction = SKELETON_RATING_LINE_WIDTH),
                 )
                 Spacer(modifier = Modifier.height(CardPadding))
             }
