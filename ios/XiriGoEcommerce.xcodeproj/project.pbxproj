@@ -76,6 +76,8 @@
 		736FCF9067F82CD1D1BB48A2 /* XGErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554986508E1FAAE519489E49 /* XGErrorView.swift */; };
 		76683B3661E0812BAC9AAFB0 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254C2A30455F31F0F2F795C /* HomeScreen.swift */; };
 		7713FB41E71969CE98B66A68 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AD7D3FED082C37F8DBCC82C6 /* .swiftlint.yml */; };
+		A2148C2827054D26BCBE643D /* XGDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB620FB328334A6A919F0311 /* XGDivider.swift */; };
+		7A868740327D407E8122289E /* XGDividerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CC9D570C0E48B492EDFB55 /* XGDividerTests.swift */; };
 		77AA9EB3BABBDB321F11EFE7 /* XGEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3950964CA5396EC1767917 /* XGEmptyView.swift */; };
 		78640EFDB391A9CC4DF9F6B0 /* XGLogoMarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D27438F92E92A568F0864E /* XGLogoMarkTests.swift */; };
 		7968338AD7B2CF980DAB3AC1 /* XiriGoEcommerceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E25D0F208C56E96FB7F796D /* XiriGoEcommerceApp.swift */; };
@@ -376,6 +378,8 @@
 		FA2A8CD0216980EC8E2A8EF1 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		FD3D21C88ADFEE454FF042F9 /* XGButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGButton.swift; sourceTree = "<group>"; };
 		FD5709CADB8D98B3C64C22CA /* OnboardingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingRepository.swift; sourceTree = "<group>"; };
+		EB620FB328334A6A919F0311 /* XGDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGDivider.swift; sourceTree = "<group>"; };
+		E0CC9D570C0E48B492EDFB55 /* XGDividerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGDividerTests.swift; sourceTree = "<group>"; };
 		FF3950964CA5396EC1767917 /* XGEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGEmptyView.swift; sourceTree = "<group>"; };
 		AD57213A9C27D845085D8168 /* HomeBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBanner.swift; sourceTree = "<group>"; };
 		093B0A04697374C5E20E6E62 /* HomeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategory.swift; sourceTree = "<group>"; };
@@ -491,6 +495,7 @@
 				2C53B8F847465284B8E10D02 /* XGButtonTests.swift */,
 				75F745022E4A018757BA6ECB /* XGCardTests.swift */,
 				7C217147B91F6CAA7B8972F3 /* XGChipTests.swift */,
+				E0CC9D570C0E48B492EDFB55 /* XGDividerTests.swift */,
 				159628B709FF5E7444561704 /* XGEmptyViewTests.swift */,
 				D66E2A1E727488DB7D86F888 /* XGErrorViewTests.swift */,
 				7A4880586786F5CB2F364639 /* XGImageTests.swift */,
@@ -1079,6 +1084,7 @@
 				FD3D21C88ADFEE454FF042F9 /* XGButton.swift */,
 				2E2905E53F5CA6D7325B01E2 /* XGCard.swift */,
 				CA561F63F4D664E347DAA9AE /* XGChip.swift */,
+				EB620FB328334A6A919F0311 /* XGDivider.swift */,
 				FF3950964CA5396EC1767917 /* XGEmptyView.swift */,
 				554986508E1FAAE519489E49 /* XGErrorView.swift */,
 				A967395803F8B91CDEBBD4BA /* XGImage.swift */,
@@ -1429,6 +1435,7 @@
 				5F7CF11B7C7BB69E99EC44AE /* XGColorsTests.swift in Sources */,
 				1B1B154A9F9F85EB9D31405A /* XGCornerRadiusTests.swift in Sources */,
 				CBBEE57E04C13C63CDBB8BDB /* XGElevationTests.swift in Sources */,
+				7A868740327D407E8122289E /* XGDividerTests.swift in Sources */,
 				F7F3804545B1D98E01DA6811 /* XGEmptyViewTests.swift in Sources */,
 				3CF87D08F5CFDCBC847F48BC /* XGErrorViewTests.swift in Sources */,
 				32313EFC536EBA930C81203C /* XGImageTests.swift in Sources */,
@@ -1519,6 +1526,7 @@
 				6706279B5AA2043968FF4CF4 /* XGColors.swift in Sources */,
 				FD1D4CD140B4C0534519593D /* XGCornerRadius.swift in Sources */,
 				8A79B552D14B649EF97A103E /* XGElevation.swift in Sources */,
+				A2148C2827054D26BCBE643D /* XGDivider.swift in Sources */,
 				77AA9EB3BABBDB321F11EFE7 /* XGEmptyView.swift in Sources */,
 				736FCF9067F82CD1D1BB48A2 /* XGErrorView.swift in Sources */,
 				95F34BEBDC6BC93A44E79D21 /* XGImage.swift in Sources */,
