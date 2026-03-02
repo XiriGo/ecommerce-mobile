@@ -1,2736 +1,2755 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "(%@)" : {
-
-    },
-    "%@" : {
-
+  "sourceLanguage": "en",
+  "strings": {
+    "(%@)": {},
+    "%@": {},
+    "%@/%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@/%2$@"
+          }
+        }
+      }
     },
-    "%@/%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@/%2$@"
+    "app_name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XiriGo Ecommerce"
+          }
+        },
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XiriGo Ecommerce"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XiriGo Ecommerce"
           }
         }
       }
     },
-    "app_name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XiriGo Ecommerce"
+    "auth_social_continue_apple": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XiriGo Ecommerce"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XiriGo Ecommerce"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
           }
         }
       }
     },
-    "auth_social_continue_apple" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple"
+    "auth_social_continue_google": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google"
           }
         }
       }
     },
-    "auth_social_continue_google" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Google"
+    "cart_empty_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your cart is empty"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Google"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il-kartella tiegħek hija vojta"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Google"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepetiniz boş"
           }
         }
       }
     },
-    "cart_empty_message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your cart is empty"
+    "cart_start_shopping": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Shopping"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Il-kartella tiegħek hija vojta"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ibda Tixtri"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sepetiniz boş"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alışverişe Başla"
           }
         }
       }
     },
-    "cart_start_shopping" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start Shopping"
+    "categories_automotive": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automotive"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ibda Tixtri"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Awtomobilistiku"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alışverişe Başla"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otomotiv"
           }
         }
       }
     },
-    "categories_automotive" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Automotive"
+    "categories_beauty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beauty"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Awtomobilistiku"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sbuħija"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otomotiv"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Güzellik"
           }
         }
       }
     },
-    "categories_beauty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beauty"
+    "categories_item_count %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld items"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sbuħija"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld oġġetti"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Güzellik"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ürün"
           }
         }
       }
     },
-    "categories_item_count %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld items"
+    "categories_search_placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search categories..."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld oġġetti"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fittex kategoriji..."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld ürün"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategori ara..."
           }
         }
       }
     },
-    "categories_search_placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search categories..."
+    "categories_toys": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toys & Games"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fittex kategoriji..."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ġugarelli u Logħob"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategori ara..."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oyuncak ve Oyunlar"
           }
         }
       }
     },
-    "categories_toys" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toys & Games"
+    "common_add_to_cart": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Cart"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ġugarelli u Logħob"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Żled fil-Basket"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oyuncak ve Oyunlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepete Ekle"
           }
         }
       }
     },
-    "common_add_to_cart" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add to Cart"
+    "common_add_to_wishlist": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to wishlist"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Żled fil-Basket"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Żid mal-wishlist"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sepete Ekle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorilere ekle"
           }
         }
       }
     },
-    "common_add_to_wishlist" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add to wishlist"
+    "common_back_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Żid mal-wishlist"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lura"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favorilere ekle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geri"
           }
         }
       }
     },
-    "common_back_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Back"
+    "common_cancel_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lura"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ikkanella"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iptal"
           }
         }
       }
     },
-    "common_cancel_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
+    "common_close_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ikkanella"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agħlaq"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iptal"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapat"
           }
         }
       }
     },
-    "common_close_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Close"
+    "common_decrease_quantity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decrease quantity"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agħlaq"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naqqas il-kwantità"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kapat"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miktarı azalt"
           }
         }
       }
     },
-    "common_decrease_quantity" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Decrease quantity"
+    "common_double_tap_to_view": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double tap to view"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Naqqas il-kwantità"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ittappja darbtejn biex tara"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Miktarı azalt"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çift dokunarak görüntüle"
           }
         }
       }
     },
-    "common_double_tap_to_view" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Double tap to view"
+    "common_empty_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to show"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ittappja darbtejn biex tara"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xejn x'għandek tara"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Çift dokunarak görüntüle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gösterilecek bir şey yok"
           }
         }
       }
     },
-    "common_empty_message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nothing to show"
+    "common_error_generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xejn x'għandek tara"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xi ħaġa marret ħażin"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gösterilecek bir şey yok"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir şeyler ters gitti"
           }
         }
       }
     },
-    "common_error_generic" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Something went wrong"
+    "common_error_icon_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xi ħaġa marret ħażin"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Żball"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bir şeyler ters gitti"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hata"
           }
         }
       }
     },
-    "common_error_icon_description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error"
+    "common_error_network": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection error. Please check your internet."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Żball"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problema fil-konnessjoni. Iccekja l-internet tieghek."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hata"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Baglanti hatasi. Lutfen internetinizi kontrol edin."
           }
         }
       }
     },
-    "common_error_network" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Connection error. Please check your internet."
+    "common_error_not_found": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The requested item was not found."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Problema fil-konnessjoni. Iccekja l-internet tieghek."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L-oggett mitlub ma nstabx."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Baglanti hatasi. Lutfen internetinizi kontrol edin."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aranan oge bulunamadi."
           }
         }
       }
     },
-    "common_error_not_found" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The requested item was not found."
+    "common_error_server": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong. Please try again later."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L-oggett mitlub ma nstabx."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xi haga marret hazin. Erga' ipprova aktar tard."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aranan oge bulunamadi."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir seyler ters gitti. Lutfen daha sonra tekrar deneyin."
           }
         }
       }
     },
-    "common_error_server" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Something went wrong. Please try again later."
+    "common_error_unauthorized": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please log in to continue."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xi haga marret hazin. Erga' ipprova aktar tard."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jekk joghgbok idhlol biex tkompli."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bir seyler ters gitti. Lutfen daha sonra tekrar deneyin."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Devam etmek icin lutfen giris yapin."
           }
         }
       }
     },
-    "common_error_unauthorized" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please log in to continue."
+    "common_error_unknown": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An unexpected error occurred."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jekk joghgbok idhlol biex tkompli."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sehhet problema mhux mistennija."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Devam etmek icin lutfen giris yapin."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beklenmedik bir hata olustu."
           }
         }
       }
     },
-    "common_error_unknown" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "An unexpected error occurred."
+    "common_hide_password": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide password"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sehhet problema mhux mistennija."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aħbi l-password"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beklenmedik bir hata olustu."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şifreyi gizle"
           }
         }
       }
     },
-    "common_hide_password" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hide password"
+    "common_increase_quantity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Increase quantity"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aħbi l-password"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Żid il-kwantità"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şifreyi gizle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miktarı artır"
           }
         }
       }
     },
-    "common_increase_quantity" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Increase quantity"
+    "common_loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading..."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Żid il-kwantità"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tagħbija..."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Miktarı artır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yükleniyor..."
           }
         }
       }
     },
-    "common_loading" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading..."
+    "common_loading_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading..."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tagħbija..."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qed jillowdja..."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yükleniyor..."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yukleniyor..."
           }
         }
       }
     },
-    "common_loading_message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading..."
+    "common_navigate_back": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go back"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qed jillowdja..."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mur lura"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yukleniyor..."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geri git"
           }
         }
       }
     },
-    "common_navigate_back" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go back"
+    "common_notifications_count %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld notifications"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mur lura"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld notifiki"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri git"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld bildirim"
           }
         }
       }
     },
-    "common_notifications_count %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld notifications"
+    "common_ok_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld notifiki"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld bildirim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamam"
           }
         }
       }
     },
-    "common_ok_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
+    "common_price_label %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Price: %1$@ %2$@"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prezz: %1$@ %2$@"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamam"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fiyat: %1$@ %2$@"
           }
         }
       }
     },
-    "common_price_label %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Price: %1$@ %2$@"
+    "common_quantity_value %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quantity: %lld"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prezz: %1$@ %2$@"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kwantità: %lld"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fiyat: %1$@ %2$@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miktar: %lld"
           }
         }
       }
     },
-    "common_quantity_value %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quantity: %lld"
+    "common_rating_description %lf %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rating: %1$.1f out of %2$lld"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kwantità: %lld"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klassifika: %1$.1f minn %2$lld"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Miktar: %lld"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puan: %2$lld üzerinden %1$.1f"
           }
         }
       }
     },
-    "common_rating_description %lf %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rating: %1$.1f out of %2$lld"
+    "common_remove_from_wishlist": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from wishlist"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Klassifika: %1$.1f minn %2$lld"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neħħi mill-wishlist"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puan: %2$lld üzerinden %1$.1f"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorilerden kaldır"
           }
         }
       }
     },
-    "common_remove_from_wishlist" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove from wishlist"
+    "common_retry_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retry"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neħħi mill-wishlist"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erġa' pprova"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favorilerden kaldır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekrar Dene"
           }
         }
       }
     },
-    "common_retry_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Retry"
+    "common_reviews_count %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%lld reviews)"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erġa' pprova"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%lld reviżjonijiet)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tekrar Dene"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%lld değerlendirme)"
           }
         }
       }
     },
-    "common_reviews_count %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(%lld reviews)"
+    "common_sale_price_label %@ %@ %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sale price: %1$@ %2$@, was %3$@ %4$@"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(%lld reviżjonijiet)"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prezz tal-bejgħ: %1$@ %2$@, kien %3$@ %4$@"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(%lld değerlendirme)"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirimli fiyat: %1$@ %2$@, eskisi %3$@ %4$@"
           }
         }
       }
     },
-    "common_sale_price_label %@ %@ %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sale price: %1$@ %2$@, was %3$@ %4$@"
+    "common_search_placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prezz tal-bejgħ: %1$@ %2$@, kien %3$@ %4$@"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fittex"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İndirimli fiyat: %1$@ %2$@, eskisi %3$@ %4$@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ara"
           }
         }
       }
     },
-    "common_search_placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search"
+    "common_see_all": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See All"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fittex"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ara Kollox"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ara"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tümünü Gör"
           }
         }
       }
     },
-    "common_see_all" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "See All"
+    "common_show_password": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show password"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ara Kollox"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uri l-password"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tümünü Gör"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şifreyi göster"
           }
         }
       }
     },
-    "common_show_password" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show password"
+    "common_tab_cart": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cart"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uri l-password"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Karrettun"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şifreyi göster"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepet"
           }
         }
       }
     },
-    "common_tab_cart" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cart"
+    "common_tab_categories": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Karrettun"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriji"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sepet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriler"
           }
         }
       }
     },
-    "common_tab_categories" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categories"
+    "common_tab_home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoriji"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dar"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoriler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana sayfa"
           }
         }
       }
     },
-    "common_tab_home" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
+    "common_tab_profile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dar"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana sayfa"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil"
           }
         }
       }
     },
-    "common_tab_profile" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
+    "home_banner_deals_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limited time offers just for you"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offerti b'ħin limitat għalik biss"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sadece size özel sınırlı süreli fırsatlar"
           }
         }
       }
     },
-    "home_banner_deals_subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limited time offers just for you"
+    "home_banner_deals_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Deals"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Offerti b'ħin limitat għalik biss"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offerti tal-Ġurnata"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sadece size özel sınırlı süreli fırsatlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Fırsatları"
           }
         }
       }
     },
-    "home_banner_deals_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Deals"
+    "home_banner_new_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check out the latest trends"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Offerti tal-Ġurnata"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ara l-aħħar xejriet"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günün Fırsatları"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En son trendlere göz atın"
           }
         }
       }
     },
-    "home_banner_new_subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Check out the latest trends"
+    "home_banner_new_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Collection"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ara l-aħħar xejriet"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kollezzjoni Ġdida"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En son trendlere göz atın"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni Koleksiyon"
           }
         }
       }
     },
-    "home_banner_new_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New Collection"
+    "home_banner_season_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up to 50% off selected items"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kollezzjoni Ġdida"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sa 50% tnaqqis fuq oġġetti magħżula"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yeni Koleksiyon"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seçili ürünlerde %50'ye varan indirim"
           }
         }
       }
     },
-    "home_banner_season_subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Up to 50% off selected items"
+    "home_banner_tag_hot_deals": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOT DEALS"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sa 50% tnaqqis fuq oġġetti magħżula"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OFFERTI SĦAN"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seçili ürünlerde %50'ye varan indirim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FIRSAT ÜRÜNLERİ"
           }
         }
       }
     },
-    "home_banner_tag_hot_deals" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HOT DEALS"
+    "home_banner_tag_new_season": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NEW SEASON"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OFFERTI SĦAN"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STAĠUN ĠDID"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FIRSAT ÜRÜNLERİ"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YENİ SEZON"
           }
         }
       }
     },
-    "home_banner_tag_new_season" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NEW SEASON"
+    "home_banner_season_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season Sale"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "STAĠUN ĠDID"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bejgħ tal-Istaġun"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "YENİ SEZON"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sezon İndirimi"
           }
         }
       }
     },
-    "home_banner_season_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Season Sale"
+    "home_categories_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bejgħ tal-Istaġun"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriji"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sezon İndirimi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriler"
           }
         }
       }
     },
-    "home_categories_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categories"
+    "home_category_books": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoriji"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kotba"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoriler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kitaplar"
           }
         }
       }
     },
-    "home_category_books" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Books"
+    "home_category_electronics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Electronics"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotba"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elettronika"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kitaplar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elektronik"
           }
         }
       }
     },
-    "home_category_electronics" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Electronics"
+    "home_category_fashion": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fashion"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elettronika"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moda"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elektronik"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moda"
           }
         }
       }
     },
-    "home_category_fashion" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fashion"
+    "home_category_gaming": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gaming"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moda"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logħob"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moda"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oyun"
           }
         }
       }
     },
-    "home_category_gaming" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gaming"
+    "home_category_home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logħob"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dar"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oyun"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ev"
           }
         }
       }
     },
-    "home_category_home" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
+    "home_category_sports": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sports"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dar"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sports"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ev"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spor"
           }
         }
       }
     },
-    "home_category_sports" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sports"
+    "home_daily_deal_badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DAILY DEAL"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sports"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OFFERTA TAL-ĠURNATA"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spor"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GÜNÜN FIRSATI"
           }
         }
       }
     },
-    "home_daily_deal_badge" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DAILY DEAL"
+    "home_daily_deal_ended": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENDED"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OFFERTA TAL-ĠURNATA"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SPIĊĊA"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GÜNÜN FIRSATI"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SONA ERDİ"
           }
         }
       }
     },
-    "home_daily_deal_ended" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ENDED"
+    "home_daily_deal_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Deal"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SPIĊĊA"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offerta tal-Ġurnata"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SONA ERDİ"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Fırsatı"
           }
         }
       }
     },
-    "home_daily_deal_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Deal"
+    "home_daily_deal_product_name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nike Air Zoom Pegasus"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Offerta tal-Ġurnata"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nike Air Zoom Pegasus"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günün Fırsatı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nike Air Zoom Pegasus"
           }
         }
       }
     },
-    "home_daily_deal_product_name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nike Air Zoom Pegasus"
+    "home_delivery_badge_sample": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Order before 23:59, delivered Monday"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nike Air Zoom Pegasus"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ordna qabel 23:59, ikkunsinjat it-Tnejn"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nike Air Zoom Pegasus"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "23:59 öncesi sipariş, Pazartesi teslim"
           }
         }
       }
     },
-    "home_delivery_badge_sample" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Order before 23:59, delivered Monday"
+    "home_delivery_badge_bold_part": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "23:59"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ordna qabel 23:59, ikkunsinjat it-Tnejn"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "23:59"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "23:59 öncesi sipariş, Pazartesi teslim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "23:59"
           }
         }
       }
     },
-    "home_delivery_badge_bold_part" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "23:59"
+    "home_featured_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Featured"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "23:59"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rakkomandati"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "23:59"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öne Çıkanlar"
           }
         }
       }
     },
-    "home_featured_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Featured"
+    "home_flash_sale_badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FLASH SALE"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rakkomandati"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BEJGĦ MALAJR"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Öne Çıkanlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KAMPANYA"
           }
         }
       }
     },
-    "home_flash_sale_badge" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FLASH SALE"
+    "home_flash_sale_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flash Sale"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BEJGĦ MALAJR"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bejgħ ta’ Malajr"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KAMPANYA"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirim Fırsatı"
           }
         }
       }
     },
-    "home_flash_sale_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flash Sale"
+    "home_new_arrivals_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Arrivals"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bejgħ ta’ Malajr"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waslu Ġodda"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İndirim Fırsatı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni Gelenler"
           }
         }
       }
     },
-    "home_new_arrivals_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New Arrivals"
+    "home_popular_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popular Products"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Waslu Ġodda"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prodotti Popolari"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yeni Gelenler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popüler Ürünler"
           }
         }
       }
     },
-    "home_popular_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Popular Products"
+    "home_product_backpack": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel Backpack"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prodotti Popolari"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Backpack tal-Ivvjaġġar"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Popüler Ürünler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seyahat Sırt Çantası"
           }
         }
       }
     },
-    "home_product_backpack" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Travel Backpack"
+    "home_product_headphones": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wireless Headphones Pro"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backpack tal-Ivvjaġġar"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Headphones Wireless Pro"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seyahat Sırt Çantası"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kablosuz Kulaklık Pro"
           }
         }
       }
     },
-    "home_product_headphones" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wireless Headphones Pro"
+    "home_product_jacket": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Urban Jacket"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Headphones Wireless Pro"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ġakketta Urbana"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kablosuz Kulaklık Pro"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şehir Ceketi"
           }
         }
       }
     },
-    "home_product_jacket" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Urban Jacket"
+    "home_product_keyboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mechanical Keyboard"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ġakketta Urbana"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tastiera Mekkanika"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şehir Ceketi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mekanik Klavye"
           }
         }
       }
     },
-    "home_product_keyboard" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mechanical Keyboard"
+    "home_product_lamp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Designer Desk Lamp"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tastiera Mekkanika"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lampa tal-Desk Disinjatur"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mekanik Klavye"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasarım Masa Lambası"
           }
         }
       }
     },
-    "home_product_lamp" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Designer Desk Lamp"
+    "home_product_speaker": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth Speaker"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lampa tal-Desk Disinjatur"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speaker Bluetooth"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tasarım Masa Lambası"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth Hoparlör"
           }
         }
       }
     },
-    "home_product_speaker" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth Speaker"
+    "home_product_sneakers": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sport Sneakers"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Speaker Bluetooth"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sneakers Sportivi"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth Hoparlör"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spor Ayakkabı"
           }
         }
       }
     },
-    "home_product_sneakers" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sport Sneakers"
+    "home_product_watch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Watch Elite"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sneakers Sportivi"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Watch Elite"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spor Ayakkabı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Akıllı Saat Elite"
           }
         }
       }
     },
-    "home_product_watch" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Smart Watch Elite"
+    "home_product_vase": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ceramic Vase Set"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Smart Watch Elite"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sett ta' Vażi taċ-Ċeramika"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Akıllı Saat Elite"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seramik Vazo Seti"
           }
         }
       }
     },
-    "home_product_vase" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ceramic Vase Set"
+    "home_product_yoga_mat": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yoga Mat Premium"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sett ta' Vażi taċ-Ċeramika"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yoga Mat Premium"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seramik Vazo Seti"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Yoga Matı"
           }
         }
       }
     },
-    "home_product_yoga_mat" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yoga Mat Premium"
+    "home_search_placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search products..."
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yoga Mat Premium"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fittex prodotti..."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Yoga Matı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ürün ara..."
           }
         }
       }
     },
-    "home_search_placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search products..."
+    "home_welcome_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discover amazing products"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fittex prodotti..."
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skopri prodotti tal-għaġeb"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ürün ara..."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harika ürünleri keşfedin"
           }
         }
       }
     },
-    "home_welcome_subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discover amazing products"
+    "home_welcome_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to XiriGo"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skopri prodotti tal-għaġeb"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merħba f'XiriGo"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Harika ürünleri keşfedin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XiriGo'ya Hoş Geldiniz"
           }
         }
       }
     },
-    "home_welcome_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Welcome to XiriGo"
+    "nav_cart_badge_description %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld items in cart"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Merħba f'XiriGo"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld oggetti fil-kartella"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XiriGo'ya Hoş Geldiniz"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepette %lld urun"
           }
         }
       }
     },
-    "nav_cart_badge_description %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld items in cart"
+    "nav_placeholder_coming_soon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coming soon"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld oggetti fil-kartella"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dalwaqt"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sepette %lld urun"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yakinda"
           }
         }
       }
     },
-    "nav_placeholder_coming_soon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Coming soon"
+    "nav_profile_guest_login_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log In"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dalwaqt"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idhlol"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yakinda"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giris Yap"
           }
         }
       }
     },
-    "nav_profile_guest_login_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Log In"
+    "nav_profile_guest_register_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create Account"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Idhlol"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ohlok Kont"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Giris Yap"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hesap Olustur"
           }
         }
       }
     },
-    "nav_profile_guest_register_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create Account"
+    "nav_profile_guest_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in to manage your account"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ohlok Kont"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idhlol biex tamministra l-kont tieghek"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hesap Olustur"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hesabinizi yonetmek icin giris yapin"
           }
         }
       }
     },
-    "nav_profile_guest_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Log in to manage your account"
+    "nav_tab_cart": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cart"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Idhlol biex tamministra l-kont tieghek"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kartella"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hesabinizi yonetmek icin giris yapin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepet"
           }
         }
       }
     },
-    "nav_tab_cart" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cart"
+    "nav_tab_categories": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Categories"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kartella"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriji"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sepet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriler"
           }
         }
       }
     },
-    "nav_tab_categories" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categories"
+    "nav_tab_home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoriji"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dar"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoriler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Sayfa"
           }
         }
       }
     },
-    "nav_tab_home" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
+    "nav_tab_profile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dar"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Sayfa"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil"
           }
         }
       }
     },
-    "nav_tab_profile" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
+    "onboarding_get_started_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ibda"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başla"
           }
         }
       }
     },
-    "onboarding_get_started_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Get Started"
+    "onboarding_illustration_a11y_browse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustration of marketplace browsing"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ibda"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustrazzjoni ta' browsing fis-suq"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başla"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pazar yeri gezinme illüstrasyonu"
           }
         }
       }
     },
-    "onboarding_illustration_a11y_browse" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustration of marketplace browsing"
+    "onboarding_illustration_a11y_checkout": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustration of secure checkout"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustrazzjoni ta' browsing fis-suq"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustrazzjoni ta' checkout sigur"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pazar yeri gezinme illüstrasyonu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Güvenli ödeme illüstrasyonu"
           }
         }
       }
     },
-    "onboarding_illustration_a11y_checkout" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustration of secure checkout"
+    "onboarding_illustration_a11y_compare": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustration of price comparison"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustrazzjoni ta' checkout sigur"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustrazzjoni ta' paragun tal-prezzijiet"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Güvenli ödeme illüstrasyonu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fiyat karşılaştırma illüstrasyonu"
           }
         }
       }
     },
-    "onboarding_illustration_a11y_compare" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustration of price comparison"
+    "onboarding_illustration_a11y_track": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustration of order tracking"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustrazzjoni ta' paragun tal-prezzijiet"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Illustrazzjoni ta' tracking tal-ordni"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fiyat karşılaştırma illüstrasyonu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sipariş takip illüstrasyonu"
           }
         }
       }
     },
-    "onboarding_illustration_a11y_track" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustration of order tracking"
+    "onboarding_logo_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XiriGo logo"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Illustrazzjoni ta' tracking tal-ordni"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logo ta' XiriGo"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sipariş takip illüstrasyonu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XiriGo logosu"
           }
         }
       }
     },
-    "onboarding_logo_a11y" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XiriGo logo"
+    "onboarding_page_browse_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explore a wide range of products from multiple vendors in one place"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logo ta' XiriGo"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esplora firxa wiesgħa ta' prodotti minn diversi bejjiegħa f'post wieħed"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XiriGo logosu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir çok satıcınan geniş ürün yelpazesini tek bir yerde keşfet"
           }
         }
       }
     },
-    "onboarding_page_browse_description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Explore a wide range of products from multiple vendors in one place"
+    "onboarding_page_browse_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Browse Thousands of Products"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esplora firxa wiesgħa ta' prodotti minn diversi bejjiegħa f'post wieħed"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esplora Eluf ta' Prodotti"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bir çok satıcınan geniş ürün yelpazesini tek bir yerde keşfet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Binlerce Ürünü Keşfet"
           }
         }
       }
     },
-    "onboarding_page_browse_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Browse Thousands of Products"
+    "onboarding_page_checkout_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pay securely with multiple payment options and fast processing"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esplora Eluf ta' Prodotti"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ħallas b'mod sigur b'għażliet ta' ħlas multipli u processing mgħaġġel"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Binlerce Ürünü Keşfet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birden fazla ödeme seçeneğiyle güvenli ve hızlı ödeme yap"
           }
         }
       }
     },
-    "onboarding_page_checkout_description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pay securely with multiple payment options and fast processing"
+    "onboarding_page_checkout_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fast & Secure Checkout"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ħallas b'mod sigur b'għażliet ta' ħlas multipli u processing mgħaġġel"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checkout Mgħaġġel u Sigur"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Birden fazla ödeme seçeneğiyle güvenli ve hızlı ödeme yap"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hızlı ve Güvenli Ödeme"
           }
         }
       }
     },
-    "onboarding_page_checkout_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fast & Secure Checkout"
+    "onboarding_page_compare_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find the best deals by comparing prices across different vendors"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Checkout Mgħaġġel u Sigur"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sib l-aħjar offerti billi tqabbel il-prezzijiet bejn bejjiegħa differenti"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hızlı ve Güvenli Ödeme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farklı satıcılar arasında fiyatları karşılaştırarak en iyi fırsatları bul"
           }
         }
       }
     },
-    "onboarding_page_compare_description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Find the best deals by comparing prices across different vendors"
+    "onboarding_page_compare_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compare Vendors & Prices"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sib l-aħjar offerti billi tqabbel il-prezzijiet bejn bejjiegħa differenti"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qabbel Bejjiegħa u Prezzijiet"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Farklı satıcılar arasında fiyatları karşılaştırarak en iyi fırsatları bul"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satıcıları ve Fiyatları Karşılaştır"
           }
         }
       }
     },
-    "onboarding_page_compare_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compare Vendors & Prices"
+    "onboarding_page_indicator_a11y %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Page %1$lld of %2$lld"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qabbel Bejjiegħa u Prezzijiet"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paġna %1$lld minn %2$lld"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Satıcıları ve Fiyatları Karşılaştır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayfa %1$lld / %2$lld"
           }
         }
       }
     },
-    "onboarding_page_indicator_a11y %lld %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Page %1$lld of %2$lld"
+    "onboarding_page_track_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay updated with real-time order tracking from purchase to delivery"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paġna %1$lld minn %2$lld"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ibqa aġġornat bi tracking tal-ordni f'ħin reali mix-xiri sal-kunsinna"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sayfa %1$lld / %2$lld"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satın almadan teslimata kadar gerçek zamanlı sipariş takibi ile güncel kal"
           }
         }
       }
     },
-    "onboarding_page_track_description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stay updated with real-time order tracking from purchase to delivery"
+    "onboarding_page_track_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track Your Orders"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ibqa aġġornat bi tracking tal-ordni f'ħin reali mix-xiri sal-kunsinna"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Segwi l-Ordnijiet Tiegħek"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Satın almadan teslimata kadar gerçek zamanlı sipariş takibi ile güncel kal"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siparişlerini Takip Et"
           }
         }
       }
     },
-    "onboarding_page_track_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Track Your Orders"
+    "onboarding_skip_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Segwi l-Ordnijiet Tiegħek"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqbez"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Siparişlerini Takip Et"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atla"
           }
         }
       }
     },
-    "onboarding_skip_button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skip"
+    "onboarding_skip_button_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip onboarding"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aqbez"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqbez l-introduzzjoni"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Atla"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tanıtımı atla"
           }
         }
       }
     },
-    "onboarding_skip_button_a11y" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skip onboarding"
+    "profile_menu_addresses": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Addresses"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aqbez l-introduzzjoni"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indirizzi"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tanıtımı atla"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adreslerim"
           }
         }
       }
     },
-    "profile_menu_addresses" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Addresses"
+    "profile_menu_notifications": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indirizzi"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifiki"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adreslerim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bildirimler"
           }
         }
       }
     },
-    "profile_menu_notifications" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notifications"
+    "profile_menu_orders": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My Orders"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notifiki"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L-Ordnijiet Tiegħi"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bildirimler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siparişlerim"
           }
         }
       }
     },
-    "profile_menu_orders" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "My Orders"
+    "profile_menu_payment": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Payment Methods"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L-Ordnijiet Tiegħi"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metodi ta' Ħlas"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Siparişlerim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ödeme Yöntemlerim"
           }
         }
       }
     },
-    "profile_menu_payment" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Payment Methods"
+    "profile_menu_settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Metodi ta' Ħlas"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ödeme Yöntemlerim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayarlar"
           }
         }
       }
     },
-    "profile_menu_settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
+    "profile_menu_wishlist": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wishlist"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wishlist"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ayarlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorilerim"
           }
         }
       }
     },
-    "profile_menu_wishlist" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wishlist"
+    "skeleton_loading_placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading content"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wishlist"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qed jitgħabba l-kontenut"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favorilerim"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İçerik yükleniyor"
           }
         }
       }
     },
-    "skeleton_loading_placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading content"
+    "common_color_swatch_selected_a11y \\(colorName)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(colorName), selected"
           }
         },
-        "mt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qed jitgħabba l-kontenut"
+        "mt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(colorName), magħżul"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İçerik yükleniyor"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(colorName), seçili"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }
