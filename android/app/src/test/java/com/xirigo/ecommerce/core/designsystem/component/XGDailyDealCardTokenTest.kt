@@ -199,7 +199,7 @@ class XGDailyDealCardTokenTest {
     @Test
     fun `formatCountdown should use Locale ROOT for consistent formatting`() {
         // Verify format is always HH:MM:SS regardless of locale
-        val result = formatCountdownMirror(3661_000L, "Ended") // 1h 1m 1s
+        val result = formatCountdownMirror(3_661_000L, "Ended") // 1h 1m 1s
         assertThat(result).matches("\\d{2}:\\d{2}:\\d{2}")
     }
 
