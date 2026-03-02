@@ -1,7 +1,6 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
+import com.xirigo.ecommerce.core.designsystem.theme.XGMotion
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 private val ActiveDotWidth = 18.dp
@@ -29,7 +29,6 @@ private val InactiveDotWidth = 6.dp
 private val DotHeight = 6.dp
 private val DotCornerRadius = 3.dp
 private val DotGap = 4.dp
-private const val ANIMATION_DURATION_MS = 300
 
 /** Animated pagination dot indicators for paged content. */
 @Composable
@@ -52,7 +51,7 @@ fun XGPaginationDots(
             val isActive = index == currentPage
             val animatedWidth by animateDpAsState(
                 targetValue = if (isActive) ActiveDotWidth else InactiveDotWidth,
-                animationSpec = tween(durationMillis = ANIMATION_DURATION_MS),
+                animationSpec = XGMotion.Easing.springSpec(),
                 label = "dotWidth$index",
             )
 

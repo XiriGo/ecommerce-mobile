@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-09)
+
+- **XGPaginationDots motion token upgrade**: Replaced hardcoded `tween(300ms)` animation on Android with `XGMotion.Easing.springSpec()` (spring with dampingRatio=0.7, stiffness=StiffnessMedium). iOS was already compliant (`XGMotion.Easing.spring`). Updated component token JSON to reference `$foundations/motion.easing.spring` instead of hardcoded spring parameters. Both platforms now use matching spring-based dot width animations. 6 Android instrumentation tests + 8 iOS unit tests verified. (#53) (Android + iOS)
+
 #### Design Quality Backfill (DQ-08)
 
 - **XGBadge token audit**: Audited and aligned the full badge component family (`XGBadge`, `XGCountBadge`, `XGStatusBadge`) against `shared/design-tokens/components/atoms/xg-badge.json`. Android: added `XGBadgeVariant` enum (Primary/Secondary), added `XGBadge` composable, fixed `XGStatusBadge` to use `XGColors` tokens instead of `MaterialTheme.colorScheme` references, corrected `XGCountBadge` shape from `CircleShape` to `RoundedCornerShape(XGCornerRadius.Full)` (capsule), added `XGCustomTextStyles.CaptionSemiBold` (12sp SemiBold Poppins). iOS: removed unused `Constants.fontSize` dead code; all token references were already spec-aligned. 56 Android tests (37 JVM unit + 19 Compose UI) + 89 iOS tests (88 passing, 1 skipped) across 11 suites. (Android + iOS)

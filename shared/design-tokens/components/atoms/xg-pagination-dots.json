@@ -17,7 +17,7 @@
     "gap": 4,
     "activeColor": "$foundations/colors.paginationDots.active",
     "inactiveColor": "$foundations/colors.paginationDots.inactive",
-    "animation": "spring(response: 0.3, dampingFraction: 0.7)"
+    "animation": "$foundations/motion.easing.spring"
   },
 
   "parameters": {
