@@ -101,7 +101,7 @@ struct XGPriceText: View {
     // MARK: - Lifecycle
 
     init(
-        price: String,
+        price: String?,
         originalPrice: String? = nil,
         currencySymbol: String = "\u{20AC}",
         style: XGPriceStyle = .default,
@@ -119,38 +119,42 @@ struct XGPriceText: View {
     // MARK: - Internal
 
     var body: some View {
-        Group {
-            switch layout {
-                case .inline:
-                    HStack(alignment: .firstTextBaseline, spacing: XGSpacing.sm) {
-                        compositePrice
+        // Null price fallback: hide component entirely (DQ-10)
+        if let price {
+            Group {
+                switch layout {
+                    case .inline:
+                        HStack(alignment: .firstTextBaseline, spacing: XGSpacing.sm) {
+                            compositePrice
 
-                        if let originalPrice {
-                            strikethroughPrice(originalPrice)
-                        }
-                    }
-
-                case .stacked:
-                    VStack(alignment: .leading, spacing: XGSpacing.xxs) {
-                        if let originalPrice {
-                            strikethroughPrice(originalPrice)
+                            if let originalPrice {
+                                strikethroughPrice(originalPrice)
+                            }
                         }
 
-                        compositePrice
-                    }
+                    case .stacked:
+                        VStack(alignment: .leading, spacing: XGSpacing.xxs) {
+                            if let originalPrice {
+                                strikethroughPrice(originalPrice)
+                            }
+
+                            compositePrice
+                        }
+                }
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(accessibilityDescription)
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(accessibilityDescription)
     }
 
     // MARK: - Private
 
     private enum Constants {
         static let defaultStrikethroughFontSize: CGFloat = 15.18
+        static let standardStrikethroughFontSize: CGFloat = 14
     }
 
-    private let price: String
+    private let price: String?
     private let originalPrice: String?
     private let currencySymbol: String
     private let style: XGPriceStyle
@@ -166,20 +170,22 @@ struct XGPriceText: View {
     }
 
     private var priceParts: (integer: String, decimal: String) {
-        let components = price.split(separator: ".", maxSplits: 1)
+        let priceValue = price ?? "0"
+        let components = priceValue.split(separator: ".", maxSplits: 1)
         let integer = String(components.first ?? "0")
         let decimal = components.count > 1 ? "," + String(components.last ?? "00") : ""
         return (integer, decimal)
     }
 
     private var accessibilityDescription: String {
+        let priceValue = price ?? "0"
         if let originalPrice {
             return String(
-                localized: "common_sale_price_label \(currencySymbol) \(price) \(currencySymbol) \(originalPrice)",
+                localized: "common_sale_price_label \(currencySymbol) \(priceValue) \(currencySymbol) \(originalPrice)",
             )
         }
         return String(
-            localized: "common_price_label \(currencySymbol) \(price)",
+            localized: "common_price_label \(currencySymbol) \(priceValue)",
         )
     }
 
@@ -239,6 +245,16 @@ struct XGPriceText: View {
     VStack(alignment: .leading, spacing: XGSpacing.sm) {
         XGPriceText(price: "89.99", originalPrice: "149.99", layout: .stacked)
         XGPriceText(price: "49.99", originalPrice: "69.99", style: .standard, layout: .stacked)
+    }
+    .padding()
+    .xgTheme()
+}
+
+#Preview("XGPriceText Nil Price") {
+    VStack(alignment: .leading, spacing: XGSpacing.sm) {
+        Text("Before price:")
+        XGPriceText(price: nil)
+        Text("After price (nothing between):")
     }
     .padding()
     .xgTheme()
