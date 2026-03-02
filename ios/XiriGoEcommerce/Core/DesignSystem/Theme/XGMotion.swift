@@ -78,6 +78,8 @@ enum XGMotion {
     enum Scroll {
         static let prefetchDistance: Int = 5
         static let scrollRestorationEnabled = true
+        /// Auto-scroll interval for carousels (e.g. hero banner). Token: `scroll.autoScrollIntervalMs`.
+        static let autoScrollInterval: TimeInterval = 5.0
     }
 
     // MARK: - EntranceAnimation

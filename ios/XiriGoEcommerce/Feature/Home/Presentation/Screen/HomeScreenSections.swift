@@ -9,7 +9,7 @@ extension HomeScreen {
 
     enum BannerConstants {
         static let carouselHeight: CGFloat = 210
-        static let autoScrollInterval: TimeInterval = 5
+        static let autoScrollInterval: TimeInterval = XGMotion.Scroll.autoScrollInterval
     }
 
     // MARK: - Banner Auto-Scroll
