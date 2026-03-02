@@ -126,4 +126,8 @@
     <!-- Social Login -->
     <string name="auth_social_continue_google">Google</string>
     <string name="auth_social_continue_apple">Apple</string>
+
+    <!-- Color Swatch -->
+    <string name="common_color_swatch_selected_a11y">%1$s, selected</string>
+    <string name="common_color_swatch_a11y">%1$s</string>
 </resources>
