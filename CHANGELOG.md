@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-14)
+
+- **XGCategoryIcon token audit**: Audited and aligned `XGCategoryIcon` on both platforms against `shared/design-tokens/components/atoms/xg-category-icon.json`. Android: replaced 4 inline font properties (`fontFamily/fontSize/fontWeight/lineHeight`) with `MaterialTheme.typography.labelMedium`, removed dead `LabelFontSize` and `LabelLineHeight` constants, removed unused `PoppinsFontFamily` import, added `semantics(mergeDescendants = true)` for TalkBack accessibility. iOS: added 5 missing category color tokens to `XGColors.swift` (`categoryBlue`, `categoryPink`, `categoryYellow`, `categoryMint`, `categoryLightYellow`), removed unused `Constants.labelFontSize` dead code, added `.buttonStyle(.plain)` to prevent system button styling, replaced hardcoded hex colors in preview with `XGColors.category*` tokens. 22 Android JUnit tests + 24 iOS Swift Testing tests verified. (#58) (Android + iOS)
+
 #### Design Quality Backfill (DQ-13)
 
 - **XGSectionHeader token audit**: Audited and aligned `XGSectionHeader` on both platforms against `shared/design-tokens/components/atoms/xg-section-header.json`. Android: replaced 6 inline font constants (`fontFamily/fontSize/fontWeight`) with `MaterialTheme.typography.titleMedium` and `MaterialTheme.typography.labelLarge`, fixed subtitle font weight from `Normal` to `Medium`, corrected arrow icon size from 16dp to 12dp, added explicit subtitle spacing via `Arrangement.spacedBy(XGSpacing.XXS)`, removed `PoppinsFontFamily` direct import. iOS: removed unused `Constants.titleFontSize` and `Constants.seeAllFontSize` dead code, enhanced doc comment with full token mapping. 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#57) (Android + iOS)
