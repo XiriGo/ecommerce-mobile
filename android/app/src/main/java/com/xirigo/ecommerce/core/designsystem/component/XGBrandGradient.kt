@@ -9,25 +9,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+// Gradient stops sourced from gradients.json > brandHeader.layers[0] (base)
+// Stops: #9000FE (edge) -> #6900FE (mid) -> #6900FE (mid) -> #9000FE (edge)
 private val BaseGradientStops = arrayOf(
-    0.00f to Color(0xFF9000FE),
-    0.27f to Color(0xFF6900FE),
-    0.66f to Color(0xFF6900FE),
-    1.00f to Color(0xFF9000FE),
+    0.00f to XGColors.BrandPrimaryLight,
+    0.27f to XGColors.BrandGradientMid,
+    0.66f to XGColors.BrandGradientMid,
+    1.00f to XGColors.BrandPrimaryLight,
 )
 
+// Gradient stops sourced from gradients.json > brandHeader.layers[1] (darkOverlay)
+// Stops: #6000FE@0% -> #5D00FB@6% -> #5800F4@21% -> #4F00E9@46% -> #4200DA@81% -> #3C00D2@100%
 private val DarkOverlayStops = arrayOf(
-    0.32f to Color(0x006000FE),
-    0.38f to Color(0x0F5D00FB),
-    0.49f to Color(0x365800F4),
-    0.64f to Color(0x754F00E9),
-    0.81f to Color(0xCF4200DA),
-    0.90f to Color(0xFF3C00D2),
+    0.32f to XGColors.BrandPrimary.copy(alpha = 0.00f),
+    0.38f to XGColors.BrandOverlayMid1.copy(alpha = 0.06f),
+    0.49f to XGColors.BrandOverlayMid2.copy(alpha = 0.21f),
+    0.64f to XGColors.BrandOverlayMid3.copy(alpha = 0.46f),
+    0.81f to XGColors.BrandOverlayMid4.copy(alpha = 0.81f),
+    0.90f to XGColors.BrandPrimaryDark,
 )
 
 /** XiriGo brand radial gradient background with dark overlay. */

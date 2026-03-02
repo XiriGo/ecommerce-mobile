@@ -12,9 +12,12 @@ import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Default logo size from xg-logo-mark.json > tokens.defaultSize. */
+private val DEFAULT_LOGO_SIZE = 120.dp
+
 /** XiriGo logo mark image at a configurable size. */
 @Composable
-fun XGLogoMark(modifier: Modifier = Modifier, size: Dp = 120.dp) {
+fun XGLogoMark(modifier: Modifier = Modifier, size: Dp = DEFAULT_LOGO_SIZE) {
     Image(
         painter = painterResource(R.drawable.splash_logo),
         contentDescription = stringResource(R.string.onboarding_logo_a11y),

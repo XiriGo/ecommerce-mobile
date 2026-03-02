@@ -14,11 +14,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-private const val PATTERN_OPACITY = 0.06f
-
-/** Tiled brand pattern overlay drawn at low opacity. */
+/** Tiled brand pattern overlay drawn at low opacity (from splashPatternOverlay token). */
 @Composable
 fun XGBrandPattern(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -38,7 +37,7 @@ fun XGBrandPattern(modifier: Modifier = Modifier) {
             .drawBehind {
                 drawRect(
                     brush = tiledBrush,
-                    alpha = PATTERN_OPACITY,
+                    alpha = XGColors.BRAND_PATTERN_OPACITY,
                 )
             },
     )
