@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -44,6 +46,21 @@ private val LabelFontSize = 12.sp
 private val LabelLineHeight = 16.sp
 private val LabelTopPadding = 8.dp
 private val SliderHeight = 48.dp // min touch target
+
+/** Pixel measurements for the slider, resolved from density. */
+private data class SliderMetrics(
+    val thumbRadiusPx: Float,
+    val trackHeightPx: Float,
+    val thumbBorderPx: Float,
+)
+
+/** Resolved color tokens for the slider track and thumbs. */
+private data class SliderColors(
+    val trackActive: Color,
+    val trackInactive: Color,
+    val thumb: Color,
+    val thumbBorder: Color,
+)
 
 /**
  * Dual-thumb range slider for selecting a numeric range.
@@ -106,145 +123,168 @@ private fun RangeSliderTrack(
     rangeDescription: String,
 ) {
     val density = LocalDensity.current
-    val thumbRadiusPx = with(density) { ThumbSize.toPx() / 2f }
-    val trackHeightPx = with(density) { TrackHeight.toPx() }
-    val thumbBorderPx = with(density) { ThumbBorderWidth.toPx() }
+    val metrics = SliderMetrics(
+        thumbRadiusPx = with(density) { ThumbSize.toPx() / 2f },
+        trackHeightPx = with(density) { TrackHeight.toPx() },
+        thumbBorderPx = with(density) { ThumbBorderWidth.toPx() },
+    )
+    val colors = SliderColors(
+        trackActive = XGColors.Primary,
+        trackInactive = XGColors.Outline,
+        thumb = XGColors.Primary,
+        thumbBorder = XGColors.Surface,
+    )
 
-    val trackActiveColor = XGColors.Primary
-    val trackInactiveColor = XGColors.Outline
-    val thumbColor = XGColors.Primary
-    val thumbBorderColor = XGColors.Surface
-
-    var draggingThumb by remember { mutableFloatStateOf(0f) } // 0=none, -1=low, 1=high
+    var draggingThumb by remember { mutableFloatStateOf(0f) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(SliderHeight)
             .semantics { contentDescription = rangeDescription }
-            .pointerInput(range, step) {
-                detectDragGestures(
-                    onDragStart = { offset ->
-                        val totalRange = range.endInclusive - range.start
-                        val trackWidth = size.width - 2 * thumbRadiusPx
-                        val lowX = thumbRadiusPx +
-                            (min - range.start) / totalRange * trackWidth
-                        val highX = thumbRadiusPx +
-                            (max - range.start) / totalRange * trackWidth
-
-                        draggingThumb = if (
-                            kotlin.math.abs(offset.x - lowX) <=
-                            kotlin.math.abs(offset.x - highX)
-                        ) {
-                            -1f
-                        } else {
-                            1f
-                        }
-                    },
-                    onDrag = { change, _ ->
-                        change.consume()
-                        val totalRange = range.endInclusive - range.start
-                        val trackWidth = size.width - 2 * thumbRadiusPx
-                        val rawValue = range.start +
-                            (change.position.x - thumbRadiusPx) / trackWidth * totalRange
-                        val snappedValue = snapToStep(
-                            rawValue.coerceIn(range),
-                            step,
-                            range,
-                        )
-
-                        if (draggingThumb < 0f) {
-                            val newMin = snappedValue.coerceAtMost(max)
-                            onRangeChange(newMin, max)
-                        } else {
-                            val newMax = snappedValue.coerceAtLeast(min)
-                            onRangeChange(min, newMax)
-                        }
-                    },
-                    onDragEnd = { draggingThumb = 0f },
-                    onDragCancel = { draggingThumb = 0f },
-                )
-            },
+            .rangeSliderDragInput(
+                min = min,
+                max = max,
+                range = range,
+                step = step,
+                metrics = metrics,
+                draggingThumb = draggingThumb,
+                onDraggingThumbChange = { draggingThumb = it },
+                onRangeChange = onRangeChange,
+            ),
     ) {
-        Canvas(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(SliderHeight),
-        ) {
-            val canvasWidth = size.width
-            val centerY = size.height / 2f
-            val trackWidth = canvasWidth - 2 * thumbRadiusPx
-            val totalRange = range.endInclusive - range.start
-
-            val lowFraction = if (totalRange > 0f) {
-                (min - range.start) / totalRange
-            } else {
-                0f
-            }
-            val highFraction = if (totalRange > 0f) {
-                (max - range.start) / totalRange
-            } else {
-                1f
-            }
-
-            val lowX = thumbRadiusPx + lowFraction * trackWidth
-            val highX = thumbRadiusPx + highFraction * trackWidth
-            val trackCornerRadius = CornerRadius(trackHeightPx / 2f)
-
-            // Inactive track (left)
-            drawRoundRect(
-                color = trackInactiveColor,
-                topLeft = Offset(thumbRadiusPx, centerY - trackHeightPx / 2f),
-                size = Size(lowX - thumbRadiusPx, trackHeightPx),
-                cornerRadius = trackCornerRadius,
-            )
-
-            // Active track (between thumbs)
-            drawRoundRect(
-                color = trackActiveColor,
-                topLeft = Offset(lowX, centerY - trackHeightPx / 2f),
-                size = Size(highX - lowX, trackHeightPx),
-                cornerRadius = trackCornerRadius,
-            )
-
-            // Inactive track (right)
-            drawRoundRect(
-                color = trackInactiveColor,
-                topLeft = Offset(highX, centerY - trackHeightPx / 2f),
-                size = Size(
-                    thumbRadiusPx + trackWidth - highX,
-                    trackHeightPx,
-                ),
-                cornerRadius = trackCornerRadius,
-            )
-
-            // Low thumb
-            drawCircle(
-                color = thumbColor,
-                radius = thumbRadiusPx,
-                center = Offset(lowX, centerY),
-            )
-            drawCircle(
-                color = thumbBorderColor,
-                radius = thumbRadiusPx,
-                center = Offset(lowX, centerY),
-                style = Stroke(width = thumbBorderPx),
-            )
-
-            // High thumb
-            drawCircle(
-                color = thumbColor,
-                radius = thumbRadiusPx,
-                center = Offset(highX, centerY),
-            )
-            drawCircle(
-                color = thumbBorderColor,
-                radius = thumbRadiusPx,
-                center = Offset(highX, centerY),
-                style = Stroke(width = thumbBorderPx),
-            )
-        }
+        RangeSliderCanvas(
+            min = min,
+            max = max,
+            range = range,
+            metrics = metrics,
+            colors = colors,
+        )
     }
+}
+
+@Suppress("LongParameterList")
+private fun Modifier.rangeSliderDragInput(
+    min: Float,
+    max: Float,
+    range: ClosedFloatingPointRange<Float>,
+    step: Float,
+    metrics: SliderMetrics,
+    draggingThumb: Float,
+    onDraggingThumbChange: (Float) -> Unit,
+    onRangeChange: (Float, Float) -> Unit,
+): Modifier = pointerInput(range, step) {
+    detectDragGestures(
+        onDragStart = { offset ->
+            val totalRange = range.endInclusive - range.start
+            val trackWidth = size.width - 2 * metrics.thumbRadiusPx
+            val lowX = metrics.thumbRadiusPx + (min - range.start) / totalRange * trackWidth
+            val highX = metrics.thumbRadiusPx + (max - range.start) / totalRange * trackWidth
+            val nearLow = kotlin.math.abs(offset.x - lowX) <= kotlin.math.abs(offset.x - highX)
+            onDraggingThumbChange(if (nearLow) -1f else 1f)
+        },
+        onDrag = { change, _ ->
+            change.consume()
+            val totalRange = range.endInclusive - range.start
+            val trackWidth = size.width - 2 * metrics.thumbRadiusPx
+            val rawValue = range.start +
+                (change.position.x - metrics.thumbRadiusPx) / trackWidth * totalRange
+            val snappedValue = snapToStep(rawValue.coerceIn(range), step, range)
+            if (draggingThumb < 0f) {
+                onRangeChange(snappedValue.coerceAtMost(max), max)
+            } else {
+                onRangeChange(min, snappedValue.coerceAtLeast(min))
+            }
+        },
+        onDragEnd = { onDraggingThumbChange(0f) },
+        onDragCancel = { onDraggingThumbChange(0f) },
+    )
+}
+
+@Composable
+private fun RangeSliderCanvas(
+    min: Float,
+    max: Float,
+    range: ClosedFloatingPointRange<Float>,
+    metrics: SliderMetrics,
+    colors: SliderColors,
+) {
+    Canvas(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(SliderHeight),
+    ) {
+        val centerY = size.height / 2f
+        val trackWidth = size.width - 2 * metrics.thumbRadiusPx
+        val totalRange = range.endInclusive - range.start
+
+        val lowFraction = if (totalRange > 0f) (min - range.start) / totalRange else 0f
+        val highFraction = if (totalRange > 0f) (max - range.start) / totalRange else 1f
+        val lowX = metrics.thumbRadiusPx + lowFraction * trackWidth
+        val highX = metrics.thumbRadiusPx + highFraction * trackWidth
+        val cornerRadius = CornerRadius(metrics.trackHeightPx / 2f)
+        val trackTop = centerY - metrics.trackHeightPx / 2f
+
+        drawTrackSegments(
+            metrics.thumbRadiusPx,
+            trackTop,
+            metrics.trackHeightPx,
+            trackWidth,
+            lowX,
+            highX,
+            cornerRadius,
+            colors,
+        )
+        drawThumb(colors, metrics, lowX, centerY)
+        drawThumb(colors, metrics, highX, centerY)
+    }
+}
+
+@Suppress("LongParameterList")
+private fun DrawScope.drawTrackSegments(
+    thumbRadiusPx: Float,
+    trackTop: Float,
+    trackHeightPx: Float,
+    trackWidth: Float,
+    lowX: Float,
+    highX: Float,
+    cornerRadius: CornerRadius,
+    colors: SliderColors,
+) {
+    drawRoundRect(
+        color = colors.trackInactive,
+        topLeft = Offset(thumbRadiusPx, trackTop),
+        size = Size(lowX - thumbRadiusPx, trackHeightPx),
+        cornerRadius = cornerRadius,
+    )
+    drawRoundRect(
+        color = colors.trackActive,
+        topLeft = Offset(lowX, trackTop),
+        size = Size(highX - lowX, trackHeightPx),
+        cornerRadius = cornerRadius,
+    )
+    drawRoundRect(
+        color = colors.trackInactive,
+        topLeft = Offset(highX, trackTop),
+        size = Size(thumbRadiusPx + trackWidth - highX, trackHeightPx),
+        cornerRadius = cornerRadius,
+    )
+}
+
+private fun DrawScope.drawThumb(
+    colors: SliderColors,
+    metrics: SliderMetrics,
+    x: Float,
+    y: Float,
+) {
+    val center = Offset(x, y)
+    drawCircle(color = colors.thumb, radius = metrics.thumbRadiusPx, center = center)
+    drawCircle(
+        color = colors.thumbBorder,
+        radius = metrics.thumbRadiusPx,
+        center = center,
+        style = Stroke(width = metrics.thumbBorderPx),
+    )
 }
 
 @Composable
