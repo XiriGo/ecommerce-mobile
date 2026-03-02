@@ -63,4 +63,7 @@
 
     <!-- Skeleton -->
     <string name="skeleton_loading_placeholder">Qed jitghabba l-kontenut</string>
+
+    <!-- Filter Pill -->
+    <string name="common_filter_pill_dismiss_a11y">Nehhi l-filtru %1$s</string>
 </resources>

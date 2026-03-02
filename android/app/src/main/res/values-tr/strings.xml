@@ -108,4 +108,7 @@
 
     <!-- Skeleton -->
     <string name="skeleton_loading_placeholder">Icerik yukleniyor</string>
+
+    <!-- Filter Pill -->
+    <string name="common_filter_pill_dismiss_a11y">%1$s filtresini kaldir</string>
 </resources>
