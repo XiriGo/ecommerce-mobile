@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
@@ -36,27 +36,39 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.xirigo.ecommerce.R
 import com.xirigo.ecommerce.core.designsystem.component.XGButton
 import com.xirigo.ecommerce.core.designsystem.component.XGButtonStyle
 import com.xirigo.ecommerce.core.designsystem.component.XGDivider
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGElevation
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
+/** Screen-level constants extracted from magic numbers per coding standards. */
+private object ProfileConstants {
+    /** Avatar circle diameter in the guest header (design spec: 80dp). */
+    val GuestAvatarSize = XGSpacing.XXL + XGSpacing.XXXL // 32 + 48 = 80dp
+}
+
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
     ) {
-        GuestHeader()
-        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
-        ProfileMenuSection()
-        Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
+        item(key = "guest_header") {
+            GuestHeader()
+        }
+        item(key = "section_spacer_top") {
+            Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
+        }
+        item(key = "menu_section") {
+            ProfileMenuSection()
+        }
+        item(key = "section_spacer_bottom") {
+            Spacer(modifier = Modifier.height(XGSpacing.SectionSpacing))
+        }
     }
 }
 
@@ -65,22 +77,22 @@ private fun GuestHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(XGColors.SurfaceVariant)
             .padding(XGSpacing.LG),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
-                .size(80.dp)
+                .size(ProfileConstants.GuestAvatarSize)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.secondaryContainer),
+                .background(XGColors.SecondaryContainer),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = Icons.Outlined.Person,
                 contentDescription = null,
                 modifier = Modifier.size(XGSpacing.XXL),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                tint = XGColors.OnSecondaryContainer,
             )
         }
 
@@ -89,7 +101,7 @@ private fun GuestHeader() {
         Text(
             text = stringResource(R.string.nav_profile_guest_title),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = XGColors.OnSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.height(XGSpacing.Base))
@@ -145,8 +157,9 @@ private fun ProfileMenuSection() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = XGSpacing.ScreenPaddingHorizontal),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(XGCornerRadius.Large),
+        shape = RoundedCornerShape(XGCornerRadius.Large),
         elevation = CardDefaults.cardElevation(defaultElevation = XGElevation.Level1),
+        colors = CardDefaults.cardColors(containerColor = XGColors.Surface),
     ) {
         Column {
             menuItems.forEachIndexed { index, item ->
@@ -176,7 +189,7 @@ private fun ProfileMenuRow(item: ProfileMenuItem) {
             imageVector = item.icon,
             contentDescription = null,
             modifier = Modifier.size(XGSpacing.LG),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = XGColors.OnSurfaceVariant,
         )
         Spacer(modifier = Modifier.width(XGSpacing.Base))
         Text(
@@ -188,7 +201,7 @@ private fun ProfileMenuRow(item: ProfileMenuItem) {
         Icon(
             imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = XGColors.OnSurfaceVariant,
         )
     }
 }
