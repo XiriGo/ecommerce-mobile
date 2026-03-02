@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-28)
+
+- **XGEmptyView token audit**: Audited `XGEmptyView` on both platforms against `xg-empty-view.json` token spec. Fixed Android CTA button variant from `XGButtonStyle.Primary` to `XGButtonStyle.Outlined` to match the token spec (`$atoms/xg-button (outlined variant)`). iOS was already fully compliant. All visual properties verified: icon size (XXXL/48dp), icon/message color (textSecondary/onSurfaceVariant), message font (bodyLarge), spacing (base/16dp). Existing tests adequate on both platforms (7 Android instrumented + 11 iOS Swift Testing). (#72) (Android + iOS)
+
 #### Design Quality Backfill (DQ-27)
 
 - **XGErrorView crossfade transition upgrade**: Added crossfade transition to `XGErrorView` on both Android and iOS using `XGMotion.Crossfade.CONTENT_SWITCH` (Android, 200ms) / `XGMotion.Crossfade.contentSwitch` (iOS, 0.2s). New overload accepts `isError: Boolean/Bool` and a content slot, enabling smooth opacity crossfade between content and error state. Android uses `AnimatedContent` with `fadeIn`/`fadeOut` tween; iOS uses `Group` with `.animation(.easeInOut)` and `.transition(.opacity)`. Extracted shared `ErrorContent` layout (icon + message + retry button) into a private composable/struct. Backward compatible: existing `XGErrorView(message:, onRetry:)` call sites unchanged. All visual properties from design tokens (`xg-error-view.json`). 13 Android instrumented tests + 15 iOS Swift Testing tests verified. (#71) (Android + iOS)
