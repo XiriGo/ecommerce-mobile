@@ -30,6 +30,15 @@ struct XGTabItem: Identifiable {
 
 // MARK: - XGTabBar
 
+/// Bottom navigation bar with tab items and optional badge counts.
+///
+/// Uses XG design tokens for all visual properties:
+/// - Colors: `XGColors.bottomNavBackground`, `bottomNavIconActive`, `bottomNavIconInactive`
+/// - Icon size: `XGSpacing.IconSize.medium` (24pt)
+/// - Label font: `XGTypography.micro` (10pt Regular)
+/// - Animation: `XGMotion.Duration.fast` (200ms) with standard easing
+///
+/// Token source: `shared/design-tokens/components/molecules/xg-bottom-bar.json`
 struct XGTabBar: View {
     // MARK: - Lifecycle
 
@@ -48,18 +57,34 @@ struct XGTabBar: View {
     // MARK: - Body
 
     var body: some View {
-        HStack {
-            ForEach(items) { item in
-                tabButton(for: item)
+        VStack(spacing: 0) {
+            // Top border — borderSubtle divider
+            Rectangle()
+                .fill(XGColors.outlineVariant)
+                .frame(height: Constants.topBorderWidth)
+
+            // Tab items row
+            HStack {
+                ForEach(items) { item in
+                    tabButton(for: item)
+                }
             }
+            .frame(height: Constants.barHeight)
+            .background(XGColors.bottomNavBackground)
         }
-        .padding(.top, XGSpacing.sm)
-        .padding(.bottom, XGSpacing.xs)
-        .background(XGColors.surface)
-        .xgElevation(XGElevation.level4)
     }
 
     // MARK: - Private
+
+    // MARK: - Constants
+
+    private enum Constants {
+        /// Bar height — from spacing.json: bottomNavigation.height = 75
+        static let barHeight: CGFloat = 75
+
+        /// Top border width — from xg-bottom-bar.json: topBorderWidth = 0.5
+        static let topBorderWidth: CGFloat = 0.5
+    }
 
     @Binding private var selectedIndex: Int
 
@@ -70,7 +95,9 @@ struct XGTabBar: View {
         let isSelected = item.id == selectedIndex
 
         Button {
-            selectedIndex = item.id
+            withAnimation(.easeInOut(duration: XGMotion.Duration.fast)) {
+                selectedIndex = item.id
+            }
         } label: {
             VStack(spacing: XGSpacing.xxs) {
                 ZStack(alignment: .topTrailing) {
@@ -84,9 +111,9 @@ struct XGTabBar: View {
                 }
 
                 Text(item.label)
-                    .font(XGTypography.labelSmall)
+                    .font(XGTypography.micro)
             }
-            .foregroundStyle(isSelected ? XGColors.primary : XGColors.onSurfaceVariant)
+            .foregroundStyle(isSelected ? XGColors.bottomNavIconActive : XGColors.bottomNavIconInactive)
             .frame(maxWidth: .infinity)
             .frame(minHeight: XGSpacing.minTouchTarget)
         }
@@ -140,5 +167,5 @@ private let previewTabItems: [XGTabItem] = [
             }
         }
     }
-    return PreviewWrapper()
+    PreviewWrapper()
 }
