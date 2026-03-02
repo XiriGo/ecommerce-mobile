@@ -1,13 +1,15 @@
 import SwiftUI
 
 /// Tappable search bar placeholder that navigates to the search screen.
-/// Token source: `components/atoms/xg-search-bar.json`.
+/// Token source: `shared/design-tokens/components/atoms/xg-search-bar.json`.
 ///
-/// - Background: inputBackground
-/// - Border: outlineVariant
-/// - Corner radius: full (pill)
-/// - Icon: magnifyingglass, onSurfaceVariant
-/// - Placeholder font: bodyLarge
+/// - Background: `XGColors.inputBackground` (`colors.light.inputBackground`)
+/// - Border: `XGColors.outlineVariant` (`colors.light.borderSubtle`), 1 pt
+/// - Corner radius: `XGCornerRadius.pill` (`cornerRadius.pill` = 28 pt)
+/// - Icon: magnifyingglass, `XGSpacing.IconSize.medium` (24 pt), `XGColors.onSurfaceVariant`
+/// - Placeholder font: `XGTypography.bodyLarge` (16 pt Poppins Regular)
+/// - Placeholder color: `XGColors.onSurfaceVariant` (`colors.light.textSecondary`)
+/// - Padding: horizontal = `XGSpacing.md`, vertical = `XGSpacing.md`
 struct XGSearchBar: View {
     // MARK: - Lifecycle
 
@@ -38,9 +40,9 @@ struct XGSearchBar: View {
             .padding(.horizontal, XGSpacing.md)
             .padding(.vertical, XGSpacing.md)
             .background(XGColors.inputBackground)
-            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.full))
+            .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.pill))
             .overlay(
-                RoundedRectangle(cornerRadius: XGCornerRadius.full)
+                RoundedRectangle(cornerRadius: XGCornerRadius.pill)
                     .stroke(XGColors.outlineVariant, lineWidth: 1),
             )
         }

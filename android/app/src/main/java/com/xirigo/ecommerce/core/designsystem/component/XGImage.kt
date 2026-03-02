@@ -1,11 +1,11 @@
 package com.xirigo.ecommerce.core.designsystem.component
 
 import coil3.compose.SubcomposeAsyncImage
-import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Image
@@ -58,7 +58,7 @@ fun XGImage(
             loading = {
                 Box(
                     modifier = Modifier
-                        .matchParentSize()
+                        .fillMaxSize()
                         .background(XGColors.Shimmer)
                         .shimmerEffect(),
                 )
@@ -66,7 +66,7 @@ fun XGImage(
             error = {
                 Box(
                     modifier = Modifier
-                        .matchParentSize()
+                        .fillMaxSize()
                         .background(XGColors.SurfaceVariant),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -77,9 +77,6 @@ fun XGImage(
                         modifier = Modifier.size(PlaceholderIconSize),
                     )
                 }
-            },
-            content = {
-                SubcomposeAsyncImageContent(contentScale = contentScale)
             },
         )
     } else {

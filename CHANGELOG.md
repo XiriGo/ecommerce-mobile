@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+#### Design Quality Backfill (DQ-12)
+
+- **XGSearchBar token audit**: Audited and aligned `XGSearchBar` on both platforms against `shared/design-tokens/components/atoms/xg-search-bar.json`. Android: replaced `Card` wrapper with `Row` + `background` + `border` + `clip`, changed background from `SurfaceVariant` to `InputBackground`, corner radius from `Medium` (10dp) to `Pill` (28dp), removed elevation, added `OutlineVariant` border at 1dp, fixed padding from `Base` (16dp) to `MD` (12dp), added explicit 24dp icon size, removed redundant `PoppinsFontFamily` override. iOS: changed corner radius from `full` (999pt) to `pill` (28pt). 15 Android JUnit tests + 19 iOS Swift Testing tests verified. (#56) (Android + iOS)
+
 ### Added
 
 #### Design Quality Backfill (DQ-09)
