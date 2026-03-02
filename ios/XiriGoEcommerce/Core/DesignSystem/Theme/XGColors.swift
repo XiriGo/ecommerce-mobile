@@ -31,6 +31,7 @@ enum XGColors {
     static let onSurface = Color(hex: "#333333")
     static let surfaceSecondary = Color(hex: "#F9FAFB")
     static let surfaceVariant = Color(hex: "#F9FAFB")
+    static let surfaceTertiary = Color(hex: "#F1F5F9")
     static let onSurfaceVariant = Color(hex: "#8E8E93")
     static let surfaceElevated = Color(hex: "#FFFFFF")
 
