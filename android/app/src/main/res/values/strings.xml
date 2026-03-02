@@ -130,4 +130,7 @@
     <!-- Color Swatch -->
     <string name="common_color_swatch_selected_a11y">%1$s, selected</string>
     <string name="common_color_swatch_a11y">%1$s</string>
+
+    <!-- Range Slider -->
+    <string name="common_range_slider_description">Range: %1$s to %2$s</string>
 </resources>

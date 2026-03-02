@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### Design Quality Backfill (DQ-21)
+
+- **XGRangeSlider component**: New atom component for dual-thumb range selection, used by Product Search (M1-08) price filter. Custom Canvas-based (Android) / GeometryReader-based (iOS) rendering for full token control. Track height 4dp/pt with active segment (brand primary) between thumbs and inactive segments (borderStrong) outside. Thumbs are 24dp/pt circles with 3dp/pt surface-colored border stroke. Supports continuous and stepped modes, custom label formatting, and optional min/max value labels. Accessibility: semantic range description on both platforms. Token-driven from `shared/design-tokens/components/atoms/xg-range-slider.json`. 11 Android JUnit token tests + 15 iOS Swift Testing tests verified. (#65) (Android + iOS)
+
 #### Design Quality Backfill (DQ-20)
 
 - **XGColorSwatch component**: New atom component for product detail and filter screens. Circular color swatch with 40dp/pt diameter, 1px always-visible border (`XGColors.Outline`), and branded selection ring (`XGColors.Primary`, 2px stroke, 3px gap). Selected state shows checkmark overlay with adaptive contrast -- white checkmark on dark swatches (luminance <= 0.6), dark checkmark on light swatches. Animated selection ring using `XGMotion.Easing.standardTween` (Android) / `XGMotion.Easing.standard` (iOS). Accessibility: `contentDescription`/`accessibilityLabel` with color name, `Role.RadioButton` + `.isSelected` traits. Token-driven from `shared/design-tokens/components/atoms/xg-color-swatch.json`. 17 Android JUnit token tests + 20 iOS Swift Testing tests verified. (#64) (Android + iOS)
