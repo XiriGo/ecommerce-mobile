@@ -2,6 +2,7 @@ package com.xirigo.ecommerce.core.designsystem.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
@@ -23,9 +26,30 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
+
+/**
+ * Token-spec constants for XGTextField.
+ * Source: `shared/design-tokens/components/atoms/xg-text-field.json`
+ * and `shared/design-tokens/foundations/spacing.json > inputSize.default`.
+ */
+private object XGTextFieldTokens {
+    /** inputSize.default.height = 52 dp */
+    val FieldHeight = 52.dp
+
+    /** default.borderWidth = 1 dp */
+    val BorderWidth = 1.dp
+
+    /** default.focusBorderWidth = 2 dp */
+    val FocusBorderWidth = 2.dp
+
+    /** Disabled-state opacity (Material 3 convention: 0.38f) */
+    const val DISABLED_OPACITY = 0.38f
+}
 
 /** Outlined text field with label, validation error, helper text, and password mode. */
 @Composable
@@ -55,7 +79,10 @@ fun XGTextField(
         modifier
     }
 
-    Column(modifier = semanticsModifier) {
+    Column(
+        modifier = semanticsModifier
+            .alpha(if (enabled) 1f else XGTextFieldTokens.DISABLED_OPACITY),
+    ) {
         XGOutlinedTextFieldContent(
             value = value,
             onValueChange = onValueChange,
@@ -113,9 +140,23 @@ private fun XGOutlinedTextFieldContent(
                 onValueChange(newValue)
             }
         },
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = label) },
-        placeholder = placeholder?.let { { Text(text = it) } },
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = XGTextFieldTokens.FieldHeight),
+        label = {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        },
+        placeholder = placeholder?.let {
+            {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
+        },
         leadingIcon = leadingIcon?.let {
             {
                 Icon(
@@ -141,7 +182,38 @@ private fun XGOutlinedTextFieldContent(
         },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         singleLine = singleLine,
+        textStyle = MaterialTheme.typography.bodyLarge,
         shape = RoundedCornerShape(XGCornerRadius.Medium),
+        colors = OutlinedTextFieldDefaults.colors(
+            // Text colors
+            focusedTextColor = XGColors.OnSurface,
+            unfocusedTextColor = XGColors.OnSurface,
+            disabledTextColor = XGColors.OnSurface,
+            errorTextColor = XGColors.OnSurface,
+            // Container / background
+            focusedContainerColor = XGColors.InputBackground,
+            unfocusedContainerColor = XGColors.InputBackground,
+            disabledContainerColor = XGColors.InputBackground,
+            errorContainerColor = XGColors.InputBackground,
+            // Border — default
+            unfocusedBorderColor = XGColors.InputBorder,
+            // Border — focused (brand primary)
+            focusedBorderColor = XGColors.Primary,
+            // Border — error
+            errorBorderColor = XGColors.Error,
+            // Border — disabled
+            disabledBorderColor = XGColors.InputBorder,
+            // Label
+            focusedLabelColor = XGColors.Primary,
+            unfocusedLabelColor = XGColors.InputPlaceholder,
+            disabledLabelColor = XGColors.InputPlaceholder,
+            errorLabelColor = XGColors.Error,
+            // Placeholder
+            focusedPlaceholderColor = XGColors.InputPlaceholder,
+            unfocusedPlaceholderColor = XGColors.InputPlaceholder,
+            disabledPlaceholderColor = XGColors.InputPlaceholder,
+            errorPlaceholderColor = XGColors.InputPlaceholder,
+        ),
     )
 }
 
@@ -194,9 +266,9 @@ private fun XGTextFieldSupportingText(errorMessage: String?, helperText: String?
                 top = XGSpacing.XS,
             ),
             color = if (errorMessage != null) {
-                MaterialTheme.colorScheme.error
+                XGColors.Error
             } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
+                XGColors.OnSurfaceVariant
             },
             style = MaterialTheme.typography.bodySmall,
         )
@@ -214,7 +286,7 @@ private fun XGTextFieldCharacterCount(value: String, maxLength: Int?) {
                     end = XGSpacing.Base,
                     top = XGSpacing.XS,
                 ),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = XGColors.OnSurfaceVariant,
             style = MaterialTheme.typography.bodySmall,
             textAlign = androidx.compose.ui.text.style.TextAlign.End,
         )
@@ -256,6 +328,19 @@ private fun XGTextFieldPasswordPreview() {
             onValueChange = {},
             label = "Password",
             isPassword = true,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun XGTextFieldDisabledPreview() {
+    XGTheme {
+        XGTextField(
+            value = "Disabled value",
+            onValueChange = {},
+            label = "Disabled Field",
+            enabled = false,
         )
     }
 }
