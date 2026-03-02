@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+#### Design Quality Backfill (DQ-38)
+
+- **XGPriceLayout iOS port**: Extracted `XGPriceLayout` enum (`.inline`, `.stacked`) from `XGPriceText.swift` into its own file `XGPriceLayout.swift` for platform parity with Android. No API changes; the enum already existed inline and `XGPriceText` already supported the `layout` parameter. Added `XGPriceLayoutTests` suite (6 tests) to verify both cases and integration with `XGPriceText`. (#82) (iOS)
+
 #### Design Quality Backfill (DQ-30)
 
 - **XGBottomBar/XGTabBar token audit**: Audited bottom navigation components on both platforms against `xg-bottom-bar.json` token spec. Android: replaced Material 3 `NavigationBar` + `NavigationBarItem` with custom `Row`-based composable for full token control; set background to `XGColors.BottomNavBackground`, active icon tint to `XGColors.BottomNavIconActive`, inactive tint to `XGColors.BottomNavIconInactive`; added 0.5dp top border (`XGColors.OutlineVariant`); set explicit 75dp bar height and 24dp icon size; removed M3 elevation (level0); added `animateColorAsState` with `XGMotion.Easing.standardTween(FAST)` for icon tint transitions; badge uses `XGColors.BadgeBackground/BadgeText` + `XGTypography.labelSmall`. iOS: changed background from `XGColors.surface` to `bottomNavBackground`; active/inactive foreground from `primary`/`onSurfaceVariant` to `bottomNavIconActive`/`bottomNavIconInactive`; removed `XGElevation.level4` shadow; added 0.5pt top border; set explicit 75pt bar height; changed label font from `labelSmall` to `micro` (10pt); added `withAnimation(.easeInOut(duration: XGMotion.Duration.fast))` on tab selection; removed explicit `return` from `#Preview`. 11 Android instrumented tests + 18 iOS Swift Testing tests verified. (#74) (Android + iOS)
