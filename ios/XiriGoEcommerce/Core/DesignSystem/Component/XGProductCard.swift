@@ -27,6 +27,7 @@ struct XGProductCard: View {
         priceLayout: XGPriceLayout = .inline,
         showRatingAbovePrice: Bool = false,
         showDeliveryAbovePrice: Bool = false,
+        reserveSpace: Bool = false,
         onAddToCartAction: (() -> Void)? = nil,
         action: @escaping () -> Void,
     ) {
@@ -46,6 +47,7 @@ struct XGProductCard: View {
         self.priceLayout = priceLayout
         self.showRatingAbovePrice = showRatingAbovePrice
         self.showDeliveryAbovePrice = showDeliveryAbovePrice
+        self.reserveSpace = reserveSpace
         self.onAddToCartAction = onAddToCartAction
         self.action = action
     }
@@ -82,6 +84,14 @@ struct XGProductCard: View {
         static let addToCartIconSize: CGFloat = 16
         static let borderWidth: CGFloat = 1
         static let defaultStrikethroughFontSize: CGFloat = 15.18
+
+        // Reserved heights for uniform card sizing (reserveSpace strategy)
+        // Token source: spacing.json > starRating.starSize (12) + gap
+        static let reservedRatingHeight: CGFloat = 16
+        // Token source: xg-product-card.json > deliveryLabelSubComponent.lineHeight
+        static let reservedDeliveryHeight: CGFloat = 14
+        // Token source: xg-product-card.json > addToCartSubComponent.size
+        static let reservedAddToCartHeight: CGFloat = 38
     }
 
     private let imageUrl: URL?
@@ -100,6 +110,7 @@ struct XGProductCard: View {
     private let priceLayout: XGPriceLayout
     private let showRatingAbovePrice: Bool
     private let showDeliveryAbovePrice: Bool
+    private let reserveSpace: Bool
     private let onAddToCartAction: (() -> Void)?
     private let action: () -> Void
 
@@ -179,6 +190,8 @@ struct XGProductCard: View {
     private var ratingSection: some View {
         if let rating {
             XGRatingBar(rating: rating, showValue: false, reviewCount: reviewCount)
+        } else if reserveSpace {
+            Color.clear.frame(height: Constants.reservedRatingHeight)
         }
     }
 
@@ -188,6 +201,8 @@ struct XGProductCard: View {
             Text(deliveryAttributedString(deliveryLabel))
                 .font(XGTypography.micro)
                 .foregroundStyle(XGColors.deliveryText)
+        } else if reserveSpace {
+            Color.clear.frame(height: Constants.reservedDeliveryHeight)
         }
     }
 
@@ -197,6 +212,9 @@ struct XGProductCard: View {
             Spacer()
             if onAddToCartAction != nil {
                 addToCartButton
+            } else if reserveSpace {
+                Color.clear
+                    .frame(width: Constants.addToCartSize, height: Constants.addToCartSize)
             }
         }
     }
@@ -208,6 +226,8 @@ struct XGProductCard: View {
                 Spacer()
                 addToCartButton
             }
+        } else if reserveSpace {
+            Color.clear.frame(height: Constants.reservedAddToCartHeight)
         }
     }
 
