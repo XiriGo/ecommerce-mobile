@@ -45,5 +45,14 @@
     }
   },
 
-  "layout": "ZStack: [backgroundImage, gradientOverlay, VStack(tag → Spacer → headline → subtitle)]"
+  "layout": "ZStack: [backgroundImage, gradientOverlay, VStack(tag → Spacer → headline → subtitle)]",
+
+  "skeleton": {
+    "component": "HeroBannerSkeleton",
+    "layout": "ZStack(bottomLeading): [SkeletonBox(full), VStack(SkeletonLine(tag) → Spacer → SkeletonLine(headline) → SkeletonLine(subtitle))]",
+    "background": "$atoms/xg-skeleton.SkeletonBox",
+    "textLines": "$atoms/xg-skeleton.SkeletonLine"
+  },
+
+  "autoScrollInterval": "$foundations/motion.scroll.autoScrollIntervalMs"
 }

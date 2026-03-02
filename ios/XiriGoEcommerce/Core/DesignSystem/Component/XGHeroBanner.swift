@@ -144,7 +144,75 @@ struct XGHeroBanner: View {
     }
 }
 
+// MARK: - HeroBannerSkeleton
+
+/// Shimmer skeleton placeholder that mirrors the ``XGHeroBanner`` layout.
+///
+/// Displays a full-size shimmer box with overlaid skeleton lines matching
+/// the tag badge, headline, and subtitle positions. Use this as the
+/// placeholder in a ``skeleton(visible:placeholder:)`` wrapper or loading state.
+///
+/// Token source: `components/molecules/xg-hero-banner.json` (skeleton section).
+struct HeroBannerSkeleton: View {
+    // MARK: - Internal
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            // Full background shimmer
+            SkeletonBox(
+                width: Constants.skeletonFullWidth,
+                height: Constants.bannerHeight,
+                cornerRadius: XGCornerRadius.medium,
+            )
+            .frame(maxWidth: .infinity)
+            .frame(height: Constants.bannerHeight)
+
+            // Bottom-aligned text skeleton lines
+            VStack(alignment: .leading, spacing: XGSpacing.sm) {
+                SkeletonLine(width: Constants.skeletonHeadlineWidth, height: Constants.headlineFontSize)
+                SkeletonLine(width: Constants.skeletonSubtitleWidth, height: Constants.subtitleFontSize)
+            }
+            .padding(XGSpacing.base)
+
+            // Tag badge skeleton at top-leading
+            VStack {
+                HStack {
+                    SkeletonLine(
+                        width: Constants.skeletonTagWidth,
+                        height: Constants.tagFontSize,
+                    )
+                    .padding(XGSpacing.md)
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
+        .frame(height: Constants.bannerHeight)
+        .clipShape(RoundedRectangle(cornerRadius: XGCornerRadius.medium))
+        .accessibilityLabel(Text("skeleton_loading_placeholder"))
+    }
+
+    // MARK: - Private
+
+    private enum Constants {
+        static let bannerHeight: CGFloat = 192
+        static let tagFontSize: CGFloat = 12
+        static let headlineFontSize: CGFloat = 24
+        static let subtitleFontSize: CGFloat = 14
+        static let skeletonTagWidth: CGFloat = 80
+        static let skeletonHeadlineWidth: CGFloat = 160
+        static let skeletonSubtitleWidth: CGFloat = 120
+        static let skeletonFullWidth: CGFloat = 400
+    }
+}
+
 // MARK: - Previews
+
+#Preview("HeroBannerSkeleton") {
+    HeroBannerSkeleton()
+        .padding(XGSpacing.base)
+        .xgTheme()
+}
 
 #Preview("XGHeroBanner with image") {
     XGHeroBanner(

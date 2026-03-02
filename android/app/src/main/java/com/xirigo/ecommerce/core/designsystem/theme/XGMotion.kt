@@ -112,6 +112,7 @@ object XGMotion {
     object Scroll {
         const val PREFETCH_DISTANCE = 5 // scroll.prefetchDistance
         const val SCROLL_RESTORATION_ENABLED = true // scroll.scrollRestorationEnabled
+        const val AUTO_SCROLL_INTERVAL_MS = 5000L // scroll.autoScrollIntervalMs
     }
 
     /**

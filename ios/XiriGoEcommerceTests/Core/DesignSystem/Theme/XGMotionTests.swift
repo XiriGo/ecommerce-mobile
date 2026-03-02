@@ -196,6 +196,16 @@ struct XGMotionScrollTests {
     func prefetchDistanceIsPositive() {
         #expect(XGMotion.Scroll.prefetchDistance > 0)
     }
+
+    @Test("autoScrollInterval is 5.0 seconds (5000ms)")
+    func autoScrollInterval() {
+        #expect(XGMotion.Scroll.autoScrollInterval == 5.0)
+    }
+
+    @Test("autoScrollInterval is positive")
+    func autoScrollIntervalIsPositive() {
+        #expect(XGMotion.Scroll.autoScrollInterval > 0)
+    }
 }
 
 // MARK: - XGMotionEntranceAnimationTests

@@ -10,6 +10,7 @@
 		01D7236F5A3F2E5EE9465CA8 /* XGRatingBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A97661F397BE293A2CF51A2 /* XGRatingBarTests.swift */; };
 		C63CFEFB5B3E4A0F9150A18C /* ShimmerModifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59E507B14B147CA82712265 /* ShimmerModifierTests.swift */; };
 		F4EA86D8D7BE4BFBB5E7E993 /* SkeletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D25F218F384C0489155AE2 /* SkeletonTests.swift */; };
+		DQ23BF01A1B24C8E9E3F7A01 /* HeroBannerSkeletonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DQ23AF02B2C34D9F8E4F8B02 /* HeroBannerSkeletonTests.swift */; };
 		036AB440D9BAC59A5CA5662F /* XGBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61370A981BC5EC92A0C4A8 /* XGBadge.swift */; };
 		0407B1F9467D13882F0D6EDD /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9393EAA32874CDD93E4540 /* RequestLogger.swift */; };
 		0506C2BAE6E57BADDF04BED7 /* CompleteOnboardingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45D12B726F4BE4BA58C486E /* CompleteOnboardingUseCaseTests.swift */; };
@@ -321,6 +322,7 @@
 		9A97661F397BE293A2CF51A2 /* XGRatingBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGRatingBarTests.swift; sourceTree = "<group>"; };
 		F59E507B14B147CA82712265 /* ShimmerModifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifierTests.swift; sourceTree = "<group>"; };
 		A2D25F218F384C0489155AE2 /* SkeletonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTests.swift; sourceTree = "<group>"; };
+		DQ23AF02B2C34D9F8E4F8B02 /* HeroBannerSkeletonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroBannerSkeletonTests.swift; sourceTree = "<group>"; };
 		9B7806465C1ACEE5A0DF4D14 /* FakeOnboardingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeOnboardingRepository.swift; sourceTree = "<group>"; };
 		A0E948D7C8EAA15065F60F29 /* XGCornerRadiusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGCornerRadiusTests.swift; sourceTree = "<group>"; };
 		A127522170E0361905067E7F /* XGPaginationDots.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = XGPaginationDots.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 				9A97661F397BE293A2CF51A2 /* XGRatingBarTests.swift */,
 				F59E507B14B147CA82712265 /* ShimmerModifierTests.swift */,
 				A2D25F218F384C0489155AE2 /* SkeletonTests.swift */,
+				DQ23AF02B2C34D9F8E4F8B02 /* HeroBannerSkeletonTests.swift */,
 				E2B848AA0222E1996DCD712E /* XGTabBarTests.swift */,
 				ACF83A6796BA6C75451ED925 /* XGTextFieldTests.swift */,
 				743A3229DA093150B73B66B5 /* XGTopBarTests.swift */,
@@ -1456,6 +1459,7 @@
 				01D7236F5A3F2E5EE9465CA8 /* XGRatingBarTests.swift in Sources */,
 				C63CFEFB5B3E4A0F9150A18C /* ShimmerModifierTests.swift in Sources */,
 				F4EA86D8D7BE4BFBB5E7E993 /* SkeletonTests.swift in Sources */,
+				DQ23BF01A1B24C8E9E3F7A01 /* HeroBannerSkeletonTests.swift in Sources */,
 				128B94164A884EF4ADEC1277 /* XGMotionTests.swift in Sources */,
 				9E9031596242E21B3D871A00 /* XGSpacingTests.swift in Sources */,
 				9E7CFA8E8F949A13D6FB9A9E /* XGTabBarTests.swift in Sources */,

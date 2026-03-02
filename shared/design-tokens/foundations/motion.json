@@ -39,6 +39,7 @@
   "scroll": {
     "prefetchDistance": 5,
     "scrollRestorationEnabled": true,
+    "autoScrollIntervalMs": 5000,
     "flingDecayFriction": { "ios": "default UIScrollView", "android": "default fling" },
     "_rule": "All scrollable lists MUST use lazy rendering (LazyColumn/LazyRow/LazyVGrid on Android, LazyVStack/LazyHStack/LazyVGrid on iOS). Never use Column+verticalScroll or ScrollView+VStack for lists with >4 items."
   },

@@ -120,6 +120,16 @@ class XGMotionTest {
         assertThat(XGMotion.Scroll.SCROLL_RESTORATION_ENABLED).isTrue()
     }
 
+    @Test
+    fun `Scroll AUTO_SCROLL_INTERVAL_MS should be 5000`() {
+        assertThat(XGMotion.Scroll.AUTO_SCROLL_INTERVAL_MS).isEqualTo(5000L)
+    }
+
+    @Test
+    fun `Scroll AUTO_SCROLL_INTERVAL_MS should be positive`() {
+        assertThat(XGMotion.Scroll.AUTO_SCROLL_INTERVAL_MS).isGreaterThan(0L)
+    }
+
     // endregion
 
     // region EntranceAnimation

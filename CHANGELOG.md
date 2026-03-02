@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+#### Design Quality Backfill (DQ-23)
+
+- **XGHeroBanner shimmer + motion upgrade**: Added `HeroBannerSkeleton` shimmer loading placeholder on both Android and iOS using `SkeletonBox` + `SkeletonLine` skeleton primitives. Skeleton mirrors the banner layout with full-width shimmer background, overlaid tag/headline/subtitle skeleton lines. Added `XGMotion.Scroll.AUTO_SCROLL_INTERVAL_MS` (Android, 5000L) / `XGMotion.Scroll.autoScrollInterval` (iOS, 5.0s) centralized motion token for carousel auto-scroll interval. Replaced hardcoded auto-scroll constants in HomeScreen on both platforms. Updated `xg-hero-banner.json` with skeleton section and autoScroll reference, `motion.json` with `autoScrollIntervalMs`. Verified gradient overlay and image shimmer already use design tokens (no changes needed). 4 Android instrumented tests + 2 Android unit tests + 8 iOS Swift Testing tests verified. (#67) (Android + iOS)
+
 ### Added
 
 #### Design Quality Backfill (DQ-21)
