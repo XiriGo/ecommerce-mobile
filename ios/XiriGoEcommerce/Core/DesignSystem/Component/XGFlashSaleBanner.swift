@@ -5,11 +5,16 @@ import SwiftUI
 /// A promotional banner card with accent stripes for flash sale events.
 /// Token source: `components/molecules/xg-flash-sale-banner.json`.
 ///
-/// - Height: 133pt
-/// - Background: #FFD814 (bright yellow)
-/// - Left accent stripe: #9EBDF4 (blue), diagonal
-/// - Right accent stripe: #F60186 (pink), diagonal
-/// - Text color: #1D1D1B (near-black)
+/// Image loading shimmer is inherited from ``XGImage`` (DQ-07). All dimensions
+/// and typography are driven by design tokens.
+///
+/// - Height: `Constants.bannerHeight` (133pt)
+/// - Background: `XGColors.flashSaleBackground`
+/// - Left accent stripe: `XGColors.flashSaleAccentBlue`, diagonal
+/// - Right accent stripe: `XGColors.flashSaleAccentPink`, diagonal
+/// - Text color: `XGColors.flashSaleText`
+/// - Badge font: `XGTypography.bodySemiBold`
+/// - Title font: `XGTypography.title`
 struct XGFlashSaleBanner: View {
     // MARK: - Lifecycle
 
@@ -32,6 +37,10 @@ struct XGFlashSaleBanner: View {
             ZStack {
                 XGColors.flashSaleBackground
 
+                if let imageUrl {
+                    XGImage(url: imageUrl)
+                }
+
                 accentStripes
 
                 VStack(spacing: XGSpacing.sm) {
@@ -43,7 +52,7 @@ struct XGFlashSaleBanner: View {
                         .font(XGTypography.title)
                         .foregroundStyle(XGColors.flashSaleText)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .lineLimit(Constants.titleMaxLines)
                 }
                 .padding(XGSpacing.base)
             }
@@ -63,8 +72,7 @@ struct XGFlashSaleBanner: View {
 
     private enum Constants {
         static let bannerHeight: CGFloat = 133
-        static let badgeFontSize: CGFloat = 14
-        static let titleFontSize: CGFloat = 20
+        static let titleMaxLines: Int = 2
     }
 
     private enum StripeLayout {
@@ -122,6 +130,16 @@ struct XGFlashSaleBanner: View {
 #Preview("XGFlashSaleBanner") {
     XGFlashSaleBanner(
         title: "Up to 70% Off Selected Items",
+        action: {},
+    )
+    .padding()
+    .xgTheme()
+}
+
+#Preview("XGFlashSaleBanner with image") {
+    XGFlashSaleBanner(
+        title: "Limited Time Offer",
+        imageUrl: URL(string: "https://picsum.photos/350/133"),
         action: {},
     )
     .padding()
