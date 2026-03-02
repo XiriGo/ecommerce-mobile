@@ -26,7 +26,7 @@ import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGSpacing
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
-// Token source: components/atoms/xg-price-text.json
+// Token source: components/atoms/xg-price-text.json — variant font sizes
 private val DefaultCurrencyFontSize = 22.78.sp
 private val DefaultIntegerFontSize = 27.33.sp
 private val DefaultDecimalFontSize = 18.98.sp
@@ -36,44 +36,66 @@ private val StandardDecimalFontSize = 14.sp
 private val SmallCurrencyFontSize = 14.sp
 private val SmallIntegerFontSize = 18.sp
 private val SmallDecimalFontSize = 14.sp
-private val DefaultStrikethroughFontSize = 15.18.sp
 
-/** Formatted price display with currency symbol, integer, and decimal parts. */
+// Token source: components/atoms/xg-price-text.json — strikethrough font sizes
+private val DefaultStrikethroughFontSize = 15.18.sp
+private val StandardStrikethroughFontSize = 14.sp
+
+/** Visual style variants for price display. Maps to XGPriceStyle in the token spec. */
+enum class XGPriceStyle {
+    /** Default discount price (Featured/Popular cards). */
+    Default,
+
+    /** Standard variant for New Arrivals cards (20/20/14). */
+    Standard,
+
+    /** Small variant for compact layouts. */
+    Small,
+
+    /** Deal variant — brand secondary color for daily deal contexts. */
+    Deal,
+}
+
+/** Formatted price display with currency symbol, integer, and decimal parts.
+ *  When [price] is null the component renders nothing (hides entirely). */
 @Composable
 fun XGPriceText(
-    price: String,
+    price: String?,
     modifier: Modifier = Modifier,
     originalPrice: String? = null,
     currencySymbol: String = "\u20AC",
-    size: XGPriceSize = XGPriceSize.Default,
+    style: XGPriceStyle = XGPriceStyle.Default,
     strikethroughFontSize: Float = DefaultStrikethroughFontSize.value,
     layout: XGPriceLayout = XGPriceLayout.Inline,
 ) {
+    // Null price fallback: hide component entirely (DQ-10)
+    if (price == null) return
+
     val priceColor: Color
     val currencyFontSize: Float
     val integerFontSize: Float
     val decimalFontSize: Float
 
-    when (size) {
-        XGPriceSize.Default -> {
+    when (style) {
+        XGPriceStyle.Default -> {
             priceColor = XGColors.PriceSale
             currencyFontSize = DefaultCurrencyFontSize.value
             integerFontSize = DefaultIntegerFontSize.value
             decimalFontSize = DefaultDecimalFontSize.value
         }
-        XGPriceSize.Standard -> {
+        XGPriceStyle.Standard -> {
             priceColor = XGColors.PriceSale
             currencyFontSize = StandardCurrencyFontSize.value
             integerFontSize = StandardIntegerFontSize.value
             decimalFontSize = StandardDecimalFontSize.value
         }
-        XGPriceSize.Small -> {
+        XGPriceStyle.Small -> {
             priceColor = XGColors.PriceSale
             currencyFontSize = SmallCurrencyFontSize.value
             integerFontSize = SmallIntegerFontSize.value
             decimalFontSize = SmallDecimalFontSize.value
         }
-        XGPriceSize.Deal -> {
+        XGPriceStyle.Deal -> {
             priceColor = XGColors.BrandSecondary
             currencyFontSize = DefaultCurrencyFontSize.value
             integerFontSize = DefaultIntegerFontSize.value
@@ -215,7 +237,7 @@ private fun XGPriceTextStandardPreview() {
         XGPriceText(
             price = PreviewPrices.REGULAR,
             originalPrice = PreviewPrices.ORIGINAL,
-            size = XGPriceSize.Standard,
+            style = XGPriceStyle.Standard,
             strikethroughFontSize = PreviewPrices.STANDARD_STRIKETHROUGH,
         )
     }
@@ -225,7 +247,7 @@ private fun XGPriceTextStandardPreview() {
 @Composable
 private fun XGPriceTextSmallPreview() {
     XGTheme {
-        XGPriceText(price = PreviewPrices.SMALL, size = XGPriceSize.Small)
+        XGPriceText(price = PreviewPrices.SMALL, style = XGPriceStyle.Small)
     }
 }
 
@@ -236,7 +258,7 @@ private fun XGPriceTextDealPreview() {
         XGPriceText(
             price = PreviewPrices.DEAL,
             originalPrice = PreviewPrices.DEAL_ORIGINAL,
-            size = XGPriceSize.Deal,
+            style = XGPriceStyle.Deal,
         )
     }
 }
@@ -250,5 +272,17 @@ private fun XGPriceTextStackedPreview() {
             originalPrice = PreviewPrices.DEAL_ORIGINAL,
             layout = XGPriceLayout.Stacked,
         )
+    }
+}
+
+@Preview(showBackground = true, name = "XGPriceText Null Price")
+@Composable
+private fun XGPriceTextNullPricePreview() {
+    XGTheme {
+        Column {
+            Text("Before price:")
+            XGPriceText(price = null)
+            Text("After price (nothing between):")
+        }
     }
 }
