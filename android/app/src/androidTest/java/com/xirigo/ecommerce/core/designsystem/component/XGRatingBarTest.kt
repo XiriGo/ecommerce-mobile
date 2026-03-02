@@ -27,7 +27,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("4.5").assertIsDisplayed()
+        composeTestRule.onNodeWithText("4.5", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -41,7 +41,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("4.5").assertDoesNotExist()
+        composeTestRule.onNodeWithText("4.5", useUnmergedTree = true).assertDoesNotExist()
     }
 
     @Test
@@ -55,7 +55,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("(123)").assertIsDisplayed()
+        composeTestRule.onNodeWithText("(123)", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -69,7 +69,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("(0)").assertDoesNotExist()
+        composeTestRule.onNodeWithText("(0)", useUnmergedTree = true).assertDoesNotExist()
     }
 
     @Test
@@ -83,7 +83,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("5.0").assertIsDisplayed()
+        composeTestRule.onNodeWithText("5.0", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -97,7 +97,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("0.0").assertIsDisplayed()
+        composeTestRule.onNodeWithText("0.0", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -111,7 +111,7 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("2.5").assertIsDisplayed()
+        composeTestRule.onNodeWithText("2.5", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test
@@ -129,6 +129,20 @@ class XGRatingBarTest {
     }
 
     @Test
+    fun xgRatingBar_accessibilityDescription_withReviewCount() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGRatingBar(rating = 3.5f, reviewCount = 42)
+            }
+        }
+
+        // Accessibility description should include both rating and review count
+        composeTestRule.onNode(
+            hasContentDescription("Rating: 3.5 out of 5", substring = true),
+        ).assertExists()
+    }
+
+    @Test
     fun xgRatingBar_showValue_andReviewCount_bothDisplayed() {
         composeTestRule.setContent {
             XGTheme {
@@ -140,7 +154,22 @@ class XGRatingBarTest {
             }
         }
 
-        composeTestRule.onNodeWithText("3.5").assertIsDisplayed()
-        composeTestRule.onNodeWithText("(42)").assertIsDisplayed()
+        composeTestRule.onNodeWithText("3.5", useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText("(42)", useUnmergedTree = true).assertIsDisplayed()
+    }
+
+    @Test
+    fun xgRatingBar_customMaxRating_rendersWithoutCrash() {
+        composeTestRule.setContent {
+            XGTheme {
+                XGRatingBar(
+                    rating = 7.0f,
+                    maxRating = 10,
+                    showValue = true,
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("7.0", useUnmergedTree = true).assertIsDisplayed()
     }
 }

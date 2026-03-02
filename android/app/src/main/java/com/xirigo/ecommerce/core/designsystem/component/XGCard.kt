@@ -72,7 +72,7 @@ fun XGProductCard(
     onWishlistToggle: (() -> Unit)? = null,
     deliveryLabel: String? = null,
     onAddToCartClick: (() -> Unit)? = null,
-    priceSize: XGPriceSize = XGPriceSize.Default,
+    priceStyle: XGPriceStyle = XGPriceStyle.Default,
     strikethroughFontSize: Float = 15.18f,
     priceLayout: XGPriceLayout = XGPriceLayout.Inline,
     showRatingAbovePrice: Boolean = false,
@@ -103,7 +103,7 @@ fun XGProductCard(
                 reviewCount = reviewCount,
                 deliveryLabel = deliveryLabel,
                 onAddToCartClick = onAddToCartClick,
-                priceSize = priceSize,
+                priceStyle = priceStyle,
                 strikethroughFontSize = strikethroughFontSize,
                 priceLayout = priceLayout,
                 showRatingAbovePrice = showRatingAbovePrice,
@@ -151,7 +151,7 @@ private fun ProductCardDetailsSection(
     reviewCount: Int?,
     deliveryLabel: String?,
     onAddToCartClick: (() -> Unit)?,
-    priceSize: XGPriceSize,
+    priceStyle: XGPriceStyle,
     strikethroughFontSize: Float,
     priceLayout: XGPriceLayout,
     showRatingAbovePrice: Boolean,
@@ -178,7 +178,7 @@ private fun ProductCardDetailsSection(
             PriceWithCartRow(
                 price = price,
                 originalPrice = originalPrice,
-                priceSize = priceSize,
+                priceStyle = priceStyle,
                 strikethroughFontSize = strikethroughFontSize,
                 priceLayout = priceLayout,
                 onAddToCartClick = onAddToCartClick,
@@ -188,7 +188,7 @@ private fun ProductCardDetailsSection(
             XGPriceText(
                 price = price,
                 originalPrice = originalPrice,
-                size = priceSize,
+                style = priceStyle,
                 strikethroughFontSize = strikethroughFontSize,
                 layout = priceLayout,
             )
@@ -223,7 +223,7 @@ private fun DeliverySection(deliveryLabel: String?) {
 private fun PriceWithCartRow(
     price: String,
     originalPrice: String?,
-    priceSize: XGPriceSize,
+    priceStyle: XGPriceStyle,
     strikethroughFontSize: Float,
     priceLayout: XGPriceLayout,
     onAddToCartClick: (() -> Unit)?,
@@ -236,7 +236,7 @@ private fun PriceWithCartRow(
         XGPriceText(
             price = price,
             originalPrice = originalPrice,
-            size = priceSize,
+            style = priceStyle,
             strikethroughFontSize = strikethroughFontSize,
             layout = priceLayout,
         )
@@ -438,7 +438,7 @@ private fun XGProductCardStandardPreview() {
             deliveryLabel = "Order before **23:59**, delivered **Monday**",
             onAddToCartClick = {},
             onClick = {},
-            priceSize = XGPriceSize.Standard,
+            priceStyle = XGPriceStyle.Standard,
             strikethroughFontSize = 14f,
             priceLayout = XGPriceLayout.Stacked,
             showRatingAbovePrice = true,

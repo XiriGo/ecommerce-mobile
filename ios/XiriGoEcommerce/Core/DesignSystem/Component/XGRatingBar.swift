@@ -70,7 +70,8 @@ struct XGRatingBar: View {
     private let reviewCount: Int?
 
     private var accessibilityDescription: String {
-        var desc = String(localized: "common_rating_description \(rating) \(maxRating)")
+        let formattedRating = String(format: "%.1f", rating)
+        var desc = String(localized: "common_rating_description \(formattedRating) \(maxRating)")
         if let reviewCount {
             desc += " " + String(localized: "common_reviews_count \(reviewCount)")
         }
