@@ -278,7 +278,7 @@ private extension Comparable {
             .padding()
         }
     }
-    return PreviewWrapper()
+    PreviewWrapper()
         .xgTheme()
 }
 
@@ -297,7 +297,7 @@ private extension Comparable {
             .padding()
         }
     }
-    return PreviewWrapper()
+    PreviewWrapper()
         .xgTheme()
 }
 
@@ -317,6 +317,6 @@ private extension Comparable {
             .padding()
         }
     }
-    return PreviewWrapper()
+    PreviewWrapper()
         .xgTheme()
 }
