@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,26 +17,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.xirigo.ecommerce.R
-import com.xirigo.ecommerce.core.designsystem.theme.PoppinsFontFamily
 import com.xirigo.ecommerce.core.designsystem.theme.XGColors
 import com.xirigo.ecommerce.core.designsystem.theme.XGCornerRadius
 import com.xirigo.ecommerce.core.designsystem.theme.XGTheme
 
 // Token source: components/molecules/xg-flash-sale-banner.json
 private val BannerHeight = 133.dp
-private val BadgeFontSize = 14.sp
-private val TitleFontSize = 20.sp
-private val TitleLineHeight = 28.sp
+private const val TITLE_MAX_LINES = 2
 private const val STRIPE_WIDTH_FRACTION = 0.12f
 private const val STRIPE_SHEAR_MULTIPLIER = 1.5f
 private const val STRIPE_OFFSET_MULTIPLIER = 0.5f
 
-/** Flash sale promotional banner with decorative diagonal stripes and title text. */
+/**
+ * Flash sale promotional banner with decorative diagonal stripes and title text.
+ *
+ * Image loading shimmer is inherited from [XGImage] (DQ-07). All dimensions and
+ * typography are driven by design tokens (`xg-flash-sale-banner.json`).
+ *
+ * @param title Banner headline text (max 2 lines, centered).
+ * @param modifier Modifier applied to the root composable.
+ * @param imageUrl Optional background image URL; loaded via [XGImage] with shimmer.
+ * @param onClick Optional click handler; when `null` the banner is non-interactive.
+ */
 @Composable
 fun XGFlashSaleBanner(
     title: String,
@@ -89,18 +96,15 @@ fun XGFlashSaleBanner(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = stringResource(R.string.home_flash_sale_badge),
-                fontFamily = PoppinsFontFamily,
-                fontSize = BadgeFontSize,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleSmall,
                 color = XGColors.FlashSaleText,
             )
             Text(
                 text = title,
-                fontFamily = PoppinsFontFamily,
-                fontSize = TitleFontSize,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = XGColors.FlashSaleText,
-                lineHeight = TitleLineHeight,
+                textAlign = TextAlign.Center,
+                maxLines = TITLE_MAX_LINES,
             )
         }
     }
@@ -112,6 +116,18 @@ private fun XGFlashSaleBannerPreview() {
     XGTheme {
         XGFlashSaleBanner(
             title = "Flash Sale - Up to 70% Off!",
+            onClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun XGFlashSaleBannerWithImagePreview() {
+    XGTheme {
+        XGFlashSaleBanner(
+            title = "Limited Time Offer",
+            imageUrl = "https://picsum.photos/350/133",
             onClick = {},
         )
     }
