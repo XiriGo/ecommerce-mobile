@@ -15,13 +15,12 @@ Parse: `$ARGUMENTS` — feature name and optional platform filter.
 ## Pre-flight
 1. Read `CLAUDE.md` — project overview and key rules
 2. Read `docs/standards/testing.md` — test rules, coverage, patterns
-3. Read `docs/TEST.md` — full iOS test architecture reference (13 layers)
-4. Read platform-specific standards:
+3. Read platform-specific standards:
    - Android: `docs/standards/android.md`
    - iOS: `docs/standards/ios.md`
-5. Read developer handoffs for file manifests
-6. Read ALL source files for the feature being tested
-7. Read existing test infrastructure:
+4. Read architect spec: `shared/feature-specs/{feature}.md` (TDD: tests FROM spec)
+5. Read ADR: `docs/adr/ADR-NNN-{feature}.md` (architectural decisions)
+6. Read existing test infrastructure:
    - iOS: `ios/XiriGoEcommerceTests/Infrastructure/` (helpers, base classes)
    - iOS: `ios/XiriGoEcommerceTests/Snapshot/SnapshotTestCase.swift`
 
@@ -32,7 +31,7 @@ Parse: `$ARGUMENTS` — feature name and optional platform filter.
 **ViewModel Tests:**
 - Test ALL states: `.loading`, `.success(data)`, `.error(message)`, `.empty`
 - Test ALL user actions/events
-- Test state transitions: loading → success, loading → error
+- Test state transitions: loading -> success, loading -> error
 - Use `@Suite` + `@Test` + `@MainActor`
 - Verify with `#expect()`
 
@@ -116,7 +115,7 @@ final class FeatureScreenSnapshotTests: SnapshotTestCase {
 
 Use `MockURLProtocol` for network stubbing.
 
-**Test the full chain:** API call → JSON decode → DTO mapping → Domain model
+**Test the full chain:** API call -> JSON decode -> DTO mapping -> Domain model
 
 **Pattern:**
 ```swift
@@ -152,14 +151,54 @@ final class FeaturePerformanceTests: PerformanceTestCase {
 }
 ```
 
-### Layer 5-9: Auto Tests (Already Exist)
+### Layer 5: E2E / UI Tests (MANDATORY -- every screen with user interaction)
+
+Test real user flows using XCUITest. Page Object pattern.
+
+**Location:** `ios/XiriGoEcommerceUITests/Feature/{Name}/`
+
+**What to test:**
+- User can see the screen and its content
+- User can tap buttons and navigate
+- User can scroll and load more content
+- User can type in text fields
+- Loading, error, and empty states render correctly
+- Navigation between screens works
+
+**Pattern:**
+```swift
+final class FeatureUITests: XCTestCase {
+    let app = XCUIApplication()
+
+    override func setUp() {
+        super.setUp()
+        continueAfterFailure = false
+        app.launch()
+    }
+
+    func test_user_seesFeatureScreen() {
+        // Navigate to feature
+        app.tabBars.buttons["Home"].tap()
+        // Verify content is visible
+        XCTAssertTrue(app.staticTexts["Welcome"].waitForExistence(timeout: 5))
+    }
+
+    func test_user_tapsProductAndNavigatesToDetail() {
+        app.tabBars.buttons["Home"].tap()
+        app.cells.firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Product Detail"].waitForExistence(timeout: 5))
+    }
+}
+```
+
+### Layer 6-9: Auto Tests (Already Exist)
 
 These test suites run automatically for ALL features:
-- **ArchitectureTests** — layer boundary enforcement
-- **SecurityTests** — HTTPS, secrets, sensitive logging
-- **AccessibilityTests** — modifiers, touch targets, colors
-- **LocalizableTests** — string translations
-- **ConfigTests** — API URL, bundle version
+- **ArchitectureTests** -- layer boundary enforcement
+- **SecurityTests** -- HTTPS, secrets, sensitive logging
+- **AccessibilityTests** -- modifiers, touch targets, colors
+- **LocalizableTests** -- string translations
+- **ConfigTests** -- API URL, bundle version
 
 You do NOT need to add to these unless the feature requires specific checks.
 

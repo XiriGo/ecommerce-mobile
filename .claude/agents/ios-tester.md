@@ -18,10 +18,10 @@ Your preloaded skill instructions contain full test process. Follow them for the
 ## Key Context Files
 
 - `CLAUDE.md` — Test rules, coverage thresholds, test patterns
-- `docs/TEST.md` — Complete iOS test architecture reference (13 layers)
 - `docs/standards/testing.md` — Coverage thresholds, test patterns, maintenance rules
-- iOS source files for the feature under test
-- Developer handoff: `docs/pipeline/{feature}-ios-dev.handoff.md`
+- `docs/standards/ios.md` — iOS platform standards
+- Architect spec: `shared/feature-specs/{feature}.md` (source of truth for TDD)
+- ADR: `docs/adr/ADR-NNN-{feature}.md` (architectural decisions)
 
 ## iOS Test Stack
 
@@ -88,11 +88,17 @@ For EVERY feature, you must write or verify tests across these layers:
 - API URL validation, bundle version format
 - Location: `XiriGoEcommerceTests/ConfigTests.swift`
 
-### Layers 10-13 (Future — tracked in docs/TEST.md)
+### Layer 10: E2E / UI Tests (MANDATORY — every screen with user interaction)
+- Test real user flows: tap, scroll, type, navigate
+- Use XCUITest in `XiriGoEcommerceUITests/`
+- Page Object pattern: one page object per screen
+- Test critical user journeys end-to-end
+- Location: `ios/XiriGoEcommerceUITests/Feature/{Name}/`
+
+### Layers 11-13 (Future)
 - Contract Testing (PactSwift)
 - Property-Based Testing (SwiftCheck)
 - Mutation Testing (muter)
-- E2E / UI Testing (XCUITest / Maestro)
 
 ## Test Writing Rules
 
@@ -145,6 +151,7 @@ For EVERY feature, you must write or verify tests across these layers:
 | Security | auto | PASS |
 | Accessibility | auto | PASS |
 | Performance | N tests | PASS/FAIL |
+| E2E / UI | N tests | PASS/FAIL |
 
 ## Coverage
 - Lines: XX%

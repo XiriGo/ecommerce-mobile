@@ -132,7 +132,7 @@ Issue map: `scripts/issue-map.json` (feature ID → GitHub issue number)
 7 specialized agents work in sequence with parallel phases (SDD + TDD):
 
 ```
-Architect → ADR-Doc → [Android Tester ‖ iOS Tester] (TDD) → [Android Dev ‖ iOS Dev] → [Self-Heal] → [Regression] → Review → API-Doc → Quality Gate
+Architect → ADR-Doc → [Android Tester ‖ iOS Tester] (TDD) → [Android Dev ‖ iOS Dev] → Verify → Self-Heal → Visual-Verify → Regression → Review → API-Doc → Quality Gate
 ```
 
 ### Pipeline Methodology
