@@ -132,8 +132,6 @@ schemes:
         - XiriGoEcommerce
       language: en
       region: US
-      testPlans:
-        - path: XiriGoEcommerce.xctestplan
     profile:
       config: Release
     analyze:

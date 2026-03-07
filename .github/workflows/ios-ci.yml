@@ -42,6 +42,7 @@ jobs:
 
       - name: SwiftFormat
         run: |
+          echo "SwiftFormat path: $(which swiftformat)"
           swiftformat --version
           swiftformat --lint . --config .swiftformat
         working-directory: ios
