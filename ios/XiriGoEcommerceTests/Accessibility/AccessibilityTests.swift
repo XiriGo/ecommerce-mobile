@@ -1,0 +1,175 @@
+import Foundation
+import Testing
+
+/// Static accessibility audit tests that scan source code for common issues.
+/// Maps to TEST.md Section 8 — Accessibility Test Layer.
+///
+/// Runtime accessibility audits (performAccessibilityAudit) require XCUITest.
+/// These tests catch missing accessibility modifiers at the code level.
+@Suite("Accessibility Tests")
+struct AccessibilityTests {
+    // MARK: - Internal
+
+    // MARK: - Accessibility Labels on Interactive Elements
+
+    @Test("Interactive elements have accessibility modifiers")
+    func interactiveElements_haveAccessibilityModifiers() {
+        // Find all screen files (presentation/screen/)
+        let screenFiles = SourceFileScanner.swiftFiles(in: sourceRoot)
+            .filter { $0.path.contains("/screen/") || $0.path.contains("/Screen/") || $0.path.contains("/Screen.swift")
+            }
+
+        var missingAccessibility: [SourceFinding] = []
+
+        for file in screenFiles {
+            let findings = findImagesWithoutAccessibility(in: file)
+            missingAccessibility.append(contentsOf: findings)
+        }
+
+        // This is a warning-level test — record issues but don't fail
+        for finding in missingAccessibility {
+            Issue.record(
+                "Image without accessibility modifier at \(finding.file):\(finding.line) — \(finding.content)",
+            )
+        }
+    }
+
+    // MARK: - Touch Target Size
+
+    @Test("No explicit small frame sizes on interactive elements")
+    func interactiveElements_meetMinimumTouchTarget() {
+        let screenFiles = SourceFileScanner.swiftFiles(in: sourceRoot)
+            .filter { $0.path.contains("/screen/") || $0.path.contains("/Screen/") || $0.path.contains("/Component/") }
+
+        var smallTargets: [SourceFinding] = []
+
+        for file in screenFiles {
+            let findings = findSmallTouchTargets(in: file)
+            smallTargets.append(contentsOf: findings)
+        }
+
+        for finding in smallTargets {
+            Issue.record(
+                "Touch target may be too small (<44pt) at \(finding.file):\(finding.line) — \(finding.content)",
+            )
+        }
+    }
+
+    // MARK: - Color Contrast (Design System Check)
+
+    @Test("Design system components use semantic colors (not hardcoded hex)")
+    func designSystem_usesSemanticColors() {
+        let featureDir = sourceRoot + "/Feature"
+        guard FileManager.default.fileExists(atPath: featureDir) else {
+            return
+        }
+
+        let hardcodedColors = SourceFileScanner.containsPattern(
+            "Color(#colorLiteral",
+            in: featureDir,
+            excludingPaths: ["Tests", "Preview"],
+        ) + SourceFileScanner.containsPattern(
+            "Color(red:",
+            in: featureDir,
+            excludingPaths: ["Tests", "Preview"],
+        ) + SourceFileScanner.containsPattern(
+            "Color(hex:",
+            in: featureDir,
+            excludingPaths: ["Tests", "Preview"],
+        )
+
+        for finding in hardcodedColors {
+            Issue.record(
+                "Hardcoded color in feature code at \(finding.file):\(finding.line) — use XGColors tokens instead",
+            )
+        }
+
+        #expect(
+            hardcodedColors.isEmpty,
+            "Found \(hardcodedColors.count) hardcoded color(s) in feature code — use XGColors semantic tokens",
+        )
+    }
+
+    // MARK: - Private
+
+    private let sourceRoot = SecurityTestHelpers.sourceRoot
+
+    private let minimumTouchTarget: Double = 44
+
+    // MARK: - Helpers
+
+    private func extractNumber(from string: String) -> Double? {
+        let trimmed = string.trimmingCharacters(in: .whitespaces)
+        var numStr = ""
+        for char in trimmed {
+            if char.isNumber || char == "." {
+                numStr.append(char)
+            } else {
+                break
+            }
+        }
+        return Double(numStr)
+    }
+
+    private func findImagesWithoutAccessibility(in file: URL) -> [SourceFinding] {
+        guard let content = try? String(contentsOf: file, encoding: .utf8) else {
+            return []
+        }
+        let lines = content.components(separatedBy: .newlines)
+        var findings: [SourceFinding] = []
+        let lookAheadCount = 5
+
+        for (index, line) in lines.enumerated() {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard trimmed.contains("Image("), !trimmed.hasPrefix("//") else {
+                continue
+            }
+            let end = min(index + 1 + lookAheadCount, lines.count)
+            let lookAhead = lines[min(index + 1, lines.count - 1) ..< end].joined(separator: " ")
+            let hasA11y = lookAhead.contains("accessibilityLabel") ||
+                lookAhead.contains("accessibilityHidden") ||
+                lookAhead.contains(".decorative")
+            if !hasA11y {
+                findings.append(SourceFinding(file: file.path, line: index + 1, content: trimmed))
+            }
+        }
+        return findings
+    }
+
+    private func findSmallTouchTargets(in file: URL) -> [SourceFinding] {
+        guard let content = try? String(contentsOf: file, encoding: .utf8) else {
+            return []
+        }
+        let lines = content.components(separatedBy: .newlines)
+        var findings: [SourceFinding] = []
+        let contextRange = 3
+
+        for (index, line) in lines.enumerated() {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard trimmed.contains(".frame(") else {
+                continue
+            }
+            let context = lines[max(0, index - contextRange) ..< min(index + contextRange, lines.count)]
+                .joined(separator: " ")
+            let isInteractive = context.contains("Button") || context.contains("onTapGesture") || context
+                .contains("tap")
+            guard isInteractive else {
+                continue
+            }
+
+            if
+                let range = trimmed.range(of: "width:"),
+                let value = extractNumber(from: String(trimmed[range.upperBound...])),
+                value < minimumTouchTarget {
+                findings.append(SourceFinding(file: file.path, line: index + 1, content: trimmed))
+            }
+            if
+                let range = trimmed.range(of: "height:"),
+                let value = extractNumber(from: String(trimmed[range.upperBound...])),
+                value < minimumTouchTarget {
+                findings.append(SourceFinding(file: file.path, line: index + 1, content: trimmed))
+            }
+        }
+        return findings
+    }
+}

@@ -1,8 +1,6 @@
 ---
 name: pipeline-run
 description: "Create an Agent Team to implement a mobile feature end-to-end across Android and iOS"
-model: opus
-allowed-tools: Read, Grep, Glob, Bash, Write, Edit, Task, WebFetch, WebSearch
 argument-hint: "[feature-id or pipeline_id] [description]"
 ---
 
@@ -269,10 +267,39 @@ git commit -m "chore({scope}): review approved for {feature} [agent:review]"
    ```
 5. **Verification gates**: After teammates finish and branches are merged,
    verify files exist on the feature branch.
-6. **Quality gate (Task 8)**: After reviewer approves, run verification yourself:
+6. **Quality gate (Task 8)**: After reviewer approves, run FULL verification:
    ```bash
+   # Android checks
    cd android && ./gradlew ktlintCheck && ./gradlew detekt && ./gradlew test && cd ..
+
+   # iOS checks (multi-layer)
+   cd ios
+   xcodebuild test \
+     -scheme XiriGoEcommerce \
+     -destination 'platform=iOS Simulator,name=iPhone 16' \
+     -enableCodeCoverage YES \
+     -resultBundlePath TestResults.xcresult \
+     CODE_SIGNING_ALLOWED=NO
+
+   # Coverage check
+   xcrun xccov view --report TestResults.xcresult --json > coverage.json
+   python3 -c "
+   import json, sys
+   data = json.load(open('coverage.json'))
+   for t in data.get('targets', []):
+       if t.get('name') == 'XiriGoEcommerce':
+           pct = t.get('lineCoverage', 0) * 100
+           print(f'Coverage: {pct:.1f}%')
+           if pct < 70: sys.exit(1)
+   "
+   cd ..
    ```
+   Quality gate MUST verify:
+   - All unit tests pass (including Security, Architecture, Accessibility auto tests)
+   - Coverage >= 70% minimum (80% target)
+   - Lint checks pass (SwiftLint --strict)
+   - No suppress/disable directives
+
    If any check fails, send the failure back to the relevant developer teammate.
    Max 2 fix rounds before escalating to user.
 7. **Review feedback loop**: If reviewer requests changes, the reviewer

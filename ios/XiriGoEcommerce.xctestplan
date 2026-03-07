@@ -1,0 +1,69 @@
+{
+  "configurations" : [
+    {
+      "id" : "iPhone-Latest",
+      "name" : "iPhone (Latest)",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:XiriGoEcommerce.xcodeproj",
+          "identifier" : "XiriGoEcommerce",
+          "name" : "XiriGoEcommerce"
+        }
+      }
+    },
+    {
+      "id" : "iPhone-SE",
+      "name" : "iPhone Small (SE/16e)",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:XiriGoEcommerce.xcodeproj",
+          "identifier" : "XiriGoEcommerce",
+          "name" : "XiriGoEcommerce"
+        }
+      }
+    },
+    {
+      "id" : "iPad",
+      "name" : "iPad",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:XiriGoEcommerce.xcodeproj",
+          "identifier" : "XiriGoEcommerce",
+          "name" : "XiriGoEcommerce"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:XiriGoEcommerce.xcodeproj",
+          "identifier" : "XiriGoEcommerce",
+          "name" : "XiriGoEcommerce"
+        }
+      ]
+    },
+    "testExecutionOrdering" : "random",
+    "threadSanitizerEnabled" : false
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:XiriGoEcommerce.xcodeproj",
+        "identifier" : "XiriGoEcommerceTests",
+        "name" : "XiriGoEcommerceTests"
+      }
+    },
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:XiriGoEcommerce.xcodeproj",
+        "identifier" : "XiriGoEcommerceUITests",
+        "name" : "XiriGoEcommerceUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

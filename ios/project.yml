@@ -127,6 +127,13 @@ schemes:
       config: Debug
       targets:
         - XiriGoEcommerceTests
+        - XiriGoEcommerceUITests
+      codeCoverageTargets:
+        - XiriGoEcommerce
+      language: en
+      region: US
+      testPlans:
+        - path: XiriGoEcommerce.xctestplan
     profile:
       config: Release
     analyze:

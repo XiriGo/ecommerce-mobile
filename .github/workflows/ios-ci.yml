@@ -24,17 +24,17 @@ concurrency:
 
 env:
   SCHEME: XiriGoEcommerce
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+  DESTINATION_IPHONE: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+  DESTINATION_IPAD: 'platform=iOS Simulator,name=iPad Pro 13-inch (M4),OS=latest'
+  DESTINATION_SMALL: 'platform=iOS Simulator,name=iPhone 16e,OS=latest'
 
 jobs:
+  # ━━━ Stage 1: Lint ━━━
   lint:
     name: Lint (SwiftLint + SwiftFormat)
-    runs-on: macos-15
+    runs-on: macos-19-runner
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install tools
-        run: brew install swiftlint swiftformat
 
       - name: SwiftLint
         run: swiftlint lint --strict --reporter github-actions-logging
@@ -44,64 +44,74 @@ jobs:
         run: swiftformat --lint . --config .swiftformat
         working-directory: ios
 
+  # ━━━ Stage 2: Build ━━━
   build:
     name: Build
-    runs-on: macos-15
+    runs-on: macos-19-runner
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install xcodegen
-        run: brew install xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
         working-directory: ios
-
-      - name: Cache SPM packages
-        uses: actions/cache@v4
-        with:
-          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
-          restore-keys: spm-${{ runner.os }}-
 
       - name: Build
         run: |
           xcodebuild build \
             -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION }}' \
+            -destination '${{ env.DESTINATION_IPHONE }}' \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
         working-directory: ios
 
+  # ━━━ Stage 3: Unit Tests + Coverage (Multi-Device) ━━━
   test:
-    name: Unit tests
-    runs-on: macos-15
+    name: Unit Tests + Coverage (iPhone + iPad + Small)
+    runs-on: macos-19-runner
     needs: build
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install xcodegen
-        run: brew install xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
         working-directory: ios
 
-      - name: Cache SPM packages
-        uses: actions/cache@v4
-        with:
-          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
-          restore-keys: spm-${{ runner.os }}-
-
-      - name: Run tests
+      - name: Run tests on multiple devices
         run: |
           xcodebuild test \
             -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION }}' \
+            -destination '${{ env.DESTINATION_IPHONE }}' \
+            -destination '${{ env.DESTINATION_IPAD }}' \
+            -destination '${{ env.DESTINATION_SMALL }}' \
+            -parallel-testing-enabled YES \
             -skipPackagePluginValidation \
             -resultBundlePath TestResults.xcresult \
+            -enableCodeCoverage YES \
             CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
+
+      - name: Extract coverage report
+        if: always()
+        run: |
+          xcrun xccov view --report TestResults.xcresult --json > coverage.json 2>/dev/null || true
+          if [ -f coverage.json ]; then
+            echo "=== Coverage Summary ==="
+            python3 -c "
+          import json, sys
+          try:
+              data = json.load(open('coverage.json'))
+              targets = data.get('targets', [])
+              for t in targets:
+                  name = t.get('name', '')
+                  if 'XiriGoEcommerce' in name and 'Tests' not in name:
+                      pct = t.get('lineCoverage', 0) * 100
+                      print(f'{name}: {pct:.1f}% line coverage')
+                      if pct < 80:
+                          print(f'WARNING: Coverage {pct:.1f}% is below 80% threshold')
+          except Exception as e:
+              print(f'Coverage parse error: {e}')
+          " 2>/dev/null || true
+          fi
         working-directory: ios
 
       - name: Upload test results
@@ -109,5 +119,30 @@ jobs:
         if: always()
         with:
           name: ios-test-results
-          path: ios/TestResults.xcresult
+          path: |
+            ios/TestResults.xcresult
+            ios/coverage.json
           retention-days: 14
+
+  # ━━━ Stage 4: Thread Sanitizer (nightly or on-demand) ━━━
+  sanitizer:
+    name: Thread Sanitizer
+    runs-on: macos-19-runner
+    needs: build
+    if: github.event_name == 'schedule' || contains(github.event.head_commit.message, '[sanitizer]')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+        working-directory: ios
+
+      - name: Run tests with Thread Sanitizer
+        run: |
+          xcodebuild test \
+            -scheme ${{ env.SCHEME }} \
+            -destination '${{ env.DESTINATION_IPHONE }}' \
+            -skipPackagePluginValidation \
+            -enableThreadSanitizer YES \
+            CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
