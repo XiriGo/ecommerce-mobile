@@ -5,27 +5,6 @@ import XCTest
 /// Base class for performance tests that need XCTest's `measure()` API.
 /// Swift Testing doesn't support performance measurement, so these use XCTest.
 class PerformanceTestCase: XCTestCase {
-    // MARK: - Memory Leak Assertions
-
-    /// Tracks an object for deallocation verification at teardown.
-    /// If the object is still alive when the test ends, the test fails.
-    private func trackForMemoryLeaks(
-        _ instance: AnyObject,
-        file: StaticString = #filePath,
-        line: UInt = #line,
-    ) {
-        let description = String(describing: instance)
-        weak var weakRef = instance
-        addTeardownBlock {
-            XCTAssertNil(
-                weakRef,
-                "Potential memory leak: \(description) was not deallocated",
-                file: file,
-                line: line,
-            )
-        }
-    }
-
     // MARK: - Performance Measurement Helpers
 
     /// Measures execution time with configurable iteration count.
