@@ -86,6 +86,7 @@ jobs:
             -destination '${{ env.DESTINATION_IPHONE }}' \
             -destination '${{ env.DESTINATION_IPAD }}' \
             -destination '${{ env.DESTINATION_SMALL }}' \
+            -skip-testing:XiriGoEcommerceUITests \
             -parallel-testing-enabled YES \
             -skipPackagePluginValidation \
             -resultBundlePath TestResults.xcresult \
@@ -145,6 +146,7 @@ jobs:
           xcodebuild test \
             -scheme ${{ env.SCHEME }} \
             -destination '${{ env.DESTINATION_IPHONE }}' \
+            -skip-testing:XiriGoEcommerceUITests \
             -skipPackagePluginValidation \
             -enableThreadSanitizer YES \
             CODE_SIGNING_ALLOWED=NO

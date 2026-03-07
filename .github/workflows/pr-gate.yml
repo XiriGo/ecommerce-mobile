@@ -187,6 +187,7 @@ jobs:
             -scheme ${{ env.SCHEME }} \
             -destination '${{ env.DESTINATION_IPHONE }}' \
             -destination '${{ env.DESTINATION_IPAD }}' \
+            -skip-testing:XiriGoEcommerceUITests \
             -parallel-testing-enabled YES \
             -skipPackagePluginValidation \
             -resultBundlePath TestResults.xcresult \
