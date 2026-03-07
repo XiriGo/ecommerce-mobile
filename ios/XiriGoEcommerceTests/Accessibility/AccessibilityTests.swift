@@ -136,6 +136,16 @@ struct AccessibilityTests {
         return findings
     }
 
+    private func isBelowMinimum(_ text: String, dimension: String) -> Bool {
+        guard let range = text.range(of: dimension) else {
+            return false
+        }
+        guard let value = extractNumber(from: String(text[range.upperBound...])) else {
+            return false
+        }
+        return value < minimumTouchTarget
+    }
+
     private func findSmallTouchTargets(in file: URL) -> [SourceFinding] {
         guard let content = try? String(contentsOf: file, encoding: .utf8) else {
             return []
@@ -157,17 +167,12 @@ struct AccessibilityTests {
                 continue
             }
 
-            if
-                let range = trimmed.range(of: "width:"),
-                let value = extractNumber(from: String(trimmed[range.upperBound...])),
-                value < minimumTouchTarget {
-                findings.append(SourceFinding(file: file.path, line: index + 1, content: trimmed))
+            let finding = SourceFinding(file: file.path, line: index + 1, content: trimmed)
+            if isBelowMinimum(trimmed, dimension: "width:") {
+                findings.append(finding)
             }
-            if
-                let range = trimmed.range(of: "height:"),
-                let value = extractNumber(from: String(trimmed[range.upperBound...])),
-                value < minimumTouchTarget {
-                findings.append(SourceFinding(file: file.path, line: index + 1, content: trimmed))
+            if isBelowMinimum(trimmed, dimension: "height:") {
+                findings.append(finding)
             }
         }
         return findings
