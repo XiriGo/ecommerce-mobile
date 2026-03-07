@@ -153,19 +153,19 @@ private let previewTabItems: [XGTabItem] = [
     ),
 ]
 
-#Preview("XGTabBar") {
-    struct PreviewWrapper: View {
-        @State var selectedIndex = 0
+// MARK: - XGTabBarPreview
 
-        var body: some View {
-            VStack {
-                Spacer()
-                XGTabBar(
-                    items: previewTabItems,
-                    selectedIndex: $selectedIndex,
-                )
-            }
+private struct XGTabBarPreview: View {
+    @State var selectedIndex = 0
+
+    var body: some View {
+        VStack {
+            Spacer()
+            XGTabBar(items: previewTabItems, selectedIndex: $selectedIndex)
         }
     }
-    PreviewWrapper()
+}
+
+#Preview("XGTabBar") {
+    XGTabBarPreview()
 }

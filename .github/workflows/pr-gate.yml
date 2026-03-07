@@ -144,7 +144,9 @@ jobs:
         working-directory: ios
 
       - name: SwiftFormat
-        run: swiftformat --lint . --config .swiftformat
+        run: |
+          swiftformat --version
+          swiftformat --lint . --config .swiftformat
         working-directory: ios
 
   ios-build:
