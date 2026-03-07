@@ -17,7 +17,7 @@ class PerformanceTestCase: XCTestCase {
         let description = String(describing: instance)
         let capturedFile = file
         let capturedLine = line
-        addTeardownBlock { [weak instance] in
+        addTeardownBlock { @Sendable [weak instance] in
             XCTAssertNil(
                 instance,
                 "Potential memory leak: \(description) was not deallocated",
