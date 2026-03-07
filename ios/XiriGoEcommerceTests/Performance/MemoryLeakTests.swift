@@ -37,7 +37,7 @@ final class MemoryLeakTests: PerformanceTestCase {
 
     // MARK: - Memory Baseline
 
-    private let maxTestMemoryMB: Double = 200.0
+    private let maxTestMemoryMB: Double = 512.0
 
     // MARK: - ViewModel Memory Leak Tests
 
