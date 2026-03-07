@@ -15,14 +15,13 @@ class PerformanceTestCase: XCTestCase {
         line: UInt = #line,
     ) {
         let description = String(describing: instance)
-        let capturedFile = file
-        let capturedLine = line
-        addTeardownBlock { @MainActor [weak instance] in
+        weak var weakRef = instance
+        addTeardownBlock {
             XCTAssertNil(
-                instance,
+                weakRef,
                 "Potential memory leak: \(description) was not deallocated",
-                file: capturedFile,
-                line: capturedLine,
+                file: file,
+                line: line,
             )
         }
     }
