@@ -1,8 +1,8 @@
 ---
 name: ios-tester
-description: "Write comprehensive multi-layer tests for iOS features. Use proactively after iOS implementation is complete."
+description: "Write comprehensive multi-layer tests for iOS features (TDD: tests FROM spec BEFORE implementation)."
 tools: Read, Edit, Write, Grep, Glob, Bash
-model: sonnet
+model: opus
 permissionMode: acceptEdits
 memory: project
 skills:

@@ -1,8 +1,8 @@
 ---
 name: android-tester
-description: "Write unit and UI tests for Android features. Use proactively after Android implementation is complete."
+description: "Write unit and UI tests for Android features (TDD: tests FROM spec BEFORE implementation)."
 tools: Read, Edit, Write, Grep, Glob, Bash
-model: sonnet
+model: opus
 permissionMode: acceptEdits
 memory: project
 skills:

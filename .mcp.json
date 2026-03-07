@@ -1,25 +1,8 @@
 {
   "mcpServers": {
-    "xcode-build": {
-      "command": "npx",
-      "args": ["-y", "xcodebuildmcp@latest", "mcp"],
-      "description": "Xcode build, test, run, simulator management for iOS development"
-    },
-    "apple-docs": {
-      "command": "npx",
-      "args": ["-y", "apple-doc-mcp-server@latest"],
-      "description": "Apple Developer Documentation search (SwiftUI, UIKit, Foundation, etc.)"
-    },
-    "apple-docs-full": {
-      "command": "npx",
-      "args": ["-y", "@kimsungwhee/apple-docs-mcp@latest"],
-      "description": "Comprehensive Apple docs including WWDC sessions, HIG, all frameworks"
-    },
-    "material3": {
-      "command": "npx",
-      "args": ["-y", "@weppa-cloud/material3-mcp-server@latest"],
-      "description": "Material Design 3 components, design tokens, icons, accessibility guidelines"
-    },
+
+
+
     "ios-simulator": {
       "command": "npx",
       "args": ["-y", "ios-simulator-mcp@latest"],
@@ -65,6 +48,11 @@
       "type": "url",
       "url": "http://127.0.0.1:3845/mcp",
       "description": "Firebase services - Analytics, Crashlytics, FCM, Remote Config (requires firebase-tools running locally)"
+    },
+    "xirigo-storefront": {
+      "command": "node",
+      "args": ["../ecommerce-backend/tooling/mcp-server/dist/bin/xirigo-mcp.js"],
+      "description": "XiriGo Medusa storefront API - product, cart, order, customer, auth endpoints for mobile app development"
     }
   }
 }
