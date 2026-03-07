@@ -214,6 +214,12 @@
 --disable wrapMultilineConditionalAssignment
 # redundantStaticSelf: Can conflict with SwiftLint prefer_self_in_static_references
 --disable redundantStaticSelf
+# redundantSendable: Swift 6 infers Sendable — disable to avoid version-specific churn
+--disable redundantSendable
+# redundantSwiftTestingSuite: @Suite with display names is intentional
+--disable redundantSwiftTestingSuite
+# swiftTestingTestCaseNames: Our naming convention uses underscores intentionally
+--disable swiftTestingTestCaseNames
 
 # =============================================================================
 # Exclusions

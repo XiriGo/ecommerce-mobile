@@ -24,8 +24,8 @@ concurrency:
 
 env:
   SCHEME: XiriGoEcommerce
-  DESTINATION_IPHONE: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
-  DESTINATION_IPAD: 'platform=iOS Simulator,name=iPad Pro 13-inch (M4),OS=latest'
+  DESTINATION_IPHONE: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest'
+  DESTINATION_IPAD: 'platform=iOS Simulator,name=iPad Pro 13-inch (M5),OS=latest'
   DESTINATION_SMALL: 'platform=iOS Simulator,name=iPhone 16e,OS=latest'
 
 jobs:
