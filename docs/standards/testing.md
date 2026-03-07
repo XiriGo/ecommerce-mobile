@@ -1,7 +1,6 @@
 # Testing Standards
 
 Comprehensive testing standards for the XiriGo Ecommerce mobile app.
-Reference: `docs/TEST.md` for full iOS test architecture (13 layers).
 
 ---
 
@@ -21,19 +20,17 @@ Every feature MUST have tests across these layers. Auto layers run for all featu
 
 | # | Layer | Type | iOS Location | Frequency |
 |---|-------|------|-------------|-----------|
-| 1 | Unit (ViewModel) | Manual | `XiriGoEcommerceTests/**/ViewModel/*Tests.swift` | Every feature |
-| 2 | Unit (UseCase) | Manual | `XiriGoEcommerceTests/**/UseCase/*Tests.swift` | Every feature |
-| 3 | Unit (Repository) | Manual | `XiriGoEcommerceTests/**/Repository/*Tests.swift` | Every feature |
-| 4 | Snapshot | Manual | `XiriGoEcommerceTests/Snapshot/*Tests.swift` | Every screen |
-| 5 | Integration (API) | Manual | `XiriGoEcommerceTests/Integration/*Tests.swift` | API features |
-| 6 | Performance | Manual | `XiriGoEcommerceTests/Performance/*Tests.swift` | Every ViewModel |
-| 7 | Architecture | Auto | `XiriGoEcommerceTests/ArchitectureTests.swift` | All features |
-| 8 | Security | Auto | `XiriGoEcommerceTests/Security/SecurityTests.swift` | All features |
-| 9 | Accessibility | Auto | `XiriGoEcommerceTests/Accessibility/AccessibilityTests.swift` | All features |
-| 10 | Localization | Auto | `XiriGoEcommerceTests/Resources/LocalizableTests.swift` | All features |
-| 11 | Configuration | Auto | `XiriGoEcommerceTests/ConfigTests.swift` | All features |
-| 12 | UI / E2E | Manual | `XiriGoEcommerceUITests/` | Critical flows |
-| 13 | Contract | Future | — | API-dependent features |
+| 1 | Unit (ViewModel, UseCase, Repository, Models) | Manual | `XiriGoEcommerceTests/Feature/{Name}/` | Every feature |
+| 2 | Snapshot | Manual | `XiriGoEcommerceTests/Snapshot/*Tests.swift` | Every screen |
+| 3 | Integration (API) | Manual | `XiriGoEcommerceTests/Integration/*Tests.swift` | API features |
+| 4 | Architecture | Auto | `XiriGoEcommerceTests/ArchitectureTests.swift` | All features |
+| 5 | Security | Auto | `XiriGoEcommerceTests/Security/SecurityTests.swift` | All features |
+| 6 | Accessibility | Auto | `XiriGoEcommerceTests/Accessibility/AccessibilityTests.swift` | All features |
+| 7 | Performance | Manual | `XiriGoEcommerceTests/Performance/*Tests.swift` | Every ViewModel |
+| 8 | Localization | Auto | `XiriGoEcommerceTests/Resources/LocalizableTests.swift` | All features |
+| 9 | Configuration | Auto | `XiriGoEcommerceTests/ConfigTests.swift` | All features |
+| 10 | UI / E2E | Manual | `XiriGoEcommerceUITests/Feature/{Name}/` | Every screen with user interaction |
+| 11-13 | Contract, Property-Based, Mutation | Future | — | Planned |
 
 ### Android Test Types
 
