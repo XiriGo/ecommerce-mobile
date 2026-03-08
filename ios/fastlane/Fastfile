@@ -11,6 +11,8 @@ SMALL_DESTINATION = "platform=iOS Simulator,name=iPhone 16e,OS=latest"
 
 platform :ios do
   before_all do
+    ENV["LANG"] = "en_US.UTF-8"
+    ENV["LC_ALL"] = "en_US.UTF-8"
     setup_xcodegen
   end
 
@@ -20,18 +22,18 @@ platform :ios do
 
   desc "Run SwiftLint + SwiftFormat checks"
   lane :lint do
-    sh("swiftlint lint --strict --reporter github-actions-logging")
-    sh("swiftformat --lint . --config .swiftformat")
+    sh("cd .. && swiftlint lint --strict --reporter github-actions-logging")
+    sh("cd .. && swiftformat --lint . --config .swiftformat")
   end
 
   desc "Build debug (no code signing)"
   lane :build do
-    xcodebuild(
-      scheme: SCHEME,
-      destination: IPHONE_DESTINATION,
-      configuration: "Debug",
-      xcargs: "-skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO",
-      build: true
+    sh(
+      "cd .. && xcodebuild build " \
+      "-scheme #{SCHEME} " \
+      "-destination '#{IPHONE_DESTINATION}' " \
+      "-skipPackagePluginValidation " \
+      "CODE_SIGNING_ALLOWED=NO"
     )
   end
 
