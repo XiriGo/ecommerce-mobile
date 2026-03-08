@@ -33,11 +33,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-          bundler-cache: true
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
       - name: Fastlane lint
         run: bundle exec fastlane android lint
@@ -49,11 +46,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-          bundler-cache: true
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
       - name: Fastlane build
         run: bundle exec fastlane android build
@@ -72,11 +66,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-          bundler-cache: true
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
       - name: Fastlane test
         run: bundle exec fastlane android test
