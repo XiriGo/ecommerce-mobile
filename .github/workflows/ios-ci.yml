@@ -9,6 +9,8 @@ on:
       - 'ios/**'
       - 'shared/**'
       - '.github/workflows/ios-ci.yml'
+      - 'Gemfile'
+      - 'Gemfile.lock'
       - 'CLAUDE.md'
   pull_request:
     branches: [develop]
@@ -16,55 +18,53 @@ on:
       - 'ios/**'
       - 'shared/**'
       - '.github/workflows/ios-ci.yml'
+      - 'Gemfile'
+      - 'Gemfile.lock'
       - 'CLAUDE.md'
 
 concurrency:
   group: ios-ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  SCHEME: XiriGoEcommerce
-  DESTINATION_IPHONE: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest'
-  DESTINATION_IPAD: 'platform=iOS Simulator,name=iPad Pro 13-inch (M5),OS=latest'
-  DESTINATION_SMALL: 'platform=iOS Simulator,name=iPhone 16e,OS=latest'
-
 jobs:
-  # ━━━ Stage 1: Lint ━━━
-  lint:
-    name: Lint (SwiftLint + SwiftFormat)
+  # ━━━ Setup ━━━
+  setup:
+    name: Install Fastlane
     runs-on: macos-19-runner
     steps:
       - uses: actions/checkout@v4
 
-      - name: SwiftLint
-        run: swiftlint lint --strict --reporter github-actions-logging
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: SwiftFormat
-        run: |
-          echo "SwiftFormat path: $(which swiftformat)"
-          swiftformat --version
-          swiftformat --lint . --config .swiftformat
+  # ━━━ Stage 1: Lint ━━━
+  lint:
+    name: Lint (SwiftLint + SwiftFormat)
+    runs-on: macos-19-runner
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Fastlane lint
+        run: bundle exec fastlane ios lint
         working-directory: ios
 
   # ━━━ Stage 2: Build ━━━
   build:
     name: Build
     runs-on: macos-19-runner
+    needs: setup
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate Xcode project
-        run: xcodegen generate
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Build
-        run: |
-          xcodebuild build \
-            -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION_IPHONE }}' \
-            -skipPackagePluginValidation \
-            CODE_SIGNING_ALLOWED=NO
+      - name: Fastlane build
+        run: bundle exec fastlane ios build
         working-directory: ios
 
   # ━━━ Stage 3: Unit Tests + Coverage (Multi-Device) ━━━
@@ -75,47 +75,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate Xcode project
-        run: xcodegen generate
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Run tests on multiple devices
-        run: |
-          xcodebuild test \
-            -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION_IPHONE }}' \
-            -destination '${{ env.DESTINATION_IPAD }}' \
-            -destination '${{ env.DESTINATION_SMALL }}' \
-            -skip-testing:XiriGoEcommerceUITests \
-            -parallel-testing-enabled YES \
-            -skipPackagePluginValidation \
-            -resultBundlePath TestResults.xcresult \
-            -enableCodeCoverage YES \
-            CODE_SIGNING_ALLOWED=NO
-        working-directory: ios
-
-      - name: Extract coverage report
-        if: always()
-        run: |
-          xcrun xccov view --report TestResults.xcresult --json > coverage.json 2>/dev/null || true
-          if [ -f coverage.json ]; then
-            echo "=== Coverage Summary ==="
-            python3 -c "
-          import json, sys
-          try:
-              data = json.load(open('coverage.json'))
-              targets = data.get('targets', [])
-              for t in targets:
-                  name = t.get('name', '')
-                  if 'XiriGoEcommerce' in name and 'Tests' not in name:
-                      pct = t.get('lineCoverage', 0) * 100
-                      print(f'{name}: {pct:.1f}% line coverage')
-                      if pct < 80:
-                          print(f'WARNING: Coverage {pct:.1f}% is below 80% threshold')
-          except Exception as e:
-              print(f'Coverage parse error: {e}')
-          " 2>/dev/null || true
-          fi
+      - name: Fastlane test
+        run: bundle exec fastlane ios test
         working-directory: ios
 
       - name: Upload test results
@@ -124,8 +88,8 @@ jobs:
         with:
           name: ios-test-results
           path: |
-            ios/TestResults.xcresult
-            ios/coverage.json
+            ios/fastlane/test_output/
+            ios/fastlane/coverage.json
           retention-days: 14
 
   # ━━━ Stage 4: Thread Sanitizer (nightly or on-demand) ━━━
@@ -137,17 +101,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate Xcode project
-        run: xcodegen generate
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Run tests with Thread Sanitizer
-        run: |
-          xcodebuild test \
-            -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION_IPHONE }}' \
-            -skip-testing:XiriGoEcommerceUITests \
-            -skipPackagePluginValidation \
-            -enableThreadSanitizer YES \
-            CODE_SIGNING_ALLOWED=NO
+      - name: Fastlane sanitizer
+        run: bundle exec fastlane ios sanitizer
         working-directory: ios

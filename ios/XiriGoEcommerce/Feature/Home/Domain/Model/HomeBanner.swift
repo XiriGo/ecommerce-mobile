@@ -3,7 +3,7 @@ import Foundation
 // MARK: - HomeBanner
 
 /// A single hero banner in the home screen carousel.
-struct HomeBanner: Identifiable, Equatable, Sendable {
+struct HomeBanner: Identifiable, Equatable {
     let id: String
     let title: String
     let subtitle: String

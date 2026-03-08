@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Tab
 
 /// Defines the four top-level tabs displayed in the bottom navigation bar.
-enum Tab: String, CaseIterable, Identifiable, Sendable {
+enum Tab: String, CaseIterable, Identifiable {
     case home
     case categories
     case cart

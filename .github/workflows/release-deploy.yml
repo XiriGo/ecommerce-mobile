@@ -1,0 +1,81 @@
+name: Release Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to release'
+        required: true
+        type: choice
+        options:
+          - both
+          - ios
+          - android
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+concurrency:
+  group: release-deploy
+  cancel-in-progress: false
+
+jobs:
+  # ------------------------------------------------------------------
+  # iOS Release (App Store)
+  # ------------------------------------------------------------------
+  ios-release:
+    name: 'iOS: Release (App Store)'
+    runs-on: macos-19-runner
+    if: github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'both'
+    env:
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Bump version
+        run: bundle exec fastlane ios bump_version type:${{ github.event.inputs.version_bump }}
+        working-directory: ios
+
+      - name: Deploy to App Store
+        run: bundle exec fastlane ios release
+        working-directory: ios
+
+  # ------------------------------------------------------------------
+  # Android Release (Play Store)
+  # ------------------------------------------------------------------
+  android-release:
+    name: 'Android: Release (Play Store)'
+    runs-on: ubuntu-davinci
+    if: github.event.inputs.platform == 'android' || github.event.inputs.platform == 'both'
+    env:
+      PLAY_STORE_JSON_KEY_PATH: ${{ secrets.PLAY_STORE_JSON_KEY_PATH }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Bump version
+        run: bundle exec fastlane android bump_version type:${{ github.event.inputs.version_bump }}
+        working-directory: android
+
+      - name: Deploy to Play Store
+        run: bundle exec fastlane android release
+        working-directory: android

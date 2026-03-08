@@ -4,7 +4,7 @@ import Foundation
 
 /// Represents a single onboarding page with localized content references.
 /// Content is driven by localized string keys and bundled illustration asset names.
-struct OnboardingPage: Identifiable, Sendable, Equatable {
+struct OnboardingPage: Identifiable, Equatable {
     // MARK: - Page Indices
 
     enum Index {

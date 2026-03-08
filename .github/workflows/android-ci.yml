@@ -9,6 +9,8 @@ on:
       - 'android/**'
       - 'shared/**'
       - '.github/workflows/android-ci.yml'
+      - 'Gemfile'
+      - 'Gemfile.lock'
       - 'CLAUDE.md'
   pull_request:
     branches: [develop]
@@ -16,6 +18,8 @@ on:
       - 'android/**'
       - 'shared/**'
       - '.github/workflows/android-ci.yml'
+      - 'Gemfile'
+      - 'Gemfile.lock'
       - 'CLAUDE.md'
 
 concurrency:
@@ -26,29 +30,28 @@ jobs:
   lint:
     name: Lint (ktlint + detekt)
     runs-on: ubuntu-davinci
-    defaults:
-      run:
-        working-directory: android
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run ktlint
-        run: ./gradlew ktlintCheck
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Run detekt
-        run: ./gradlew detekt
+      - name: Fastlane lint
+        run: bundle exec fastlane android lint
+        working-directory: android
 
   build:
     name: Build debug APK
     runs-on: ubuntu-davinci
-    defaults:
-      run:
-        working-directory: android
     steps:
       - uses: actions/checkout@v4
 
-      - name: Assemble debug
-        run: ./gradlew assembleDebug
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Fastlane build
+        run: bundle exec fastlane android build
+        working-directory: android
 
       - uses: actions/upload-artifact@v4
         with:
@@ -60,14 +63,15 @@ jobs:
     name: Unit tests
     runs-on: ubuntu-davinci
     needs: build
-    defaults:
-      run:
-        working-directory: android
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run unit tests
-        run: ./gradlew test
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Fastlane test
+        run: bundle exec fastlane android test
+        working-directory: android
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

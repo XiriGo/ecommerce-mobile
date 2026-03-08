@@ -3,7 +3,7 @@ import Foundation
 // MARK: - HomeProduct
 
 /// A product displayed in Popular Products or New Arrivals sections on the home screen.
-struct HomeProduct: Identifiable, Equatable, Sendable {
+struct HomeProduct: Identifiable, Equatable {
     let id: String
     let title: String
     let imageUrl: String?

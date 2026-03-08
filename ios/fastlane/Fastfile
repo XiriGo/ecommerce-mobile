@@ -1,0 +1,218 @@
+default_platform(:ios)
+
+SCHEME = "XiriGoEcommerce"
+SCHEME_STAGING = "XiriGoEcommerce-Staging"
+PROJECT = "XiriGoEcommerce.xcodeproj"
+WORKSPACE = nil # SPM-based, no workspace
+
+IPHONE_DESTINATION = "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest"
+IPAD_DESTINATION = "platform=iOS Simulator,name=iPad Pro 13-inch (M5),OS=latest"
+SMALL_DESTINATION = "platform=iOS Simulator,name=iPhone 16e,OS=latest"
+
+platform :ios do
+  before_all do
+    ENV["LANG"] = "en_US.UTF-8"
+    ENV["LC_ALL"] = "en_US.UTF-8"
+    setup_xcodegen
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # CI Lanes (Phase 1 — mirrors existing CI commands)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Run SwiftLint + SwiftFormat checks"
+  lane :lint do
+    sh("cd .. && swiftlint lint --strict --reporter github-actions-logging")
+    sh("cd .. && swiftformat --lint . --config .swiftformat")
+  end
+
+  desc "Build debug (no code signing)"
+  lane :build do
+    sh(
+      "cd .. && xcodebuild build " \
+      "-scheme #{SCHEME} " \
+      "-destination '#{IPHONE_DESTINATION}' " \
+      "-skipPackagePluginValidation " \
+      "CODE_SIGNING_ALLOWED=NO"
+    )
+  end
+
+  desc "Run unit tests on multiple devices with coverage"
+  lane :test do
+    sh(
+      "cd .. && xcodebuild test " \
+      "-scheme #{SCHEME} " \
+      "-destination '#{IPHONE_DESTINATION}' " \
+      "-destination '#{IPAD_DESTINATION}' " \
+      "-destination '#{SMALL_DESTINATION}' " \
+      "-skip-testing:XiriGoEcommerceUITests " \
+      "-parallel-testing-enabled YES " \
+      "-skipPackagePluginValidation " \
+      "-resultBundlePath fastlane/test_output/TestResults.xcresult " \
+      "-enableCodeCoverage YES " \
+      "CODE_SIGNING_ALLOWED=NO"
+    )
+
+    extract_coverage
+  end
+
+  desc "Run Thread Sanitizer tests"
+  lane :sanitizer do
+    run_tests(
+      scheme: SCHEME,
+      devices: ["iPhone 17 Pro"],
+      skip_testing: "XiriGoEcommerceUITests",
+      xcargs: "-skipPackagePluginValidation -enableThreadSanitizer YES CODE_SIGNING_ALLOWED=NO"
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Code Signing (Phase 2)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Sync certificates and provisioning profiles via match"
+  lane :certificates do |options|
+    match_type = options[:type] || "development"
+    match(
+      type: match_type,
+      app_identifier: app_identifiers,
+      readonly: is_ci
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Beta Distribution (Phase 2)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Build staging and upload to TestFlight"
+  lane :beta do
+    certificates(type: "appstore")
+
+    increment_build_number(
+      build_number: latest_testflight_build_number + 1
+    )
+
+    build_app(
+      scheme: SCHEME_STAGING,
+      configuration: "Staging",
+      export_method: "app-store",
+      output_directory: "./fastlane/build_output",
+      output_name: "XiriGoEcommerce-staging.ipa",
+      xcargs: "-skipPackagePluginValidation"
+    )
+
+    changelog = changelog_from_git_commits(
+      commits_count: 10,
+      pretty: "- %s"
+    )
+
+    upload_to_testflight(
+      changelog: changelog,
+      distribute_external: false,
+      notify_external_testers: false
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Release (Phase 3)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Build release and upload to App Store Connect"
+  lane :release do
+    certificates(type: "appstore")
+
+    increment_build_number(
+      build_number: latest_testflight_build_number + 1
+    )
+
+    build_app(
+      scheme: SCHEME,
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "./fastlane/build_output",
+      output_name: "XiriGoEcommerce-release.ipa",
+      xcargs: "-skipPackagePluginValidation"
+    )
+
+    changelog = changelog_from_git_commits(
+      commits_count: 20,
+      pretty: "- %s"
+    )
+
+    upload_to_app_store(
+      submit_for_review: false,
+      automatic_release: false,
+      force: true,
+      release_notes: { "default" => changelog, "tr" => changelog }
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Version Management (Phase 3)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Bump version number (major, minor, patch)"
+  lane :bump_version do |options|
+    bump_type = options[:type] || "patch"
+    increment_version_number(bump_type: bump_type)
+    version = get_version_number(target: "XiriGoEcommerce")
+    UI.success("Version bumped to #{version}")
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Screenshots (Phase 3)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Capture screenshots on multiple devices"
+  lane :screenshots do
+    capture_screenshots(
+      scheme: SCHEME,
+      devices: [
+        "iPhone 15 Pro Max",
+        "iPhone 15",
+        "iPad Pro (12.9-inch) (6th generation)"
+      ],
+      languages: ["en-US", "tr"],
+      output_directory: "./fastlane/screenshots"
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Helpers
+  # ──────────────────────────────────────────────────────────
+
+  private_lane :setup_xcodegen do
+    sh("cd .. && xcodegen generate") unless File.exist?("../#{PROJECT}")
+  end
+
+  private_lane :extract_coverage do
+    result_bundle = Dir.glob("../fastlane/test_output/*.xcresult").first
+    return unless result_bundle
+
+    sh("xcrun xccov view --report '#{result_bundle}' --json > coverage.json 2>/dev/null || true")
+    return unless File.exist?("coverage.json")
+
+    require "json"
+    data = JSON.parse(File.read("coverage.json"))
+    targets = data["targets"] || []
+    targets.each do |t|
+      name = t["name"] || ""
+      next unless name == "XiriGoEcommerce"
+
+      pct = (t["lineCoverage"] || 0) * 100
+      UI.message("Coverage: #{pct.round(1)}%")
+      if pct < 70
+        UI.error("FAIL: Coverage #{pct.round(1)}% is below 70% minimum")
+        raise "Coverage threshold not met"
+      elsif pct < 80
+        UI.important("WARNING: Coverage #{pct.round(1)}% is below 80% target")
+      else
+        UI.success("PASS: Coverage #{pct.round(1)}% meets threshold")
+      end
+    end
+  end
+
+  def app_identifiers
+    ["com.xirigo.ecommerce", "com.xirigo.ecommerce.debug", "com.xirigo.ecommerce.staging"]
+  end
+end

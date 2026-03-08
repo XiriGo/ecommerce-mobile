@@ -12,12 +12,6 @@ concurrency:
   group: pr-gate-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
-env:
-  # iOS
-  SCHEME: XiriGoEcommerce
-  DESTINATION_IPHONE: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest'
-  DESTINATION_IPAD: 'platform=iOS Simulator,name=iPad Pro 13-inch (M5),OS=latest'
-
 jobs:
   # ------------------------------------------------------------------
   # Detect which paths changed to conditionally run platform checks
@@ -37,12 +31,16 @@ jobs:
             android:
               - 'android/**'
               - 'shared/**'
+              - 'Gemfile'
+              - 'Gemfile.lock'
               - 'CLAUDE.md'
               - '.github/workflows/android-ci.yml'
               - '.github/workflows/pr-gate.yml'
             ios:
               - 'ios/**'
               - 'shared/**'
+              - 'Gemfile'
+              - 'Gemfile.lock'
               - 'CLAUDE.md'
               - '.github/workflows/ios-ci.yml'
               - '.github/workflows/pr-gate.yml'
@@ -55,44 +53,44 @@ jobs:
     runs-on: ubuntu-davinci
     needs: changes
     if: needs.changes.outputs.android == 'true'
-    defaults:
-      run:
-        working-directory: android
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run ktlint
-        run: ./gradlew ktlintCheck
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Run detekt
-        run: ./gradlew detekt
+      - name: Fastlane lint
+        run: bundle exec fastlane android lint
+        working-directory: android
 
   android-build:
     name: 'Android: Build'
     runs-on: ubuntu-davinci
     needs: changes
     if: needs.changes.outputs.android == 'true'
-    defaults:
-      run:
-        working-directory: android
     steps:
       - uses: actions/checkout@v4
 
-      - name: Assemble debug
-        run: ./gradlew assembleDebug
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Fastlane build
+        run: bundle exec fastlane android build
+        working-directory: android
 
   android-test:
     name: 'Android: Test'
     runs-on: ubuntu-davinci
     needs: android-build
-    defaults:
-      run:
-        working-directory: android
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run unit tests
-        run: ./gradlew test
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Fastlane test
+        run: bundle exec fastlane android test
+        working-directory: android
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -115,14 +113,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: SwiftLint
-        run: swiftlint lint --strict --reporter github-actions-logging
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: SwiftFormat
-        run: |
-          swiftformat --version
-          swiftformat --lint . --config .swiftformat
+      - name: Fastlane lint
+        run: bundle exec fastlane ios lint
         working-directory: ios
 
   ios-build:
@@ -133,67 +128,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate Xcode project
-        run: xcodegen generate
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Build
-        run: |
-          xcodebuild build \
-            -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION_IPHONE }}' \
-            -skipPackagePluginValidation \
-            CODE_SIGNING_ALLOWED=NO
+      - name: Fastlane build
+        run: bundle exec fastlane ios build
         working-directory: ios
 
   ios-test:
-    name: 'iOS: Test (iPhone + iPad)'
+    name: 'iOS: Test (iPhone + iPad + Small)'
     runs-on: macos-19-runner
     needs: ios-build
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate Xcode project
-        run: xcodegen generate
-        working-directory: ios
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-      - name: Run tests on iPhone + iPad
-        run: |
-          xcodebuild test \
-            -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION_IPHONE }}' \
-            -destination '${{ env.DESTINATION_IPAD }}' \
-            -skip-testing:XiriGoEcommerceUITests \
-            -parallel-testing-enabled YES \
-            -skipPackagePluginValidation \
-            -resultBundlePath TestResults.xcresult \
-            -enableCodeCoverage YES \
-            CODE_SIGNING_ALLOWED=NO
-        working-directory: ios
-
-      - name: Check coverage threshold
-        if: always()
-        run: |
-          xcrun xccov view --report TestResults.xcresult --json > coverage.json 2>/dev/null || true
-          if [ -f coverage.json ]; then
-            python3 -c "
-          import json, sys
-          data = json.load(open('coverage.json'))
-          targets = data.get('targets', [])
-          for t in targets:
-              name = t.get('name', '')
-              if 'XiriGoEcommerce' == name:
-                  pct = t.get('lineCoverage', 0) * 100
-                  print(f'Coverage: {pct:.1f}%')
-                  if pct < 70:
-                      print(f'FAIL: Coverage {pct:.1f}% is below 70% minimum')
-                      sys.exit(1)
-                  elif pct < 80:
-                      print(f'WARNING: Coverage {pct:.1f}% is below 80% target')
-                  else:
-                      print(f'PASS: Coverage {pct:.1f}% meets threshold')
-          " 2>/dev/null || echo "Coverage check skipped (parse error)"
-          fi
+      - name: Fastlane test
+        run: bundle exec fastlane ios test
         working-directory: ios
 
       - name: Upload test results
@@ -202,8 +155,8 @@ jobs:
         with:
           name: pr-ios-test-results
           path: |
-            ios/TestResults.xcresult
-            ios/coverage.json
+            ios/fastlane/test_output/
+            ios/fastlane/coverage.json
           retention-days: 7
 
   # ------------------------------------------------------------------

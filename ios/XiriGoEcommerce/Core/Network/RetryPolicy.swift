@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - RetryPolicy
 
-struct RetryPolicy: Sendable {
+struct RetryPolicy {
     // MARK: - Internal
 
     static let `default` = Self(

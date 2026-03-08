@@ -3,7 +3,7 @@ import Foundation
 // MARK: - HomeEvent
 
 /// Events dispatched from the home screen UI to the ViewModel.
-enum HomeEvent: Equatable, Sendable {
+enum HomeEvent: Equatable {
     case refresh
     case bannerTapped(HomeBanner)
     case categoryTapped(HomeCategory)

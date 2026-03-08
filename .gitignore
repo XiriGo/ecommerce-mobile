@@ -56,6 +56,16 @@ coverage/
 # ─── Claude Code (secrets) ────────────────────────
 .claude/settings.local.json
 
+# ─── Fastlane ─────────────────────────────────────
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots/
+*/fastlane/test_output/
+*/fastlane/build_output/
+*/fastlane/coverage.json
+*/fastlane/README.md
+vendor/bundle/
+
 # ─── Misc ──────────────────────────────────────────
 *.tmp
 *.bak

@@ -1,0 +1,4 @@
+app_identifier("com.xirigo.ecommerce")
+apple_id(ENV["APPLE_ID"] || "developer@xirigo.com")
+team_id(ENV["TEAM_ID"])
+itc_team_id(ENV["ITC_TEAM_ID"])
