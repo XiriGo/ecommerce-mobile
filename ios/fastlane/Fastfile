@@ -39,15 +39,18 @@ platform :ios do
 
   desc "Run unit tests on multiple devices with coverage"
   lane :test do
-    run_tests(
-      scheme: SCHEME,
-      devices: ["iPhone 17 Pro", "iPad Pro 13-inch (M5)", "iPhone 16e"],
-      skip_testing: "XiriGoEcommerceUITests",
-      parallel_testing: true,
-      code_coverage: true,
-      result_bundle: true,
-      output_directory: "./fastlane/test_output",
-      xcargs: "-skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO"
+    sh(
+      "cd .. && xcodebuild test " \
+      "-scheme #{SCHEME} " \
+      "-destination '#{IPHONE_DESTINATION}' " \
+      "-destination '#{IPAD_DESTINATION}' " \
+      "-destination '#{SMALL_DESTINATION}' " \
+      "-skip-testing:XiriGoEcommerceUITests " \
+      "-parallel-testing-enabled YES " \
+      "-skipPackagePluginValidation " \
+      "-resultBundlePath fastlane/test_output/TestResults.xcresult " \
+      "-enableCodeCoverage YES " \
+      "CODE_SIGNING_ALLOWED=NO"
     )
 
     extract_coverage
