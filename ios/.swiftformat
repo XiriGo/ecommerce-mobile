@@ -214,6 +214,8 @@
 --disable wrapMultilineConditionalAssignment
 # redundantStaticSelf: Can conflict with SwiftLint prefer_self_in_static_references
 --disable redundantStaticSelf
+# swiftTestingTestCaseNames: Our naming convention uses underscores intentionally
+--disable swiftTestingTestCaseNames
 
 # =============================================================================
 # Exclusions

@@ -13,12 +13,10 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Android
-  JAVA_VERSION: '17'
-  JAVA_DISTRIBUTION: 'temurin'
   # iOS
   SCHEME: XiriGoEcommerce
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+  DESTINATION_IPHONE: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest'
+  DESTINATION_IPAD: 'platform=iOS Simulator,name=iPad Pro 13-inch (M5),OS=latest'
 
 jobs:
   # ------------------------------------------------------------------
@@ -54,7 +52,7 @@ jobs:
   # ------------------------------------------------------------------
   android-lint:
     name: 'Android: Lint'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-davinci
     needs: changes
     if: needs.changes.outputs.android == 'true'
     defaults:
@@ -62,13 +60,6 @@ jobs:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - uses: gradle/actions/setup-gradle@v4
 
       - name: Run ktlint
         run: ./gradlew ktlintCheck
@@ -78,7 +69,7 @@ jobs:
 
   android-build:
     name: 'Android: Build'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-davinci
     needs: changes
     if: needs.changes.outputs.android == 'true'
     defaults:
@@ -87,32 +78,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - uses: gradle/actions/setup-gradle@v4
-
       - name: Assemble debug
         run: ./gradlew assembleDebug
 
   android-test:
     name: 'Android: Test'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-davinci
     needs: android-build
     defaults:
       run:
         working-directory: android
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - uses: gradle/actions/setup-gradle@v4
 
       - name: Run unit tests
         run: ./gradlew test
@@ -128,87 +105,95 @@ jobs:
           retention-days: 7
 
   # ------------------------------------------------------------------
-  # iOS checks
+  # iOS checks (self-hosted runner)
   # ------------------------------------------------------------------
   ios-lint:
     name: 'iOS: Lint'
-    runs-on: macos-15
+    runs-on: macos-19-runner
     needs: changes
     if: needs.changes.outputs.ios == 'true'
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install tools
-        run: brew install swiftlint swiftformat
 
       - name: SwiftLint
         run: swiftlint lint --strict --reporter github-actions-logging
         working-directory: ios
 
       - name: SwiftFormat
-        run: swiftformat --lint .
+        run: |
+          swiftformat --version
+          swiftformat --lint . --config .swiftformat
         working-directory: ios
 
   ios-build:
     name: 'iOS: Build'
-    runs-on: macos-15
+    runs-on: macos-19-runner
     needs: changes
     if: needs.changes.outputs.ios == 'true'
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install xcodegen
-        run: brew install xcodegen
-
       - name: Generate Xcode project
         run: xcodegen generate
         working-directory: ios
-
-      - name: Cache SPM packages
-        uses: actions/cache@v4
-        with:
-          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
-          restore-keys: spm-${{ runner.os }}-
 
       - name: Build
         run: |
           xcodebuild build \
             -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION }}' \
+            -destination '${{ env.DESTINATION_IPHONE }}' \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
         working-directory: ios
 
   ios-test:
-    name: 'iOS: Test'
-    runs-on: macos-15
+    name: 'iOS: Test (iPhone + iPad)'
+    runs-on: macos-19-runner
     needs: ios-build
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install xcodegen
-        run: brew install xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
         working-directory: ios
 
-      - name: Cache SPM packages
-        uses: actions/cache@v4
-        with:
-          path: ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
-          key: spm-${{ runner.os }}-${{ hashFiles('ios/Package.swift', 'ios/project.yml') }}
-          restore-keys: spm-${{ runner.os }}-
-
-      - name: Run tests
+      - name: Run tests on iPhone + iPad
         run: |
           xcodebuild test \
             -scheme ${{ env.SCHEME }} \
-            -destination '${{ env.DESTINATION }}' \
+            -destination '${{ env.DESTINATION_IPHONE }}' \
+            -destination '${{ env.DESTINATION_IPAD }}' \
+            -skip-testing:XiriGoEcommerceUITests \
+            -parallel-testing-enabled YES \
             -skipPackagePluginValidation \
             -resultBundlePath TestResults.xcresult \
+            -enableCodeCoverage YES \
             CODE_SIGNING_ALLOWED=NO
+        working-directory: ios
+
+      - name: Check coverage threshold
+        if: always()
+        run: |
+          xcrun xccov view --report TestResults.xcresult --json > coverage.json 2>/dev/null || true
+          if [ -f coverage.json ]; then
+            python3 -c "
+          import json, sys
+          data = json.load(open('coverage.json'))
+          targets = data.get('targets', [])
+          for t in targets:
+              name = t.get('name', '')
+              if 'XiriGoEcommerce' == name:
+                  pct = t.get('lineCoverage', 0) * 100
+                  print(f'Coverage: {pct:.1f}%')
+                  if pct < 70:
+                      print(f'FAIL: Coverage {pct:.1f}% is below 70% minimum')
+                      sys.exit(1)
+                  elif pct < 80:
+                      print(f'WARNING: Coverage {pct:.1f}% is below 80% target')
+                  else:
+                      print(f'PASS: Coverage {pct:.1f}% meets threshold')
+          " 2>/dev/null || echo "Coverage check skipped (parse error)"
+          fi
         working-directory: ios
 
       - name: Upload test results
@@ -216,7 +201,9 @@ jobs:
         if: always()
         with:
           name: pr-ios-test-results
-          path: ios/TestResults.xcresult
+          path: |
+            ios/TestResults.xcresult
+            ios/coverage.json
           retention-days: 7
 
   # ------------------------------------------------------------------

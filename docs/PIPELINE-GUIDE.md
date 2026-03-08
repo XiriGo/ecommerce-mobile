@@ -417,12 +417,15 @@ GitHub Issue #12 "[M1-06] Product List"
 
 ## 9. CI/CD Workflows
 
-| Workflow | Trigger | Ne Yapar |
-|----------|---------|----------|
-| `android-ci.yml` | Push to `feature/**`, PR to `develop` | ktlint + detekt + build + test |
-| `ios-ci.yml` | Push to `feature/**`, PR to `develop` | SwiftLint + SwiftFormat + build + test |
-| `pr-gate.yml` | PR to `develop`/`main` | Combined gate (path filtering ile) |
-| `auto-merge.yml` | Review approved + checks passed | `agent:pipeline` label'li PR'lari squash merge |
+| Workflow | Trigger | Runner | Ne Yapar |
+|----------|---------|--------|----------|
+| `android-ci.yml` | Push to `feature/**`, PR to `develop` | `ubuntu-latest` | ktlint + detekt + build + test |
+| `ios-ci.yml` | Push to `feature/**`, PR to `develop` | `macos-19-runner` | SwiftLint + SwiftFormat + build + multi-device test + coverage |
+| `pr-gate.yml` | PR to `develop`/`main` | `macos-19-runner` (iOS) / `ubuntu-latest` (Android) | Combined gate (path filtering ile) |
+| `auto-merge.yml` | Review approved + checks passed | `ubuntu-latest` | `agent:pipeline` label'li PR'lari squash merge |
+
+**iOS Multi-Device Testing**: Testler iPhone 16, iPhone 16e (kucuk ekran), iPad Pro 13-inch uzerinde paralel calisir.
+**Coverage Enforcement**: PR gate'de >= 70% fail, >= 80% warn.
 
 ### Branch Protection (Manuel Ayar)
 

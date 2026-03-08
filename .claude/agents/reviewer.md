@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: "Review feature implementations for quality, cross-platform consistency, and spec compliance. Use proactively after documentation is complete."
+description: "Review feature implementations for quality, cross-platform consistency, and spec compliance. Runs after regression, before API-Doc."
 tools: Read, Grep, Glob, Bash, Write, Edit
 model: opus
 memory: project

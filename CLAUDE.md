@@ -129,19 +129,28 @@ Issue map: `scripts/issue-map.json` (feature ID → GitHub issue number)
 
 ## Agent Pipeline
 
-7 specialized agents work in sequence with parallel phases:
+7 specialized agents work in sequence with parallel phases (SDD + TDD):
 
 ```
-Architect → [Android Dev ‖ iOS Dev] → [Android Tester ‖ iOS Tester] → Doc → Review → Quality Gate
+Architect → ADR-Doc → [Android Tester ‖ iOS Tester] (TDD) → [Android Dev ‖ iOS Dev] → Verify → Self-Heal → Visual-Verify → Regression → Review → API-Doc → Quality Gate
 ```
+
+### Pipeline Methodology
+
+- **SDD**: Architect writes platform-agnostic spec first
+- **ADR-Doc**: Architectural Decision Records written BEFORE tests (design rationale for testers)
+- **TDD**: Testers write tests FROM THE SPEC + ADR before implementation (tests define the contract)
+- **Constrained Implementation**: Developers write code to pass existing tests
+- **Self-Heal**: On verification failure, auto-fix before escalating (max 2 retries)
+- **Regression**: All existing tests must still pass after new feature
 
 | Agent | Model | Reads |
 |-------|-------|-------|
 | Architect | Opus | `CLAUDE.md` + `docs/standards/common.md` |
 | Android Dev | Opus | `CLAUDE.md` + `docs/standards/android.md` |
 | iOS Dev | Opus | `CLAUDE.md` + `docs/standards/ios.md` |
-| Android Tester | Sonnet | `CLAUDE.md` + `docs/standards/android.md` + `docs/standards/testing.md` |
-| iOS Tester | Sonnet | `CLAUDE.md` + `docs/standards/ios.md` + `docs/standards/testing.md` |
+| Android Tester | Opus | `CLAUDE.md` + `docs/standards/android.md` + `docs/standards/testing.md` |
+| iOS Tester | Opus | `CLAUDE.md` + `docs/standards/ios.md` + `docs/standards/testing.md` |
 | Doc Writer | Sonnet | `CLAUDE.md` |
 | Reviewer | Opus | `CLAUDE.md` + `docs/standards/faang-rules.md` + `docs/standards/testing.md` |
 
@@ -194,6 +203,7 @@ Full pipeline documentation: `docs/PIPELINE-GUIDE.md`
 | `github` | Project | GitHub API (needs `GITHUB_TOKEN`) |
 | `figma` | Design | Figma API (needs `FIGMA_API_KEY`) |
 | `firebase` | Both | Firebase services |
+| `xirigo-storefront` | API | Medusa storefront API (product, cart, order, auth) |
 
 ## CI/CD
 
