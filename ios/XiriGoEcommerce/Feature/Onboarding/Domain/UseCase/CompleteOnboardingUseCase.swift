@@ -3,7 +3,7 @@ import Foundation
 // MARK: - CompleteOnboardingUseCase
 
 /// Marks onboarding as completed so it is not shown on subsequent launches.
-struct CompleteOnboardingUseCase: Sendable {
+struct CompleteOnboardingUseCase {
     // MARK: - Lifecycle
 
     // MARK: - Init

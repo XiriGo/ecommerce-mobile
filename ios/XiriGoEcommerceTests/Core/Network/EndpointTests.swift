@@ -45,7 +45,7 @@ private struct GetProductDetailEndpoint: Endpoint {
 // MARK: - CreateCartEndpoint
 
 private struct CreateCartEndpoint: Endpoint {
-    struct Body: Encodable, Sendable {
+    struct Body: Encodable {
         let regionId: String
     }
 

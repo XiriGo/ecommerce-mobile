@@ -4,7 +4,7 @@ import Testing
 
 // MARK: - ProductResponse
 
-private struct ProductResponse: Decodable, Sendable {
+private struct ProductResponse: Decodable {
     let id: String
     let title: String
 }
@@ -20,7 +20,7 @@ private struct TestEndpoint: Endpoint {
 // MARK: - BodyEndpoint
 
 private struct BodyEndpoint: Endpoint {
-    struct Payload: Encodable, Sendable {
+    struct Payload: Encodable {
         let regionId: String
     }
 

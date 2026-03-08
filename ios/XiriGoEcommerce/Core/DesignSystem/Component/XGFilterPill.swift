@@ -21,7 +21,7 @@ private enum FilterPillTokens {
 // MARK: - XGFilterPillItem
 
 /// Data model for a single filter pill.
-struct XGFilterPillItem: Equatable, Sendable {
+struct XGFilterPillItem: Equatable {
     let label: String
     let isSelected: Bool
 }

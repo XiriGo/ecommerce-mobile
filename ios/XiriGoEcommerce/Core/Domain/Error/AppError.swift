@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - AppError
 
-enum AppError: Error, Equatable, Sendable {
+enum AppError: Error, Equatable {
     case network(message: String = "Network error")
     case server(code: Int, message: String)
     case notFound(message: String = "Not found")

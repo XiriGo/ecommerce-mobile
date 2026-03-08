@@ -2,6 +2,6 @@ import Foundation
 
 // MARK: - AuthTokenResponse
 
-struct AuthTokenResponse: Decodable, Sendable {
+struct AuthTokenResponse: Decodable {
     let token: String
 }

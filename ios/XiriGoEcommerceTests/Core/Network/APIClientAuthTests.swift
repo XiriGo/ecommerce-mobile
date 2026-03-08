@@ -4,7 +4,7 @@ import Testing
 
 // MARK: - ProductResponse
 
-private struct ProductResponse: Decodable, Sendable {
+private struct ProductResponse: Decodable {
     let id: String
     let title: String
 }

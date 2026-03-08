@@ -3,7 +3,7 @@ import Foundation
 // MARK: - CheckOnboardingUseCase
 
 /// Returns whether onboarding has been previously shown to the user.
-struct CheckOnboardingUseCase: Sendable {
+struct CheckOnboardingUseCase {
     // MARK: - Lifecycle
 
     // MARK: - Init

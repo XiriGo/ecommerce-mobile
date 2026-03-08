@@ -15,7 +15,7 @@ enum XGElevation {
 
 // MARK: - ShadowStyle
 
-struct ShadowStyle: Sendable {
+struct ShadowStyle {
     let radius: CGFloat
     let y: CGFloat
     let opacity: Double

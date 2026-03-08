@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - MedusaErrorDTO
 
-struct MedusaErrorDTO: Decodable, Sendable {
+struct MedusaErrorDTO: Decodable {
     // MARK: - Lifecycle
 
     init(type: String, message: String, code: String? = nil) {
