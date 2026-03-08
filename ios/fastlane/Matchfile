@@ -1,0 +1,5 @@
+git_url(ENV["MATCH_GIT_URL"])
+storage_mode("git")
+type("development")
+app_identifier(["com.xirigo.ecommerce", "com.xirigo.ecommerce.debug", "com.xirigo.ecommerce.staging"])
+username(ENV["APPLE_ID"] || "developer@xirigo.com")

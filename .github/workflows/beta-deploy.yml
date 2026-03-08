@@ -1,0 +1,102 @@
+name: Beta Deploy
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to deploy'
+        required: true
+        type: choice
+        options:
+          - both
+          - ios
+          - android
+
+concurrency:
+  group: beta-deploy
+  cancel-in-progress: false
+
+jobs:
+  # ------------------------------------------------------------------
+  # Detect which paths changed (for push events)
+  # ------------------------------------------------------------------
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    outputs:
+      android: ${{ steps.filter.outputs.android }}
+      ios: ${{ steps.filter.outputs.ios }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            android:
+              - 'android/**'
+              - 'shared/**'
+            ios:
+              - 'ios/**'
+              - 'shared/**'
+
+  # ------------------------------------------------------------------
+  # iOS Beta (TestFlight)
+  # ------------------------------------------------------------------
+  ios-beta:
+    name: 'iOS: Beta (TestFlight)'
+    runs-on: macos-19-runner
+    needs: changes
+    if: >-
+      (github.event_name == 'workflow_dispatch' && (github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'both'))
+      || (github.event_name == 'push' && needs.changes.outputs.ios == 'true')
+    env:
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Deploy to TestFlight
+        run: bundle exec fastlane ios beta
+        working-directory: ios
+
+  # ------------------------------------------------------------------
+  # Android Beta (Firebase App Distribution)
+  # ------------------------------------------------------------------
+  android-beta:
+    name: 'Android: Beta (Firebase App Distribution)'
+    runs-on: ubuntu-davinci
+    needs: changes
+    if: >-
+      (github.event_name == 'workflow_dispatch' && (github.event.inputs.platform == 'android' || github.event.inputs.platform == 'both'))
+      || (github.event_name == 'push' && needs.changes.outputs.android == 'true')
+    env:
+      FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Deploy to Firebase App Distribution
+        run: bundle exec fastlane android beta
+        working-directory: android

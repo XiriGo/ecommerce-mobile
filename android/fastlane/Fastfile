@@ -1,0 +1,128 @@
+default_platform(:android)
+
+platform :android do
+  # ──────────────────────────────────────────────────────────
+  # CI Lanes (Phase 1 — mirrors existing CI commands)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Run ktlint + detekt"
+  lane :lint do
+    gradle(task: "ktlintCheck")
+    gradle(task: "detekt")
+  end
+
+  desc "Build debug APK"
+  lane :build do
+    gradle(task: "assembleDebug")
+  end
+
+  desc "Run unit tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Beta Distribution (Phase 2)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Build staging and distribute via Firebase App Distribution"
+  lane :beta do
+    increment_version_code
+
+    gradle(
+      task: "assemble",
+      build_type: "Staging"
+    )
+
+    changelog = changelog_from_git_commits(
+      commits_count: 10,
+      pretty: "- %s"
+    )
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID_ANDROID"],
+      groups: "internal-testers",
+      release_notes: changelog,
+      apk_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Release (Phase 3)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Build release AAB and upload to Play Store (internal track)"
+  lane :release do
+    increment_version_code
+
+    gradle(
+      task: "bundle",
+      build_type: "Release"
+    )
+
+    changelog = changelog_from_git_commits(
+      commits_count: 20,
+      pretty: "- %s"
+    )
+
+    upload_to_play_store(
+      track: "internal",
+      aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      release_status: "draft",
+      json_key: ENV["PLAY_STORE_JSON_KEY_PATH"],
+      changelogs: { "default" => changelog, "tr" => changelog }
+    )
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Version Management (Phase 3)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Bump version name (major, minor, patch)"
+  lane :bump_version do |options|
+    bump_type = options[:type] || "patch"
+
+    current = android_get_version_name(gradle_file: "app/build.gradle.kts")
+    parts = current.split(".").map(&:to_i)
+
+    case bump_type
+    when "major"
+      parts[0] += 1
+      parts[1] = 0
+      parts[2] = 0
+    when "minor"
+      parts[1] += 1
+      parts[2] = 0
+    when "patch"
+      parts[2] += 1
+    end
+
+    new_version = parts.join(".")
+    android_set_version_name(version_name: new_version, gradle_file: "app/build.gradle.kts")
+    UI.success("Version bumped to #{new_version}")
+  end
+
+  desc "Increment version code by 1"
+  private_lane :increment_version_code do
+    current = android_get_version_code(gradle_file: "app/build.gradle.kts")
+    new_code = current.to_i + 1
+    android_set_version_code(version_code: new_code, gradle_file: "app/build.gradle.kts")
+    UI.success("Version code incremented to #{new_code}")
+  end
+
+  # ──────────────────────────────────────────────────────────
+  # Screenshots (Phase 3)
+  # ──────────────────────────────────────────────────────────
+
+  desc "Capture screenshots via screengrab"
+  lane :screenshots do
+    gradle(task: "assembleDebug", build_type: "Debug")
+    gradle(task: "assembleAndroidTest", build_type: "Debug")
+
+    screengrab(
+      locales: ["en-US", "tr-TR"],
+      clear_previous_screenshots: true,
+      output_directory: "./fastlane/screenshots"
+    )
+  end
+end

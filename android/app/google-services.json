@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "742768669947",
+    "project_id": "xirigo-ecommerce",
+    "storage_bucket": "xirigo-ecommerce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742768669947:android:34f777a5f670ddbaa56c5e",
+        "android_client_info": {
+          "package_name": "com.xirigo.ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9q7HrlNOzhkgqki5XJ4Kh5DHt-p-7Jcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
